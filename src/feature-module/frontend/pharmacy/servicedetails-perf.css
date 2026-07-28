@@ -1,0 +1,195 @@
+/* Service details — full page scroll performance */
+.service-details-page {
+    contain: layout style;
+}
+
+.service-details-page section {
+    contain: layout style;
+}
+
+.service-details-page .search-section1 {
+    contain: none;
+    overflow: visible;
+}
+
+.service-details-page .service-cards-stack-wrapper,
+.service-details-page .service-cards-section {
+    contain: none;
+    overflow: visible;
+}
+
+@media (max-width: 991px) {
+    .service-details-page .service-cards-stack-wrapper {
+        margin-top: 60px !important;
+    }
+}
+
+.service-details-page .service-cards-section.is-tooltip-active {
+    z-index: 12;
+}
+
+.service-details-page .service-cards-section.is-tooltip-active .tooltip-content {
+    z-index: 20;
+}
+
+.service-details-page .search-section1.is-search-open {
+    z-index: 25;
+}
+
+.service-category-card {
+    border-radius: 16px;
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    box-shadow: 0 10px 30px rgba(25, 25, 46, 0.08);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.service-category-card .card-accent-bar {
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.25s ease;
+}
+
+.service-category-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 30px rgba(128, 89, 202, 0.12);
+}
+
+.service-category-card:hover .card-accent-bar {
+    transform: scaleX(1);
+}
+
+.service-partners-section-lite {
+    background: linear-gradient(135deg,
+            rgba(243, 232, 255, 0.85) 0%,
+            rgba(237, 233, 254, 0.9) 100%) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    border: 1px solid rgba(128, 89, 202, 0.12) !important;
+    box-shadow: 0 8px 24px -8px rgba(147, 51, 234, 0.1) !important;
+}
+
+.service-details-page .home-dynamic-section,
+.service-details-page .home-dynamic-section-lite {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+.service-partners-scroll-item {
+    flex: 0 0 auto;
+    width: 88px;
+    scroll-snap-align: start;
+    contain: layout style paint;
+}
+
+@media (min-width: 768px) {
+    .service-partners-scroll-item {
+        width: 160px;
+    }
+}
+
+.service-partner-card {
+    cursor: pointer;
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+    border: 1px solid #eef0f6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 155px;
+}
+
+.service-partner-card--mobile {
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    min-height: 80px;
+    padding: 10px;
+    justify-content: center;
+}
+
+.service-partner-card img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.service-details-page .service-suggestion-item:hover,
+.service-details-page .service-suggestion-clear:hover {
+    background-color: #f9fafb !important;
+}
+
+.service-details-page .service-suggestion-clear:hover {
+    background-color: #fef2f2 !important;
+}
+
+.service-details-page .top-vendor-badge.service-link-hover:hover {
+    background: #8059ca !important;
+    color: #ffffff !important;
+}
+
+html.home-lite .service-details-page .service-category-card,
+html.service-details-lite .service-details-page .service-category-card {
+    transition: none;
+}
+
+html.home-lite .service-details-page .service-category-card:hover,
+html.service-details-lite .service-details-page .service-category-card:hover {
+    transform: none;
+}
+
+html.home-lite .service-details-page [style*="animation"],
+html.service-details-lite .service-details-page [style*="animation"] {
+    animation: none !important;
+}
+
+html.service-details-lite .service-details-page .service-partner-card {
+    transition: none !important;
+}
+
+.service-details-page .service-partners-carousel .home-products-scroll-row {
+    gap: 12px;
+    padding-bottom: 4px;
+}
+
+.service-category-card-lite {
+    contain: layout style paint;
+    width: 100%;
+}
+
+html.home-lite .service-details-page .service-category-card-lite,
+html.service-details-lite .service-details-page .service-category-card-lite {
+    transition: none !important;
+}
+
+html.home-lite .service-details-page .serv-wrap.medi-bg:hover,
+html.service-details-lite .service-details-page .serv-wrap.medi-bg:hover {
+    transform: none !important;
+}
+
+html.home-lite .service-details-page .serv-wrap:hover span img,
+html.service-details-lite .service-details-page .serv-wrap:hover span img {
+    transform: none !important;
+}
+
+.service-cards-section .service-cards-stack .description-item {
+    margin-bottom: 0;
+}
+
+html.home-lite .service-cards-section .service-card-lite,
+html.service-details-lite .service-cards-section .service-card-lite {
+    transition: none !important;
+}
+
+html.home-lite .service-cards-section .service-card-lite:hover,
+html.service-details-lite .service-cards-section .service-card-lite:hover {
+    z-index: auto !important;
+}
+
+.service-module-loading {
+    min-height: 120px;
+}

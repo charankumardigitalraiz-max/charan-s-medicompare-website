@@ -1,0 +1,121 @@
+.address-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 24px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+    border: 1.5px solid #f0f0f0 !important;
+    transition: all 0.3s ease;
+    height: 100%;
+}
+
+.address-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    border-color: #8059ca !important;
+}
+
+.address-title {
+    font-weight: 600;
+    font-size: 15px;
+    display: inline-flex;
+    align-items: center;
+    background: #faf8ff;
+    color: #8059ca;
+    padding: 4px 12px;
+    border-radius: 20px;
+    border: 1px solid #f3effc;
+}
+
+.address-name {
+    font-weight: 600;
+    font-size: 15px;
+    color: #333;
+    margin-top: 15px;
+}
+
+.address-text {
+    font-size: 13px;
+    color: #666;
+    margin-top: 8px;
+    line-height: 1.5;
+}
+
+.action-icons {
+    display: flex;
+    gap: 8px;
+}
+
+.action-icons i {
+    cursor: pointer;
+    font-size: 13px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #f8f9fa;
+    color: #666;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.action-icons i.fa-pen:hover {
+    background: #e8f0fe;
+    color: #1a73e8;
+}
+
+.action-icons i.fa-trash:hover {
+    background: #fce8e6;
+    color: #d93025;
+}
+
+.add-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fafafd;
+    border-radius: 14px;
+    border: 1.5px dashed #dcdbe6 !important;
+    height: 100%;
+    position: relative;
+    padding: 24px;
+    flex-direction: column;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-height: 200px;
+}
+
+.add-card:hover {
+    transform: translateY(-4px);
+    border: 1.5px dashed #8059ca !important;
+    background: #faf8ff;
+}
+
+.add-card h6 {
+    color: #444;
+    font-size: 15px;
+    margin-bottom: 4px;
+}
+
+.map-link {
+    background: #faf8ff;
+    border: 1px solid #e1d5f5;
+    color: #8059ca;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    width: 100%;
+}
+
+.map-link:hover {
+    background: #8059ca;
+    color: #fff;
+    border-color: #8059ca;
+    text-decoration: none;
+}

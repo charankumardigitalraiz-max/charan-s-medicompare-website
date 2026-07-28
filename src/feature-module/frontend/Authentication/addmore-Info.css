@@ -1,0 +1,478 @@
+img {
+  max-width: 100%;
+  display: block;
+}
+
+#signup-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  background-color: #f9fafb;
+}
+
+.main-container {
+  display: flex;
+  flex-direction: row;
+  max-width: 1000px;
+  width: 100%;
+  gap: 20px;
+  align-items: stretch;
+}
+
+.left-panel {
+  flex: 1;
+  background-color: #6941c6;
+  border-radius: 20px;
+  padding: 25px;
+  color: white;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 520px;
+}
+
+.left-panel-content {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 15px;
+}
+
+.brand-logo {
+  width: 120px;
+  height: auto;
+}
+
+.qr-code-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.qr-text {
+  font-size: 12px;
+  margin: 0 0 8px 0;
+  line-height: 1.3;
+  opacity: 0.9;
+}
+
+.qr-image {
+  width: 60px;
+  height: 60px;
+  border-radius: 6px;
+}
+
+.auth-form-title {
+  font-size: 22px;
+  font-weight: 600;
+  color: #344055;
+  margin: 0px 0 16px 0;
+  line-height: 1.2;
+}
+
+
+.phones-display {
+  position: relative;
+  flex-grow: 1;
+  width: 100%;
+  min-height: 200px;
+  margin: 15px 0;
+}
+
+.phone-img {
+  position: absolute;
+  width: 40%;
+  max-width: 160px;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0px 8px 16px rgba(0, 0, 0, 0.2));
+}
+
+.phone-img1 {
+  position: absolute;
+  width: 40%;
+  max-width: 160px;
+  height: 260px;
+  object-fit: contain;
+  filter: drop-shadow(0px 8px 16px rgba(0, 0, 0, 0.2));
+}
+
+.phone-left {
+  left: 15%;
+  top: -52px;
+  z-index: 1;
+}
+
+.phone-right {
+  right: 20%;
+  top: -20px;
+}
+
+.particles {
+  position: absolute;
+  top: 40px;
+  left: 10%;
+  width: 90px;
+  height: 90px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  filter: blur(35px);
+}
+
+.promo-text {
+  text-align: center;
+  margin-bottom: 20px;
+  margin-top: auto;
+}
+
+.promo-text h2 {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.promo-text p {
+  font-size: 14px;
+  line-height: 1.4;
+  opacity: 0.9;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.store-buttons1 {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.store-btn1 {
+  display: flex;
+  align-items: center;
+  backdrop-filter: blur(4px);
+  padding: 8px 12px;
+  color: white;
+  background-color: rgba(103, 164, 255, 0.2);
+  border-radius: 12px;
+  backdrop-filter: blur(1px);
+  box-shadow: inset 0px 4px 50px 0px #ffffff;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.store-btn1:hover {
+  background: rgba(103, 164, 255, 0.3);
+}
+
+.store-btn1 img {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+
+.store-btn1 .btn-text {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.store-btn1 .small-text {
+  font-size: 9px;
+  opacity: 0.8;
+}
+
+.store-btn1 .large-text {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.right-panel {
+  flex: 1;
+  background-color: white;
+  border-radius: 18px;
+  border: 1px solid #ededed;
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  height: 520px;
+  justify-content: center;
+}
+
+.form-container {
+  max-width: 450px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.form-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.form-header h1 {
+  font-size: 26px;
+  font-weight: 700;
+  color: #101828;
+  margin: 0 0 10px 0;
+}
+
+.form-header p {
+  font-size: 14px;
+  color: #667085;
+  margin: 0;
+}
+
+.form-section-label {
+  font-size: 14px;
+  color: #667085;
+  margin-bottom: 12px;
+  font-weight: 500;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.full-width {
+  grid-column: span 2;
+}
+
+.input-group1 {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.input-wrapper1 {
+  display: flex;
+  align-items: center;
+  border: 1px solid #7c7e80;
+  border-radius: 8px;
+  padding: 10px 12px;
+  background-color: #f9fafb;
+  height: 40px;
+  transition: border-color 0.2s;
+  position: relative;
+}
+
+.input-wrapper1:focus-within {
+  border-color: #512aac;
+}
+
+.input-wrapper1 input,
+.input-wrapper1 select {
+  border: none;
+  outline: none;
+  font-size: 14px;
+  color: #1d2939;
+  width: 100%;
+  background: transparent;
+  padding-left: 8px;
+}
+
+.input-wrapper1 select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  cursor: pointer;
+}
+
+.input-wrapper1 select::-ms-expand {
+  display: none;
+}
+
+.input-wrapper1:has(select)::after {
+  content: '';
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 4px solid #667085;
+  pointer-events: none;
+}
+
+.date-picker-wrapper::after {
+  display: none;
+}
+
+.input-wrapper1 input::placeholder {
+  color: #667085;
+}
+
+.placeholder-text {
+  color: #667085;
+  font-size: 14px;
+}
+
+.privacy-text {
+  font-size: 10px;
+  text-align: center;
+}
+
+.submit-btn {
+  width: 100%;
+  background-color: #6941c6;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  transition: background-color 0.2s;
+}
+
+.submit-btn:hover {
+  background-color: #5334a0;
+}
+
+.login-link {
+  text-align: center;
+  font-size: 12px;
+  color: #667085;
+}
+
+.login-link a {
+  color: #6941c6;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.login-link a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .main-container {
+    flex-direction: column;
+    max-width: 600px;
+  }
+
+  .left-panel {
+    min-height: 400px;
+  }
+
+  .phones-display {
+    min-height: 180px;
+  }
+}
+
+@media (max-width: 600px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .full-width {
+    grid-column: span 1;
+  }
+
+  .right-panel {
+    padding: 25px 20px;
+  }
+
+  .store-buttons1 {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .store-btn1 {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+.date-picker-wrapper .input-icon.calendar-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #667085;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.date-picker-wrapper .rs-picker {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.date-picker-wrapper .rs-picker-input-group1 {
+  width: 100% !important;
+  height: 100% !important;
+  border: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  display: flex !important;
+  align-items: center !important;
+  padding-left: 24px !important;
+}
+
+.date-picker-wrapper .rs-picker,
+.date-picker-wrapper .rs-picker *,
+.date-picker-wrapper .rs-picker-input-group1,
+.date-picker-wrapper .rs-picker-input-group1 *,
+.date-picker-wrapper .rs-input,
+.date-picker-wrapper .rs-input *,
+.date-picker-wrapper input {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.date-picker-wrapper .rs-input {
+  border: none !important;
+  outline: none !important;
+  font-size: 14px !important;
+  color: #1d2939 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  height: 100% !important;
+}
+
+.date-picker-wrapper .rs-input::placeholder {
+  color: #667085 !important;
+}
+
+.date-picker-wrapper .rs-input-group-addon {
+  display: none !important;
+}
+
+.date-picker-wrapper .rs-picker-input-group1:focus,
+.date-picker-wrapper .rs-picker-input-group1:focus-within,
+.date-picker-wrapper .rs-input:focus,
+.date-picker-wrapper .rs-picker:focus-within {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.date-picker-wrapper:focus-within .rs-picker-input-group1 {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.input-icon {
+  color: #667085;
+  flex-shrink: 0;
+  min-width: 16px;
+}
