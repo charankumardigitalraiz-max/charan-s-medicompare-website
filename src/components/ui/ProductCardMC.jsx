@@ -1,9 +1,29 @@
 import React, { useEffect, useRef } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 // import { UseMediaQuery } from "../../hooks/UseMediaQuery";
 import ProductImage from "./ProductImage.jsx";
 import PriceDisplay from "./PriceDisplay.jsx";
 import { getImageUrl } from "../../utils/index";
 import { CartQuantityControls } from "./index";
+
+const getSlugs = (data) => {
+  let sub =
+    data?.subcatdetails ||
+    data?.subcategorydetails ||
+    data?.subcategoryDetails ||
+    data?.subcategorys;
+  if (Array.isArray(sub)) {
+    sub = sub[0];
+  }
+
+  const cat = sub?.catdetails || sub?.categoryDetails || sub?.category;
+
+  return {
+    category: cat?.slug,
+    subcategory: sub?.slug,
+    slug: data?.slug,
+  };
+};
 /**
  * Reusable Product Card Component
  * Displays product information in a card format with image, details, pricing, and cart controls
@@ -41,6 +61,8 @@ const ProductCardMC = ({
   showDeliveryInfo = true,
   isMobile,
 }) => {
+  const navigate = useNavigate();
+  const location = useLocation();
   const selectedVariant =
     variant ||
     (Array.isArray(item?.variants) ? item.variants[0] : item?.variants) ||
@@ -182,6 +204,13 @@ const ProductCardMC = ({
     e.stopPropagation();
     if (onCompareClick) {
       onCompareClick(item);
+      return;
+    }
+    const tablet = item?.tabletdetails || item?.tabletDetails || item?.tablet || item;
+    const { category, subcategory, slug } = getSlugs(tablet);
+    if (slug) {
+      const searchParams = location.search || "";
+      navigate(`/${category || "medicine"}/${subcategory || "tablets"}/${slug}/compare${searchParams}`);
     }
   };
 
@@ -357,12 +386,12 @@ const ProductCardMC = ({
               opacity: 1 !important;
             }
           `}</style>
-          <span
+          <button
             ref={compareIconRef}
             onClick={handleCompareIconClick}
             data-tooltip-id="global-tooltip"
             data-tooltip-content="Compare"
-            className="compare-btn-highlight"
+            className="compare-btn-highlight focus:outline-none"
             style={{
               position: "absolute",
               top: "10px",
@@ -412,7 +441,7 @@ const ProductCardMC = ({
             >
               Compare
             </span>
-          </span>
+          </button>
         </>
       )}
 
@@ -629,26 +658,11 @@ const ProductCardMC = ({
           </div>
 
           <button
-            className="btn w-100"
             onClick={(e) => {
               e.stopPropagation();
               onProductClick(item);
             }}
-            style={{
-              backgroundColor: "#8059ca",
-              color: "white",
-              border: "none",
-              borderRadius: "8px",
-              padding: "4px 10px",
-              fontSize: "11px",
-              fontWeight: "600",
-              boxShadow: "0 2px 4px rgba(79, 70, 229, 0.2)",
-              transition: "all 0.3s ease",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: "8px",
-            }}
+            className="w-full flex items-center justify-center gap-2 py-0.5 px-2 !rounded-md text-[8px] font-bold text-white bg-[#8059ca] shadow-sm shadow-[#8059ca]/20 hover:shadow-md transition-all duration-300 cursor-pointer border-none"
           >
             Order Now
             <i

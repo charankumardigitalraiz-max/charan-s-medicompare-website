@@ -1206,6 +1206,7 @@ const HomeCareServices = ({
             </div>
             <div className="col-xl-7 col-lg-8">
               <ul className="work-flow-chart">
+
                 <li
                   data-aos="fade-up"
                   data-aos-delay={500}
@@ -1223,6 +1224,7 @@ const HomeCareServices = ({
                     <span className="chart-count">01</span>
                   </div>
                 </li>
+
                 <li
                   data-aos="fade-up"
                   data-aos-delay={600}
@@ -1240,6 +1242,7 @@ const HomeCareServices = ({
                     <span className="chart-count">02</span>
                   </div>
                 </li>
+
                 <li
                   data-aos="fade-up"
                   data-aos-delay={700}
@@ -1257,6 +1260,7 @@ const HomeCareServices = ({
                     <span className="chart-count">03</span>
                   </div>
                 </li>
+
                 <li
                   data-aos="fade-up"
                   data-aos-delay={800}
@@ -1274,6 +1278,7 @@ const HomeCareServices = ({
                     <span className="chart-count">04</span>
                   </div>
                 </li>
+
               </ul>
 
               <div className="hc-mobile-steps">
@@ -1360,16 +1365,7 @@ const HomeCareServices = ({
           <div className="row mb-5" data-aos="fade-up">
             <div className="col-12 text-center">
               <h2
-                className="mb-2"
-                style={{
-                  fontSize: "42px",
-                  fontWeight: "600",
-                  background: `linear-gradient(90deg, ${PRIMARY_COLOR} 0%, ${PRIMARY_DARK} 100%)`,
-                  WebkitBackgroundClip: "text",
-                  backgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  letterSpacing: "-1px",
-                }}
+                className="text-[42px] font-semibold bg-gradient-to-r from-[#8059ca] to-[#5d3ebc] bg-clip-text text-transparent tracking-[-1px]"
               >
                 How do we Deliver Fastest Recovery?
               </h2>

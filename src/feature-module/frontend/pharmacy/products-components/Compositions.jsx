@@ -109,13 +109,11 @@ const Compositions = () => {
         clearTimeout(debounceTimeoutRef.current);
       }
 
-      // Set new timeout to apply filters after 500ms
       debounceTimeoutRef.current = setTimeout(() => {
         applyFilters();
       }, 500);
     }
 
-    // Cleanup function
     return () => {
       if (debounceTimeoutRef.current) {
         clearTimeout(debounceTimeoutRef.current);
@@ -182,7 +180,6 @@ const Compositions = () => {
 
   const { products = [], pagination } = manufactureData || {};
   const {
-    currentPage: apiCurrentPage = 1,
     totalPages = 1,
   } = pagination || {};
   const displayProducts = searchQuery.trim() ? filteredProducts : products;
@@ -279,13 +276,11 @@ const Compositions = () => {
   };
 
   const applyFilters = async () => {
-    // Check if any filters are actually active
     const hasActiveFilters = selectedBrands.length > 0 ||
       selectedRatings.length > 0 ||
       priceFilter.min > 0 ||
       priceFilter.max < priceRange.max;
 
-    // If no filters are active, fetch initial data instead
     if (!hasActiveFilters) {
       try {
         setFilterLoading(true);
@@ -334,7 +329,6 @@ const Compositions = () => {
       params.append('page', currentPage);
       params.append('limit', 20);
 
-      // Apply all active filters
       if (selectedBrands.length > 0) {
         params.append('brand', selectedBrands.join(','));
       }
@@ -367,7 +361,7 @@ const Compositions = () => {
     }
   };
 
-  const handleBrandToggle = async (brandId, brandName) => {
+  const handleBrandToggle = async (brandId) => {
     const newSelection = selectedBrands.includes(brandId)
       ? selectedBrands.filter((id) => id !== brandId)
       : [...selectedBrands, brandId];
@@ -396,7 +390,6 @@ const Compositions = () => {
       const limit = Number.isFinite(opts?.brandsLimit) ? opts.brandsLimit : 10;
       const page = Number.isFinite(opts?.page) ? opts.page : 1;
 
-      // Always pass brandLimit + brandPage (server-side paging)
       params.append("brandLimit", String(limit));
       params.append("brandPage", String(page));
 
@@ -418,10 +411,6 @@ const Compositions = () => {
       setBrandsPagination(nextPagination);
       setBrands((prev) => (opts?.append ? [...prev, ...nextBrands] : nextBrands));
 
-      // Decide if we should show "View More" even when backend doesn't send pagination.
-      // Priority:
-      // 1) If backend sends pagination, use it.
-      // 2) Else, assume "more exists" when we received a full page (limit items).
       if (nextPagination?.page != null && nextPagination?.totalPages != null) {
         setHasMoreBrands(
           Number(nextPagination.page) < Number(nextPagination.totalPages),
@@ -432,7 +421,6 @@ const Compositions = () => {
 
       setRatingOptions(data?.ratingOptions || []);
 
-      // Set price range from API response
       if (data?.pricerange && !priceInitializedRef.current) {
         const { minprice, maxprice } = data.pricerange;
         const range = {
@@ -483,76 +471,39 @@ const Compositions = () => {
         </div>
       ) : (
         <>
-
-          <div
-            style={{
-              padding: "16px",
-              borderRadius: "8px",
-              border: "1px solid #e5e7eb",
-              backgroundColor: "#fff",
-              position: "relative"
-            }}
-          >
+          <div className="p-4 rounded-lg border border-slate-200 bg-white relative">
             {filterLoading && (
-              <div
-                style={{
-                  position: "absolute",
-                  top: "8px",
-                  right: "8px",
-                  zIndex: 10
-                }}
-              >
-                <i className="fas fa-spinner fa-spin" style={{ fontSize: "12px", color: "#3b82f6" }}></i>
+              <div className="absolute top-2.5 right-2.5 z-10">
+                <i className="fas fa-spinner fa-spin text-xs text-blue-500"></i>
               </div>
             )}
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center"
-              }}
-            >
-              <label style={{ fontWeight: 600, fontSize: "15px" }}>
+            <div className="flex justify-between items-center">
+              <label className="font-bold text-sm text-slate-800">
                 Price Range
               </label>
 
               <button
                 onClick={() => {
-                  // Reset all filters
                   const resetRange = { min: priceRange.min, max: priceRange.max };
                   setPriceFilter(resetRange);
                   setVisualProgress(resetRange);
                   setSelectedBrands([]);
                   setSelectedRatings([]);
                 }}
-                style={{
-                  fontSize: "12px",
-                  border: "none",
-                  background: "transparent",
-                  color: "#3b82f6",
-                  cursor: "pointer"
-                }}
+                className="text-xs border-none bg-transparent text-blue-500 cursor-pointer hover:underline"
               >
                 Clear
               </button>
             </div>
 
             {/* Values */}
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                fontSize: "13px",
-                color: "#6b7280",
-                margin: "8px 0 12px"
-              }}
-            >
+            <div className="flex justify-between text-xs text-slate-500 my-2">
               <span>₹{Math.round(priceFilter.min)}</span>
               <span>₹{Math.round(priceFilter.max)}</span>
             </div>
 
-            {/* CRangeSlider Component */}
-            <div style={{ padding: "10px 0" }}>
+            {/* RangeSlider Component */}
+            <div className="py-2.5">
               <Slider
                 range
                 min={priceRange.min}
@@ -575,7 +526,7 @@ const Compositions = () => {
                     height: 6,
                   },
                   rail: {
-                    backgroundColor: "#8059ca",
+                    backgroundColor: "#e2e8f0",
                     height: 6,
                   },
                   handle: {
@@ -593,53 +544,21 @@ const Compositions = () => {
                 }}
               />
             </div>
-
-            {/* Bottom Labels */}
-            {/* <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                marginTop: "10px"
-              }}
-            >
-              <div>
-                <div style={{ fontSize: "11px", color: "#9ca3af" }}>Min</div>
-                <div style={{ fontWeight: 600 }}>₹{Math.round(priceFilter.min)}</div>
-              </div>
-
-              <div>
-                <div style={{ fontSize: "11px", color: "#9ca3af" }}>Max</div>
-                <div style={{ fontWeight: 600 }}>₹{Math.round(priceFilter.max)}</div>
-              </div>
-            </div> */}
           </div>
-          <hr />
+          <hr className="border-slate-200 my-4" />
 
-          <label
-            className="form-label"
-            style={{ fontSize: "16px", fontWeight: "600" }}
-          >
+          <label className="form-label text-base font-bold text-slate-800">
             Ratings
           </label>
 
-          <ul
-            className="list-unstyled filter-scroll-list"
-            style={{
-              overflowX: "hidden",
-              overflowY: "auto",
-              scrollbarWidth: "thin",
-              scrollbarColor: "#94a3b8 #e5e7eb",
-              maxHeight: "180px",
-            }}
-          >
+          <ul className="list-unstyled overflow-x-hidden overflow-y-auto max-h-[180px] scrollbar-thin [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-slate-100 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-thumb]:bg-slate-300 [&::-webkit-scrollbar-thumb]:rounded-full">
             {ratingOptions.length === 0 ? (
-              <li className="py-2 text-muted">No ratings available</li>
+              <li className="py-2 text-slate-400 text-xs">No ratings available</li>
             ) : (
               ratingOptions.map((rating) => (
                 <li key={rating.value} className="py-2">
                   <div
-                    className="d-flex align-items-center w-100"
-                    style={{ cursor: "pointer" }}
+                    className="flex align-items-center w-full cursor-pointer"
                     onClick={() => {
                       const checkbox = document.getElementById(
                         `rating-${rating.value}`,
@@ -650,27 +569,19 @@ const Compositions = () => {
                       handleRatingToggle(rating.value);
                     }}
                   >
-                    <div className="d-flex align-items-center flex-grow-1">
+                    <div className="flex align-items-center flex-grow-1">
                       <input
                         type="checkbox"
                         id={`rating-${rating.value}`}
-                        className="form-check-input me-2"
-                        style={{ cursor: "pointer" }}
+                        className="form-check-input me-2 cursor-pointer"
                         checked={selectedRatings.includes(rating.value)}
                         onChange={() => handleRatingToggle(rating.value)}
                         onClick={(e) => e.stopPropagation()}
                       />
-                      <span
-                        style={{
-                          fontSize: "13px",
-                          fontWeight: "500",
-                          color: "#000",
-                        }}
-                      >
+                      <span className="text-xs font-medium text-slate-800">
                         {Array.from({ length: rating.value }, (_, index) => (
                           <i key={index} className="fas fa-star text-warning me-1"></i>
                         ))}
-                        {/* {rating.label} */}
                       </span>
                     </div>
                   </div>
@@ -678,11 +589,8 @@ const Compositions = () => {
               ))
             )}
           </ul>
-          <hr />
-          <label
-            className="form-label"
-            style={{ fontSize: "16px", fontWeight: "600" }}
-          >
+          <hr className="border-slate-200 my-4" />
+          <label className="form-label text-base font-bold text-slate-800">
             Brands
           </label>
 
@@ -696,23 +604,15 @@ const Compositions = () => {
 
           <ul
             ref={brandsListRef}
-            className="list-unstyled filter-scroll-list"
-            style={{
-              overflowX: "hidden",
-              overflowY: "auto",
-              scrollbarWidth: "thin",
-              scrollbarColor: "#94a3b8 #e5e7eb",
-              maxHeight: "240px",
-            }}
+            className="list-unstyled overflow-x-hidden overflow-y-auto max-h-[240px] scrollbar-thin [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-slate-100 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-thumb]:bg-slate-300 [&::-webkit-scrollbar-thumb]:rounded-full"
           >
             {brands.length === 0 ? (
-              <li className="py-2 text-muted">No brands available</li>
+              <li className="py-2 text-slate-400 text-xs">No brands available</li>
             ) : (
               brands.map((brand, index) => (
                 <li key={brand._id || index} className="py-2">
                   <div
-                    className="d-flex align-items-center w-100"
-                    style={{ cursor: "pointer" }}
+                    className="flex align-items-center w-full cursor-pointer"
                     onClick={() => {
                       const checkbox = document.getElementById(
                         `brand-${brand._id}`,
@@ -723,33 +623,19 @@ const Compositions = () => {
                       handleBrandToggle(brand._id);
                     }}
                   >
-                    <div className="d-flex align-items-center flex-grow-1 text-truncate">
+                    <div className="flex align-items-center flex-grow-1 text-truncate">
                       <input
                         type="checkbox"
                         id={`brand-${brand._id}`}
-                        className="form-check-input me-2"
-                        style={{ cursor: "pointer" }}
+                        className="form-check-input me-2 cursor-pointer"
                         checked={selectedBrands.includes(brand._id)}
                         onChange={() => handleBrandToggle(brand._id)}
                         onClick={(e) => e.stopPropagation()}
                       />
-                      <span
-                        className="text-truncate"
-                        style={{
-                          fontSize: "13px",
-                          fontWeight: "500",
-                          color: "#000",
-                        }}
-                      >
+                      <span className="text-truncate text-xs font-medium text-slate-800">
                         {brand.name}
                         {brand.productCount !== undefined && (
-                          <span
-                            style={{
-                              fontSize: "11px",
-                              color: "#6b7280",
-                              marginLeft: "4px",
-                            }}
-                          >
+                          <span className="text-[10px] text-slate-500 ml-1">
                             ({brand.productCount})
                           </span>
                         )}
@@ -770,13 +656,13 @@ const Compositions = () => {
                   loadMoreBrands();
                 }}
                 disabled={brandLoading}
-                className="view-more-btn"
+                className="text-xs font-bold text-[#8059ca] border border-[#8059ca]/30 bg-purple-50/50 py-1.5 px-3 rounded-lg hover:bg-[#8059ca] hover:text-white transition-all duration-200"
               >
                 {brandLoading ? "Loading..." : "View More"}
               </button>
             </div>
           )}
-          <hr />
+          <hr className="border-slate-200 my-4" />
         </>
       )}
     </>
@@ -789,100 +675,38 @@ const Compositions = () => {
   return (
     <>
       <style>{`
-        .custom-shift {
-          position: relative;
-        }
-
-        @media (min-width: 768px) {
-          .custom-shift {
-            left: 150px;
-          }
-          
-        }
-
-        @media (max-width: 767px) {
-          .custom-shift {
-            left: 0;
-          }
-        }
-
-        .search-body {
-          background: #ffffff;
-          position: relative;
-          z-index: 9;
-        }
-
-        @media (min-width: 768px) {
-          .search-body {
-            padding: 30px;
-          }
-        }
-
-        @media (max-width: 767px) {
-          .search-body {
-          padding: 20px 0px;
-          }
-        }
-
-        /* Slider Custom Styles */
+        /* Slider Custom Overrides */
         .rc-slider-handle-dragging {
-          box-shadow: 0 0 0 5px rgba(59, 130, 246, 0.2) !important;
+          box-shadow: 0 0 0 5px rgba(128, 89, 202, 0.2) !important;
         }
         .rc-slider-handle:hover {
-          border-color: #2563eb !important;
+          border-color: #8059ca !important;
         }
         .rc-slider-handle:active {
-          border-color: #2563eb !important;
-          box-shadow: 0 0 5px rgba(59, 130, 246, 0.5) !important;
-        }
-
-        .filter-scroll-list::-webkit-scrollbar {
-          width: 6px;
-        }
-
-        .filter-scroll-list::-webkit-scrollbar-track {
-          background: #e5e7eb;
-          border-radius: 999px;
-        }
-
-        .filter-scroll-list::-webkit-scrollbar-thumb {
-          background: #94a3b8;
-          border-radius: 999px;
+          border-color: #8059ca !important;
+          box-shadow: 0 0 5px rgba(128, 89, 202, 0.5) !important;
         }
       `}</style>
       <Home2Header />
       <CategoryProvider isLoading={false} />
 
-      <div
-        className="breadcrumb-bar"
-        style={{
-          backgroundImage: "url('/assets/Medicompares Background.png')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-          position: "relative",
-          overflow: "hidden",
-        }}
-      >
-        <div className="breadcrumbb-contentt">
+      <div className="relative overflow-hidden bg-[#fdfaff] pt-[35px] pb-[28px] md:pt-[35px] md:pb-[28px] bottom-[2px] z-[1]">
+        <div className="absolute inset-0 z-[1] after:content-[''] after:absolute after:inset-0 after:bg-white/30">
+          <img className="w-full h-full object-cover" src="/assets/Medicompares Background.png" />
+        </div>
+        <div className="relative z-[2] px-[15px] py-0 sm:pt-[27px] sm:pr-[16px] sm:pb-0 sm:pl-[13px] container-fluid">
+          <div className="mb-3">
+            <button
+              onClick={() => navigate(-1)}
+              className="inline-flex items-center gap-2 py-1.5 px-4 !rounded-full text-xs font-bold text-slate-700 bg-white border border-slate-200 shadow-sm hover:bg-slate-50 transition-all cursor-pointer"
+            >
+              <i className="fa-solid fa-arrow-left text-[11px]" />
+              Go Back
+            </button>
+          </div>
+
           <div className="row align-items-center">
             <div className="col-lg-8">
-              <nav aria-label="breadcrumb d-none d-lg-block">
-                <ol className="breadcrumb d-flex align-items-center mb-0">
-                  <li className="breadcrumb-item">
-                    <Link to="/" className="text-decoration-none">
-                      <i className="fa fa-home me-1" />
-                      Home
-                    </Link>
-                  </li>
-                  <li
-                    className="breadcrumb-item active text-primary"
-                    aria-current="page"
-                  >
-                    Composition
-                  </li>
-                </ol>
-              </nav>
               <div
                 style={{ position: "relative" }}
                 className="d-none d-lg-block"
@@ -897,55 +721,41 @@ const Compositions = () => {
                   }}
                 />
               </div>
-              <h2 className="breadcrumbb-title text-dark text-center custom-shift">
+              <h2
+                className="breadcrumbb-title text-dark text-center d-none d-lg-block relative left-[150px] !text-[30px] font-[700] text-[#0a2540]"
+              >
                 Trusted Excellence <br /> in Healthcare
               </h2>
+            </div>
+            <div className="col-lg-4">
+              <div className="bg-white rounded-[14px] p-[18px_20px] flex items-center gap-[15px] shadow-[0_12px_30px_rgba(128,89,202,0.1)] border border-purple-100/50 max-w-[360px] ml-auto lg:ml-auto lg:mt-0 mt-5 mx-auto">
+                <div className="w-[60px] h-[60px] rounded-[10px] bg-purple-50 flex items-center justify-center shrink-0">
+                  <i className="fas fa-flask text-[#8059ca] text-[24px]"></i>
+                </div>
+                <div>
+                  <div className="font-[700] text-base text-black capitalize truncate max-w-[220px]">
+                    {manufactureData?.name || "Composition Details"}
+                  </div>
+                  <div className="text-[12px] text-[#6b7280] mt-0.5">
+                    Active Formulation
+                  </div>
+                  <div className="text-[12px] text-[#8059ca] mt-1 font-bold">
+                    {products?.length || 0} Products Available
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-
-      <section className="search-body">
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            padding: "0 20px",
-            maxWidth: "850px",
-            margin: "0 auto",
-          }}
-        >
-          <div
-            className="search-wrapper1"
-            style={{ width: "100%", maxWidth: "600px" }}
-          >
+      <section className="bg-white relative z-[9] md:py-[30px] py-[20px] px-0">
+        <div className="flex justify-center px-5 max-w-[850px] mx-auto">
+          <div className="w-full max-w-[600px]">
             <form onSubmit={(e) => e.preventDefault()}>
-              <div
-                style={{
-                  background: "#ffffff",
-                  borderRadius: "30px",
-                  border: "1.5px solid #e5e7eb",
-                  boxShadow:
-                    "0 1px 3px rgba(0, 0, 0, 0.02), 0 1px 2px rgba(0, 0, 0, 0.01)",
-                  display: "flex",
-                  alignItems: "center",
-                  padding: "8px",
-                  gap: "8px",
-                  width: "100%",
-                }}
-              >
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    width: "25px",
-                    height: "25px",
-                    color: "#9ca3af",
-                  }}
-                >
-                  <i className="fas fa-search" style={{ fontSize: "14px" }}></i>
+              <div className="bg-white !rounded-[30px] border border-slate-200 shadow-sm flex items-center p-2.5 gap-2 w-full">
+                <div className="flex items-center justify-center w-6 h-6 text-slate-400">
+                  <i className="fas fa-search text-sm"></i>
                 </div>
 
                 <input
@@ -953,14 +763,7 @@ const Compositions = () => {
                   placeholder="Search medicines..."
                   value={searchQuery}
                   onChange={handleInputChange}
-                  style={{
-                    border: "none",
-                    outline: "none",
-                    flex: 1,
-                    fontSize: "16px",
-                    color: "#111827",
-                    background: "transparent",
-                  }}
+                  className="border-none outline-none flex-1 text-base text-slate-900 bg-transparent"
                 />
               </div>
             </form>
@@ -969,19 +772,16 @@ const Compositions = () => {
       </section>
 
       {!searchLoading && searchQuery && displayProducts.length === 0 && (
-        <section
-          className="mx-2"
-          style={{ padding: "20px 0", backgroundColor: "#ffffff" }}
-        >
+        <section className="mx-2 py-5 bg-white">
           <div className="container-fluid text-center">
-            <p className="text-muted">
+            <p className="text-slate-400 text-sm">
               No products found for "{searchQuery}"
             </p>
           </div>
         </section>
       )}
 
-      <div className="container-fluid" style={{ background: "#f8f9fa" }}>
+      <div className="container-fluid bg-slate-50 py-4">
         <div className="d-flex align-items-center justify-content-between d-lg-none mb-3 mobile-filter-buttons-container">
           <button
             type="button"
@@ -1042,18 +842,12 @@ const Compositions = () => {
               </div>
             )}
             {searchLoading || filterLoading ? (
-
-              <div style={{ textAlign: 'center', padding: '50px' }}>
-                <i className="fas fa-spinner fa-spin" style={{ fontSize: '24px', color: '#6b7280' }}></i>
-                <p style={{ marginTop: '10px', color: '#6b7280' }}>{filterLoading ? 'Filtering...' : 'Searching...'}</p>
+              <div className="text-center py-[50px]">
+                <i className="fas fa-spinner fa-spin text-2xl text-slate-400"></i>
+                <p className="mt-2.5 text-slate-400 text-sm">{filterLoading ? 'Filtering...' : 'Searching...'}</p>
               </div>
             ) : displayProducts && displayProducts.length > 0 ? (
-              <section
-                style={{
-                  borderRadius: "10px",
-                }}
-                className="m-0 m-md-2"
-              >
+              <section className="m-0 md:m-2 rounded-lg">
                 <div className="row">
                   {displayProducts.map((item, index) => {
                     const normalizedItem = normalizeItem(item);
@@ -1077,7 +871,7 @@ const Compositions = () => {
                   })}
                 </div>
 
-                {/* Pagination - only show for manufacture data, not search results */}
+                {/* Pagination */}
                 {displayPagination && totalPages > 1 && (
                   <div className="pagination dashboard-pagination mt-0">
                     <ul className="d-flex justify-content-center align-items-center gap-1">
@@ -1146,41 +940,19 @@ const Compositions = () => {
                   <div className="text-center py-5">
                     <div className="mb-4">
                       <i
-                        className="fas fa-box-open"
-                        style={{
-                          fontSize: "64px",
-                          color: "#dee2e6",
-                          marginBottom: "20px"
-                        }}
+                        className="fas fa-box-open text-[64px] text-slate-200 mb-[20px]"
                       ></i>
                     </div>
-                    <h3 className="text-muted mb-3" style={{ fontWeight: "500" }}>
+                    <h3 className="text-slate-400 mb-3 font-medium">
                       No Products Found
                     </h3>
-                    <p className="text-muted" style={{ fontSize: "16px", maxWidth: "600px", margin: "0 auto 20px auto" }}>
+                    <p className="text-slate-400 text-base max-w-[600px] mx-auto mb-5">
                       No products are currently available from this composition.
                     </p>
-                    <div className="d-flex justify-content-center gap-3">
-                      {/* <button 
-                    className="btn btn-primary"
-                    onClick={() => navigate('/medicines/all')}
-                    style={{
-                      borderRadius: "25px",
-                      padding: "10px 24px",
-                      fontSize: "14px"
-                    }}
-                  >
-                    <i className="fas fa-pills me-2"></i>
-                    Browse All Medicines
-                  </button> */}
+                    <div className="flex justify-center gap-3">
                       <button
-                        className="btn btn-outline-secondary"
+                        className="btn btn-outline-secondary rounded-[25px] py-2 px-6 text-sm"
                         onClick={() => window.location.reload()}
-                        style={{
-                          borderRadius: "25px",
-                          padding: "10px 24px",
-                          fontSize: "14px"
-                        }}
                       >
                         <i className="fas fa-redo me-2"></i>
                         Refresh

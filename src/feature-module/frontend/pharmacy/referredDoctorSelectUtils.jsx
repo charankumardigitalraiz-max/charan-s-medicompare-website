@@ -42,6 +42,8 @@ export const ReferredDoctorMenuList = (props) => {
         role="option"
         aria-selected={isSelected}
         onMouseDown={handleNotApplicableMouseDown}
+        onTouchStart={handleNotApplicableMouseDown}
+        onClick={handleNotApplicableMouseDown}
         style={{
           padding: "10px 14px",
           cursor: "pointer",

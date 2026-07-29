@@ -363,17 +363,34 @@ const Favourites = ({ HomeNavigate, BackButton }) => {
           <div className="row">
             <div className="col-12 px-3 px-md-4">
               {/* Header - aligned with MedicineBookings header pattern */}
-              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-5 mt-2">
-                <div className="flex items-center gap-3">
-                  <i className="fa-solid fa-heart text-[#8059ca] text-[20px] shrink-0" />
-                  <div className="flex flex-col gap-0.5">
-                    <h3 className="m-0 text-slate-800 font-bold text-[18px] md:text-[20px] tracking-tight leading-none">
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-2 mb-2 border-b border-slate-100 mt-2">
+                <div className="flex items-center gap-3.5">
+                  {HomeNavigate && <HomeNavigate />}
+                  <div className="w-11 h-11 rounded-xl bg-purple-50 text-[#8059ca] flex items-center justify-center text-[20px] shrink-0 border border-purple-100/50 shadow-sm">
+                    <i className="fa-solid fa-heart" />
+                  </div>
+
+
+                  {/* <div className="flex flex-col gap-1">
+                    <div className="m-0 text-[#0f172a] text-[18px] md:text-[20px] tracking-tight leading-none" style={{ fontWeight: 500 }}>
                       My Favourites
-                    </h3>
-                    <p className="text-slate-500 text-[12px] md:text-[13px] m-0 font-medium">
+                    </div>
+                    <p className="text-slate-500 text-[12px] m-0 font-medium leading-none">
                       View and manage all your favourite items
                     </p>
+                  </div> */}
+
+
+
+                  <div className="flex flex-col gap-1">
+                    <div className="m-0 text-[#0f172a] font-medium text-[16px] md:text-[16px] tracking-tight leading-none" >
+                      My Favourites
+                    </div>
+                    <div className="text-slate-500 text-[12px] m-0 font-medium leading-none">
+                      View and manage all your favourite items
+                    </div>
                   </div>
+
                 </div>
 
                 <div className="flex items-center gap-3 w-full sm:w-auto">
@@ -389,7 +406,6 @@ const Favourites = ({ HomeNavigate, BackButton }) => {
                       <i className="fa-solid fa-search" />
                     </span>
                   </div>
-                  {HomeNavigate && <HomeNavigate />}
                 </div>
               </div>
 
@@ -398,7 +414,7 @@ const Favourites = ({ HomeNavigate, BackButton }) => {
                 <button
                   key="all-services"
                   onClick={() => setSelectedService("All")}
-                  className={`inline-block rounded-full text-[14px] font-medium px-4 py-2 cursor-pointer transition-all duration-300 capitalize border ${selectedService === "All"
+                  className={`inline-block !rounded-md text-[14px] font-medium px-4 py-2 cursor-pointer transition-all duration-300 capitalize border ${selectedService === "All"
                     ? "bg-[#8059ca] text-white border-[#8059ca]"
                     : "bg-white text-slate-700 border-slate-200 hover:bg-slate-50 hover:border-[#8059ca]"
                     }`}
@@ -409,7 +425,7 @@ const Favourites = ({ HomeNavigate, BackButton }) => {
                   <button
                     key={service}
                     onClick={() => setSelectedService(service)}
-                    className={`inline-block rounded-full text-[14px] font-medium px-4 py-2 cursor-pointer transition-all duration-300 capitalize border ${selectedService === service
+                    className={`inline-block !rounded-md text-[14px] font-medium px-4 py-2 cursor-pointer transition-all duration-300 capitalize border ${selectedService === service
                       ? "bg-[#8059ca] text-white border-[#8059ca]"
                       : "bg-white text-slate-700 border-slate-200 hover:bg-slate-50 hover:border-[#8059ca]"
                       }`}
@@ -639,7 +655,7 @@ const Favourites = ({ HomeNavigate, BackButton }) => {
                             {/* View Details Button */}
                             <button
                               onClick={(e) => handleProductClick(item, e)}
-                              className="block w-full text-center py-[5px] px-4 bg-[#8059ca] text-white rounded-lg border-none text-[12px] font-medium transition-all duration-300 cursor-pointer mt-auto hover:bg-[#6b1fe6] hover:-translate-y-px hover:shadow-[0_4px_12px_rgba(125,46,255,0.3)]"
+                              className="block w-full text-center py-[5px] px-4 bg-[#8059ca] text-white !rounded-md border-none text-[12px] font-medium transition-all duration-300 cursor-pointer mt-auto hover:bg-[#6b1fe6] hover:-translate-y-px hover:shadow-[0_4px_12px_rgba(125,46,255,0.3)]"
                             >
                               View Details
                             </button>

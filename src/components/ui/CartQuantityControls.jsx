@@ -617,11 +617,10 @@ const CartQuantityControls = ({
   return (
     <>
       {bookingType === "leads" && (
-        <div style={contailerStyles}>
+        <div className="w-full flex-1">
           <button
             type="button"
-            className={`vendor-action-btn vendor-lead-btn ${className}`}
-            style={actionButtonStyle}
+            className="w-full flex items-center justify-center gap-1.5 py-1 px-2.5 !rounded-md text-xs font-bold text-white bg-gradient-to-r from-[#8059ca] to-[#822BD4] hover:shadow-md active:scale-[0.98] transition-all cursor-pointer border-none"
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
@@ -633,11 +632,10 @@ const CartQuantityControls = ({
         </div>
       )}
       {bookingType === "booking" && (
-        <div style={contailerStyles}>
+        <div className="w-full flex-1">
           <button
             type="button"
-            className={`vendor-action-btn vendor-add-btn ${className}`}
-            style={actionButtonStyle}
+            className="w-full flex items-center justify-center gap-1.5 py-1 px-2.5 !rounded-md text-xs font-bold text-white bg-gradient-to-r from-[#8059ca] to-[#822BD4] hover:shadow-md active:scale-[0.98] transition-all cursor-pointer border-none"
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
@@ -649,11 +647,10 @@ const CartQuantityControls = ({
         </div>
       )}
       {bookingType === "slots" && (
-        <div style={contailerStyles}>
+        <div className="w-full flex-1">
           <button
             type="button"
-            className={`vendor-action-btn vendor-add-btn ${className}`}
-            style={actionButtonStyle}
+            className="w-full flex items-center justify-center gap-1.5 py-1 px-2.5 !rounded-md text-xs font-bold text-white bg-gradient-to-r from-[#8059ca] to-[#822BD4] hover:shadow-md active:scale-[0.98] transition-all cursor-pointer border-none"
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
@@ -665,32 +662,29 @@ const CartQuantityControls = ({
         </div>
       )}
       {bookingType === "rentals" && (
-        <div style={contailerStyles}>
+        <div className="w-full flex-1">
           <button
             type="button"
-            className={`vendor-action-btn vendor-rent-btn ${className}`}
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
               handleRentalBookinProcess(item.vendordetails, item.tabletdetails, item);
             }}
             disabled={!item?.perDayRent}
-            style={{
-              ...actionButtonStyle,
-              opacity: item?.perDayRent ? 1 : 0.6,
-              cursor: item?.perDayRent ? "pointer" : "not-allowed",
-            }}
+            className={`w-full flex items-center justify-center gap-1.5 py-1 px-2.5 !rounded-md text-xs font-bold text-white transition-all border-none ${item?.perDayRent
+              ? "bg-gradient-to-r from-[#8059ca] to-[#822BD4] hover:shadow-md active:scale-[0.98] cursor-pointer"
+              : "bg-slate-300 opacity-60 cursor-not-allowed"
+              }`}
           >
             <i className="fa-solid fa-clipboard-check"></i>Rent
           </button>
         </div>
       )}
       {bookingType === "consultation" && (
-        <div style={contailerStyles}>
+        <div className="w-full flex-1">
           <button
             type="button"
-            className={`vendor-action-btn vendor-consultation-btn ${className}`}
-            style={actionButtonStyle}
+            className="w-full flex items-center justify-center gap-1.5 py-1 px-2.5 !rounded-md text-xs font-bold text-white bg-gradient-to-r from-[#8059ca] to-[#822BD4] hover:shadow-md active:scale-[0.98] transition-all cursor-pointer border-none"
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
@@ -702,11 +696,10 @@ const CartQuantityControls = ({
         </div>
       )}
       {bookingType === "appointment" && (
-        <div style={contailerStyles}>
+        <div className="w-full flex-1">
           <button
             type="button"
-            className={`vendor-action-btn vendor-appointment-btn ${className}`}
-            style={actionButtonStyle}
+            className="w-full flex items-center justify-center gap-1.5 py-1 px-2.5 !rounded-md text-xs font-bold text-white bg-gradient-to-r from-[#8059ca] to-[#822BD4] hover:shadow-md active:scale-[0.98] transition-all cursor-pointer border-none"
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
@@ -719,82 +712,59 @@ const CartQuantityControls = ({
       )}
 
       {bookingType === "rentals_addtocarts" && (
-        <div style={contailerStyles}>
+        <div className="w-full flex flex-col gap-2 items-center">
           {inStock ? (
             quantity > 0 ? (
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  gap: "4px",
-                }}
-              >
-                <div
-                  className={`cart-qty-controls ${className}`}
-                  style={individualStyleForCart}
-                >
+              <div className="flex flex-col items-center gap-1 w-full">
+                <div className="flex items-center justify-between border border-[#8059ca] bg-[#fdfaff] !rounded-lg px-2.5 py-1 w-full shadow-sm">
                   <button
-                    className="cart-qty-btn cart-qty-decrease"
+                    className="text-[#8059ca] hover:bg-[#8059ca]/10 disabled:opacity-50 w-5 h-5 rounded flex items-center justify-center cursor-pointer border-none bg-transparent"
                     onClick={handleDecrement}
                     disabled={isLoading || quantity <= 0}
                   >
-                    <i className="fas fa-minus"></i>
+                    <i className="fas fa-minus text-[10px]"></i>
                   </button>
-                  <span className="cart-qty-value">{quantity}</span>
+                  <span className="text-xs font-bold text-[#8059ca] px-2">{quantity}</span>
                   <button
-                    className="cart-qty-btn cart-qty-increase"
+                    className="text-[#8059ca] hover:bg-[#8059ca]/10 w-5 h-5 rounded flex items-center justify-center cursor-pointer border-none bg-transparent"
                     onClick={handleIncrement}
                     disabled={isLoading}
                   >
-                    <i className="fas fa-plus"></i>
+                    <i className="fas fa-plus text-[10px]"></i>
                   </button>
                 </div>
                 {atMaxStock && (
-                  <small
-                    style={{
-                      display: "block",
-                      textAlign: "center",
-                      color: "#b45309",
-                      fontSize: "11px",
-                      fontWeight: 600,
-                      lineHeight: 1.3,
-                      maxWidth: "140px",
-                    }}
-                  >
+                  <small className="block text-center text-amber-700 text-[10px] font-semibold leading-tight max-w-[140px]">
                     Only {effectiveMaxStock} in stock
                   </small>
                 )}
               </div>
             ) : (
               <button
-                className={`vendor-action-btn vendor-add-btn ${className}`}
                 onClick={handleAdd}
                 disabled={isLoading}
-                style={actionButtonStyle}
+                className="w-full flex items-center justify-center gap-1.5 py-1 px-2.5 !rounded-md text-xs font-bold text-white bg-gradient-to-r from-[#8059ca] to-[#822BD4] hover:shadow-md active:scale-[0.98] transition-all cursor-pointer border-none"
               >
-                <i className="fas fa-shopping-cart me-2"></i>Add
+                <i className="fas fa-shopping-cart"></i>Add
               </button>
             )
           ) : (
-            <button className="vendor-action-btn vendor-disabled-btn" disabled>
+            <button className="w-full flex items-center justify-center gap-1.5 py-1 px-2.5 !rounded-md text-xs font-bold text-slate-400 bg-slate-100 border-none cursor-not-allowed" disabled>
               <i className="fas fa-ban"></i>Unavailable
             </button>
           )}
           <button
             type="button"
-            className="vendor-action-btn vendor-rent-btn"
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
               handleRentalBookinProcess(item.vendordetails, item.tabletdetails, item);
             }}
             disabled={!item?.perDayRent}
-            style={{
-              ...actionButtonStyle,
-              opacity: item?.perDayRent ? 1 : 0.6,
-              cursor: item?.perDayRent ? "pointer" : "not-allowed",
-            }}
+            className={`w-full flex items-center justify-center gap-1.5 py-1 px-2.5 !rounded-md text-xs font-bold text-white transition-all border-none ${item?.perDayRent
+              ? "bg-gradient-to-r from-[#8059ca] to-[#822BD4] hover:shadow-md active:scale-[0.98] cursor-pointer"
+              : "bg-slate-300 opacity-60 cursor-not-allowed"
+              }`}
           >
             <i className="fa-solid fa-clipboard-check"></i>Rent
           </button>
@@ -802,11 +772,10 @@ const CartQuantityControls = ({
       )}
 
       {bookingType === "cart" && !inStock && (
-        <div style={contailerStyles}>
+        <div className="w-full flex-1">
           <button
             type="button"
-            className={`vendor-action-btn vendor-disabled-btn ${className}`}
-            style={actionButtonStyle}
+            className="w-full flex items-center justify-center gap-1.5 py-1 px-2.5 !rounded-md text-xs font-bold text-slate-400 bg-slate-100 border-none cursor-not-allowed"
             disabled
           >
             <i className="fas fa-ban"></i>Unavailable
@@ -814,193 +783,63 @@ const CartQuantityControls = ({
         </div>
       )}
 
-      {bookingType === "cart" &&
+      {bookingType === "cart" && inStock &&
         (quantity > 0 ? (
-          <div
-            style={{
-              ...contailerStyles,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              gap: "4px",
-            }}
-          >
-            {/* {isLabTest ? ( */}
-            {/* <div style={{ ...contailerStyles, width: "100%" }}>
-                <button
-                  type="button"
-                  className={`vendor-action-btn vendor-selected-btn ${className}`}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    handleRemove(item?.cartKey || (isPackage ? `${vendorId}_pkg_${packageId}` : variantId ? `${vendorId}_${variantId}` : `${vendorId}_${productId}`));
-                  }}
-                  disabled={isLoading}
-                  style={{
-                    ...actionButtonStyle,
-                    width: "100%",
-                    backgroundColor: "#10b981",
-                    color: "#ffffff",
-                    border: "none",
-                    borderRadius: actionButtonStyle?.borderRadius || "6px",
-                    padding: actionButtonStyle?.padding || "5px 12px",
-                    fontSize: actionButtonStyle?.fontSize || "11px",
-                    fontWeight: "600",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    boxShadow: "0 2px 8px rgba(16, 185, 129, 0.2)",
-                    transition: "all 0.3s ease",
-                  }}
-                >
-                  <i className="fas fa-check me-2"></i>Selected
-                </button>
-              </div> */}
-            {/* ) : ( */}
-            <div
-              className={`cart-qty-controls ${className}`}
-              style={individualStyleForCart}
-            >
+          <div className="w-full flex flex-col items-center gap-1">
+            <div className="flex items-center justify-between border border-[#8059ca] bg-[#fdfaff] !rounded-lg px-2.5 py-1 w-full shadow-sm">
               <button
-                className="cart-qty-btn cart-qty-decrease"
+                className="text-[#8059ca] hover:bg-[#8059ca]/10 disabled:opacity-50 w-5 h-5 rounded flex items-center justify-center cursor-pointer border-none bg-transparent"
                 onClick={handleDecrement}
                 disabled={isLoading || quantity <= 0}
               >
-                <i className="fas fa-minus"></i>
+                <i className="fas fa-minus text-[10px]"></i>
               </button>
-              <span className="cart-qty-value">{quantity}</span>
+              <span className="text-xs font-bold text-[#8059ca] px-2">{quantity}</span>
               <button
-                className="cart-qty-btn cart-qty-increase"
+                className="text-[#8059ca] hover:bg-[#8059ca]/10 w-5 h-5 rounded flex items-center justify-center cursor-pointer border-none bg-transparent"
                 onClick={handleIncrement}
-              // disabled={isLoading || atMaxStock}
               >
-                <i className="fas fa-plus"></i>
+                <i className="fas fa-plus text-[10px]"></i>
               </button>
             </div>
-            {/* )} */}
-            {/* {atMaxStock && (
-              <small
-                style={{
-                  display: "block",
-                  textAlign: "center",
-                  color: "#b45309",
-                  fontSize: "11px",
-                  fontWeight: 600,
-                  lineHeight: 1.3,
-                  maxWidth: "140px",
-                }}
-              >
-                Only {effectiveMaxStock} in stock
-              </small>
-            )} */}
-
           </div>
         ) : (
-          <div style={contailerStyles}>
+          <div className="w-full flex-1">
             <button
-              className={`vendor-add-btn ${className}`}
-              style={actionButtonStyle}
               onClick={handleAdd}
               disabled={isLoading}
-
+              className="w-full flex items-center justify-center gap-1.5 py-1 px-2.5 !rounded-lg text-xs font-bold text-white bg-gradient-to-r from-[#8059ca] to-[#822BD4] hover:shadow-md active:scale-[0.98] transition-all cursor-pointer border-none"
             >
-              <i className="fas fa-shopping-cart me-2"></i>Add
+              <i className="fas fa-shopping-cart"></i>Add
             </button>
           </div>
         ))}
 
-
-
       {bookingType === "cartslots" && (quantity > 0 ? (
-        <div
-          style={{
-            ...contailerStyles,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: "4px",
-          }}
-        >
-          {/* {isLabTest ? ( */}
-          <div style={{ ...contailerStyles, width: "100%" }}>
+        <div className="w-full flex flex-col items-center gap-1">
+          <div className="w-full flex-1">
             <button
               type="button"
-              className={`vendor-action-btn vendor-selected-btn ${className}`}
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
                 handleRemove(item?.cartKey || (isPackage ? `${vendorId}_pkg_${packageId}` : variantId ? `${vendorId}_${variantId}` : `${vendorId}_${productId}`));
               }}
               disabled={isLoading}
-              style={{
-                ...actionButtonStyle,
-                width: "100%",
-                backgroundColor: "#10b981",
-                color: "#ffffff",
-                border: "none",
-                borderRadius: actionButtonStyle?.borderRadius || "6px",
-                padding: actionButtonStyle?.padding || "5px 12px",
-                fontSize: actionButtonStyle?.fontSize || "11px",
-                fontWeight: "600",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                boxShadow: "0 2px 8px rgba(16, 185, 129, 0.2)",
-                transition: "all 0.3s ease",
-              }}
+              className="w-full flex items-center justify-center gap-1.5 py-1 px-2.5 !rounded-md text-xs font-bold text-white bg-emerald-500 hover:bg-emerald-600 transition-all cursor-pointer border-none shadow-sm shadow-emerald-500/20 active:scale-[0.98]"
             >
-              <i className="fas fa-check me-2"></i>Selected
+              <i className="fas fa-check"></i>Selected
             </button>
           </div>
-          {/* // ) : (
-            //   <div
-            //     className={`cart-qty-controls ${className}`}
-            //     style={individualStyleForCart}
-            //   >
-            //     <button
-            //       className="cart-qty-btn cart-qty-decrease"
-            //       onClick={handleDecrement}
-            //       disabled={isLoading || quantity <= 0}
-            //     >
-            //       <i className="fas fa-minus"></i>
-            //     </button>
-            //     <span className="cart-qty-value">{quantity}</span>
-            //     <button
-            //       className="cart-qty-btn cart-qty-increase"
-            //       onClick={handleIncrement}
-            //     // disabled={isLoading || atMaxStock}
-            //     >
-            //       <i className="fas fa-plus"></i>
-            //     </button>
-            //   </div>
-            // )} */}
-          {/* {atMaxStock && (
-              <small
-                style={{
-                  display: "block",
-                  textAlign: "center",
-                  color: "#b45309",
-                  fontSize: "11px",
-                  fontWeight: 600,
-                  lineHeight: 1.3,
-                  maxWidth: "140px",
-                }}
-              >
-                Only {effectiveMaxStock} in stock
-              </small>
-            )} */}
-
         </div>
       ) : (
-        <div style={contailerStyles}>
+        <div className="w-full flex-1">
           <button
-            className={`vendor-add-btn ${className}`}
-            style={actionButtonStyle}
             onClick={handleAdd}
             disabled={isLoading}
-
+            className="w-full flex items-center justify-center gap-1.5 py-1 px-2.5 !rounded-md text-xs font-bold text-white bg-gradient-to-r from-[#8059ca] to-[#822BD4] hover:shadow-md active:scale-[0.98] transition-all cursor-pointer border-none"
           >
-            <i className="fas fa-shopping-cart me-2"></i>Add
+            <i className="fas fa-shopping-cart"></i>Add
           </button>
         </div>
       ))}

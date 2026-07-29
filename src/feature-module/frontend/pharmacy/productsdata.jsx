@@ -37,16 +37,12 @@ import {
 } from "../../../components/ui";
 import { useAddToCart } from "../../../hooks/useAddToCart";
 import { CartQuantityControls } from "../../../components/ui";
-import "./productsdata.css";
-import "./filter-sidebar.css";
 import { useResponsive } from "../../../hooks";
 import { useProfile } from "../../../context/ProfileContext";
 import { useLocation } from "../../../context/LocationContext";
 import { handleGeneralBookingProcess } from "../../../services/bookingService";
 
-
 const ProductsData = () => {
-
   let { service, id } = useParams();
   const navigate = useNavigate();
   const { selectedPincode, latitude, longitude } = useLocation();
@@ -1821,8 +1817,8 @@ const ProductsData = () => {
     <>
       <Home2Header />
       <CategoryProvider />
-      <div className="products-data-page py-[50px] bg-gradient-to-br from-[#f8f9fa] to-white">
-        <div className="container mb-6">
+      <div className="py-12 bg-gradient-to-br from-[#f8f9fa] to-white min-h-screen">
+        <div className="max-w-[1440px] mx-auto px-4 md:px-6 lg:px-8 mb-6">
           <SearchInput
             value={searchTerm}
             onChange={(e) => {
@@ -1841,7 +1837,7 @@ const ProductsData = () => {
           />
         </div>
 
-        <div className="container-fluid">
+        <div className="max-w-[1440px] mx-auto px-4 md:px-6 lg:px-8">
           {isFilterDrawerOpen && (
             <div
               className="lg:hidden fixed inset-0 bg-black/50 z-[9999] transition-opacity duration-300"
@@ -1851,7 +1847,7 @@ const ProductsData = () => {
 
           <div className={`lg:hidden flex flex-col fixed top-0 left-0 w-3/4 max-w-[320px] h-full bg-white z-[9999] shadow-[2px_0_10px_rgba(0,0,0,0.1)] overflow-hidden transition-transform duration-300 ${isFilterDrawerOpen ? "translate-x-0" : "-translate-x-full"}`}>
             <div className="flex items-center justify-between p-[12px_14px] border-b border-[#e0e0e0] bg-white shrink-0 min-h-[48px] sticky top-0 z-[9999]">
-              <h4>Filters</h4>
+              <h4 className="text-base font-semibold m-0 text-slate-800">Filters</h4>
               <button
                 className="flex bg-[#f0f0f0] border border-[#ccc] text-[16px] text-[#333] cursor-pointer p-0 items-center justify-center w-8 h-8 rounded-[6px] shrink-0"
                 onClick={() => setIsFilterDrawerOpen(false)}
@@ -1938,10 +1934,10 @@ const ProductsData = () => {
             </div>
           </div>
 
-          <div className="row">
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
             {/* Desktop Filter Sidebar */}
             <div
-              className={`hidden lg:block col-xl-3 col-lg-4 mb-4 mb-md-0 transition-all duration-300 ${isDesktopSidebarOpen ? "" : "!hidden"}`}
+              className={`hidden lg:block lg:col-span-1 mb-4 lg:mb-0 transition-all duration-300 ${isDesktopSidebarOpen ? "" : "!hidden"}`}
             >
               <FilterSidebar
                 categories={categories}
@@ -2005,7 +2001,7 @@ const ProductsData = () => {
 
             <div
               className={
-                isDesktopSidebarOpen ? "col-xl-9 col-lg-8 col-md-12" : "col-12"
+                isDesktopSidebarOpen ? "lg:col-span-3 col-span-1" : "lg:col-span-4 col-span-1"
               }
             >
               <div className="hidden lg:flex w-full mb-5">

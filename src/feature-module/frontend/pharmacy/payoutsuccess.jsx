@@ -53,52 +53,52 @@ const PaymentSuccess = () => {
   const viewOrdersLink = isAmbulance
     ? "/ambulance-booking"
     : isRental ? "/rental-booking"
-    : isSlot ? "/my-appointments"
-    : "/my-orders";
+      : isSlot ? "/my-appointments"
+        : "/my-orders";
 
   const viewOrdersLabel = isAmbulance
     ? "View My Bookings"
     : isRental ? "View My Rentals"
-    : isSlot ? "View My Appointments"
-    : "View My Orders";
+      : isSlot ? "View My Appointments"
+        : "View My Orders";
 
   const successMessage = paymentMethod === "cod"
     ? "Payment will be collected at the time of delivery"
     : productType === "ambulance" ? "Your ambulance booking has been confirmed and will be processed shortly."
-    : productType === "rental" ? "Your rental booking has been confirmed and will be processed shortly."
-    : productType === "package" ? "Your booking has been confirmed and will be processed shortly."
-    : productType === "product" ? "Your order has been confirmed and will be delivered shortly."
-    : "Your order has been confirmed and will be processed shortly.";
+      : productType === "rental" ? "Your rental booking has been confirmed and will be processed shortly."
+        : productType === "package" ? "Your booking has been confirmed and will be processed shortly."
+          : productType === "product" ? "Your order has been confirmed and will be delivered shortly."
+            : "Your order has been confirmed and will be processed shortly.";
 
   const nextStepTeamMsg = productType === "ambulance"
     ? "Our team will contact you to schedule your ambulance service"
     : productType === "rental" ? "Our team will contact you to schedule your rental delivery"
-    : productType === "package" ? "Our team will contact you to schedule your appointment"
-    : productType === "product" ? "Your order will be prepared and shipped to your address"
-    : "Our team will contact you to schedule your appointment";
+      : productType === "package" ? "Our team will contact you to schedule your appointment"
+        : productType === "product" ? "Your order will be prepared and shipped to your address"
+          : "Our team will contact you to schedule your appointment";
 
   const trackLabel = productType === "ambulance" ? "ambulance booking"
     : productType === "rental" ? "rental booking"
-    : productType === "package" ? "booking"
-    : "order";
+      : productType === "package" ? "booking"
+        : "order";
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#f8f5fe] via-white to-[#e8f4ff]">
       <Home2Header />
 
-      <div className="flex items-center justify-center py-[120px] px-4">
-        <div className="w-full max-w-lg">
-          <div className="bg-white rounded-[24px] shadow-[0_20px_60px_rgba(128,89,202,0.12)] overflow-hidden">
+      <div className="fixed inset-0 z-[99999] bg-black/60 backdrop-blur-sm p-4 overflow-y-auto flex justify-center items-start md:relative md:inset-auto md:z-auto md:bg-transparent md:backdrop-blur-none md:overflow-visible md:items-center md:py-12 md:px-4">
+        <div className="w-full max-w-md md:max-w-lg my-auto md:my-0">
+          <div className="bg-white rounded-[24px] shadow-[0_20px_60px_rgba(128,89,202,0.15)] overflow-hidden">
 
             {/* Top accent strip */}
             <div className="h-[6px] bg-gradient-to-r from-[#8059ca] to-[#04BD6C]" />
 
-            <div className="p-8 md:p-10">
+            <div className="p-6 md:p-10">
               {/* Success Icon */}
               <div className="flex justify-center mb-6">
                 <div className="relative">
-                  <div className="w-[90px] h-[90px] rounded-full bg-gradient-to-br from-[#04BD6C] to-[#00a55d] flex items-center justify-center shadow-[0_8px_32px_rgba(4,189,108,0.35)]">
-                    <i className="fas fa-check text-white text-[36px]" />
+                  <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-gradient-to-br from-[#04BD6C] to-[#00a55d] flex items-center justify-center shadow-[0_8px_32px_rgba(4,189,108,0.35)]">
+                    <i className="fas fa-check text-white text-[32px] md:text-[38px]" />
                   </div>
                   {/* Ripple rings */}
                   <div className="absolute inset-0 rounded-full border-2 border-[#04BD6C]/30 animate-ping" />
@@ -108,36 +108,36 @@ const PaymentSuccess = () => {
 
               {/* Title */}
               <div className="text-center mb-6">
-                <h1 className="text-[28px] font-bold text-[#1a1a2e] mb-2">
+                <h1 className="text-2xl md:text-3xl font-bold text-[#1a1a2e] mb-2">
                   {paymentMethod === "cod" ? "Order Confirmed!" : "Payment Successful!"}
                 </h1>
-                <p className="text-[15px] text-[#666] leading-relaxed">{successMessage}</p>
+                <p className="text-sm md:text-base text-[#666] leading-relaxed">{successMessage}</p>
               </div>
 
               {/* Order Details Card */}
-              <div className="bg-[#f8f5fe] rounded-[16px] p-5 mb-5 border border-[#e8d5ff]">
+              <div className="bg-[#f8f5fe] rounded-[16px] p-3 md:p-6 mb-6 border border-[#e8d5ff]">
                 <div className="flex items-center gap-2 mb-4 pb-3 border-b border-[#e0c8ff]">
                   <i className="fas fa-receipt text-[#8059ca]" />
-                  <h3 className="text-[15px] font-semibold text-[#333] mb-0">Order Details</h3>
+                  <h3 className="text-sm md:text-base font-semibold text-[#333] mb-0">Order Details</h3>
                 </div>
-                <div className="space-y-3">
-                  <div className="flex justify-between items-center">
-                    <span className="flex items-center gap-2 text-[13px] text-[#666]">
+                <div className="space-y-3.5">
+                  <div className="flex justify-between items-center gap-4">
+                    <span className="flex items-center gap-2 text-[13px] md:text-sm text-[#666] shrink-0">
                       <i className="fas fa-hashtag text-[#8059ca]" /> Order ID
                     </span>
-                    <span className="text-[13px] font-semibold text-[#333]">{orderId}</span>
+                    <span className="text-[13px] md:text-sm font-semibold text-[#333] break-all text-right">{orderId}</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="flex items-center gap-2 text-[13px] text-[#666]">
+                    <span className="flex items-center gap-2 text-[13px] md:text-sm text-[#666]">
                       <i className="fas fa-calendar-alt text-[#8059ca]" /> Order Date
                     </span>
-                    <span className="text-[13px] font-semibold text-[#333]">{currentDate}</span>
+                    <span className="text-[13px] md:text-sm font-semibold text-[#333]">{currentDate}</span>
                   </div>
                   <div className="flex justify-between items-center">
-                    <span className="flex items-center gap-2 text-[13px] text-[#666]">
+                    <span className="flex items-center gap-2 text-[13px] md:text-sm text-[#666]">
                       <i className="fas fa-check-circle text-[#8059ca]" /> Status
                     </span>
-                    <span className="text-[13px] font-semibold text-[#04BD6C] bg-[#e8faf2] px-3 py-1 rounded-full">
+                    <span className="text-[12px] md:text-[13px] font-semibold text-[#04BD6C] bg-[#e8faf2] px-3 py-1 rounded-full">
                       Confirmed
                     </span>
                   </div>
@@ -145,17 +145,17 @@ const PaymentSuccess = () => {
               </div>
 
               {/* Next Steps Card */}
-              <div className="bg-[#fffbea] rounded-[16px] p-5 mb-6 border border-[#ffe9a0]">
-                <h4 className="flex items-center gap-2 text-[14px] font-semibold text-[#92600a] mb-3">
+              <div className="bg-[#fffbea] rounded-[16px] p-3 md:p-6 mb-6 border border-[#ffe9a0]">
+                <h4 className="flex items-center gap-2 text-sm md:text-[15px] font-semibold text-[#92600a] mb-3">
                   <i className="fas fa-info-circle" /> What's Next?
                 </h4>
-                <ul className="space-y-2">
+                <ul className="space-y-2.5">
                   {[
                     "You will receive a confirmation email shortly",
                     nextStepTeamMsg,
                     `Track your ${trackLabel} status in your account`,
                   ].map((step, i) => (
-                    <li key={i} className="flex items-start gap-3 text-[13px] text-[#555]">
+                    <li key={i} className="flex items-start gap-3 text-[13px] md:text-sm text-[#555]">
                       <i className="fas fa-check text-[#04BD6C] mt-[2px] flex-shrink-0" />
                       <span>{step}</span>
                     </li>
@@ -167,14 +167,14 @@ const PaymentSuccess = () => {
               <div className="flex flex-col sm:flex-row gap-3">
                 <Link
                   to={viewOrdersLink}
-                  className="flex-1 flex items-center justify-center gap-2 bg-[#8059ca] hover:bg-[#6b44b8] text-white text-[14px] font-semibold py-3 px-5 rounded-[12px] transition-all duration-200 no-underline"
+                  className="flex-1 btn flex items-center justify-center gap-2 !bg-[#8059ca] hover:!bg-[#6b44b8] !text-white text-sm md:text-base font-semibold py-3 px-5 rounded-[12px] transition-all duration-200 no-underline"
                 >
                   <i className="fas fa-list-alt" />
                   {viewOrdersLabel}
                 </Link>
                 <Link
                   to="/"
-                  className="flex-1 flex items-center justify-center gap-2 bg-white hover:bg-[#f5f0ff] text-[#8059ca] border border-[#8059ca] text-[14px] font-semibold py-3 px-5 rounded-[12px] transition-all duration-200 no-underline"
+                  className="flex-1 btn flex items-center justify-center gap-2 !bg-white hover:!bg-[#f5f0ff] !text-[#8059ca] !border !border-[#8059ca] text-sm md:text-base font-semibold py-3 px-5 rounded-[12px] transition-all duration-200 no-underline"
                 >
                   <i className="fas fa-home" />
                   Back to Home

@@ -290,60 +290,41 @@ const FilterSidebar = ({
   };
 
   return (
-    <div className="modern-filter-sidebar">
-      <div className="card-body p-0">
-        <div className="accordion-content">
+    <div className="bg-white rounded-2xl shadow-sm border border-purple-100/55 sticky top-28 pb-4">
+      <div className="p-0">
+        <div className="divide-y divide-slate-100">
           <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              padding: "20px",
-              fontSize: "17px",
-              fontWeight: "600",
-              color: "#000",
-              cursor: "pointer",
-            }}
+            className="flex justify-between items-center py-3 px-4 text-base font-bold text-slate-800 border-b border-slate-100 cursor-pointer bg-gradient-to-r from-purple-50/30 to-white"
             onClick={toggleSidebar}
           >
-            <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <div className="flex items-center gap-2.5">
               <span>Apply Filters</span>
             </div>
 
             <div
-              style={{ display: "flex", alignItems: "center", gap: "8px" }}
+              className="flex items-center gap-2"
               onClick={(e) => e.stopPropagation()}
             >
               {onClearFilters && (
                 <button
                   type="button"
-                  className="filter-clear-btn"
+                  className="text-[#8059ca] hover:text-[#6d3fc7] font-semibold text-xs py-1 px-2.5 rounded-md bg-purple-50 hover:bg-purple-100 transition-colors duration-150 border-0 flex items-center gap-1.5"
                   onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
                     onClearFilters();
                   }}
                 >
-                  <i className="fas fa-redo me-1"></i>
+                  <i className="fas fa-redo text-[10px]"></i>
                   Reset
                 </button>
               )}
               {isDesktopSidebarOpen && (
                 <div
-                  className="bg-light"
+                  className="bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-full w-6 h-6 text-xs flex items-center justify-center cursor-pointer transition-colors"
                   onClick={(e) => {
                     e.stopPropagation();
                     toggleSidebar();
-                  }}
-                  style={{
-                    borderRadius: "50%",
-                    width: "25px",
-                    height: "25px",
-                    fontSize: "12px",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    cursor: "pointer",
                   }}
                 >
                   <i className="fas fa-times"></i>
@@ -351,21 +332,12 @@ const FilterSidebar = ({
               )}
             </div>
           </div>
-          <div className="modern-accordion-body bg-white">
+          <div className="bg-white p-2.5">
             <div
               onClick={() => toggleAccordion("category")}
-              style={{
-                fontSize: "13px",
-                fontWeight: "600",
-                marginLeft: "15px",
-                display: "flex",
-                justifyContent: "space-between",
-                paddingRight: "15px",
-                cursor: "pointer",
-                color: "#000",
-              }}
+              className="flex justify-between items-center py-2 px-3 font-semibold text-slate-800 text-xs cursor-pointer select-none hover:bg-slate-50/50 rounded-lg transition-colors"
             >
-              {HeadingName(service)} CATEGORY
+              <span className="uppercase tracking-wider">{HeadingName(service)} CATEGORY</span>
               <PlusMinus open={openAccordion.category} />
             </div>
             {openAccordion.category && <AlphabetBar />}
@@ -376,7 +348,7 @@ const FilterSidebar = ({
               categories?.data &&
               categories?.data?.length > 0 && (
                 <>
-                  <div className="filter-scroll-container">
+                  <div className="max-h-[160px] overflow-y-auto pr-1 scrollbar-thin flex flex-col gap-1 mt-1.5">
                     {categories?.data?.map((cat) => {
                       const isActive =
                         selectedCategories.includes(cat.slug);
@@ -387,36 +359,27 @@ const FilterSidebar = ({
                       return (
                         <div
                           key={cat.slug}
-                          className={`modern-checkbox-item ${isActive ? "active" : ""
-                            } ${isDefaultCategory
-                              ? "default-category"
-                              : ""
-                            }`}
+                          className="flex items-center justify-between py-1 px-2 hover:bg-purple-50/40 rounded-md cursor-pointer transition-colors"
                           onClick={() =>
                             onCategoryToggle(cat.slug)
                           }
-                          style={{ marginLeft: "10px" }}
                         >
-                          <div
-                            style={{
-                              display: "flex",
-                              gap: "5px",
-                            }}
-                          >
+                          <div className="flex items-center gap-2">
                             <input
                               type="checkbox"
                               checked={isActive}
                               disabled={isDefaultCategory}
                               readOnly
+                              className="w-3.5 h-3.5 rounded border-slate-300 text-[#8059ca] focus:ring-[#8059ca]"
                             />
 
-                            <span style={{ fontSize: "12px" }}>
+                            <span className="text-[13px] text-slate-700">
                               {cat.name}
                             </span>
                           </div>
 
-                          <span>
-                            {cat.productCount || 0}
+                          <span className="text-[11px] text-slate-400">
+                            ({cat.productCount || 0})
                           </span>
                         </div>
                       );
@@ -425,7 +388,7 @@ const FilterSidebar = ({
 
                   {categories?.pagination?.page <
                     categories?.pagination?.totalPages && (
-                      <div style={{ padding: "10px" }}>
+                      <div className="p-2">
                         <button
                           type="button"
                           onClick={(e) => {
@@ -440,7 +403,7 @@ const FilterSidebar = ({
                             }
                           }}
                           disabled={categoryLoading}
-                          className="view-more-btn"
+                          className="w-full text-center py-1.5 px-3 rounded-lg border border-[#8059ca] text-[#8059ca] hover:bg-[#8059ca] hover:text-white transition-all text-xs font-semibold cursor-pointer bg-transparent mt-2 block !bg-transparent hover:!bg-[#8059ca] hover:!text-white !text-[#8059ca]"
                         >
                           {categoryLoading
                             ? "Loading..."
@@ -578,59 +541,39 @@ const FilterSidebar = ({
 
           {brands?.data?.length > 0 && (
             <>
-              <hr style={{ maxWidth: "100%", margin: "0px 0px 0px 0px" }} />
-              <div className="modern-accordion-body bg-white">
+              <hr className="border-t border-slate-100 my-0" />
+              <div className="bg-white p-2.5">
                 <div
                   onClick={() => toggleAccordion("brands")}
-                  style={{
-                    fontSize: "13px",
-                    fontWeight: "600",
-                    marginBottom: "7px",
-                    marginLeft: "15px",
-                    color: "#191C1F",
-                    lineHeight: "24px",
-                    textAlign: "left",
-                    display: "flex",
-                    justifyContent: "space-between",
-                    paddingRight: "15px",
-                    cursor: "pointer",
-                  }}
+                  className="flex justify-between items-center py-2 px-3 font-semibold text-slate-800 text-xs cursor-pointer select-none hover:bg-slate-50/50 rounded-lg transition-colors"
                 >
-                  POPULAR BRANDS
+                  <span className="uppercase tracking-wider">POPULAR BRANDS</span>
                   <PlusMinus open={openAccordion.brands} />
                 </div>
 
                 {openAccordion.brands && (
-                  <div className="filter-scroll-container">
+                  <div className="max-h-[160px] overflow-y-auto pr-1 scrollbar-thin flex flex-col gap-1 mt-1.5">
                     {brands?.data?.map((brand) => {
                       const isActive = selectedBrands.includes(brand.slug);
                       return (
                         <div
                           key={brand.slug}
-                          className={`modern-checkbox-item ${isActive ? "active" : ""} `}
+                          className="flex items-center justify-between py-1 px-2 hover:bg-purple-50/40 rounded-md cursor-pointer transition-colors"
                           onClick={() => onBrandToggle(brand.slug)}
-                          style={{ marginLeft: "10px" }}
                         >
-                          <div
-                            style={{
-                              display: "flex",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
-                          >
-                            <input type="checkbox" checked={isActive} readOnly />
-                            <span style={{ fontSize: "12px", fontWeight: "500" }}>
+                          <div className="flex items-center gap-2">
+                            <input
+                              type="checkbox"
+                              checked={isActive}
+                              readOnly
+                              className="w-3.5 h-3.5 rounded border-slate-300 text-[#8059ca] focus:ring-[#8059ca]"
+                            />
+                            <span className="text-[13px] text-slate-700">
                               {brand.name}
                             </span>
                           </div>
-                          <span
-                            style={{
-                              backgroundColor: "#f0f0f0",
-                              fontSize: "12px",
-                              fontWeight: "500",
-                            }}
-                          >
-                            {brand.productCount || 0}
+                          <span className="text-[11px] text-slate-400">
+                            ({brand.productCount || 0})
                           </span>
                         </div>
                       )
@@ -655,7 +598,7 @@ const FilterSidebar = ({
                           }
                         }}
                         disabled={brandLoading}
-                        className="view-more-btn"
+                        className="w-full text-center py-1.5 px-3 rounded-lg border border-[#8059ca] text-[#8059ca] hover:bg-[#8059ca] hover:text-white transition-all text-xs font-semibold cursor-pointer bg-transparent mt-2 block !bg-transparent hover:!bg-[#8059ca] hover:!text-white !text-[#8059ca]"
                       >
                         {
                           brandLoading
@@ -674,101 +617,40 @@ const FilterSidebar = ({
           )}
 
 
-          <hr style={{ maxWidth: "100%", margin: "0px 0px 0px 0px" }} />
-          <div className="modern-accordion-body bg-white" style={{ display: complexityData.length > 0 ? "block" : "none" }}>
+          <hr className="border-t border-slate-100 my-0" />
+          <div className="bg-white p-2.5" style={{ display: complexityData.length > 0 ? "block" : "none" }}>
             <div
               onClick={() => toggleAccordion("complexity")}
-              style={{
-                fontSize: "13px",
-                fontWeight: "600",
-                marginLeft: "15px",
-                display: "flex",
-                justifyContent: "space-between",
-                paddingRight: "15px",
-                cursor: "pointer",
-                color: "#000",
-              }}
+              className="flex justify-between items-center py-2 px-3 font-semibold text-slate-800 text-xs cursor-pointer select-none hover:bg-slate-50/50 rounded-lg transition-colors"
             >
-              Complexity
+              <span className="uppercase tracking-wider">Complexity</span>
               <PlusMinus open={openAccordion.complexity} />
             </div>
 
-            {openAccordion.complexity && complexityData && complexityData.length > 0 &&
-              complexityData.map((form) => {
-                const isActive = Array.isArray(selectedComplexity)
-                  ? selectedComplexity.includes(form.value)
-                  : false;
-                const toggle = onComplexityToggle || onFormToggle;
-                return (
-                  <div
-                    key={form.value}
-                    className={`modern-checkbox-item ${isActive ? "active" : ""} `}
-                    onClick={() => toggle(form.value)}
-                    style={{ marginLeft: "10px" }}
-                  >
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "5px",
-                      }}
-                    >
-                      <input type="checkbox" checked={isActive} readOnly />
-                      <span style={{ fontSize: "12px", fontWeight: "500" }}>
-                        {form.label}
-                      </span>
-                    </div>
-                    {/* <span
-                      style={{
-                        backgroundColor: "#f0f0f0",
-                        fontSize: "12px",
-                        fontWeight: "500",
-                      }}
-                    >
-                      {form.productCount || 0}
-                    </span> */}
-                  </div>
-                );
-              })}
-
-          </div>
-
-          <hr style={{ maxWidth: "100%", margin: "0px 0px 0px 0px" }} />
-          <div className="modern-accordion-body bg-white" style={{ display: genderData.length > 0 ? "block" : "none" }}>
-            <div
-              onClick={() => toggleAccordion("gender")}
-              style={{
-                fontSize: "13px",
-                fontWeight: "600",
-                marginLeft: "15px",
-                display: "flex",
-                justifyContent: "space-between",
-                paddingRight: "15px",
-                cursor: "pointer",
-                color: "#000",
-              }}
-            >
-              Gender
-              <PlusMinus open={openAccordion.gender} />
-            </div>
-
-            {openAccordion.gender && genderData && genderData.length > 0 && (
-              <div style={{ marginTop: 8 }}>
-                {genderData.map((g) => {
-                  const isActive = Array.isArray(selectedGender) ? selectedGender.includes(g.value) : false;
-                  const toggle = onGenderToggle || onFormToggle;
+            {openAccordion.complexity && complexityData && complexityData.length > 0 && (
+              <div className="flex flex-col gap-1 mt-1.5">
+                {complexityData.map((form) => {
+                  const isActive = Array.isArray(selectedComplexity)
+                    ? selectedComplexity.includes(form.value)
+                    : false;
+                  const toggle = onComplexityToggle || onFormToggle;
                   return (
                     <div
-                      key={g.value}
-                      className={`modern-checkbox-item ${isActive ? "active" : ""} `}
-                      onClick={() => toggle(g.value)}
-                      style={{ marginLeft: "10px" }}
+                      key={form.value}
+                      className="flex items-center py-1 px-2 hover:bg-purple-50/40 rounded-md cursor-pointer transition-colors"
+                      onClick={() => toggle(form.value)}
                     >
-                      <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
-                        <input type="checkbox" checked={isActive} readOnly />
-                        <span style={{ fontSize: "12px", fontWeight: "500" }}>{g.label}</span>
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="checkbox"
+                          checked={isActive}
+                          readOnly
+                          className="w-3.5 h-3.5 rounded border-slate-300 text-[#8059ca] focus:ring-[#8059ca]"
+                        />
+                        <span className="text-[13px] text-slate-700">
+                          {form.label}
+                        </span>
                       </div>
-                      {/* <span style={{ backgroundColor: "#f0f0f0", fontSize: "12px", fontWeight: "500" }}>{g.productCount || 0}</span> */}
                     </div>
                   );
                 })}
@@ -776,43 +658,72 @@ const FilterSidebar = ({
             )}
           </div>
 
+          <hr className="border-t border-slate-100 my-0" />
+          <div className="bg-white p-2.5" style={{ display: genderData.length > 0 ? "block" : "none" }}>
+            <div
+              onClick={() => toggleAccordion("gender")}
+              className="flex justify-between items-center py-2 px-3 font-semibold text-slate-800 text-xs cursor-pointer select-none hover:bg-slate-50/50 rounded-lg transition-colors"
+            >
+              <span className="uppercase tracking-wider">Gender</span>
+              <PlusMinus open={openAccordion.gender} />
+            </div>
 
+            {openAccordion.gender && genderData && genderData.length > 0 && (
+              <div className="flex flex-col gap-1 mt-1.5">
+                {genderData.map((g) => {
+                  const isActive = Array.isArray(selectedGender) ? selectedGender.includes(g.value) : false;
+                  const toggle = onGenderToggle || onFormToggle;
+                  return (
+                    <div
+                      key={g.value}
+                      className="flex items-center py-1 px-2 hover:bg-purple-50/40 rounded-md cursor-pointer transition-colors"
+                      onClick={() => toggle(g.value)}
+                    >
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="checkbox"
+                          checked={isActive}
+                          readOnly
+                          className="w-3.5 h-3.5 rounded border-slate-300 text-[#8059ca] focus:ring-[#8059ca]"
+                        />
+                        <span className="text-[13px] text-slate-700">{g.label}</span>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
 
-          <hr style={{ maxWidth: "100%", margin: "0px 0px 0px 0px" }} />
-          <div className="modern-accordion-body bg-white" style={{ display: samplesData.length > 0 ? "block" : "none" }}>
+          <hr className="border-t border-slate-100 my-0" />
+          <div className="bg-white p-2.5" style={{ display: samplesData.length > 0 ? "block" : "none" }}>
             <div
               onClick={() => toggleAccordion("samples")}
-              style={{
-                fontSize: "13px",
-                fontWeight: "600",
-                marginLeft: "15px",
-                display: "flex",
-                justifyContent: "space-between",
-                paddingRight: "15px",
-                cursor: "pointer",
-                color: "#000",
-              }}
+              className="flex justify-between items-center py-2 px-3 font-semibold text-slate-800 text-xs cursor-pointer select-none hover:bg-slate-50/50 rounded-lg transition-colors"
             >
-              Samples
+              <span className="uppercase tracking-wider">Samples</span>
               <PlusMinus open={openAccordion.samples} />
             </div>
             {openAccordion.samples && samplesData && samplesData.length > 0 && (
-              <div style={{ marginTop: 8 }}>
+              <div className="flex flex-col gap-1 mt-1.5">
                 {samplesData.map((s) => {
                   const isActive = Array.isArray(selectedSamples) ? selectedSamples.includes(s.value) : false;
                   const toggle = onSampleToggle || onFormToggle;
                   return (
                     <div
                       key={s.value}
-                      className={`modern-checkbox-item ${isActive ? "active" : ""} `}
+                      className="flex items-center py-1 px-2 hover:bg-purple-50/40 rounded-md cursor-pointer transition-colors"
                       onClick={() => toggle(s.value)}
-                      style={{ marginLeft: "10px" }}
                     >
-                      <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
-                        <input type="checkbox" checked={isActive} readOnly />
-                        <span style={{ fontSize: "12px", fontWeight: "500" }}>{s.label}</span>
+                      <div className="flex items-center gap-2">
+                        <input
+                          type="checkbox"
+                          checked={isActive}
+                          readOnly
+                          className="w-3.5 h-3.5 rounded border-slate-300 text-[#8059ca] focus:ring-[#8059ca]"
+                        />
+                        <span className="text-[13px] text-slate-700">{s.label}</span>
                       </div>
-                      {/* <span style={{ backgroundColor: "#f0f0f0", fontSize: "12px", fontWeight: "500" }}>{s.productCount || 0}</span> */}
                     </div>
                   );
                 })}
@@ -824,45 +735,35 @@ const FilterSidebar = ({
           {/* Conditions Filter */}
           {conditionsData && conditionsData.length > 0 && (
             <>
-              <hr style={{ maxWidth: "100%", margin: "0px 0px 0px 0px" }} />
-              <div className="modern-accordion-body bg-white" style={{ display: conditionsData.length > 0 ? "block" : "none" }}>
+              <hr className="border-t border-slate-100 my-0" />
+              <div className="bg-white p-2.5" style={{ display: conditionsData.length > 0 ? "block" : "none" }}>
                 <div
                   onClick={() => toggleAccordion("conditions")}
-                  style={{
-                    fontSize: "13px",
-                    fontWeight: "600",
-                    marginBottom: "7px",
-                    marginLeft: "15px",
-                    // color: "#191C1F",
-                    lineHeight: "24px",
-                    textAlign: "left",
-                    display: "flex",
-                    justifyContent: "space-between",
-                    paddingRight: "15px",
-                    cursor: "pointer",
-                    color: "#000",
-                  }}
+                  className="flex justify-between items-center py-2 px-3 font-semibold text-slate-800 text-xs cursor-pointer select-none hover:bg-slate-50/50 rounded-lg transition-colors"
                 >
-                  Conditions
+                  <span className="uppercase tracking-wider">Conditions</span>
                   <PlusMinus open={openAccordion.conditions} />
                 </div>
                 {openAccordion.conditions && conditionsData && conditionsData.length > 0 && (
-                  <div style={{ marginTop: 8 }}>
+                  <div className="flex flex-col gap-1 mt-1.5">
                     {conditionsData.map((c) => {
                       const isActive = Array.isArray(selectedConditions) ? selectedConditions.includes(c.value) : false;
                       const toggle = onConditionToggle || onFormToggle;
                       return (
                         <div
                           key={c.value}
-                          className={`modern-checkbox-item ${isActive ? "active" : ""} `}
+                          className="flex items-center py-1 px-2 hover:bg-purple-50/40 rounded-md cursor-pointer transition-colors"
                           onClick={() => toggle(c.value)}
-                          style={{ marginLeft: "10px" }}
                         >
-                          <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
-                            <input type="checkbox" checked={isActive} readOnly />
-                            <span style={{ fontSize: "12px", fontWeight: "500" }}>{c.label}</span>
+                          <div className="flex items-center gap-2">
+                            <input
+                              type="checkbox"
+                              checked={isActive}
+                              readOnly
+                              className="w-3.5 h-3.5 rounded border-slate-300 text-[#8059ca] focus:ring-[#8059ca]"
+                            />
+                            <span className="text-[13px] text-slate-700">{c.label}</span>
                           </div>
-                          {/* <span style={{ backgroundColor: "#f0f0f0", fontSize: "12px", fontWeight: "500" }}>{c.productCount || 0}</span> */}
                         </div>
                       );
                     })}
@@ -874,62 +775,42 @@ const FilterSidebar = ({
 
           {types && types.length > 0 && (
             <>
-              <hr style={{ maxWidth: "100%", margin: "0px 0px 0px 0px" }} />
-              <div className="modern-accordion-body bg-white">
+              <hr className="border-t border-slate-100 my-0" />
+              <div className="bg-white p-2.5">
                 <div
                   onClick={() => toggleAccordion("nature")}
-                  style={{
-                    fontSize: "13px",
-                    fontWeight: "600",
-                    marginBottom: "7px",
-                    marginLeft: "15px",
-                    color: "#191C1F",
-                    lineHeight: "24px",
-                    textAlign: "left",
-                    display: "flex",
-                    justifyContent: "space-between",
-                    paddingRight: "15px",
-                    cursor: "pointer",
-                  }}
+                  className="flex justify-between items-center py-2 px-3 font-semibold text-slate-800 text-xs cursor-pointer select-none hover:bg-slate-50/50 rounded-lg transition-colors"
                 >
-                  Nature of Product
+                  <span className="uppercase tracking-wider">Nature of Product</span>
                   <PlusMinus open={openAccordion.nature} />
                 </div>
 
-                {openAccordion.nature &&
-                  types?.map((type) => {
-                    const isActive = selectedTypes.includes(type.value);
-                    return (
-                      <div
-                        key={type.value}
-                        className={`modern-checkbox-item ${isActive ? "active" : ""} `}
-                        onClick={() => onTypeToggle(type.value)}
-                        style={{ marginLeft: "10px" }}
-                      >
+                {openAccordion.nature && (
+                  <div className="flex flex-col gap-1 mt-1.5">
+                    {types?.map((type) => {
+                      const isActive = selectedTypes.includes(type.value);
+                      return (
                         <div
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "5px",
-                          }}
+                          key={type.value}
+                          className="flex items-center py-1 px-2 hover:bg-purple-50/40 rounded-md cursor-pointer transition-colors"
+                          onClick={() => onTypeToggle(type.value)}
                         >
-                          <input type="checkbox" checked={isActive} readOnly />
-                          <span style={{ fontSize: "12px", fontWeight: "500" }}>
-                            {type.label}
-                          </span>
+                          <div className="flex items-center gap-2">
+                            <input
+                              type="checkbox"
+                              checked={isActive}
+                              readOnly
+                              className="w-3.5 h-3.5 rounded border-slate-300 text-[#8059ca] focus:ring-[#8059ca]"
+                            />
+                            <span className="text-[13px] text-slate-700">
+                              {type.label}
+                            </span>
+                          </div>
                         </div>
-                        {/* <span
-                          style={{
-                            backgroundColor: "#f0f0f0",
-                            fontSize: "12px",
-                            fontWeight: "500",
-                          }}
-                        >
-                          {type.productCount || 0}
-                        </span> */}
-                      </div>
-                    )
-                  })}
+                      )
+                    })}
+                  </div>
+                )}
               </div>
             </>
           )}
@@ -937,124 +818,85 @@ const FilterSidebar = ({
           {/* Medicine Form Section - Only show for medicines with data */}
           {(service === "medicine" || service === "medicines") && medicineForms && medicineForms.length > 0 && (
             <>
-              <hr style={{ maxWidth: "100%", margin: "0px 0px 0px 0px" }} />
-              <div className="modern-accordion-body bg-white">
+              <hr className="border-t border-slate-100 my-0" />
+              <div className="bg-white p-2.5">
                 <div
                   onClick={() => toggleAccordion("form")}
-                  style={{
-                    fontSize: "13px",
-                    fontWeight: "600",
-                    marginBottom: "7px",
-                    marginLeft: "15px",
-                    color: "#191C1F",
-                    lineHeight: "24px",
-                    textAlign: "left",
-                    display: "flex",
-                    justifyContent: "space-between",
-                    paddingRight: "15px",
-                    cursor: "pointer",
-                  }}
+                  className="flex justify-between items-center py-2 px-3 font-semibold text-slate-800 text-xs cursor-pointer select-none hover:bg-slate-50/50 rounded-lg transition-colors"
                 >
-                  Medicine Form
+                  <span className="uppercase tracking-wider">Medicine Form</span>
                   <PlusMinus open={openAccordion.form} />
                 </div>
 
-                {openAccordion.form &&
-                  medicineForms?.map((form) => {
-                    const isActive = selectedForms.includes(form.value);
-                    return (
-                      <div
-                        key={form.value}
-                        className={`modern-checkbox-item ${isActive ? "active" : ""} `}
-                        onClick={() => onFormToggle(form.value)}
-                        style={{ marginLeft: "10px" }}
-                      >
+                {openAccordion.form && (
+                  <div className="flex flex-col gap-1 mt-1.5">
+                    {medicineForms?.map((form) => {
+                      const isActive = selectedForms.includes(form.value);
+                      return (
                         <div
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "5px",
-                          }}
+                          key={form.value}
+                          className="flex items-center justify-between py-1 px-2 hover:bg-purple-50/40 rounded-md cursor-pointer transition-colors"
+                          onClick={() => onFormToggle(form.value)}
                         >
-                          <input type="checkbox" checked={isActive} readOnly />
-                          <span style={{ fontSize: "12px", fontWeight: "500" }}>
-                            {form.label}
+                          <div className="flex items-center gap-2">
+                            <input
+                              type="checkbox"
+                              checked={isActive}
+                              readOnly
+                              className="w-3.5 h-3.5 rounded border-slate-300 text-[#8059ca] focus:ring-[#8059ca]"
+                            />
+                            <span className="text-[13px] text-slate-700">
+                              {form.label}
+                            </span>
+                          </div>
+                          <span className="text-[11px] text-slate-400">
+                            ({form.productCount || 0})
                           </span>
                         </div>
-                        <span
-                          style={{
-                            backgroundColor: "#f0f0f0",
-                            fontSize: "12px",
-                            fontWeight: "500",
-                          }}
-                        >
-                          {form.productCount || 0}
-                        </span>
-                      </div>
-                    )
-                  })}
+                      )
+                    })}
+                  </div>
+                )}
               </div>
             </>
           )}
 
-
-          {/* service === "medicine" || service === "medicines") &&  */}
           {/* Medicine Composition Section - Only show for medicines with data */}
           {(compositions && compositions?.data?.length > 0) && (
             <>
-              <hr style={{ maxWidth: "100%", margin: "0px 0px 0px 0px" }} />
-              <div className="modern-accordion-body bg-white">
+              <hr className="border-t border-slate-100 my-0" />
+              <div className="bg-white p-2.5">
                 <div
                   onClick={() => toggleAccordion("compositions")}
-                  style={{
-                    fontSize: "13px",
-                    fontWeight: "600",
-                    marginBottom: "7px",
-                    marginLeft: "15px",
-                    color: "#191C1F",
-                    lineHeight: "24px",
-                    textAlign: "left",
-                    display: "flex",
-                    justifyContent: "space-between",
-                    paddingRight: "15px",
-                    cursor: "pointer",
-                  }}
+                  className="flex justify-between items-center py-2 px-3 font-semibold text-slate-800 text-xs cursor-pointer select-none hover:bg-slate-50/50 rounded-lg transition-colors"
                 >
-                  Medicine Composition
+                  <span className="uppercase tracking-wider">Medicine Composition</span>
                   <PlusMinus open={openAccordion.compositions} />
                 </div>
 
                 {openAccordion.compositions && (
-                  <div className="filter-scroll-container">
+                  <div className="max-h-[160px] overflow-y-auto pr-1 scrollbar-thin flex flex-col gap-1 mt-1.5">
                     {compositions?.data?.map((composition) => {
                       const isActive = selectedCompositions.includes(composition.slug);
                       return (
                         <div
                           key={composition.slug}
-                          className={`modern-checkbox-item ${isActive ? "active" : ""} `}
+                          className="flex items-center justify-between py-1 px-2 hover:bg-purple-50/40 rounded-md cursor-pointer transition-colors"
                           onClick={() => onCompositionToggle(composition.slug)}
-                          style={{ marginLeft: "10px" }}
                         >
-                          <div
-                            style={{
-                              display: "flex",
-                              alignItems: "center",
-                              gap: "5px",
-                            }}
-                          >
-                            <input type="checkbox" checked={isActive} readOnly />
-                            <span style={{ fontSize: "12px", fontWeight: "500" }}>
+                          <div className="flex items-center gap-2">
+                            <input
+                              type="checkbox"
+                              checked={isActive}
+                              readOnly
+                              className="w-3.5 h-3.5 rounded border-slate-300 text-[#8059ca] focus:ring-[#8059ca]"
+                            />
+                            <span className="text-[13px] text-slate-700">
                               {composition.name}
                             </span>
                           </div>
-                          <span
-                            style={{
-                              backgroundColor: "#f0f0f0",
-                              fontSize: "12px",
-                              fontWeight: "500",
-                            }}
-                          >
-                            {composition.productCount || 0}
+                          <span className="text-[11px] text-slate-400">
+                            ({composition.productCount || 0})
                           </span>
                         </div>
                       )
@@ -1062,36 +904,29 @@ const FilterSidebar = ({
                   </div>
                 )}
 
-                {
-                  compositions?.pagination?.page <
+                {compositions?.pagination?.page <
                   compositions?.pagination?.totalPages && (
-                    <div style={{ padding: "10px" }}>
+                    <div className="p-2">
                       <button
                         type="button"
                         onClick={(e) => {
                           e.preventDefault();
                           e.stopPropagation();
 
-                          console.log("COMPOSITION VIEW MORE");
-
                           if (typeof loadMoreCompositions === "function") {
                             loadMoreCompositions();
                           }
                         }}
                         disabled={compositionLoading}
-                        className="view-more-btn"
+                        className="w-full text-center font-[600] py-1.5 px-3 rounded-lg border border-[#8059ca] text-[#8059ca] hover:bg-[#8059ca] hover:text-white transition-all text-xs font-semibold cursor-pointer bg-transparent mt-2 block !bg-transparent hover:!bg-[#8059ca] hover:!text-white !text-[#8059ca]"
                       >
-                        {
-                          compositionLoading
-                            ? "Loading..."
-                            : "View More"
-                        }
+                        {compositionLoading
+                          ? "Loading..."
+                          : "View More"}
                       </button>
                     </div>
-                  )
-                }
+                  )}
               </div>
-
             </>
           )}
 

@@ -223,18 +223,32 @@ const Profile = ({ HomeNavigate, BackButton }) => {
   return (
     <>
       {/* Header Section */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-5 mt-2">
-        <div className="flex items-center gap-3">
-          <i className="fa-solid fa-user-gear text-[#8059ca] text-[20px] shrink-0" />
-          <div className="flex flex-col gap-0.5">
-            <h4 className="m-0 text-slate-800 font-bold text-[16px] md:text-[18px] tracking-tight leading-none">Profile Details</h4>
-            <p className="text-slate-500 text-[11px] md:text-[12px] m-0 font-medium">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pb-2 mb-2 border-b border-slate-100 mt-2">
+        <div className="flex items-center gap-3.5">
+          {HomeNavigate && <HomeNavigate />}
+          <div className="w-11 h-11 rounded-xl bg-purple-50 text-[#8059ca] flex items-center justify-center text-[20px] shrink-0 border border-purple-100/50 shadow-sm">
+            <i className="fa-solid fa-user-gear" />
+          </div>
+
+
+          {/* <div className="flex flex-col gap-1">
+            <div className="m-0 text-[#0f172a] text-[18px] md:text-[20px] tracking-tight leading-none" style={{ fontWeight: 600 }}>
+              Profile Details
+            </div>
+            <p className="text-slate-500 text-[12px] m-0 font-medium leading-none">
               Update your personal information and preferences
             </p>
+          </div> */}
+
+
+          <div className="flex flex-col gap-1">
+            <div className="m-0 text-[#0f172a] font-medium text-[16px] md:text-[16px] tracking-tight leading-none" >
+              Profile Details
+            </div>
+            <div className="text-slate-500 text-[12px] m-0 font-medium leading-none">
+              Update your personal information and preferences
+            </div>
           </div>
-        </div>
-        <div className="flex items-center gap-3 w-full sm:w-auto">
-          {HomeNavigate && <HomeNavigate />}
         </div>
       </div>
 

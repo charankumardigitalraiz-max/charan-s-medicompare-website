@@ -909,7 +909,7 @@ const surgeries = ({
                     className="custom-surgeons-slide slider-card-wrapper"
                   >
                     <div className="surgeriesCard">
-                       <div className="text-center">
+                      <div className="text-center">
                         <img
                           src={
                             doctor?.profileImage?.[0]
@@ -1689,8 +1689,7 @@ const surgeries = ({
                         }}
                       >
                         <i
-                          className={`${
-                            feature.id === 1
+                          className={`${feature.id === 1
                               ? "fas fa-list-check"
                               : feature.id === 3
                                 ? "fas fa-balance-scale"
@@ -1699,7 +1698,7 @@ const surgeries = ({
                                   : feature.id === 5
                                     ? "fas fa-file-medical"
                                     : "fas fa-search"
-                          } text-[20px] text-white`}
+                            } text-[20px] text-white`}
                           style={{
                             animation: "bounce 1.5s infinite",
                           }}

@@ -296,15 +296,36 @@ const TicketIssues = ({ HomeNavigate, BackButton }) => {
             )}
             <div className="col-lg-12">
               {/* Header Section — matches MedicineBookings styling */}
-              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-5 mt-2">
-                <div className="flex items-center gap-3">
-                  <i className="fa-solid fa-ticket text-[#8059ca] text-[20px] shrink-0" />
-                  <div className="flex flex-col gap-0.5">
-                    <h4 className="m-0 text-slate-800 font-bold text-[18px] md:text-[20px] tracking-tight leading-none">Tickets</h4>
-                    <p className="text-slate-500 text-[12px] md:text-[13px] m-0 font-medium">
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pb-2 mb-2 border-b border-slate-100 mt-2">
+                <div className="flex items-center gap-3.5">
+                  {HomeNavigate && <HomeNavigate />}
+                  <div className="w-11 h-11 rounded-xl bg-purple-50 text-[#8059ca] flex items-center justify-center text-[20px] shrink-0 border border-purple-100/50 shadow-sm">
+                    <i className="fa-solid fa-ticket" />
+                  </div>
+
+
+
+
+                  {/* <div className="flex flex-col gap-1">
+                    <div className="m-0 text-[#0f172a] text-[18px] md:text-[20px] tracking-tight leading-none" style={{ fontWeight: 600 }}>
+                      Tickets
+                    </div>
+                    <p className="text-slate-500 text-[12px] m-0 font-medium leading-none">
                       Manage and track all your support tickets
                     </p>
+                  </div> */}
+
+
+                  <div className="flex flex-col gap-1">
+                    <div className="m-0 text-[#0f172a] font-medium text-[16px] md:text-[16px] tracking-tight leading-none" >
+                      Tickets
+                    </div>
+                    <div className="text-slate-500 text-[12px] m-0 font-medium leading-none">
+                      Manage and track all your support tickets
+                    </div>
                   </div>
+
+
                 </div>
                 <div className="flex items-center gap-3 w-full sm:w-auto">
                   <div className="relative w-full sm:w-[260px] shrink-0">
@@ -322,110 +343,107 @@ const TicketIssues = ({ HomeNavigate, BackButton }) => {
                       <i className="fa-solid fa-search" />
                     </span>
                   </div>
-                  {HomeNavigate && <HomeNavigate />}
                 </div>
               </div>
 
-              <div className="custom-table">
-                <div className="consultation-table-wrapper bg-white rounded-xl border border-[#ececf6] shadow-[0_4px_16px_rgba(0,0,0,0.03)] overflow-hidden mb-5">
-                  <div className="table-responsive">
-                    <table className="table w-full border-collapse mb-0">
-                      <thead>
+              <div className="profile-table-wrapper">
+                <div className="table-responsive">
+                  <table className="profile-table">
+                    <thead>
+                      <tr>
+                        {columnConfig.ticketNo && <th>Ticket No</th>}
+                        {columnConfig.subject && <th>Subject</th>}
+                        {columnConfig.category && <th>Category</th>}
+                        {columnConfig.priority && <th>Priority</th>}
+                        {columnConfig.status && <th>Status</th>}
+                        {columnConfig.date && <th>Date</th>}
+                        <th className="text-center">Chat</th>
+                        <th className="text-center">Action</th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      {loading ? (
                         <tr>
-                          {columnConfig.ticketNo && <th className="bg-[#fbfbfe] text-[#777] text-[11px] font-semibold uppercase tracking-[0.5px] py-3.5 px-4 border-b border-[#ececf6] text-left">Ticket No</th>}
-                          {columnConfig.subject && <th className="bg-[#fbfbfe] text-[#777] text-[11px] font-semibold uppercase tracking-[0.5px] py-3.5 px-4 border-b border-[#ececf6] text-left">Subject</th>}
-                          {columnConfig.category && <th className="bg-[#fbfbfe] text-[#777] text-[11px] font-semibold uppercase tracking-[0.5px] py-3.5 px-4 border-b border-[#ececf6] text-left">Category</th>}
-                          {columnConfig.priority && <th className="bg-[#fbfbfe] text-[#777] text-[11px] font-semibold uppercase tracking-[0.5px] py-3.5 px-4 border-b border-[#ececf6] text-left">Priority</th>}
-                          {columnConfig.status && <th className="bg-[#fbfbfe] text-[#777] text-[11px] font-semibold uppercase tracking-[0.5px] py-3.5 px-4 border-b border-[#ececf6] text-left">Status</th>}
-                          {columnConfig.date && <th className="bg-[#fbfbfe] text-[#777] text-[11px] font-semibold uppercase tracking-[0.5px] py-3.5 px-4 border-b border-[#ececf6] text-left">Date</th>}
-                          <th className="bg-[#fbfbfe] text-[#777] text-[11px] font-semibold uppercase tracking-[0.5px] py-3.5 px-4 border-b border-[#ececf6] text-center">Chat</th>
-                          <th className="bg-[#fbfbfe] text-[#777] text-[11px] font-semibold uppercase tracking-[0.5px] py-3.5 px-4 border-b border-[#ececf6] text-center">Action</th>
+                          <td colSpan="100%" className="text-center py-3">
+                            Loading...
+                          </td>
                         </tr>
-                      </thead>
+                      ) : filteredOrders.length > 0 ? (
+                        filteredOrders.map((ticket) => (
+                          <tr key={ticket._id} className="group hover:bg-[#faf9fe]">
+                            {columnConfig.ticketNo && (
+                              <td className="py-3.5 px-4 text-[13px] text-[#333] border-b border-[#ececf6] align-middle group-last:border-b-0">
+                                <span className="font-semibold text-[#8059ca]">
+                                  {ticket.ticketNo}
+                                </span>
+                              </td>
+                            )}
+                            {columnConfig.subject && <td className="py-3.5 px-4 text-[13px] text-[#333] border-b border-[#ececf6] align-middle group-last:border-b-0">{ticket.subject}</td>}
+                            {columnConfig.category && (
+                              <td className="py-3.5 px-4 text-[13px] text-[#333] border-b border-[#ececf6] align-middle group-last:border-b-0 capitalize">{ticket.category}</td>
+                            )}
 
-                      <tbody>
-                        {loading ? (
-                          <tr>
-                            <td colSpan="100%" className="text-center py-3">
-                              Loading...
+                            {columnConfig.priority && (
+                              <td className="py-3.5 px-4 text-[13px] text-[#333] border-b border-[#ececf6] align-middle group-last:border-b-0">
+                                <span
+                                  className={`text-[11px] px-2 py-[3px] rounded font-semibold capitalize inline-block ${priorityClasses(ticket.priority)}`}
+                                >
+                                  {ticket.priority}
+                                </span>
+                              </td>
+                            )}
+                            {columnConfig.status && (
+                              <td className="py-3.5 px-4 text-[13px] text-[#333] border-b border-[#ececf6] align-middle group-last:border-b-0">
+                                <span
+                                  className={`text-[11px] px-2 py-[3px] rounded font-semibold capitalize inline-block ${statusClasses(ticket.status)}`}
+                                >
+                                  {ticket.status}
+                                </span>
+                              </td>
+                            )}
+                            {columnConfig.date && (
+                              <td className="py-3.5 px-4 text-[13px] text-[#333] border-b border-[#ececf6] align-middle group-last:border-b-0">
+                                {new Date(ticket.createdAt).toLocaleDateString(
+                                  "en-GB",
+                                  {
+                                    day: "2-digit",
+                                    month: "short",
+                                    year: "numeric",
+                                  },
+                                )}
+                              </td>
+                            )}
+                            <td className="py-3.5 px-4 text-[13px] text-[#333] border-b border-[#ececf6] align-middle group-last:border-b-0 text-center">
+                              <button
+                                className={`rounded-full w-8 h-8 p-0 inline-flex items-center justify-center text-white cursor-pointer border ${ticket.status === "closed" ? "bg-[#ff6b6b] border-[#ff6b6b]" : "bg-[#8059ca] border-[#8059ca]"
+                                  }`}
+                                title={ticket.status === "closed" ? "View chat history (closed ticket)" : "Chat with Support"}
+                                onClick={() => openChat(ticket)}
+                              >
+                                <i className="fas fa-comments"></i>
+                              </button>
+                            </td>
+                            <td className="py-3.5 px-4 text-[13px] text-[#333] border-b border-[#ececf6] align-middle group-last:border-b-0 text-center">
+                              <button
+                                className="btn btn-sm btn-light rounded-full w-8 h-8 p-0 inline-flex items-center justify-center cursor-pointer"
+                                title="View Ticket"
+                                onClick={() => viewLead(ticket)}
+                              >
+                                <i className="fas fa-eye"></i>
+                              </button>
                             </td>
                           </tr>
-                        ) : filteredOrders.length > 0 ? (
-                          filteredOrders.map((ticket) => (
-                            <tr key={ticket._id} className="group hover:bg-[#faf9fe]">
-                              {columnConfig.ticketNo && (
-                                <td className="py-3.5 px-4 text-[13px] text-[#333] border-b border-[#ececf6] align-middle group-last:border-b-0">
-                                  <span className="font-semibold text-[#8059ca]">
-                                    {ticket.ticketNo}
-                                  </span>
-                                </td>
-                              )}
-                              {columnConfig.subject && <td className="py-3.5 px-4 text-[13px] text-[#333] border-b border-[#ececf6] align-middle group-last:border-b-0">{ticket.subject}</td>}
-                              {columnConfig.category && (
-                                <td className="py-3.5 px-4 text-[13px] text-[#333] border-b border-[#ececf6] align-middle group-last:border-b-0 capitalize">{ticket.category}</td>
-                              )}
-
-                              {columnConfig.priority && (
-                                <td className="py-3.5 px-4 text-[13px] text-[#333] border-b border-[#ececf6] align-middle group-last:border-b-0">
-                                  <span
-                                    className={`text-[11px] px-2 py-[3px] rounded font-semibold capitalize inline-block ${priorityClasses(ticket.priority)}`}
-                                  >
-                                    {ticket.priority}
-                                  </span>
-                                </td>
-                              )}
-                              {columnConfig.status && (
-                                <td className="py-3.5 px-4 text-[13px] text-[#333] border-b border-[#ececf6] align-middle group-last:border-b-0">
-                                  <span
-                                    className={`text-[11px] px-2 py-[3px] rounded font-semibold capitalize inline-block ${statusClasses(ticket.status)}`}
-                                  >
-                                    {ticket.status}
-                                  </span>
-                                </td>
-                              )}
-                              {columnConfig.date && (
-                                <td className="py-3.5 px-4 text-[13px] text-[#333] border-b border-[#ececf6] align-middle group-last:border-b-0">
-                                  {new Date(ticket.createdAt).toLocaleDateString(
-                                    "en-GB",
-                                    {
-                                      day: "2-digit",
-                                      month: "short",
-                                      year: "numeric",
-                                    },
-                                  )}
-                                </td>
-                              )}
-                              <td className="py-3.5 px-4 text-[13px] text-[#333] border-b border-[#ececf6] align-middle group-last:border-b-0 text-center">
-                                <button
-                                  className={`rounded-full w-8 h-8 p-0 inline-flex items-center justify-center text-white cursor-pointer border ${ticket.status === "closed" ? "bg-[#ff6b6b] border-[#ff6b6b]" : "bg-[#8059ca] border-[#8059ca]"
-                                    }`}
-                                  title={ticket.status === "closed" ? "View chat history (closed ticket)" : "Chat with Support"}
-                                  onClick={() => openChat(ticket)}
-                                >
-                                  <i className="fas fa-comments"></i>
-                                </button>
-                              </td>
-                              <td className="py-3.5 px-4 text-[13px] text-[#333] border-b border-[#ececf6] align-middle group-last:border-b-0 text-center">
-                                <button
-                                  className="btn btn-sm btn-light rounded-full w-8 h-8 p-0 inline-flex items-center justify-center cursor-pointer"
-                                  title="View Ticket"
-                                  onClick={() => viewLead(ticket)}
-                                >
-                                  <i className="fas fa-eye"></i>
-                                </button>
-                              </td>
-                            </tr>
-                          ))
-                        ) : (
-                          <tr>
-                            <td colSpan="100%" className="text-center py-3">
-                              No data found
-                            </td>
-                          </tr>
-                        )}
-                      </tbody>
-                    </table>
-                  </div>
+                        ))
+                      ) : (
+                        <tr>
+                          <td colSpan="100%" className="text-center py-3">
+                            No data found
+                          </td>
+                        </tr>
+                      )}
+                    </tbody>
+                  </table>
                 </div>
               </div>
 

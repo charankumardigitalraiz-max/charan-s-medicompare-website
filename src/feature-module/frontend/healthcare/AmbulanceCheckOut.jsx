@@ -286,10 +286,12 @@ const AmbulanceCheckOut = () => {
           },
         },
       );
+
       if (!orderRes.data?.success) {
         toast.error("Order creation failed. Please contact support.");
         return;
       }
+
       const razorpayData = orderRes.data.data;
       const orderId =
         orderRes.data.orderId || orderRes.data._id || razorpayData?._id || razorpayData?.orderId;
@@ -848,6 +850,7 @@ const AmbulanceCheckOut = () => {
                 paymentMethod === "online" ? `Pay ₹${totalAmount?.toLocaleString("en-IN") || 0} Now` : "Confirm Booking"
               )}
             </button>
+
           </div>
         </div>
       </div>

@@ -858,7 +858,7 @@ const DentalTeeth = ({
 
                                   <div className="flex-grow-1">
                                     <h6
-                                      className="mb-1 text-[12px] font-semibold"
+                                      className="mb-1 !text-[14px] font-semibold"
                                     >
                                       {vendor.name}
                                     </h6>

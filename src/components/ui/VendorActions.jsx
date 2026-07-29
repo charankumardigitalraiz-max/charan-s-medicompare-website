@@ -38,7 +38,7 @@ const VendorActions = ({
 }) => {
   const actualFullVendor = fullVendor || vendor;
   const perDayRent = rentPerDay || actualFullVendor?.perDayRent || null;
-  // console.log("price", price)
+
   const mergedContainerStyle = {
     display: "flex",
     width: "100%",
@@ -47,23 +47,14 @@ const VendorActions = ({
     ...containerStyle,
   };
 
-  const mergedButtonStyle = {
-    width: "100%",
-    flex: 1,
-    ...buttonStyle,
-  };
+  const discount = 0; // Not strictly used for actions logic, but keeping variables clean
 
-  // console.log('perDayRent', perDayRent)
-
-  // console.log(service);
-  // console.log(med);
   if (bookingType === "rentals_addtocarts") {
     return (
       <div
-        className={`pd-vendor-actions ${className}`}
+        className={`flex w-full gap-2 items-center ${className}`}
         style={mergedContainerStyle}
       >
-        {/* {isInStock ? ( */}
         <CartQuantityControls
           rentAndCartButtonStyles={{
             fontSize: "12px",
@@ -122,22 +113,9 @@ const VendorActions = ({
           service={service}
           style={{ flex: 1, width: "100%" }}
         />
-        {/* ) : (
-          <button
-            type="button"
-            className="pd-btn pd-btn-disabled"
-            disabled
-            style={mergedButtonStyle}
-          >
-            <i className="fas fa-ban"></i>Unavailable
-          </button>
-        )} */}
-
-
 
         <button
           type="button"
-          className="pd-btn text-white"
           disabled={perDayRent === 0 || !perDayRent}
           onClick={(e) => {
             e.preventDefault();
@@ -153,22 +131,12 @@ const VendorActions = ({
               );
             }
           }}
-          style={{
-            background: (perDayRent === 0 || !perDayRent)
-              ? "#d3d3d3"
-              : "linear-gradient(135deg, #8059ca 0%, #822BD4 100%)",
-            border: "none",
-            fontWeight: "600",
-            opacity: (perDayRent === 0 || !perDayRent) ? 0.65 : 1,
-            cursor: (perDayRent === 0 || !perDayRent) ? "not-allowed" : "pointer",
-            fontSize: "12px",
-            padding: "5px 5px",
-            borderRadius: "5px",
-            height: "100%",
-            ...mergedButtonStyle,
-          }}
+          className={`w-full flex-1 flex items-center justify-center gap-1.5 py-1 px-2.5 !rounded-md text-xs font-bold text-white transition-all cursor-pointer border-none ${perDayRent === 0 || !perDayRent
+            ? "bg-slate-300 opacity-60 cursor-not-allowed"
+            : "bg-gradient-to-r from-[#8059ca] to-[#822BD4] hover:shadow-md active:scale-[0.98]"
+            }`}
         >
-          <i className="fa-solid fa-clipboard-check me-2"></i>
+          <i className="fa-solid fa-clipboard-check"></i>
           Rent
         </button>
       </div>
@@ -178,10 +146,9 @@ const VendorActions = ({
   // booking & slots - Navigate to BookingProcess
   if (bookingType === "booking" || bookingType === "slots") {
     return (
-      <div className={`pd-vendor-actions ${className}`} style={mergedContainerStyle}>
+      <div className={`flex w-full gap-2 items-center ${className}`} style={mergedContainerStyle}>
         <button
           type="button"
-          className="pd-btn pd-btn-book"
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
@@ -200,8 +167,7 @@ const VendorActions = ({
               );
             }
           }}
-          // disabled={!isInStock && !isServiceType}
-          style={mergedButtonStyle}
+          className="w-full flex-1 flex items-center justify-center gap-1.5 py-1.5 px-3 !rounded-lg text-xs font-bold text-white bg-gradient-to-r from-[#8059ca] to-[#822BD4] hover:shadow-md active:scale-[0.98] transition-all cursor-pointer border-none"
         >
           <i
             className={
@@ -216,15 +182,12 @@ const VendorActions = ({
     );
   }
 
-  // console.log("bookingType", bookingType)
-
   // leads - Open Lead Modal (do NOT navigate)
   if (bookingType === "lead" || bookingType === "leads") {
     return (
-      <div className={`pd-vendor-actions ${className}`} style={mergedContainerStyle}>
+      <div className={`flex w-full gap-2 items-center ${className}`} style={mergedContainerStyle}>
         <button
           type="button"
-          className="pd-btn pd-btn-lead"
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
@@ -235,10 +198,9 @@ const VendorActions = ({
               });
             }
           }}
-          // disabled={!isInStock}
-          style={mergedButtonStyle}
+          className="w-full flex-1 flex items-center justify-center gap-1.5 py-1.5 px-3 !rounded-lg text-xs font-bold text-white bg-gradient-to-r from-[#8059ca] to-[#822BD4] hover:shadow-md active:scale-[0.98] transition-all cursor-pointer border-none"
         >
-          <i className="fas fa-file-invoice-dollar me-1"></i>
+          <i className="fas fa-file-invoice-dollar"></i>
           Get An Enquiry
         </button>
       </div>
@@ -248,14 +210,12 @@ const VendorActions = ({
   // rentals - Open Rental Modal
   if (bookingType === "rentals") {
     return (
-      <div className={`pd-vendor-actions ${className}`} style={mergedContainerStyle}>
+      <div className={`flex w-full gap-2 items-center ${className}`} style={mergedContainerStyle}>
         <button
           type="button"
-          className="pd-btn pd-btn-ride"
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
-            // if (isStockFalse && !isServiceType) return;
             if (handleRentalBookinProcess) {
               handleRentalBookinProcess(
                 vendor,
@@ -267,12 +227,7 @@ const VendorActions = ({
               );
             }
           }}
-          // disabled={(!isInStock && !isServiceType) || !perDayRent}
-          style={{
-            opacity: 1,
-            cursor: "pointer",
-            ...mergedButtonStyle,
-          }}
+          className="w-full flex-1 flex items-center justify-center gap-1.5 py-1.5 px-3 !rounded-lg text-xs font-bold text-white bg-gradient-to-r from-[#8059ca] to-[#822BD4] hover:shadow-md active:scale-[0.98] transition-all cursor-pointer border-none"
         >
           <i className="fa-solid fa-clipboard-check"></i>
           Rent
@@ -283,29 +238,25 @@ const VendorActions = ({
 
   if (bookingType === "consultation") {
     return (
-      <div className={`pd-vendor-actions ${className}`} style={mergedContainerStyle}>
+      <div className={`flex w-full gap-2 items-center ${className}`} style={mergedContainerStyle}>
         <button
           type="button"
-          className="pd-btn pd-btn-consultation text-white"
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
-            // if (isStockFalse && !isServiceType) return;
             if (handleOpenConsultationModal) {
               handleOpenConsultationModal(
                 vendor,
                 med,
                 effectiveVariantId,
                 price,
-                // stock,
                 service
               );
             }
           }}
-          // disabled={!isInStock}
-          style={mergedButtonStyle}
+          className="w-full flex-1 flex items-center justify-center gap-1.5 py-1.5 px-3 !rounded-lg text-xs font-bold text-white bg-gradient-to-r from-[#8059ca] to-[#822BD4] hover:shadow-md active:scale-[0.98] transition-all cursor-pointer border-none"
         >
-          <i className="fa-solid fa-comments text-white"></i>
+          <i className="fa-solid fa-comments"></i>
           Consultation
         </button>
       </div>
@@ -314,29 +265,25 @@ const VendorActions = ({
 
   if (bookingType === "appointment") {
     return (
-      <div className={`pd-vendor-actions ${className}`} style={mergedContainerStyle}>
+      <div className={`flex w-full gap-2 items-center ${className}`} style={mergedContainerStyle}>
         <button
           type="button"
-          className="pd-btn pd-btn-appointment text-white"
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
-            // if (isStockFalse && !isServiceType) return;
             if (handleOpenAppointmentModal) {
               handleOpenAppointmentModal(
                 vendor,
                 med,
                 effectiveVariantId,
                 price,
-                // stock,
                 service
               );
             }
           }}
-          // disabled={!isInStock}
-          style={mergedButtonStyle}
+          className="w-full flex-1 flex items-center justify-center gap-1.5 py-1.5 px-3 !rounded-lg text-xs font-bold text-white bg-gradient-to-r from-[#8059ca] to-[#822BD4] hover:shadow-md active:scale-[0.98] transition-all cursor-pointer border-none"
         >
-          <i className="fa-solid fa-calendar-check text-white"></i>
+          <i className="fa-solid fa-calendar-check"></i>
           Appointment
         </button>
       </div>
@@ -345,27 +292,23 @@ const VendorActions = ({
 
   if (bookingType === "ride") {
     return (
-      <div className={`pd-vendor-actions ${className}`} style={mergedContainerStyle}>
+      <div className={`flex w-full gap-2 items-center ${className}`} style={mergedContainerStyle}>
         <button
           type="button"
-          className="pd-btn pd-btn-ride"
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
-            // if (isStockFalse && !isServiceType) return;
             if (handleOpenRideModal) {
               handleOpenRideModal(
                 vendor,
                 med,
                 effectiveVariantId,
                 price,
-                // stock,
                 service
               );
             }
           }}
-          // disabled={!isInStock}
-          style={mergedButtonStyle}
+          className="w-full flex-1 flex items-center justify-center gap-1.5 py-1.5 px-3 !rounded-lg text-xs font-bold text-white bg-gradient-to-r from-[#8059ca] to-[#822BD4] hover:shadow-md active:scale-[0.98] transition-all cursor-pointer border-none"
         >
           <i className="fas fa-car"></i>
           Add Ride
@@ -387,11 +330,8 @@ const VendorActions = ({
       ) || selectedVariant
       : null;
 
-    const canUseCart = !isStockFalse && isInStock;
-
     return (
-      <div className={`pd-vendor-actions ${className}`} style={mergedContainerStyle}>
-        {/* {canUseCart ? ( */}
+      <div className={`flex w-full gap-2 items-center ${className}`} style={mergedContainerStyle}>
         <CartQuantityControls
           item={{
             tabletdetails: med,
@@ -406,9 +346,8 @@ const VendorActions = ({
           }}
           service={service}
           variant={variantForCart}
-          // maxStock={maxStock}
           options={{ bookingType: "cart", type: "normal" }}
-          style={mergedButtonStyle}
+          style={{ flex: 1, width: "100%" }}
           contailerStyles={{ width: "100%", flex: 1 }}
           individualStyleForCart={{
             display: "flex",
@@ -425,20 +364,9 @@ const VendorActions = ({
             boxShadow: "0 2px 5px rgba(125, 46, 255, 0.1)",
           }}
         />
-        {/* ) : (
-          <button
-            type="button"
-            className="pd-btn pd-btn-secondary"
-            disabled
-            style={buttonStyle}
-          >
-            <i className="fas fa-ban"></i> Unavailable
-          </button>
-        )} */}
       </div>
     );
   }
-
 
   if (bookingType === "cartslots") {
     const variantForCart = isVariant
@@ -455,12 +383,8 @@ const VendorActions = ({
 
     const packageId = IsPackage ? (med?._id || null) : null;
 
-
-    const canUseCart = !isStockFalse && isInStock;
-
     return (
-      <div className={`pd-vendor-actions ${className}`} style={mergedContainerStyle}>
-        {/* {canUseCart ? ( */}
+      <div className={`flex w-full gap-2 items-center ${className}`} style={mergedContainerStyle}>
         <CartQuantityControls
           item={{
             tabletdetails: med,
@@ -476,9 +400,8 @@ const VendorActions = ({
           }}
           service={service}
           variant={variantForCart}
-          // maxStock={maxStock}
           options={{ bookingType: "cartslots", type: IsPackage ? "package" : "normal" }}
-          style={mergedButtonStyle}
+          style={{ flex: 1, width: "100%" }}
           contailerStyles={{ width: "100%", flex: 1 }}
           individualStyleForCart={{
             display: "flex",
@@ -495,30 +418,18 @@ const VendorActions = ({
             boxShadow: "0 2px 5px rgba(125, 46, 255, 0.1)",
           }}
         />
-        {/* ) : (
-          <button
-            type="button"
-            className="pd-btn pd-btn-secondary"
-            disabled
-            style={buttonStyle}
-          >
-            <i className="fas fa-ban"></i> Unavailable
-          </button>
-        )} */}
       </div>
     );
   }
 
   if (bookingType === "buy_now" || service === "surgeries") {
     return (
-      <div className={`pd-vendor-actions ${className}`} style={mergedContainerStyle}>
+      <div className={`flex w-full gap-2 items-center ${className}`} style={mergedContainerStyle}>
         <button
           type="button"
-          className="pd-btn pd-btn-book"
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
-            // if (isStockFalse && !isServiceType) return;
             if (handleNavigateToBooking) {
               handleNavigateToBooking(
                 vendor,
@@ -531,8 +442,7 @@ const VendorActions = ({
               );
             }
           }}
-          // disabled={!isInStock}
-          style={mergedButtonStyle}
+          className="w-full flex-1 flex items-center justify-center gap-1.5 py-1.5 px-3 !rounded-lg text-xs font-bold text-white bg-gradient-to-r from-[#8059ca] to-[#822BD4] hover:shadow-md active:scale-[0.98] transition-all cursor-pointer border-none"
         >
           Book Now
         </button>
@@ -542,14 +452,12 @@ const VendorActions = ({
 
   // Default: Add to Cart
   return (
-    <div className={`pd-vendor-actions ${className}`} style={mergedContainerStyle}>
+    <div className={`flex w-full gap-2 items-center ${className}`} style={mergedContainerStyle}>
       <button
         type="button"
-        className="pd-btn pd-btn-cart"
         onClick={(e) => {
           e.preventDefault();
           e.stopPropagation();
-          // if (isStockFalse && !isServiceType) return;
           if (isVariant || effectiveVariantId) {
             if (handleAddToCart) {
               handleAddToCart(
@@ -569,8 +477,7 @@ const VendorActions = ({
             }
           }
         }}
-        // disabled={!isInStock}
-        style={mergedButtonStyle}
+        className="w-full flex-1 flex items-center justify-center gap-1.5 py-1.5 px-3 !rounded-lg text-xs font-bold text-white bg-gradient-to-r from-[#8059ca] to-[#822BD4] hover:shadow-md active:scale-[0.98] transition-all cursor-pointer border-none"
       >
         Add to Cart
       </button>

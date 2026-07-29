@@ -111,36 +111,51 @@ const Notifications = ({ HomeNavigate, BackButton }) => {
             <div className="col-lg-12">
 
               {/* Header */}
-              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-5 mt-2">
-                <div className="flex items-center gap-3">
-                  <i className="fa-solid fa-bell text-[#8059ca] text-[20px] shrink-0" />
-                  <div className="flex flex-col gap-0.5">
-                    <h4 className="m-0 text-slate-800 font-bold text-[18px] md:text-[20px] tracking-tight leading-none">
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pb-2 mb-2 border-b border-slate-100 mt-2">
+                <div className="flex items-center gap-3.5">
+                  {HomeNavigate && <HomeNavigate />}
+                  <div className="w-11 h-11 rounded-xl bg-purple-50 text-[#8059ca] flex items-center justify-center text-[20px] shrink-0 border border-purple-100/50 shadow-sm">
+                    <i className="fa-solid fa-bell" />
+                  </div>
+
+
+                  {/* <div className="flex flex-col gap-1">
+                    <div className="m-0 text-[#0f172a] text-[18px] md:text-[20px] tracking-tight leading-none" style={{ fontWeight: 600 }}>
                       Notifications
-                    </h4>
-                    <p className="text-slate-500 text-[12px] md:text-[13px] m-0 font-medium">
+                    </div>
+                    <p className="text-slate-500 text-[12px] m-0 font-medium leading-none">
                       View and manage all your notifications
                     </p>
+                  </div> */}
+
+
+
+                  <div className="flex flex-col gap-1">
+                    <div className="m-0 text-[#0f172a] font-medium text-[16px] md:text-[16px] tracking-tight leading-none" >
+                      Notifications
+                    </div>
+                    <div className="text-slate-500 text-[12px] m-0 font-medium leading-none">
+                      View and manage all your notifications
+                    </div>
                   </div>
+
+
+
+
                 </div>
-                {HomeNavigate && (
-                  <div className="flex items-center gap-3 w-full sm:w-auto justify-end">
-                    <HomeNavigate />
-                  </div>
-                )}
               </div>
 
               {/* Table */}
-              <div className="bg-white rounded-xl border border-[#ececf6] shadow-[0_4px_16px_rgba(0,0,0,0.03)] overflow-hidden mb-5">
+              <div className="profile-table-wrapper">
                 <div className="table-responsive">
-                  <table className="w-full border-separate border-spacing-0 mb-0">
+                  <table className="profile-table">
                     <thead>
                       <tr>
-                        <th className="bg-[#fbfbfe] text-[#777] text-[11px] font-semibold uppercase tracking-[0.5px] py-3.5 px-4 ![border-bottom:1px_solid_#ececf6] text-left whitespace-nowrap">Date</th>
-                        <th className="bg-[#fbfbfe] text-[#777] text-[11px] font-semibold uppercase tracking-[0.5px] py-3.5 px-4 ![border-bottom:1px_solid_#ececf6] text-left whitespace-nowrap">Title</th>
-                        <th className="bg-[#fbfbfe] text-[#777] text-[11px] font-semibold uppercase tracking-[0.5px] py-3.5 px-4 ![border-bottom:1px_solid_#ececf6] text-left whitespace-nowrap">Message</th>
-                        <th className="bg-[#fbfbfe] text-[#777] text-[11px] font-semibold uppercase tracking-[0.5px] py-3.5 px-4 ![border-bottom:1px_solid_#ececf6] text-left whitespace-nowrap">Status</th>
-                        <th className="bg-[#fbfbfe] text-[#777] text-[11px] font-semibold uppercase tracking-[0.5px] py-3.5 px-4 ![border-bottom:1px_solid_#ececf6] text-center whitespace-nowrap">Actions</th>
+                        <th>Date</th>
+                        <th>Title</th>
+                        <th>Message</th>
+                        <th>Status</th>
+                        <th className="text-center">Actions</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -162,31 +177,30 @@ const Notifications = ({ HomeNavigate, BackButton }) => {
 
                           return (
                             <tr key={nt._id} className="hover:bg-[#faf9fe] transition-colors duration-150">
-                              <td className="py-3.5 px-4 text-[13px] text-[#333] ![border-bottom:1px_solid_#ececf6] align-middle whitespace-nowrap">
+                              <td className="whitespace-nowrap">
                                 {formattedDate}
                               </td>
-                              <td className={`py-3.5 px-4 text-[13px] text-[#333] ![border-bottom:1px_solid_#ececf6] align-middle ${isUnread ? "font-semibold" : "font-medium"}`}>
+                              <td className={isUnread ? "font-semibold" : "font-medium"}>
                                 {nt.title}
                               </td>
-                              <td className="py-3.5 px-4 text-[13px] text-[#333] ![border-bottom:1px_solid_#ececf6] align-middle max-w-[280px]">
+                              <td className="max-w-[280px]">
                                 {nt.message}
                               </td>
-                              <td className="py-3.5 px-4 text-[13px] text-[#333] ![border-bottom:1px_solid_#ececf6] align-middle">
+                              <td>
                                 <span
-                                  className={`inline-flex items-center gap-1.5 px-2 py-[3px] rounded-full text-[11px] font-semibold border ${
-                                    isUnread
-                                      ? "bg-amber-50 text-amber-500 border-amber-200"
-                                      : "bg-emerald-50 text-emerald-500 border-emerald-200"
-                                  }`}
+                                  className={`inline-flex items-center gap-1.5 px-2 py-[3px] rounded-full text-[11px] font-semibold border ${isUnread
+                                    ? "bg-amber-50 text-amber-500 border-amber-200"
+                                    : "bg-emerald-50 text-emerald-500 border-emerald-200"
+                                    }`}
                                 >
                                   <i className="fa-solid fa-circle text-[6px]" />
                                   {status}
                                 </span>
                               </td>
-                              <td className="py-3.5 px-4 text-[13px] text-[#333] ![border-bottom:1px_solid_#ececf6] align-middle text-center">
+                              <td className="text-center">
                                 <button
                                   onClick={() => deleteNotification(nt._id)}
-                                  className="w-8 h-8 rounded-full bg-slate-100 inline-flex items-center justify-center cursor-pointer hover:bg-red-50 hover:text-red-500 transition-colors duration-150 border-0"
+                                  className="btn-profile-danger-icon"
                                   title="Delete Notification"
                                 >
                                   <i className="fa-solid fa-trash text-[12px] text-red-400" />
@@ -225,11 +239,10 @@ const Notifications = ({ HomeNavigate, BackButton }) => {
                         return (
                           <li key={page}>
                             <button
-                              className={`w-9 h-9 flex items-center justify-center rounded-lg text-[13px] font-medium ${
-                                currentPage === page
-                                  ? "bg-[#8059ca] text-white"
-                                  : "border border-[#ececf6] text-[#666] hover:bg-[#faf9fe]"
-                              }`}
+                              className={`w-9 h-9 flex items-center justify-center rounded-lg text-[13px] font-medium ${currentPage === page
+                                ? "bg-[#8059ca] text-white"
+                                : "border border-[#ececf6] text-[#666] hover:bg-[#faf9fe]"
+                                }`}
                               onClick={() => handlePageChange(page)}
                             >
                               {page}

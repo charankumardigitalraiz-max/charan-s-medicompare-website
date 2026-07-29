@@ -127,15 +127,35 @@ const MyReports = ({ HomeNavigate }) => {
   return (
     <div className="w-full">
       <div className="col-lg-12">
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-5 mt-2">
-          <div className="flex items-center gap-3">
-            <i className="fa-solid fa-shopping-bag text-[#8059ca] text-[20px] shrink-0" />
-            <div className="flex flex-col gap-0.5">
-              <h4 className="m-0 text-slate-800 font-bold text-[18px] md:text-[20px] tracking-tight leading-none">My Reports</h4>
-              <p className="text-slate-500 text-[12px] md:text-[13px] m-0 font-medium">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pb-2 mb-2 border-b border-slate-100 mt-2">
+          <div className="flex items-center gap-3.5">
+            {HomeNavigate && <HomeNavigate />}
+            <div className="w-11 h-11 rounded-xl bg-purple-50 text-[#8059ca] flex items-center justify-center text-[20px] shrink-0 border border-purple-100/50 shadow-sm">
+              <i className="fa-solid fa-shopping-bag" />
+            </div>
+
+            {/* <div className="flex flex-col gap-1">
+              <div className="m-0 text-[#0f172a] text-[18px] md:text-[20px] tracking-tight leading-none" style={{ fontWeight: 600 }}>
+                My Reports
+              </div>
+              <p className="text-slate-500 text-[12px] m-0 font-medium leading-none">
                 View and manage all your reports
               </p>
+            </div> */}
+
+
+
+
+            <div className="flex flex-col gap-1">
+              <div className="m-0 text-[#0f172a] font-medium text-[16px] md:text-[16px] tracking-tight leading-none" >
+                My Reports
+              </div>
+              <div className="text-slate-500 text-[12px] m-0 font-medium leading-none">
+                View and manage all your reports
+              </div>
             </div>
+
+
           </div>
           <div className="flex items-center gap-3 w-full sm:w-auto">
             <div className="relative w-full sm:w-[260px] shrink-0">
@@ -150,7 +170,6 @@ const MyReports = ({ HomeNavigate }) => {
                 <i className="fa-solid fa-search" />
               </span>
             </div>
-            {HomeNavigate && <HomeNavigate />}
           </div>
         </div>
 
@@ -186,11 +205,10 @@ const MyReports = ({ HomeNavigate }) => {
                           );
                           return (
                             <span
-                              className={`text-[11px] px-2.5 py-1 rounded-xl font-semibold ${
-                                !hasPendingReport
-                                  ? "bg-[#d7f5e8] text-[#00a86b]"
-                                  : "bg-[#ffe9d6] text-[#ff7a00]"
-                              }`}
+                              className={`text-[11px] px-2.5 py-1 rounded-xl font-semibold ${!hasPendingReport
+                                ? "bg-[#d7f5e8] text-[#00a86b]"
+                                : "bg-[#ffe9d6] text-[#ff7a00]"
+                                }`}
                             >
                               {!hasPendingReport ? "READY" : "PENDING"}
                             </span>

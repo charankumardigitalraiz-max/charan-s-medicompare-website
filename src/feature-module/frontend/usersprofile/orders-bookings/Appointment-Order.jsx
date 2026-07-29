@@ -11,7 +11,7 @@ import { toast } from "react-hot-toast";
 import OrderFeedbackOffcanvas from "../AppointmentFeedbackModal";
 import AppointmentOrderCard from "./components/AppointmentOrderCard";
 import { useNavigate } from "react-router";
-
+import BaseModal from "../../../../components/ui/BaseModal";
 
 // Styles migrated to Tailwind CSS
 
@@ -972,49 +972,44 @@ const AppoitmentsOrders = ({ HomeNavigate, ServiceTabs }) => {
     return "Unknown Patient";
   };
 
+  const onClose = () => {
+    setShowModel(false)
+  }
+
   return (
     <div className="w-full">
       <div className="col-lg-12">
         {/* Header */}
-        <div className="mb-5 mt-2">
-          {/* Main header row */}
-          <div className="flex items-center justify-between gap-3">
-            {/* Left: icon + title */}
-            <div className="flex items-center gap-3 min-w-0">
-              <i className="fa-solid fa-calendar-check text-[#8059ca] text-[20px] shrink-0" />
-              <div className="flex flex-col gap-0.5 min-w-0">
-                <h4 className="m-0 text-slate-800 font-bold text-[16px] md:text-[18px] tracking-tight leading-none">My Appointments</h4>
-                <p className="text-slate-500 text-[11px] md:text-[12px] m-0 font-medium hidden sm:block">
-                  View and manage all your appointments
-                </p>
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pb-2 mb-2 border-b border-slate-100 mt-2">
+          <div className="flex items-center gap-3.5">
+            {HomeNavigate && <HomeNavigate />}
+            <div className="w-11 h-11 rounded-xl bg-purple-50 text-[#8059ca] flex items-center justify-center text-[20px] shrink-0 border border-purple-100/50 shadow-sm">
+              <i className="fa-solid fa-calendar-check" />
+            </div>
+
+
+            {/* <div className="flex flex-col gap-1">
+              <div className="m-0 text-[#0f172a] text-[18px] md:text-[20px] tracking-tight leading-none" style={{ fontWeight: 600 }}>
+                My Appointments
+              </div>
+              <p className="text-slate-500 text-[12px] m-0 font-medium leading-none">
+                View and manage all your appointments
+              </p>
+            </div> */}
+
+
+            <div className="flex flex-col gap-1">
+              <div className="m-0 text-[#0f172a] font-medium text-[16px] md:text-[16px] tracking-tight leading-none" >
+                My Appointments
+              </div>
+              <div className="text-slate-500 text-[12px] m-0 font-medium leading-none">
+                View and manage all your appointments
               </div>
             </div>
-            {/* Right: search (desktop) + HomeNavigate (hamburger on mobile, home icon always) */}
-            <div className="flex items-center gap-2 shrink-0">
-              <div className="relative hidden sm:block w-[240px]">
-                <input
-                  type="text"
-                  placeholder="Search by Order ID"
-                  value={searchTerm}
-                  onChange={(e) => {
-                    setSearchTerm(e.target.value);
-                    setCurrentPage(1);
-                  }}
-                  className="h-[38px] rounded-lg border border-slate-200 pl-9 pr-3 text-[13px] w-full outline-none bg-slate-50 hover:bg-white hover:border-[#8059ca] focus:bg-white focus:border-[#8059ca] transition-all duration-200"
-                />
-                <span className="absolute left-[12px] top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none text-[13px]">
-                  <i className="fa-solid fa-search" />
-                </span>
-              </div>
-              {HomeNavigate && <HomeNavigate />}
-            </div>
+
           </div>
-          {/* Mobile-only: subtitle + full-width search bar */}
-          <div className="sm:hidden mt-2 flex flex-col gap-2">
-            <p className="text-slate-500 text-[11px] m-0 font-medium">
-              View and manage all your appointments
-            </p>
-            <div className="relative w-full">
+          <div className="flex items-center gap-3 w-full sm:w-auto">
+            <div className="relative w-full sm:w-[260px] shrink-0">
               <input
                 type="text"
                 placeholder="Search by Order ID"
@@ -1249,138 +1244,166 @@ const AppoitmentsOrders = ({ HomeNavigate, ServiceTabs }) => {
         </div>
 
         {showModel && (
-          <div
-            onClick={() => setShowModel(false)}
-            style={{
-              position: "fixed", top: 0, left: 0, right: 0, bottom: 0,
-              backgroundColor: "rgba(15, 23, 42, 0.55)",
-              backdropFilter: "blur(6px)",
-              zIndex: 999999999,
-              display: "flex", alignItems: "center", justifyContent: "center",
-              padding: "16px",
-            }}
-          >
-            <div
-              onClick={(e) => e.stopPropagation()}
-              style={{
-                width: "100%", maxWidth: "580px", maxHeight: "90vh",
-                display: "flex", flexDirection: "column",
-                background: "#fff", borderRadius: "22px",
-                overflow: "hidden", boxShadow: "0 24px 60px rgba(15, 23, 42, 0.16)",
-              }}
-            >
-              {/* HEADER */}
-              <div style={{
-                padding: "18px 20px 14px", borderBottom: "1px solid #f0f0f0",
-                display: "flex", alignItems: "flex-start", justifyContent: "space-between", flexShrink: 0,
-              }}>
-                <div>
-                  <div className="d-flex align-items-center gap-2 flex-wrap">
-                    <div style={{ fontWeight: 700, fontSize: "16px", color: "#222" }}>Appointment Details</div>
-                    {selectedOrder && (
-                      <span
-                        className={`status-badge ${getOrderStatusMeta(selectedOrder.orderStatus).badgeClass}`}
-                        style={{ fontSize: "10px", padding: "2px 8px" }}
-                      >
-                        {getOrderStatusMeta(selectedOrder.orderStatus).label || "N/A"}
-                      </span>
-                    )}
-                  </div>
-                  <div style={{ fontSize: "11px", color: "#888", marginTop: "2px" }}>#{selectedOrder?.orderId || "N/A"}</div>
-                </div>
-                <div className="d-flex align-items-center gap-2">
-                  {/* <button
-                        onClick={downloadInvoice}
-                        style={{
-                          background: "#f5f3ff", border: "none", borderRadius: "8px",
-                          padding: "6px 12px", display: "flex", alignItems: "center",
-                          gap: "6px", cursor: "pointer", color: "#8059ca", fontSize: "12px",
-                          fontWeight: 600,
-                        }}
-                      >
-                        <i className="fas fa-file-download" /> Invoice
-                      </button> */}
-                  <button onClick={() => setShowModel(false)} style={{
-                    background: "#f5f3ff", border: "none", borderRadius: "50%",
-                    width: "30px", height: "30px", display: "flex", alignItems: "center",
-                    justifyContent: "center", cursor: "pointer", color: "#8059ca", fontSize: "18px", flexShrink: 0,
-                  }}>&times;</button>
+
+          <BaseModal
+            show={showModel}
+            onClose={onClose}
+            title={
+              <div className="flex flex-col">
+                <span className="text-[15px] md:text-[17px] font-semibold text-slate-900">
+                  Appointment Details
+                </span>
+                <div className="flex flex-wrap items-center gap-2 mt-1">
+                  <span
+                    className={`status-badge ${getOrderStatusMeta(selectedOrder.orderStatus).badgeClass}`}
+                  >
+                    {getOrderStatusMeta(selectedOrder.orderStatus).label || "N/A"}
+                  </span>
+
+                  <span className="text-[11px] text-slate-500">
+                    #{selectedOrder?.orderId || "N/A"}
+                  </span>
                 </div>
               </div>
+            }
+            size="lg"
+            className="max-w-3xl"
+            bodyClassName="!p-4 md:!p-5"
+            headerClassName="border-b border-slate-200 pb-4"
+          >
 
-              {/* SCROLLABLE BODY */}
-              <div style={{ overflowY: "auto", flex: 1, padding: "20px" }}>
-
-                {/* ITEMS */}
-                {selectedOrder?.groupDetails?.length > 0 && (
-                  <div style={{ marginBottom: "20px" }}>
-                    <div style={{ fontSize: "10px", fontWeight: 700, color: "#8059ca", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "10px" }}>
-                      Patients & Tests
+            {/* <div
+              onClick={() => setShowModel(false)}
+              style={{
+                position: "fixed", top: 0, left: 0, right: 0, bottom: 0,
+                backgroundColor: "rgba(15, 23, 42, 0.55)",
+                backdropFilter: "blur(6px)",
+                zIndex: 999999999,
+                display: "flex", alignItems: "center", justifyContent: "center",
+                padding: "16px",
+              }}
+            >
+              <div
+                onClick={(e) => e.stopPropagation()}
+                style={{
+                  width: "100%", maxWidth: "580px", maxHeight: "90vh",
+                  display: "flex", flexDirection: "column",
+                  background: "#fff", borderRadius: "22px",
+                  overflow: "hidden", boxShadow: "0 24px 60px rgba(15, 23, 42, 0.16)",
+                }}
+              > */}
+            {/* HEADER */}
+            {/* <div style={{
+                  padding: "18px 20px 14px", borderBottom: "1px solid #f0f0f0",
+                  display: "flex", alignItems: "flex-start", justifyContent: "space-between", flexShrink: 0,
+                }}>
+                  <div>
+                    <div className="d-flex align-items-center gap-2 flex-wrap">
+                      <div style={{ fontWeight: 700, fontSize: "16px", color: "#222" }}>Appointment Details</div>
+                      {selectedOrder && (
+                        <span
+                          className={`status-badge ${getOrderStatusMeta(selectedOrder.orderStatus).badgeClass}`}
+                          style={{ fontSize: "10px", padding: "2px 8px" }}
+                        >
+                          {getOrderStatusMeta(selectedOrder.orderStatus).label || "N/A"}
+                        </span>
+                      )}
                     </div>
-                    {selectedOrder.groupDetails.map((group, groupIndex) => {
-                      const groupItems = group?.items || [];
-                      const patientName =
-                        group?.patientDetails?.name ||
-                        getPatientName(group, selectedOrder) ||
-                        `Patient ${groupIndex + 1}`;
-                      const patientRelationship = group?.patientDetails?.relationship || "";
-
-                      return (
-                        <div key={group._id || groupIndex} style={{
-                          background: "#faf9fe", border: "1px solid #f1eff9",
-                          borderRadius: "12px", padding: "12px", marginBottom: "12px",
-                        }}>
-                          <div className="d-flex justify-content-between align-items-center mb-2 flex-wrap gap-2">
-                            <div className="d-flex align-items-center gap-2">
-                              <div style={{
-                                width: "28px", height: "28px", borderRadius: "50%",
-                                background: "#efe7ff", color: "#8059ca", display: "flex",
-                                alignItems: "center", justifyContent: "center", fontWeight: 700, fontSize: "12px"
-                              }}>
-                                {(patientName || "P").charAt(0).toUpperCase()}
-                              </div>
-                              <div>
-                                <span style={{ fontSize: "13px", fontWeight: 600, color: "#333", textTransform: "capitalize" }}>{patientName}</span>
-                                {patientRelationship && (
-                                  <span style={{ fontSize: "10px", color: "#8059ca", background: "#f5f3ff", padding: "1px 6px", borderRadius: "10px", marginLeft: "6px", fontWeight: 500, textTransform: "capitalize" }}>
-                                    {patientRelationship}
-                                  </span>
-                                )}
-                              </div>
-                            </div>
-                            {group.totalTests != null && (
-                              <span style={{ fontSize: "11px", fontWeight: 600, color: "#8059ca", background: "#f5f3ff", padding: "2px 8px", borderRadius: "6px" }}>
-                                {group.totalTests} {group.totalTests === 1 ? "Test" : "Tests"}
-                              </span>
-                            )}
-                          </div>
-                          <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-                            {groupItems.length > 0 ? (
-                              groupItems.map((orderItem, itemIndex) =>
-                                renderOrderItemCard(orderItem, `${groupIndex}-${itemIndex}`)
-                              )
-                            ) : (
-                              <div style={{ fontSize: "12px", color: "#999", padding: "8px", textAlign: "center" }}>
-                                No products found for this member.
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      );
-                    })}
+                    <div style={{ fontSize: "11px", color: "#888", marginTop: "2px" }}>#{selectedOrder?.orderId || "N/A"}</div>
                   </div>
-                )}
+                  <div className="d-flex align-items-center gap-2">
+                    <button
+                      onClick={downloadInvoice}
+                      style={{
+                        background: "#f5f3ff", border: "none", borderRadius: "8px",
+                        padding: "6px 12px", display: "flex", alignItems: "center",
+                        gap: "6px", cursor: "pointer", color: "#8059ca", fontSize: "12px",
+                        fontWeight: 600,
+                      }}
+                    >
+                      <i className="fas fa-file-download" /> Invoice
+                    </button>
+                    <button onClick={() => setShowModel(false)} style={{
+                      background: "#f5f3ff", border: "none", borderRadius: "50%",
+                      width: "30px", height: "30px", display: "flex", alignItems: "center",
+                      justifyContent: "center", cursor: "pointer", color: "#8059ca", fontSize: "18px", flexShrink: 0,
+                    }}>&times;</button>
+                  </div>
+                </div> */}
+
+            {/* SCROLLABLE BODY */}
+            <div className="space-y-5">
+
+              {/* ITEMS */}
+              {selectedOrder?.groupDetails?.length > 0 && (
+                <div style={{ marginBottom: "20px" }}>
+                  <div style={{ fontSize: "10px", fontWeight: 700, color: "#8059ca", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "10px" }}>
+                    Patients & Tests
+                  </div>
+                  {selectedOrder.groupDetails.map((group, groupIndex) => {
+                    const groupItems = group?.items || [];
+                    const patientName =
+                      group?.patientDetails?.name ||
+                      getPatientName(group, selectedOrder) ||
+                      `Patient ${groupIndex + 1}`;
+                    const patientRelationship = group?.patientDetails?.relationship || "";
+
+                    return (
+                      <div key={group._id || groupIndex} style={{
+                        background: "#faf9fe", border: "1px solid #f1eff9",
+                        borderRadius: "12px", padding: "12px", marginBottom: "12px",
+                      }}>
+                        <div className="d-flex justify-content-between align-items-center mb-2 flex-wrap gap-2">
+                          <div className="d-flex align-items-center gap-2">
+                            <div style={{
+                              width: "28px", height: "28px", borderRadius: "50%",
+                              background: "#efe7ff", color: "#8059ca", display: "flex",
+                              alignItems: "center", justifyContent: "center", fontWeight: 700, fontSize: "12px"
+                            }}>
+                              {(patientName || "P").charAt(0).toUpperCase()}
+                            </div>
+                            <div>
+                              <span style={{ fontSize: "13px", fontWeight: 600, color: "#333", textTransform: "capitalize" }}>{patientName}</span>
+                              {patientRelationship && (
+                                <span style={{ fontSize: "10px", color: "#8059ca", background: "#f5f3ff", padding: "1px 6px", borderRadius: "10px", marginLeft: "6px", fontWeight: 500, textTransform: "capitalize" }}>
+                                  {patientRelationship}
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                          {group.totalTests != null && (
+                            <span style={{ fontSize: "11px", fontWeight: 600, color: "#8059ca", background: "#f5f3ff", padding: "2px 8px", borderRadius: "6px" }}>
+                              {group.totalTests} {group.totalTests === 1 ? "Test" : "Tests"}
+                            </span>
+                          )}
+                        </div>
+                        <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+                          {groupItems.length > 0 ? (
+                            groupItems.map((orderItem, itemIndex) =>
+                              renderOrderItemCard(orderItem, `${groupIndex}-${itemIndex}`)
+                            )
+                          ) : (
+                            <div style={{ fontSize: "12px", color: "#999", padding: "8px", textAlign: "center" }}>
+                              No products found for this member.
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
 
 
-                {selectedOrder?.items?.length > 0 && (
-                  <div style={{ marginBottom: "20px" }}>
-                    {selectedOrder.items.map((group, groupIndex) => {
-                      return (
-                        <div key={group._id || groupIndex} style={{
-                          background: "#faf9fe", border: "1px solid #f1eff9",
-                          borderRadius: "12px", padding: "12px", marginBottom: "12px",
-                        }}>
-                          {/* <div className="d-flex justify-content-between align-items-center mb-2 flex-wrap gap-2">
+              {selectedOrder?.items?.length > 0 && (
+                <div style={{ marginBottom: "20px" }}>
+                  {selectedOrder.items.map((group, groupIndex) => {
+                    return (
+                      <div key={group._id || groupIndex} style={{
+                        background: "#faf9fe", border: "1px solid #f1eff9",
+                        borderRadius: "12px", padding: "12px", marginBottom: "12px",
+                      }}>
+                        {/* <div className="d-flex justify-content-between align-items-center mb-2 flex-wrap gap-2">
                                 <div className="d-flex align-items-center gap-2">
                                   <div style={{
                                     width: "28px", height: "28px", borderRadius: "50%",
@@ -1404,114 +1427,114 @@ const AppoitmentsOrders = ({ HomeNavigate, ServiceTabs }) => {
                                   </span>
                                 )}
                               </div> */}
-                          <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-                            {group && (
-                              renderOrderItemCard(group, `${groupIndex}`)  // ✅
-                            )}
-                          </div>
+                        <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+                          {group && (
+                            renderOrderItemCard(group, `${groupIndex}`)  // ✅
+                          )}
                         </div>
-                      );
-                    })}
-                  </div>
-                )}
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
 
-                {/* DOCTOR DETAILS */}
-                <div style={{ marginBottom: "20px" }}>
-                  <div style={{ fontSize: "10px", fontWeight: 700, color: "#8059ca", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "10px" }}>
-                    Referral Details
-                  </div>
-                  <div style={{ background: "#faf9fe", borderRadius: "12px", padding: "12px", border: "1px solid #f1eff9" }}>
-                    <div style={{ fontSize: "10px", color: "#aaa", marginBottom: "2px" }}>Doctor Name</div>
-                    <div style={{ fontSize: "13px", fontWeight: 600, color: "#333", textTransform: "capitalize" }}>
-                      {selectedOrder?.doctorName && selectedOrder?.doctorId ? selectedOrder.doctorName : "Self Referral"}
-                    </div>
+              {/* DOCTOR DETAILS */}
+              <div style={{ marginBottom: "20px" }}>
+                <div style={{ fontSize: "10px", fontWeight: 700, color: "#8059ca", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "10px" }}>
+                  Referral Details
+                </div>
+                <div style={{ background: "#faf9fe", borderRadius: "12px", padding: "12px", border: "1px solid #f1eff9" }}>
+                  <div style={{ fontSize: "10px", color: "#aaa", marginBottom: "2px" }}>Doctor Name</div>
+                  <div style={{ fontSize: "13px", fontWeight: 600, color: "#333", textTransform: "capitalize" }}>
+                    {selectedOrder?.doctorName && selectedOrder?.doctorId ? selectedOrder.doctorName : "Self Referral"}
                   </div>
                 </div>
+              </div>
 
-                {/* APPOINTMENT SCHEDULE */}
-                {selectedOrder?.selectedDate && selectedOrder?.selectedTimeSlot && (
-                  <div style={{ marginBottom: "20px" }}>
-                    <div style={{ fontSize: "10px", fontWeight: 700, color: "#8059ca", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "10px" }}>
-                      Appointment Schedule
-                    </div>
-                    <div className="row g-2">
-                      {[
-                        {
-                          label: "Selected Date",
-                          value: (() => {
-                            try {
-                              const d = new Date(selectedOrder.selectedDate);
-                              return isNaN(d.getTime())
-                                ? selectedOrder.selectedDate
-                                : d.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" });
-                            } catch (_) {
-                              return selectedOrder.selectedDate;
-                            }
-                          })()
-                        },
-                        { label: "Selected Slot", value: selectedOrder.selectedTimeSlot },
-                      ].map(({ label, value }) => (
-                        <div className="col-6" key={label}>
-                          <div style={{ background: "#faf9fe", borderRadius: "8px", padding: "8px 12px", border: "1px solid #f1eff9" }}>
-                            <div style={{ fontSize: "10px", color: "#aaa", marginBottom: "2px" }}>{label}</div>
-                            <div style={{ fontSize: "12px", fontWeight: 600, color: "#333", textTransform: "capitalize" }}>{value}</div>
-                          </div>
+              {/* APPOINTMENT SCHEDULE */}
+              {selectedOrder?.selectedDate && selectedOrder?.selectedTimeSlot && (
+                <div style={{ marginBottom: "20px" }}>
+                  <div style={{ fontSize: "10px", fontWeight: 700, color: "#8059ca", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "10px" }}>
+                    Appointment Schedule
+                  </div>
+                  <div className="row g-2">
+                    {[
+                      {
+                        label: "Selected Date",
+                        value: (() => {
+                          try {
+                            const d = new Date(selectedOrder.selectedDate);
+                            return isNaN(d.getTime())
+                              ? selectedOrder.selectedDate
+                              : d.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" });
+                          } catch (_) {
+                            return selectedOrder.selectedDate;
+                          }
+                        })()
+                      },
+                      { label: "Selected Slot", value: selectedOrder.selectedTimeSlot },
+                    ].map(({ label, value }) => (
+                      <div className="col-6" key={label}>
+                        <div style={{ background: "#faf9fe", borderRadius: "8px", padding: "8px 12px", border: "1px solid #f1eff9" }}>
+                          <div style={{ fontSize: "10px", color: "#aaa", marginBottom: "2px" }}>{label}</div>
+                          <div style={{ fontSize: "12px", fontWeight: 600, color: "#333", textTransform: "capitalize" }}>{value}</div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* BILL SUMMARY */}
+              <div>
+                <div style={{ fontSize: "10px", fontWeight: 700, color: "#8059ca", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "10px" }}>
+                  Bill Summary
+                </div>
+                {(() => {
+                  const bs = selectedOrder?.billingSummary || {};
+                  const rows = [
+                    { label: "Subtotal (Inclusive of all Taxes)", value: bs.subtotal ?? 0 },
+                    { label: "Sample Collection Fee", value: bs.sampleCollection ?? bs.samplecollectionCharges ?? 0 },
+                    { label: "GST", value: bs?.tax ?? 0 }
+                  ].filter(r => Number(r.value) > 0);
+                  const coupon = Number(bs.couponAmount || bs?.couponmount || 0);
+                  const total = Number(selectedOrder?.billingSummary?.total);
+                  const wallet = Number(bs.walletAmount || bs.walletamount || selectedOrder?.walletamount || selectedOrder?.walletAmount || 0);
+
+                  const payMethod = (selectedOrder?.paymentmethod ?? selectedOrder?.paymentMethod ?? "").toLowerCase();
+                  const isCOD = payMethod === "cod" || payMethod.includes("cash");
+                  const remainingPayable = Math.max(0, total - wallet);
+
+                  const valWithoutCouponAndWithoutWallet = Number(bs.withoutCouponAndWithoutWallet ?? (Number(bs.subtotal || 0) + Number(bs.deliveryCharge ?? bs.deliveryCharges ?? 0) + Number(bs.sampleCollection ?? bs.samplecollectionCharges ?? 0)));
+                  const valWithCouponAndWithoutWallet = Number(bs.withCouponAndWithoutWallet ?? (valWithoutCouponAndWithoutWallet - coupon));
+                  const valWithoutCouponAndWithWallet = Number(bs.withoutCouponAndWithWallet ?? (valWithoutCouponAndWithoutWallet - wallet));
+                  const valWithCouponAndWithWallet = Number(bs.withCouponAndWithWallet ?? (valWithCouponAndWithoutWallet - wallet));
+
+                  return (
+                    <div style={{ background: "#faf9fe", borderRadius: "12px", padding: "14px 16px", border: "1px solid #f1eff9" }}>
+                      {rows.map(({ label, value }) => (
+                        <div key={label} className="d-flex justify-content-between align-items-center" style={{ marginBottom: "9px", fontSize: "13px" }}>
+                          <span style={{ color: "#666" }}>{label}</span>
+                          <span style={{ fontWeight: 500 }}>₹{Number(value).toFixed(2)}</span>
                         </div>
                       ))}
-                    </div>
-                  </div>
-                )}
-
-                {/* BILL SUMMARY */}
-                <div>
-                  <div style={{ fontSize: "10px", fontWeight: 700, color: "#8059ca", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "10px" }}>
-                    Bill Summary
-                  </div>
-                  {(() => {
-                    const bs = selectedOrder?.billingSummary || {};
-                    const rows = [
-                      { label: "Subtotal (Inclusive of all Taxes)", value: bs.subtotal ?? 0 },
-                      { label: "Sample Collection Fee", value: bs.sampleCollection ?? bs.samplecollectionCharges ?? 0 },
-                      { label: "GST", value: bs?.tax ?? 0 }
-                    ].filter(r => Number(r.value) > 0);
-                    const coupon = Number(bs.couponAmount || bs?.couponmount || 0);
-                    const total = Number(selectedOrder?.billingSummary?.total);
-                    const wallet = Number(bs.walletAmount || bs.walletamount || selectedOrder?.walletamount || selectedOrder?.walletAmount || 0);
-
-                    const payMethod = (selectedOrder?.paymentmethod ?? selectedOrder?.paymentMethod ?? "").toLowerCase();
-                    const isCOD = payMethod === "cod" || payMethod.includes("cash");
-                    const remainingPayable = Math.max(0, total - wallet);
-
-                    const valWithoutCouponAndWithoutWallet = Number(bs.withoutCouponAndWithoutWallet ?? (Number(bs.subtotal || 0) + Number(bs.deliveryCharge ?? bs.deliveryCharges ?? 0) + Number(bs.sampleCollection ?? bs.samplecollectionCharges ?? 0)));
-                    const valWithCouponAndWithoutWallet = Number(bs.withCouponAndWithoutWallet ?? (valWithoutCouponAndWithoutWallet - coupon));
-                    const valWithoutCouponAndWithWallet = Number(bs.withoutCouponAndWithWallet ?? (valWithoutCouponAndWithoutWallet - wallet));
-                    const valWithCouponAndWithWallet = Number(bs.withCouponAndWithWallet ?? (valWithCouponAndWithoutWallet - wallet));
-
-                    return (
-                      <div style={{ background: "#faf9fe", borderRadius: "12px", padding: "14px 16px", border: "1px solid #f1eff9" }}>
-                        {rows.map(({ label, value }) => (
-                          <div key={label} className="d-flex justify-content-between align-items-center" style={{ marginBottom: "9px", fontSize: "13px" }}>
-                            <span style={{ color: "#666" }}>{label}</span>
-                            <span style={{ fontWeight: 500 }}>₹{Number(value).toFixed(2)}</span>
-                          </div>
-                        ))}
-                        {coupon > 0 && (
-                          <div className="d-flex justify-content-between align-items-center" style={{ marginBottom: "9px", fontSize: "13px", color: "#28a745" }}>
-                            <span>Coupon Discount</span>
-                            <span style={{ fontWeight: 600 }}>-₹{coupon.toFixed(2)}</span>
-                          </div>
-                        )}
-                        {wallet > 0 && (
-                          <div className="d-flex justify-content-between align-items-center" style={{ marginBottom: "9px", fontSize: "13px", color: "#28a745" }}>
-                            <span>Wallet Deduction</span>
-                            <span style={{ fontWeight: 600 }}>-₹{wallet.toFixed(2)}</span>
-                          </div>
-                        )}
-                        <div className="d-flex justify-content-between align-items-center" style={{ borderTop: "1.5px dashed #e0daf5", paddingTop: "12px", marginTop: "6px", fontSize: "15px", fontWeight: 700 }}>
-                          <span style={{ color: "#333" }}>{wallet > 0 ? "Total Value" : "Total Amount"}</span>
-                          <span style={{ color: wallet > 0 ? "#333" : "#7c4dc4", fontSize: "16px" }}>₹{total.toFixed(2)}</span>
+                      {coupon > 0 && (
+                        <div className="d-flex justify-content-between align-items-center" style={{ marginBottom: "9px", fontSize: "13px", color: "#28a745" }}>
+                          <span>Coupon Discount</span>
+                          <span style={{ fontWeight: 600 }}>-₹{coupon.toFixed(2)}</span>
                         </div>
-                        {/* 
+                      )}
+                      {wallet > 0 && (
+                        <div className="d-flex justify-content-between align-items-center" style={{ marginBottom: "9px", fontSize: "13px", color: "#28a745" }}>
+                          <span>Wallet Deduction</span>
+                          <span style={{ fontWeight: 600 }}>-₹{wallet.toFixed(2)}</span>
+                        </div>
+                      )}
+                      <div className="d-flex justify-content-between align-items-center" style={{ borderTop: "1.5px dashed #e0daf5", paddingTop: "12px", marginTop: "6px", fontSize: "15px", fontWeight: 700 }}>
+                        <span style={{ color: "#333" }}>{wallet > 0 ? "Total Value" : "Total Amount"}</span>
+                        <span style={{ color: wallet > 0 ? "#333" : "#7c4dc4", fontSize: "16px" }}>₹{total.toFixed(2)}</span>
+                      </div>
+                      {/* 
                             {wallet > 0 && remainingPayable > 0 && !isCOD && (
                               <div className="d-flex justify-content-between align-items-center" style={{ marginTop: "8px", fontSize: "15px", fontWeight: 800, color: "#7c4dc4" }}>
                                 <span>{isCOD ? "Payable via Cash" : "Payable via Online"}</span>
@@ -1519,8 +1542,8 @@ const AppoitmentsOrders = ({ HomeNavigate, ServiceTabs }) => {
                               </div>
                             )} */}
 
-                        {/* Detailed Breakdown for Clarification */}
-                        {/* <div style={{ borderTop: "1px solid #e2e8f0", paddingTop: "10px", marginTop: "12px" }}>
+                      {/* Detailed Breakdown for Clarification */}
+                      {/* <div style={{ borderTop: "1px solid #e2e8f0", paddingTop: "10px", marginTop: "12px" }}>
                               <div style={{ fontSize: "10.5px", fontWeight: 700, color: "#64748b", marginBottom: "8px", textTransform: "uppercase", letterSpacing: "0.5px" }}>Billing Breakdown (Clarification)</div>
                               <div style={{ display: "flex", flexDirection: "column", gap: "6px", background: "#f1f5f9", padding: "10px", borderRadius: "8px", border: "1px solid #e2e8f0" }}>
                                 <div style={{ display: "flex", justifyContent: "space-between", fontSize: "11.5px", color: "#475569" }}>
@@ -1541,14 +1564,15 @@ const AppoitmentsOrders = ({ HomeNavigate, ServiceTabs }) => {
                                 </div>
                               </div>
                             </div> */}
-                      </div>
-                    );
-                  })()}
-                </div>
-
+                    </div>
+                  );
+                })()}
               </div>
+
+              {/* </div>
+              </div> */}
             </div>
-          </div>
+          </BaseModal>
         )}
 
         {/* Vendor Modal */}

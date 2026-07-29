@@ -89,37 +89,35 @@ const ProductsSection = ({
   return (
     <div>
       {/* Products Section Header */}
-      <div className="products-section-header">
-        <div className="products-count">
-          <div className="d-flex align-items-center justify-content-between flex-wrap gap-2">
-            <div className="d-flex align-items-center gap-2 mobile-filter-buttons-container">
-              {/* Mobile Filter Button */}
-              {onOpenFilterDrawer && (
-                <button
-                  type="button"
-                  className="mobile-filter-toggle-btn-inline"
-                  onClick={onOpenFilterDrawer}
-                >
-                  <i className="fas fa-filter"></i>
-                  <span>Filter</span>
-                  {filteredProducts.length > 0 && (
-                    <span className="filter-count-badge-inline">{filteredProducts.length}</span>
-                  )}
-                </button>
-              )}
-              {/* Sort Select - Mobile */}
-              <div className="d-block d-lg-none">
-                <SortSelect
-                  value={sortBy}
-                  onChange={handleSortChange}
-                />
-              </div>
+      <div className="flex items-center justify-between mt-5 mb-6 p-4 bg-white rounded-2xl shadow-sm border border-slate-100 lg:hidden">
+        <div className="flex items-center justify-between flex-wrap gap-2 w-full">
+          <div className="flex items-center gap-2">
+            {/* Mobile Filter Button */}
+            {onOpenFilterDrawer && (
+              <button
+                type="button"
+                className="flex items-center gap-2 px-3.5 py-2 bg-[#8059ca] text-white border-0 rounded-lg text-xs font-semibold cursor-pointer hover:bg-[#6d3fc7] transition-all"
+                onClick={onOpenFilterDrawer}
+              >
+                <i className="fas fa-filter text-[10px]"></i>
+                <span>Filter</span>
+                {filteredProducts.length > 0 && (
+                  <span className="bg-white/20 px-1.5 py-0.5 rounded text-[10px] font-bold">{filteredProducts.length}</span>
+                )}
+              </button>
+            )}
+            {/* Sort Select - Mobile */}
+            <div className="block lg:hidden">
+              <SortSelect
+                value={sortBy}
+                onChange={handleSortChange}
+              />
             </div>
           </div>
         </div>
-        <div className="d-flex align-items-center gap-3">
+        <div className="flex items-center gap-3">
           {/* Sort Select - Desktop */}
-          <div className="d-none d-lg-block">
+          <div className="hidden lg:block">
             <SortSelect
               value={sortBy}
               onChange={handleSortChange}
@@ -130,30 +128,30 @@ const ProductsSection = ({
       </div>
 
       {/* Products Grid */}
-      <div className="row g-2 products-grid-row">
+      <div className={`grid gap-4 items-stretch ${isFull ? "grid-cols-1" : "grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"}`}>
         {(isLoading || isSkeletonLoading || isSorting) && (
           isFull ? (
             Array(8).fill(0).map((_, index) => (
-              <div key={index} className="col-12 mb-2">
-                <div className="product-carddd" style={{ border: '1px solid #eee', padding: '10px', borderRadius: '8px' }}>
-                  <div className="row align-items-center">
-                    <div className="col-md-2 d-flex justify-content-center">
-                      <Skeleton height={80} width={80} />
+              <div key={index} className="w-full">
+                <div className="bg-white border border-slate-100 rounded-2xl p-4 shadow-sm">
+                  <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+                    <div className="md:col-span-2 flex justify-center">
+                      <Skeleton height={80} width={80} className="rounded-xl" />
                     </div>
-                    <div className="col-md-6">
-                      <Skeleton count={1} height={20} width="60%" style={{ marginBottom: '10px' }} />
-                      <div className="d-flex gap-2">
+                    <div className="md:col-span-6 flex flex-col gap-2">
+                      <Skeleton count={1} height={20} width="60%" />
+                      <div className="flex gap-2">
                         <Skeleton height={30} width={80} />
                         <Skeleton height={30} width={80} />
                       </div>
-                      <div className="d-flex flex-wrap gap-2 mt-2">
+                      <div className="flex flex-wrap gap-2">
                         <Skeleton height={20} width={60} />
                         <Skeleton height={20} width={60} />
                         <Skeleton height={20} width={60} />
                       </div>
                     </div>
-                    <div className="col-md-4">
-                      <div className="d-flex justify-content-end gap-2 mb-2">
+                    <div className="md:col-span-4">
+                      <div className="flex justify-end gap-2 mb-2">
                         <Skeleton circle height={35} width={35} />
                         <Skeleton circle height={35} width={35} />
                         <Skeleton circle height={35} width={35} />
@@ -166,14 +164,14 @@ const ProductsSection = ({
             ))
           ) : (
             Array(8).fill(0).map((_, index) => (
-              <div key={index} className="col-12 col-md-6 col-lg-4 col-xl-3">
-                <div className="product-card">
-                  <div className="product-img">
-                    <Skeleton height={200} />
+              <div key={index} className="w-full">
+                <div className="bg-white border border-slate-100 rounded-2xl p-4 shadow-sm flex flex-col gap-4">
+                  <div className="relative aspect-video bg-slate-50 flex items-center justify-center rounded-xl p-4">
+                    <Skeleton height="100%" width="100%" />
                   </div>
-                  <div className="product-content">
-                    <Skeleton count={1} height={20} style={{ marginBottom: '10px' }} />
-                    <Skeleton count={1} height={15} width="60%" style={{ marginBottom: '10px' }} />
+                  <div className="flex flex-col gap-2 p-2">
+                    <Skeleton count={1} height={20} />
+                    <Skeleton count={1} height={15} width="60%" />
                     <Skeleton count={1} height={15} width="40%" />
                   </div>
                 </div>
@@ -183,13 +181,14 @@ const ProductsSection = ({
         )}
 
         {!isLoading && !isSkeletonLoading && !isSorting && sortedProducts.length === 0 && (
-          <div className="col-12 products-empty">
+          <div className="col-span-full flex flex-col items-center justify-center p-12 bg-white rounded-2xl shadow-sm border border-slate-100 text-center">
             <img
               src="https://cdni.iconscout.com/illustration/premium/thumb/data-not-found-illustration-svg-download-png-9404367.png"
               alt="No Data Found"
+              className="max-w-[200px] mb-4"
             />
-            <h3>No Products Found</h3>
-            <p>Try adjusting your filters to see more results</p>
+            <h3 className="text-lg font-bold text-slate-800 mb-1">No Products Found</h3>
+            <p className="text-sm text-slate-500">Try adjusting your filters to see more results</p>
           </div>
         )}
 
@@ -229,30 +228,34 @@ const ProductsSection = ({
 
       {/* Pagination */}
       {!isLoading && !isSkeletonLoading && totalPages > 0 && sortedProducts.length > 0 && (
-        <div className="pagination dashboard-pagination" style={{ marginTop: "40px", marginBottom: "20px", display: "flex", justifyContent: "center" }}>
-          <ul>
+        <div className="mt-10 mb-6 flex justify-center">
+          <ul className="flex items-center gap-1.5 list-none p-0 m-0">
             <li>
-              <a
-                className={`page-link ${page <= 1 ? "disabled" : ""}`}
+              <button
+                type="button"
+                className={`flex items-center justify-center w-9 h-9 rounded-lg border border-slate-200 bg-white text-slate-500 hover:border-purple-300 hover:bg-purple-50/20 transition-all ${page <= 1 ? "opacity-40 cursor-not-allowed" : "cursor-pointer"}`}
                 onClick={() => page > 1 && onPageChange(page - 1)}
-                style={{
-                  cursor: page <= 1 ? "not-allowed" : "pointer",
-                  opacity: page <= 1 ? 0.5 : 1
-                }}
+                disabled={page <= 1}
               >
-                <i className="fa-solid fa-chevron-left" />
-              </a>
+                <i className="fa-solid fa-chevron-left text-xs" />
+              </button>
             </li>
 
             {totalPages > 1 && page > 3 && (
               <li>
-                <a className="page-link" onClick={() => onPageChange(1)}>1</a>
+                <button
+                  type="button"
+                  className="flex items-center justify-center min-w-[36px] h-9 px-3 rounded-lg border border-slate-200 bg-white text-slate-600 hover:border-purple-300 hover:bg-purple-50/20 text-sm font-semibold transition-all duration-150 cursor-pointer"
+                  onClick={() => onPageChange(1)}
+                >
+                  1
+                </button>
               </li>
             )}
 
             {totalPages > 1 && page > 4 && (
               <li>
-                <span className="page-link">...</span>
+                <span className="flex items-center justify-center min-w-[36px] h-9 text-slate-400 text-sm font-semibold">...</span>
               </li>
             )}
 
@@ -260,7 +263,12 @@ const ProductsSection = ({
               if (totalPages === 1) {
                 return (
                   <li>
-                    <a className="page-link active">1</a>
+                    <button
+                      type="button"
+                      className="flex items-center justify-center min-w-[36px] h-9 px-3 rounded-lg border bg-[#8059ca] border-[#8059ca] text-white text-sm font-semibold cursor-default"
+                    >
+                      1
+                    </button>
                   </li>
                 );
               }
@@ -274,12 +282,13 @@ const ProductsSection = ({
                 const pageNum = start + i;
                 return (
                   <li key={pageNum}>
-                    <a
-                      className={`page-link ${pageNum === page ? "active" : ""}`}
+                    <button
+                      type="button"
+                      className={`flex items-center justify-center min-w-[36px] h-9 px-3 rounded-lg border text-sm font-semibold transition-all duration-150 cursor-pointer ${pageNum === page ? "bg-[#8059ca] border-[#8059ca] text-white" : "bg-white border-slate-200 text-slate-600 hover:border-purple-300 hover:bg-purple-50/20"}`}
                       onClick={() => onPageChange(pageNum)}
                     >
                       {pageNum}
-                    </a>
+                    </button>
                   </li>
                 );
               });
@@ -287,29 +296,31 @@ const ProductsSection = ({
 
             {totalPages > 1 && page < totalPages - 3 && (
               <li>
-                <span className="page-link">...</span>
+                <span className="flex items-center justify-center min-w-[36px] h-9 text-slate-400 text-sm font-semibold">...</span>
               </li>
             )}
 
             {totalPages > 1 && page < totalPages - 2 && (
               <li>
-                <a className="page-link" onClick={() => onPageChange(totalPages)}>
+                <button
+                  type="button"
+                  className="flex items-center justify-center min-w-[36px] h-9 px-3 rounded-lg border border-slate-200 bg-white text-slate-600 hover:border-purple-300 hover:bg-purple-50/20 text-sm font-semibold transition-all duration-150 cursor-pointer"
+                  onClick={() => onPageChange(totalPages)}
+                >
                   {totalPages}
-                </a>
+                </button>
               </li>
             )}
 
             <li>
-              <a
-                className={`page-link ${page >= totalPages ? "disabled" : ""}`}
+              <button
+                type="button"
+                className={`flex items-center justify-center w-9 h-9 rounded-lg border border-slate-200 bg-white text-slate-500 hover:border-purple-300 hover:bg-purple-50/20 transition-all ${page >= totalPages ? "opacity-40 cursor-not-allowed" : "cursor-pointer"}`}
                 onClick={() => page < totalPages && onPageChange(page + 1)}
-                style={{
-                  cursor: page >= totalPages ? "not-allowed" : "pointer",
-                  opacity: page >= totalPages ? 0.5 : 1
-                }}
+                disabled={page >= totalPages}
               >
-                <i className="fa-solid fa-chevron-right" />
-              </a>
+                <i className="fa-solid fa-chevron-right text-xs" />
+              </button>
             </li>
           </ul>
         </div>

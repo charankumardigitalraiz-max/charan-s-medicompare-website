@@ -1,7 +1,8 @@
 import React, { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import { imgUrl } from "../../Apiservice.jsx";
 import VendorsSection from "./VendorsSection.jsx";
-import { ProductImage, PriceDisplay, ProductDetailField } from "../ui";
+import { ProductImage, PriceDisplay, ProductDetailField, CompareOverlayButton } from "../ui";
 import { getImageUrl } from "../../utils/index.js";
 import { FaRegShareSquare, FaHeart } from "react-icons/fa";
 import { IoIosHeartEmpty } from "react-icons/io";
@@ -40,7 +41,7 @@ const ProductCard = ({
   isFull,
   service,
   id,
-  navigate,
+  navigate: propNavigate,
   selectedVariants,
   expandedVendors,
   onToggleExpand,
@@ -59,6 +60,8 @@ const ProductCard = ({
   onSelectVariant,
   isSidebarOpen = true,
 }) => {
+  const navigate = useNavigate();
+  const location = useLocation();
   const formatCurrency = (value) => Number(value || 0).toFixed(2);
 
   // console.log('product card ', product);
@@ -873,252 +876,79 @@ const ProductCard = ({
   }
   // console.log("product card design issue ", service)
   return (
-    <div className={`${gridClasses} mb-3 mb-md-4 d-flex`}>
+    <div className="w-full flex">
       <div
-        className={`modern-product-card modern-product-card-${service} ${isFull ? "product-card-list-view" : "product-card-vertical h-100"
-          }`}
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          cursor: "pointer",
-          height: isFull ? "auto" : "100%",
-          width: "100%",
-          border: "1px solid #dee2e6",
-          boxShadow: "0 4px 10px rgba(0, 0, 0, 0.05)",
-          borderRadius: "10px",
-          backgroundColor: "#ffffff",
-          transition: "all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)"
-        }}
+        className="flex flex-col bg-white rounded-lg border border-slate-200/80 shadow-sm hover:shadow-md hover:border-purple-300 transition-all duration-300 w-full cursor-pointer overflow-hidden"
         onClick={() => navigate(`/${service}/${id}/${tablet.slug}`)}
       >
         {/* Image Container */}
-        <div className="product-image-container-vertical">
+        <div className="relative w-full h-[135px] bg-slate-50 flex items-center justify-center p-2">
           <ProductImage
             src={getProductImage()}
             alt={tablet.name}
             onClick={() => navigate(`/${service}/${id}/${tablet.slug}`)}
+            containerStyle={{ height: "100%", padding: "4px" }}
           />
 
           {/* Rating Overlay for Grid View */}
-          <div
-            style={{
-              position: "absolute",
-              top: "10px",
-              left: "10px",
-              background: "#ffffff",
-              padding: "2px 8px",
-              borderRadius: "20px",
-              fontSize: "11px",
-              fontWeight: "600",
-              display: "flex",
-              alignItems: "center",
-              gap: "4px",
-              boxShadow: "0 2px 5px rgba(0,0,0,0.1)",
-              border: "1px solid #e0e0e0",
-              zIndex: 10,
-            }}
-          >
+          <div className="absolute top-2.5 left-2.5 bg-white py-0.5 px-2 rounded-full text-[11px] font-semibold flex items-center gap-1 shadow-sm border border-slate-100 z-10">
             <i
               className="fas fa-star text-warning"
               style={{ fontSize: "10px" }}
             ></i>
             <span>{tablet?.averageRating?.toFixed(1) || "0"}</span>
-            <span
-              style={{ color: "#9ca3af", fontWeight: "400", fontSize: "10px" }}
-            >
+            <span className="text-slate-400 font-normal text-[10px]">
               ({tablet?.ratingCount > 0 ? `${tablet.ratingCount}` : "0"})
             </span>
           </div>
 
-          <style>{`
-            @keyframes comparePulse {
-              0% {
-                box-shadow: 0 0 0 0 rgba(128, 89, 202, 0.6);
-              }
-              70% {
-                box-shadow: 0 0 0 6px rgba(128, 89, 202, 0);
-              }
-              100% {
-                box-shadow: 0 0 0 0 rgba(128, 89, 202, 0);
-              }
-            }
-            @keyframes compareAutoExpand {
-              0%, 10%, 40%, 100% {
-                width: 32px;
-              }
-              15%, 35% {
-                width: 90px;
-              }
-            }
-            @keyframes textFadeInOut {
-              0%, 12%, 38%, 100% {
-                opacity: 0;
-              }
-              15%, 35% {
-                opacity: 1;
-              }
-            }
-            .compare-btn-highlight {
-              animation: comparePulse 2s infinite, compareAutoExpand 8s infinite ease-in-out;
-            }
-            .compare-text-label {
-              animation: textFadeInOut 8s infinite ease-in-out;
-            }
-            .compare-btn-highlight:hover {
-              animation: comparePulse 2s infinite !important;
-            }
-            .compare-btn-highlight:hover .compare-text-label {
-              animation: none !important;
-              opacity: 1 !important;
-            }
-          `}</style>
-          <div
-            data-tooltip-id="global-tooltip"
-            // data-tooltip-content="Compare Prices"
-            className="compare-btn-highlight"
-            onClick={(e) => {
-              e.stopPropagation();
-
-              const { category, subcategory, slug } = getSlugs(tablet);
-
-              if (slug) {
-                navigate(
-                  `/${category || service}/${subcategory}/${slug}/compare`,
-                );
-              }
-            }}
-            style={{
-              position: "absolute",
-              top: "10px",
-              right: "10px",
-              background: "#8059ca",
-              color: "#ffffff",
-              border: "1.5px solid #8059ca",
-              borderRadius: "20px",
-              width: "32px",
-              height: "26px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "flex-start",
-              paddingLeft: "9px",
-              cursor: "pointer",
-              zIndex: 10,
-              boxShadow: "0 2px 8px rgba(128, 89, 202, 0.4)",
-              transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-              overflow: "hidden",
-              whiteSpace: "nowrap",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.width = "90px";
-              e.currentTarget.style.backgroundColor = "#6a45b3";
-              e.currentTarget.style.borderColor = "#6a45b3";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.width = "32px";
-              e.currentTarget.style.backgroundColor = "#8059ca";
-              e.currentTarget.style.borderColor = "#8059ca";
-            }}
-          >
-            <i
-              className="fa-solid fa-right-left shrink-0"
-              style={{ fontSize: "11px", color: "inherit" }}
-            ></i>
-            <span
-              className="compare-text-label"
-              style={{
-                marginLeft: "6px",
-                fontSize: "11px",
-                fontWeight: "600",
-                color: "#ffffff",
-                opacity: 0,
-                transition: "opacity 0.2s ease-in-out",
-              }}
-            >
-              Compare
-            </span>
-          </div>
+          <CompareOverlayButton
+            tablet={tablet}
+            serviceType={service}
+          />
         </div>
 
-        <div
-          className="product-card-body"
-          style={{
-            flex: 1,
-            padding: "8px 10px",
-            display: "flex",
-            flexDirection: "column",
-            gap: "2px",
-          }}
-        >
-          <div className="d-flex align-items-start justify-content-between">
+        <div className="flex-1 p-3 flex flex-col gap-2">
+          <div className="flex items-start justify-between">
             <div
-              className="product-title text-capitalize"
+              className="text-[13px] font-semibold leading-[18px] text-slate-800 text-capitalize line-clamp-2 overflow-hidden text-ellipsis max-h-[36px] w-full"
               title={tablet.name || ""}
-              style={{
-                fontSize: "13px",
-                fontWeight: "500",
-                lineHeight: "1.4",
-                margin: 0,
-                color: "#0f172a",
-                letterSpacing: "-0.01em",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                display: "-webkit-box",
-                WebkitLineClamp: 2,
-                WebkitBoxOrient: "vertical",
-              }}
             >
               {tablet.name}
             </div>
             <div
-              className="d-flex align-items-center gap-1 ms-2"
-              style={{ flexShrink: 0, marginTop: "2px" }}
+              className="flex items-center gap-1.5 ml-2 shrink-0 mt-0.5"
               onClick={(e) => e.stopPropagation()}
             >
               <div
-                className="action-icon-btn"
+                className="w-7 h-7 !rounded-full bg-slate-100/80 hover:bg-red-50 flex items-center justify-center transition-all duration-150 shadow-[0_2px_4px_rgba(0,0,0,0.06)] border border-slate-200/60"
                 onClick={(e) => {
                   e.stopPropagation();
                   onToggleFavourite(tablet._id);
                 }}
               >
                 {tablet.isFavorite ? (
-                  <FaHeart size={16} color="#ef4444" />
+                  <FaHeart size={14} color="#ef4444" />
                 ) : (
-                  <IoIosHeartEmpty size={16} color="#9ca3af" />
+                  <IoIosHeartEmpty size={14} color="#9ca3af" />
                 )}
               </div>
               <div
-                className="action-icon-btn"
+                className="w-7 h-7 !rounded-full bg-slate-100/80 hover:bg-purple-50 flex items-center justify-center transition-all duration-150 shadow-[0_2px_4px_rgba(0,0,0,0.06)] border border-slate-200/60"
                 onClick={(e) => {
                   e.stopPropagation();
                   onShare(product);
                 }}
               >
-                <FaRegShareSquare size={15} color="#9ca3af" />
+                <FaRegShareSquare size={13} color="#9ca3af" />
               </div>
             </div>
           </div>
 
-          <div
-            className="d-flex align-items-center justify-content-between"
-            style={{ gap: "4px", minWidth: 0 }}
-          >
+          <div className="flex items-center justify-between gap-1 mt-1 min-w-0">
             {tablet?.manufacture?.name && (
               <span
-                style={{
-                  fontSize: "10.5px",
-                  color: "#8059ca",
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  whiteSpace: "nowrap",
-                  letterSpacing: "0.02em",
-                  background: "#f5f3ff",
-                  padding: "2px 8px",
-                  borderRadius: "6px",
-                  border: "1px solid rgba(125, 46, 255, 0.1)",
-                  display: "inline-block",
-                  maxWidth: "100%",
-                }}
+                className="text-[10px] text-[#8059ca] bg-purple-50/50 border border-purple-100 px-2 py-0.5 rounded-md font-medium tracking-wide truncate max-w-full inline-block"
                 title={tablet.manufacture.name}
               >
                 By {tablet.manufacture.name}
@@ -1127,8 +957,8 @@ const ProductCard = ({
             <div></div>
           </div>
 
-          {/* Product Details Grid — max 3 fields shown */}
-          <div className="product-details-grid">
+          {/* Product Details Grid */}
+          <div className="flex flex-col gap-1 text-xs text-slate-500 mt-1">
             {(() => {
               const allFields = [
                 { label: "Form", value: tablet?.form },
@@ -1153,34 +983,35 @@ const ProductCard = ({
                   : []),
               ];
 
-              const visibleFields = allFields.filter((f) => !!f.value).slice(0, 3);
-
-              return visibleFields.map((field, idx) => (
-                <DetailRow key={idx} label={field.label} value={field.value} />
-              ));
+              return allFields
+                .filter((f) => f.value && String(f.value).trim() !== "")
+                .map((field, idx) => (
+                  <div
+                    key={idx}
+                    className="flex justify-between items-center bg-slate-50/50 px-2 py-1 rounded-lg"
+                  >
+                    <span className="text-[10px] text-slate-400 font-medium uppercase tracking-wider">
+                      {field.label}
+                    </span>
+                    <span className="text-[11px] font-semibold text-slate-700 truncate max-w-[150px]" title={field.value}>
+                      {field.value}
+                    </span>
+                  </div>
+                ));
             })()}
 
             {tablet?.variant &&
               Array.isArray(tablet.variant) &&
               tablet.variant.length > 0 && (
-                <div className="detail-item-compact variant-select-item">
+                <div className="col-span-2 mt-1">
                   <select
-                    className="variant-select-minimal"
+                    className="w-full h-7 px-2 py-0.5 border border-slate-200 rounded-lg text-[11px] bg-white outline-none focus:border-[#8059ca]"
                     value={String(selectedVariantId)}
                     onChange={(e) => {
                       e.stopPropagation();
                       onSelectVariant && onSelectVariant(e.target.value, tablet);
                     }}
                     onClick={(e) => e.stopPropagation()}
-                    style={{
-                      outline: "none",
-                      fontSize: "11px",
-                      padding: "2px 4px",
-                      width: "100%",
-                      height: "24px",
-                      border: "1px solid #dee2e6",
-                      borderRadius: "4px",
-                    }}
                   >
                     {tablet.variant.map((v) => (
                       <option key={v._id} value={String(v._id)}>
@@ -1192,7 +1023,7 @@ const ProductCard = ({
               )}
           </div>
 
-          <div className={`d-flex ${isFull ? "" : "mt-auto"}`}>
+          <div className={`flex ${isFull ? "" : "mt-auto pt-2"}`}>
             {currentPrice && (
               <PriceDisplay
                 price={currentPrice}

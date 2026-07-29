@@ -196,37 +196,7 @@ const ProfileSideBar = () => {
     }
   };
 
-  const HomeNavigate = () => (
-    <div className="flex items-center gap-2">
-      {/* Mobile Menu Icon — only visible below lg breakpoint */}
-      <button
-        onClick={() => setIsMobileDrawerOpen(true)}
-        className="lg:hidden w-10 h-10 rounded-[10px] bg-[#8059ca] text-white border-0 flex items-center justify-center cursor-pointer shadow-[0_4px_12px_rgba(125,46,255,0.3)] transition-all duration-300 shrink-0"
-        onMouseEnter={(e) => {
-          e.currentTarget.style.transform = "scale(1.05)";
-          e.currentTarget.style.boxShadow = "0 6px 16px rgba(125,46,255,0.4)";
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.transform = "scale(1)";
-          e.currentTarget.style.boxShadow = "0 4px 12px rgba(125,46,255,0.3)";
-        }}
-        aria-label="Open menu"
-      >
-        <i className="fa-solid fa-bars" style={{ fontSize: "18px" }}></i>
-      </button>
-      {/* Home breadcrumb */}
-      <ol className="flex items-center gap-2 list-none p-0 m-0 text-[13px] text-[#6c757d]">
-        <li>
-          <Link
-            to="/"
-            className="flex items-center justify-center w-8 h-8 rounded-lg bg-[#f1f3f5] text-[#6f42c1] no-underline transition-[background] duration-200"
-          >
-            <i className="isax isax-home-15" style={{ fontSize: "16px" }} />
-          </Link>
-        </li>
-      </ol>
-    </div>
-  );
+  const HomeNavigate = () => null;
 
   // Reusable Sidebar Content Component
   const SidebarContent = ({ onItemClick }) => (
@@ -431,7 +401,7 @@ const ProfileSideBar = () => {
                       handleSectionChange(item.id, e);
                       if (onItemClick) onItemClick();
                     }}
-                    className="flex items-center py-2 pl-4 no-underline relative transition-all duration-300 border-b border-black/[0.03]"
+                    className="flex items-center py-2 pl-4 no-underline relative transition-all duration-300 border-b border-black/[0.03] group"
                     style={{
                       color: isActive ? "#8059ca" : "#555",
                       backgroundColor: isActive ? "rgba(125,46,255,0.08)" : "transparent",
@@ -453,7 +423,7 @@ const ProfileSideBar = () => {
                     }}
                   >
                     <i
-                      className={`${item.icon} mr-3 transition-transform duration-300 text-black`}
+                      className={`${item.icon} mr-3 transition-colors duration-300 ${isActive ? "!text-[#8059ca]" : "!text-slate-500 group-hover:!text-[#8059ca]"}`}
                       style={{ fontSize: "18px", width: "22px" }}
                     />
                     <span
@@ -479,7 +449,7 @@ const ProfileSideBar = () => {
                 style={{ borderLeft: "3px solid transparent" }}
               >
                 <i
-                  className="isax isax-logout mr-3"
+                  className="isax isax-logout mr-3 !text-[#ff4757]"
                   style={{ fontSize: "18px", width: "22px" }}
                 />
                 <span className="text-[14px] font-semibold">Logout</span>
@@ -550,18 +520,18 @@ const ProfileSideBar = () => {
       </div>
 
       {/* Page Content */}
-      <div className="content doctor-content">
-        <div className="container-fluid">
-          <div className="row">
+      <div className="content doctor-content !pb-12 !pt-4 lg:!pt-6 !px-4 md:!px-6 !bg-white min-h-[calc(100vh-200px)]">
+        <div className="max-w-[1400px] mx-auto w-full">
+          <div className="flex flex-col lg:flex-row gap-6 items-start w-full">
             {/* Sidebar — desktop only */}
-            <div className="col-lg-4 col-xl-3 hidden lg:block theiaStickySidebar">
-              <div className="profile-sidebar doctor-sidebar profile-sidebar-new">
+            <div className="hidden lg:block w-[300px] shrink-0 sticky top-[calc(var(--header-height,0px)+var(--nav-height,0px)+16px)]">
+              <div className="profile-sidebar doctor-sidebar profile-sidebar-new bg-white rounded-xl shadow-[0_4px_15px_rgba(0,0,0,0.05)] overflow-hidden">
                 <SidebarContent />
               </div>
             </div>
 
             {/* Main Content */}
-            <div className="col-lg-8 col-xl-9 mt-2 theiaStickySidebar">
+            <div className="w-full flex-1">
               {activeSection === "profile" && (
                 <Profile onProfileUpdate={fetchProfile} HomeNavigate={HomeNavigate} />
               )}
@@ -633,6 +603,19 @@ const ProfileSideBar = () => {
         </div>
       </div>
 
+
+      {/* Mobile Floating Menu Button */}
+      <button
+        onClick={() => setIsMobileDrawerOpen(true)}
+        className="lg:hidden fixed bottom-20 right-6 w-12 h-12 !rounded-[20px] bg-gradient-to-br from-[#8059ca] to-[#9b5dff] text-white border border-white/20 flex items-center justify-center cursor-pointer shadow-[0_8px_20px_rgba(128,89,202,0.35)] transition-all duration-300 z-[99999] hover:scale-105 active:scale-95"
+        aria-label="Open menu"
+      >
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+          <line x1="4" y1="6" x2="20" y2="6" />
+          <line x1="4" y1="12" x2="16" y2="12" />
+          <line x1="4" y1="18" x2="20" y2="18" />
+        </svg>
+      </button>
 
       <Footer />
     </div>

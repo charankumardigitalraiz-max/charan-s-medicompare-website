@@ -723,9 +723,7 @@ const diagnostics = ({
 
                                     <div className="flex-grow-1">
                                       <div className="flex items-center">
-                                        <h6
-                                          className="text-[13px] font-semibold"
-                                        >
+                                        <h6 className="!text-[14px] !sm:text-[9px] !md:text-[12px] !lg:text-[14px] font-semibold text-slate-800 leading-tight">
                                           {vendor.name}
                                         </h6>
                                         {test?.averageRating > 0 && test?.ratingCount > 0 && (

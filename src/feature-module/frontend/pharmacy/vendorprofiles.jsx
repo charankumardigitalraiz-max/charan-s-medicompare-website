@@ -27,7 +27,7 @@ import {
 } from "./utils/shareUtils.js";
 import CategoryProvider from "../../../components/CategoryProvider.jsx";
 import { Offcanvas } from "react-bootstrap";
-import { PriceDisplay, ProductImage } from "../../../components/ui";
+import { PriceDisplay, ProductImage, CompareOverlayButton } from "../../../components/ui";
 import { getDisplayPrice } from "./utils/productUtils.js";
 import { FaRegShareSquare, FaHeart, FaExchangeAlt, FaStar } from "react-icons/fa";
 import { IoIosHeartEmpty } from "react-icons/io";
@@ -55,25 +55,35 @@ const DetailRow = ({ label, value, title }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   if (!value) return null;
 
+  const isClickable = value.length > 25;
+
   return (
     <div
-      className={`detail-item-compact ${isExpanded ? "is-expanded" : ""}`}
+      className={`group rounded-[6px] transition-all duration-200 min-h-[22px] min-w-0 relative flex px-2 py-1 w-full hover:bg-[#f5f3ff] hover:border-purple-200 ${isExpanded
+        ? "bg-[#f5f3ff] border border-[#8059ca] flex-col items-start gap-1 z-20 shadow-md"
+        : "flex-row items-center justify-between gap-[6px]"
+        } ${isClickable ? "cursor-pointer" : "cursor-default"}`}
       onClick={(e) => {
+        if (!isClickable) return;
         e.stopPropagation();
         setIsExpanded(!isExpanded);
       }}
-      style={{
-        cursor: value.length > 25 ? "pointer" : "default",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        padding: "4px 8px",
-        width: "100%"
-      }}
       title={title || value}
     >
-      <span className="detail-label" style={{ fontSize: "11px", fontWeight: "500", color: "#6b7280", textTransform: "capitalize", letterSpacing: "0.02em" }}>{label}</span>
-      <span className="detail-value" style={{ fontSize: "11.5px", fontWeight: "500", color: "#1f2937", textAlign: "right" }}>{value}</span>
+      <span
+        className={`text-[11px] font-[500] capitalize tracking-[0.04em] whitespace-nowrap shrink-0 transition-colors ${isExpanded ? "text-[#8059ca]" : "text-[#6b7280]"
+          }`}
+      >
+        {label}
+      </span>
+      <span
+        className={`text-[11.5px] font-[500] text-[#1f2937] leading-[1.2] transition-all ${isExpanded
+          ? "text-left whitespace-normal max-w-full break-all"
+          : "text-right whitespace-nowrap flex-1 min-w-0 overflow-hidden text-ellipsis"
+          }`}
+      >
+        {value}
+      </span>
     </div>
   );
 };
@@ -594,20 +604,13 @@ const VendorProfile = () => {
       ) : (
         <>
           <label
-            className="form-label"
-            style={{ fontSize: "16px", fontWeight: "600" }}
+            className="form-label text-[16px] font-[600]"
           >
             Categories
           </label>
 
           <ul
-            className="list-unstyled mt-2"
-            style={{
-              maxHeight: "300px",
-              overflowX: "hidden",
-              overflowY: "auto",
-              scrollbarWidth: "none",
-            }}
+            className="list-unstyled mt-2 max-h-[300px] overflow-x-hidden overflow-y-auto scrollbar-none"
           >
             {categories.length === 0 ? (
               <li className="py-2 text-muted">No categories available</li>
@@ -615,8 +618,7 @@ const VendorProfile = () => {
               categories.slice(0, categoriesToShow).map((cat, index) => (
                 <li key={cat._id || index} className="py-2">
                   <div
-                    className="d-flex align-items-center w-100"
-                    style={{ cursor: "pointer" }}
+                    className="d-flex align-items-center w-100 cursor-pointer"
                     onClick={() => {
                       if (activeCategory.id === cat._id) {
                         setActiveCategory({ id: null, slug: null });
@@ -634,22 +636,10 @@ const VendorProfile = () => {
                         }
                         alt={cat.name}
                         title={cat.name}
-                        style={{
-                          width: "24px",
-                          height: "24px",
-                          objectFit: "contain",
-                          marginRight: "10px",
-                          borderRadius: "4px",
-                          fontWeight: "500",
-                        }}
+                        className="w-6 h-6 object-contain mr-[10px] rounded-[4px] font-[500]"
                       />
                       <span
-                        className="text-truncate"
-                        style={{
-                          fontSize: "13px",
-                          fontWeight: "500",
-                          color: "#000",
-                        }}
+                        className="text-truncate text-[13px] font-[500] text-black"
                       >
                         {cat.name}
                       </span>
@@ -668,8 +658,7 @@ const VendorProfile = () => {
                           className={`fa-solid ${activeCategory.id === cat._id
                             ? "fa-minus"
                             : "fa-plus"
-                            }`}
-                          style={{ fontSize: "12px" }}
+                            } text-[12px]`}
                         />
                       )}
                     </div>
@@ -681,19 +670,10 @@ const VendorProfile = () => {
                         subcategories?.map((sub) => (
                           <li
                             key={sub._id || sub.slug}
-                            className="py-1 text-muted"
-                            style={{ cursor: "pointer" }}
+                            className="py-1 text-muted cursor-pointer"
                           >
                             <label
-                              style={{
-                                display: "flex",
-                                alignItems: "center",
-                                gap: "10px",
-                                fontSize: "12px",
-                                fontWeight: "500",
-                                color: "#374151",
-                                cursor: "pointer",
-                              }}
+                              className="flex items-center gap-[10px] text-[12px] font-[500] text-[#374151] cursor-pointer"
                             >
                               <input
                                 type="checkbox"
@@ -710,8 +690,7 @@ const VendorProfile = () => {
                         ))
                       ) : (
                         <li
-                          className="py-1 text-muted"
-                          style={{ fontSize: "12px" }}
+                          className="py-1 text-muted text-[12px]"
                         >
                           No subcategories found
                         </li>
@@ -725,12 +704,7 @@ const VendorProfile = () => {
           {categories.length > categoriesToShow && (
             <div className="text-center mt-2">
               <span
-                className="text-primary"
-                style={{
-                  cursor: "pointer",
-                  fontSize: "12px",
-                  textDecoration: "underline",
-                }}
+                className="text-primary cursor-pointer text-[12px] underline"
                 onClick={() =>
                   setCategoriesToShow(
                     categoriesToShow === 6 ? categories.length : 6,
@@ -754,19 +728,12 @@ const VendorProfile = () => {
           </div> */}
           <hr />
           <label
-            className="form-label"
-            style={{ fontSize: "16px", fontWeight: "600" }}
+            className="form-label text-[16px] font-[600]"
           >
             Brands
           </label>
           <ul
-            className="list-unstyled mt-2"
-            style={{
-              maxHeight: "300px",
-              overflowX: "hidden",
-              overflowY: "auto",
-              scrollbarWidth: "none",
-            }}
+            className="list-unstyled mt-2 max-h-[300px] overflow-x-hidden overflow-y-auto scrollbar-none"
           >
             {Brands.length === 0 ? (
               <li className="py-2 text-muted">No brands available</li>
@@ -774,8 +741,7 @@ const VendorProfile = () => {
               Brands.slice(0, brandsToShow).map((brand, index) => (
                 <li key={brand._id || brand.slug || index} className="py-2">
                   <div
-                    className="d-flex align-items-center w-100"
-                    style={{ cursor: "pointer" }}
+                    className="d-flex align-items-center w-100 cursor-pointer"
                     onClick={() => {
                       const checkbox = document.getElementById(
                         `brand-${brand.slug}`,
@@ -790,20 +756,13 @@ const VendorProfile = () => {
                       <input
                         type="checkbox"
                         id={`brand-${brand.slug}`}
-                        className="form-check-input me-2"
-                        style={{ cursor: "pointer" }}
+                        className="form-check-input me-2 cursor-pointer"
                         checked={selectedBrands.includes(brand.slug)}
                         onChange={() => handleBrandToggle(brand.slug)}
                         onClick={(e) => e.stopPropagation()}
                       />
                       <span
-                        className="text-truncate"
-                        style={{
-                          fontSize: "13px",
-                          fontWeight: "500",
-                          color: "#000",
-                          cursor: "pointer",
-                        }}
+                        className="text-truncate text-[13px] font-[500] text-black cursor-pointer"
                       >
                         {brand.name}
                       </span>
@@ -816,12 +775,7 @@ const VendorProfile = () => {
           {Brands.length > brandsToShow && (
             <div className="text-center mt-2">
               <span
-                className="text-primary"
-                style={{
-                  cursor: "pointer",
-                  fontSize: "12px",
-                  textDecoration: "underline",
-                }}
+                className="text-primary cursor-pointer text-[12px] underline"
                 onClick={() =>
                   setBrandsToShow(brandsToShow === 6 ? Brands.length : 6)
                 }
@@ -863,14 +817,14 @@ const VendorProfile = () => {
       <Home2Header />
       <CategoryProvider />
 
-      <div className="breadcrumb-bar">
-        <div className="breadcrumbb-bggg">
-          <img src={breadcrumbBg} />
+      <div className="relative overflow-hidden bg-[#f9fbff] pt-[35px] pb-[28px] md:pt-[35px] md:pb-[28px] bottom-[2px] z-[1]">
+        <div className="absolute inset-0 z-[1] after:content-[''] after:absolute after:inset-0 after:bg-white/30">
+          <img className="w-full h-full object-cover" src={breadcrumbBg} />
         </div>
-        <div className="breadcrumbb-contentt">
+        <div className="relative z-[2] px-[15px] py-0 sm:pt-[27px] sm:pr-[16px] sm:pb-0 sm:pl-[13px]">
           <div className="row align-items-center">
             <div className="col-lg-8">
-              <nav aria-label="breadcrumb d-none d-lg-block">
+              {/* <nav aria-label="breadcrumb d-none d-lg-block">
                 <ol className="breadcrumb d-flex align-items-center mb-0">
                   <li className="breadcrumb-item">
                     <Link to="/" className="text-decoration-none">
@@ -885,7 +839,7 @@ const VendorProfile = () => {
                     Vendor
                   </li>
                 </ol>
-              </nav>
+              </nav> */}
               <div
                 style={{ position: "relative" }}
                 className="d-none d-lg-block"
@@ -901,16 +855,16 @@ const VendorProfile = () => {
                 />
               </div>
               <h2
-                className="breadcrumbb-title text-dark text-center d-none d-lg-block"
-                style={{ position: "relative", left: "150px" }}
+                className="breadcrumbb-title text-dark text-center d-none d-lg-block relative left-[150px] !text-[30px] font-[700] text-[#0a2540]"
               >
                 Trusted Excellence <br /> in Healthcare
               </h2>
             </div>
             <div className="col-lg-4">
-              <div className="hospital-cardd">
-                <div className="hospital-logoo">
+              <div className="bg-white rounded-[14px] p-[18px_20px] flex items-center gap-[15px] shadow-[0_12px_30px_rgba(0,0,0,0.12)] max-w-[360px] ml-auto lg:ml-auto lg:mt-0 mt-5 mx-auto">
+                <div className="w-[70px] h-[70px] rounded-[10px] bg-[#f0f7ff] flex items-center justify-center shrink-0">
                   <img
+                    className="w-[70px]"
                     src={
                       getImageUrl(
                         data?.bussinessdetails?.bussiness_image?.[0]?.url,
@@ -919,26 +873,26 @@ const VendorProfile = () => {
                   />
                 </div>
                 <div>
-                  <div className="hospital-name">
+                  <div className="font-[700] mb-1 text-black">
                     {" "}
                     {data?.bussinessdetails?.name}
                   </div>
-                  <div className="ratingss">
+                  <div className="text-[#f5a623] text-[14px]">
                     {data?.averageRating ? (
                       <>
                         {"★".repeat(Math.floor(data.averageRating))}
                         {data.averageRating % 1 >= 0.5 ? "☆" : ""}
                         <strong>{data.averageRating.toFixed(1)}</strong>
-                        <span>({data.ratingCount} reviews)</span>
+                        <span className="text-[#6b7280] text-[13px]">({data.ratingCount} reviews)</span>
                       </>
                     ) : (
                       <>
                         ★★★★☆ <strong>4.8</strong>
-                        <span>(0 reviews)</span>
+                        <span className="text-[#6b7280] text-[13px]">(0 reviews)</span>
                       </>
                     )}
                   </div>
-                  <div className="orderss">{data?.totalOrders ? `${data.totalOrders}+ Orders` : ""}</div>
+                  <div className="text-[13px] text-[#6b7280] mt-1">{data?.totalOrders ? `${data.totalOrders}+ Orders` : ""}</div>
                 </div>
               </div>
             </div>
@@ -967,7 +921,7 @@ const VendorProfile = () => {
         </div>
 
         <div className="row">
-          <div className="col-lg-3 mb-4 d-none d-lg-block" style={{ position: "sticky", top: "100px", alignSelf: "flex-start", zIndex: 10 }}>
+          <div className="col-lg-3 mb-4 d-none d-lg-block sticky top-[100px] self-start z-10">
             <div className="card shadow-sm p-3">
               {FilterContent()}
             </div>
@@ -981,22 +935,12 @@ const VendorProfile = () => {
                   {selectedSubcategories.map((slug, index) => (
                     <div
                       key={index}
-                      className="d-flex align-items-center"
-                      style={{
-                        background: "#b284fe38",
-                        borderRadius: "16px",
-                        padding: "4px 10px",
-                        fontSize: "12px",
-                        color: "black",
-                        cursor: "pointer",
-                        whiteSpace: "nowrap",
-                      }}
+                      className="d-flex align-items-center bg-[#b284fe38] rounded-[16px] p-[4px_10px] text-[12px] text-black cursor-pointer whitespace-nowrap"
                     >
                       {subcategories.find((sub) => sub.slug === slug)?.name ||
                         slug}
                       <button
-                        className="btn btn-link p-0 ms-1 text-secondary"
-                        style={{ fontSize: "10px", lineHeight: "1" }}
+                        className="btn btn-link p-0 ms-1 text-secondary text-[10px] leading-[1]"
                         onClick={() => handleSubcategoryToggle(slug)}
                       >
                         ×
@@ -1006,20 +950,11 @@ const VendorProfile = () => {
                   {selectedBrands.map((slug, index) => (
                     <div
                       key={index}
-                      className="d-flex align-items-center"
-                      style={{
-                        background: "#f8f9fa",
-                        borderRadius: "16px",
-                        padding: "4px 10px",
-                        fontSize: "12px",
-                        cursor: "pointer",
-                        whiteSpace: "nowrap",
-                      }}
+                      className="d-flex align-items-center bg-[#f8f9fa] rounded-[16px] p-[4px_10px] text-[12px] cursor-pointer whitespace-nowrap"
                     >
                       {Brands.find((brand) => brand.slug === slug)?.name || slug}
                       <button
-                        className="btn btn-link p-0 ms-1 text-secondary"
-                        style={{ fontSize: "10px", lineHeight: "1" }}
+                        className="btn btn-link p-0 ms-1 text-secondary text-[10px] leading-[1]"
                         onClick={() => handleBrandToggle(slug)}
                       >
                         ×
@@ -1027,8 +962,7 @@ const VendorProfile = () => {
                     </div>
                   ))}
                   <button
-                    className="btn btn-sm btn-outline-secondary"
-                    style={{ fontSize: "12px", padding: "4px 10px" }}
+                    className="btn btn-sm btn-outline-secondary text-[12px] p-[4px_10px]"
                     onClick={() => {
                       setSelectedSubcategories([]);
                       setSelectedBrands([]);
@@ -1077,16 +1011,7 @@ const VendorProfile = () => {
                         {/* Section Header */}
                         <div className="col-12 mt-4 mb-2">
                           <h3
-                            className="category-section-title"
-                            style={{
-                              fontSize: "18px",
-                              fontWeight: "700",
-                              color: "#0f172a",
-                              borderLeft: "4px solid #b284fe",
-                              paddingLeft: "12px",
-                              marginBottom: "15px",
-                              letterSpacing: "-0.01em"
-                            }}
+                            className="category-section-title text-[18px] font-[700] text-[#0f172a] border-l-4 border-l-[#b284fe] pl-[12px] mb-[15px] tracking-[-0.01em]"
                           >
                             {categoryName}
                           </h3>
@@ -1126,23 +1051,23 @@ const VendorProfile = () => {
                               className="col-xxl-3 col-md-4 d-flex mb-3 mb-md-4"
                             >
                               <div
-                                className="modern-product-card product-card-vertical h-100 w-100"
+                                className="modern-product-card product-card-vertical h-100 w-100 flex flex-col cursor-pointer h-full min-h-0 border border-[#dee2e6] shadow-[0_4px_10px_rgba(0,0,0,0.05)] rounded-[10px] bg-white transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.8,0.25,1)]"
                                 onClick={() => handleProductClick(products)}
-                                style={{
-                                  display: "flex",
-                                  flexDirection: "column",
-                                  cursor: "pointer",
-                                  height: "100%",
-                                  minHeight: "auto",
-                                  border: "1px solid #dee2e6",
-                                  boxShadow: "0 4px 10px rgba(0, 0, 0, 0.05)",
-                                  borderRadius: "10px",
-                                  backgroundColor: "#ffffff",
-                                  transition: "all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)"
-                                }}
+                              // style={{
+                              //   display: "flex",
+                              //   flexDirection: "column",
+                              //   cursor: "pointer",
+                              //   height: "100%",
+                              //   minHeight: "auto",
+                              //   border: "1px solid #dee2e6",
+                              //   boxShadow: "0 4px 10px rgba(0, 0, 0, 0.05)",
+                              //   borderRadius: "10px",
+                              //   backgroundColor: "#ffffff",
+                              //   transition: "all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)"
+                              // }}
                               >
                                 {/* Image Container */}
-                                <div className="product-image-container-vertical" style={{ position: "relative", overflow: "hidden", background: "#f8fafc", borderTopLeftRadius: "10px", borderTopRightRadius: "10px" }}>
+                                <div className="product-image-container-vertical relative overflow-hidden bg-[#f8fafc] rounded-t-[10px]">
                                   <ProductImage
                                     src={resolveTabletImage(tablet)}
                                     alt={tablet?.name || "Product"}
@@ -1151,209 +1076,50 @@ const VendorProfile = () => {
 
                                   {/* Rating Overlay */}
                                   <div
-                                    style={{
-                                      position: "absolute",
-                                      top: "10px",
-                                      left: "10px",
-                                      background: "#ffffff",
-                                      padding: "2px 8px",
-                                      borderRadius: "20px",
-                                      fontSize: "11px",
-                                      fontWeight: "600",
-                                      display: "flex",
-                                      alignItems: "center",
-                                      gap: "4px",
-                                      boxShadow: "0 2px 5px rgba(0,0,0,0.1)",
-                                      border: "1px solid #e0e0e0",
-                                      zIndex: 10,
-                                    }}
+                                    className="absolute top-[10px] left-[10px] bg-white px-2 py-0.5 rounded-[20px] text-[11px] font-[600] flex items-center gap-1 shadow-[0_2px_5px_rgba(0,0,0,0.1)] border border-[#e0e0e0] z-10"
                                   >
                                     <FaStar
-                                      className="text-warning"
-                                      style={{ fontSize: "10px" }}
+                                      className="text-warning text-[10px]"
                                     />
                                     <span>{tablet?.averageRating?.toFixed(1) || "0"}</span>
                                     <span
-                                      style={{ color: "#9ca3af", fontWeight: "400", fontSize: "10px" }}
+                                      className="text-[#9ca3af] font-[400] text-[10px]"
                                     >
                                       ({tablet?.ratingCount > 0 ? `${tablet.ratingCount}` : "0"})
                                     </span>
                                   </div>
 
                                   {/* Compare Overlay Button */}
-                                  <style>{`
-                                    @keyframes comparePulse {
-                                      0% {
-                                        box-shadow: 0 0 0 0 rgba(128, 89, 202, 0.6);
-                                      }
-                                      70% {
-                                        box-shadow: 0 0 0 6px rgba(128, 89, 202, 0);
-                                      }
-                                      100% {
-                                        box-shadow: 0 0 0 0 rgba(128, 89, 202, 0);
-                                      }
-                                    }
-                                    @keyframes compareAutoExpand {
-                                      0%, 10%, 40%, 100% {
-                                        width: 32px;
-                                      }
-                                      15%, 35% {
-                                        width: 90px;
-                                      }
-                                    }
-                                    @keyframes textFadeInOut {
-                                      0%, 12%, 38%, 100% {
-                                        opacity: 0;
-                                      }
-                                      15%, 35% {
-                                        opacity: 1;
-                                      }
-                                    }
-                                    .compare-btn-highlight {
-                                      animation: comparePulse 2s infinite, compareAutoExpand 8s infinite ease-in-out;
-                                    }
-                                    .compare-text-label {
-                                      animation: textFadeInOut 8s infinite ease-in-out;
-                                    }
-                                    .compare-btn-highlight:hover {
-                                      animation: comparePulse 2s infinite !important;
-                                    }
-                                    .compare-btn-highlight:hover .compare-text-label {
-                                      animation: none !important;
-                                      opacity: 1 !important;
-                                    }
-                                  `}</style>
-                                  <div
-                                    data-tooltip-id="global-tooltip"
-                                    className="compare-btn-highlight"
-                                    onClick={(e) => {
-                                      e.stopPropagation();
-                                      const { category, subcategory, slug } = getSlugs(tablet);
-                                      if (slug) {
-                                        navigate(
-                                          `/${category || serviceType}/${subcategory}/${slug}/compare`,
-                                        );
-                                      }
-                                    }}
-                                    style={{
-                                      position: "absolute",
-                                      top: "10px",
-                                      right: "10px",
-                                      background: "#8059ca",
-                                      color: "#ffffff",
-                                      border: "1.5px solid #8059ca",
-                                      borderRadius: "20px",
-                                      width: "32px",
-                                      height: "26px",
-                                      display: "flex",
-                                      alignItems: "center",
-                                      justifyContent: "flex-start",
-                                      paddingLeft: "9px",
-                                      cursor: "pointer",
-                                      zIndex: 10,
-                                      boxShadow: "0 2px 8px rgba(128, 89, 202, 0.4)",
-                                      transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-                                      overflow: "hidden",
-                                      whiteSpace: "nowrap",
-                                    }}
-                                    onMouseEnter={(e) => {
-                                      e.currentTarget.style.width = "90px";
-                                      e.currentTarget.style.backgroundColor = "#6a45b3";
-                                      e.currentTarget.style.borderColor = "#6a45b3";
-                                    }}
-                                    onMouseLeave={(e) => {
-                                      e.currentTarget.style.width = "32px";
-                                      e.currentTarget.style.backgroundColor = "#8059ca";
-                                      e.currentTarget.style.borderColor = "#8059ca";
-                                    }}
-                                  >
-                                    <FaExchangeAlt
-                                      style={{ fontSize: "11px", color: "inherit", flexShrink: 0 }}
-                                    />
-                                    <span
-                                      className="compare-text-label"
-                                      style={{
-                                        marginLeft: "6px",
-                                        fontSize: "11px",
-                                        fontWeight: "600",
-                                        color: "#ffffff",
-                                        opacity: 0,
-                                        transition: "opacity 0.2s ease-in-out",
-                                      }}
-                                    >
-                                      Compare
-                                    </span>
-                                  </div>
+                                  <CompareOverlayButton
+                                    tablet={tablet}
+                                    serviceType={serviceType}
+                                  />
                                 </div>
 
                                 {/* Card Body */}
                                 <div
-                                  className="product-card-body"
-                                  style={{
-                                    flex: 1,
-                                    padding: "8px 10px",
-                                    display: "flex",
-                                    flexDirection: "column",
-                                    gap: "2px",
-                                  }}
+                                  className="product-card-body flex-grow flex flex-col gap-0.5 p-[8px_10px]"
                                 >
-                                  <div className="d-flex align-items-start justify-content-between" style={{ width: "100%", gap: "8px" }}>
-                                    <div style={{ display: "flex", flexDirection: "column", gap: "2px", flex: 1, minWidth: 0 }}>
+                                  <div className="d-flex align-items-start justify-content-between w-full gap-2">
+                                    <div className="flex flex-col gap-0.5 flex-1 min-w-0">
                                       <div
-                                        className="product-title text-capitalize"
+                                        className="product-title text-capitalize text-[13px] font-[500] leading-[1.3] m-0 text-[#0f172a] tracking-[-0.01em] whitespace-nowrap overflow-hidden text-ellipsis block"
                                         title={tablet.name || ""}
-                                        style={{
-                                          fontSize: "13px",
-                                          fontWeight: "500",
-                                          lineHeight: "1.3",
-                                          margin: 0,
-                                          color: "#0f172a",
-                                          letterSpacing: "-0.01em",
-                                          whiteSpace: "nowrap",
-                                          overflow: "hidden",
-                                          textOverflow: "ellipsis",
-                                          display: "block",
-                                        }}
                                       >
                                         {tablet.name}
                                       </div>
-                                      {/* Price Display */}
-                                      {/* {CurrentPrice && (
-                                        <div className="d-flex align-items-center flex-wrap" style={{ fontFamily: "Poppins", marginTop: "2px", gap: "6px" }}>
-                                          <span style={{ display: "flex", alignItems: "center", gap: "3px" }}>
-                                            <span style={{ fontSize: "11px", fontWeight: "600", color: "#64748b" }}>
-                                              MRP
-                                            </span>
-                                            <strong style={{ color: "#0f172a", fontSize: "13px", fontWeight: "700" }}>
-                                              ₹{typeof FinalAmount === "number" ? FinalAmount.toFixed(2) : FinalAmount}
-                                            </strong>
-                                          </span>
-                                          {hasDiscount && (
-                                            <>
-                                              <span style={{ fontSize: "11px", color: "#94a3b8", textDecoration: "line-through" }}>
-                                                ₹{typeof CurrentPrice === "number" ? CurrentPrice.toFixed(2) : CurrentPrice}
-                                              </span>
-                                              <span style={{ fontSize: "10px", fontWeight: "600", color: "#16a34a" }}>
-                                                {discountPercent}% OFF
-                                              </span>
-                                            </>
-                                          )}
-                                        </div>
-                                      )} */}
                                     </div>
 
                                     <div
-                                      className="d-flex align-items-center gap-1 ms-2"
-                                      style={{ flexShrink: 0, marginTop: "2px" }}
+                                      className="d-flex align-items-center gap-1 ms-2 shrink-0 mt-[2px]"
                                       onClick={(e) => e.stopPropagation()}
                                     >
                                       <div
-                                        className="action-icon-btn"
+                                        className="action-icon-btn cursor-pointer p-1"
                                         onClick={(e) => {
                                           e.stopPropagation();
                                           handleToggleFavourite(tablet._id, tablet.isFavorite);
                                         }}
-                                        style={{ cursor: "pointer", padding: "4px" }}
                                       >
                                         {tablet.isFavorite ? (
                                           <FaHeart size={16} color="#ef4444" />
@@ -1362,35 +1128,21 @@ const VendorProfile = () => {
                                         )}
                                       </div>
                                       <div
-                                        className="action-icon-btn"
+                                        className="action-icon-btn cursor-pointer p-1"
                                         onClick={(e) => {
                                           e.stopPropagation();
                                           handleShare(products);
                                         }}
-                                        style={{ cursor: "pointer", padding: "4px" }}
                                       >
                                         <FaRegShareSquare size={15} color="#9ca3af" />
                                       </div>
                                     </div>
                                   </div>
 
-                                  <div className="d-flex align-items-center justify-content-between" style={{ gap: "4px", minWidth: 0 }}>
+                                  <div className="d-flex align-items-center justify-content-between gap-1 min-w-0">
                                     {(tablet?.brands?.name || tablet?.brand?.name || tablet?.manufacture?.name) && (
                                       <span
-                                        style={{
-                                          fontSize: "10.5px",
-                                          color: "#8059ca",
-                                          overflow: "hidden",
-                                          textOverflow: "ellipsis",
-                                          whiteSpace: "nowrap",
-                                          letterSpacing: "0.02em",
-                                          background: "#f5f3ff",
-                                          padding: "2px 8px",
-                                          borderRadius: "6px",
-                                          border: "1px solid rgba(125, 46, 255, 0.1)",
-                                          display: "inline-block",
-                                          maxWidth: "100%",
-                                        }}
+                                        className="text-[10.5px] text-[#8059ca] overflow-hidden text-ellipsis whitespace-nowrap tracking-[0.02em] bg-[#f5f3ff] px-2 py-0.5 rounded-[6px] border border-[rgba(125,46,255,0.1)] inline-block max-w-full"
                                         title={tablet?.brands?.name || tablet?.brand?.name || tablet?.manufacture?.name}
                                       >
                                         By {tablet?.brands?.name || tablet?.brand?.name || tablet?.manufacture?.name}
@@ -1399,7 +1151,7 @@ const VendorProfile = () => {
                                   </div>
 
                                   {/* Product Details Grid */}
-                                  <div className="product-details-grid" style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
+                                  <div className="product-details-grid flex flex-col gap-0.5">
                                     {(() => {
                                       const specs = [
                                         { label: "Composition", value: tablet?.compositions?.name },
@@ -1431,18 +1183,18 @@ const VendorProfile = () => {
 
                                   {/* Equipments Section */}
                                   {tablet?.equipmentType?.length > 0 && (
-                                    <div className="mt-2 pt-2 border-top" style={{ borderTop: "1px dashed #eaeaea" }}>
-                                      <div className="mb-1 d-flex align-items-center" style={{ fontSize: "11px", color: "#6b7280" }}>
-                                        <span style={{ fontSize: "11px", fontWeight: "600", textTransform: "uppercase", letterSpacing: "0.02em" }}>Equipments:</span>
+                                    <div className="mt-2 pt-2 border-t border-dashed border-t-[#eaeaea]">
+                                      <div className="mb-1 d-flex align-items-center text-[11px] text-[#6b7280]">
+                                        <span className="text-[11px] font-[600] uppercase tracking-[0.02em]">Equipments:</span>
                                       </div>
                                       <div className="d-flex flex-wrap gap-1">
                                         {tablet.equipmentType.slice(0, 3).map((item, index) => (
-                                          <span key={index} className="badge bg-light text-dark border px-2 py-1" style={{ fontSize: "9px", borderRadius: "4px" }}>
+                                          <span key={index} className="badge bg-light text-dark border px-2 py-1 text-[9px] rounded-[4px]">
                                             {item}
                                           </span>
                                         ))}
                                         {tablet.equipmentType.length > 3 && (
-                                          <span className="badge bg-light text-secondary border px-2 py-1" style={{ fontSize: "9px", borderRadius: "4px" }}>
+                                          <span className="badge bg-light text-secondary border px-2 py-1 text-[9px] rounded-[4px]">
                                             +{tablet.equipmentType.length - 3} More
                                           </span>
                                         )}
@@ -1458,7 +1210,7 @@ const VendorProfile = () => {
                     ));
                   })()
                 ) : (
-                  <p className="text-center mt-4" style={{ fontSize: "20px" }}>
+                  <p className="text-center mt-4 text-[20px]">
                     No data found
                   </p>
                 )}
@@ -1505,7 +1257,7 @@ const VendorProfile = () => {
                 ) {
                   return (
                     <li key={`dots-${page}`}>
-                      <span className="page-link" style={{ cursor: "default" }}>
+                      <span className="page-link cursor-default">
                         ...
                       </span>
                     </li>
@@ -1533,8 +1285,7 @@ const VendorProfile = () => {
         show={showFilterCanvas}
         onHide={() => setShowFilterCanvas(false)}
         placement="start"
-        className="w-75 w-md-50"
-        style={{ zIndex: "999999" }}
+        className="w-75 w-md-50 z-[999999]"
       >
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>Filters</Offcanvas.Title>

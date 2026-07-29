@@ -19,7 +19,7 @@ const ViewAllPartners = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const itemsPerPage = 9;
+  const itemsPerPage = 12;
 
   const fetchVendors = async () => {
     setIsLoading(true);
@@ -125,7 +125,7 @@ const ViewAllPartners = () => {
       ) : (
         categories.map((cat) => (
           <li key={cat._id || cat.slug} className="py-2">
-            <div className="form-check flex items-center">
+            <div className="form-check  flex flex-row items-center">
               <input
                 className="form-check-input me-2"
                 type="checkbox"

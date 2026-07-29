@@ -10,7 +10,7 @@ import { toast } from "react-hot-toast";
 import OrderFeedbackOffcanvas from "../OrdersReviewModal";
 import CartOrderCard from "./components/CartOrderCard";
 import { useNavigate } from "react-router";
-
+import BaseModal from "../../../../components/ui/BaseModal";
 
 // Styles migrated to Tailwind CSS
 
@@ -771,17 +771,39 @@ const MedicineBookings = ({ HomeNavigate, ServiceTabs }) => {
   };
 
 
+  const onClose = () => {
+    setShowModel(false)
+  }
+
+
   return (
     <div className="w-full">
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-5 mt-2">
-        <div className="flex items-center gap-3">
-          <i className="fa-solid fa-pills text-[#8059ca] text-[20px] shrink-0" />
-          <div className="flex flex-col gap-0.5">
-            <h4 className="m-0 text-slate-800 font-bold text-[18px] md:text-[20px] tracking-tight leading-none">My Orders</h4>
-            <p className="text-slate-500 text-[12px] md:text-[13px] m-0 font-medium">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pb-2 mb-2 border-b border-slate-100 mt-2">
+        <div className="flex items-center gap-3.5">
+          {HomeNavigate && <HomeNavigate />}
+          <div className="w-11 h-11 rounded-xl bg-purple-50 text-[#8059ca] flex items-center justify-center text-[20px] shrink-0 border border-purple-100/50 shadow-sm">
+            <i className="fa-solid fa-pills" />
+          </div>
+
+          {/* <div className="flex flex-col gap-1">
+            <div className="m-0 text-[#0f172a] text-[18px] md:text-[20px] tracking-tight leading-none" style={{ fontWeight: 600 }}>
+              My Orders
+            </div>
+            <p className="text-slate-500 text-[12px] m-0 font-medium leading-none">
               View and manage all your orders
             </p>
+          </div> */}
+
+
+          <div className="flex flex-col gap-1">
+            <div className="m-0 text-[#0f172a] font-medium text-[16px] md:text-[16px] tracking-tight leading-none" >
+              My Orders
+            </div>
+            <div className="text-slate-500 text-[12px] m-0 font-medium leading-none">
+              View and manage all your orders
+            </div>
           </div>
+
         </div>
         <div className="flex items-center gap-3 w-full sm:w-auto">
           <div className="relative w-full sm:w-[260px] shrink-0">
@@ -799,7 +821,6 @@ const MedicineBookings = ({ HomeNavigate, ServiceTabs }) => {
               <i className="fa-solid fa-search" />
             </span>
           </div>
-          {HomeNavigate && <HomeNavigate />}
         </div>
       </div>
       <div
@@ -1049,265 +1070,240 @@ const MedicineBookings = ({ HomeNavigate, ServiceTabs }) => {
       </div>
 
       {showModel && (
-        <div
-          onClick={() => setShowModel(false)}
-          style={{
-            position: "fixed", top: 0, left: 0, right: 0, bottom: 0,
-            backgroundColor: "rgba(15, 23, 42, 0.55)",
-            backdropFilter: "blur(6px)",
-            zIndex: 999999999,
-            display: "flex", alignItems: "center", justifyContent: "center",
-            padding: "16px",
-          }}
+
+
+        <BaseModal
+          show={showModel}
+          onClose={onClose}
+          title={`Order Details - ${getOrderStatusMeta(selectedOrder?.orderStatus).label || "N/A"} (${selectedOrder?.orderId || "N/A"})`}
+          size="md"
+          bodyClassName="!p-0"
+          headerClassName="border-b border-[#f1eff9] pb-3"
         >
-          <div
-            onClick={(e) => e.stopPropagation()}
-            style={{
-              width: "100%", maxWidth: "580px", maxHeight: "90vh",
-              display: "flex", flexDirection: "column",
-              background: "#fff", borderRadius: "22px",
-              overflow: "hidden", boxShadow: "0 24px 60px rgba(15, 23, 42, 0.16)",
-            }}>
-            {/* HEADER */}
-            <div style={{
-              padding: "18px 20px 14px", borderBottom: "1px solid #f0f0f0",
-              display: "flex", alignItems: "flex-start", justifyContent: "space-between", flexShrink: 0,
-            }}>
-              <div>
-                <div style={{ fontWeight: 700, fontSize: "16px", color: "#222" }}>Order Details</div>
-                <div style={{ fontSize: "11px", color: "#888", marginTop: "2px" }}>#{selectedOrder?.orderId || "N/A"}</div>
+          {/* SCROLLABLE BODY */}
+          <div className="space-y-5">
+
+            {/* ITEMS */}
+            {selectedOrder?.items?.length > 0 && (
+              <div style={{ padding: "16px 20px", borderBottom: "1px solid #f5f5f5" }}>
+                {selectedOrder.items.map((orderItem, idx) => {
+
+                  const billingSummary = orderItem?.billingSummary;
+
+                  const itemName =
+                    orderItem?.productSnapshot?.name ||
+                    orderItem?.productDetails?.tabletdetails?.name ||
+                    orderItem?.productDetails?.variantcurrentDetails?.productname ||
+                    orderItem?.packageDetails?.name ||
+                    "Item";
+                  const vendorArr = orderItem?.productSnapshot?.vendorDetails || orderItem?.packageDetails?.vendorDetails;
+                  const vendor0 = Array.isArray(vendorArr) && vendorArr.length > 0 ? vendorArr[0] : null;
+                  const vendorName = vendor0?.name || null;
+                  const vendorImg = vendor0
+                    ? (Array.isArray(vendor0.bussiness_image) ? vendor0.bussiness_image[0]?.url : vendor0.bussiness_image?.url)
+                    : null;
+                  // const originalPrice = orderItem?.price || 0;
+                  // const discountPrice = orderItem?.discountprice || 0;
+                  const originalPrice = billingSummary?.basePrice;
+                  const discountPrice = billingSummary?.unitPrice
+                  const hasDiscount = billingSummary?.isDiscount;
+                  const totalAmountProduct = billingSummary?.baseAmount;
+                  const discountPct = hasDiscount && originalPrice > 0 ? Math.round(((originalPrice - discountPrice) / originalPrice) * 100) : 0;
+                  let varientName;
+                  if (selectedOrder?.productSnapshot?.variantId) {
+                    varientName = selectedOrder?.productSnapshot?.variantDetails?.name || null;
+                  }
+
+                  const status = orderItem?.orderStatus || "";
+                  const statusStyle = status.toLowerCase() === "completed"
+                    ? { bg: "#d1fae5", color: "#065f46" }
+                    : status.toLowerCase() === "cancelled"
+                      ? { bg: "#fee2e2", color: "#991b1b" }
+                      : { bg: "#fef3c7", color: "#92400e" };
+                  const itemTotal = ((discountPrice || originalPrice || 0) * (orderItem?.quantity || 1)).toFixed(2);
+                  return (
+                    <div key={idx} className="d-flex align-items-center justify-content-between gap-3"
+                      style={{
+                        padding: "12px",
+                        background: "#faf8ff",
+                        border: "1.5px solid #f1edfa",
+                        borderRadius: "12px",
+                        marginBottom: idx < selectedOrder.items.length - 1 ? "12px" : 0
+                      }}>
+                      <div className="d-flex align-items-start gap-3" style={{ flex: 1, minWidth: 0 }}>
+                        <div style={{
+                          width: "60px", height: "60px", border: "1px solid #e1dcf5",
+                          borderRadius: "10px", flexShrink: 0, overflow: "hidden", background: "#fff",
+                          display: "flex", alignItems: "center", justifyContent: "center"
+                        }}>
+                          <img src={resolveOrderItemImage(orderItem)} alt="product"
+                            style={{ height: "100%", width: "100%", objectFit: "contain" }}
+                            onError={(e) => { e.currentTarget.src = "/assets/default.png"; }} />
+                        </div>
+                        <div style={{ flex: 1, minWidth: 0 }}>
+                          <div style={{ display: "flex", alignItems: "center", gap: "6px", flexWrap: "wrap", marginBottom: "3px" }}>
+                            <div style={{ fontWeight: 700, fontSize: "13px", color: "#1e1b4b", textTransform: "capitalize" }}>
+                              {itemName.length > 38 ? itemName.slice(0, 38) + "\u2026" : itemName} {varientName}
+                            </div>
+                            {status && (
+                              <span style={{ fontSize: "9px", fontWeight: 700, padding: "2px 6px", borderRadius: "5px", background: statusStyle.bg, color: statusStyle.color, textTransform: "capitalize" }}>
+                                {status}
+                              </span>
+                            )}
+                          </div>
+                          {vendorName && (
+                            <div className="d-flex align-items-center gap-1"
+                              style={{ fontSize: "11px", color: "#8059ca", marginBottom: "4px" }}>
+                              {vendorImg && (
+                                <img src={vendorImg} alt={vendorName}
+                                  onError={(e) => { e.currentTarget.src = "/assets/default.png"; }}
+                                  style={{ width: "14px", height: "14px", borderRadius: "50%", objectFit: "cover", border: "1px solid #e1dcf5" }} />
+                              )}
+                              <span style={{ fontWeight: 600, textTransform: "capitalize" }}>{vendorName}</span>
+                            </div>
+                          )}
+                          <div className="d-flex flex-wrap gap-2 align-items-center">
+                            <span style={{ fontSize: "11px", color: "#64748b" }}>Qty: <strong style={{ color: "#334155" }}>{orderItem?.quantity || 1}</strong></span>
+                            <span style={{ fontSize: "11px", color: "#64748b" }}>•</span>
+                            {hasDiscount && <span style={{ fontSize: "11px", color: "#94a3b8", textDecoration: "line-through" }}>₹{(originalPrice || 0).toFixed(2)}</span>}
+                            <span style={{ fontSize: "12px", fontWeight: 700, color: "#16a34a" }}>₹{(discountPrice || originalPrice || 0).toFixed(2)}</span>
+                            {hasDiscount && <span style={{ fontSize: "9px", fontWeight: 700, color: "#ef4444", background: "#fee2e2", padding: "1px 4px", borderRadius: "4px" }}>{discountPct}% off</span>}
+                          </div>
+                        </div>
+                      </div>
+                      <div style={{ textAlign: "right", flexShrink: 0 }}>
+                        <div style={{ fontSize: "10.5px", color: "#94a3b8", marginBottom: "2px", fontWeight: "500" }}>Total</div>
+                        <div style={{ fontWeight: 800, fontSize: "14px", color: "#8059ca" }}>₹{totalAmountProduct}</div>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
-              <button onClick={() => setShowModel(false)} style={{
-                background: "#f5f3ff", border: "none", borderRadius: "50%",
-                width: "30px", height: "30px", display: "flex", alignItems: "center",
-                justifyContent: "center", cursor: "pointer", color: "#8059ca", fontSize: "18px", flexShrink: 0,
-              }}>&times;</button>
+            )}
+
+            {/* ORDER INFO */}
+            <div style={{ padding: "14px 20px 0", borderBottom: "1px solid #f5f5f5" }}>
+              <div style={{ fontSize: "10px", fontWeight: 700, color: "#8059ca", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "10px" }}>
+                Order Info
+              </div>
+              <div className="row g-2" style={{ marginBottom: "14px" }}>
+                {[
+                  { label: "Order Status", value: selectedOrder?.orderStatus ? selectedOrder.orderStatus.charAt(0).toUpperCase() + selectedOrder.orderStatus.slice(1) : "N/A" },
+                  { label: "Payment Status", value: selectedOrder?.paymentStatus ? selectedOrder.paymentStatus.charAt(0).toUpperCase() + selectedOrder.paymentStatus.slice(1) : "N/A", color: selectedOrder?.paymentStatus === "paid" ? "#28a745" : "#e0a000" },
+                  { label: "Payment Method", value: selectedOrder?.paymentmethod ? selectedOrder.paymentmethod.charAt(0).toUpperCase() + selectedOrder.paymentmethod.slice(1) : "N/A" },
+                  // { label: "Order Type", value: selectedOrder?.orderType ? selectedOrder.orderType.charAt(0).toUpperCase() + selectedOrder.orderType.slice(1) : "N/A" },
+                ].map(({ label, value, color }) => (
+                  <div className="col-6" key={label}>
+                    <div style={{ background: "#faf9fe", borderRadius: "8px", padding: "8px 12px" }}>
+                      <div style={{ fontSize: "10px", color: "#aaa", marginBottom: "2px" }}>{label}</div>
+                      <div style={{ fontSize: "12px", fontWeight: 600, color: color || "#333", textTransform: "capitalize" }}>{value}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
 
-            {/* SCROLLABLE BODY */}
-            <div style={{ overflowY: "auto", flex: 1 }}>
-
-              {/* ITEMS */}
-              {selectedOrder?.items?.length > 0 && (
-                <div style={{ padding: "16px 20px", borderBottom: "1px solid #f5f5f5" }}>
-                  {selectedOrder.items.map((orderItem, idx) => {
-
-                    const billingSummary = orderItem?.billingSummary;
-
-                    const itemName =
-                      orderItem?.productSnapshot?.name ||
-                      orderItem?.productDetails?.tabletdetails?.name ||
-                      orderItem?.productDetails?.variantcurrentDetails?.productname ||
-                      orderItem?.packageDetails?.name ||
-                      "Item";
-                    const vendorArr = orderItem?.productSnapshot?.vendorDetails || orderItem?.packageDetails?.vendorDetails;
-                    const vendor0 = Array.isArray(vendorArr) && vendorArr.length > 0 ? vendorArr[0] : null;
-                    const vendorName = vendor0?.name || null;
-                    const vendorImg = vendor0
-                      ? (Array.isArray(vendor0.bussiness_image) ? vendor0.bussiness_image[0]?.url : vendor0.bussiness_image?.url)
-                      : null;
-                    // const originalPrice = orderItem?.price || 0;
-                    // const discountPrice = orderItem?.discountprice || 0;
-                    const originalPrice = billingSummary?.basePrice;
-                    const discountPrice = billingSummary?.unitPrice
-                    const hasDiscount = billingSummary?.isDiscount;
-                    const totalAmountProduct = billingSummary?.baseAmount;
-                    const discountPct = hasDiscount && originalPrice > 0 ? Math.round(((originalPrice - discountPrice) / originalPrice) * 100) : 0;
-                    let varientName;
-                    if (selectedOrder?.productSnapshot?.variantId) {
-                      varientName = selectedOrder?.productSnapshot?.variantDetails?.name || null;
-                    }
-
-                    const status = orderItem?.orderStatus || "";
-                    const statusStyle = status.toLowerCase() === "completed"
-                      ? { bg: "#d1fae5", color: "#065f46" }
-                      : status.toLowerCase() === "cancelled"
-                        ? { bg: "#fee2e2", color: "#991b1b" }
-                        : { bg: "#fef3c7", color: "#92400e" };
-                    const itemTotal = ((discountPrice || originalPrice || 0) * (orderItem?.quantity || 1)).toFixed(2);
-                    return (
-                      <div key={idx} className="d-flex align-items-center justify-content-between gap-3"
-                        style={{
-                          padding: "12px",
-                          background: "#faf8ff",
-                          border: "1.5px solid #f1edfa",
-                          borderRadius: "12px",
-                          marginBottom: idx < selectedOrder.items.length - 1 ? "12px" : 0
-                        }}>
-                        <div className="d-flex align-items-start gap-3" style={{ flex: 1, minWidth: 0 }}>
-                          <div style={{
-                            width: "60px", height: "60px", border: "1px solid #e1dcf5",
-                            borderRadius: "10px", flexShrink: 0, overflow: "hidden", background: "#fff",
-                            display: "flex", alignItems: "center", justifyContent: "center"
-                          }}>
-                            <img src={resolveOrderItemImage(orderItem)} alt="product"
-                              style={{ height: "100%", width: "100%", objectFit: "contain" }}
-                              onError={(e) => { e.currentTarget.src = "/assets/default.png"; }} />
-                          </div>
-                          <div style={{ flex: 1, minWidth: 0 }}>
-                            <div style={{ display: "flex", alignItems: "center", gap: "6px", flexWrap: "wrap", marginBottom: "3px" }}>
-                              <div style={{ fontWeight: 700, fontSize: "13px", color: "#1e1b4b", textTransform: "capitalize" }}>
-                                {itemName.length > 38 ? itemName.slice(0, 38) + "\u2026" : itemName} {varientName}
-                              </div>
-                              {status && (
-                                <span style={{ fontSize: "9px", fontWeight: 700, padding: "2px 6px", borderRadius: "5px", background: statusStyle.bg, color: statusStyle.color, textTransform: "capitalize" }}>
-                                  {status}
-                                </span>
-                              )}
-                            </div>
-                            {vendorName && (
-                              <div className="d-flex align-items-center gap-1"
-                                style={{ fontSize: "11px", color: "#8059ca", marginBottom: "4px" }}>
-                                {vendorImg && (
-                                  <img src={vendorImg} alt={vendorName}
-                                    onError={(e) => { e.currentTarget.src = "/assets/default.png"; }}
-                                    style={{ width: "14px", height: "14px", borderRadius: "50%", objectFit: "cover", border: "1px solid #e1dcf5" }} />
-                                )}
-                                <span style={{ fontWeight: 600, textTransform: "capitalize" }}>{vendorName}</span>
-                              </div>
-                            )}
-                            <div className="d-flex flex-wrap gap-2 align-items-center">
-                              <span style={{ fontSize: "11px", color: "#64748b" }}>Qty: <strong style={{ color: "#334155" }}>{orderItem?.quantity || 1}</strong></span>
-                              <span style={{ fontSize: "11px", color: "#64748b" }}>•</span>
-                              {hasDiscount && <span style={{ fontSize: "11px", color: "#94a3b8", textDecoration: "line-through" }}>₹{(originalPrice || 0).toFixed(2)}</span>}
-                              <span style={{ fontSize: "12px", fontWeight: 700, color: "#16a34a" }}>₹{(discountPrice || originalPrice || 0).toFixed(2)}</span>
-                              {hasDiscount && <span style={{ fontSize: "9px", fontWeight: 700, color: "#ef4444", background: "#fee2e2", padding: "1px 4px", borderRadius: "4px" }}>{discountPct}% off</span>}
-                            </div>
-                          </div>
-                        </div>
-                        <div style={{ textAlign: "right", flexShrink: 0 }}>
-                          <div style={{ fontSize: "10.5px", color: "#94a3b8", marginBottom: "2px", fontWeight: "500" }}>Total</div>
-                          <div style={{ fontWeight: 800, fontSize: "14px", color: "#8059ca" }}>₹{totalAmountProduct}</div>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
-
-              {/* ORDER INFO */}
+            {/* PATIENT / DOCTOR */}
+            {selectedOrder?.groups && selectedOrder.groups.length > 0 && (
               <div style={{ padding: "14px 20px 0", borderBottom: "1px solid #f5f5f5" }}>
-                <div style={{ fontSize: "10px", fontWeight: 700, color: "#8059ca", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "10px" }}>
-                  Order Info
-                </div>
-                <div className="row g-2" style={{ marginBottom: "14px" }}>
-                  {[
-                    { label: "Order Status", value: selectedOrder?.orderStatus ? selectedOrder.orderStatus.charAt(0).toUpperCase() + selectedOrder.orderStatus.slice(1) : "N/A" },
-                    { label: "Payment Status", value: selectedOrder?.paymentStatus ? selectedOrder.paymentStatus.charAt(0).toUpperCase() + selectedOrder.paymentStatus.slice(1) : "N/A", color: selectedOrder?.paymentStatus === "paid" ? "#28a745" : "#e0a000" },
-                    { label: "Payment Method", value: selectedOrder?.paymentmethod ? selectedOrder.paymentmethod.charAt(0).toUpperCase() + selectedOrder.paymentmethod.slice(1) : "N/A" },
-                    // { label: "Order Type", value: selectedOrder?.orderType ? selectedOrder.orderType.charAt(0).toUpperCase() + selectedOrder.orderType.slice(1) : "N/A" },
-                  ].map(({ label, value, color }) => (
-                    <div className="col-6" key={label}>
-                      <div style={{ background: "#faf9fe", borderRadius: "8px", padding: "8px 12px" }}>
-                        <div style={{ fontSize: "10px", color: "#aaa", marginBottom: "2px" }}>{label}</div>
-                        <div style={{ fontSize: "12px", fontWeight: 600, color: color || "#333", textTransform: "capitalize" }}>{value}</div>
-                      </div>
+                <div style={{ fontSize: "10px", fontWeight: 700, color: "#8059ca", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "10px" }}>Patients</div>
+                <div className="d-flex flex-column gap-2" style={{ marginBottom: "14px" }}>
+                  {selectedOrder.groups.map((group, gIdx) => (
+                    <div key={gIdx} style={{ background: "#faf9fe", borderRadius: "8px", padding: "8px 12px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                      <span style={{ fontSize: "12px", fontWeight: 600, color: "#333", textTransform: "capitalize" }}>
+                        <span style={{ color: "#8059ca", marginRight: "6px" }}>{gIdx + 1}.</span>
+                        {getPatientName(group, selectedOrder)}
+                      </span>
+                      {group.totalTests && <span style={{ fontSize: "11px", fontWeight: 600, color: "#8059ca", background: "#f3e8ff", padding: "2px 8px", borderRadius: "6px" }}>{group.totalTests} Test{group.totalTests !== 1 ? "s" : ""}</span>}
                     </div>
                   ))}
                 </div>
               </div>
+            )}
 
-              {/* PATIENT / DOCTOR */}
-              {selectedOrder?.groups && selectedOrder.groups.length > 0 && (
-                <div style={{ padding: "14px 20px 0", borderBottom: "1px solid #f5f5f5" }}>
-                  <div style={{ fontSize: "10px", fontWeight: 700, color: "#8059ca", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "10px" }}>Patients</div>
-                  <div className="d-flex flex-column gap-2" style={{ marginBottom: "14px" }}>
-                    {selectedOrder.groups.map((group, gIdx) => (
-                      <div key={gIdx} style={{ background: "#faf9fe", borderRadius: "8px", padding: "8px 12px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                        <span style={{ fontSize: "12px", fontWeight: 600, color: "#333", textTransform: "capitalize" }}>
-                          <span style={{ color: "#8059ca", marginRight: "6px" }}>{gIdx + 1}.</span>
-                          {getPatientName(group, selectedOrder)}
-                        </span>
-                        {group.totalTests && <span style={{ fontSize: "11px", fontWeight: 600, color: "#8059ca", background: "#f3e8ff", padding: "2px 8px", borderRadius: "6px" }}>{group.totalTests} Test{group.totalTests !== 1 ? "s" : ""}</span>}
+            {selectedOrder?.doctorName && (
+              <div style={{ padding: "14px 20px 0", borderBottom: "1px solid #f5f5f5" }}>
+                <div style={{ fontSize: "10px", fontWeight: 700, color: "#8059ca", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "10px" }}>Doctor</div>
+                <div style={{ background: "#faf9fe", borderRadius: "8px", padding: "8px 12px", marginBottom: "14px" }}>
+                  <div style={{ fontSize: "12px", fontWeight: 600, color: "#333", textTransform: "capitalize" }}>
+                    {selectedOrder.doctorId ? selectedOrder.doctorName : "Self Referral"}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* BILLING SUMMARY */}
+            <div style={{ padding: "14px 20px 20px" }}>
+              <div style={{ fontSize: "10px", fontWeight: 700, color: "#8059ca", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "12px" }}>
+                Billing Summary
+              </div>
+              {(() => {
+                const bs = selectedOrder?.billingSummary || {};
+                const subtotalBase = bs.subtotal ?? bs.subtotal ?? selectedOrder?.subtotal ?? 0;
+                const cgst = Number(bs.cgst ?? selectedOrder?.cgst ?? 0);
+                const sgst = Number(bs.sgst ?? selectedOrder?.sgst ?? 0);
+                const tax = Number(bs.totalGst ?? selectedOrder?.tax ?? 0);
+                const sampleCollection = Number(bs.sampleCollection ?? selectedOrder?.samplecollection ?? 0);
+                const deliveryCharge = Number(bs.deliveryCharge ?? selectedOrder?.shipping ?? 0);
+                const coupon = Number(bs.couponAmount ?? selectedOrder?.couponAmount ?? 0);
+                const wallet = Number(bs.walletAmount ?? selectedOrder?.walletAmount ?? 0);
+                const total = Number(bs.total ?? selectedOrder?.total ?? 0);
+                const rows = [
+                  { label: "Product Subtotal(Inclusive of all Taxes)", value: subtotalBase },
+                  { label: "Delivery Fee", value: deliveryCharge },
+                  { label: "Sample Collection", value: sampleCollection },
+                  { label: "GST", value: tax },
+                  // { label: "SGST", value: sgst },
+                ].filter(r => Number(r.value) > 0);
+
+                const valWithoutCouponAndWithoutWallet = subtotalBase + deliveryCharge + sampleCollection + tax;
+                const valWithCouponAndWithoutWallet = valWithoutCouponAndWithoutWallet - coupon;
+                const valWithoutCouponAndWithWallet = Math.max(0, valWithoutCouponAndWithoutWallet - wallet);
+                const valWithCouponAndWithWallet = Math.max(0, valWithoutCouponAndWithoutWallet - coupon - wallet);
+
+                return (
+                  <div style={{ background: "#faf9fe", borderRadius: "12px", padding: "14px 16px", border: "1px solid #f1eff9" }}>
+                    {rows.map(({ label, value }) => (
+                      <div key={label} className="d-flex justify-content-between align-items-center" style={{ marginBottom: "9px", fontSize: "13px" }}>
+                        <span style={{ color: "#666" }}>{label}</span>
+                        <span style={{ fontWeight: 500 }}>₹{Number(value).toFixed(2)}</span>
                       </div>
                     ))}
-                  </div>
-                </div>
-              )}
+                    {coupon > 0 && (
+                      <div className="d-flex justify-content-between align-items-center" style={{ marginBottom: "9px", fontSize: "13px", color: "#28a745" }}>
+                        <span>Coupon Discount</span>
+                        <span style={{ fontWeight: 600 }}>-₹{coupon.toFixed(2)}</span>
+                      </div>
+                    )}
 
-              {selectedOrder?.doctorName && (
-                <div style={{ padding: "14px 20px 0", borderBottom: "1px solid #f5f5f5" }}>
-                  <div style={{ fontSize: "10px", fontWeight: 700, color: "#8059ca", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "10px" }}>Doctor</div>
-                  <div style={{ background: "#faf9fe", borderRadius: "8px", padding: "8px 12px", marginBottom: "14px" }}>
-                    <div style={{ fontSize: "12px", fontWeight: 600, color: "#333", textTransform: "capitalize" }}>
-                      {selectedOrder.doctorId ? selectedOrder.doctorName : "Self Referral"}
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* BILLING SUMMARY */}
-              <div style={{ padding: "14px 20px 20px" }}>
-                <div style={{ fontSize: "10px", fontWeight: 700, color: "#8059ca", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "12px" }}>
-                  Billing Summary
-                </div>
-                {(() => {
-                  const bs = selectedOrder?.billingSummary || {};
-                  const subtotalBase = bs.subtotal ?? bs.subtotal ?? selectedOrder?.subtotal ?? 0;
-                  const cgst = Number(bs.cgst ?? selectedOrder?.cgst ?? 0);
-                  const sgst = Number(bs.sgst ?? selectedOrder?.sgst ?? 0);
-                  const tax = Number(bs.totalGst ?? selectedOrder?.tax ?? 0);
-                  const sampleCollection = Number(bs.sampleCollection ?? selectedOrder?.samplecollection ?? 0);
-                  const deliveryCharge = Number(bs.deliveryCharge ?? selectedOrder?.shipping ?? 0);
-                  const coupon = Number(bs.couponAmount ?? selectedOrder?.couponAmount ?? 0);
-                  const wallet = Number(bs.walletAmount ?? selectedOrder?.walletAmount ?? 0);
-                  const total = Number(bs.total ?? selectedOrder?.total ?? 0);
-                  const rows = [
-                    { label: "Product Subtotal(Inclusive of all Taxes)", value: subtotalBase },
-                    { label: "Delivery Fee", value: deliveryCharge },
-                    { label: "Sample Collection", value: sampleCollection },
-                    { label: "GST", value: tax },
-                    // { label: "SGST", value: sgst },
-                  ].filter(r => Number(r.value) > 0);
-
-                  const valWithoutCouponAndWithoutWallet = subtotalBase + deliveryCharge + sampleCollection + tax;
-                  const valWithCouponAndWithoutWallet = valWithoutCouponAndWithoutWallet - coupon;
-                  const valWithoutCouponAndWithWallet = Math.max(0, valWithoutCouponAndWithoutWallet - wallet);
-                  const valWithCouponAndWithWallet = Math.max(0, valWithoutCouponAndWithoutWallet - coupon - wallet);
-
-                  return (
-                    <div style={{ background: "#faf9fe", borderRadius: "12px", padding: "14px 16px", border: "1px solid #f1eff9" }}>
-                      {rows.map(({ label, value }) => (
-                        <div key={label} className="d-flex justify-content-between align-items-center" style={{ marginBottom: "9px", fontSize: "13px" }}>
-                          <span style={{ color: "#666" }}>{label}</span>
-                          <span style={{ fontWeight: 500 }}>₹{Number(value).toFixed(2)}</span>
-                        </div>
-                      ))}
-                      {coupon > 0 && (
-                        <div className="d-flex justify-content-between align-items-center" style={{ marginBottom: "9px", fontSize: "13px", color: "#28a745" }}>
-                          <span>Coupon Discount</span>
-                          <span style={{ fontWeight: 600 }}>-₹{coupon.toFixed(2)}</span>
-                        </div>
-                      )}
-
-                      {wallet > 0 && (
-                        <div className="d-flex justify-content-between align-items-center" style={{ marginBottom: "9px", fontSize: "13px", color: "#28a745" }}>
-                          <span>Wallet Deduction</span>
-                          <span style={{ fontWeight: 600 }}>-₹{(wallet || 0).toFixed(2)}</span>
-                        </div>
-                      )}
-                      {(() => {
-                        const payMethod = (selectedOrder?.paymentmethod ?? selectedOrder?.paymentMethod ?? "").toLowerCase();
-                        const isCOD = payMethod === "cod" || payMethod.includes("cash");
-                        const remainingPayable = Math.max(0, total - wallet);
-                        return (
-                          <>
-                            <div className="d-flex justify-content-between align-items-center" style={{ borderTop: "1.5px dashed #e0daf5", paddingTop: "12px", marginTop: "6px", fontSize: "15px", fontWeight: 700 }}>
-                              <span style={{ color: "#333" }}>{wallet > 0 ? "Total Value" : "Total Amount"}</span>
-                              <span style={{ color: wallet > 0 ? "#333" : "#7c4dc4", fontSize: "16px" }}>₹{total.toFixed(2)}</span>
+                    {wallet > 0 && (
+                      <div className="d-flex justify-content-between align-items-center" style={{ marginBottom: "9px", fontSize: "13px", color: "#28a745" }}>
+                        <span>Wallet Deduction</span>
+                        <span style={{ fontWeight: 600 }}>-₹{(wallet || 0).toFixed(2)}</span>
+                      </div>
+                    )}
+                    {(() => {
+                      const payMethod = (selectedOrder?.paymentmethod ?? selectedOrder?.paymentMethod ?? "").toLowerCase();
+                      const isCOD = payMethod === "cod" || payMethod.includes("cash");
+                      const remainingPayable = Math.max(0, total - wallet);
+                      return (
+                        <>
+                          <div className="d-flex justify-content-between align-items-center" style={{ borderTop: "1.5px dashed #e0daf5", paddingTop: "12px", marginTop: "6px", fontSize: "15px", fontWeight: 700 }}>
+                            <span style={{ color: "#333" }}>{wallet > 0 ? "Total Value" : "Total Amount"}</span>
+                            <span style={{ color: wallet > 0 ? "#333" : "#7c4dc4", fontSize: "16px" }}>₹{total.toFixed(2)}</span>
+                          </div>
+                          {wallet > 0 && remainingPayable > 0 && (
+                            <div className="d-flex justify-content-between align-items-center" style={{ marginTop: "8px", fontSize: "15px", fontWeight: 800, color: "#7c4dc4" }}>
+                              <span>{isCOD ? "Payable via Cash" : "Payable via Online"}</span>
+                              <span style={{ fontSize: "17px" }}>₹{remainingPayable.toFixed(2)}</span>
                             </div>
-                            {wallet > 0 && remainingPayable > 0 && (
-                              <div className="d-flex justify-content-between align-items-center" style={{ marginTop: "8px", fontSize: "15px", fontWeight: 800, color: "#7c4dc4" }}>
-                                <span>{isCOD ? "Payable via Cash" : "Payable via Online"}</span>
-                                <span style={{ fontSize: "17px" }}>₹{remainingPayable.toFixed(2)}</span>
-                              </div>
-                            )}
-                          </>
-                        );
-                      })()}
+                          )}
+                        </>
+                      );
+                    })()}
 
-                      {/* Detailed Breakdown for Clarification */}
-                      {/* <div style={{ borderTop: "1px solid #e2e8f0", paddingTop: "10px", marginTop: "12px" }}>
+                    {/* Detailed Breakdown for Clarification */}
+                    {/* <div style={{ borderTop: "1px solid #e2e8f0", paddingTop: "10px", marginTop: "12px" }}>
                               <div style={{ fontSize: "10.5px", fontWeight: 700, color: "#64748b", marginBottom: "8px", textTransform: "uppercase", letterSpacing: "0.5px" }}>Billing Breakdown (Clarification)</div>
                               <div style={{ display: "flex", flexDirection: "column", gap: "6px", background: "#f1f5f9", padding: "10px", borderRadius: "8px", border: "1px solid #e2e8f0" }}>
                                 <div style={{ display: "flex", justifyContent: "space-between", fontSize: "11.5px", color: "#475569" }}>
@@ -1328,14 +1324,12 @@ const MedicineBookings = ({ HomeNavigate, ServiceTabs }) => {
                                 </div>
                               </div>
                             </div> */}
-                    </div>
-                  );
-                })()}
-              </div>
-
+                  </div>
+                );
+              })()}
             </div>
           </div>
-        </div>
+        </BaseModal>
       )}
 
 

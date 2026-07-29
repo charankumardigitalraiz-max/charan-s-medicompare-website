@@ -3,7 +3,7 @@
 .booking-process-wrapper {
   background: #f5f5f5;
   min-height: 100vh;
-  padding: 100px 0 30px;
+  padding: 50px 0 30px;
 }
 
 /* Recently Searched Scroll */
@@ -33,9 +33,9 @@
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .booking-process-wrapper {
-    padding: 155px 0 20px;
+    padding: 20px 0 20px;
   }
-  
+
   .recently-searched-scroll {
     -webkit-overflow-scrolling: touch;
   }
@@ -58,6 +58,7 @@
 }
 
 @media (max-width: 767px) {
+
   .booking-process-wrapper .col-lg-8,
   .booking-process-wrapper .col-lg-4 {
     padding-left: 5px;
@@ -219,6 +220,7 @@
     opacity: 0;
     transform: translateY(10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -672,7 +674,8 @@
   transition: background 0.2s ease;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  display: none; /* Hide the original button since we have sticky one */
+  display: none;
+  /* Hide the original button since we have sticky one */
 }
 
 .proceed-pay-btn:hover {
@@ -809,7 +812,7 @@
 
 @media (max-width: 767px) {
   .booking-process-wrapper {
-    padding: 130px 0 120px 0;
+    padding: 40px 0 120px 0;
   }
 
   .booking-process-wrapper .container-fluid {
@@ -1647,6 +1650,7 @@
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -1670,6 +1674,7 @@
     transform: translateY(30px);
     opacity: 0;
   }
+
   to {
     transform: translateY(0);
     opacity: 1;
@@ -1862,6 +1867,7 @@
     opacity: 0;
     transform: translateX(-20px);
   }
+
   to {
     opacity: 1;
     transform: translateX(0);
@@ -1937,6 +1943,7 @@
     from {
       transform: translateY(100%);
     }
+
     to {
       transform: translateY(0);
     }
@@ -2044,9 +2051,11 @@
   0% {
     box-shadow: 0 0 0 0 rgba(128, 89, 202, 0.7);
   }
+
   70% {
     box-shadow: 0 0 0 10px rgba(128, 89, 202, 0);
   }
+
   100% {
     box-shadow: 0 0 0 0 rgba(128, 89, 202, 0);
   }
@@ -2136,12 +2145,9 @@
 
 .choice-card.selected .choice-card-text {
   color: white;
-  
+
 }
 
 .choice-card:hover:not(.selected) {
   background: rgba(255, 255, 255, 0.5);
 }
-
-
-

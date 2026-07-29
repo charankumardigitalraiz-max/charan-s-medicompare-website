@@ -10,7 +10,6 @@ import {
 import { getImageUrl } from "../../../utils/index";
 import toast from "react-hot-toast";
 import CategoryProvider from "../../../components/CategoryProvider.jsx";
-import "./bookingprocess.css";
 import { openRazorpayCheckout } from "../../../utils/razorpayUtils";
 import { useResponsive } from "../../../hooks";
 import VendorActions from "../../../components/ui/VendorActions.jsx";
@@ -31,10 +30,20 @@ import { fetchFamilyMembersList } from "../../../services/familyMemberService";
 import { useLocation } from "../../../context/LocationContext";
 import LeadModal from "./products-components/LeadModal.jsx";
 
+// NOTE: "./bookingprocess.css" import removed — its rules (.meq-arrow-btn,
+// .top-vendor-badge, .choice-cards-container/.choice-card etc, .scroll-container,
+// .offers-modal-*) are referenced by className below and should now live as
+// Tailwind utilities co-located on the elements themselves. If any of those
+// classNames are still relied on elsewhere, keep the stylesheet import.
+
 const TOKEN_STORAGE_KEY = "medicomparestoken";
 const SUPPORT_WHATSAPP_NUMBER = "919010357778";
 const PRIMARY_COLOR = "#8059ca";
 const PRIMARY_SECTION_BG = "#f8f4ff";
+
+// react-select is styled through its own `styles` prop API (JS objects, not
+// DOM style/className), so this cannot be expressed as Tailwind classes —
+// left as-is since it's how the library itself expects to be themed.
 const customSelectStyles = {
   control: (provided, state) => ({
     ...provided,
@@ -1351,46 +1360,14 @@ const BookingProcess = () => {
   const renderRecentlyViewed = () => {
     if (!(relevantProducts?.length > 0)) return null;
     return (
-      <div
-        className="card shadow-sm mb-3"
-        style={{
-          borderRadius: "12px",
-          border: "none",
-          backgroundImage: "url('/assets/Medicompares Background.png')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-        }}
-      >
-        <div className="card-body" style={{ padding: "20px" }}>
+      <div className="card shadow-sm mb-3 rounded-xl border-0 bg-[url('/assets/Medicompares_Background.png')] bg-cover bg-center bg-no-repeat">
+        <div className="card-body p-2">
           {/* Header */}
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "flex-start",
-              gap: "12px",
-              alignItems: "center",
-              marginBottom: "16px",
-              borderLeft: "4px solid #8059ca",
-              paddingLeft: "12px",
-              lineHeight: "1",
-            }}
-          >
-            <div style={{ fontSize: "20px", fontWeight: 500, color: "#0f172a", margin: 0 }}>
+          <div className="flex justify-start gap-3 items-center mb-2 border-l-4 border-[#8059ca] pl-3 leading-none">
+            <div className="text-xl font-medium text-[#0f172a] m-0">
               Recently Viewed Products
             </div>
-            <span
-              style={{
-                fontSize: "11px",
-                color: "#8059ca",
-                fontWeight: "700",
-                background: "#f3e8ff",
-                padding: "4px 10px",
-                borderRadius: "20px",
-                textTransform: "uppercase",
-                letterSpacing: "0.5px",
-              }}
-            >
+            <span className="text-[11px] text-[#8059ca] font-bold bg-[#f3e8ff] px-2.5 py-1 rounded-full uppercase tracking-wide">
               {relevantProducts.length} items
             </span>
           </div>
@@ -1439,17 +1416,13 @@ const BookingProcess = () => {
           `}</style>
 
           {/* Carousel */}
-          <div style={{ position: "relative", display: "flex", alignItems: "center" }}>
+          <div className="relative flex items-center">
             {/* Left Scroll */}
             <button
-              className="meq-arrow-btn dental-prev"
+              className="meq-arrow-btn dental-prev flex -left-[15px]"
               onClick={() => {
                 const container = document.getElementById("productCarousel");
                 if (container) container.scrollLeft -= 250;
-              }}
-              style={{
-                left: "-15px",
-                display: "flex",
               }}
             >
               <i className="fas fa-chevron-left"></i>
@@ -1458,16 +1431,7 @@ const BookingProcess = () => {
             {/* Cards */}
             <div
               id="productCarousel"
-              className="scroll-container"
-              style={{
-                display: "flex",
-                overflowX: "auto",
-                gap: "20px",
-                padding: "20px 60px",
-                scrollBehavior: "smooth",
-                scrollbarWidth: "none",
-                msOverflowStyle: "none",
-              }}
+              className="scroll-container flex overflow-x-auto gap-2 px-[60px] py-3 scroll-smooth [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
             >
               {relevantProducts?.map((product, index) => {
                 const originalPrice = product?.price || 0;
@@ -1506,90 +1470,16 @@ const BookingProcess = () => {
                 return (
                   <div
                     key={`${product._id || "product"}-${product.vendor?.vendorId || "vendor"}-${product.combinedvariant?.variantId || "variant"}-${index}`}
-                    style={{
-                      minWidth: "220px",
-                      maxWidth: "220px",
-                      background: "#ffffff",
-                      borderRadius: "12px",
-                      border: "1px solid #f1f5f9",
-                      boxShadow: "0 4px 20px rgba(0, 0, 0, 0.08)",
-                      display: "flex",
-                      flexDirection: "column",
-                      flexShrink: 0,
-                      transition: "all 0.3s ease",
-                      position: "relative",
-                      overflow: "hidden",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = "translateY(-3px)";
-                      e.currentTarget.style.borderColor = "#8059ca";
-                      e.currentTarget.style.boxShadow = "0 8px 24px rgba(128, 89, 202, 0.15)";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = "translateY(0)";
-                      e.currentTarget.style.borderColor = "#f1f5f9";
-                      e.currentTarget.style.boxShadow = "0 4px 20px rgba(0, 0, 0, 0.08)";
-                    }}
+                    className="min-w-[220px] max-w-[220px] bg-white rounded-xl border border-slate-100 shadow-[0_4px_20px_rgba(0,0,0,0.08)] flex flex-col shrink-0 transition-all duration-300 relative overflow-hidden hover:-translate-y-[3px] hover:border-[#8059ca] hover:shadow-[0_8px_24px_rgba(128,89,202,0.15)]"
                   >
                     {/* Compare Button */}
-                    <div
-                      className="compare-btn-highlight"
-                      style={{
-                        position: "absolute",
-                        right: "8px",
-                        top: "8px",
-                        zIndex: 10,
-                        cursor: "pointer",
-                        background: "#8059ca",
-                        color: "#ffffff",
-                        border: "1.5px solid #8059ca",
-                        borderRadius: "20px",
-                        width: "32px",
-                        height: "26px",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "flex-start",
-                        paddingLeft: "9px",
-                        boxShadow: "0 2px 8px rgba(128, 89, 202, 0.4)",
-                        transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-                        overflow: "hidden",
-                        whiteSpace: "nowrap",
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.width = "90px";
-                        e.currentTarget.style.backgroundColor = "#6a45b3";
-                        e.currentTarget.style.borderColor = "#6a45b3";
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.width = "32px";
-                        e.currentTarget.style.backgroundColor = "#8059ca";
-                        e.currentTarget.style.borderColor = "#8059ca";
-                      }}
-                    >
+                    <div className="compare-btn-highlight absolute right-2 top-2 z-10 cursor-pointer bg-[#8059ca] text-white border-[1.5px] border-[#8059ca] rounded-[20px] w-8 h-[26px] flex items-center justify-start pl-[9px] shadow-[0_2px_8px_rgba(128,89,202,0.4)] transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] overflow-hidden whitespace-nowrap hover:w-[90px] hover:bg-[#6a45b3] hover:border-[#6a45b3]">
                       <Link
                         to={`/${product?.tabletDetails?.subcategoryDetails?.categoryDetails?.slug}/${product?.tabletDetails?.subcategoryDetails?.slug}/${product?.tabletDetails?.slug}/compare`}
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          color: "#ffffff",
-                          textDecoration: "none",
-                        }}
+                        className="flex items-center text-white no-underline"
                       >
-                        <i
-                          className="fa-solid fa-right-left shrink-0"
-                          style={{ fontSize: "11px", color: "#ffffff" }}
-                        ></i>
-                        <span
-                          className="compare-text-label"
-                          style={{
-                            marginLeft: "6px",
-                            fontSize: "11px",
-                            fontWeight: "600",
-                            color: "#ffffff",
-                            opacity: 0,
-                            transition: "opacity 0.2s ease-in-out",
-                          }}
-                        >
+                        <i className="fa-solid fa-right-left shrink-0 text-[11px] text-white"></i>
+                        <span className="compare-text-label ml-1.5 text-[11px] font-semibold text-white transition-opacity duration-200 ease-in-out">
                           Compare
                         </span>
                       </Link>
@@ -1597,98 +1487,75 @@ const BookingProcess = () => {
 
                     {/* Image */}
                     <div
-                      style={{
-                        width: "100%",
-                        height: "130px",
-                        background: "#f8f4ff",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        padding: "12px",
-                        cursor: "pointer",
-                      }}
+                      className="w-full h-[130px] bg-[#f8f4ff] flex items-center justify-center p-3 cursor-pointer"
                       onClick={() => handleProductClick(product)}
                     >
                       <img
                         src={getImageUrl(productImage)}
                         alt="product"
-                        style={{ maxHeight: "100%", maxWidth: "100%", objectFit: "contain" }}
+                        className="max-h-full max-w-full object-contain"
                       />
                     </div>
 
                     {/* Details */}
-                    <div style={{ padding: "12px", display: "flex", flexDirection: "column", gap: "8px", flex: 1 }}>
+                    <div className="p-3 flex flex-col gap-2 flex-1">
                       {/* Name */}
-                      <div style={{ cursor: "pointer" }} onClick={() => handleProductClick(product)}>
-                        <h4
-                          style={{
-                            fontSize: "13px",
-                            fontWeight: "500",
-                            color: "#0f172a",
-                            margin: 0,
-                            lineHeight: "1.3",
-                            textTransform: "capitalize",
-                            display: "-webkit-box",
-                            WebkitLineClamp: 2,
-                            WebkitBoxOrient: "vertical",
-                            overflow: "hidden",
-                            height: "34px",
-                          }}
-                        >
+                      <div className="cursor-pointer" onClick={() => handleProductClick(product)}>
+                        <div className="text-[13px] font-medium text-[#0f172a] m-0 leading-[1.3] capitalize line-clamp-2 h-[34px] [display:-webkit-box] [-webkit-box-orient:vertical]">
                           {product?.tabletDetails?.name}
-                        </h4>
+                        </div>
                       </div>
 
                       {/* Seller & Rating */}
-                      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "6px" }}>
-                        <div style={{ display: "flex", alignItems: "center", gap: "6px", minWidth: 0, flex: 1 }}>
+                      <div className="flex items-center justify-between gap-1.5">
+                        <div className="flex items-center gap-1.5 min-w-0 flex-1">
                           <img
                             src={getImageUrl(vendorImage)}
                             alt={vendorName}
-                            style={{ width: "24px", height: "24px", borderRadius: "50%", objectFit: "cover", background: "#f1f5f9", flexShrink: 0 }}
+                            className="w-6 h-6 rounded-full object-cover bg-slate-100 shrink-0"
                             onError={(e) => { e.target.src = "/assets/img/logo.png"; }}
                           />
                           <span
-                            style={{ fontSize: "12.5px", fontWeight: "600", color: "#334155", textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap", flex: 1 }}
+                            className="text-[12.5px] font-semibold text-slate-700 text-ellipsis overflow-hidden whitespace-nowrap flex-1"
                             title={vendorName}
                           >
                             {vendorName}
                           </span>
                         </div>
-                        <div style={{ display: "flex", alignItems: "center", gap: "2px", flexShrink: 0 }}>
-                          <span style={{ fontSize: "11px", color: "#fbbf24" }}>★</span>
-                          <span style={{ fontSize: "11px", fontWeight: "600", color: "#475569" }}>
+                        <div className="flex items-center gap-0.5 shrink-0">
+                          <span className="text-[11px] text-amber-400">★</span>
+                          <span className="text-[11px] font-semibold text-slate-600">
                             {product.tabletDetails?.averageRating ? product.tabletDetails.averageRating.toFixed(1) : "0.0"}
                           </span>
                         </div>
                       </div>
 
                       {/* Price */}
-                      <div style={{ display: "flex", flexDirection: "column", gap: "1px" }}>
-                        <div style={{ display: "flex", alignItems: "center", flexWrap: "wrap" }}>
-                          <span style={{ fontSize: "15px", fontWeight: "700", color: "#0f172a" }}>
+                      <div className="flex flex-col gap-px">
+                        <div className="flex items-center flex-wrap">
+                          <span className="text-[15px] font-bold text-[#0f172a]">
                             ₹{displayPrice.toFixed(2)}
                           </span>
                           {hasValidDiscount && (
-                            <span style={{ fontSize: "11px", textDecoration: "line-through", color: "#94a3b8", marginLeft: "6px" }}>
+                            <span className="text-[11px] line-through text-slate-400 ml-1.5">
                               ₹{Number(originalPrice).toFixed(2)}
                             </span>
                           )}
                         </div>
                         {hasValidDiscount && (
-                          <span style={{ fontSize: "10px", fontWeight: "700", color: "#dc2626" }}>
+                          <span className="text-[10px] font-bold text-red-600">
                             {discountPercent}% OFF
                           </span>
                         )}
                         {product?.perDayRent && (
-                          <span style={{ fontSize: "10px", color: "#64748b" }}>
+                          <span className="text-[10px] text-slate-500">
                             ₹{Number(product.perDayRent).toFixed(2)}/day
                           </span>
                         )}
                       </div>
 
-                      <div style={{ marginTop: "auto", width: "100%" }}>
-                        <div style={{ borderTop: "1px solid #f1f5f9", margin: "2px 0 4px 0" }} />
+                      <div className="mt-auto w-full">
+                        <div className="border-t border-slate-100 my-0.5 mb-1" />
                         <VendorActions
                           bookingType={
                             product?.tabletDetails?.subcategoryDetails?.categoryDetails?.categoryType || product?.bookingType ||
@@ -1729,14 +1596,10 @@ const BookingProcess = () => {
 
             {/* Right Scroll */}
             <button
-              className="meq-arrow-btn dental-next"
+              className="meq-arrow-btn dental-next flex -right-[15px]"
               onClick={() => {
                 const container = document.getElementById("productCarousel");
                 if (container) container.scrollLeft += 250;
-              }}
-              style={{
-                right: "-15px",
-                display: "flex",
               }}
             >
               <i className="fas fa-chevron-right"></i>
@@ -1748,390 +1611,272 @@ const BookingProcess = () => {
   };
 
   return (
-    <div className="main-wrapper ">
+    <div className="main-wrapper min-h-screen bg-[#f8f9fa]">
       <Home2Header />
       <CategoryProvider />
 
-      <div className="booking-process-wrapper mt-2 md:mt-4">
-        <div className="container-fluid px-2 px-md-3 px-lg-5">
-          {/* <nav aria-label="breadcrumb" className="mb-3 mb-md-4 mt-2 mt-md-3">
-            <ol className="breadcrumb mb-0" style={{ fontSize: "14px" }}>
-              <li className="breadcrumb-item">
-                <Link to="/" className="text-decoration-none text-muted">
-                  Home
-                </Link>
-              </li>
-              <li className="breadcrumb-item active" aria-current="page">
-                Booking
-              </li>
-            </ol>
-          </nav> */}
-
-          <div className="row g-3 g-md-4">
-            <div className="col-lg-8 col-md-12 order-1 order-lg-1 d-flex flex-column">
-              <div className="row" style={{ padding: "2px" }}>
-                <div className={isLoggedIn ? "col-md-6 col-12" : "col-12"}>
-                  {isSlotCategory && cart?.type !== "package" && selectedVisitType !== "home" ? (
-                    <div style={{ marginBottom: "24px" }}>
-                      <div
-                        style={{
-                          border: "1px solid #d1fae5",
-                          borderRadius: "10px",
-                          padding: "16px",
-                          backgroundColor: "#f0fdf4",
-                          boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
-                        }}
-                      >
-                        <div
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "10px",
-                            marginBottom: "10px",
-                          }}
-                        >
-                          <i
-                            className="fab fa-whatsapp"
-                            style={{ color: "#16a34a", fontSize: "22px" }}
-                          ></i>
-                          <div
-                            style={{
-                              fontSize: isMobile ? "13px" : "14px",
-                              fontWeight: "700",
-                              color: "#111827",
-                            }}
-                          >
-                            Booking Support
-                          </div>
+      <div className="max-w-[1440px] mx-auto px-4 md:px-6 lg:px-8 pt-8 pb-12">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-2 flex flex-col gap-6">
+            <div className={`grid gap-6 ${isLoggedIn ? "grid-cols-1 md:grid-cols-2" : "grid-cols-1"}`}>
+              <div className="w-full">
+                {isSlotCategory && cart?.type !== "package" && selectedVisitType !== "home" ? (
+                  <div className="mb-6">
+                    <div className="border border-[#d1fae5] rounded-[10px] p-4 bg-[#f0fdf4] shadow-[0_2px_8px_rgba(0,0,0,0.05)]">
+                      <div className="flex items-center gap-2.5 mb-2.5">
+                        <i className="fab fa-whatsapp text-[#16a34a] text-[22px]"></i>
+                        <div className={`${isMobile ? "text-[13px]" : "text-sm"} font-bold text-gray-900`}>
+                          Booking Support
                         </div>
-                        <p
-                          style={{
-                            fontSize: "13px",
-                            color: "#4b5563",
-                            marginBottom: "12px",
-                          }}
-                        >
-                          Need help with this appointment? Chat with our support
-                          team on WhatsApp.
-                        </p>
-                        <button
-                          type="button"
-                          onClick={handleWhatsAppSupport}
-                          style={{
-                            width: "100%",
-                            border: "none",
-                            borderRadius: "8px",
-                            backgroundColor: "#16a34a",
-                            color: "#fff",
-                            padding: "10px 12px",
-                            fontSize: "13px",
-                            fontWeight: "700",
-                            cursor: "pointer",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            gap: "8px",
-                          }}
-                        >
-                          <i className="fab fa-whatsapp"></i>
-                          Contact on WhatsApp
-                        </button>
                       </div>
+                      <p className="text-[13px] text-gray-600 mb-3">
+                        Need help with this appointment? Chat with our support
+                        team on WhatsApp.
+                      </p>
+                      <button
+                        type="button"
+                        onClick={handleWhatsAppSupport}
+                        className="w-full border-0 rounded-lg bg-[#16a34a] text-white py-2.5 px-3 text-[13px] font-bold cursor-pointer flex items-center justify-center gap-2"
+                      >
+                        <i className="fab fa-whatsapp"></i>
+                        Contact on WhatsApp
+                      </button>
                     </div>
-                  ) : (
+                  </div>
+                ) : (
 
-                    <>
-                      {VENDOR_LOCATION_SERVICES.includes(data?.medicineDetails?.CategoryDetails?.fixedType) && (
-                        <div style={{ marginBottom: "24px" }}>
-                          <div
-                            style={{
-                              border: "1px solid #e0e0e0",
-                              borderRadius: "10px",
-                              padding: "16px",
-                              backgroundColor: "#fff",
-                              fontSize: "14px",
-                              color: "#333",
-                              boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
-                            }}
-                          >
-                            <div
-                              style={{
-                                fontWeight: "bold",
-                                marginBottom: "8px",
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "space-between",
-                                gap: "8px",
-                              }}
-                            >
-                              <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
-                                <i className="fas fa-hospital" style={{ color: "#8059ca" }}></i>
-                                <span
-                                  style={{
-                                    fontSize: "14px",
-                                    fontWeight: "600",
-                                    color: "#000",
-                                    margin: 0,
-                                  }}>Provider Address</span>
+                  <>
+                    {VENDOR_LOCATION_SERVICES.includes(data?.medicineDetails?.CategoryDetails?.fixedType) && (
+                      <div className="mb-6">
+                        <div className="border border-[#e0e0e0] rounded-[10px] p-4 bg-white text-sm text-[#333] shadow-[0_2px_8px_rgba(0,0,0,0.05)]">
+                          <div className="font-bold mb-2 flex items-center justify-between gap-2">
+                            <div className="flex items-center gap-[5px]">
+                              <i className="fas fa-hospital text-[#8059ca]"></i>
+                              <span className="text-sm font-semibold text-black m-0">Provider Address</span>
+                            </div>
+                            {data?.businessDetails?.location?.coordinates &&
+                              data.businessDetails.location.coordinates.length === 2 && (
+                                <div>
+                                  <a
+                                    href={`https://www.google.com/maps/search/?api=1&query=${data.businessDetails.location.coordinates[1]},${data.businessDetails.location.coordinates[0]}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-flex btn btn-primary items-center gap-2 py-[5px] px-2.5 bg-[#8059ca] text-white text-sm font-medium no-underline rounded-lg border border-[#6d46b5] shadow-[0_3px_8px_rgba(128,89,202,0.25)] transition-all duration-[250ms] ease cursor-pointer hover:bg-[#6d46b5] hover:-translate-y-0.5 hover:shadow-[0_6px_14px_rgba(128,89,202,0.35)]"
+                                  >
+                                    <i className="fas fa-map-marked-alt"></i>
+                                    View on Map
+                                  </a>
+                                </div>
+                              )}
+                          </div>
+
+                          {data?.businessDetails?.name && (
+                            <div className="font-semibold mb-1">
+                              {data?.businessDetails?.name}
+                            </div>
+                          )}
+                          {data?.businessDetails?.address && (
+                            <div className="text-gray-600">
+                              {data?.businessDetails?.address}
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    )}
+
+                    {(data?.medicineDetails?.CategoryDetails?.fixedType !== "dentalservice" &&
+                      data?.medicineDetails?.CategoryDetails?.fixedType !== "medicaltreatment" &&
+                      data?.medicineDetails?.CategoryDetails?.fixedType !== "nursingcare" &&
+                      data?.medicineDetails?.CategoryDetails?.fixedType !== "diagnostics") && (
+                        <div className="mb-6">
+                          <div className="rounded-[10px] overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.05)]">
+                            <div className="flex justify-between items-center border border-[#e0e0e0] py-4 px-[5px] bg-white rounded-tr-[10px] rounded-tl-[10px]">
+                              <div
+                                className={`top-vendor-badge ${isMobile ? "text-xs" : "text-xs"} font-semibold`}
+                              // className="top-vendor-badge"
+                              >
+                                <i className="fas fa-bolt"></i>{" "}
+                                <span className={isMobile ? "text-xs" : "text-[13px]"}>
+                                  {getAddressTypeLabel()}
+                                </span>
                               </div>
-                              {data?.businessDetails?.location?.coordinates &&
-                                data.businessDetails.location.coordinates.length === 2 && (
-                                  <div>
-                                    <a
-                                      href={`https://www.google.com/maps/search/?api=1&query=${data.businessDetails.location.coordinates[1]},${data.businessDetails.location.coordinates[0]}`}
-                                      target="_blank"
-                                      rel="noopener noreferrer"
-                                      style={{
-                                        display: "inline-flex",
-                                        alignItems: "center",
-                                        gap: "8px",
-                                        padding: "5px 10px",
-                                        background: "#8059ca",
-                                        color: "#fff",
-                                        fontSize: "14px",
-                                        fontWeight: "500",
-                                        textDecoration: "none",
-                                        borderRadius: "8px",
-                                        border: "1px solid #6d46b5",
-                                        boxShadow: "0 3px 8px rgba(128, 89, 202, 0.25)",
-                                        transition: "all 0.25s ease",
-                                        cursor: "pointer",
-                                      }}
-                                      onMouseEnter={(e) => {
-                                        e.currentTarget.style.background = "#6d46b5";
-                                        e.currentTarget.style.transform = "translateY(-2px)";
-                                        e.currentTarget.style.boxShadow =
-                                          "0 6px 14px rgba(128, 89, 202, 0.35)";
-                                      }}
-                                      onMouseLeave={(e) => {
-                                        e.currentTarget.style.background = "#8059ca";
-                                        e.currentTarget.style.transform = "translateY(0)";
-                                        e.currentTarget.style.boxShadow =
-                                          "0 3px 8px rgba(128, 89, 202, 0.25)";
-                                      }}
-                                    >
-                                      <i className="fas fa-map-marked-alt"></i>
-                                      View on Map
-                                    </a>
-                                  </div>
-                                )}
+                              <div>
+                                <button
+                                  className={`text-[#8059ca] bg-transparent border-0 font-semibold cursor-pointer ${isMobile ? "text-xs" : "text-[13px]"}`}
+                                  onClick={() => {
+                                    const token =
+                                      localStorage.getItem("medicomparestoken");
+                                    if (!token) {
+                                      toast.error("Please login to change address");
+                                      navigate("/login");
+                                      return;
+                                    }
+                                    handleLocationClick("right");
+                                  }}
+                                >
+                                  {selectedAddress ? "Change" : "Add"}
+                                </button>
+                              </div>
                             </div>
 
-                            {/* <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}> */}
-                            {data?.businessDetails?.name && (
-                              <div style={{ fontWeight: "600", marginBottom: "4px" }}>
-                                {data?.businessDetails?.name}
+                            {selectedAddress ? (
+                              <div className="border border-[#e0e0e0] border-t-0 p-4 bg-white text-sm text-[#333] rounded-bl-[10px] rounded-br-[10px]">
+                                {selectedAddress ? (
+                                  <div>
+                                    {selectedAddress.name && (
+                                      <div className="font-bold mb-1">
+                                        {selectedAddress.name}
+                                      </div>
+                                    )}
+                                    {selectedAddress.houseNo && (
+                                      <div>{selectedAddress.houseNo}</div>
+                                    )}
+                                    {selectedAddress.street && (
+                                      <div>{selectedAddress.street}</div>
+                                    )}
+                                    {selectedAddress.area && (
+                                      <div>{selectedAddress.area}</div>
+                                    )}
+                                    {selectedAddress.location?.address && (
+                                      <div>{selectedAddress.location.address} </div>
+                                    )}
+                                  </div>
+                                ) : (
+                                  selectedAddress?.address || ""
+                                )}
                               </div>
-                            )}
-                            {/* </div> */}
-                            {data?.businessDetails?.address && (
-                              <div style={{ color: "#4b5563" }}>
-                                {data?.businessDetails?.address}
+                            ) : (
+                              <div className="border border-[#e0e0e0] border-t-0 p-4 bg-white text-sm text-[#333] rounded-bl-[10px] rounded-br-[10px] flex items-center gap-2">
+                                <i className="fas fa-map-marker-alt"></i>
+                                <span>
+                                  {isLocationUpdating
+                                    ? "Detecting location..."
+                                    : "Add address"}
+                                </span>
                               </div>
                             )}
                           </div>
                         </div>
                       )}
-
-                      {(data?.medicineDetails?.CategoryDetails?.fixedType !== "dentalservice" &&
-                        data?.medicineDetails?.CategoryDetails?.fixedType !== "medicaltreatment" &&
-                        data?.medicineDetails?.CategoryDetails?.fixedType !== "nursingcare" &&
-                        data?.medicineDetails?.CategoryDetails?.fixedType !== "diagnostics") && (
-                          <div style={{ marginBottom: "24px" }}>
-                            <div
-                              style={{
-
-                                borderRadius: "10px",
-                                overflow: "hidden",
-                                boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
-                              }}
-                            >
-                              <div
-                                style={{
-                                  display: "flex",
-                                  justifyContent: "space-between",
-                                  alignItems: "center",
-                                  border: "1px solid #e0e0e0",
-                                  padding: "16px 5px",
-                                  backgroundColor: "#fff",
-                                  borderTopRightRadius: "10px",
-                                  borderTopLeftRadius: "10px",
+                  </>
+                )}
+              </div>
+              {isLoggedIn && (
+                <div className="w-full">
+                  <div className="rounded-[10px] shadow-[0_2px_8px_rgba(0,0,0,0.05)] bg-white border-0 p-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="col-span-1 md:col-span-2">
+                        <div className="choice-cards-container flex gap-3">
+                          <div className="choice-card-wrapper flex-1">
+                            <label className={`choice-card flex items-center gap-2 border rounded-lg p-1 cursor-pointer transition-all ${personType === "self" ? "selected border-[#8059ca] bg-[#f8f4ff]" : "border-[#e0e0e0] bg-white"}`}>
+                              <input
+                                type="radio"
+                                name="personType"
+                                checked={personType === "self"}
+                                onChange={() => {
+                                  setPersonType("self");
+                                  setSelectedDoctor(null);
+                                  setDoctorSearchQuery("");
+                                  setDoctors([]);
                                 }}
-                              >
-                                <div
-                                  style={{
-                                    fontSize: isMobile ? "12px" : "12px",
-                                    fontWeight: "600",
-                                  }}
-                                  className="top-vendor-badge"
-                                >
-                                  <i className="fas fa-bolt"></i>{" "}
-                                  <span
-                                    style={{ fontSize: isMobile ? "12px" : "13px" }}
-                                  >
-                                    {getAddressTypeLabel()}
-                                  </span>
-                                </div>
-                                <div>
-                                  <button
-                                    style={{
-                                      color: "#8059ca",
-                                      background: "transparent",
-                                      border: "none",
-                                      fontWeight: "600",
-                                      cursor: "pointer",
-                                      fontSize: isMobile ? "12px" : "13px",
-                                    }}
-                                    onClick={() => {
-                                      const token =
-                                        localStorage.getItem("medicomparestoken");
-                                      if (!token) {
-                                        toast.error("Please login to change address");
-                                        navigate("/login");
-                                        return;
-                                      }
-                                      handleLocationClick("right");
-                                    }}
-                                  >
-                                    {selectedAddress ? "Change" : "Add"}
-                                  </button>
-                                </div>
-                              </div>
-
-                              {selectedAddress ? (
-                                <div
-                                  style={{
-                                    border: "1px solid #e0e0e0",
-                                    borderTop: "none",
-                                    padding: "16px",
-                                    backgroundColor: "#fff",
-                                    fontSize: "14px",
-                                    color: "#333",
-                                    borderBottomLeftRadius: "10px",
-                                    borderBottomRightRadius: "10px",
-                                  }}
-                                >
-                                  {selectedAddress ? (
-                                    <div>
-                                      {selectedAddress.name && (
-                                        <div
-                                          style={{
-                                            fontWeight: "bold",
-                                            marginBottom: "4px",
-                                          }}
-                                        >
-                                          {selectedAddress.name}
-                                        </div>
-                                      )}
-                                      {selectedAddress.houseNo && (
-                                        <div>{selectedAddress.houseNo}</div>
-                                      )}
-                                      {selectedAddress.street && (
-                                        <div>{selectedAddress.street}</div>
-                                      )}
-                                      {selectedAddress.area && (
-                                        <div>{selectedAddress.area}</div>
-                                      )}
-                                      {selectedAddress.location?.address && (
-                                        <div>{selectedAddress.location.address} </div>
-                                      )}
-                                    </div>
-                                  ) : (
-                                    selectedAddress?.address || ""
-                                  )}
-                                </div>
-                              ) : (
-                                <div
-                                  style={{
-                                    border: "1px solid #e0e0e0",
-                                    borderTop: "none",
-                                    padding: "16px",
-                                    backgroundColor: "#fff",
-                                    fontSize: "14px",
-                                    color: "#333",
-                                    borderBottomLeftRadius: "10px",
-                                    borderBottomRightRadius: "10px",
-                                    display: "flex",
-                                    alignItems: "center",
-                                    gap: "8px",
-                                  }}
-                                >
-                                  <i className="fas fa-map-marker-alt"></i>
-                                  <span>
-                                    {isLocationUpdating
-                                      ? "Detecting location..."
-                                      : "Add address"}
-                                  </span>
-                                </div>
-                              )}
-                            </div>
+                                className="hidden"
+                              />
+                              <i className="fas fa-user choice-card-icon"></i>
+                              <span className="choice-card-text">Self</span>
+                            </label>
                           </div>
-                        )}
-                    </>
-                  )}
-                </div>
-                {isLoggedIn && (
-                  <div className="col-md-6 col-12">
-                    <div
-                      style={{
-                        borderRadius: "10px",
-                        boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
-                        backgroundColor: "#fff",
-                        border: "none",
-                        padding: "16px",
-                      }}
-                    >
-                      <div className="row g-3">
-                        <div className="col-12 ">
-                          <div className="choice-cards-container">
-                            <div className="choice-card-wrapper">
-                              <label className={`choice-card ${personType === "self" ? "selected" : ""}`}>
-                                <input
-                                  type="radio"
-                                  name="personType"
-                                  checked={personType === "self"}
-                                  onChange={() => {
-                                    setPersonType("self");
-                                    setSelectedDoctor(null);
-                                    setDoctorSearchQuery("");
-                                    setDoctors([]);
-                                  }}
-                                />
-                                <i className="fas fa-user choice-card-icon"></i>
-                                <span className="choice-card-text">Self</span>
-                              </label>
-                            </div>
 
-                            <div className="choice-card-wrapper">
-                              <label className={`choice-card ${personType === "forWhom" ? "selected" : ""}`}>
-                                <input
-                                  type="radio"
-                                  name="personType"
-                                  checked={personType === "forWhom"}
-                                  onChange={() => {
-                                    setPersonType("forWhom");
-                                    setSelectedFamilyMember(null);
-                                    setSelectedDoctor(null);
-                                    setDoctorName("");
-                                    setDoctorSearchQuery("");
-                                    setDoctors([]);
-                                  }}
-                                />
-                                <i className="fas fa-users choice-card-icon"></i>
-                                <span className="choice-card-text">For Whom</span>
-                              </label>
-                            </div>
+                          <div className="choice-card-wrapper flex-1">
+                            <label className={`choice-card flex items-center gap-2 border rounded-lg p-1 cursor-pointer transition-all ${personType === "forWhom" ? "selected border-[#8059ca] bg-[#f8f4ff]" : "border-[#e0e0e0] bg-white"}`}>
+                              <input
+                                type="radio"
+                                name="personType"
+                                checked={personType === "forWhom"}
+                                onChange={() => {
+                                  setPersonType("forWhom");
+                                  setSelectedFamilyMember(null);
+                                  setSelectedDoctor(null);
+                                  setDoctorName("");
+                                  setDoctorSearchQuery("");
+                                  setDoctors([]);
+                                }}
+                                className="hidden"
+                              />
+                              <i className="fas fa-users choice-card-icon"></i>
+                              <span className="choice-card-text">For Whom</span>
+                            </label>
                           </div>
                         </div>
+                      </div>
 
-                        {personType === "self" && (
-                          <div className="col-12">
-                            <label
-                              className="form-label"
-                              style={{ color: "#333", fontSize: "14px", fontWeight: "500", marginBottom: "6px" }}
-                            >
-                              Select Referred Doctor{" "}
-                              <span style={{ color: "red" }}>*</span>
+                      {personType === "self" && (
+                        <div className="col-span-1 md:col-span-2">
+                          <label className="form-label text-[#333] text-sm font-medium mb-1.5">
+                            Select Referred Doctor <span className="text-red-600">*</span>
+                          </label>
+                          <Select
+                            styles={customSelectStyles}
+                            options={getReferredDoctorSelectOptions(doctors)}
+                            components={referredDoctorSelectComponents}
+                            filterOption={() => true}
+                            inputValue={doctorSearchQuery}
+                            value={selectedDoctor}
+                            onChange={(selectedOption) =>
+                              handleReferredDoctorSelectChange(
+                                selectedOption,
+                                setSelectedDoctor,
+                                setDoctorName,
+                                setDoctorSearchQuery,
+                              )
+                            }
+                            onInputChange={(inputValue, actionMeta) =>
+                              handleReferredDoctorInputChange(
+                                inputValue,
+                                actionMeta,
+                                setDoctorSearchQuery,
+                              )
+                            }
+                            openMenuOnFocus
+                            openMenuOnClick
+                            placeholder="Search and Select Referred Doctor"
+                            isClearable
+                            isSearchable
+                            isLoading={doctorSearchLoading}
+                            menuPortalTarget={document.body}
+                            menuPosition="fixed"
+                            noOptionsMessage={({ inputValue }) =>
+                              inputValue.trim() ? "No doctors found" : null
+                            }
+                          />
+                        </div>
+                      )}
+
+                      {personType === "forWhom" && (
+                        <>
+                          <div className="col-span-1">
+                            <label className="form-label text-[#333] text-sm font-medium mb-1.5">
+                              Select Family Member <span className="text-red-600">*</span>
+                            </label>
+                            <Select
+                              isMulti={false}
+                              styles={customSelectStyles}
+                              options={familyMembers.map((member) => ({
+                                value: member._id,
+                                label: member.name,
+                              }))}
+                              value={selectedFamilyMember}
+                              onChange={(selectedOption) =>
+                                setSelectedFamilyMember(selectedOption)
+                              }
+                              placeholder="Select family members"
+                              isClearable
+                              menuPortalTarget={document.body}
+                              menuPosition="fixed"
+                            />
+                          </div>
+                          <div className="col-span-1">
+                            <label className="form-label text-[#333] text-sm font-medium mb-1.5">
+                              Select Referred Doctor <span className="text-red-600">*</span>
                             </label>
                             <Select
                               styles={customSelectStyles}
@@ -2168,1485 +1913,587 @@ const BookingProcess = () => {
                               }
                             />
                           </div>
-                        )}
-
-                        {personType === "forWhom" && (
-                          <>
-                            <div className="col-md-6 col-12">
-                              <label
-                                className="form-label"
-                                style={{ color: "#333", fontSize: "14px", fontWeight: "500", marginBottom: "6px" }}
-                              >
-                                Select Family Member{" "}
-                                <span style={{ color: "red" }}>*</span>
-                              </label>
-                              <Select
-                                isMulti={false}
-                                styles={customSelectStyles}
-                                options={familyMembers.map((member) => ({
-                                  value: member._id,
-                                  label: member.name,
-                                }))}
-                                value={selectedFamilyMember}
-                                onChange={(selectedOption) =>
-                                  setSelectedFamilyMember(selectedOption)
-                                }
-                                placeholder="Select family members"
-                                isClearable
-                                menuPortalTarget={document.body}
-                                menuPosition="fixed"
-                              />
-                            </div>
-                            <div className="col-md-6 col-12">
-                              <label
-                                className="form-label"
-                                style={{ color: "#333", fontSize: "14px", fontWeight: "500", marginBottom: "6px" }}
-                              >
-                                Select Referred Doctor{" "}
-                                <span style={{ color: "red" }}>*</span>
-                              </label>
-                              <Select
-                                styles={customSelectStyles}
-                                options={getReferredDoctorSelectOptions(doctors)}
-                                components={referredDoctorSelectComponents}
-                                filterOption={() => true}
-                                inputValue={doctorSearchQuery}
-                                value={selectedDoctor}
-                                onChange={(selectedOption) =>
-                                  handleReferredDoctorSelectChange(
-                                    selectedOption,
-                                    setSelectedDoctor,
-                                    setDoctorName,
-                                    setDoctorSearchQuery,
-                                  )
-                                }
-                                onInputChange={(inputValue, actionMeta) =>
-                                  handleReferredDoctorInputChange(
-                                    inputValue,
-                                    actionMeta,
-                                    setDoctorSearchQuery,
-                                  )
-                                }
-                                openMenuOnFocus
-                                openMenuOnClick
-                                placeholder="Search and Select Referred Doctor"
-                                isClearable
-                                isSearchable
-                                isLoading={doctorSearchLoading}
-                                menuPortalTarget={document.body}
-                                menuPosition="fixed"
-                                noOptionsMessage={({ inputValue }) =>
-                                  inputValue.trim() ? "No doctors found" : null
-                                }
-                              />
-                            </div>
-                          </>
-                        )}
-                      </div>
+                        </>
+                      )}
                     </div>
-                  </div>
-                )}
-              </div>
-
-              {selectedVisitType === "home" && (
-                <div style={{ marginBottom: "10px" }}>
-                  <div
-                    style={{
-                      border: "1px solid #d1fae5",
-                      borderRadius: "10px",
-                      padding: "16px",
-                      backgroundColor: "#f0fdf4",
-                      boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
-                    }}
-                  >
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "10px",
-                        marginBottom: "10px",
-                      }}
-                    >
-                      <i
-                        className="fab fa-whatsapp"
-                        style={{ color: "#16a34a", fontSize: "22px" }}
-                      ></i>
-                      <div
-                        style={{
-                          fontSize: isMobile ? "13px" : "14px",
-                          fontWeight: "700",
-                          color: "#111827",
-                        }}
-                      >
-                        Booking Support
-                      </div>
-                    </div>
-                    <p
-                      style={{
-                        fontSize: "13px",
-                        color: "#4b5563",
-                        marginBottom: "12px",
-                      }}
-                    >
-                      Need help with this appointment? Chat with our support
-                      team on WhatsApp.
-                    </p>
-                    <button
-                      type="button"
-                      onClick={handleWhatsAppSupport}
-                      style={{
-                        width: "100%",
-                        border: "none",
-                        borderRadius: "8px",
-                        backgroundColor: "#16a34a",
-                        color: "#fff",
-                        padding: "10px 12px",
-                        fontSize: "13px",
-                        fontWeight: "700",
-                        cursor: "pointer",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        gap: "8px",
-                      }}
-                    >
-                      <i className="fab fa-whatsapp"></i>
-                      Contact on WhatsApp
-                    </button>
                   </div>
                 </div>
               )}
+            </div>
 
-              <div
-                className="card shadow-sm mb-3 order-2 order-md-1"
-                style={{
-                  borderRadius: "12px",
-                  border: "none",
-                }}
-              >
-                <div className="card-body p-3 p-md-4">
-                  <div
-                    className="d-flex"
-                    style={{
-                      gap: isMobile ? "12px" : "16px",
-                      flexWrap: "wrap",
-                      alignItems: "flex-start",
-                    }}
-                  >
-                    <div style={{ position: "relative", flexShrink: 0 }}>
-                      <div
-                        style={{
-                          width: isMobile ? "80px" : "100px",
-                          height: isMobile ? "80px" : "100px",
-                          borderRadius: "8px",
-                          overflow: "hidden",
-                          backgroundColor: "#f0f4ff",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          border: "1px solid #e0e0e0",
-                        }}
-                      >
-                        <img
-                          src={
-                            resolveImage(data) ||
-                            resolveImage(data?.medicineDetails) ||
-                            resolveImage(data?.currentVariation) ||
-                            "/assets/img/doctors/labtest (3).svg"
-                          }
-                          alt={productName}
-                          style={{
-                            width: "100%",
-                            height: "100%",
-                            objectFit: "contain",
-                          }}
-                          onError={(e) => {
-                            e.target.src =
-                              "/assets/img/doctors/labtest (3).svg";
-                          }}
-                        />
-                      </div>
+            {selectedVisitType === "home" && (
+              <div className="mb-2.5">
+                <div className="border border-[#d1fae5] rounded-[10px] p-4 bg-[#f0fdf4] shadow-[0_2px_8px_rgba(0,0,0,0.05)]">
+                  <div className="flex items-center gap-2.5 mb-2.5">
+                    <i className="fab fa-whatsapp text-[#16a34a] text-[22px]"></i>
+                    <div className={`${isMobile ? "text-[13px]" : "text-sm"} font-bold text-gray-900`}>
+                      Booking Support
                     </div>
+                  </div>
+                  <p className="text-[13px] text-gray-600 mb-3">
+                    Need help with this appointment? Chat with our support
+                    team on WhatsApp.
+                  </p>
+                  <button
+                    type="button"
+                    onClick={handleWhatsAppSupport}
+                    className="w-full border-0 rounded-lg bg-[#16a34a] text-white py-2.5 px-3 text-[13px] font-bold cursor-pointer flex items-center justify-center gap-2"
+                  >
+                    <i className="fab fa-whatsapp"></i>
+                    Contact on WhatsApp
+                  </button>
+                </div>
+              </div>
+            )}
 
-                    <div
-                      style={{
-                        flex: "1 1 auto",
-                        minWidth: isMobile ? "0" : "200px",
-                        width: isMobile ? "100%" : "auto",
-                      }}
-                    >
-                      <div
-                        className={`d-flex ${isMobile ? "flex-column" : "align-items-start"
-                          } w-100`}
-                      >
-                        <div
-                          className="d-flex flex-column"
-                          style={{ width: isMobile ? "100%" : "auto" }}
-                        >
-                          <h6
-                            style={{
-                              fontSize: isMobile ? "14px" : "16px",
-                              fontWeight: "600",
-                              marginBottom: isMobile ? "8px" : "12px",
-                              color: "#000",
-                              textTransform: "capitalize",
-                            }}
-                          >
-                            {productName}
-                          </h6>
+            <div className="card shadow-sm mb-3 order-2 order-md-1 rounded-xl border-0">
+              <div className="card-body p-3 p-md-4">
+                <div className={`d-flex flex-wrap items-start ${isMobile ? "gap-3" : "gap-4"}`}>
+                  <div className="relative shrink-0">
+                    <div className={`${isMobile ? "w-20 h-20" : "w-[100px] h-[100px]"} rounded-lg overflow-hidden bg-[#f0f4ff] flex items-center justify-center border border-[#e0e0e0]`}>
+                      <img
+                        src={
+                          resolveImage(data) ||
+                          resolveImage(data?.medicineDetails) ||
+                          resolveImage(data?.currentVariation) ||
+                          "/assets/img/doctors/labtest (3).svg"
+                        }
+                        alt={productName}
+                        className="w-full h-full object-contain"
+                        onError={(e) => {
+                          e.target.src =
+                            "/assets/img/doctors/labtest (3).svg";
+                        }}
+                      />
+                    </div>
+                  </div>
+
+                  <div className={`flex-1 ${isMobile ? "min-w-0 w-full" : "min-w-[200px] w-auto"}`}>
+                    <div className={`flex ${isMobile ? "flex-column" : "items-start"} w-100`}>
+                      <div className={`flex flex-column ${isMobile ? "w-full" : "w-auto"}`}>
+                        <div className={`${isMobile ? "text-sm" : "text-base"} font-semibold ${isMobile ? "mb-2" : "mb-3"} text-black capitalize`}>
+                          {productName}
                         </div>
+                      </div>
 
-                        <div
-                          style={{
-                            marginLeft: isMobile ? "0" : "auto",
-                            marginTop: isMobile ? "12px" : "0",
-                            width: isMobile ? "100%" : "auto",
-                          }}
-                        >
-                          <div
-                            className="d-flex align-items-center"
-                            style={{
-                              gap: isMobile ? "8px" : "12px",
-                              flexWrap: "wrap",
-                              marginBottom: isMobile ? "12px" : "0px",
-                            }}
-                          >
-                            {discountPrice && mrpPrice > pricePerItem ? (
-                              <>
-                                <span
-                                  style={{
-                                    fontSize: "20px",
-                                    fontWeight: "700",
-                                    color: "#000",
-                                  }}
-                                >
-                                  ₹{pricePerItem.toFixed(2)}
-                                </span>
-                                <span
-                                  style={{
-                                    fontSize: "16px",
-                                    color: "#999",
-                                    textDecoration: "line-through",
-                                  }}
-                                >
-                                  ₹{mrpPrice.toFixed(2)}
-                                </span>
-
-                                {discountPercent > 0 && (
-                                  <span
-                                    className="badge"
-                                    style={{
-                                      backgroundColor: "#28a745",
-                                      color: "#fff",
-                                      fontSize: "12px",
-                                      padding: "4px 8px",
-                                      borderRadius: "4px",
-                                    }}
-                                  >
-                                    {discountPercent}% OFF
-                                  </span>
-                                )}
-                              </>
-                            ) : (
-                              <span
-                                style={{
-                                  fontSize: "20px",
-                                  fontWeight: "700",
-                                  color: "#000",
-                                }}
-                              >
+                      <div className={`${isMobile ? "ml-0 mt-3 w-full" : "ml-auto mt-0 w-auto"}`}>
+                        <div className={`flex items-center flex-wrap ${isMobile ? "gap-2" : "gap-3"} ${isMobile ? "mb-3" : "mb-0"}`}>
+                          {discountPrice && mrpPrice > pricePerItem ? (
+                            <>
+                              <span className="text-xl font-semibold text-black">
                                 ₹{pricePerItem.toFixed(2)}
                               </span>
-                            )}
-                          </div>
-                        </div>
-                      </div>
+                              <span className="text-base text-gray-400 line-through">
+                                ₹{mrpPrice.toFixed(2)}
+                              </span>
 
-                      <div
-                        style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          alignItems: "center",
-                          justifyContent: "space-between",
-                          gap: "20px",
-                          flexWrap: "wrap",
-                        }}
-                      >
-                        <div>
-                          {/* {['surgeries', 'diagnosis'].} */}
-                          <ul
-                            style={{
-                              listStyle: "none",
-                              padding: 0,
-                              margin: "0 0 12px 0",
-                            }}
-                          >
-                            {data?.medicineDetails?.form && (
-                              <li
-                                style={{
-                                  fontSize: "13px",
-                                  color: "#666",
-                                  marginBottom: "6px",
-                                  display: "flex",
-                                  alignItems: "center",
-                                  gap: "8px",
-                                }}
-                              >
-                                <i
-                                  className="fas fa-capsules"
-                                  style={{ color: "#8059ca", fontSize: "12px" }}
-                                ></i>
-                                Form : {data?.medicineDetails?.form}
-                              </li>
-                            )}
-
-                            {data?.medicineDetails?.strength && (
-                              <li
-                                style={{
-                                  fontSize: "13px",
-                                  color: "#666",
-                                  marginBottom: "6px",
-                                  display: "flex",
-                                  alignItems: "center",
-                                  gap: "8px",
-                                }}
-                              >
-                                <i
-                                  className="fas fa-bolt"
-                                  style={{ color: "#8059ca", fontSize: "12px" }}
-                                ></i>
-                                Strength : {data?.medicineDetails?.strength}
-                              </li>
-                            )}
-
-                            {data?.medicineDetails?.duration && (
-                              <li
-                                style={{
-                                  fontSize: "13px",
-                                  color: "#666",
-                                  marginBottom: "6px",
-                                  display: "flex",
-                                  alignItems: "center",
-                                  gap: "8px",
-                                }}
-                              >
-                                <i
-                                  className="fas fa-clock"
-                                  style={{ color: "#8059ca", fontSize: "12px" }}
-                                ></i>
-                                Duration : {data?.medicineDetails?.duration}
-                              </li>
-                            )}
-                            {data?.medicineDetails?.shiftType && (
-                              <li
-                                style={{
-                                  fontSize: "13px",
-                                  color: "#666",
-                                  marginBottom: "6px",
-                                  display: "flex",
-                                  alignItems: "center",
-                                  gap: "8px",
-                                }}
-                              >
-                                <i
-                                  className="fas fa-clock"
-                                  style={{ color: "#8059ca", fontSize: "12px" }}
-                                ></i>
-                                Shift Type : {data?.medicineDetails?.shiftType}
-                              </li>
-                            )}
-                            {data?.medicineDetails?.nursecareType && (
-                              <li
-                                style={{
-                                  fontSize: "13px",
-                                  color: "#666",
-                                  marginBottom: "6px",
-                                  display: "flex",
-                                  alignItems: "center",
-                                  gap: "8px",
-                                }}
-                              >
-                                <i
-                                  className="fas fa-clock"
-                                  style={{ color: "#8059ca", fontSize: "12px" }}
-                                ></i>
-                                Type : {data?.medicineDetails?.nursecareType}
-                              </li>
-                            )}
-                            {data?.medicineDetails?.gender && (
-                              <li
-                                style={{
-                                  fontSize: "13px",
-                                  color: "#666",
-                                  marginBottom: "6px",
-                                  display: "flex",
-                                  alignItems: "center",
-                                  gap: "8px",
-                                }}
-                              >
-                                <i
-                                  className="fas fa-venus-mars"
-                                  style={{ color: "#8059ca", fontSize: "12px" }}
-                                ></i>
-                                Gender : {data?.medicineDetails?.gender}
-                              </li>
-                            )}
-                            {data?.medicineDetails?.complexity && (
-                              <li
-                                style={{
-                                  fontSize: "13px",
-                                  color: "#666",
-                                  marginBottom: "6px",
-                                  display: "flex",
-                                  alignItems: "center",
-                                  gap: "8px",
-                                }}
-                              >
-                                <i
-                                  className="fas fa-layer-group"
-                                  style={{ color: "#8059ca", fontSize: "12px" }}
-                                ></i>
-                                Complexity : {data?.medicineDetails?.complexity}
-                              </li>
-                            )}
-
-                            {data?.medicineDetails?.model && (
-                              <li
-                                style={{
-                                  fontSize: "13px",
-                                  color: "#666",
-                                  marginBottom: "6px",
-                                  display: "flex",
-                                  alignItems: "center",
-                                  gap: "8px",
-                                }}
-                              >
-                                <i
-                                  className="fas fa-cube"
-                                  style={{ color: "#8059ca", fontSize: "12px" }}
-                                ></i>
-                                Model : {data?.medicineDetails?.model}
-                              </li>
-                            )}
-                            {data?.medicineDetails?.condition && (
-                              <li
-                                style={{
-                                  fontSize: "13px",
-                                  color: "#666",
-                                  marginBottom: "6px",
-                                  display: "flex",
-                                  alignItems: "center",
-                                  gap: "8px",
-                                }}
-                              >
-                                <i
-                                  className="fas fa-info-circle"
-                                  style={{ color: "#8059ca", fontSize: "12px" }}
-                                ></i>
-                                Condition : {data?.medicineDetails?.condition}
-                              </li>
-                            )}
-                            {data?.medicineDetails?.machineType && (
-                              <li
-                                style={{
-                                  fontSize: "13px",
-                                  color: "#666",
-                                  marginBottom: "6px",
-                                  display: "flex",
-                                  alignItems: "center",
-                                  gap: "8px",
-                                }}
-                              >
-                                <i
-                                  className="fas fa-cogs"
-                                  style={{ color: "#8059ca", fontSize: "12px" }}
-                                ></i>
-                                Machine Type :{" "}
-                                {data?.medicineDetails?.machineType}
-                              </li>
-                            )}
-
-                            {data?.medicineDetails?.compositionDetails
-                              ?.name && (
-                                <li
-                                  style={{
-                                    fontSize: "13px",
-                                    color: "#666",
-                                    marginBottom: "6px",
-                                    display: "flex",
-                                    alignItems: "center",
-                                    gap: "8px",
-                                  }}
-                                >
-                                  <i
-                                    className="fas fa-mortar-pestle"
-                                    style={{ color: "#8059ca", fontSize: "12px" }}
-                                  ></i>
-                                  Composition :{" "}
-                                  {
-                                    data?.medicineDetails?.compositionDetails
-                                      ?.name
-                                  }
-                                </li>
+                              {discountPercent > 0 && (
+                                <span className="badge bg-[#28a745] text-white text-xs py-1 px-2 rounded">
+                                  {discountPercent}% OFF
+                                </span>
                               )}
-
-                            {data?.medicineDetails?.reportsDuration && (
-                              <li
-                                style={{
-                                  fontSize: "13px",
-                                  color: "#666",
-                                  marginBottom: "6px",
-                                  display: "flex",
-                                  alignItems: "center",
-                                  gap: "8px",
-                                }}
-                              >
-                                <i
-                                  className="fas fa-clock"
-                                  style={{ color: "#8059ca", fontSize: "12px" }}
-                                ></i>
-
-                                {data?.medicineDetails?.reportsDuration.slice(
-                                  0,
-                                  40,
-                                ) ||
-                                  data?.reportsDuration ||
-                                  "24"}
-                              </li>
-                            )}
-                            {testsCount && (
-                              <li
-                                style={{
-                                  fontSize: "13px",
-                                  color: "#666",
-                                  marginBottom: "6px",
-                                  display: "flex",
-                                  alignItems: "center",
-                                  gap: "8px",
-                                }}
-                              >
-                                <i
-                                  className="fas fa-vial"
-                                  style={{ color: "#8059ca", fontSize: "12px" }}
-                                ></i>
-                                Includes {testsCount} parameters
-                              </li>
-                            )}
-                          </ul>
-
-                          <div
-                            style={{
-                              display: "flex",
-                              gap: "20px",
-                              flexWrap: "wrap",
-                            }}
-                          >
-                            <a
-                              href="#"
-                              onClick={(e) => {
-                                e.preventDefault();
-                                navigate(-1);
-                              }}
-                              style={{
-                                fontSize: "13px",
-                                color: "#dc3545",
-                                textDecoration: "none",
-                                cursor: "pointer",
-                                display: "flex",
-                                alignItems: "center",
-                                gap: "6px",
-                              }}
-                            >
-                              <i
-                                className="fas fa-trash-alt"
-                                style={{ fontSize: "12px" }}
-                              ></i>
-                              Delete
-                            </a>
-                          </div>
-                        </div>
-
-                        {(data?.businessDetails ||
-                          data?.vendorDetails?.businessDetails) && (
-                            <div
-                              style={{
-                                padding: "10px",
-                                background: "#f8f9fa",
-                                borderRadius: "8px",
-                                display: "flex",
-                                alignItems: "center",
-                                gap: "12px",
-                                border: "1px solid #eee",
-                              }}
-                            >
-                              <img
-                                src={getImageUrl(
-                                  data?.businessDetails?.bussiness_image?.url ||
-                                  data?.vendorDetails?.businessDetails
-                                    ?.bussiness_image?.url ||
-                                  "",
-                                )}
-                                alt="business"
-                                style={{
-                                  width: "40px",
-                                  height: "40px",
-                                  borderRadius: "6px",
-                                  objectFit: "cover",
-                                }}
-                              />
-                              <div>
-                                <div
-                                  style={{
-                                    fontSize: "13px",
-                                    fontWeight: "600",
-                                    color: "#111",
-                                  }}
-                                >
-                                  {
-                                    (
-                                      data?.businessDetails ||
-                                      data?.vendorDetails?.businessDetails
-                                    )?.name
-                                  }
-                                </div>
-                              </div>
-                            </div>
-                          )}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              {!isMobile && productData?.length > 0 && (
-                <div className="mt-2 order-lg-last">
-                  {renderRecentlyViewed()}
-                </div>
-              )}
-            </div>
-
-            <div className="col-lg-4 col-md-12 order-2 order-lg-2">
-              <div
-                style={{
-                  position: isMobile ? "relative" : "sticky",
-                  top: isMobile ? "0" : "20px",
-                }}
-              >
-                {isSlotCategory && (
-                  <div
-                    className="card shadow-sm mb-4"
-                    style={{
-                      borderRadius: "12px",
-                      border: "none",
-                    }}
-                  >
-                    <div className="card-body p-3">
-                      {/* Visit Type Option */}
-                      {serviceDetails?.visitType && (
-                        <div style={{ marginBottom: "16px", borderBottom: "1px solid #f1f1f1", paddingBottom: "12px" }}>
-                          <h6
-                            style={{
-                              fontSize: "12px",
-                              fontWeight: "700",
-                              color: "#8059ca",
-                              textTransform: "uppercase",
-                              letterSpacing: "0.5px",
-                              marginBottom: "8px",
-                            }}
-                          >
-                            Visit Type
-                          </h6>
-                          {serviceDetails.visitType.toLowerCase() === "both" ? (
-                            <div className="d-flex gap-2">
-                              <button
-                                type="button"
-                                onClick={() => setSelectedVisitType("home")}
-                                style={{
-                                  flex: 1,
-                                  padding: "8px 12px",
-                                  borderRadius: "8px",
-                                  border: selectedVisitType === "home" ? "2px solid #8059ca" : "1px solid #ddd",
-                                  background: selectedVisitType === "home" ? "#f8f4ff" : "#fff",
-                                  color: selectedVisitType === "home" ? "#8059ca" : "#333",
-                                  fontWeight: "600",
-                                  fontSize: "12px",
-                                  cursor: "pointer",
-                                  transition: "all 0.2s ease",
-                                  display: "flex",
-                                  alignItems: "center",
-                                  justifyContent: "center",
-                                  gap: "6px",
-                                }}
-                              >
-                                <i className="fas fa-home"></i> Home Visit
-                              </button>
-                              <button
-                                type="button"
-                                onClick={() => setSelectedVisitType("center")}
-                                style={{
-                                  flex: 1,
-                                  padding: "8px 12px",
-                                  borderRadius: "8px",
-                                  border: selectedVisitType === "center" ? "2px solid #8059ca" : "1px solid #ddd",
-                                  background: selectedVisitType === "center" ? "#f8f4ff" : "#fff",
-                                  color: selectedVisitType === "center" ? "#8059ca" : "#333",
-                                  fontWeight: "600",
-                                  fontSize: "12px",
-                                  cursor: "pointer",
-                                  transition: "all 0.2s ease",
-                                  display: "flex",
-                                  alignItems: "center",
-                                  justifyContent: "center",
-                                  gap: "6px",
-                                }}
-                              >
-                                <i className="fas fa-building"></i> Visit Center
-                              </button>
-                            </div>
-                          ) : serviceDetails.visitType.toLowerCase() === "home" ? (
-                            <div
-                              style={{
-                                padding: "8px 12px",
-                                background: "#ecfdf5",
-                                border: "1px solid #a7f3d0",
-                                borderRadius: "8px",
-                                color: "#065f46",
-                                fontSize: "12px",
-                                fontWeight: "600",
-                                display: "flex",
-                                alignItems: "center",
-                                gap: "8px",
-                              }}
-                            >
-                              <i className="fas fa-home" style={{ color: "#059669" }}></i>
-                              Home Service Only Available
-                            </div>
+                            </>
                           ) : (
-                            <div
-                              style={{
-                                padding: "8px 12px",
-                                background: "#fffbeb",
-                                border: "1px solid #fde68a",
-                                borderRadius: "8px",
-                                color: "#b45309",
-                                fontSize: "12px",
-                                fontWeight: "600",
-                                display: "flex",
-                                alignItems: "center",
-                                gap: "8px",
-                              }}
-                            >
-                              <i className="fas fa-exclamation-circle" style={{ color: "#d97706" }}></i>
-                              Please visit the center for this booking
-                            </div>
+                            <span className="text-xl font-bold text-black">
+                              ₹{pricePerItem.toFixed(2)}
+                            </span>
                           )}
                         </div>
-                      )}
-
-                      <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          alignItems: "center",
-                          marginBottom: "12px",
-                        }}
-                      >
-                        <h6
-                          style={{
-                            fontSize: "14px",
-                            fontWeight: "600",
-                            color: "#000",
-                            margin: 0,
-                          }}
-                        >
-                          APPOINTMENT SLOT
-                        </h6>
-                        <button
-                          onClick={() => setShowSlotPicker(true)}
-                          className="highlighted-pick-slot-btn"
-                        >
-                          PICK SLOT
-                        </button>
-                      </div>
-                      {selectedSlot || formatSelectedSlot() ? (
-                        <div
-                          style={{
-                            backgroundColor: "rgba(236, 236, 238, 1)",
-                            borderRadius: "8px",
-                            padding: "12px",
-                            fontSize: "13px",
-                            color: "#000",
-                            marginBottom: "12px",
-                          }}
-                        >
-                          {selectedSlot ||
-                            formatSelectedSlot() ||
-                            "Select a slot"}
-                        </div>
-                      ) : (
-                        <div
-                          style={{
-                            backgroundColor: PRIMARY_SECTION_BG,
-                            borderRadius: "8px",
-                            padding: "12px",
-                            fontSize: "13px",
-                            color: PRIMARY_COLOR,
-                            marginBottom: "12px",
-                          }}
-                        >
-                          No slot selected
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                )}
-
-                <div
-                  className="card shadow-sm mb-3"
-                  style={{
-                    borderRadius: "12px",
-                    border: "none",
-                  }}
-                >
-                  <div className="card-body p-0">
-                    <div
-                      style={{
-                        padding: "16px",
-                        borderBottom: "1px solid #e0e0e0",
-                        cursor: "pointer",
-                      }}
-                      onClick={() =>
-                        setIsTotalFareExpanded(!isTotalFareExpanded)
-                      }
-                    >
-                      <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          alignItems: "center",
-                        }}
-                      >
-                        <h6
-                          style={{
-                            fontSize: "16px",
-                            fontWeight: "600",
-                            margin: 0,
-                            color: "#000",
-                          }}
-                        >
-                          CART BREAKDOWN
-                        </h6>
-                        <i
-                          className={`fas fa-chevron-${isTotalFareExpanded ? "up" : "down"
-                            }`}
-                          style={{ color: "#666", fontSize: "12px" }}
-                        ></i>
                       </div>
                     </div>
 
-                    {isTotalFareExpanded && (
-                      <div style={{ padding: "16px" }}>
-                        <div
-                          style={{
-                            marginBottom: "16px",
-                            paddingBottom: "16px",
-                            borderBottom: "1px solid #e0e0e0",
-                          }}
-                        >
-                          <div
-                            style={{
-                              fontSize: "14px",
-                              fontWeight: "600",
-                              marginBottom: "12px",
-                              color: "#000",
-                            }}
-                          >
-                            Booking Summary
-                          </div>
+                    <div className="flex flex-row items-center justify-between gap-5 flex-wrap">
+                      <div>
+                        <ul className="list-none p-0 mt-0 mb-3">
+                          {data?.medicineDetails?.form && (
+                            <li className="text-[13px] text-gray-600 mb-1.5 flex items-center gap-2">
+                              <i className="fas fa-capsules text-[#8059ca] text-xs"></i>
+                              Form : {data?.medicineDetails?.form}
+                            </li>
+                          )}
 
-                          {/* OFFERS & COUPONS */}
-                          <div
-                            style={{
-                              marginBottom: "16px",
+                          {data?.medicineDetails?.strength && (
+                            <li className="text-[13px] text-gray-600 mb-1.5 flex items-center gap-2">
+                              <i className="fas fa-bolt text-[#8059ca] text-xs"></i>
+                              Strength : {data?.medicineDetails?.strength}
+                            </li>
+                          )}
+
+                          {data?.medicineDetails?.duration && (
+                            <li className="text-[13px] text-gray-600 mb-1.5 flex items-center gap-2">
+                              <i className="fas fa-clock text-[#8059ca] text-xs"></i>
+                              Duration : {data?.medicineDetails?.duration}
+                            </li>
+                          )}
+                          {data?.medicineDetails?.shiftType && (
+                            <li className="text-[13px] text-gray-600 mb-1.5 flex items-center gap-2">
+                              <i className="fas fa-clock text-[#8059ca] text-xs"></i>
+                              Shift Type : {data?.medicineDetails?.shiftType}
+                            </li>
+                          )}
+                          {data?.medicineDetails?.nursecareType && (
+                            <li className="text-[13px] text-gray-600 mb-1.5 flex items-center gap-2">
+                              <i className="fas fa-clock text-[#8059ca] text-xs"></i>
+                              Type : {data?.medicineDetails?.nursecareType}
+                            </li>
+                          )}
+                          {data?.medicineDetails?.gender && (
+                            <li className="text-[13px] text-gray-600 mb-1.5 flex items-center gap-2">
+                              <i className="fas fa-venus-mars text-[#8059ca] text-xs"></i>
+                              Gender : {data?.medicineDetails?.gender}
+                            </li>
+                          )}
+                          {data?.medicineDetails?.complexity && (
+                            <li className="text-[13px] text-gray-600 mb-1.5 flex items-center gap-2">
+                              <i className="fas fa-layer-group text-[#8059ca] text-xs"></i>
+                              Complexity : {data?.medicineDetails?.complexity}
+                            </li>
+                          )}
+
+                          {data?.medicineDetails?.model && (
+                            <li className="text-[13px] text-gray-600 mb-1.5 flex items-center gap-2">
+                              <i className="fas fa-cube text-[#8059ca] text-xs"></i>
+                              Model : {data?.medicineDetails?.model}
+                            </li>
+                          )}
+                          {data?.medicineDetails?.condition && (
+                            <li className="text-[13px] text-gray-600 mb-1.5 flex items-center gap-2">
+                              <i className="fas fa-info-circle text-[#8059ca] text-xs"></i>
+                              Condition : {data?.medicineDetails?.condition}
+                            </li>
+                          )}
+                          {data?.medicineDetails?.machineType && (
+                            <li className="text-[13px] text-gray-600 mb-1.5 flex items-center gap-2">
+                              <i className="fas fa-cogs text-[#8059ca] text-xs"></i>
+                              Machine Type : {data?.medicineDetails?.machineType}
+                            </li>
+                          )}
+
+                          {data?.medicineDetails?.compositionDetails?.name && (
+                            <li className="text-[13px] text-gray-600 mb-1.5 flex items-center gap-2">
+                              <i className="fas fa-mortar-pestle text-[#8059ca] text-xs"></i>
+                              Composition : {data?.medicineDetails?.compositionDetails?.name}
+                            </li>
+                          )}
+
+                          {data?.medicineDetails?.reportsDuration && (
+                            <li className="text-[13px] text-gray-600 mb-1.5 flex items-center gap-2">
+                              <i className="fas fa-clock text-[#8059ca] text-xs"></i>
+                              {data?.medicineDetails?.reportsDuration.slice(0, 40) ||
+                                data?.reportsDuration ||
+                                "24"}
+                            </li>
+                          )}
+                          {testsCount && (
+                            <li className="text-[13px] text-gray-600 mb-1.5 flex items-center gap-2">
+                              <i className="fas fa-vial text-[#8059ca] text-xs"></i>
+                              Includes {testsCount} parameters
+                            </li>
+                          )}
+                        </ul>
+
+                        <div className="flex gap-5 flex-wrap">
+                          <a
+                            href="#"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              navigate(-1);
                             }}
+                            className="text-[13px] text-red-600 no-underline cursor-pointer flex items-center gap-1.5"
                           >
-                            <div
-                              style={{
-                                display: "flex",
-                                gap: "12px",
-                                background: "#ecfdf5",
-                                padding: "16px",
-                                borderRadius: "12px",
-                                alignItems: "center",
-                                cursor: "pointer",
-                                border: "1px solid #d1fae5",
-                              }}
-                              onClick={(e) => {
-                                e.preventDefault();
-                                const token =
-                                  localStorage.getItem("medicomparestoken");
-                                if (!token) {
-                                  toast.error("Please login to apply coupons");
-                                  navigate("/login");
-                                  return;
+                            <i className="fas fa-trash-alt text-xs"></i>
+                            Delete
+                          </a>
+                        </div>
+                      </div>
+
+                      {(data?.businessDetails ||
+                        data?.vendorDetails?.businessDetails) && (
+                          <div className="p-2.5 bg-gray-50 rounded-lg flex items-center gap-3 border border-gray-100">
+                            <img
+                              src={getImageUrl(
+                                data?.businessDetails?.bussiness_image?.url ||
+                                data?.vendorDetails?.businessDetails
+                                  ?.bussiness_image?.url ||
+                                "",
+                              )}
+                              alt="business"
+                              className="w-10 h-10 rounded-md object-cover"
+                            />
+                            <div>
+                              <div className="text-[13px] font-semibold text-gray-900">
+                                {
+                                  (
+                                    data?.businessDetails ||
+                                    data?.vendorDetails?.businessDetails
+                                  )?.name
                                 }
-                                setShowOffersModal(true);
-                              }}
-                            >
-                              <div
-                                style={{
-                                  width: 40,
-                                  height: 40,
-                                  background: "#16a34a",
-                                  borderRadius: "50%",
-                                  display: "flex",
-                                  alignItems: "center",
-                                  justifyContent: "center",
-                                  color: "#fff",
-                                  fontSize: "16px",
-                                  fontWeight: 700,
-                                }}
-                              >
-                                %
                               </div>
-
-                              <div style={{ flex: 1 }}>
-                                <div
-                                  style={{
-                                    display: "flex",
-                                    alignItems: "center",
-                                    justifyContent: "space-between",
-                                    fontSize: "14px",
-                                    fontWeight: 600,
-                                    color: "#065f46",
-                                    marginBottom: "2px",
-                                    cursor: "pointer",
-                                  }}
-                                >
-                                  <span>Apply Coupon</span>
-                                  <i className="fas fa-chevron-right" />
-                                </div>
-
-                                <div
-                                  style={{ fontSize: "12px", color: "#047857" }}
-                                >
-                                  {appliedCoupon ? (
-                                    <div
-                                      style={{
-                                        display: "flex",
-                                        alignItems: "center",
-                                        gap: "8px",
-                                        flexWrap: "wrap",
-                                      }}
-                                    >
-                                      <span>
-                                        Applied:{" "}
-                                        {appliedCoupon.code ||
-                                          appliedCoupon.name}
-                                      </span>
-                                      {/* <span
-                                        style={{
-                                          background: "#dcfce7",
-                                          color: "#166534",
-                                          fontSize: "11px",
-                                          padding: "2px 8px",
-                                          borderRadius: "999px",
-                                          fontWeight: 700,
-                                        }}
-                                      >
-                                        Coupon Applied
-                                      </span> */}
-                                      <button
-                                        type="button"
-                                        onClick={(e) => {
-                                          e.preventDefault();
-                                          e.stopPropagation();
-                                          setAppliedCoupon(null);
-                                        }}
-                                        style={{
-                                          background: "transparent",
-                                          border: "none",
-                                          padding: 0,
-                                          cursor: "pointer",
-                                          color: "#065f46",
-                                          textDecoration: "underline",
-                                          fontWeight: 600,
-                                          fontSize: "12px",
-                                        }}
-                                      >
-                                        Remove
-                                      </button>
-                                    </div>
-                                  ) : localStorage.getItem(
-                                    "medicomparestoken",
-                                  ) ? (
-                                    "View available coupons"
-                                  ) : (
-                                    "Login to apply coupons"
-                                  )}
-                                </div>
-                              </div>
-                            </div>
-
-                            {/* Manual Coupon Input */}
-                            <div style={{ display: "flex", gap: "8px", marginTop: "12px" }}>
-                              <input
-                                type="text"
-                                placeholder="Enter Coupon Code"
-                                value={couponInputText}
-                                onChange={(e) => setCouponInputText(e.target.value)}
-                                style={{
-                                  flex: 1,
-                                  border: "1px solid #cbd5e1",
-                                  borderRadius: "8px",
-                                  padding: "8px 12px",
-                                  fontSize: "13px",
-                                  outline: "none",
-                                  transition: "border-color 0.2s",
-                                }}
-                                onFocus={(e) => e.target.style.borderColor = "#8059ca"}
-                                onBlur={(e) => e.target.style.borderColor = "#cbd5e1"}
-                              />
-                              <button
-                                type="button"
-                                onClick={(e) => {
-                                  e.preventDefault();
-                                  handleManualCouponApply();
-                                }}
-                                style={{
-                                  background: "#8059ca",
-                                  color: "#fff",
-                                  border: "none",
-                                  borderRadius: "8px",
-                                  padding: "8px 16px",
-                                  fontSize: "13px",
-                                  fontWeight: "600",
-                                  cursor: "pointer",
-                                  transition: "background 0.2s",
-                                }}
-                                onMouseEnter={(e) => e.currentTarget.style.background = "#6f42c1"}
-                                onMouseLeave={(e) => e.currentTarget.style.background = "#8059ca"}
-                              >
-                                Apply
-                              </button>
-                            </div>
-                          </div>
-
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              marginBottom: "8px",
-                              fontSize: "13px",
-                            }}
-                          >
-                            <span style={{ color: "#666" }}>
-                              Subtotal<small> (Inclusive of all Taxes)</small>
-                            </span>
-                            <span style={{ fontWeight: "600", color: "#000" }}>
-                              ₹{subtotal.toFixed(2)}
-                            </span>
-                          </div>
-
-                          {(data?.medicineDetails?.CategoryDetails
-                            ?.fixedType === "labtests" ||
-                            cart?.type === "package") && (
-                              <div
-                                style={{
-                                  display: "flex",
-                                  justifyContent: "space-between",
-                                  marginBottom: "8px",
-                                  fontSize: "13px",
-                                }}
-                              >
-                                <span style={{ color: "#666" }}>
-                                  Sample Collection fee
-                                </span>
-                                <span
-                                  style={{ fontWeight: "600", color: "#000" }}
-                                >
-                                  ₹{samplecollection.toFixed(2)}
-                                </span>
-                              </div>
-                            )}
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              marginBottom: "8px",
-                              fontSize: "13px",
-                            }}
-                          >
-                            <span style={{ color: "#666" }}>GST</span>
-                            <span style={{ fontWeight: "600", color: "#000" }}>
-                              ₹{tax.toFixed(2)}
-                            </span>
-                          </div>
-
-                          {/* <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              marginBottom: "8px",
-                              fontSize: "13px",
-                            }}
-                          >
-                            <span style={{ color: "#666" }}>SGST (14%)</span>
-                            <span style={{ fontWeight: "600", color: "#000" }}>
-                              ₹{sgst.toFixed(2)}
-                            </span>
-                          </div> */}
-
-                          {couponDiscount > 0 && (
-                            <div
-                              style={{
-                                display: "flex",
-                                justifyContent: "space-between",
-                                marginBottom: "8px",
-                                fontSize: "13px",
-                                color: "#065f46",
-                              }}
-                            >
-                              <span style={{ fontWeight: 600, color: "#065f46 !important" }}>
-                                Coupon Discount
-                                {appliedCoupon?.code
-                                  ? ` (${appliedCoupon.code})`
-                                  : ""}
-                              </span>
-                              <span style={{ fontWeight: 700, color: "#065f46 !important" }}>
-                                -₹{couponDiscount.toFixed(2)}
-                              </span>
-                            </div>
-                          )}
-                        </div>
-
-                        {paymentMethod === "online" && walletAmount > 0 && (
-                          <>
-                            <div
-                              style={{
-                                display: "flex",
-                                justifyContent: "space-between",
-                                fontSize: "14px",
-                                fontWeight: 600,
-                                color: "#047857",
-                                marginBottom: "12px",
-                              }}
-                            >
-                              <span>Wallet Amount</span>
-                              <span> - ₹{(dudcutedWalletAmount || 0).toFixed(2)}</span>
-                            </div>
-
-                            {/* <div
-                              style={{
-                                display: "flex",
-                                justifyContent: "space-between",
-                                fontSize: "12px",
-                                color: "#444",
-                                marginBottom: "12px",
-                              }}
-                            >
-                              <p
-                                style={{
-                                  fontSize: "12px",
-                                  color: "#047857",
-                                  marginTop: "4px",
-                                  display: "flex",
-                                  alignItems: "center",
-                                  gap: "6px",
-                                }}
-                              >
-                                <span style={{ fontWeight: 500 }}>
-                                  Wallet amount will be deducted from your total
-                                  payable
-                                </span>
-                              </p>
-                            </div> */}
-                          </>
-                        )}
-
-                        <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            marginBottom: "16px",
-                          }}
-                        >
-                          <span
-                            style={{
-                              fontSize: "16px",
-                              fontWeight: "600",
-                              color: "#000",
-                            }}
-                          >
-                            Amount to Pay
-                          </span>
-                          <span
-                            style={{
-                              fontSize: "18px",
-                              fontWeight: "600",
-                              color: "#000",
-                            }}
-                          >
-                            ₹{amountToPay.toFixed(2)}
-                          </span>
-                        </div>
-
-                        {appliedCoupon && couponDiscount > 0 && (
-                          <div
-                            style={{
-                              backgroundColor: "#ECFDF5",
-                              borderRadius: "8px",
-                              padding: "12px",
-                              textAlign: "center",
-                              marginBottom: "16px",
-                              border: "1px solid #D1FAE5",
-                            }}
-                          >
-                            <div
-                              style={{
-                                fontSize: "13px",
-                                fontWeight: "600",
-                                color: "#166534",
-                              }}
-                            >
-                              YOU SAVED A TOTAL OF ₹{couponDiscount.toFixed(2)}
                             </div>
                           </div>
                         )}
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                <div
-                  className="card shadow-sm mb-4"
-                  style={{
-                    borderRadius: "12px",
-                    border: "none",
-                  }}
-                >
-                  <div className="card-body p-3">
-                    <div
-                      style={{
-                        fontSize: "16px",
-                        fontWeight: "600",
-                        margin: "24px 0 16px 0",
-                        color: "#000",
-                      }}
-                    >
-                      Choose Payment Method
-                    </div>
-
-                    <div style={{ display: "flex", flexDirection: isMobile || isTablet ? "column" : "row", gap: "8px", marginBottom: "16px", width: "100%", boxSizing: "border-box" }}>
-                      {/* Online Option */}
-                      <div
-                        style={{
-                          flex: "1 1 0%",
-                          minWidth: 0,
-                          border: paymentMethod === "online" ? "2px solid #8059ca" : "1.5px solid #e2e8f0",
-                          borderRadius: "12px",
-                          padding: "10px 12px",
-                          display: "flex",
-                          alignItems: "center",
-                          gap: "8px",
-                          backgroundColor: paymentMethod === "online" ? "#fdfaff" : "#ffffff",
-                          cursor: "pointer",
-                          transition: "all 0.2s ease",
-                          boxShadow: paymentMethod === "online" ? "0 4px 12px rgba(128, 89, 202, 0.08)" : "none",
-                          boxSizing: "border-box"
-                        }}
-                        onClick={() => setPaymentMethod("online")}
-                        onMouseEnter={(e) => {
-                          if (paymentMethod !== "online") {
-                            e.currentTarget.style.borderColor = "#cbd5e1";
-                            e.currentTarget.style.backgroundColor = "#fafbfc";
-                          }
-                        }}
-                        onMouseLeave={(e) => {
-                          if (paymentMethod !== "online") {
-                            e.currentTarget.style.borderColor = "#e2e8f0";
-                            e.currentTarget.style.backgroundColor = "#ffffff";
-                          }
-                        }}
-                      >
-                        <div style={{ width: "28px", height: "28px", borderRadius: "8px", background: paymentMethod === "online" ? "#8059ca" : "#f1f5f9", display: "flex", alignItems: "center", justifyContent: "center", color: paymentMethod === "online" ? "#fff" : "#64748b", fontSize: "12px", transition: "all 0.2s ease", flexShrink: 0 }}>
-                          <i className="fas fa-credit-card" />
-                        </div>
-                        <div style={{ flex: 1, minWidth: 0 }}>
-                          <div style={{ fontSize: "12px", fontWeight: "700", color: paymentMethod === "online" ? "#8059ca" : "#1e293b", marginBottom: "1px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-                            Online Payment
-                          </div>
-                          <div style={{ fontSize: "10px", color: "#64748b", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>UPI, Cards, NetBanking</div>
-                        </div>
-                        <div style={{ width: "14px", height: "14px", borderRadius: "50%", border: paymentMethod === "online" ? "4px solid #8059ca" : "2px solid #cbd5e1", background: "#fff", transition: "all 0.2s ease", flexShrink: 0 }} />
-                      </div>
-
-                      {/* COD Option */}
-                      <div
-                        style={{
-                          flex: "1 1 0%",
-                          minWidth: 0,
-                          border: paymentMethod === "cod" ? "2px solid #8059ca" : "1.5px solid #e2e8f0",
-                          borderRadius: "12px",
-                          padding: "10px 12px",
-                          display: "flex",
-                          alignItems: "center",
-                          gap: "8px",
-                          backgroundColor: paymentMethod === "cod" ? "#fdfaff" : "#ffffff",
-                          cursor: "pointer",
-                          transition: "all 0.2s ease",
-                          boxShadow: paymentMethod === "cod" ? "0 4px 12px rgba(128, 89, 202, 0.08)" : "none",
-                          boxSizing: "border-box"
-                        }}
-                        onClick={() => {
-                          setPaymentMethod("cod");
-                          setAppliedCoupon(null);
-                        }}
-                        onMouseEnter={(e) => {
-                          if (paymentMethod !== "cod") {
-                            e.currentTarget.style.borderColor = "#cbd5e1";
-                            e.currentTarget.style.backgroundColor = "#fafbfc";
-                          }
-                        }}
-                        onMouseLeave={(e) => {
-                          if (paymentMethod !== "cod") {
-                            e.currentTarget.style.borderColor = "#e2e8f0";
-                            e.currentTarget.style.backgroundColor = "#ffffff";
-                          }
-                        }}
-                      >
-                        <div style={{ width: "28px", height: "28px", borderRadius: "8px", background: paymentMethod === "cod" ? "#8059ca" : "#f1f5f9", display: "flex", alignItems: "center", justifyContent: "center", color: paymentMethod === "cod" ? "#fff" : "#64748b", fontSize: "12px", transition: "all 0.2s ease", flexShrink: 0 }}>
-                          <i className="fas fa-money-bill-wave" />
-                        </div>
-                        <div style={{ flex: 1, minWidth: 0 }}>
-                          <div style={{ fontSize: "12px", fontWeight: "700", color: paymentMethod === "cod" ? "#8059ca" : "#1e293b", marginBottom: "1px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-                            Pay After Service
-                          </div>
-                          <div style={{ fontSize: "10px", color: "#64748b", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>Pay at the time of delivery</div>
-                        </div>
-                        <div style={{ width: "14px", height: "14px", borderRadius: "50%", border: paymentMethod === "cod" ? "4px solid #8059ca" : "2px solid #cbd5e1", background: "#fff", transition: "all 0.2s ease", flexShrink: 0 }} />
-                      </div>
-                    </div>
-
-                    <hr style={{ margin: "10px 0", borderColor: "#eee" }} />
-
-                    <form onSubmit={(e) => handleSubmit(e)}>
-                      <input
-                        type="hidden"
-                        name="paymentMethod"
-                        value={paymentMethod}
-                      />
-                      <button
-                        type="submit"
-                        disabled={isSubmitting || (isSlotCategory && !hasSelectedSlot)}
-                        style={{
-                          width: "100%",
-                          backgroundColor:
-                            isSubmitting || (isSlotCategory && !hasSelectedSlot)
-                              ? "#9ca3af"
-                              : "#8059ca",
-                          color: "#fff",
-                          border: "none",
-                          borderRadius: "8px",
-                          padding: "12px",
-                          cursor:
-                            isSubmitting || (isSlotCategory && !hasSelectedSlot)
-                              ? "not-allowed"
-                              : "pointer",
-                          marginBottom: "12px",
-                          transition: "all 0.3s ease",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          gap: "8px",
-                        }}
-                      >
-                        {isSubmitting ? (
-                          <>
-                            <div
-                              className="spinner-border spinner-border-sm"
-                              role="status"
-                              style={{
-                                width: "16px",
-                                height: "16px",
-                                borderWidth: "2px",
-                              }}
-                            >
-                              <span className="visually-hidden">
-                                Loading...
-                              </span>
-                            </div>
-                            Processing...
-                          </>
-                        ) : (
-                          "PROCEED TO PAY"
-                        )}
-                      </button>
-                      {isSlotCategory && !hasSelectedSlot && (
-                        <p
-                          style={{
-                            fontSize: "12px",
-                            color: "#dc2626",
-                            marginTop: "-6px",
-                            marginBottom: "10px",
-                          }}
-                        >
-                          Appointment slot is required before submitting order.
-                        </p>
-                      )}
-                    </form>
-
-                    <div
-                      style={{
-                        display: "flex",
-                        gap: "16px",
-                        justifyContent: "center",
-                        flexWrap: "wrap",
-                      }}
-                    >
-                      <div
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          gap: "6px",
-                          fontSize: "11px",
-                          color: "#666",
-                        }}
-                      >
-                        <i
-                          className="fas fa-check-circle"
-                          style={{ color: "#28a745", fontSize: "14px" }}
-                        ></i>
-                        <span>Health satisfaction guarantee</span>
-                      </div>
-                      <div
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          gap: "6px",
-                          fontSize: "11px",
-                          color: "#666",
-                        }}
-                      >
-                        <i
-                          className="fas fa-shield-alt"
-                          style={{ color: "#007bff", fontSize: "14px" }}
-                        ></i>
-                        <span>Secure Payments</span>
-                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            {isMobile && productData?.length > 0 && (
-              <div
-                className={`col-lg-${showProductDetails ? "8" : "12"} col-md-12 order-3`}
-              >
+            {!isMobile && productData?.length > 0 && (
+              <div className="mt-2 order-lg-last">
                 {renderRecentlyViewed()}
               </div>
             )}
           </div>
+
+          <div className="lg:col-span-1">
+            <div className={isMobile ? "relative top-0" : "sticky top-5 flex flex-col gap-6"}>
+              {isSlotCategory && (
+                <div className="card shadow-sm mb-4 rounded-xl border-0">
+                  <div className="card-body p-3">
+                    {/* Visit Type Option */}
+                    {serviceDetails?.visitType && (
+                      <div className="mb-4 border-b border-gray-100 pb-3">
+                        <h6 className="text-xs font-bold text-[#8059ca] uppercase tracking-wide mb-2">
+                          Visit Type
+                        </h6>
+                        {serviceDetails.visitType.toLowerCase() === "both" ? (
+                          <div className="d-flex gap-2">
+                            <button
+                              type="button"
+                              onClick={() => setSelectedVisitType("home")}
+                              className={`flex-1 py-2 px-3 rounded-lg font-semibold text-xs cursor-pointer transition-all duration-200 flex items-center justify-center gap-1.5 ${selectedVisitType === "home" ? "border-2 border-[#8059ca] bg-[#f8f4ff] text-[#8059ca]" : "border border-[#ddd] bg-white text-[#333]"}`}
+                            >
+                              <i className="fas fa-home"></i> Home Visit
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => setSelectedVisitType("center")}
+                              className={`flex-1 py-2 px-3 rounded-lg font-semibold text-xs cursor-pointer transition-all duration-200 flex items-center justify-center gap-1.5 ${selectedVisitType === "center" ? "border-2 border-[#8059ca] bg-[#f8f4ff] text-[#8059ca]" : "border border-[#ddd] bg-white text-[#333]"}`}
+                            >
+                              <i className="fas fa-building"></i> Visit Center
+                            </button>
+                          </div>
+                        ) : serviceDetails.visitType.toLowerCase() === "home" ? (
+                          <div className="py-2 px-3 bg-[#ecfdf5] border border-[#a7f3d0] rounded-lg text-[#065f46] text-xs font-semibold flex items-center gap-2">
+                            <i className="fas fa-home text-[#059669]"></i>
+                            Home Service Only Available
+                          </div>
+                        ) : (
+                          <div className="py-2 px-3 bg-[#fffbeb] border border-[#fde68a] rounded-lg text-[#b45309] text-xs font-semibold flex items-center gap-2">
+                            <i className="fas fa-exclamation-circle text-[#d97706]"></i>
+                            Please visit the center for this booking
+                          </div>
+                        )}
+                      </div>
+                    )}
+
+                    <div className="flex justify-between items-center mb-3">
+                      <h6 className="text-sm font-semibold  m-0">
+                        APPOINTMENT SLOT
+                      </h6>
+                      <button
+                        onClick={() => setShowSlotPicker(true)}
+                        className="highlighted-pick-slot-btn"
+                      >
+                        PICK SLOT
+                      </button>
+                    </div>
+                    {selectedSlot || formatSelectedSlot() ? (
+                      <div className="bg-[rgba(236,236,238,1)] rounded-lg p-3 text-[13px] text-black mb-3">
+                        {selectedSlot ||
+                          formatSelectedSlot() ||
+                          "Select a slot"}
+                      </div>
+                    ) : (
+                      <div className="bg-[#f8f4ff] rounded-lg p-3 text-[13px] text-[#8059ca] mb-3">
+                        No slot selected
+                      </div>
+                    )}
+                  </div>
+                </div>
+              )}
+
+              <div className="card shadow-sm mb-3 rounded-xl border-0">
+                <div className="card-body p-0">
+                  <div
+                    className="p-4 border-b border-[#e0e0e0] cursor-pointer"
+                    onClick={() =>
+                      setIsTotalFareExpanded(!isTotalFareExpanded)
+                    }
+                  >
+                    <div className="flex justify-between items-center">
+                      <h6 className="text-sm font-semibold m-0 font-[500]">
+                        CART BREAKDOWN
+                      </h6>
+                      <i
+                        className={`fas fa-chevron-${isTotalFareExpanded ? "up" : "down"} ext-gray-600 text-xs`}
+                      // className="text-gray-600 text-xs"
+                      ></i>
+                    </div>
+                  </div>
+
+                  {isTotalFareExpanded && (
+                    <div className="p-4">
+                      <div className="mb-4 pb-4 border-b border-[#e0e0e0]">
+                        <div className="text-sm font-semibold mb-3 text-black">
+                          Booking Summary
+                        </div>
+
+                        {/* OFFERS & COUPONS */}
+                        <div className="mb-4">
+                          <div
+                            className="flex gap-3 bg-[#ecfdf5] p-4 rounded-xl items-center cursor-pointer border border-[#d1fae5]"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              const token =
+                                localStorage.getItem("medicomparestoken");
+                              if (!token) {
+                                toast.error("Please login to apply coupons");
+                                navigate("/login");
+                                return;
+                              }
+                              setShowOffersModal(true);
+                            }}
+                          >
+                            <div className="w-10 h-10 bg-[#16a34a] rounded-full flex items-center justify-center text-white text-base font-bold">
+                              %
+                            </div>
+
+                            <div className="flex-1">
+                              <div className="flex items-center justify-between text-sm font-semibold text-[#065f46] mb-0.5 cursor-pointer">
+                                <span>Apply Coupon</span>
+                                <i className="fas fa-chevron-right" />
+                              </div>
+
+                              <div className="text-xs text-[#047857]">
+                                {appliedCoupon ? (
+                                  <div className="flex items-center gap-2 flex-wrap">
+                                    <span>
+                                      Applied:{" "}
+                                      {appliedCoupon.code ||
+                                        appliedCoupon.name}
+                                    </span>
+                                    <button
+                                      type="button"
+                                      onClick={(e) => {
+                                        e.preventDefault();
+                                        e.stopPropagation();
+                                        setAppliedCoupon(null);
+                                      }}
+                                      className="bg-transparent border-0 p-0 cursor-pointer text-[#065f46] underline font-semibold text-xs"
+                                    >
+                                      Remove
+                                    </button>
+                                  </div>
+                                ) : localStorage.getItem(
+                                  "medicomparestoken",
+                                ) ? (
+                                  "View available coupons"
+                                ) : (
+                                  "Login to apply coupons"
+                                )}
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* Manual Coupon Input */}
+                          <div className="flex gap-2 mt-3 flex-row w-full">
+                            <input
+                              type="text"
+                              placeholder="Enter Coupon Code"
+                              value={couponInputText}
+                              onChange={(e) => setCouponInputText(e.target.value)}
+                              className="flex-1 min-w-0 border border-slate-300 rounded-lg py-2 px-3 text-[13px] outline-none transition-colors duration-200 focus:border-[#8059ca]"
+                            />
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                handleManualCouponApply();
+                              }}
+                              className="bg-[#8059ca] text-white border-0 rounded-lg py-2 px-4 text-[13px] font-semibold cursor-pointer transition-colors duration-200 hover:bg-[#6f42c1] shrink-0"
+                            >
+                              Apply
+                            </button>
+                          </div>
+                        </div>
+
+                        <div className="flex justify-between mb-2 text-[13px]">
+                          <span className="text-gray-600">
+                            Subtotal<small> (Inclusive of all Taxes)</small>
+                          </span>
+                          <span className="font-semibold text-black">
+                            ₹{subtotal.toFixed(2)}
+                          </span>
+                        </div>
+
+                        {(data?.medicineDetails?.CategoryDetails
+                          ?.fixedType === "labtests" ||
+                          cart?.type === "package") && (
+                            <div className="flex justify-between mb-2 text-[13px]">
+                              <span className="text-gray-600">
+                                Sample Collection fee
+                              </span>
+                              <span className="font-semibold text-black">
+                                ₹{samplecollection.toFixed(2)}
+                              </span>
+                            </div>
+                          )}
+                        <div className="flex justify-between mb-2 text-[13px]">
+                          <span className="text-gray-600">GST</span>
+                          <span className="font-semibold text-black">
+                            ₹{tax.toFixed(2)}
+                          </span>
+                        </div>
+
+                        {couponDiscount > 0 && (
+                          <div className="flex justify-between mb-2 text-[13px] text-[#065f46]">
+                            <span className="font-semibold text-[#065f46]">
+                              Coupon Discount
+                              {appliedCoupon?.code
+                                ? ` (${appliedCoupon.code})`
+                                : ""}
+                            </span>
+                            <span className="font-bold text-[#065f46]">
+                              -₹{couponDiscount.toFixed(2)}
+                            </span>
+                          </div>
+                        )}
+                      </div>
+
+                      {paymentMethod === "online" && walletAmount > 0 && (
+                        <>
+                          <div className="flex justify-between text-sm font-semibold text-[#047857] mb-3">
+                            <span>Wallet Amount</span>
+                            <span> - ₹{(dudcutedWalletAmount || 0).toFixed(2)}</span>
+                          </div>
+                        </>
+                      )}
+
+                      <div className="flex justify-between items-center mb-4">
+                        <span className="text-base font-semibold text-black">
+                          Amount to Pay
+                        </span>
+                        <span className="text-lg font-semibold text-black">
+                          ₹{amountToPay.toFixed(2)}
+                        </span>
+                      </div>
+
+                      {appliedCoupon && couponDiscount > 0 && (
+                        <div className="bg-[#ECFDF5] rounded-lg p-3 text-center mb-4 border border-[#D1FAE5]">
+                          <div className="text-[13px] font-semibold text-[#166534]">
+                            YOU SAVED A TOTAL OF ₹{couponDiscount.toFixed(2)}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div className="card shadow-sm mb-4 rounded-xl border-0">
+                <div className="card-body p-3">
+                  <div className="text-base font-semibold my-6 mb-4 text-black">
+                    Choose Payment Method
+                  </div>
+
+                  <div className={`flex ${isMobile || isTablet ? "flex-col" : "flex-row"} gap-2 mb-4 w-full box-border`}>
+                    {/* Online Option */}
+                    <div
+                      // className={`flex-1 min-w-0 rounded-xl py-2.5 px-3 flex items-center gap-2 cursor-pointer transition-all duration-200 box-border ${paymentMethod === "online" ? "border-2 border-[#8059ca] bg-[#fdfaff] shadow-[0_4px_12px_rgba(128,89,202,0.08)]" : "border-[1.5px] border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50"}`}
+                      className={`flex-1 min-w-0 border rounded-xl px-3.5 py-3 flex items-center gap-2.5 cursor-pointer transition-all duration-200 ${paymentMethod === "online"
+                        ? "border-[#8059ca] bg-[#fdfaff] shadow-[0_4px_12px_rgba(128,89,202,0.08)]"
+                        : "border-[#e2e8f0] bg-white hover:border-[#cbd5e1] hover:bg-[#fafbfc]"
+                        }`}
+                      onClick={() => setPaymentMethod("online")}
+                    >
+                      <div className={`w-7 h-7 rounded-lg flex items-center justify-center text-xs transition-all duration-200 shrink-0 ${paymentMethod === "online" ? "bg-[#8059ca] text-white" : "bg-slate-100 text-slate-500"}`}>
+                        <i className="fas fa-credit-card" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className={`text-xs font-bold mb-px whitespace-nowrap overflow-hidden text-ellipsis ${paymentMethod === "online" ? "text-[#8059ca]" : "text-slate-800"}`}>
+                          Online Payment
+                        </div>
+                        <div className="text-[10px] text-slate-500 whitespace-nowrap overflow-hidden text-ellipsis">UPI, Cards, NetBanking</div>
+                      </div>
+                      <div className={`w-3.5 h-3.5 rounded-full bg-white transition-all duration-200 shrink-0 ${paymentMethod === "online" ? "border-4 border-[#8059ca]" : "border-2 border-slate-300"}`} />
+                    </div>
+
+                    {/* COD Option */}
+                    <div
+                      className={`flex-1 min-w-0 border rounded-xl px-3.5 py-3 flex items-center gap-2.5 cursor-pointer transition-all duration-200 ${paymentMethod === "cod"
+                        ? "border-[#8059ca] bg-[#fdfaff] shadow-[0_4px_12px_rgba(128,89,202,0.08)]"
+                        : "border-[#e2e8f0] bg-white hover:border-[#cbd5e1] hover:bg-[#fafbfc]"
+                        }`}
+                      onClick={() => {
+                        setPaymentMethod("cod");
+                        setAppliedCoupon(null);
+                      }}
+                    >
+                      <div className={`w-7 h-7 rounded-lg flex items-center justify-center text-xs transition-all duration-200 shrink-0 ${paymentMethod === "cod" ? "bg-[#8059ca] text-white" : "bg-slate-100 text-slate-500"}`}>
+                        <i className="fas fa-money-bill-wave" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className={`text-xs font-bold mb-px whitespace-nowrap overflow-hidden text-ellipsis ${paymentMethod === "cod" ? "text-[#8059ca]" : "text-slate-800"}`}>
+                          Pay After Service
+                        </div>
+                        <div className="text-[10px] text-slate-500 whitespace-nowrap overflow-hidden text-ellipsis">Pay at the time of delivery</div>
+                      </div>
+                      <div className={`w-3.5 h-3.5 rounded-full bg-white transition-all duration-200 shrink-0 ${paymentMethod === "cod" ? "border-4 border-[#8059ca]" : "border-2 border-slate-300"}`} />
+                    </div>
+                  </div>
+
+                  <hr className="my-2.5 border-gray-200" />
+
+                  <form onSubmit={(e) => handleSubmit(e)}>
+                    <input
+                      type="hidden"
+                      name="paymentMethod"
+                      value={paymentMethod}
+                    />
+                    <button
+                      type="submit"
+                      disabled={isSubmitting || (isSlotCategory && !hasSelectedSlot)}
+                      className={`w-full text-white rounded-sm border-0 rounded-lg p-2 mb-3 transition-all duration-300 flex items-center justify-center gap-2 ${isSubmitting || (isSlotCategory && !hasSelectedSlot) ? "bg-gray-400 cursor-not-allowed" : "bg-[#8059ca] cursor-pointer"}`}
+                    >
+                      {isSubmitting ? (
+                        <>
+                          <div
+                            className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"
+                            role="status"
+                          />
+                          Processing...
+                        </>
+                      ) : (
+                        "PROCEED TO PAY"
+                      )}
+                    </button>
+                    {isSlotCategory && !hasSelectedSlot && (
+                      <p className="text-xs text-red-600 -mt-1.5 mb-2.5">
+                        Appointment slot is required before submitting order.
+                      </p>
+                    )}
+                  </form>
+
+                  <div className="flex gap-4 justify-center flex-wrap">
+                    <div className="flex items-center gap-1.5 text-[11px] text-gray-600">
+                      <i className="fas fa-check-circle text-[#28a745] text-sm"></i>
+                      <span>Health satisfaction guarantee</span>
+                    </div>
+                    <div className="flex items-center gap-1.5 text-[11px] text-gray-600">
+                      <i className="fas fa-shield-alt text-[#007bff] text-sm"></i>
+                      <span>Secure Payments</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {isMobile && productData?.length > 0 && (
+            <div className="lg:col-span-3">
+              {renderRecentlyViewed()}
+            </div>
+          )}
         </div>
       </div>
 
@@ -3656,7 +2503,7 @@ const BookingProcess = () => {
           show={showSlotPicker}
           onHide={() => setShowSlotPicker(false)}
           placement="end"
-          style={{ zIndex: "9999999999" }}
+          className="z-[9999999999]"
         >
           <Offcanvas.Header closeButton>
             <Offcanvas.Title>Book A Slot</Offcanvas.Title>
@@ -3715,18 +2562,17 @@ const BookingProcess = () => {
       {/*  Coupon modal */}
       {showOffersModal && (
         <div
-          className="offers-modal-overlay"
+          className="offers-modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-black/50"
           onClick={() => setShowOffersModal(false)}
         >
           <div
-            className="offers-modal-content"
+            className="offers-modal-content max-w-[580px] w-full bg-white rounded-xl overflow-hidden max-h-[85vh] flex flex-col"
             onClick={(e) => e.stopPropagation()}
-            style={{ maxWidth: "580px" }}
           >
-            <div className="offers-modal-header">
-              <h3 className="offers-modal-title">Apply Coupon</h3>
+            <div className="offers-modal-header flex items-center justify-between p-4 border-b border-gray-200">
+              <h3 className="offers-modal-title text-lg font-semibold m-0">Apply Coupon</h3>
               <button
-                className="offers-modal-close"
+                className="offers-modal-close bg-transparent border-0 text-2xl leading-none cursor-pointer"
                 onClick={() => setShowOffersModal(false)}
               >
                 ×
@@ -3754,8 +2600,8 @@ const BookingProcess = () => {
 
               return (
                 <>
-                  <div className="offers-modal-body" style={{ padding: "20px", background: "#f8fafc" }}>
-                    <div className="offers-list" style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
+                  <div className="offers-modal-body p-3 bg-slate-50 overflow-y-auto">
+                    <div className="offers-list flex flex-col gap-3.5">
                       {(() => {
                         const cartVendorIds = [
                           String(
@@ -3802,47 +2648,47 @@ const BookingProcess = () => {
                         const couponThemes = {
                           saver: {
                             label: "Saver",
-                            bg: "#fafffb",
-                            border: "#d1fae5",
-                            accent: "#22c55e",
-                            badgeBg: "#f0fdf4",
-                            badgeText: "#16a34a",
-                            btnBg: "#f0fdf4",
-                            btnText: "#16a34a",
-                            btnBorder: "#bbf7d0",
+                            bg: "bg-[#fafffb]",
+                            border: "border-[#d1fae5]",
+                            accent: "text-[#22c55e]",
+                            badgeBg: "bg-[#f0fdf4]",
+                            badgeText: "text-[#16a34a]",
+                            btnBg: "bg-[#f0fdf4]",
+                            btnText: "text-[#16a34a]",
+                            btnBorder: "border-[#bbf7d0]",
                           },
                           good: {
                             label: "Good Deal",
-                            bg: "#f8fbff",
-                            border: "#dbeafe",
-                            accent: "#3b82f6",
-                            badgeBg: "#eff6ff",
-                            badgeText: "#2563eb",
-                            btnBg: "#eff6ff",
-                            btnText: "#2563eb",
-                            btnBorder: "#bfdbfe",
+                            bg: "bg-[#f8fbff]",
+                            border: "border-[#dbeafe]",
+                            accent: "text-[#3b82f6]",
+                            badgeBg: "bg-[#eff6ff]",
+                            badgeText: "text-[#2563eb]",
+                            btnBg: "bg-[#eff6ff]",
+                            btnText: "text-[#2563eb]",
+                            btnBorder: "border-[#bfdbfe]",
                           },
                           hot: {
                             label: "Hot Deal",
-                            bg: "#fffdf7",
-                            border: "#fde68a",
-                            accent: "#d97706",
-                            badgeBg: "#fffbeb",
-                            badgeText: "#b45309",
-                            btnBg: "#fffbeb",
-                            btnText: "#d97706",
-                            btnBorder: "#fcd34d",
+                            bg: "bg-[#fffdf7]",
+                            border: "border-[#fde68a]",
+                            accent: "text-[#d97706]",
+                            badgeBg: "bg-[#fffbeb]",
+                            badgeText: "text-[#b45309]",
+                            btnBg: "bg-[#fffbeb]",
+                            btnText: "text-[#d97706]",
+                            btnBorder: "border-[#fcd34d]",
                           },
                           mega: {
                             label: "Mega Save",
-                            bg: "#fcfaff",
-                            border: "#e9d5ff",
-                            accent: "#8059ca",
-                            badgeBg: "#f5f3ff",
-                            badgeText: "#7c3aed",
-                            btnBg: "#f3e8ff",
-                            btnText: "#8059ca",
-                            btnBorder: "#ddd6fe",
+                            bg: "bg-[#fcfaff]",
+                            border: "border-[#e9d5ff]",
+                            accent: "text-[#8059ca]",
+                            badgeBg: "bg-[#f5f3ff]",
+                            badgeText: "text-[#7c3aed]",
+                            btnBg: "bg-[#f3e8ff]",
+                            btnText: "text-[#8059ca]",
+                            btnBorder: "border-[#ddd6fe]",
                           },
                         };
 
@@ -3903,7 +2749,6 @@ const BookingProcess = () => {
                           }
                           if (isVendorCoupon) {
                             applicableAmount = subtotal;
-                            // console.log(applicableAmount);
                             if (hasExpired) {
                               isEligible = false;
                             } else if (applicableAmount < ele.minimumPurchase) {
@@ -3917,7 +2762,6 @@ const BookingProcess = () => {
                             } else {
                               isEligible = true;
                             }
-                            // console.log(isEligible)
                           } else {
                             applicableAmount = total;
                             if (hasExpired) {
@@ -3938,25 +2782,25 @@ const BookingProcess = () => {
                           const tier = getDiscountTier(ele);
                           const theme = couponThemes[tier];
                           const inactiveTheme = {
-                            bg: "#f8fafc",
-                            border: "#e2e8f0",
-                            accent: "#94a3b8",
-                            badgeBg: "#f1f5f9",
-                            badgeText: "#64748b",
-                            btnBg: "#f1f5f9",
-                            btnText: "#94a3b8",
-                            btnBorder: "#e2e8f0",
+                            bg: "bg-slate-50",
+                            border: "border-slate-200",
+                            accent: "text-slate-400",
+                            badgeBg: "bg-slate-100",
+                            badgeText: "text-slate-500",
+                            btnBg: "bg-slate-100",
+                            btnText: "text-slate-400",
+                            btnBorder: "border-slate-200",
                             label: "Unavailable",
                           };
                           const appliedTheme = {
-                            bg: "#f6fef9",
-                            border: "#a7f3d0",
-                            accent: "#10b981",
-                            badgeBg: "#ecfdf5",
-                            badgeText: "#059669",
-                            btnBg: "#ecfdf5",
-                            btnText: "#059669",
-                            btnBorder: "#a7f3d0",
+                            bg: "bg-[#f6fef9]",
+                            border: "border-[#a7f3d0]",
+                            accent: "text-[#10b981]",
+                            badgeBg: "bg-[#ecfdf5]",
+                            badgeText: "text-[#059669]",
+                            btnBg: "bg-[#ecfdf5]",
+                            btnText: "text-[#059669]",
+                            btnBorder: "border-[#a7f3d0]",
                             label: "Applied",
                           };
                           const activeTheme = !isEligible
@@ -3972,163 +2816,45 @@ const BookingProcess = () => {
                           return (
                             <div
                               key={ele._id || `${ele.code}-${ind}`}
-                              style={{
-                                display: "flex",
-                                alignItems: "stretch",
-                                width: "100%",
-                                background: activeTheme.bg,
-                                border: `1px solid ${activeTheme.border}`,
-                                borderRadius: "12px",
-                                overflow: "hidden",
-                                transition: "all 0.2s ease",
-                                boxShadow: "none",
-                                opacity: isEligible ? 1 : 0.72,
-                              }}
+                              className={`flex items-stretch w-full ${activeTheme.bg} border ${activeTheme.border} rounded-xl overflow-hidden transition-all duration-200 shadow-none ${isEligible ? "opacity-100" : "opacity-[0.72]"}`}
                             >
-                              <div
-                                style={{
-                                  minWidth: "88px",
-                                  maxWidth: "88px",
-                                  padding: "14px 10px",
-                                  background: activeTheme.badgeBg,
-                                  borderRight: `1px dashed ${activeTheme.border}`,
-                                  display: "flex",
-                                  flexDirection: "column",
-                                  alignItems: "center",
-                                  justifyContent: "center",
-                                  gap: "4px",
-                                  textAlign: "center",
-                                }}
-                              >
-                                <span
-                                  style={{
-                                    fontSize: "20px",
-                                    fontWeight: "800",
-                                    color: activeTheme.badgeText,
-                                    lineHeight: 1.1,
-                                  }}
-                                >
+                              <div className={`min-w-[88px] max-w-[88px] py-3.5 px-2.5 ${activeTheme.badgeBg} border-r border-dashed ${activeTheme.border} flex flex-col items-center justify-center gap-1 text-center`}>
+                                <span className={`text-xl font-extrabold ${activeTheme.badgeText} leading-[1.1]`}>
                                   {discountText}
                                 </span>
-                                <span
-                                  style={{
-                                    fontSize: "9px",
-                                    fontWeight: "700",
-                                    color: activeTheme.badgeText,
-                                    textTransform: "uppercase",
-                                    letterSpacing: "0.3px",
-                                  }}
-                                >
+                                <span className={`text-[9px] font-bold ${activeTheme.badgeText} uppercase tracking-[0.3px]`}>
                                   OFF
                                 </span>
-                                <span
-                                  style={{
-                                    fontSize: "8.5px",
-                                    fontWeight: "700",
-                                    color: activeTheme.accent,
-                                    background: "#ffffff",
-                                    padding: "2px 6px",
-                                    borderRadius: "10px",
-                                    marginTop: "4px",
-                                  }}
-                                >
+                                <span className={`text-[8.5px] font-bold ${activeTheme.accent} bg-white py-0.5 px-1.5 rounded-[10px] mt-1`}>
                                   {activeTheme.label}
                                 </span>
                               </div>
 
-                              <div
-                                style={{
-                                  flex: 1,
-                                  padding: "12px 14px",
-                                  display: "flex",
-                                  flexDirection: "column",
-                                  gap: "6px",
-                                  minWidth: 0,
-                                }}
-                              >
-                                <h4
-                                  style={{
-                                    fontSize: "14px",
-                                    fontWeight: "700",
-                                    color: "#0f172a",
-                                    margin: 0,
-                                    lineHeight: 1.3,
-                                  }}
-                                >
+                              <div className="flex-1 py-3 px-3.5 flex flex-col gap-1.5 min-w-0">
+                                <h4 className="text-sm font-bold text-slate-900 m-0 leading-[1.3]">
                                   {ele.name}
                                 </h4>
 
-                                <div
-                                  style={{
-                                    display: "flex",
-                                    flexWrap: "wrap",
-                                    gap: "6px",
-                                    alignItems: "center",
-                                  }}
-                                >
-                                  <span
-                                    style={{
-                                      fontSize: "11px",
-                                      fontWeight: "700",
-                                      fontFamily: "monospace",
-                                      color: activeTheme.accent,
-                                      background: "#ffffff",
-                                      border: `1px dashed ${activeTheme.border}`,
-                                      borderRadius: "6px",
-                                      padding: "3px 8px",
-                                    }}
-                                  >
+                                <div className="flex flex-wrap gap-1.5 items-center">
+                                  <span className={`text-[11px] font-bold font-mono ${activeTheme.accent} bg-white border border-dashed ${activeTheme.border} rounded-md py-[3px] px-2`}>
                                     {ele.code}
                                   </span>
                                   {ele.minimumPurchase > 0 && (
-                                    <span style={{ fontSize: "10px", color: "#64748b" }}>
+                                    <span className="text-[10px] text-slate-500">
                                       Minimum order ₹{ele.minimumPurchase}
                                     </span>
                                   )}
-                                  {/* {matchesCartVendor && isEligible && (
-                                    <span
-                                      style={{
-                                        fontSize: "9px",
-                                        fontWeight: "700",
-                                        color: "#8059ca",
-                                        background: "#f3e8ff",
-                                        padding: "2px 6px",
-                                        borderRadius: "4px",
-                                      }}
-                                    >
-                                      Matches Cart
-                                    </span>
-                                  )} */}
                                 </div>
 
                                 {ele.description && (
-                                  <p
-                                    style={{
-                                      fontSize: "11px",
-                                      color: "#475569",
-                                      margin: 0,
-                                      lineHeight: 1.45,
-                                      display: "-webkit-box",
-                                      WebkitLineClamp: 2,
-                                      WebkitBoxOrient: "vertical",
-                                      overflow: "hidden",
-                                    }}
-                                  >
+                                  <p className="text-[11px] text-slate-600 m-0 leading-[1.45] line-clamp-2 [display:-webkit-box] [-webkit-box-orient:vertical]">
                                     {ele.description}
                                   </p>
                                 )}
 
-                                <div
-                                  style={{
-                                    display: "flex",
-                                    flexWrap: "wrap",
-                                    gap: "8px",
-                                    fontSize: "10px",
-                                    color: "#64748b",
-                                  }}
-                                >
+                                <div className="flex flex-wrap gap-2 text-[10px] text-slate-500">
                                   {isEligible && savingsPreview > 0 && (
-                                    <span style={{ fontWeight: "600", color: activeTheme.accent }}>
+                                    <span className={`font-semibold ${activeTheme.accent}`}>
                                       You save ₹{savingsPreview.toFixed(2)}
                                     </span>
                                   )}
@@ -4141,43 +2867,18 @@ const BookingProcess = () => {
                                 </div>
 
                                 {!isEligible && criteriaText && (
-                                  <span
-                                    style={{
-                                      fontSize: "10px",
-                                      color: "#dc2626",
-                                      fontWeight: "600",
-                                    }}
-                                  >
+                                  <span className="text-[10px] text-red-600 font-semibold">
                                     ⚠️ {criteriaText}
                                   </span>
                                 )}
                               </div>
 
-                              <div
-                                style={{
-                                  display: "flex",
-                                  alignItems: "center",
-                                  padding: "12px 12px 12px 0",
-                                  flexShrink: 0,
-                                }}
-                              >
+                              <div className="flex items-center py-3 pr-3 pl-0 shrink-0">
                                 <button
                                   type="button"
                                   disabled={!isEligible}
                                   onClick={() => handleCouponApply(ele)}
-                                  style={{
-                                    padding: "7px 14px",
-                                    borderRadius: "8px",
-                                    border: `1px solid ${activeTheme.btnBorder}`,
-                                    background: activeTheme.btnBg,
-                                    color: activeTheme.btnText,
-                                    fontSize: "12px",
-                                    fontWeight: "600",
-                                    cursor: !isEligible ? "not-allowed" : "pointer",
-                                    transition: "all 0.2s ease",
-                                    whiteSpace: "nowrap",
-                                    boxShadow: "none",
-                                  }}
+                                  className={`py-[7px] px-3.5 rounded-sm border ${activeTheme.btnBorder} ${activeTheme.btnBg} ${activeTheme.btnText} text-xs font-semibold transition-all duration-200 whitespace-nowrap shadow-none ${!isEligible ? "cursor-not-allowed" : "cursor-pointer"}`}
                                 >
                                   {isApplied ? "Applied" : "Apply"}
                                 </button>
@@ -4195,24 +2896,14 @@ const BookingProcess = () => {
 
                         if (sortedVendorCoupons.length === 0 && sortedAdminCoupons.length === 0) {
                           return (
-                            <div
-                              style={{
-                                display: "flex",
-                                flexDirection: "column",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                padding: "40px 20px",
-                                textAlign: "center",
-                                color: "#94a3b8",
-                              }}
-                            >
-                              <div style={{ fontSize: "32px", marginBottom: "12px", color: "#cbd5e1" }}>
+                            <div className="flex flex-col items-center justify-center py-10 px-5 text-center text-slate-400">
+                              <div className="text-3xl mb-3 text-slate-300">
                                 🎟️
                               </div>
-                              <span style={{ fontSize: "14px", fontWeight: "600", color: "#64748b" }}>
+                              <span className="text-sm font-semibold text-slate-500">
                                 No Coupons Available
                               </span>
-                              <span style={{ fontSize: "12px", color: "#94a3b8", marginTop: "4px" }}>
+                              <span className="text-xs text-slate-400 mt-1">
                                 There are no active coupons at the moment.
                               </span>
                             </div>
@@ -4223,13 +2914,7 @@ const BookingProcess = () => {
                           <>
                             {renderSection(sortedVendorCoupons, true)}
                             {sortedVendorCoupons.length > 0 && sortedAdminCoupons.length > 0 && (
-                              <div
-                                style={{
-                                  height: "1px",
-                                  background: "#e2e8f0",
-                                  margin: "4px 0",
-                                }}
-                              />
+                              <div className="h-px bg-slate-200 my-1" />
                             )}
                             {renderSection(sortedAdminCoupons, false)}
                           </>

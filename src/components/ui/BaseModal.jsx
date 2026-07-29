@@ -13,93 +13,70 @@ const BaseModal = ({
   footer,
   closeButton = true,
   backdrop = true,
-  zIndex = "999999999",
+  zIndex = 99999999,
 }) => {
   if (!show) return null;
 
   const sizeClasses = {
-    sm: "modal-sm",
-    md: "",
-    lg: "modal-lg",
-    xl: "modal-xl",
+    sm: "max-w-sm",
+    md: "max-w-md",
+    lg: "max-w-lg",
+    xl: "max-w-2xl",
   };
 
   return (
     <div
-      className="modal fade show"
+      className="fixed inset-0 flex items-center justify-center p-4"
       style={{
-        display: "block",
-        backgroundColor: backdrop ? "rgba(0,0,0,0.85)" : "transparent",
-        position: "fixed",
-        top: 0,
-        left: 0,
-        width: "100%",
-        height: "100%",
+        backgroundColor: backdrop ? "rgba(0,0,0,0.50)" : "transparent",
         zIndex,
-        backdropFilter: backdrop ? "blur(2px)" : "none",
+        backdropFilter: backdrop ? "blur(4px)" : "none",
       }}
       onClick={backdrop ? onClose : undefined}
     >
       <div
-        className={`modal-dialog ${sizeClasses[size]} ${centered ? "modal-dialog-centered" : ""}`}
+        className={`bg-white rounded-lg shadow-xl w-full ${sizeClasses[size]} transform transition-all flex flex-col ${className}`}
         onClick={(e) => e.stopPropagation()}
+        style={{
+          maxHeight: "80vh",
+        }}
       >
-        <div
-          className={`modal-content shadow-lg ${className}`}
-          style={{
-            borderRadius: "12px",
-            overflow: "hidden",
-            border: "none",
-          }}
-        >
-          {(title || closeButton) && (
-            <div
-              className={`modal-header ${headerClassName}`}
-              style={{
-                borderBottom: "1px solid #e9ecef",
-                padding: "20px 24px 16px",
-              }}
-            >
-              {title && (
-                <h5
-                  className="modal-title"
-                  style={{ fontWeight: "600", fontSize: "18px", margin: 0 }}
-                >
-                  {title}
-                </h5>
-              )}
-              {closeButton && (
-                <button
-                  type="button"
-                  className="btn-close"
-                  onClick={onClose}
-                  style={{ fontSize: "14px" }}
-                />
-              )}
-            </div>
-          )}
-          <div
-            className={`modal-body ${bodyClassName}`}
-            style={{ padding: title ? "16px 24px" : "24px" }}
-          >
-            {children}
+        {/* Header */}
+        {(title || closeButton) && (
+          <div className={`flex items-center justify-between px-6 py-4 border-b border-slate-100 ${headerClassName}`}>
+            {title && (
+              <h3 className="text-lg font-semibold text-slate-900 leading-6 m-0">
+                {title}
+              </h3>
+            )}
+            {closeButton && (
+              <button
+                type="button"
+                onClick={onClose}
+                className="rounded-lg p-1.5 text-slate-400 hover:text-slate-500 hover:bg-slate-50 transition-colors cursor-pointer border-none bg-transparent flex items-center justify-center"
+              >
+                <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            )}
           </div>
-          {footer && (
-            <div
-              className="modal-footer"
-              style={{
-                borderTop: "1px solid #e9ecef",
-                padding: "16px 24px",
-              }}
-            >
-              {footer}
-            </div>
-          )}
+        )}
+
+        {/* Body */}
+        <div className={`overflow-y-auto px-6 py-4 flex-1 ${bodyClassName}`}>
+          {children}
         </div>
+
+        {/* Footer */}
+        {footer && (
+          <div className="flex items-center justify-end gap-2 px-6 py-4 border-t border-slate-100 bg-slate-50 rounded-b-2xl">
+            {footer}
+          </div>
+        )}
       </div>
     </div>
   );
 };
 
 export default BaseModal;
-

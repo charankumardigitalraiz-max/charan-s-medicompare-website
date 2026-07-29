@@ -694,68 +694,67 @@ const LocationOffcanvas = ({
     <>
       <style>{`
         .pac-container {
-          z-index: 2147483647 !important;
+          z-index: 99999999999999999 !important;
+          max-height: 120px !important;
+          overflow-y: auto !important;
+          overflow-x: hidden !important;
+          border: 1px solid #e2e8f0 !important;
+          border-radius: 6px !important;
+          box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1) !important;
+        }
+        @media (max-width: 768px) {
+          .pac-container {
+            left: 12px !important;
+            right: 12px !important;
+            transform: none !important;
+            width: auto !important;
+            max-height: 180px !important;
+          }
+        }
+        .pac-item {
+          padding: 8px 12px !important;
+          cursor: pointer !important;
+          font-size: 13px !important;
+          white-space: nowrap !important;
+          border-top: 1px solid #f1f5f9 !important;
+          display: flex !important;
+          align-items: center !important;
+        }
+        .pac-item:hover {
+          background-color: #f8fafc !important;
+        }
+        .pac-item-query {
+          font-weight: 500 !important;
+          color: #0f172a !important;
+        }
+        .pac-icon {
+          margin-right: 6px !important;
         }
       `}</style>
 
       <div
-        className="location-offcanvas-overlay"
-        style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          backgroundColor: "rgba(0, 0, 0, 0.8)",
-          zIndex: 999999999,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: position === "right" ? "flex-end" : "flex-start",
-        }}
+        className={`location-offcanvas-overlay fixed inset-0 bg-black/80 z-[999999999] flex items-center ${position === "right" ? "justify-end" : "justify-start"}`}
         onClick={handleOverlayClick}
       >
         <div
-          className="location-offcanvas-content"
-          style={{
-            width: "100%",
-            maxWidth: "450px",
-            height: "100%",
-            backgroundColor: "white",
-            boxShadow: "-2px 0 10px rgba(0,0,0,0.1)",
-            overflow: "hidden",
-            display: "flex",
-            flexDirection: "column",
-          }}
+          className="location-offcanvas-content w-full max-w-[450px] h-full bg-white shadow-[-2px_0_10px_rgba(0,0,0,0.1)] overflow-hidden flex flex-col"
           onClick={(e) => e.stopPropagation()}
         >
           {/* Header */}
           <div
-            style={{
-              padding: "15px 20px",
-              borderBottom: "1px solid #eee",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              backgroundColor: "#f8f9fa",
-            }}
+            className="p-[15px_20px] border-b border-b-[#eee] flex items-center justify-between bg-[#f8f9fa]"
           >
             <h6 className="mb-0">Select Your Location</h6>
             <button
               onClick={onClose}
-              style={{
-                background: "none",
-                border: "none",
-                fontSize: "18px",
-                cursor: "pointer",
-                color: "#6c757d",
-              }}
+              className="bg-none border-none text-[18px] cursor-pointer text-[#6c757d]"
             >
               <i className="fas fa-times"></i>
             </button>
           </div>
 
           {/* Search Section */}
-          <div style={{ padding: "15px 20px", borderBottom: "1px solid #eee" }}>
+          <div className="p-[15px_20px] border-b border-b-[#eee]">
             <div className="row g-2 align-items-center">
               {/* INPUT - col-8 */}
               <div className="col-9">
@@ -784,13 +783,7 @@ const LocationOffcanvas = ({
                       placeholder="Search for area, street name..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      className="form-control"
-                      style={{
-                        padding: "6px 12px",
-                        border: "1px solid #c9c9c9ad",
-                        borderRadius: "6px",
-                        fontSize: "14px",
-                      }}
+                      className="form-control p-[6px_12px] border border-[#c9c9c9ad] rounded-[6px] text-[14px]"
                     />
                   </Autocomplete>
                 ) : (
@@ -807,17 +800,7 @@ const LocationOffcanvas = ({
                 <button
                   type="button"
                   onClick={handleLocateButtonClick}
-                  className="locate-btn d-flex align-items-center justify-content-center"
-                  style={{
-                    padding: "6px 12px",
-                    border: "1px solid #8059ca",
-                    borderRadius: "6px",
-                    background: "#8059ca",
-                    color: "#fff",
-                    cursor: "pointer",
-                    transition: "all 0.2s ease",
-                    width: "100%",
-                  }}
+                  className="locate-btn d-flex align-items-center justify-content-center p-[6px_12px] border border-[#8059ca] rounded-[6px] bg-[#8059ca] text-white cursor-pointer transition-all duration-200 w-full hover:bg-[#6a45b3] hover:border-[#6a45b3]"
                   title="Use current GPS location"
                 >
                   <svg
@@ -844,8 +827,8 @@ const LocationOffcanvas = ({
               </div>
             </div>
 
-            <div style={{ marginTop: "10px" }}>
-              <p style={{ fontSize: "12px", color: "#6c757d", margin: 0 }}>
+            <div className="mt-2.5">
+              <p className="text-[12px] text-[#6c757d] m-0">
                 Current Location:{" "}
                 <small className="text-dark">{currentAddress}</small>
               </p>
@@ -853,32 +836,26 @@ const LocationOffcanvas = ({
           </div>
 
           <div
-            style={{
-              borderBottom: "1px solid #eee",
-              padding: "10px 20px",
-              backgroundColor: "#f8f9fa",
-            }}
+            className="border-b border-b-[#eee] p-[10px_20px] bg-[#f8f9fa]"
           >
             <p className="mb-0 fw-bold">
               Saved Addresses ({savedAddresses.length})
             </p>
           </div>
 
-          <div style={{ flex: 1, overflow: "auto", padding: "0" }}>
+          <div className="flex-1 overflow-auto p-0">
             {isLoading ? (
               <div
-                className="d-flex justify-content-center align-items-center"
-                style={{ height: "200px" }}
+                className="d-flex justify-content-center align-items-center h-[200px]"
               >
                 <div className="spinner-border text-primary" role="status">
                   <span className="visually-hidden">Loading...</span>
                 </div>
               </div>
             ) : savedAddresses.length === 0 ? (
-              <div className="text-center" style={{ padding: "40px 20px" }}>
+              <div className="text-center p-[40px_20px]">
                 <i
-                  className="fas fa-map-marker-alt text-muted"
-                  style={{ fontSize: "2rem" }}
+                  className="fas fa-map-marker-alt text-muted text-[2rem]"
                 ></i>
                 <p className="text-muted mb-2">No saved addresses yet</p>
                 <button
@@ -893,7 +870,7 @@ const LocationOffcanvas = ({
                 </button>
               </div>
             ) : (
-              <div style={{ padding: "10px" }}>
+              <div className="p-2.5">
                 {(showAllAddresses
                   ? savedAddresses
                   : savedAddresses.slice(0, 3)
@@ -904,23 +881,14 @@ const LocationOffcanvas = ({
                   return (
                     <div
                       key={address._id}
-                      style={{
-                        padding: "12px",
-                        border: isSelected
-                          ? "2px solid #007bff"
-                          : "1px solid #e9ecef",
-                        borderRadius: "8px",
-                        marginBottom: "8px",
-                        backgroundColor: isSelected ? "#f0f8ff" : "#fff",
-                        cursor: hasLocation ? "pointer" : "default",
-                        transition: "all 0.2s ease",
-                      }}
+                      className={`p-3 border rounded-[8px] mb-2 transition-all duration-200 ${isSelected ? "border-2 border-[#007bff] bg-[#f0f8ff]" : "border-[#e9ecef] bg-white"
+                        } ${hasLocation ? "cursor-pointer" : "cursor-default"}`}
                       onClick={() =>
                         hasLocation && handleAddressSelect(address._id, true)
                       }
                     >
                       <div className="d-flex justify-content-between align-items-start">
-                        <div style={{ flex: 1 }}>
+                        <div className="flex-1">
                           <div className="d-flex align-items-center mb-1">
                             {hasLocation && (
                               <input
@@ -932,12 +900,7 @@ const LocationOffcanvas = ({
                                   handleAddressSelect(address._id, true)
                                 }
                                 onClick={(e) => e.stopPropagation()}
-                                style={{
-                                  marginRight: "10px",
-                                  cursor: "pointer",
-                                  width: "18px",
-                                  height: "18px",
-                                }}
+                                className="mr-2.5 cursor-pointer w-[18px] h-[18px]"
                               />
                             )}
                             <i
@@ -950,16 +913,14 @@ const LocationOffcanvas = ({
                             </span>
                             {hasLocation ? (
                               <span
-                                className="badge bg-success ms-2"
-                                style={{ fontSize: "10px" }}
+                                className="badge bg-success ms-2 text-[10px]"
                               >
                                 <i className="fas fa-map-marker-alt me-1"></i>
                                 Located
                               </span>
                             ) : (
                               <span
-                                className="badge bg-warning ms-2"
-                                style={{ fontSize: "10px" }}
+                                className="badge bg-warning ms-2 text-[10px]"
                               >
                                 <i className="fas fa-exclamation-triangle me-1"></i>
                                 No Location
@@ -967,23 +928,20 @@ const LocationOffcanvas = ({
                             )}
                           </div>
                           <p
-                            className="mb-1"
-                            style={{ fontSize: "14px", color: "#333" }}
+                            className="mb-1 text-[14px] text-[#333]"
                           >
                             {formatAddress(address)}
                           </p>
                           {address.description && (
                             <p
-                              className="mb-1"
-                              style={{ fontSize: "12px", color: "#6c757d" }}
+                              className="mb-1 text-[12px] text-[#6c757d]"
                             >
                               {address.description}
                             </p>
                           )}
                           {hasLocation && address.location.address && (
                             <p
-                              className="mb-0"
-                              style={{ fontSize: "11px", color: "#6c757d" }}
+                              className="mb-0 text-[11px] text-[#6c757d]"
                             >
                               <i className="fas fa-map-pin me-1"></i>
                               {address.location.address}
@@ -991,8 +949,7 @@ const LocationOffcanvas = ({
                           )}
                           {!hasLocation && (
                             <p
-                              className="mb-0"
-                              style={{ fontSize: "11px", color: "#ffc107" }}
+                              className="mb-0 text-[11px] text-[#ffc107]"
                             >
                               <i className="fas fa-exclamation-triangle me-1"></i>
                               Location not set - Click edit to add location
@@ -1029,11 +986,7 @@ const LocationOffcanvas = ({
                 {savedAddresses.length > 3 && (
                   <div className="text-center mt-2 mb-2">
                     <span
-                      style={{
-                        cursor: "pointer",
-                        fontSize: "14px",
-                        fontWeight: "500",
-                      }}
+                      className="cursor-pointer text-[14px] font-[500]"
                       onClick={() => setShowAllAddresses(!showAllAddresses)}
                     >
                       {showAllAddresses ? (

@@ -912,11 +912,11 @@ const ambulanceservice = ({
 
                       {/* Step Info */}
                       <div className="flex-1 min-w-0 pr-[30px]">
-                        <h4
+                        <div
                           className={`font-semibold text-[#1e293b] mb-[6px] ${isMobile ? "text-[17px]" : "text-[19px]"}`}
                         >
                           {step.title}
-                        </h4>
+                        </div>
                         <p
                           className="text-[14px] text-[#64748b] m-0 leading-[1.6] mb-[12px]"
                         >
@@ -1052,11 +1052,11 @@ const ambulanceservice = ({
                     className="py-[14px] px-[16px] flex justify-between items-center cursor-pointer"
                     onClick={() => toggleFaq(faq.id)}
                   >
-                    <h5
+                    <div
                       className="text-[16px] font-semibold text-[#212121] m-0 flex-1"
                     >
                       {faq.question}
-                    </h5>
+                    </div>
                     <span
                       className="text-[20px] font-semibold transition-all duration-300 ease flex items-center justify-center w-[24px] h-[24px]"
                       style={{

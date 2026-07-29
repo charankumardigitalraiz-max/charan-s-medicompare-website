@@ -75,18 +75,43 @@ const Home2Header = () => {
   const [mobileHeaderHeight, setMobileHeaderHeight] = useState(62);
 
   useEffect(() => {
-    const updateHeight = () => {
+    const updateHeaderHeight = () => {
+      let height = 0;
+      const isMobile = window.innerWidth <= 991;
+
       const headerEl = document.querySelector('header.d-lg-none');
       if (headerEl) {
         setMobileHeaderHeight(headerEl.offsetHeight);
       }
+
+      if (isMobile) {
+        const mobileHeader = document.querySelector('header.d-lg-none');
+        const mobileSearch = document.querySelector('section.d-lg-none');
+        if (mobileHeader) {
+          height += mobileHeader.offsetHeight;
+        }
+        if (mobileSearch && window.getComputedStyle(mobileSearch).display !== 'none') {
+          height += mobileSearch.offsetHeight;
+        }
+      } else {
+        const desktopHeader = document.querySelector('header.header-custom');
+        if (desktopHeader) {
+          height = desktopHeader.offsetHeight;
+        }
+      }
+      document.documentElement.style.setProperty('--header-height', `${height}px`);
     };
-    updateHeight();
-    window.addEventListener('resize', updateHeight);
-    const interval = setInterval(updateHeight, 200);
+
+    updateHeaderHeight();
+    const interval = setInterval(updateHeaderHeight, 200);
+    window.addEventListener('resize', updateHeaderHeight);
+    window.addEventListener('scroll', updateHeaderHeight, { passive: true });
+
     return () => {
-      window.removeEventListener('resize', updateHeight);
       clearInterval(interval);
+      window.removeEventListener('resize', updateHeaderHeight);
+      window.removeEventListener('scroll', updateHeaderHeight);
+      document.documentElement.style.setProperty('--header-height', '0px');
     };
   }, []);
 
@@ -837,53 +862,11 @@ const Home2Header = () => {
       </header>
 
       {/* Global Spacer to prevent page content from sliding behind fixed headers */}
-      {(() => {
-        const isSearchExcluded = [
-          "/search",
-          "/profile-sidebar",
-          "/my-favourites",
-          "/family-members",
-          "/doctor-list",
-          "/myorders",
-          "/my-reports",
-          "/my-enquiries",
-          "/ticket-raised",
-          "/my-appointments",
-          "/my-consultations",
-          "/notifications",
-          "/my-transactions",
-          "/wallet",
-          "/manage-address",
-          "/reviews",
-          "/referals",
-          "/contact",
-          "/policies",
-          "/payment-success"
-        ].some(path => location.pathname.startsWith(path));
-
-        const hasHealthcareNav = !isSearchExcluded && location.pathname !== "/";
-        const navExtraHeight = hasHealthcareNav ? 44 : 0;
-        const mobileBaseHeight = isSearchExcluded ? 62 : 120;
-
-        return (
-          <>
-            {/* Mobile Spacer */}
-            <div
-              className="d-lg-none"
-              style={{
-                height: `${mobileBaseHeight + navExtraHeight}px`,
-              }}
-            />
-            {/* Desktop Spacer */}
-            <div
-              className="d-none d-lg-block"
-              style={{
-                height: `${68 + navExtraHeight}px`,
-              }}
-            />
-          </>
-        );
-      })()}
+      <div
+        style={{
+          height: "calc(var(--header-height, 0px) + var(--nav-height, 0px))",
+        }}
+      />
 
       {/* Search Overlay */}
       {showSearchOverlay && (
@@ -1215,7 +1198,7 @@ const Home2Header = () => {
                     } in cart`}
                 >
                   <i
-                    className="isax isax-shopping-cart"
+                    className="isax isax-shopping-cart "
                     style={{ fontSize: "20px" }}
                   />
                   {cartCount > 0 && (
@@ -1249,6 +1232,7 @@ const Home2Header = () => {
                       className="fas fa-bell"
                       style={{
                         fontSize: "18px",
+                        color: "#000"
                       }}
                     ></i>
                     {unreadCount > 0 && (

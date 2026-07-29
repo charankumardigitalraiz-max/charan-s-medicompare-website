@@ -31,6 +31,10 @@ import {
 import { fetchDoctorsList } from "../../../services/doctorService";
 import { fetchFamilyMembersList } from "../../../services/familyMemberService";
 
+// NOTE: react-select requires its styling to be passed as a JS "styles" object via its own
+// styling API (it does not read className/Tailwind for its internal parts like control/option/
+// placeholder). This is a component configuration object, not manual/inline CSS on a DOM node
+// we control directly, so it is kept as-is.
 const customSelectStyles = {
   control: (provided, state) => ({
     ...provided,
@@ -127,13 +131,6 @@ export const Cart = () => {
     });
   };
 
-
-
-
-  // console.log("cartitems", cartItems)
-
-
-
   const handleRentalBookinProcess = async (vendor, med, effectiveVariantId, price, stock, servicePassed) => {
     const resolvedService = servicePassed || med?.subcategoryDetails?.categoryDetails?.fixedType || med?.subcategorys?.category?.fixedType || med?.category?.fixedType || med?.fixedType;
     await handleRentalBookingProcess({
@@ -151,9 +148,6 @@ export const Cart = () => {
   const [doctorSearchLoading, setDoctorSearchLoading] = useState(false);
   const [doctorSearchQuery, setDoctorSearchQuery] = useState("");
   const doctorSearchRequestRef = useRef(0);
-
-
-
 
   const fetchDoctors = async (searchQuery = "") => {
     const trimmedQuery = searchQuery.trim();
@@ -900,18 +894,6 @@ export const Cart = () => {
     };
   }, []);
 
-  const thStyle = {
-    fontSize: "14px",
-    fontWeight: 600,
-    color: "#111827",
-  };
-
-  const subText = {
-    fontSize: "12px",
-    color: "#6b7280",
-    marginTop: "2px",
-  };
-
   if (loading) {
     return <PageLoader />;
   }
@@ -942,127 +924,48 @@ export const Cart = () => {
 
   const isLoggedIn = !!localStorage.getItem("medicomparestoken");
 
+  const newLocal = <div className="offers-modal-header">
+    <h3 className="offers-modal-title">Apply Coupon</h3>
+    <button
+      className="offers-modal-close"
+      onClick={() => setShowOffersModal(false)}
+    >
+      ×
+    </button>
+  </div>;
   return (
     <div className="main-wrapper">
       <Home2Header />
       <CategoryProvider />
 
       <div
-        style={{
-          display: "flex",
-          flexDirection: isMobile || isTablet ? "column" : "row",
-          gap: "24px",
-          paddingTop: xsMobile ? "200px" : isMobile ? "110px" : "80px",
-          paddingBottom: "48px",
-          background: "#f8f9fa",
-          alignItems: "flex-start",
-          paddingRight: isMobile ? "12px" : "30px",
-          paddingLeft: isMobile ? "12px" : "30px",
-          maxWidth: "1440px",
-          margin: "0 auto",
-        }}
+        className={`flex ${isMobile || isTablet ? "flex-col" : "flex-row"} gap-6 items-start bg-[#f8f9fa] max-w-[1440px] mx-auto ${xsMobile ? "pt-[30px]" : isMobile ? "pt-[50px]" : "pt-5"} pb-12 ${isMobile ? "px-3" : "px-[30px]"}`}
       >
         <div
-          className="card shadow-sm"
-          style={{
-            width:
-              cartItems.length === 0
-                ? "100%"
-                : isMobile || isTablet
-                  ? "100%"
-                  : "67%",
-            borderRadius: "12px",
-            border: "none",
-            backgroundColor: "#fff",
-            padding: isMobile ? "16px" : "24px",
-            marginBottom: isMobile ? "20px" : "0",
-            position: "relative",
-          }}
+          className={`card shadow-sm rounded-xl border-0 bg-white relative ${cartItems.length === 0 ? "w-full" : isMobile || isTablet ? "w-full" : "w-[67%]"} ${isMobile ? "p-4 mb-5" : "p-6 mb-0"}`}
         >
-          <div style={{ paddingTop: "0px", marginBottom: "15px" }}>
+          <div className="pt-0 mb-[15px]">
             <Link
               to="/"
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "8px",
-                color: "#8059ca",
-                border: "1px solid #e9d5ff",
-                borderRadius: "30px",
-                padding: "6px 18px",
-                textDecoration: "none",
-                fontSize: "13px",
-                fontWeight: "600",
-                background: "#fdfaff",
-                transition: "all 0.25s cubic-bezier(0.4, 0, 0.2, 1)",
-                boxShadow: "0 2px 5px rgba(128, 89, 202, 0.05)",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.color = "#ffffff";
-                e.currentTarget.style.background = "linear-gradient(135deg, #8059ca 0%, #6f42c1 100%)";
-                e.currentTarget.style.borderColor = "#8059ca";
-                e.currentTarget.style.boxShadow = "0 4px 12px rgba(128, 89, 202, 0.2)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.color = "#8059ca";
-                e.currentTarget.style.background = "#fdfaff";
-                e.currentTarget.style.borderColor = "#e9d5ff";
-                e.currentTarget.style.boxShadow = "0 2px 5px rgba(128, 89, 202, 0.05)";
-              }}
+              className="inline-flex items-center gap-2 text-[#8059ca] border border-[#e9d5ff] rounded-[30px] px-[18px] py-[6px] no-underline text-[13px] font-semibold bg-[#fdfaff] transition-all duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)] shadow-[0_2px_5px_rgba(128,89,202,0.05)] hover:text-white hover:bg-gradient-to-br hover:from-[#8059ca] hover:to-[#6f42c1] hover:border-[#8059ca] hover:shadow-[0_4px_12px_rgba(128,89,202,0.2)]"
             >
-              <i className="fas fa-arrow-left" style={{ fontSize: "11px" }} />
+              <i className="fas fa-arrow-left text-[11px]" />
               Back to Home
             </Link>
           </div>
           {cartItems.length > 0 && (
-            <div className="row">
-              <div className={isLoggedIn ? "col-md-6 col-12" : "col-12"}>
-                <div style={{ marginBottom: "24px" }}>
-                  <div
-                    style={{
-                      borderRadius: "16px",
-                      overflow: "hidden",
-                      border: "1px solid #e9ecef",
-                      boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05)",
-                      background: "#ffffff"
-                    }}
-                  >
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        padding: "16px 20px",
-                        backgroundColor: "#faf8ff",
-                        borderBottom: "1px solid #f3e8ff"
-                      }}
-                    >
-                      <div
-                        style={{
-                          fontSize: "13px",
-                          fontWeight: "700",
-                          color: "#5b21b6",
-                          display: "flex",
-                          alignItems: "center",
-                          gap: "8px"
-                        }}
-                      >
-                        <i className="fas fa-map-marker-alt" style={{ color: "#8059ca" }}></i>
+            <div className={`grid gap-6 ${isLoggedIn ? "grid-cols-1 md:grid-cols-2" : "grid-cols-1"}`}>
+              <div className="w-full">
+                <div className="mb-6">
+                  <div className="rounded-2xl overflow-hidden border border-[#e9ecef] shadow-[0_10px_25px_-5px_rgba(0,0,0,0.05),0_8px_10px_-6px_rgba(0,0,0,0.05)] bg-white">
+                    <div className="flex justify-between items-center px-3 py-4 bg-[#faf8ff] border-b border-[#f3e8ff]">
+                      <div className="text-[13px] font-bold text-[#5b21b6] flex items-center gap-2">
+                        <i className="fas fa-map-marker-alt text-[#8059ca]"></i>
                         <span>{getAddressTypeLabel()}</span>
                       </div>
                       <div>
                         <button
-                          style={{
-                            color: "#ffffff",
-                            background: "linear-gradient(135deg, #8059ca 0%, #6f42c1 100%)",
-                            border: "none",
-                            fontWeight: "600",
-                            cursor: "pointer",
-                            fontSize: "11px",
-                            padding: "6px 16px",
-                            borderRadius: "5px",
-                            boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-                          }}
+                          className="text-white bg-gradient-to-br from-[#8059ca] to-[#6f42c1] border-0 font-semibold cursor-pointer text-[11px] px-4 py-1.5 rounded-[5px] shadow-[0_2px_4px_rgba(0,0,0,0.1)]"
                           onClick={() => {
                             const token =
                               localStorage.getItem("medicomparestoken");
@@ -1080,25 +983,10 @@ export const Cart = () => {
                     </div>
 
                     {selectedAddress ? (
-                      <div
-                        style={{
-                          padding: "20px",
-                          backgroundColor: "#fff",
-                          fontSize: "13.5px",
-                          color: "#475569",
-                          lineHeight: "1.6"
-                        }}
-                      >
+                      <div className="p-3 bg-white text-[13.5px] text-[#475569] leading-[1.6]">
                         <div>
                           {selectedAddress.name && (
-                            <div
-                              style={{
-                                fontWeight: "700",
-                                color: "#0f172a",
-                                marginBottom: "6px",
-                                fontSize: "14.5px"
-                              }}
-                            >
+                            <div className="font-bold text-[#0f172a] mb-1.5 text-[14.5px]">
                               {selectedAddress.name}
                             </div>
                           )}
@@ -1112,28 +1000,15 @@ export const Cart = () => {
                             <div>{selectedAddress.area}</div>
                           )}
                           {selectedAddress.location?.address && (
-                            <div style={{ color: "#64748b", marginTop: "4px", fontSize: "12.5px" }}>
+                            <div className="text-[#64748b] mt-1 text-[12.5px]">
                               {selectedAddress.location.address}
                             </div>
                           )}
                         </div>
                       </div>
                     ) : (
-                      <div
-                        style={{
-                          padding: "24px 20px",
-                          backgroundColor: "#fff",
-                          fontSize: "13.5px",
-                          color: "#64748b",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          gap: "10px",
-                          flexDirection: "column",
-                          textAlign: "center"
-                        }}
-                      >
-                        <i className="fas fa-map-marked-alt" style={{ fontSize: "24px", color: "#cbd5e1" }}></i>
+                      <div className="py-6 px-5 bg-white text-[13.5px] text-[#64748b] flex items-center justify-center gap-2.5 flex-col text-center">
+                        <i className="fas fa-map-marked-alt text-2xl text-[#cbd5e1]"></i>
                         <span>
                           {isLocationUpdating
                             ? "Detecting your location..."
@@ -1144,23 +1019,15 @@ export const Cart = () => {
                   </div>
                 </div>
               </div>
-              <div className="col-md-6 col-12">
+
+              <div className="w-full">
                 {isLoggedIn && (
-                  <div
-                    style={{
-                      borderRadius: "16px",
-                      backgroundColor: "#fff",
-                      border: "1px solid #e9ecef",
-                      padding: "20px",
-                      boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05)",
-                      marginBottom: "24px"
-                    }}
-                  >
-                    <div className="row g-3">
-                      <div className="col-12 ">
-                        <div className="choice-cards-container" style={{ display: "flex", gap: "10px" }}>
-                          <div className="choice-card-wrapper" style={{ flex: 1 }}>
-                            <label className={`choice-card ${personType === "self" ? "selected" : ""}`} style={{ width: "100%", margin: 0 }}>
+                  <div className="rounded-2xl bg-white border border-[#e9ecef] p-3 shadow-[0_10px_25px_-5px_rgba(0,0,0,0.05),0_8px_10px_-6px_rgba(0,0,0,0.05)] mb-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="col-span-1 md:col-span-2">
+                        <div className="choice-cards-container flex gap-2.5">
+                          <div className="choice-card-wrapper flex-1">
+                            <label className={`choice-card ${personType === "self" ? "selected" : ""} w-full m-0`}>
                               <input
                                 type="radio"
                                 name="personType"
@@ -1177,8 +1044,8 @@ export const Cart = () => {
                             </label>
                           </div>
 
-                          <div className="choice-card-wrapper" style={{ flex: 1 }}>
-                            <label className={`choice-card ${personType === "forWhom" ? "selected" : ""}`} style={{ width: "100%", margin: 0 }}>
+                          <div className="choice-card-wrapper flex-1">
+                            <label className={`choice-card ${personType === "forWhom" ? "selected" : ""} w-full m-0`}>
                               <input
                                 type="radio"
                                 name="personType"
@@ -1200,13 +1067,10 @@ export const Cart = () => {
                       </div>
 
                       {personType === "self" && (
-                        <div className="col-12">
-                          <label
-                            className="form-label"
-                            style={{ color: "#333", fontSize: "14px", fontWeight: "500", marginBottom: "6px" }}
-                          >
+                        <div className="col-span-1 md:col-span-2">
+                          <label className="form-label text-[#333] text-sm font-medium mb-1.5">
                             Select Referred Doctor{" "}
-                            <span style={{ color: "red" }}>*</span>
+                            <span className="text-red-600">*</span>
                           </label>
                           <Select
                             styles={customSelectStyles}
@@ -1247,13 +1111,10 @@ export const Cart = () => {
 
                       {personType === "forWhom" && (
                         <>
-                          <div className="col-md-6 col-12">
-                            <label
-                              className="form-label"
-                              style={{ color: "#333", fontSize: "14px", fontWeight: "500", marginBottom: "6px" }}
-                            >
+                          <div className="col-span-1">
+                            <label className="form-label text-[#333] text-sm font-medium mb-1.5">
                               Select Family Member{" "}
-                              <span style={{ color: "red" }}>*</span>
+                              <span className="text-red-600">*</span>
                             </label>
                             <Select
                               styles={customSelectStyles}
@@ -1271,13 +1132,10 @@ export const Cart = () => {
                               menuPosition="fixed"
                             />
                           </div>
-                          <div className="col-md-6 col-12">
-                            <label
-                              className="form-label"
-                              style={{ color: "#333", fontSize: "14px", fontWeight: "500", marginBottom: "6px" }}
-                            >
+                          <div className="col-span-1">
+                            <label className="form-label text-[#333] text-sm font-medium mb-1.5">
                               Select Referred Doctor{" "}
-                              <span style={{ color: "red" }}>*</span>
+                              <span className="text-red-600">*</span>
                             </label>
                             <Select
                               styles={customSelectStyles}
@@ -1324,46 +1182,34 @@ export const Cart = () => {
           )}
           {/* Cart Items Table */}
           <div
-            style={isMobile ? {
-              background: "transparent",
-              borderRadius: "0",
-              boxShadow: "none",
-              padding: "0",
-              overflowX: "visible",
-            } : {
-              background: "#fff",
-              borderRadius: "16px",
-              border: "1px solid #e2e8f0",
-              boxShadow: "0 4px 20px rgba(0, 0, 0, 0.02)",
-              padding: "24px",
-              overflowX: "auto",
-              WebkitOverflowScrolling: "touch",
-            }}
+            className={
+              isMobile
+                ? "bg-transparent rounded-none shadow-none p-0 overflow-x-visible"
+                : "bg-white rounded-2xl border border-[#e2e8f0] shadow-[0_4px_20px_rgba(0,0,0,0.02)] p-6 overflow-x-auto [-webkit-overflow-scrolling:touch]"
+            }
           >
             <div
-              style={{ minWidth: cartItems.length === 0 || isMobile ? "100%" : "400px" }}
+              className={cartItems.length === 0 || isMobile ? "min-w-full" : "min-w-[400px]"}
             >
               {cartItems.length === 0 ? (
                 <div className="text-center py-5">
                   <i
-                    className="fas fa-shopping-cart text-muted mb-3"
-                    style={{ fontSize: "48px" }}
+                    className="fas fa-shopping-cart text-muted mb-3 text-[48px]"
                   ></i>
-                  <h5 className="text-muted">
+                  <h5 className="text-slate-500 font-bold mb-1">
                     Cart products are not available in this location
                   </h5>
-                  <p className="text-muted mb-3">Change pincode</p>
+                  <p className="text-slate-400 mb-4">Change pincode</p>
                   <Link
                     to="/"
-                    className="btn btn-primary"
-                    style={{ width: "150px" }}
+                    className="inline-flex items-center justify-center w-[150px] bg-[#8059ca] hover:bg-[#6d3fc7] text-white font-semibold py-2.5 rounded-full text-sm transition-colors duration-200 border-none"
                   >
                     Go Back
                   </Link>
                 </div>
               ) : isMobile ? (
                 // <>
-                <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
+                <div className="flex flex-col gap-3.5">
                   {cartItems.map((item, index) => {
                     const itemProductDetails = item.productDetails;
                     // const maxQuantity = getItemMaxQuantity(item);
@@ -1379,46 +1225,20 @@ export const Cart = () => {
                           item.cartKey ||
                           `cart-item-mobile-${index}`
                         }
-                        style={{
-                          background: "#fff",
-                          border: "1px solid #f1f5f9",
-                          borderRadius: "14px",
-                          padding: "16px",
-                          boxShadow: "0 2px 8px rgba(0,0,0,0.02)",
-                          position: "relative"
-                        }}
+                        className="bg-white border border-[#f1f5f9] rounded-[14px] p-4 shadow-[0_2px_8px_rgba(0,0,0,0.02)] relative"
                       >
                         {/* Top Section: Image, Name, and Trash */}
-                        <div style={{ display: "flex", gap: "12px", alignItems: "flex-start" }}>
+                        <div className="flex gap-3 items-start">
                           <img
                             src={resolveImage(item)}
                             alt={item.name || "Product"}
-                            style={{
-                              width: "68px",
-                              height: "68px",
-                              borderRadius: "10px",
-                              objectFit: "cover",
-                              border: "1px solid #f3effa",
-                              flexShrink: 0
-                            }}
+                            className="w-[68px] h-[68px] rounded-[10px] object-cover border border-[#f3effa] shrink-0"
                             onClick={() => handleProductClick(item)}
                           />
-                          <div style={{ flex: 1, minWidth: 0, paddingRight: "24px" }}>
+                          <div className="flex-1 min-w-0 pr-6">
                             <div
                               onClick={() => handleProductClick(item)}
-                              style={{
-                                fontSize: "14px",
-                                fontWeight: 600,
-                                color: "#1e293b",
-                                lineHeight: "1.3",
-                                marginBottom: "4px",
-                                textOverflow: "ellipsis",
-                                overflow: "hidden",
-                                display: "-webkit-box",
-                                WebkitLineClamp: 2,
-                                WebkitBoxOrient: "vertical",
-                                textTransform: "capitalize"
-                              }}
+                              className="text-sm font-semibold text-[#1e293b] leading-[1.3] mb-1 text-ellipsis overflow-hidden [display:-webkit-box] [-webkit-line-clamp:2] [-webkit-box-orient:vertical] capitalize"
                             >
                               {item.name || "Product Name"}
                             </div>
@@ -1426,23 +1246,10 @@ export const Cart = () => {
                             {item?.variantName && (
                               <div
                                 onClick={() => handleProductClick(item)}
-                                style={{
-                                  display: "inline-block",
-                                  marginBottom: "4px",
-                                  cursor: "pointer"
-                                }}
+                                className="inline-block mb-1 cursor-pointer"
                               >
                                 <span
-                                  style={{
-                                    background: "#f3e8ff",
-                                    color: "#7e22ce",
-                                    fontSize: "10.5px",
-                                    fontWeight: "600",
-                                    padding: "1px 6px",
-                                    borderRadius: "4px",
-                                    border: "1px solid #e9d5ff",
-                                    display: "inline-block"
-                                  }}
+                                  className="bg-[#f3e8ff] text-[#7e22ce] text-[10.5px] font-semibold px-1.5 py-[1px] rounded border border-[#e9d5ff] inline-block"
                                 >
                                   Variant: {item.variantName}
                                 </span>
@@ -1450,48 +1257,35 @@ export const Cart = () => {
                             )}
 
                             {/* Vendor Image and Name */}
-                            <div style={{ display: "flex", alignItems: "center", gap: "4px", marginBottom: "6px" }}>
+                            <div className="flex items-center gap-1 mb-1.5">
                               {item.vendorImage ? (
                                 <img
                                   src={getImageUrl(item.vendorImage)}
                                   alt={item.vendorName}
-                                  style={{
-                                    width: "14px",
-                                    height: "14px",
-                                    borderRadius: "3px",
-                                    objectFit: "cover"
-                                  }}
+                                  className="w-3.5 h-3.5 rounded-[3px] object-cover"
                                 />
                               ) : (
-                                <i className="fas fa-store" style={{ fontSize: "8px", color: "#8059ca" }} />
+                                <i className="fas fa-store text-[8px] text-[#8059ca]" />
                               )}
-                              <span style={{ fontSize: "10.5px", color: "#8059ca", fontWeight: "600", textTransform: "capitalize" }}>
+                              <span className="text-[10.5px] text-[#8059ca] font-semibold capitalize">
                                 {item.vendorName}
                               </span>
                             </div>
 
                             {/* Prices */}
-                            <div style={{ display: "flex", alignItems: "center", gap: "6px", flexWrap: "wrap" }}>
+                            <div className="flex items-center gap-1.5 flex-wrap">
 
-                              <span style={{ fontSize: "14px", fontWeight: "750", color: "#0f172a" }}>
+                              <span className="text-sm font-bold text-[#0f172a]">
                                 ₹{billingSummary?.unitPrice.toFixed(0)}
                               </span>
                               {billingSummary?.isDiscount && (
-                                <span style={{ textDecoration: "line-through", color: "#94a3b8", fontSize: "11px" }}>
+                                <span className="line-through text-[#94a3b8] text-[11px]">
                                   ₹{billingSummary?.basePrice}
                                 </span>
                               )}
                               {billingSummary?.isDiscount && (
                                 <span
-                                  style={{
-                                    background: "#ecfdf5",
-                                    color: "#059669",
-                                    fontSize: "9.5px",
-                                    padding: "1px 5px",
-                                    borderRadius: "4px",
-                                    fontWeight: "700",
-                                    border: "1px solid #d1fae5"
-                                  }}
+                                  className="bg-[#ecfdf5] text-[#059669] text-[9.5px] px-[5px] py-[1px] rounded font-bold border border-[#d1fae5]"
                                 >
                                   {`${Math.round(((billingSummary.basePrice - billingSummary.unitPrice) / billingSummary.basePrice) * 100)}% OFF`}
                                 </span>
@@ -1501,20 +1295,7 @@ export const Cart = () => {
 
                           {/* Trash button at top right */}
                           <div
-                            style={{
-                              position: "absolute",
-                              top: "12px",
-                              right: "12px",
-                              width: "28px",
-                              height: "28px",
-                              borderRadius: "6px",
-                              background: "#fef2f2",
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "center",
-                              cursor: "pointer",
-                              border: "1px solid #fee2e2"
-                            }}
+                            className="absolute top-3 right-3 w-7 h-7 rounded-md bg-[#fef2f2] flex items-center justify-center cursor-pointer border border-[#fee2e2]"
                             onClick={() => handleRemove(item.cartKey)}
                           >
                             <Trash2 size={13} color="#ef4444" />
@@ -1524,18 +1305,9 @@ export const Cart = () => {
                         {/* Returnable Policy row */}
                         {formatReturnablePeriod(item.returnDetails) && (
                           <div
-                            style={{
-                              display: "flex",
-                              alignItems: "center",
-                              gap: "4px",
-                              fontSize: "10px",
-                              color: "#64748b",
-                              marginTop: "8px",
-                              paddingTop: "8px",
-                              borderTop: "1px dashed #f1f5f9"
-                            }}
+                            className="flex items-center gap-1 text-[10px] text-[#64748b] mt-2 pt-2 border-t border-dashed border-[#f1f5f9]"
                           >
-                            <i className="fas fa-undo-alt" style={{ fontSize: "8px", color: "#8059ca" }} />
+                            <i className="fas fa-undo-alt text-[8px] text-[#8059ca]" />
                             <span>{formatReturnablePeriod(item.returnDetails)}</span>
                           </div>
                         )}
@@ -1543,36 +1315,22 @@ export const Cart = () => {
                         {/* Prescription Uploaded Preview */}
                         {prescriptionImage && (
                           <div
-                            style={{
-                              display: "flex",
-                              alignItems: "center",
-                              gap: "8px",
-                              background: "#f0fdf4",
-                              border: "1px solid #bbf7d0",
-                              borderRadius: "8px",
-                              padding: "6px 10px",
-                              marginTop: "8px"
-                            }}
+                            className="flex items-center gap-2 bg-[#f0fdf4] border border-[#bbf7d0] rounded-lg px-2.5 py-1.5 mt-2"
                           >
                             <img
                               src={getImageUrl(prescriptionImage)}
                               alt="Prescription"
-                              style={{
-                                width: "32px",
-                                height: "32px",
-                                borderRadius: "4px",
-                                objectFit: "cover"
-                              }}
+                              className="w-8 h-8 rounded object-cover"
                             />
-                            <div style={{ display: "flex", flexDirection: "column" }}>
-                              <span style={{ fontSize: "10px", color: "#16a34a", fontWeight: "600" }}>
+                            <div className="flex flex-col">
+                              <span className="text-[10px] text-[#16a34a] font-semibold">
                                 Prescription Uploaded
                               </span>
                               <a
                                 href={getImageUrl(prescriptionImage)}
                                 target="_blank"
                                 rel="noreferrer"
-                                style={{ fontSize: "9px", color: "#15803d", textDecoration: "underline" }}
+                                className="text-[9px] text-[#15803d] underline"
                               >
                                 View Prescription
                               </a>
@@ -1582,79 +1340,35 @@ export const Cart = () => {
 
                         {/* Bottom row: Qty Controls and Subtotal */}
                         <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            marginTop: "12px",
-                            paddingTop: "12px",
-                            borderTop: "1px solid #f1f5f9"
-                          }}
+                          className="flex justify-between items-center mt-3 pt-3 border-t border-[#f1f5f9]"
                         >
                           {/* Qty Controls */}
                           <div
-                            style={{
-                              display: "inline-flex",
-                              border: "1.5px solid #e9d5ff",
-                              borderRadius: "6px",
-                              backgroundColor: "#fff",
-                              overflow: "hidden"
-                            }}
+                            className="inline-flex border-[1.5px] border-[#e9d5ff] rounded-md bg-white overflow-hidden"
                           >
                             <button
-                              className="btn btn-sm"
+                              className="btn btn-sm w-[26px] h-[26px] bg-transparent border-0 text-[#8059ca] text-[10px] p-0 flex items-center justify-center"
                               onClick={() => decrementQuantity(item.cartKey)}
-                              style={{
-                                width: "26px",
-                                height: "26px",
-                                background: "transparent",
-                                border: "none",
-                                color: "#8059ca",
-                                fontSize: "10px",
-                                padding: 0,
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center"
-                              }}
                             >
-                              <i className="fas fa-minus" style={{ fontSize: "7px" }} />
+                              <i className="fas fa-minus text-[7px]" />
                             </button>
                             <span
-                              style={{
-                                minWidth: "24px",
-                                color: "#1e1b4b",
-                                fontWeight: "700",
-                                fontSize: "12px",
-                                textAlign: "center",
-                                lineHeight: "26px"
-                              }}
+                              className="min-w-[24px] text-[#1e1b4b] font-bold text-xs text-center leading-[26px]"
                             >
                               {item.quantity}
                             </span>
                             <button
-                              className="btn btn-sm"
+                              className="btn btn-sm w-[26px] h-[26px] bg-transparent border-0 text-[#8059ca] text-[10px] p-0 flex items-center justify-center"
                               onClick={() => incrementQuantity(item.cartKey)}
-                              style={{
-                                width: "26px",
-                                height: "26px",
-                                background: "transparent",
-                                border: "none",
-                                color: "#8059ca",
-                                fontSize: "10px",
-                                padding: 0,
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center"
-                              }}
                             >
-                              <i className="fas fa-plus" style={{ fontSize: "7px" }} />
+                              <i className="fas fa-plus text-[7px]" />
                             </button>
                           </div>
 
                           {/* Subtotal */}
-                          <div style={{ textAlign: "right" }}>
-                            <div style={{ fontSize: "11px", color: "#64748b" }}>Subtotal</div>
-                            <div style={{ fontSize: "14px", fontWeight: "750", color: "#0f172a" }}>
+                          <div className="text-right">
+                            <div className="text-[11px] text-[#64748b]">Subtotal</div>
+                            <div className="text-sm font-bold text-[#0f172a]">
                               ₹{(billingSummary?.baseAmount || 0).toFixed(2)}
                             </div>
                           </div>
@@ -1664,25 +1378,18 @@ export const Cart = () => {
                   })}
                 </div>
               ) : (
-                <div style={{ display: "flex", flexDirection: "column" }}>
+                <div className="flex flex-col">
                   {/* Header Row */}
                   <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      paddingBottom: "12px",
-                      borderBottom: "1px solid #e2e8f0",
-                      marginBottom: "8px"
-                    }}
+                    className="flex justify-between items-center pb-3 border-b border-[#e2e8f0] mb-2"
                   >
-                    <div style={{ flex: 1, fontWeight: "600", color: "#475569", fontSize: "13.5px" }}>
+                    <div className="flex-1 font-semibold text-[#475569] text-[13.5px]">
                       Medicines ({cartItems.length})
                     </div>
-                    <div style={{ width: "120px", textAlign: "center", fontWeight: "600", color: "#475569", fontSize: "13.5px" }}>
+                    <div className="w-[120px] text-center font-semibold text-[#475569] text-[13.5px]">
                       Quantity
                     </div>
-                    <div style={{ width: "150px", textAlign: "right", fontWeight: "600", color: "#475569", fontSize: "13.5px" }}>
+                    <div className="w-[150px] text-right font-semibold text-[#475569] text-[13.5px]">
                       Sub-Total
                     </div>
                   </div>
@@ -1704,128 +1411,63 @@ export const Cart = () => {
                           item.cartKey ||
                           `cart-item-${index}`
                         }
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "space-between",
-                          padding: "16px 0",
-                          borderBottom: index === cartItems.length - 1 ? "none" : "1px solid #f1f5f9",
-                        }}
+                        className={`flex items-center justify-between py-4 ${index === cartItems.length - 1 ? "border-b-0" : "border-b border-[#f1f5f9]"}`}
                       >
                         {/* Medicine Details Info */}
                         <div
-                          style={{
-                            display: "flex",
-                            gap: "16px",
-                            alignItems: "center",
-                            flex: 1,
-                            minWidth: 0,
-                          }}
+                          className="flex gap-4 items-center flex-1 min-w-0"
                         >
                           <div
                             onClick={() => handleProductClick(item)}
-                            style={{ cursor: "pointer", flexShrink: 0 }}
+                            className="cursor-pointer shrink-0"
                           >
                             <img
                               src={resolveImage(item)}
                               alt={item.name || "Product"}
-                              style={{
-                                width: 70,
-                                height: 70,
-                                borderRadius: "12px",
-                                objectFit: "cover",
-                                boxShadow: "0 4px 12px rgba(128, 89, 202, 0.06)",
-                                border: "1px solid #f3effa",
-                                transition: "transform 0.2s ease"
-                              }}
-                              onMouseEnter={(e) => {
-                                e.currentTarget.style.transform = "scale(1.03)";
-                              }}
-                              onMouseLeave={(e) => {
-                                e.currentTarget.style.transform = "scale(1)";
-                              }}
+                              className="w-[70px] h-[70px] rounded-xl object-cover shadow-[0_4px_12px_rgba(128,89,202,0.06)] border border-[#f3effa] transition-transform duration-200 ease-in-out hover:scale-[1.03]"
                             />
                           </div>
-                          <div style={{ flex: 1, minWidth: 0 }}>
+                          <div className="flex-1 min-w-0">
                             <div
                               onClick={() => handleProductClick(item)}
-                              style={{
-                                fontSize: "14.5px",
-                                fontWeight: 600,
-                                color: "#1e293b",
-                                cursor: "pointer",
-                                lineHeight: "1.3",
-                                marginBottom: "4px",
-                                textOverflow: "ellipsis",
-                                overflow: "hidden",
-                                whiteSpace: "nowrap",
-                                textTransform: "capitalize"
-                              }}
-                              onMouseEnter={(e) => e.currentTarget.style.color = "#8059ca"}
-                              onMouseLeave={(e) => e.currentTarget.style.color = "#1e293b"}
+                              className="text-[14.5px] font-semibold text-[#1e293b] cursor-pointer leading-[1.3] mb-1 text-ellipsis overflow-hidden whitespace-nowrap capitalize hover:text-[#8059ca]"
                             >
                               {item.name || "Product Name"}
                             </div>
                             {item?.variantName && (
                               <div
                                 onClick={() => handleProductClick(item)}
-                                style={{
-                                  display: "inline-block",
-                                  marginBottom: "4px",
-                                  cursor: "pointer"
-                                }}
+                                className="inline-block mb-1 cursor-pointer"
                               >
                                 <span
-                                  style={{
-                                    background: "#f3e8ff",
-                                    color: "#7e22ce",
-                                    fontSize: "11px",
-                                    fontWeight: "600",
-                                    padding: "2px 8px",
-                                    borderRadius: "4px",
-                                    border: "1px solid #e9d5ff",
-                                    display: "inline-block"
-                                  }}
+                                  className="bg-[#f3e8ff] text-[#7e22ce] text-[11px] font-semibold px-2 py-0.5 rounded border border-[#e9d5ff] inline-block"
                                 >
                                   Variant: {item.variantName}
                                 </span>
                               </div>
                             )}
 
-                            <div style={{
-                              display: "flex",
-                              alignItems: "center",
-                              gap: "8px",
-                              fontSize: "11px",
-                              color: "#64748b",
-                              marginBottom: "5px"
-                            }}>
-                              <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                            <div className="flex items-center gap-2 text-[11px] text-[#64748b] mb-1.5">
+                              <div className="flex items-center gap-1.5">
                                 {item.vendorImage ? (
                                   <img
                                     src={getImageUrl(item.vendorImage)}
                                     alt={item.vendorName}
-                                    style={{
-                                      width: "18px",
-                                      height: "18px",
-                                      borderRadius: "4px",
-                                      objectFit: "cover",
-                                      border: "1px solid #e9d5ff"
-                                    }}
+                                    className="w-[18px] h-[18px] rounded object-cover border border-[#e9d5ff]"
                                     onError={(e) => {
                                       e.target.style.display = "none";
                                     }}
                                   />
                                 ) : (
-                                  <i className="fas fa-store" style={{ fontSize: "9px", color: "#8059ca" }} />
+                                  <i className="fas fa-store text-[9px] text-[#8059ca]" />
                                 )}
-                                <span style={{ color: "#8059ca", fontWeight: "600", textTransform: "capitalize" }}>{item.vendorName}</span>
+                                <span className="text-[#8059ca] font-semibold capitalize">{item.vendorName}</span>
                               </div>
                               {formatReturnablePeriod(item.returnDetails) && (
                                 <>
-                                  <span style={{ color: "#cbd5e1" }}>•</span>
-                                  <span style={{ display: "inline-flex", alignItems: "center", gap: "3px" }}>
-                                    <i className="fas fa-undo-alt" style={{ fontSize: "9px" }} />
+                                  <span className="text-[#cbd5e1]">•</span>
+                                  <span className="inline-flex items-center gap-[3px]">
+                                    <i className="fas fa-undo-alt text-[9px]" />
                                     {formatReturnablePeriod(item.returnDetails)}
                                   </span>
                                 </>
@@ -1835,36 +1477,22 @@ export const Cart = () => {
                             {/* Prescription Uploaded Preview (Desktop) */}
                             {prescriptionImage && (
                               <div
-                                style={{
-                                  display: "inline-flex",
-                                  alignItems: "center",
-                                  gap: "8px",
-                                  background: "#f0fdf4",
-                                  border: "1px solid #bbf7d0",
-                                  borderRadius: "6px",
-                                  padding: "4px 8px",
-                                  marginBottom: "6px"
-                                }}
+                                className="inline-flex items-center gap-2 bg-[#f0fdf4] border border-[#bbf7d0] rounded-md px-2 py-1 mb-1.5"
                               >
                                 <img
                                   src={getImageUrl(prescriptionImage)}
                                   alt="Prescription"
-                                  style={{
-                                    width: "24px",
-                                    height: "24px",
-                                    borderRadius: "3px",
-                                    objectFit: "cover"
-                                  }}
+                                  className="w-6 h-6 rounded-[3px] object-cover"
                                 />
-                                <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-                                  <span style={{ fontSize: "9.5px", color: "#16a34a", fontWeight: "600" }}>
+                                <div className="flex items-center gap-1.5">
+                                  <span className="text-[9.5px] text-[#16a34a] font-semibold">
                                     Prescription Uploaded
                                   </span>
                                   {/* <a
                                     href={getImageUrl(prescriptionImage)}
                                     target="_blank"
                                     rel="noreferrer"
-                                    style={{ fontSize: "9.5px", color: "#15803d", textDecoration: "underline" }}
+                                    className="text-[9.5px] text-[#15803d] underline"
                                   >
                                     View
                                   </a> */}
@@ -1873,30 +1501,17 @@ export const Cart = () => {
                             )}
 
                             <div
-                              style={{
-                                display: "flex",
-                                alignItems: "center",
-                                gap: "6px",
-                                flexWrap: "wrap"
-                              }}
+                              className="flex items-center gap-1.5 flex-wrap"
                             >
                               <span
-                                style={{
-                                  fontSize: "14px",
-                                  fontWeight: 750,
-                                  color: "#0f172a",
-                                }}
+                                className="text-sm font-bold text-[#0f172a]"
                               >
                                 ₹{billingSummary?.unitPrice?.toFixed(2)}
                               </span>
 
                               {billingSummary?.isDiscount && (
                                 <span
-                                  style={{
-                                    textDecoration: "line-through",
-                                    color: "#94a3b8",
-                                    fontSize: "11.5px",
-                                  }}
+                                  className="line-through text-[#94a3b8] text-[11.5px]"
                                 >
                                   ₹{billingSummary?.basePrice?.toFixed(2)}
                                 </span>
@@ -1904,15 +1519,7 @@ export const Cart = () => {
 
                               {billingSummary?.basePrice > billingSummary?.unitPrice && (
                                 <span
-                                  style={{
-                                    background: "#ecfdf5",
-                                    color: "#059669",
-                                    fontSize: "10px",
-                                    padding: "1px 6px",
-                                    borderRadius: "4px",
-                                    fontWeight: "700",
-                                    border: "1px solid #d1fae5"
-                                  }}
+                                  className="bg-[#ecfdf5] text-[#059669] text-[10px] px-1.5 py-[1px] rounded font-bold border border-[#d1fae5]"
                                 >
                                   {billingSummary?.basePrice > 0
                                     ? `${Math.round(((billingSummary.basePrice - billingSummary.unitPrice) / billingSummary.basePrice) * 100)}% OFF`
@@ -1924,132 +1531,58 @@ export const Cart = () => {
                         </div>
 
                         {/* Quantity controls */}
-                        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", width: "120px", flexShrink: 0 }}>
+                        <div className="flex items-center justify-center w-[120px] shrink-0">
                           <div
-                            style={{
-                              display: "inline-flex",
-                              border: "1.5px solid #e9d5ff",
-                              borderRadius: "8px",
-                              backgroundColor: "#fff",
-                              boxShadow: "0 1px 4px rgba(128, 89, 202, 0.04)",
-                              overflow: "hidden"
-                            }}
+                            className="inline-flex border-[1.5px] border-[#e9d5ff] rounded-lg bg-white shadow-[0_1px_4px_rgba(128,89,202,0.04)] overflow-hidden"
                           >
                             <button
-                              className="btn btn-sm"
+                              className="btn btn-sm w-7 h-7 bg-transparent border-0 text-[#8059ca] text-[11px] p-0 flex items-center justify-center transition-colors duration-200 ease-in-out hover:bg-[#fdfaff]"
                               onClick={() =>
                                 decrementQuantity(item.cartKey)
                               }
-                              style={{
-                                width: "28px",
-                                height: "28px",
-                                background: "transparent",
-                                border: "none",
-                                color: "#8059ca",
-                                fontSize: "11px",
-                                padding: 0,
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                transition: "background-color 0.2s ease"
-                              }}
-                              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#fdfaff"}
-                              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "transparent"}
                             >
                               <i
-                                className="fas fa-minus"
-                                style={{ fontSize: "8px" }}
+                                className="fas fa-minus text-[8px]"
                               ></i>
                             </button>
                             <span
-                              className="mx-1 fw-bold text-center"
-                              style={{
-                                minWidth: "28px",
-                                color: "#1e1b4b",
-                                fontWeight: "700",
-                                fontSize: "13px",
-                                lineHeight: "28px"
-                              }}
+                              className="mx-1 fw-bold text-center min-w-[28px] text-[#1e1b4b] font-bold text-[13px] leading-7"
                             >
                               {item.quantity}
                             </span>
                             <button
-                              className="btn btn-sm"
+                              className="btn btn-sm w-7 h-7 bg-transparent border-0 text-[#8059ca] text-[11px] p-0 flex items-center justify-center transition-colors duration-200 ease-in-out hover:bg-[#fdfaff]"
                               onClick={() =>
                                 incrementQuantity(item.cartKey)
                               }
-                              style={{
-                                width: "28px",
-                                height: "28px",
-                                background: "transparent",
-                                border: "none",
-                                color: "#8059ca",
-                                fontSize: "11px",
-                                padding: 0,
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                transition: "background-color 0.2s ease"
-                              }}
-                              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = "#fdfaff"}
-                              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = "transparent"}
                             >
                               <i
-                                className="fas fa-plus"
-                                style={{ fontSize: "8px" }}
+                                className="fas fa-plus text-[8px]"
                               ></i>
                             </button>
                           </div>
                         </div>
 
                         {/* Sub-Total and Actions */}
-                        <div style={{ display: "flex", alignItems: "center", gap: "16px", width: "150px", flexShrink: 0, justifyContent: "flex-end" }}>
+                        <div className="flex items-center gap-4 w-[150px] shrink-0 justify-end">
                           <div
-                            style={{
-                              display: "flex",
-                              flexDirection: "column",
-                              alignItems: "flex-end",
-                              gap: "1px"
-                            }}
+                            className="flex flex-col items-end gap-[1px]"
                           >
                             <div
-                              style={{ fontSize: "15px", fontWeight: "750", color: "#0f172a" }}
+                              className="text-[15px] font-bold text-[#0f172a]"
                             >
                               ₹{(billingSummary?.baseAmount || 0).toFixed(2)}
                             </div>
                             {billingSummary?.baseAmount > billingSummary?.unitPrice && (
                               <div
-                                style={{
-                                  fontSize: "11.5px",
-                                  textDecoration: "line-through",
-                                  color: "#94a3b8",
-                                }}
+                                className="text-[11.5px] line-through text-[#94a3b8]"
                               >
                                 ₹{(billingSummary?.basePrice * (item.quantity || 1)).toFixed(2)}
                               </div>
                             )}
                           </div>
                           <div
-                            style={{
-                              width: "30px",
-                              height: "30px",
-                              borderRadius: "8px",
-                              background: "#fef2f2",
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "center",
-                              cursor: "pointer",
-                              transition: "all 0.2s ease",
-                              border: "1px solid #fee2e2"
-                            }}
-                            onMouseEnter={(e) => {
-                              e.currentTarget.style.backgroundColor = "#fee2e2";
-                              e.currentTarget.style.transform = "scale(1.05)";
-                            }}
-                            onMouseLeave={(e) => {
-                              e.currentTarget.style.backgroundColor = "#fef2f2";
-                              e.currentTarget.style.transform = "scale(1)";
-                            }}
+                            className="w-[30px] h-[30px] rounded-lg bg-[#fef2f2] flex items-center justify-center cursor-pointer transition-all duration-200 ease-in-out border border-[#fee2e2] hover:bg-[#fee2e2] hover:scale-105"
                             onClick={() => handleRemove(item.cartKey)}
                           >
                             <Trash2
@@ -2070,49 +1603,20 @@ export const Cart = () => {
 
         {cartItems.length > 0 && (
           <div
-            className="card shadow-sm"
-            style={{
-              width: isMobile || isTablet ? "100%" : "33%",
-              position: isMobile || isTablet ? "static" : "sticky",
-              top: "100px",
-              borderRadius: "16px",
-              border: "1px solid #f1f5f9",
-              backgroundColor: "#fff",
-              padding: isMobile ? "20px" : "28px",
-              boxShadow: "0 10px 25px -5px rgba(0,0,0,0.05)",
-              marginTop: "10px",
-            }}
+            className={`card shadow-sm rounded-2xl border border-[#f1f5f9] bg-white shadow-[0_10px_25px_-5px_rgba(0,0,0,0.05)] mt-2.5 ${isMobile || isTablet ? "w-full static" : "w-[33%] sticky"} ${isMobile ? "p-3" : "p-7"}`}
           >
             <div>
               {/* OFFERS */}
-              <div style={{ marginBottom: "28px" }}>
+              <div className="mb-7">
                 <div
-                  style={{
-                    fontSize: "15.5px",
-                    fontWeight: "600",
-                    marginBottom: "12px",
-                    color: "#1e293b",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "8px"
-                  }}
+                  className="text-[15.5px] font-semibold mb-3 text-[#1e293b] flex items-center gap-2"
                 >
-                  <i className="fas fa-percentage" style={{ color: "#8059ca" }}></i>
+                  <i className="fas fa-percentage text-[#8059ca]"></i>
                   Offers & Discounts
                 </div>
 
                 <div
-                  style={{
-                    display: "flex",
-                    gap: "12px",
-                    background: "#f0fdf4",
-                    padding: "16px",
-                    borderRadius: "12px",
-                    alignItems: "center",
-                    cursor: "pointer",
-                    border: "1.5px dashed #bbf7d0",
-                    transition: "all 0.2s ease",
-                  }}
+                  className="flex gap-3 bg-[#f0fdf4] p-4 rounded-xl items-center cursor-pointer border-[1.5px] border-dashed border-[#bbf7d0] transition-all duration-200 ease-in-out hover:-translate-y-px hover:shadow-[0_4px_12px_rgba(22,163,74,0.08)]"
                   onClick={(e) => {
                     e.preventDefault();
                     const token = localStorage.getItem("medicomparestoken");
@@ -2123,61 +1627,27 @@ export const Cart = () => {
                     }
                     setShowOffersModal(true);
                   }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = "translateY(-1px)";
-                    e.currentTarget.style.boxShadow = "0 4px 12px rgba(22, 163, 74, 0.08)";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = "none";
-                    e.currentTarget.style.boxShadow = "none";
-                  }}
                 >
                   <div
-                    style={{
-                      width: 38,
-                      height: 38,
-                      background: "#16a34a",
-                      borderRadius: "10px",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      color: "#fff",
-                      fontSize: "14px",
-                      fontWeight: 700,
-                    }}
+                    className="w-[38px] h-[38px] bg-[#16a34a] rounded-[10px] flex items-center justify-center text-white text-sm font-bold"
                   >
                     <i className="fas fa-tag" />
                   </div>
 
-                  <div style={{ flex: 1 }}>
+                  <div className="flex-1">
                     <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                        fontSize: "14px",
-                        fontWeight: 600,
-                        color: "#166534",
-                        marginBottom: "2px",
-                      }}
+                      className="flex items-center justify-between text-sm font-semibold text-[#166534] mb-0.5"
                     >
                       <span>{appliedCoupon ? "Coupon Applied!" : "Apply Coupon"}</span>
-                      <i className="fas fa-chevron-right" style={{ fontSize: "11px", color: "#16a34a" }} />
+                      <i className="fas fa-chevron-right text-[11px] text-[#16a34a]" />
                     </div>
 
-                    <div style={{ fontSize: "12px", color: "#15803d" }}>
+                    <div className="text-xs text-[#15803d]">
                       {appliedCoupon ? (
                         <div
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "space-between",
-                            gap: "8px",
-                            flexWrap: "wrap",
-                            marginTop: "4px"
-                          }}
+                          className="flex items-center justify-between gap-2 flex-wrap mt-1"
                         >
-                          <span style={{ fontWeight: 600 }}>
+                          <span className="font-semibold">
                             {appliedCoupon.code || appliedCoupon.name}
                           </span>
                           <button
@@ -2187,16 +1657,7 @@ export const Cart = () => {
                               e.stopPropagation();
                               setAppliedCoupon(null);
                             }}
-                            style={{
-                              background: "#fee2e2",
-                              border: "none",
-                              padding: "2px 8px",
-                              borderRadius: "4px",
-                              cursor: "pointer",
-                              color: "#ef4444",
-                              fontWeight: 700,
-                              fontSize: "10px",
-                            }}
+                            className="bg-[#fee2e2] border-0 px-2 py-0.5 rounded cursor-pointer text-[#ef4444] font-bold text-[10px]"
                           >
                             Remove
                           </button>
@@ -2211,23 +1672,13 @@ export const Cart = () => {
                 </div>
 
                 {/* Manual Coupon Input */}
-                <div style={{ display: "flex", gap: "8px", marginTop: "12px" }}>
+                {/* <div className="flex gap-2 mt-3">
                   <input
                     type="text"
                     placeholder="Enter Coupon Code"
                     value={couponInputText}
                     onChange={(e) => setCouponInputText(e.target.value)}
-                    style={{
-                      flex: 1,
-                      border: "1px solid #cbd5e1",
-                      borderRadius: "8px",
-                      padding: "8px 12px",
-                      fontSize: "13px",
-                      outline: "none",
-                      transition: "border-color 0.2s",
-                    }}
-                    onFocus={(e) => e.target.style.borderColor = "#8059ca"}
-                    onBlur={(e) => e.target.style.borderColor = "#cbd5e1"}
+                    className="flex-1 border border-[#cbd5e1] rounded-lg px-3 py-2 text-[13px] outline-none transition-colors duration-200 focus:border-[#8059ca]"
                   />
                   <button
                     type="button"
@@ -2235,93 +1686,89 @@ export const Cart = () => {
                       e.preventDefault();
                       handleManualCouponApply();
                     }}
-                    style={{
-                      background: "#8059ca",
-                      color: "#fff",
-                      border: "none",
-                      borderRadius: "8px",
-                      padding: "8px 16px",
-                      fontSize: "13px",
-                      fontWeight: "600",
-                      cursor: "pointer",
-                      transition: "background 0.2s",
-                    }}
-                    onMouseEnter={(e) => e.currentTarget.style.background = "#6f42c1"}
-                    onMouseLeave={(e) => e.currentTarget.style.background = "#8059ca"}
+                    className="bg-[#8059ca] text-white border-0 rounded-lg px-4 py-2 text-[13px] font-semibold cursor-pointer transition-colors duration-200 hover:bg-[#6f42c1]"
                   >
                     Apply
                   </button>
+                </div> */}
+
+
+
+
+
+                <div className="mt-2">
+                  <label className="block text-[13px] font-medium text-[#475569] mb-2">
+                    Have a Coupon Code?
+                  </label>
+
+                  <div className="flex gap-2 mt-2 flex-row w-full">
+                    <input
+                      type="text"
+                      placeholder="Enter Coupon Code"
+                      value={couponInputText}
+                      onChange={(e) => setCouponInputText(e.target.value)}
+                      className="flex-1 min-w-0 border border-slate-300 rounded-lg px-3 py-2 text-sm bg-[#f8fafc] outline-none transition-colors focus:border-[#8059ca]"
+                    />
+
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        handleManualCouponApply();
+                      }}
+                      className="px-4 py-2 bg-gradient-to-r from-[#8059ca] to-[#6d28d9] hover:from-[#7148c5] hover:to-[#5b21b6] text-white text-sm font-semibold rounded-lg border-none transition-all duration-200 shrink-0"
+                    >
+                      Apply
+                    </button>
+                  </div>
+
+                  {!appliedCoupon && (
+                    <div className="mt-2 text-[12px] font-[500] text-[#94a3b8]">
+                      Enter your coupon code to get instant discounts on your booking.
+                    </div>
+                  )}
                 </div>
               </div>
 
               {/* BILL SUMMARY */}
-              <div style={{ marginBottom: "5px" }}>
+              <div className="mb-[5px]">
                 <div
-                  style={{
-                    fontSize: "15.5px",
-                    fontWeight: "600",
-                    marginBottom: "12px",
-                    color: "#1e293b",
-                  }}
+                  className="text-[15.5px] font-semibold mb-3 text-[#1e293b]"
                 >
                   Cart Summary
                 </div>
                 <div
-                  style={{
-                    background: "#fdfaff",
-                    border: "1.5px solid #f3e8ff",
-                    borderRadius: "14px",
-                    padding: "20px",
-                    boxShadow: "0 2px 8px rgba(128, 89, 202, 0.02)"
-                  }}
+                  className="bg-[#fdfaff] border-[1.5px] border-[#f3e8ff] rounded-[14px] p-3 shadow-[0_2px_8px_rgba(128,89,202,0.02)]"
                 >
                   {cartItems.length > 0 && (
                     <>
                       <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          fontSize: "13px",
-                          color: "#475569",
-                          marginBottom: "14px",
-                        }}
+                        className="flex justify-between text-[13px] text-[#475569] mb-3.5"
                       >
-                        <span style={{ fontWeight: 500 }}>
-                          Subtotal <small style={{ color: "#94a3b8" }}>(Incl. of all taxes)</small>
+                        <span className="font-medium">
+                          Subtotal <small className="text-[#94a3b8]">(Incl. of all taxes)</small>
                         </span>
-                        <span style={{ fontWeight: 600, color: "#1e293b" }}>
+                        <span className="font-semibold text-[#1e293b]">
                           ₹{(cartBilling?.subtotal || 0).toFixed(2)}
                         </span>
                       </div>
 
                       <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          fontSize: "13px",
-                          color: "#475569",
-                          marginBottom: "14px",
-                        }}
+                        className="flex justify-between text-[13px] text-[#475569] mb-3.5"
                       >
-                        <span style={{ fontWeight: 500 }}>GST</span>
-                        <span style={{ fontWeight: 600, color: "#1e293b" }}>
+                        <span className="font-medium">GST</span>
+                        <span className="font-semibold text-[#1e293b]">
                           ₹
                           {(cartBilling?.totalGst || 0).toFixed(2)}
                         </span>
                       </div>
                       <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          fontSize: "13px",
-                          color: "#475569",
-                          marginBottom: "14px",
-                        }}
+                        className="flex justify-between text-[13px] text-[#475569] mb-3.5"
                       >
-                        <span style={{ fontWeight: 500 }}>
+                        <span className="font-medium">
                           Delivery Charges
                         </span>
-                        <span style={{ fontWeight: 600, color: "#16a34a" }}>
+                        <span className="font-semibold text-[#16a34a]">
                           {cartBilling?.deliveryCharges === 0 ? "Free" :
                             `₹${(cartBilling?.deliveryCharges || 0).toFixed(2)}`}
                         </span>
@@ -2329,18 +1776,12 @@ export const Cart = () => {
 
                       {(cartBilling?.couponAmount > 0 || couponDiscount > 0) && (
                         <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            fontSize: "13px",
-                            color: "#475569",
-                            marginBottom: "14px",
-                          }}
+                          className="flex justify-between text-[13px] text-[#475569] mb-3.5"
                         >
-                          <span style={{ fontWeight: 500, color: "#16a34a" }}>
+                          <span className="font-medium text-[#16a34a]">
                             Coupon Discount
                           </span>
-                          <span style={{ fontWeight: 600, color: "#16a34a" }}>
+                          <span className="font-semibold text-[#16a34a]">
                             - ₹{cartBilling?.couponAmount ?
                               cartBilling?.couponAmount.toFixed(2) :
                               (couponDiscount || 0).toFixed(2)}
@@ -2348,46 +1789,14 @@ export const Cart = () => {
                         </div>
                       )}
 
-                      {/* {cartBilling?.couponAmount > 0 && (
-                        <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            fontSize: "13px",
-                            color: "#16a34a",
-                            marginBottom: "14px",
-                            backgroundColor: "#f0fdf4",
-                            padding: "8px 12px",
-                            borderRadius: "8px",
-                            border: "1px dashed #bbf7d0"
-                          }}
-                        >
-                          <span style={{ fontWeight: 600 }}>
-                            Coupon Discount
-                            {appliedCoupon?.code
-                              ? ` (${appliedCoupon.code})`
-                              : ""}
-                          </span>
-                          <span style={{ fontWeight: 750 }}>
-                            -₹{couponDiscount.toFixed(2)}
-                          </span>
-                        </div>
-                      )} */}
-
                       {selectedPayment === "online" && walletUsed > 0 && (
                         <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            fontSize: "13px",
-                            color: "#059669",
-                            marginBottom: "14px",
-                          }}
+                          className="flex justify-between text-[13px] text-[#059669] mb-3.5"
                         >
-                          <span style={{ fontWeight: 500 }}>
+                          <span className="font-medium">
                             Wallet Deduction
                           </span>
-                          <span style={{ fontWeight: 600, color: "#059669" }}>
+                          <span className="font-semibold text-[#059669]">
                             - ₹{walletUsed.toFixed(2)}
                           </span>
                         </div>
@@ -2395,20 +1804,13 @@ export const Cart = () => {
                     </>
                   )}
 
-                  <hr style={{ margin: "14px 0", border: '2px solid #c4b5fd' }} />
+                  <hr className="my-3.5 border-2 border-[#c4b5fd]" />
 
                   <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      fontSize: "15px",
-                      fontWeight: 600,
-                      // color: "#0f172a",
-                      color: '#8059ca'
-                    }}
+                    className="flex justify-between text-[15px] font-semibold text-[#8059ca]"
                   >
                     <span>Amount To Pay</span>
-                    <span style={{ color: "#8059ca", fontSize: "17.5px" }}>
+                    <span className="text-[#8059ca] text-[17.5px]">
                       ₹
                       {(amountToPay || 0).toFixed(2)}
                     </span>
@@ -2416,52 +1818,16 @@ export const Cart = () => {
 
                   {selectedPayment === "online" && walletAmount > 0 && (
                     <>
-                      <hr style={{ margin: "12px 0", borderColor: "#f3e8ff" }} />
-                      {/* <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          fontSize: "12.5px",
-                          color: "#475569",
-                          marginBottom: "6px"
-                        }}
-                      >
-                        <span>Wallet Balance</span>
-                        <span style={{ fontWeight: "500" }}>₹{walletAmount.toFixed(2)}</span>
-                      </div>
+                      <hr className="my-3 border-[#f3e8ff]" />
                       <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          fontSize: "12.5px",
-                          color: "#16a34a",
-                          marginBottom: "6px",
-                          fontWeight: "500"
-                        }}
-                      >
-                        <span>Wallet Applied</span>
-                        <span>- ₹{walletUsed.toFixed(2)}</span>
-                      </div>  */}
-                      <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          fontSize: "12.5px",
-                          color: "#1e293b",
-                          fontWeight: "600"
-                        }}
+                        className="flex justify-between text-[12.5px] text-[#1e293b] font-semibold"
                       >
                         <span>Remaining Wallet Balance</span>
-                        <span style={{ color: "#475569" }}>₹{(walletAmount - walletUsed).toFixed(2)}</span>
+                        <span className="text-[#475569]">₹{(walletAmount - walletUsed).toFixed(2)}</span>
                       </div>
 
                       <div
-                        style={{
-                          fontSize: "11px",
-                          color: "#059669",
-                          marginTop: "8px",
-                          lineHeight: "1.4"
-                        }}
+                        className="text-[11px] text-[#059669] mt-2 leading-[1.4]"
                       >
                         Wallet amount is automatically deducted from your total payable.
                       </div>
@@ -2471,310 +1837,93 @@ export const Cart = () => {
 
                 {appliedCoupon && couponDiscount > 0 && (
                   <div
-                    style={{
-                      background: "#f0fdf4",
-                      padding: "10px",
-                      borderRadius: "10px",
-                      fontSize: "12px",
-                      fontWeight: 700,
-                      color: "#15803d",
-                      marginTop: "12px",
-                      textAlign: "center",
-                      border: "1px solid #bbf7d0",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      gap: "6px"
-                    }}
+                    className="bg-[#f0fdf4] p-2.5 rounded-[10px] text-xs font-bold text-[#15803d] mt-3 text-center border border-[#bbf7d0] flex items-center justify-center gap-1.5"
                   >
-                    <i className="fas fa-sparkles" style={{ color: "#16a34a" }} />
+                    <i className="fas fa-sparkles text-[#16a34a]" />
                     <span>YOU SAVED A TOTAL OF ₹{couponDiscount.toFixed(2)} WITH THIS ORDER!</span>
                   </div>
                 )}
 
                 <div
-                  style={{
-                    fontSize: "15.5px",
-                    fontWeight: "600",
-                    margin: isMobile ? "16px 0 10px 0" : "28px 0 12px 0",
-                    color: "#1e293b",
-                  }}
+                  className={`text-[15.5px] font-semibold text-[#1e293b] ${isMobile ? "my-4 mb-2.5" : "mt-7 mb-3"}`}
                 >
                   Choose Payment Method
                 </div>
 
-                {/* {walletAmount > 0 && (
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      background: "#fdfaff",
-                      border: useWallet ? "2px solid #8059ca" : "1.5px solid #e2e8f0",
-                      borderRadius: "12px",
-                      padding: "10px 12px",
-                      marginBottom: "12px",
-                      cursor: "pointer",
-                      boxShadow: useWallet ? "0 4px 12px rgba(128, 89, 202, 0.08)" : "none",
-                      transition: "all 0.2s ease"
-                    }}
-                    onClick={() => setUseWallet(!useWallet)}
-                  >
-                    <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                      <div
-                        style={{
-                          width: "28px",
-                          height: "28px",
-                          borderRadius: "8px",
-                          background: useWallet ? "#8059ca" : "#f1f5f9",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          color: useWallet ? "#fff" : "#64748b",
-                          fontSize: "12px",
-                          transition: "all 0.2s"
-                        }}
-                      >
-                        <i className="fas fa-wallet" />
-                      </div>
-                      <div>
-                        <div style={{ fontSize: "12px", fontWeight: "700", color: useWallet ? "#8059ca" : "#1e293b" }}>
-                          Use Wallet Balance
-                        </div>
-                        <div style={{ fontSize: "10px", color: "#64748b" }}>
-                          Available: ₹{walletAmount.toFixed(2)}
-                        </div>
-                      </div>
-                    </div>
-                    <div
-                      style={{
-                        width: "14px",
-                        height: "14px",
-                        borderRadius: "50%",
-                        border: useWallet ? "4px solid #8059ca" : "2px solid #cbd5e1",
-                        background: "#fff",
-                        transition: "all 0.2s ease"
-                      }}
-                    />
-                  </div>
-                )} */}
-
                 <div
-                  style={{
-                    display: "flex",
-                    flexDirection: isMobile || isTablet ? "column" : "row",
-                    gap: "8px",
-                    marginBottom: "16px",
-                    width: "100%",
-                    boxSizing: "border-box"
-                  }}
+                  className={`flex gap-2 mb-4 w-full box-border ${isMobile || isTablet ? "flex-col" : "flex-row"}`}
                 >
                   {/* COD Option */}
                   <div
-                    style={{
-                      flex: "1 1 0%",
-                      minWidth: 0,
-                      border: selectedPayment === "cod" ? "2px solid #8059ca" : "1.5px solid #e2e8f0",
-                      borderRadius: "12px",
-                      padding: "10px 12px",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "8px",
-                      backgroundColor: selectedPayment === "cod" ? "#fdfaff" : "#ffffff",
-                      cursor: "pointer",
-                      transition: "all 0.2s ease",
-                      boxShadow: selectedPayment === "cod" ? "0 4px 12px rgba(128, 89, 202, 0.08)" : "none",
-                      boxSizing: "border-box"
-                    }}
+                    className={`flex-1 min-w-0 rounded-xl px-3 py-2.5 flex items-center gap-2 cursor-pointer transition-all duration-200 ease-in-out box-border ${selectedPayment === "cod" ? "border-2 border-[#8059ca] bg-[#fdfaff] shadow-[0_4px_12px_rgba(128,89,202,0.08)]" : "border-[1.5px] border-[#e2e8f0] bg-white hover:border-[#cbd5e1] hover:bg-[#fafbfc]"}`}
                     onClick={() => setSelectedPayment("cod")}
-                    onMouseEnter={(e) => {
-                      if (selectedPayment !== "cod") {
-                        e.currentTarget.style.borderColor = "#cbd5e1";
-                        e.currentTarget.style.backgroundColor = "#fafbfc";
-                      }
-                    }}
-                    onMouseLeave={(e) => {
-                      if (selectedPayment !== "cod") {
-                        e.currentTarget.style.borderColor = "#e2e8f0";
-                        e.currentTarget.style.backgroundColor = "#ffffff";
-                      }
-                    }}
                   >
                     <div
-                      style={{
-                        width: "28px",
-                        height: "28px",
-                        borderRadius: "8px",
-                        background: selectedPayment === "cod" ? "#8059ca" : "#f1f5f9",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        color: selectedPayment === "cod" ? "#fff" : "#64748b",
-                        fontSize: "12px",
-                        transition: "all 0.2s ease",
-                        flexShrink: 0
-                      }}
+                      className={`w-7 h-7 rounded-lg flex items-center justify-center text-xs transition-all duration-200 ease-in-out shrink-0 ${selectedPayment === "cod" ? "bg-[#8059ca] text-white" : "bg-[#f1f5f9] text-[#64748b]"}`}
                     >
                       <i className="fas fa-money-bill-wave" />
                     </div>
-                    <div style={{ flex: 1, minWidth: 0 }}>
+                    <div className="flex-1 min-w-0">
                       <div
-                        style={{
-                          fontSize: "12px",
-                          fontWeight: "700",
-                          color: selectedPayment === "cod" ? "#8059ca" : "#1e293b",
-                          marginBottom: "1px",
-                          whiteSpace: "nowrap",
-                          overflow: "hidden",
-                          textOverflow: "ellipsis"
-                        }}
+                        className={`text-xs font-bold mb-[1px] whitespace-nowrap overflow-hidden text-ellipsis ${selectedPayment === "cod" ? "text-[#8059ca]" : "text-[#1e293b]"}`}
                       >
                         Cash on Delivery
                       </div>
-                      <div style={{ fontSize: "10px", color: "#64748b", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                      <div className="text-[10px] text-[#64748b] whitespace-nowrap overflow-hidden text-ellipsis">
                         Pay at delivery
                       </div>
                     </div>
                     <div
-                      style={{
-                        width: "14px",
-                        height: "14px",
-                        borderRadius: "50%",
-                        border: selectedPayment === "cod" ? "4px solid #8059ca" : "2px solid #cbd5e1",
-                        background: "#fff",
-                        transition: "all 0.2s ease",
-                        flexShrink: 0
-                      }}
+                      className={`w-3.5 h-3.5 rounded-full bg-white transition-all duration-200 ease-in-out shrink-0 ${selectedPayment === "cod" ? "border-4 border-[#8059ca]" : "border-2 border-[#cbd5e1]"}`}
                     />
                   </div>
 
                   {/* Online Option */}
                   <div
-                    style={{
-                      flex: "1 1 0%",
-                      minWidth: 0,
-                      border: selectedPayment === "online" ? "2px solid #8059ca" : "1.5px solid #e2e8f0",
-                      borderRadius: "12px",
-                      padding: "10px 12px",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "8px",
-                      backgroundColor: selectedPayment === "online" ? "#fdfaff" : "#ffffff",
-                      cursor: "pointer",
-                      transition: "all 0.2s ease",
-                      boxShadow: selectedPayment === "online" ? "0 4px 12px rgba(128, 89, 202, 0.08)" : "none",
-                      boxSizing: "border-box"
-                    }}
+                    className={`flex-1 min-w-0 rounded-xl px-3 py-2.5 flex items-center gap-2 cursor-pointer transition-all duration-200 ease-in-out box-border ${selectedPayment === "online" ? "border-2 border-[#8059ca] bg-[#fdfaff] shadow-[0_4px_12px_rgba(128,89,202,0.08)]" : "border-[1.5px] border-[#e2e8f0] bg-white hover:border-[#cbd5e1] hover:bg-[#fafbfc]"}`}
                     onClick={() => setSelectedPayment("online")}
-                    onMouseEnter={(e) => {
-                      if (selectedPayment !== "online") {
-                        e.currentTarget.style.borderColor = "#cbd5e1";
-                        e.currentTarget.style.backgroundColor = "#fafbfc";
-                      }
-                    }}
-                    onMouseLeave={(e) => {
-                      if (selectedPayment !== "online") {
-                        e.currentTarget.style.borderColor = "#e2e8f0";
-                        e.currentTarget.style.backgroundColor = "#ffffff";
-                      }
-                    }}
                   >
                     <div
-                      style={{
-                        width: "28px",
-                        height: "28px",
-                        borderRadius: "8px",
-                        background: selectedPayment === "online" ? "#8059ca" : "#f1f5f9",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        color: selectedPayment === "online" ? "#fff" : "#64748b",
-                        fontSize: "12px",
-                        transition: "all 0.2s ease",
-                        flexShrink: 0
-                      }}
+                      className={`w-7 h-7 rounded-lg flex items-center justify-center text-xs transition-all duration-200 ease-in-out shrink-0 ${selectedPayment === "online" ? "bg-[#8059ca] text-white" : "bg-[#f1f5f9] text-[#64748b]"}`}
                     >
                       <i className="fas fa-credit-card" />
                     </div>
-                    <div style={{ flex: 1, minWidth: 0 }}>
+                    <div className="flex-1 min-w-0">
                       <div
-                        style={{
-                          fontSize: "12px",
-                          fontWeight: "700",
-                          color: selectedPayment === "online" ? "#8059ca" : "#1e293b",
-                          marginBottom: "1px",
-                          whiteSpace: "nowrap",
-                          overflow: "hidden",
-                          textOverflow: "ellipsis"
-                        }}
+                        className={`text-xs font-bold mb-[1px] whitespace-nowrap overflow-hidden text-ellipsis ${selectedPayment === "online" ? "text-[#8059ca]" : "text-[#1e293b]"}`}
                       >
                         Online Payment
                       </div>
-                      <div style={{ fontSize: "10px", color: "#64748b", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                      <div className="text-[10px] text-[#64748b] whitespace-nowrap overflow-hidden text-ellipsis">
                         UPI, Cards, NetBanking
                       </div>
                     </div>
                     <div
-                      style={{
-                        width: "14px",
-                        height: "14px",
-                        borderRadius: "50%",
-                        border: selectedPayment === "online" ? "4px solid #8059ca" : "2px solid #cbd5e1",
-                        background: "#fff",
-                        transition: "all 0.2s ease",
-                        flexShrink: 0
-                      }}
+                      className={`w-3.5 h-3.5 rounded-full bg-white transition-all duration-200 ease-in-out shrink-0 ${selectedPayment === "online" ? "border-4 border-[#8059ca]" : "border-2 border-[#cbd5e1]"}`}
                     />
                   </div>
                 </div>
 
-                <hr style={{ margin: "18px 0", borderColor: "#f1f5f9" }} />
+                <hr className="my-[18px] border-[#f1f5f9]" />
 
                 {/* Checkout Section */}
                 <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "row",
-                    gap: "12px",
-                    backgroundColor: "#fdfaff",
-                    padding: "16px",
-                    borderRadius: "14px",
-                    alignItems: "center",
-                    border: "1px solid #f3e8ff"
-                  }}
+                  className="flex flex-row gap-3 bg-[#fdfaff] p-4 rounded-[14px] items-center border border-[#f3e8ff]"
                 >
                   <div
-                    style={{
-                      flex: 1,
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "flex-start",
-                    }}
+                    className="flex-1 flex flex-col items-start"
                   >
                     <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "row",
-                        gap: "4px",
-                        alignItems: "center",
-                      }}
+                      className="flex flex-row gap-1 items-center"
                     >
                       <div
-                        style={{
-                          fontSize: "12px",
-                          fontWeight: 600,
-                          color: "#6b7280",
-                        }}
+                        className="text-xs font-semibold text-[#6b7280]"
                       >
                         Total Payable
                       </div>
                     </div>
                     <div
-                      style={{
-                        fontSize: "20px",
-                        fontWeight: 800,
-                        color: "#1e1b4b",
-                      }}
+                      className="text-xl font-extrabold text-[#1e1b4b]"
                     >
                       ₹{(amountToPay || 0).toFixed(2)}
                     </div>
@@ -2785,47 +1934,13 @@ export const Cart = () => {
                     type="button"
                     onClick={handleSubmit}
                     disabled={cartItems.length === 0 || isSubmitting}
-                    style={{
-                      flex: 1,
-                      padding: "8px 20px",
-                      background: isSubmitting ? "#cbd5e1" : "linear-gradient(135deg, #8059ca 0%, #6f42c1 100%)",
-                      color: "#fff",
-                      border: "none",
-                      borderRadius: "10px",
-                      fontSize: "14.5px",
-                      fontWeight: 600,
-                      cursor: isSubmitting ? "not-allowed" : "pointer",
-                      minWidth: "140px",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      gap: "8px",
-                      boxShadow: isSubmitting ? "none" : "0 4px 14px rgba(128, 89, 202, 0.25)",
-                      transition: "all 0.2s ease"
-                    }}
-                    onMouseEnter={(e) => {
-                      if (!isSubmitting) {
-                        e.currentTarget.style.transform = "translateY(-1px)";
-                        e.currentTarget.style.boxShadow = "0 6px 18px rgba(128, 89, 202, 0.35)";
-                      }
-                    }}
-                    onMouseLeave={(e) => {
-                      if (!isSubmitting) {
-                        e.currentTarget.style.transform = "none";
-                        e.currentTarget.style.boxShadow = "0 4px 14px rgba(128, 89, 202, 0.25)";
-                      }
-                    }}
+                    className={`flex-1 px-5 py-2 text-white border-0 rounded-[10px] text-[14.5px] font-semibold min-w-[140px] flex items-center justify-center gap-2 transition-all duration-200 ease-in-out ${isSubmitting ? "bg-[#cbd5e1] cursor-not-allowed shadow-none" : "bg-gradient-to-br from-[#8059ca] to-[#6f42c1] cursor-pointer shadow-[0_4px_14px_rgba(128,89,202,0.25)] hover:-translate-y-px hover:shadow-[0_6px_18px_rgba(128,89,202,0.35)]"}`}
                   >
                     {isSubmitting ? (
                       <>
                         <div
-                          className="spinner-border spinner-border-sm"
+                          className="spinner-border spinner-border-sm w-4 h-4 border-2"
                           role="status"
-                          style={{
-                            width: "16px",
-                            height: "16px",
-                            borderWidth: "2px",
-                          }}
                         >
                           <span className="visually-hidden">Loading...</span>
                         </div>
@@ -2849,19 +1964,10 @@ export const Cart = () => {
           onClick={() => setShowOffersModal(false)}
         >
           <div
-            className="offers-modal-content"
+            className="offers-modal-content max-w-[580px]"
             onClick={(e) => e.stopPropagation()}
-            style={{ maxWidth: "580px" }}
           >
-            <div className="offers-modal-header">
-              <h3 className="offers-modal-title">Apply Coupon</h3>
-              <button
-                className="offers-modal-close"
-                onClick={() => setShowOffersModal(false)}
-              >
-                ×
-              </button>
-            </div>
+            {newLocal}
 
             {(() => {
               const getCouponsList = (type) => {
@@ -2895,8 +2001,8 @@ export const Cart = () => {
 
               return (
                 <>
-                  <div className="offers-modal-body" style={{ padding: '20px', background: '#f8fafc' }}>
-                    <div className="offers-list" style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
+                  <div className="offers-modal-body p-3 bg-[#f8fafc]">
+                    <div className="offers-list flex flex-col gap-3.5">
                       {(() => {
                         const cartVendorIds = Array.isArray(cartItems) ? cartItems.map(item => String(item.vendorId)) : [];
 
@@ -3082,66 +2188,36 @@ export const Cart = () => {
                           return (
                             <div
                               key={ele._id || `${ele.code}-${ind}`}
+                              className="flex items-stretch w-full rounded-xl overflow-hidden shadow-none"
                               style={{
-                                display: "flex",
-                                alignItems: "stretch",
-                                width: "100%",
                                 background: activeTheme.bg,
                                 border: `1px solid ${activeTheme.border}`,
-                                borderRadius: "12px",
-                                overflow: "hidden",
-                                transition: "all 0.2s ease",
-                                boxShadow: "none",
                                 opacity: isEligible ? 1 : 0.72,
                               }}
                             >
                               {/* Discount badge column */}
                               <div
+                                className="min-w-[88px] max-w-[88px] px-2.5 py-3.5 flex flex-col items-center justify-center gap-1 text-center"
                                 style={{
-                                  minWidth: "88px",
-                                  maxWidth: "88px",
-                                  padding: "14px 10px",
                                   background: activeTheme.badgeBg,
                                   borderRight: `1px dashed ${activeTheme.border}`,
-                                  display: "flex",
-                                  flexDirection: "column",
-                                  alignItems: "center",
-                                  justifyContent: "center",
-                                  gap: "4px",
-                                  textAlign: "center",
                                 }}
                               >
                                 <span
-                                  style={{
-                                    fontSize: "20px",
-                                    fontWeight: "800",
-                                    color: activeTheme.badgeText,
-                                    lineHeight: 1.1,
-                                  }}
+                                  className="text-xl font-extrabold leading-[1.1]"
+                                  style={{ color: activeTheme.badgeText }}
                                 >
                                   {discountText}
                                 </span>
                                 <span
-                                  style={{
-                                    fontSize: "9px",
-                                    fontWeight: "700",
-                                    color: activeTheme.badgeText,
-                                    textTransform: "uppercase",
-                                    letterSpacing: "0.3px",
-                                  }}
+                                  className="text-[9px] font-bold uppercase tracking-[0.3px]"
+                                  style={{ color: activeTheme.badgeText }}
                                 >
                                   OFF
                                 </span>
                                 <span
-                                  style={{
-                                    fontSize: "8.5px",
-                                    fontWeight: "700",
-                                    color: activeTheme.accent,
-                                    background: "#ffffff",
-                                    padding: "2px 6px",
-                                    borderRadius: "10px",
-                                    marginTop: "4px",
-                                  }}
+                                  className="text-[8.5px] font-bold bg-white px-1.5 py-0.5 rounded-[10px] mt-1"
+                                  style={{ color: activeTheme.accent }}
                                 >
                                   {activeTheme.label}
                                 </span>
@@ -3149,58 +2225,28 @@ export const Cart = () => {
 
                               {/* Details column */}
                               <div
-                                style={{
-                                  flex: 1,
-                                  padding: "12px 14px",
-                                  display: "flex",
-                                  flexDirection: "column",
-                                  gap: "6px",
-                                  minWidth: 0,
-                                }}
+                                className="flex-1 px-3.5 py-3 flex flex-col gap-1.5 min-w-0"
                               >
                                 <h4
-                                  style={{
-                                    fontSize: "14px",
-                                    fontWeight: "700",
-                                    color: "#0f172a",
-                                    margin: 0,
-                                    lineHeight: 1.3,
-                                  }}
+                                  className="text-sm font-bold text-[#0f172a] m-0 leading-[1.3]"
                                 >
                                   {ele.name}
                                 </h4>
 
-                                <div style={{ display: "flex", flexWrap: "wrap", gap: "6px", alignItems: "center" }}>
+                                <div className="flex flex-wrap gap-1.5 items-center">
                                   <span
-                                    style={{
-                                      fontSize: "11px",
-                                      fontWeight: "700",
-                                      fontFamily: "monospace",
-                                      color: activeTheme.accent,
-                                      background: "#ffffff",
-                                      border: `1px dashed ${activeTheme.border}`,
-                                      borderRadius: "6px",
-                                      padding: "3px 8px",
-                                    }}
+                                    className="text-[11px] font-bold font-mono bg-white rounded-md px-2 py-0.5"
+                                    style={{ color: activeTheme.accent, border: `1px dashed ${activeTheme.border}` }}
                                   >
                                     {ele.code}
                                   </span>
                                   {ele.minimumPurchase > 0 && (
-                                    <span style={{ fontSize: "10px", color: "#64748b" }}>
+                                    <span className="text-[10px] text-[#64748b]">
                                       Minimum order ₹{ele.minimumPurchase}
                                     </span>
                                   )}
                                   {/* {matchesCartVendor && isEligible && (
-                                    <span
-                                      style={{
-                                        fontSize: "9px",
-                                        fontWeight: "700",
-                                        color: "#8059ca",
-                                        background: "#f3e8ff",
-                                        padding: "2px 6px",
-                                        borderRadius: "4px",
-                                      }}
-                                    >
+                                    <span className="text-[9px] font-bold text-[#8059ca] bg-[#f3e8ff] px-1.5 py-0.5 rounded">
                                       Matches Cart
                                     </span>
                                   )} */}
@@ -3208,24 +2254,15 @@ export const Cart = () => {
 
                                 {ele.description && (
                                   <p
-                                    style={{
-                                      fontSize: "11px",
-                                      color: "#475569",
-                                      margin: 0,
-                                      lineHeight: 1.45,
-                                      display: "-webkit-box",
-                                      WebkitLineClamp: 2,
-                                      WebkitBoxOrient: "vertical",
-                                      overflow: "hidden",
-                                    }}
+                                    className="text-[11px] text-[#475569] m-0 leading-[1.45] [display:-webkit-box] [-webkit-line-clamp:2] [-webkit-box-orient:vertical] overflow-hidden"
                                   >
                                     {ele.description}
                                   </p>
                                 )}
 
-                                <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", fontSize: "10px", color: "#64748b" }}>
+                                <div className="flex flex-wrap gap-2 text-[10px] text-[#64748b]">
                                   {isEligible && savingsPreview > 0 && (
-                                    <span style={{ fontWeight: "600", color: activeTheme.accent }}>
+                                    <span className="font-semibold" style={{ color: activeTheme.accent }}>
                                       You save ₹{savingsPreview.toFixed(2)}
                                     </span>
                                   )}
@@ -3238,7 +2275,7 @@ export const Cart = () => {
                                 </div>
 
                                 {!isEligible && criteriaText && (
-                                  <span style={{ fontSize: "10px", color: "#dc2626", fontWeight: "600" }}>
+                                  <span className="text-[10px] text-[#dc2626] font-semibold">
                                     ⚠️ {criteriaText}
                                   </span>
                                 )}
@@ -3246,29 +2283,17 @@ export const Cart = () => {
 
                               {/* Apply button column */}
                               <div
-                                style={{
-                                  display: "flex",
-                                  alignItems: "center",
-                                  padding: "12px 12px 12px 0",
-                                  flexShrink: 0,
-                                }}
+                                className="flex items-center pr-3 pl-0 py-3 shrink-0"
                               >
                                 <button
                                   type="button"
                                   disabled={!isEligible}
                                   onClick={() => handleCouponApply(ele)}
+                                  className={`px-3.5 py-[7px] !rounded-lg text-xs font-semibold whitespace-nowrap shadow-none transition-all duration-200 ease-in-out ${!isEligible ? "cursor-not-allowed" : "cursor-pointer"}`}
                                   style={{
-                                    padding: "7px 14px",
-                                    borderRadius: "8px",
                                     border: `1px solid ${activeTheme.btnBorder}`,
                                     background: activeTheme.btnBg,
                                     color: activeTheme.btnText,
-                                    fontSize: "12px",
-                                    fontWeight: "600",
-                                    cursor: !isEligible ? "not-allowed" : "pointer",
-                                    transition: "all 0.2s ease",
-                                    whiteSpace: "nowrap",
-                                    boxShadow: "none",
                                   }}
                                 >
                                   {isApplied ? "Applied" : "Apply"}
@@ -3286,20 +2311,12 @@ export const Cart = () => {
 
                         if (sortedVendorCoupons.length === 0 && sortedAdminCoupons.length === 0) {
                           return (
-                            <div style={{
-                              display: 'flex',
-                              flexDirection: 'column',
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                              padding: '40px 20px',
-                              textAlign: 'center',
-                              color: '#94a3b8'
-                            }}>
-                              <div style={{ fontSize: '32px', marginBottom: '12px', color: '#cbd5e1' }}>🎟️</div>
-                              <span style={{ fontSize: '14px', fontWeight: '600', color: '#64748b' }}>
+                            <div className="flex flex-col items-center justify-center py-10 px-5 text-center text-[#94a3b8]">
+                              <div className="text-[32px] mb-3 text-[#cbd5e1]">🎟️</div>
+                              <span className="text-sm font-semibold text-[#64748b]">
                                 No Coupons Available
                               </span>
-                              <span style={{ fontSize: '12px', color: '#94a3b8', marginTop: '4px' }}>
+                              <span className="text-xs text-[#94a3b8] mt-1">
                                 There are no active coupons at the moment.
                               </span>
                             </div>
@@ -3311,11 +2328,7 @@ export const Cart = () => {
                             {renderSection(sortedVendorCoupons, true)}
                             {sortedVendorCoupons.length > 0 && sortedAdminCoupons.length > 0 && (
                               <div
-                                style={{
-                                  height: "1px",
-                                  background: "#e2e8f0",
-                                  margin: "4px 0",
-                                }}
+                                className="h-px bg-[#e2e8f0] my-1"
                               />
                             )}
                             {renderSection(sortedAdminCoupons, false)}
@@ -3333,80 +2346,43 @@ export const Cart = () => {
 
       {relevantProducts?.length > 0 && (
         <div
-          style={{
-            padding: "20px",
-            position: "relative",
-            marginBottom: isMobile ? "40px" : "0px",
-            backgroundImage: "url('/assets/Medicompares Background.png')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
-            // borderRadius: "12px",
-          }}
+          className={`p-5 relative bg-cover bg-center bg-no-repeat ${isMobile ? "mb-10" : "mb-0"}`}
+          style={{ backgroundImage: "url('/assets/Medicompares Background.png')" }}
         >
           <div
-            style={{
-              display: "flex",
-              justifyContent: "flex-start",
-              gap: "12px",
-              alignItems: "center",
-              marginBottom: "20px",
-              borderLeft: "4px solid #8059ca",
-              paddingLeft: "12px",
-              lineHeight: "1",
-            }}
+            className="flex justify-start gap-3 items-center mb-5 border-l-4 border-[#8059ca] pl-3 leading-none"
           >
-            <div style={{
-              fontSize: isMobile ? "20px" : "20px",
-              fontWeight: 500,
-              color: "#0f172a",
-              margin: 0
-            }}>
+            <div className="text-xl font-medium text-[#0f172a] m-0">
               Recently Viewed Products
             </div>
             <span
-              style={{
-                fontSize: "11px",
-                color: "#8059ca",
-                fontWeight: "700",
-                background: "#f3e8ff",
-                padding: "4px 10px",
-                borderRadius: "20px",
-                textTransform: "uppercase",
-                letterSpacing: "0.5px"
-              }}
+              className="text-[11px] text-[#8059ca] font-bold bg-[#f3e8ff] px-2.5 py-1 rounded-[20px] uppercase tracking-[0.5px]"
             >
               {relevantProducts.length} items
             </span>
           </div>
 
+          {/*
+            Custom keyframe animations (comparePulse / compareAutoExpand / textFadeInOut) cannot be
+            expressed as Tailwind utility classes without extending tailwind.config.js with named
+            keyframes — Tailwind's animate-[...] arbitrary syntax still requires the @keyframes rule
+            to exist somewhere. This is the one piece of "custom CSS" intentionally kept, since a
+            config-less pure-utility equivalent doesn't exist. Static, non-animation styling for these
+            elements has been moved to Tailwind classes below.
+          */}
           <style>{`
             @keyframes comparePulse {
-              0% {
-                box-shadow: 0 0 0 0 rgba(128, 89, 202, 0.6);
-              }
-              70% {
-                box-shadow: 0 0 0 6px rgba(128, 89, 202, 0);
-              }
-              100% {
-                box-shadow: 0 0 0 0 rgba(128, 89, 202, 0);
-              }
+              0% { box-shadow: 0 0 0 0 rgba(128, 89, 202, 0.6); }
+              70% { box-shadow: 0 0 0 6px rgba(128, 89, 202, 0); }
+              100% { box-shadow: 0 0 0 0 rgba(128, 89, 202, 0); }
             }
             @keyframes compareAutoExpand {
-              0%, 10%, 40%, 100% {
-                width: 32px;
-              }
-              15%, 35% {
-                width: 90px;
-              }
+              0%, 10%, 40%, 100% { width: 32px; }
+              15%, 35% { width: 90px; }
             }
             @keyframes textFadeInOut {
-              0%, 12%, 38%, 100% {
-                opacity: 0;
-              }
-              15%, 35% {
-                opacity: 1;
-              }
+              0%, 12%, 38%, 100% { opacity: 0; }
+              15%, 35% { opacity: 1; }
             }
             .compare-btn-highlight {
               animation: comparePulse 2s infinite, compareAutoExpand 8s infinite ease-in-out;
@@ -3424,24 +2400,15 @@ export const Cart = () => {
           `}</style>
 
           <div
-            style={{
-              position: "relative",
-              display: "flex",
-              alignItems: "stretch",
-            }}
+            className="relative flex items-stretch"
           >
             <button
-              className="meq-arrow-btn dental-prev"
+              className="meq-arrow-btn dental-prev flex self-center left-[-15px]"
               onClick={() => {
                 const container = document.getElementById("productCarousel");
                 if (container) {
                   container.scrollLeft -= 250;
                 }
-              }}
-              style={{
-                left: "-15px",
-                display: "flex",
-                alignSelf: "center",
               }}
             >
               <i className="fas fa-chevron-left"></i>
@@ -3449,15 +2416,7 @@ export const Cart = () => {
 
             <div
               id="productCarousel"
-              className="scroll-container"
-              style={{
-                display: "flex",
-                alignItems: "stretch",
-                overflowX: "auto",
-                gap: "20px",
-                padding: "16px 60px",
-                scrollBehavior: "smooth",
-              }}
+              className="scroll-container flex items-stretch overflow-x-auto gap-5 px-[60px] py-4 scroll-smooth"
             >
               {relevantProducts?.map((product, index) => {
                 const originalPrice = product?.price || 0;
@@ -3493,90 +2452,21 @@ export const Cart = () => {
                 return (
                   <div
                     key={`${product._id || "product"}-${product.vendor?.vendorId || "vendor"}-${product.combinedvariant?.variantId || "variant"}-${index}`}
-                    style={{
-                      minWidth: "220px",
-                      maxWidth: "220px",
-                      alignSelf: "stretch",
-                      background: "#ffffff",
-                      borderRadius: "12px",
-                      border: "1px solid #f1f5f9",
-                      boxShadow: "0 4px 20px rgba(0, 0, 0, 0.08)",
-                      display: "flex",
-                      flexDirection: "column",
-                      flexShrink: 0,
-                      transition: "all 0.3s ease",
-                      position: "relative",
-                      overflow: "hidden"
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = 'translateY(-3px)';
-                      e.currentTarget.style.borderColor = '#8059ca';
-                      e.currentTarget.style.boxShadow = '0 8px 24px rgba(128, 89, 202, 0.15)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = 'translateY(0)';
-                      e.currentTarget.style.borderColor = '#f1f5f9';
-                      e.currentTarget.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.08)';
-                    }}
+                    className="min-w-[220px] max-w-[220px] self-stretch bg-white rounded-xl border border-[#f1f5f9] shadow-[0_4px_20px_rgba(0,0,0,0.08)] flex flex-col shrink-0 transition-all duration-300 ease-in-out relative overflow-hidden hover:-translate-y-[3px] hover:border-[#8059ca] hover:shadow-[0_8px_24px_rgba(128,89,202,0.15)]"
                   >
                     {/* Compare Button */}
                     <div
-                      className="compare-btn-highlight"
-                      style={{
-                        position: "absolute",
-                        right: "8px",
-                        top: "8px",
-                        zIndex: 10,
-                        cursor: "pointer",
-                        background: "#8059ca",
-                        color: "#ffffff",
-                        border: "1.5px solid #8059ca",
-                        borderRadius: "20px",
-                        width: "32px",
-                        height: "26px",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "flex-start",
-                        paddingLeft: "9px",
-                        boxShadow: "0 2px 8px rgba(128, 89, 202, 0.4)",
-                        transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-                        overflow: "hidden",
-                        whiteSpace: "nowrap",
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.width = "90px";
-                        e.currentTarget.style.backgroundColor = "#6a45b3";
-                        e.currentTarget.style.borderColor = "#6a45b3";
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.width = "32px";
-                        e.currentTarget.style.backgroundColor = "#8059ca";
-                        e.currentTarget.style.borderColor = "#8059ca";
-                      }}
+                      className="compare-btn-highlight absolute right-2 top-2 z-10 cursor-pointer bg-[#8059ca] text-white border-[1.5px] border-[#8059ca] rounded-[20px] w-8 h-[26px] flex items-center justify-start pl-[9px] shadow-[0_2px_8px_rgba(128,89,202,0.4)] transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] overflow-hidden whitespace-nowrap hover:w-[90px] hover:bg-[#6a45b3] hover:border-[#6a45b3]"
                     >
                       <Link
                         to={`/${product?.tabletDetails?.subcategoryDetails?.categoryDetails?.slug}/${product?.tabletDetails?.subcategoryDetails?.slug}/${product?.tabletDetails?.slug}/compare`}
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          color: "#ffffff",
-                          textDecoration: "none",
-                        }}
+                        className="flex items-center text-white no-underline"
                       >
                         <i
-                          className="fa-solid fa-right-left shrink-0"
-                          style={{ fontSize: "11px", color: "#ffffff" }}
+                          className="fa-solid fa-right-left shrink-0 text-[11px] text-white"
                         ></i>
                         <span
-                          className="compare-text-label"
-                          style={{
-                            marginLeft: "6px",
-                            fontSize: "11px",
-                            fontWeight: "600",
-                            color: "#ffffff",
-                            opacity: 0,
-                            transition: "opacity 0.2s ease-in-out",
-                          }}
+                          className="compare-text-label ml-1.5 text-[11px] font-semibold text-white transition-opacity duration-200 ease-in-out"
                         >
                           Compare
                         </span>
@@ -3585,123 +2475,83 @@ export const Cart = () => {
 
                     {/* Image Area */}
                     <div
-                      style={{
-                        width: "100%",
-                        height: "138px",
-                        background: "#f8fafc",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        padding: "8px",
-                        cursor: "pointer",
-                      }}
+                      className="w-full h-[138px] bg-[#f8fafc] flex items-center justify-center p-2 cursor-pointer"
                       onClick={() => handleProductClick(product)}
                     >
                       <img
                         src={getImageUrl(productImage)}
                         alt="product"
-                        style={{
-                          maxHeight: "100%",
-                          maxWidth: "100%",
-                          objectFit: "contain",
-                        }}
+                        className="max-h-full max-w-full object-contain"
                       />
                     </div>
 
                     {/* Details Area */}
-                    <div style={{ padding: "10px", display: "flex", flexDirection: "column", gap: "7px", flex: 1, minHeight: 0 }}>
+                    <div className="p-2.5 flex flex-col gap-[7px] flex-1 min-h-0">
                       {/* Name */}
                       <div
-                        style={{ cursor: "pointer", marginBottom: "4px" }}
+                        className="cursor-pointer mb-1"
                         onClick={() => handleProductClick(product)}
                       >
-                        <h4
-                          style={{
-                            fontSize: "13px",
-                            fontWeight: "500",
-                            color: "#0f172a",
-                            margin: 0,
-                            lineHeight: "1.3",
-                            textTransform: "capitalize",
-                            display: '-webkit-box',
-                            WebkitLineClamp: 2,
-                            WebkitBoxOrient: 'vertical',
-                            overflow: 'hidden',
-                            height: '36px',
-                          }}
+                        <div
+                          className="text-[13px] font-medium text-[#0f172a] m-0 leading-[1.3] capitalize [display:-webkit-box] [-webkit-line-clamp:2] [-webkit-box-orient:vertical] overflow-hidden h-9"
                         >
                           {product?.tabletDetails?.name}
-                        </h4>
+                        </div>
                       </div>
 
                       {/* Ratings and Seller Row */}
-                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '6px' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '6px', minWidth: 0, flex: 1 }}>
+                      <div className="flex items-center justify-between gap-1.5">
+                        <div className="flex items-center gap-1.5 min-w-0 flex-1">
                           <img
                             src={getImageUrl(vendorImage)}
                             alt={vendorName}
-                            style={{
-                              width: "20px",
-                              height: "20px",
-                              borderRadius: "50%",
-                              objectFit: "cover",
-                              background: '#f1f5f9',
-                              flexShrink: 0
-                            }}
+                            className="w-5 h-5 rounded-full object-cover bg-[#f1f5f9] shrink-0"
                             onError={(e) => {
                               e.target.src = '/assets/img/logo.png';
                             }}
                           />
                           <span
-                            style={{
-                              fontSize: "12.5px",
-                              fontWeight: "600",
-                              color: "#334155",
-                              textOverflow: "ellipsis",
-                              overflow: "hidden",
-                              whiteSpace: "nowrap",
-                              flex: 1
-                            }}
+                            className="text-[12.5px] font-semibold text-[#334155] text-ellipsis overflow-hidden whitespace-nowrap flex-1"
                             title={vendorName}
                           >
                             {vendorName}
                           </span>
                         </div>
 
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '2px', flexShrink: 0 }}>
-                          <span style={{ fontSize: '11px', color: '#fbbf24' }}>★</span>
-                          <span style={{ fontSize: "11px", fontWeight: "600", color: "#475569" }}>
+                        <div className="flex items-center gap-0.5 shrink-0">
+                          <span className="text-[11px] text-[#fbbf24]">★</span>
+                          <span className="text-[11px] font-semibold text-[#475569]">
                             {product.tabletDetails?.averageRating ? product.tabletDetails.averageRating.toFixed(1) : "0.0"}
                           </span>
                         </div>
                       </div>
 
                       {/* Pricing block — fixed min height keeps cards aligned */}
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', minHeight: '32px' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap' }}>
-                          <span style={{ fontSize: "14px", fontWeight: "700", color: "#0f172a" }}>
+                      <div className="flex flex-col gap-0.5 min-h-[32px]">
+                        <div className="flex items-center flex-wrap">
+                          <span className="text-sm font-bold text-[#0f172a]">
                             ₹{displayPrice.toFixed(2)}
                           </span>
                           {hasValidDiscount && (
-                            <span style={{ fontSize: "11px", textDecoration: "line-through", color: "#94a3b8", marginLeft: "6px" }}>
+                            <span className="text-[11px] line-through text-[#94a3b8] ml-1.5">
                               ₹{Number(originalPrice).toFixed(2)}
                             </span>
                           )}
                         </div>
                         {hasValidDiscount && (
-                          <span style={{ fontSize: "10px", fontWeight: "700", color: "#dc2626" }}>
+                          <span className="text-[10px] font-bold text-[#dc2626]">
                             {discountPercent}% OFF
                           </span>
                         )}
                         {product?.perDayRent && (
-                          <span style={{ fontSize: "10px", color: "#64748b" }}>
+                          <span className="text-[10px] text-[#64748b]">
                             ₹{Number(product.perDayRent).toFixed(2)}/day
                           </span>
                         )}
                       </div>
 
-                      <div style={{ marginTop: "auto", width: "100%" }}>
-                        <div style={{ borderTop: "1px solid #f1f5f9", margin: "2px 0 4px 0" }} />
+                      <div className="mt-auto w-full">
+                        <div className="border-t border-[#f1f5f9] my-0.5" />
                         <VendorActions
                           bookingType={
                             product?.tabletDetails?.subcategoryDetails?.categoryDetails?.categoryType || product?.bookingType ||
@@ -3741,17 +2591,12 @@ export const Cart = () => {
 
             {/* Right Scroll Button */}
             <button
-              className="meq-arrow-btn dental-next"
+              className="meq-arrow-btn dental-next flex self-center right-[-15px]"
               onClick={() => {
                 const container = document.getElementById("productCarousel");
                 if (container) {
                   container.scrollLeft += 250;
                 }
-              }}
-              style={{
-                right: "-15px",
-                display: "flex",
-                alignSelf: "center",
               }}
             >
               <i className="fas fa-chevron-right"></i>

@@ -1821,76 +1821,44 @@ const RentalBookingProcess = () => {
   };
 
   return (
-    <div className="main-wrapper ">
-      <Home2Header />
+    <div className="flex flex-col min-h-screen">
+      <div className="main-wrapper min-h-screen bg-[#f8f9fa]">
+        <Home2Header />
 
-      <CategoryProvider />
+        <CategoryProvider />
 
-      <div className="booking-process-wrapper mt-2">
-        <div className="container-fluid px-2 px-md-3 px-lg-5">
-          <nav aria-label="breadcrumb" className="mb-3 mb-md-4 mt-2 mt-md-3">
-            <ol className="breadcrumb mb-0" style={{ fontSize: "14px" }}>
-              <li className="breadcrumb-item">
-                <Link to="/" className="text-decoration-none text-muted">
+        <div className="max-w-[1440px] mx-auto px-4 md:px-6 lg:px-8 pt-4 pb-12">
+          <nav aria-label="breadcrumb" className="mb-4">
+            <ol className="flex items-center gap-1.5 text-sm text-slate-500 font-medium">
+              <li className="flex items-center gap-1.5 after:content-['/'] after:text-slate-300 after:ml-1.5 last:after:content-none last:text-slate-800">
+                <Link to="/" className="text-slate-500 hover:text-[#8059ca] no-underline">
                   Home
                 </Link>
               </li>
 
-              <li className="breadcrumb-item active" aria-current="page">
+              <li className="flex items-center gap-1.5 after:content-['/'] after:text-slate-300 after:ml-1.5 last:after:content-none last:text-slate-800" aria-current="page">
                 Booking
               </li>
             </ol>
           </nav>
 
-          <div className="row g-3 g-md-4">
-            <div className="col-lg-8 col-md-12 order-1 order-lg-1 d-flex flex-column">
-              <div className="row order-lg-2">
-                <div className="col-md-6 col-12">
-                  <div style={{ marginBottom: "24px" }}>
-                    <div
-                      style={{
-                        borderRadius: "10px",
-                        overflow: "hidden",
-                        boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
-                      }}
-                    >
-                      <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          alignItems: "center",
-                          border: "1px solid #e0e0e0",
-                          padding: "16px 5px",
-                          backgroundColor: "#fff",
-                          borderTopRightRadius: "10px",
-                          borderTopLeftRadius: "10px",
-                        }}
-                      >
-                        <div
-                          style={{
-                            fontSize: isMobile ? "12px" : "12px",
-                            fontWeight: "600",
-                          }}
-                          className="top-vendor-badge"
-                        >
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="lg:col-span-2 flex flex-col gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="w-full">
+                  <div className="mb-6">
+                    <div className="rounded-xl overflow-hidden shadow-sm border border-slate-200 bg-white">
+                      <div className="flex justify-between items-center px-4 py-3.5 bg-white border-b border-slate-200">
+                        <div className="text-[13px] font-bold text-[#8059ca] flex items-center gap-2">
                           <i className="fas fa-bolt"></i>{" "}
-                          <span
-                            style={{ fontSize: isMobile ? "12px" : "13px" }}
-                          >
+                          <span className="text-[13px]">
                             {getAddressTypeLabel()}
                           </span>
                         </div>
 
                         <div>
                           <button
-                            style={{
-                              color: "#8059ca",
-                              background: "transparent",
-                              border: "none",
-                              fontWeight: "600",
-                              cursor: "pointer",
-                              fontSize: isMobile ? "12px" : "13px",
-                            }}
+                            className="text-[#8059ca] hover:text-[#6d3fc7] bg-transparent border-0 font-semibold cursor-pointer text-sm"
                             onClick={() => {
                               const token =
                                 localStorage.getItem("medicomparestoken");
@@ -1909,27 +1877,11 @@ const RentalBookingProcess = () => {
                       </div>
 
                       {selectedAddress ? (
-                        <div
-                          style={{
-                            border: "1px solid #e0e0e0",
-                            borderTop: "none",
-                            padding: "16px",
-                            backgroundColor: "#fff",
-                            fontSize: "14px",
-                            color: "#333",
-                            borderBottomLeftRadius: "10px",
-                            borderBottomRightRadius: "10px",
-                          }}
-                        >
+                        <div className="p-4 bg-white text-sm text-[#475569] leading-relaxed">
                           {selectedAddress ? (
                             <div>
                               {selectedAddress.name && (
-                                <div
-                                  style={{
-                                    fontWeight: "bold",
-                                    marginBottom: "4px",
-                                  }}
-                                >
+                                <div className="font-bold text-slate-800 mb-1.5">
                                   {selectedAddress.name}
                                 </div>
                               )}
@@ -1947,7 +1899,9 @@ const RentalBookingProcess = () => {
                               )}
 
                               {selectedAddress.location?.address && (
-                                <div>{selectedAddress.location.address} </div>
+                                <div className="text-slate-400 mt-1 text-[13px]">
+                                  {selectedAddress.location.address}
+                                </div>
                               )}
                             </div>
                           ) : (
@@ -1955,21 +1909,7 @@ const RentalBookingProcess = () => {
                           )}
                         </div>
                       ) : (
-                        <div
-                          style={{
-                            border: "1px solid #e0e0e0",
-                            borderTop: "none",
-                            padding: "16px",
-                            backgroundColor: "#fff",
-                            fontSize: "14px",
-                            color: "#333",
-                            borderBottomLeftRadius: "10px",
-                            borderBottomRightRadius: "10px",
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "8px",
-                          }}
-                        >
+                        <div className="p-4 bg-white text-sm text-slate-400 flex items-center gap-2">
                           <i className="fas fa-map-marker-alt"></i>
 
                           <span>
@@ -1983,91 +1923,38 @@ const RentalBookingProcess = () => {
                   </div>
                 </div>
 
-                <div className="col-md-6 col-12">
-                  <div style={{ marginBottom: "24px" }}>
-                    <div
-                      style={{
-                        borderRadius: "10px",
-                        overflow: "hidden",
-                        boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
-                        border: "1px solid #e0e0e0",
-                        backgroundColor: "#fff",
-                      }}
-                    >
-                      <div
-                        style={{
-                          padding: "16px",
-
-                          borderBottom: "1px solid #e0e0e0",
-                        }}
-                      >
-                        <h6
-                          style={{
-                            fontSize: "14px",
-                            fontWeight: "600",
-                            color: "#000",
-                          }}
-                        >
+                <div className="w-full">
+                  <div className="mb-6">
+                    <div className="rounded-xl overflow-hidden shadow-sm border border-slate-200 bg-white">
+                      <div className="p-4 border-b border-slate-200">
+                        <h6 className="text-sm font-semibold text-slate-800 m-0">
                           Additional Information
                         </h6>
                       </div>
 
-                      <div style={{ padding: "16px" }}>
-                        <div className="row">
-                          <div className="col-md-6 col-12 mb-2">
-                            <label
-                              style={{
-                                fontSize: "12px",
-                                fontWeight: "500",
-                                color: "#6b7280",
-                                marginBottom: "4px",
-                                display: "block",
-                              }}
-                            >
+                      <div className="px-4 pb-4 pt-1">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-3.5">
+                          <div className="flex flex-col mb-1">
+                            <label className="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">
                               Start Date
                             </label>
-
                             <input
                               type="date"
                               value={startDate}
                               onChange={(e) => setStartDate(e.target.value)}
-                              style={{
-                                width: "100%",
-                                padding: "8px 12px",
-                                border: "1px solid #e5e7eb",
-                                borderRadius: "6px",
-                                fontSize: "14px",
-                                outline: "none",
-                                boxSizing: "border-box",
-                              }}
+                              className="w-full py-2 px-3 border border-slate-200 !rounded-sm text-sm text-slate-800 bg-slate-50/55 focus:border-[#8059ca] focus:bg-white focus:ring-1 focus:ring-[#8059ca] transition-all outline-none"
                               min={new Date().toISOString().split("T")[0]}
                             />
                           </div>
 
-                          <div className="col-md-6 col-12">
-                            <label
-                              style={{
-                                fontSize: "12px",
-                                fontWeight: "500",
-                                color: "#6b7280",
-                                marginBottom: "6px",
-                                display: "block",
-                              }}
-                            >
+                          <div className="flex flex-col mb-1">
+                            <label className="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">
                               Rental Plan
                             </label>
-
                             <select
                               value={rentalPlan}
                               onChange={(e) => setRentalPlan(e.target.value)}
-                              style={{
-                                width: "100%",
-                                padding: "8px 12px",
-                                border: "1px solid #e5e7eb",
-                                borderRadius: "6px",
-                                fontSize: "14px",
-                                outline: "none",
-                              }}
+                              className="w-full py-2 px-3 border border-slate-200 !rounded-sm text-sm text-slate-800 bg-slate-50/55 focus:border-[#8059ca] focus:bg-white focus:ring-1 focus:ring-[#8059ca] transition-all outline-none"
                             >
                               <option value="">Select Plan</option>
                               <option value="weekly">Weekly</option>
@@ -2076,38 +1963,18 @@ const RentalBookingProcess = () => {
                             </select>
                           </div>
 
-                          <div className="col-md-6 col-12">
-                            <label
-                              style={{
-                                fontSize: "12px",
-                                fontWeight: "500",
-                                color: "#6b7280",
-                                marginBottom: "6px",
-                                display: "block",
-                              }}
-                            >
+                          <div className="flex flex-col mb-1">
+                            <label className="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">
                               Rental Duration{" "}
                               {rentalPlan &&
                                 `(${rentalPlan.charAt(0).toUpperCase() + rentalPlan.slice(1)})`}
                             </label>
-
                             <select
-                              style={{
-                                width: "100%",
-                                padding: "8px 12px",
-                                border: "1px solid #e5e7eb",
-                                borderRadius: "6px",
-                                fontSize: "14px",
-                                outline: "none",
-                                backgroundColor: "#fff",
-                              }}
                               value={rentalDuration}
-                              onChange={(e) =>
-                                setRentalDuration(e.target.value)
-                              }
+                              onChange={(e) => setRentalDuration(e.target.value)}
+                              className="w-full py-2 px-3 border border-slate-200 !rounded-sm text-sm text-slate-800 bg-slate-50/55 focus:border-[#8059ca] focus:bg-white focus:ring-1 focus:ring-[#8059ca] transition-all outline-none"
                             >
                               <option value="">Select duration</option>
-
                               {rentalPlan === "weekly" && (
                                 <>
                                   <option value="1">1 week</option>
@@ -2116,7 +1983,6 @@ const RentalBookingProcess = () => {
                                   <option value="4">4 weeks</option>
                                 </>
                               )}
-
                               {rentalPlan === "monthly" && (
                                 <>
                                   <option value="1">1 month</option>
@@ -2133,7 +1999,6 @@ const RentalBookingProcess = () => {
                                   <option value="12">12 months</option>
                                 </>
                               )}
-
                               {rentalPlan === "yearly" && (
                                 <>
                                   <option value="1">1 year</option>
@@ -2146,95 +2011,47 @@ const RentalBookingProcess = () => {
                             </select>
                           </div>
 
-                          <div className="col-md-6 col-12">
-                            <label
-                              style={{
-                                fontSize: "12px",
-                                fontWeight: "500",
-                                color: "#6b7280",
-                                marginBottom: "6px",
-                                display: "block",
-                              }}
-                            >
+                          <div className="flex flex-col mb-1">
+                            <label className="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">
                               Payment Type
                             </label>
-
                             <select
                               value={paymentType}
-                              onChange={(e) => {
-                                setPaymentType(e.target.value);
-                              }}
-                              style={{
-                                width: "100%",
-                                padding: "8px 12px",
-                                border: "1px solid #e5e7eb",
-                                borderRadius: "6px",
-                                fontSize: "14px",
-                                outline: "none",
-                                backgroundColor: "#fff",
-                              }}
+                              onChange={(e) => setPaymentType(e.target.value)}
+                              className="w-full py-2 px-3 border border-slate-200 !rounded-sm text-sm text-slate-800 bg-slate-50/55 focus:border-[#8059ca] focus:bg-white focus:ring-1 focus:ring-[#8059ca] transition-all outline-none"
                             >
                               <option value="">Select Type</option>
-
-                              <option value="onetimepayment">
-                                One Time Payment
-                              </option>
-
+                              <option value="onetimepayment">One Time Payment</option>
                               <option value="installment">Installment</option>
                             </select>
                           </div>
 
-                          <div className="col-md-6 col-12">
-                            {paymentType !== "onetimepayment" && (
-                              <>
-                                <label
-                                  style={{
-                                    fontSize: "12px",
-                                    fontWeight: "500",
-                                    color: "#6b7280",
-                                    margin: "6px",
-                                    display: "block",
-                                  }}
-                                >
-                                  No. of installments{" "}
-                                  {rentalPlan &&
-                                    `(${rentalPlan.charAt(0).toUpperCase() + rentalPlan.slice(1)})`}
-                                </label>
-
-                                <select
-                                  style={{
-                                    width: "100%",
-                                    padding: "8px 12px",
-                                    border: "1px solid #e5e7eb",
-                                    borderRadius: "6px",
-                                    fontSize: "14px",
-                                    outline: "none",
-                                  }}
-                                  value={numberOfInstallments}
-                                  onChange={(e) =>
-                                    setNumberOfInstallments(e.target.value)
-                                  }
-                                >
-                                  <option value="">Select installments</option>
-
-                                  {calculatedTotalAmount > 0 &&
-                                    rentalDuration &&
-                                    Array.from(
-                                      { length: parseInt(rentalDuration) },
-                                      (_, i) => i + 1,
-                                    ).map((num) => (
-                                      <option key={num} value={num}>
-                                        ₹
-                                        {(calculatedTotalAmount / num).toFixed(
-                                          2,
-                                        )}{" "}
-                                        ({num} installment)
-                                      </option>
-                                    ))}
-                                </select>
-                              </>
-                            )}
-                          </div>
+                          {paymentType !== "onetimepayment" && (
+                            <div className="flex flex-col mb-1 col-span-1 md:col-span-2">
+                              <label className="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">
+                                No. of installments{" "}
+                                {rentalPlan &&
+                                  `(${rentalPlan.charAt(0).toUpperCase() + rentalPlan.slice(1)})`}
+                              </label>
+                              <select
+                                value={numberOfInstallments}
+                                onChange={(e) => setNumberOfInstallments(e.target.value)}
+                                className="w-full py-2 px-3 border border-slate-200 !rounded-sm text-sm text-slate-800 bg-slate-50/55 focus:border-[#8059ca] focus:bg-white focus:ring-1 focus:ring-[#8059ca] transition-all outline-none"
+                              >
+                                <option value="">Select installments</option>
+                                {calculatedTotalAmount > 0 &&
+                                  rentalDuration &&
+                                  Array.from(
+                                    { length: parseInt(rentalDuration) },
+                                    (_, i) => i + 1,
+                                  ).map((num) => (
+                                    <option key={num} value={num}>
+                                      ₹{(calculatedTotalAmount / num).toFixed(2)} ({num} {num === 1 ? 'installment' : 'installments'})
+                                    </option>
+                                  ))}
+                              </select>
+                            </div>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -3031,7 +2848,7 @@ const RentalBookingProcess = () => {
               )}
             </div>
 
-            <div className="col-lg-4 col-md-12 order-2 order-lg-2">
+            <div className="lg:col-span-1">
               <div
                 style={{
                   position: isMobile ? "relative" : "sticky",
@@ -3250,23 +3067,13 @@ const RentalBookingProcess = () => {
                             </div>
 
                             {/* Manual Coupon Input */}
-                            <div style={{ display: "flex", gap: "8px", marginTop: "12px" }}>
+                            <div className="flex gap-2 mt-3 flex-row w-full">
                               <input
                                 type="text"
                                 placeholder="Enter Coupon Code"
                                 value={couponInputText}
                                 onChange={(e) => setCouponInputText(e.target.value)}
-                                style={{
-                                  flex: 1,
-                                  border: "1px solid #cbd5e1",
-                                  borderRadius: "8px",
-                                  padding: "8px 12px",
-                                  fontSize: "13px",
-                                  outline: "none",
-                                  transition: "border-color 0.2s",
-                                }}
-                                onFocus={(e) => e.target.style.borderColor = "#8059ca"}
-                                onBlur={(e) => e.target.style.borderColor = "#cbd5e1"}
+                                className="flex-1 min-w-0 border border-slate-300 rounded-lg px-3 py-2 text-sm outline-none transition-colors focus:border-[#8059ca]"
                               />
                               <button
                                 type="button"
@@ -3274,19 +3081,7 @@ const RentalBookingProcess = () => {
                                   e.preventDefault();
                                   handleManualCouponApply();
                                 }}
-                                style={{
-                                  background: "#8059ca",
-                                  color: "#fff",
-                                  border: "none",
-                                  borderRadius: "8px",
-                                  padding: "8px 16px",
-                                  fontSize: "13px",
-                                  fontWeight: "600",
-                                  cursor: "pointer",
-                                  transition: "background 0.2s",
-                                }}
-                                onMouseEnter={(e) => e.currentTarget.style.background = "#6f42c1"}
-                                onMouseLeave={(e) => e.currentTarget.style.background = "#8059ca"}
+                                className="bg-[#8059ca] hover:bg-[#6f42c1] text-white border-none rounded-lg px-4 py-2 text-sm font-semibold cursor-pointer transition-colors shrink-0"
                               >
                                 Apply
                               </button>

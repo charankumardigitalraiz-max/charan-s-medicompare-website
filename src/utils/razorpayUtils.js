@@ -27,8 +27,8 @@ export const openRazorpayCheckout = ({
   }
 
   const options = {
-    key: "rzp_live_TB29Bn3l1ssijC",
-    // key: "rzp_test_RsHwplQ9ACSY5s",
+    // key: "rzp_live_TB29Bn3l1ssijC",
+    key: "rzp_test_RsHwplQ9ACSY5s",
     amount: razorpayData.amount,
     currency: razorpayData.currency || "INR",
     order_id: razorpayData.razorpayOrderId,

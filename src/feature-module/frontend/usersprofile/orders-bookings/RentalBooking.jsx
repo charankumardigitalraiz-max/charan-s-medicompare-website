@@ -10,6 +10,7 @@ import { useResponsive } from "../../../../hooks/useResponsive";
 import toast from "react-hot-toast";
 import autoTable from "jspdf-autotable";
 import { useNavigate } from "react-router";
+import BaseModal from "../../../../components/ui/BaseModal";
 // import { fetchCategoryList } from "../../../../Apiservice";
 
 // Styles migrated to Tailwind CSS
@@ -622,18 +623,40 @@ const RentalBooking = ({ HomeNavigate, ServiceTabs }) => {
     }
   };
 
+  const onClose = () => {
+    setShowModel(false);
+    // setSelectedOrder(null);
+  }
+
   return (
     <div className="w-full">
       <div className="col-lg-12">
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-5 mt-2">
-          <div className="flex items-center gap-3">
-            <i className="fa-solid fa-calendar-days text-[#8059ca] text-[20px] shrink-0" />
-            <div className="flex flex-col gap-0.5">
-              <h4 className="m-0 text-slate-800 font-bold text-[18px] md:text-[20px] tracking-tight leading-none">Rental Orders</h4>
-              <p className="text-slate-500 text-[12px] md:text-[13px] m-0 font-medium">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pb-2 mb-2 border-b border-slate-100 mt-2">
+          <div className="flex items-center gap-3.5">
+            {HomeNavigate && <HomeNavigate />}
+            <div className="w-11 h-11 rounded-xl bg-purple-50 text-[#8059ca] flex items-center justify-center text-[20px] shrink-0 border border-purple-100/50 shadow-sm">
+              <i className="fa-solid fa-calendar-days" />
+            </div>
+
+
+            {/* <div className="flex flex-col gap-1">
+              <div className="m-0 text-[#0f172a] text-[18px] md:text-[20px] tracking-tight leading-none" style={{ fontWeight: 600 }}>
+                Rental Orders
+              </div>
+              <p className="text-slate-500 text-[12px] m-0 font-medium leading-none">
                 View and manage all your rental orders
               </p>
+            </div> */}
+
+            <div className="flex flex-col gap-1">
+              <div className="m-0 text-[#0f172a] font-medium text-[16px] md:text-[16px] tracking-tight leading-none" >
+                Rental Orders
+              </div>
+              <div className="text-slate-500 text-[12px] m-0 font-medium leading-none">
+                View and manage all your rental orders
+              </div>
             </div>
+
           </div>
           <div className="flex items-center gap-3 w-full sm:w-auto">
             <div className="relative w-full sm:w-[260px] shrink-0">
@@ -651,7 +674,6 @@ const RentalBooking = ({ HomeNavigate, ServiceTabs }) => {
                 <i className="fa-solid fa-search" />
               </span>
             </div>
-            {HomeNavigate && <HomeNavigate />}
           </div>
         </div>
 
@@ -1052,284 +1074,328 @@ const RentalBooking = ({ HomeNavigate, ServiceTabs }) => {
         </div>
 
         {showModel && (
-          <div
-            onClick={() => setShowModel(false)}
-            style={{
-              position: "fixed", top: 0, left: 0, right: 0, bottom: 0,
-              backgroundColor: "rgba(15, 23, 42, 0.55)",
-              backdropFilter: "blur(6px)",
-              zIndex: 999999999,
-              display: "flex", alignItems: "center", justifyContent: "center",
-              padding: "16px",
-            }}
-          >
-            <div
-              onClick={(e) => e.stopPropagation()}
-              style={{
-                width: "100%", maxWidth: "580px", maxHeight: "90vh",
-                display: "flex", flexDirection: "column",
-                background: "#fff", borderRadius: "22px",
-                overflow: "hidden", boxShadow: "0 24px 60px rgba(15, 23, 42, 0.16)",
-              }}>
-              {/* HEADER */}
-              <div style={{
-                padding: "18px 20px 14px", borderBottom: "1px solid #f0f0f0",
-                display: "flex", alignItems: "flex-start", justifyContent: "space-between", flexShrink: 0,
-              }}>
-                <div>
-                  <div style={{ fontWeight: 700, fontSize: "16px", color: "#222" }}>Rental Details</div>
-                  <div style={{ fontSize: "11px", color: "#888", marginTop: "2px" }}>#{selectedOrder?.orderId || "N/A"}</div>
+
+          <BaseModal
+            show={showModel}
+            onClose={onClose}
+            size="lg"
+            bodyClassName="!p-0"
+            title={
+              <div className="flex flex-col">
+                <div className="text-[17px] font-bold text-slate-800">
+                  Rental Details
                 </div>
-                <button onClick={() => setShowModel(false)} style={{
-                  background: "#f5f3ff", border: "none", borderRadius: "50%",
-                  width: "30px", height: "30px", display: "flex", alignItems: "center",
-                  justifyContent: "center", cursor: "pointer", color: "#8059ca", fontSize: "18px", flexShrink: 0,
-                }}>&times;</button>
+
+                <div className="flex items-center gap-2 flex-wrap mt-1">
+                  <span className="text-[11px] text-slate-500">
+                    #{selectedOrder?.orderId || "N/A"}
+                  </span>
+
+                  <span
+                    className={`px-2 py-0.5 rounded-full text-[10px] font-semibold
+          ${selectedOrder?.orderStatus === "completed"
+                        ? "bg-green-100 text-green-700"
+                        : "bg-purple-100 text-purple-700"
+                      }`}
+                  >
+                    {selectedOrder?.orderStatus || "Pending"}
+                  </span>
+
+                  {selectedOrder?.paymentStatus && (
+                    <span
+                      className={`px-2 py-0.5 rounded-full text-[10px] font-semibold
+            ${selectedOrder?.paymentStatus === "paid"
+                          ? "bg-green-100 text-green-700"
+                          : "bg-amber-100 text-amber-700"
+                        }`}
+                    >
+                      {selectedOrder?.paymentStatus}
+                    </span>
+                  )}
+                </div>
               </div>
+            }
+          >
+            {/* <div
+              onClick={() => setShowModel(false)}
+              style={{
+                position: "fixed", top: 0, left: 0, right: 0, bottom: 0,
+                backgroundColor: "rgba(15, 23, 42, 0.55)",
+                backdropFilter: "blur(6px)",
+                zIndex: 999999999,
+                display: "flex", alignItems: "center", justifyContent: "center",
+                padding: "16px",
+              }}
+            >
+              <div
+                onClick={(e) => e.stopPropagation()}
+                style={{
+                  width: "100%", maxWidth: "580px", maxHeight: "90vh",
+                  display: "flex", flexDirection: "column",
+                  background: "#fff", borderRadius: "22px",
+                  overflow: "hidden", boxShadow: "0 24px 60px rgba(15, 23, 42, 0.16)",
+                }}> */}
+            {/* HEADER */}
+            {/* <div style={{
+                  padding: "18px 20px 14px", borderBottom: "1px solid #f0f0f0",
+                  display: "flex", alignItems: "flex-start", justifyContent: "space-between", flexShrink: 0,
+                }}>
+                  <div>
+                    <div style={{ fontWeight: 700, fontSize: "16px", color: "#222" }}>Rental Details</div>
+                    <div style={{ fontSize: "11px", color: "#888", marginTop: "2px" }}>#{selectedOrder?.orderId || "N/A"}</div>
+                  </div>
+                  <button onClick={() => setShowModel(false)} style={{
+                    background: "#f5f3ff", border: "none", borderRadius: "50%",
+                    width: "30px", height: "30px", display: "flex", alignItems: "center",
+                    justifyContent: "center", cursor: "pointer", color: "#8059ca", fontSize: "18px", flexShrink: 0,
+                  }}>&times;</button>
+                </div> */}
 
-              {/* SCROLLABLE BODY */}
-              <div style={{ overflowY: "auto", flex: 1 }}>
+            {/* SCROLLABLE BODY */}
+            <div className="space-y-5">
 
-                {/* PRODUCT SECTION */}
-                {(() => {
-                  const rawItems = selectedOrder?.items || [];
-                  const displayItems = rawItems.length > 0 ? rawItems : (
-                    selectedOrder?.rentalPlan ? [{
-                      _id: selectedOrder?._id, productDetails: null, packageDetails: null,
-                      rentalDetails: {
-                        rentalPlan: selectedOrder?.rentalPlan,
-                        basePricePerDay: null,
-                        productSnapshot: { name: "Rental Equipment" },
-                      },
-                      quantity: 1,
-                      totalPrice: selectedOrder?.billingSummary?.subtotal ?? selectedOrder?.subtotal ?? 0,
-                    }] : []
-                  );
-                  if (displayItems.length === 0) return null;
-                  return (
-                    <div style={{ padding: "16px 20px", borderBottom: "1px solid #f5f5f5" }}>
-                      {displayItems.map((orderItem, idx) => {
-                        const itemName =
-                          orderItem?.productDetails?.tabletdetails?.name ||
-                          orderItem?.productDetails?.variantcurrentDetails?.productname ||
-                          orderItem?.packageDetails?.name ||
-                          orderItem?.rentalDetails?.productSnapshot?.name ||
-                          orderItem?.rentalDetails?.productSnapshot?.tabletName ||
-                          "Rental Item";
-                        const vendorArr = orderItem?.productDetails?.vendorDetails || orderItem?.packageDetails?.vendorDetails;
-                        const vendor0 = Array.isArray(vendorArr) && vendorArr.length > 0 ? vendorArr[0] : null;
-                        const vendorName = vendor0?.name || null;
-                        const vendorImg = vendor0
-                          ? (Array.isArray(vendor0.bussiness_image) ? vendor0.bussiness_image[0]?.url : vendor0.bussiness_image?.url)
-                          : null;
-                        return (
-                          <div key={idx} className="d-flex align-items-start gap-3"
-                            style={{ marginBottom: idx < displayItems.length - 1 ? "12px" : 0 }}>
-                            <div style={{
-                              width: "64px", height: "64px", border: "1px solid #eee",
-                              borderRadius: "10px", flexShrink: 0, overflow: "hidden", background: "#fafafa",
-                            }}>
-                              <img src={resolveOrderItemImage(orderItem)} alt="product"
-                                style={{ height: "64px", width: "64px", objectFit: "contain" }}
-                                onError={(e) => { e.currentTarget.src = "/assets/default.png"; }} />
+              {/* PRODUCT SECTION */}
+              {(() => {
+                const rawItems = selectedOrder?.items || [];
+                const displayItems = rawItems.length > 0 ? rawItems : (
+                  selectedOrder?.rentalPlan ? [{
+                    _id: selectedOrder?._id, productDetails: null, packageDetails: null,
+                    rentalDetails: {
+                      rentalPlan: selectedOrder?.rentalPlan,
+                      basePricePerDay: null,
+                      productSnapshot: { name: "Rental Equipment" },
+                    },
+                    quantity: 1,
+                    totalPrice: selectedOrder?.billingSummary?.subtotal ?? selectedOrder?.subtotal ?? 0,
+                  }] : []
+                );
+                if (displayItems.length === 0) return null;
+                return (
+                  <div style={{ padding: "16px 20px", borderBottom: "1px solid #f5f5f5" }}>
+                    {displayItems.map((orderItem, idx) => {
+                      const itemName =
+                        orderItem?.productDetails?.tabletdetails?.name ||
+                        orderItem?.productDetails?.variantcurrentDetails?.productname ||
+                        orderItem?.packageDetails?.name ||
+                        orderItem?.rentalDetails?.productSnapshot?.name ||
+                        orderItem?.rentalDetails?.productSnapshot?.tabletName ||
+                        "Rental Item";
+                      const vendorArr = orderItem?.productDetails?.vendorDetails || orderItem?.packageDetails?.vendorDetails;
+                      const vendor0 = Array.isArray(vendorArr) && vendorArr.length > 0 ? vendorArr[0] : null;
+                      const vendorName = vendor0?.name || null;
+                      const vendorImg = vendor0
+                        ? (Array.isArray(vendor0.bussiness_image) ? vendor0.bussiness_image[0]?.url : vendor0.bussiness_image?.url)
+                        : null;
+                      return (
+                        <div key={idx} className="d-flex align-items-start gap-3"
+                          style={{ marginBottom: idx < displayItems.length - 1 ? "12px" : 0 }}>
+                          <div style={{
+                            width: "64px", height: "64px", border: "1px solid #eee",
+                            borderRadius: "10px", flexShrink: 0, overflow: "hidden", background: "#fafafa",
+                          }}>
+                            <img src={resolveOrderItemImage(orderItem)} alt="product"
+                              style={{ height: "64px", width: "64px", objectFit: "contain" }}
+                              onError={(e) => { e.currentTarget.src = "/assets/default.png"; }} />
+                          </div>
+                          <div style={{ flex: 1, minWidth: 0 }}>
+                            <div style={{ fontWeight: 600, fontSize: "13px", color: "#222", marginBottom: "4px" }}>
+                              {itemName.length > 38 ? itemName.slice(0, 38) + "\u2026" : itemName}
                             </div>
-                            <div style={{ flex: 1, minWidth: 0 }}>
-                              <div style={{ fontWeight: 600, fontSize: "13px", color: "#222", marginBottom: "4px" }}>
-                                {itemName.length > 38 ? itemName.slice(0, 38) + "\u2026" : itemName}
+                            {vendorName && (
+                              <div className="d-flex align-items-center gap-1"
+                                style={{ fontSize: "11px", color: "#8059ca", marginBottom: "5px" }}>
+                                {vendorImg && (
+                                  <img src={vendorImg} alt={vendorName}
+                                    onError={(e) => { e.currentTarget.src = "/assets/default.png"; }}
+                                    style={{ width: "16px", height: "16px", borderRadius: "50%", objectFit: "cover", border: "1px solid #e1dcf5" }} />
+                                )}
+                                <span style={{ fontWeight: 600 }}>{vendorName}</span>
                               </div>
-                              {vendorName && (
-                                <div className="d-flex align-items-center gap-1"
-                                  style={{ fontSize: "11px", color: "#8059ca", marginBottom: "5px" }}>
-                                  {vendorImg && (
-                                    <img src={vendorImg} alt={vendorName}
-                                      onError={(e) => { e.currentTarget.src = "/assets/default.png"; }}
-                                      style={{ width: "16px", height: "16px", borderRadius: "50%", objectFit: "cover", border: "1px solid #e1dcf5" }} />
-                                  )}
-                                  <span style={{ fontWeight: 600 }}>{vendorName}</span>
-                                </div>
-                              )}
-                              <div className="d-flex flex-wrap gap-2">
-                                {orderItem?.rentalDetails?.rentalPlan && (
-                                  <span style={{ fontSize: "11px", background: "#f5f3ff", color: "#7c4dc4", padding: "2px 8px", borderRadius: "20px", fontWeight: 500 }}>
-                                    {orderItem.rentalDetails.rentalPlan} plan
-                                  </span>
-                                )}
-                                {orderItem?.rentalDetails?.basePricePerDay > 0 && (
-                                  <span style={{ fontSize: "11px", color: "#555" }}>
-                                    ₹{orderItem?.rentalDetails?.basePricePerDay}/day
-                                  </span>
-                                )}
-                                <span style={{ fontSize: "11px", color: "#777" }}>
-                                  Qty: <strong>{orderItem?.quantity || 1}</strong>
+                            )}
+                            <div className="d-flex flex-wrap gap-2">
+                              {orderItem?.rentalDetails?.rentalPlan && (
+                                <span style={{ fontSize: "11px", background: "#f5f3ff", color: "#7c4dc4", padding: "2px 8px", borderRadius: "20px", fontWeight: 500 }}>
+                                  {orderItem.rentalDetails.rentalPlan} plan
                                 </span>
-                              </div>
-                            </div>
-                            <div style={{ fontWeight: 700, fontSize: "14px", color: "#222", flexShrink: 0 }}>
-                              {(Number(selectedOrder?.billingSummary?.total ?? 0) || 0).toFixed(2)}
+                              )}
+                              {orderItem?.rentalDetails?.basePricePerDay > 0 && (
+                                <span style={{ fontSize: "11px", color: "#555" }}>
+                                  ₹{orderItem?.rentalDetails?.basePricePerDay}/day
+                                </span>
+                              )}
+                              <span style={{ fontSize: "11px", color: "#777" }}>
+                                Qty: <strong>{orderItem?.quantity || 1}</strong>
+                              </span>
                             </div>
                           </div>
-                        );
-                      })}
+                          <div style={{ fontWeight: 700, fontSize: "14px", color: "#222", flexShrink: 0 }}>
+                            {(Number(selectedOrder?.billingSummary?.total ?? 0) || 0).toFixed(2)}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                );
+              })()}
+
+              {/* RENTAL PERIOD */}
+              <div style={{ padding: "14px 20px 0", borderBottom: "1px solid #f5f5f5" }}>
+                <div style={{ fontSize: "10px", fontWeight: 700, color: "#8059ca", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "10px" }}>
+                  Rental Period
+                </div>
+                <div className="row g-2" style={{ marginBottom: "14px" }}>
+                  {[
+                    { label: "Start Date", value: selectedOrder?.startDate ? new Date(selectedOrder.startDate).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" }) : "N/A" },
+                    { label: "End Date", value: selectedOrder?.endDate ? new Date(selectedOrder.endDate).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" }) : "N/A" },
+                    { label: "Plan", value: selectedOrder?.rentalPlan ? selectedOrder.rentalPlan.charAt(0).toUpperCase() + selectedOrder.rentalPlan.slice(1) : "N/A" },
+                    { label: "Installments", value: selectedOrder?.numberOfInstallments ?? "N/A" },
+                  ].map(({ label, value }) => (
+                    <div className="col-6" key={label}>
+                      <div style={{ background: "#faf9fe", borderRadius: "8px", padding: "8px 12px" }}>
+                        <div style={{ fontSize: "10px", color: "#aaa", marginBottom: "2px" }}>{label}</div>
+                        <div style={{ fontSize: "12px", fontWeight: 600, color: "#333", textTransform: "capitalize" }}>{value}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* ORDER INFO */}
+              <div style={{ padding: "14px 20px 0", borderBottom: "1px solid #f5f5f5" }}>
+                <div style={{ fontSize: "10px", fontWeight: 700, color: "#8059ca", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "10px" }}>
+                  Order Info
+                </div>
+                <div className="row g-2" style={{ marginBottom: "14px" }}>
+                  {[
+                    { label: "Order Status", value: selectedOrder?.orderStatus ? selectedOrder.orderStatus.charAt(0).toUpperCase() + selectedOrder.orderStatus.slice(1) : "N/A" },
+                    { label: "Payment Status", value: selectedOrder?.paymentStatus ? selectedOrder.paymentStatus.charAt(0).toUpperCase() + selectedOrder.paymentStatus.slice(1) : "N/A", color: selectedOrder?.paymentStatus === "paid" ? "#28a745" : "#e0a000" },
+                    { label: "Payment Method", value: selectedOrder?.paymentmethod ? selectedOrder.paymentmethod.charAt(0).toUpperCase() + selectedOrder.paymentmethod.slice(1) : "N/A" },
+                    { label: "Payment Type", value: selectedOrder?.paymentType || "N/A" },
+                  ].map(({ label, value, color }) => (
+                    <div className="col-6" key={label}>
+                      <div style={{ background: "#faf9fe", borderRadius: "8px", padding: "8px 12px" }}>
+                        <div style={{ fontSize: "10px", color: "#aaa", marginBottom: "2px" }}>{label}</div>
+                        <div style={{ fontSize: "12px", fontWeight: 600, color: color || "#333", textTransform: "capitalize" }}>{value}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* BILLING SUMMARY */}
+              <div style={{ padding: "14px 20px 20px" }}>
+                <div style={{ fontSize: "10px", fontWeight: 700, color: "#8059ca", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "12px" }}>
+                  Billing Summary
+                </div>
+                {(() => {
+                  const bs = selectedOrder?.billingSummary || {};
+                  const item0 = selectedOrder?.items?.[0];
+
+                  const subtotal = bs.subtotal ?? selectedOrder?.subtotal ?? item0?.totalPrice ?? 0;
+                  const cgst = bs.cgst ?? selectedOrder?.cgst ?? 0;
+                  const sgst = bs.sgst ?? selectedOrder?.sgst ?? 0;
+                  const totalTax = bs?.tax;
+                  const baseRentalCharges = Math.max(0, subtotal - totalTax);
+
+                  const rentaDetails = selectedOrder?.items?.[0]?.rentalDetails || {};
+
+                  const rows = [
+                    { label: "Rental Charges (Enclusive of All Taxes)", value: subtotal, suffix: `(${rentaDetails?.totalDays} days × ₹${Number(rentaDetails?.basePricePerDay || 0).toFixed(2)})` },
+                    { label: "Deposit (Refundable)", value: bs.fixedDeposit ?? selectedOrder?.fixedDeposit ?? item0?.rentalDetails?.fixedDeposit ?? 0, prefix: "+" },
+                    { label: "Service Charges", value: bs.serviceCharges ?? selectedOrder?.serviceCharges ?? item0?.rentalDetails?.serviceCharges ?? 0, prefix: "+", },
+                    { label: "Return Charges", value: bs.returnCharge ?? selectedOrder?.returnCharge ?? item0?.rentalDetails?.returnCharge ?? 0, prefix: "+", },
+                    { label: "GST", value: totalTax },
+                    // { label: "SGST", value: sgst },
+                  ].filter(r => Number(r.value) > 0);
+
+                  const coupon = Number(bs.couponAmount ?? selectedOrder?.couponAmount ?? 0);
+                  const total = Number(bs.total ?? selectedOrder?.billingSummary?.total ?? 0);
+
+                  return (
+                    <div style={{ background: "#faf9fe", borderRadius: "12px", padding: "14px 16px", border: "1px solid #f1eff9" }}>
+                      <div className="d-flex justify-content-between align-items-center" style={{ marginBottom: "9px", fontSize: "13px" }}>
+                        <span style={{ color: "#666" }}>Per Day Rental Charges</span>
+                        <span style={{ fontWeight: 500 }}>₹{Number(rentaDetails?.basePricePerDay || 0).toFixed(2)}</span>
+                      </div>
+
+                      <div className="d-flex justify-content-between align-items-center" style={{ marginBottom: "9px", fontSize: "13px" }}>
+                        <span style={{ color: "#666" }}>Rental Duration</span>
+                        <span style={{ fontWeight: 500 }}>{rentaDetails?.totalDays || 0} days</span>
+                      </div>
+                      {rows.map(({ label, value, prefix, suffix }) => (
+                        <div key={label} className="d-flex justify-content-between align-items-center" style={{ marginBottom: "9px", fontSize: "13px" }}>
+                          <span style={{ color: "#666" }}>{label}</span>
+                          <span style={{ fontWeight: 500 }}>{prefix} ₹{Number(value).toFixed(2)}{suffix}</span>
+                        </div>
+                      ))}
+                      {coupon > 0 && (
+                        <div className="d-flex justify-content-between align-items-center" style={{ marginBottom: "9px", fontSize: "13px", color: "#28a745" }}>
+                          <span>Coupon Discount</span>
+                          <span style={{ fontWeight: 600 }}>-₹{coupon.toFixed(2)}</span>
+                        </div>
+                      )}
+                      <div className="d-flex justify-content-between align-items-center" style={{ borderTop: "1.5px dashed #e0daf5", paddingTop: "12px", marginTop: "6px", fontSize: "15px", fontWeight: 700 }}>
+                        <span style={{ color: "#333" }}>Total Amount</span>
+                        <span style={{ color: "#7c4dc4", fontSize: "16px" }}>₹{total.toFixed(2)}</span>
+                      </div>
+
+                      <div className="d-flex justify-content-between align-items-center" style={{ borderTop: "1.5px dashed #e0daf5", color: "green", paddingTop: "12px", marginTop: "6px", fontSize: "13px", fontWeight: 600 }}>
+                        <span >First Installment (Paid)</span>
+                        <span style={{ color: "green", fontSize: "16px" }}>₹{(bs?.paidAmount || 0).toFixed(2)}</span>
+                      </div>
                     </div>
                   );
                 })()}
 
-                {/* RENTAL PERIOD */}
-                <div style={{ padding: "14px 20px 0", borderBottom: "1px solid #f5f5f5" }}>
-                  <div style={{ fontSize: "10px", fontWeight: 700, color: "#8059ca", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "10px" }}>
-                    Rental Period
-                  </div>
-                  <div className="row g-2" style={{ marginBottom: "14px" }}>
-                    {[
-                      { label: "Start Date", value: selectedOrder?.startDate ? new Date(selectedOrder.startDate).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" }) : "N/A" },
-                      { label: "End Date", value: selectedOrder?.endDate ? new Date(selectedOrder.endDate).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" }) : "N/A" },
-                      { label: "Plan", value: selectedOrder?.rentalPlan ? selectedOrder.rentalPlan.charAt(0).toUpperCase() + selectedOrder.rentalPlan.slice(1) : "N/A" },
-                      { label: "Installments", value: selectedOrder?.numberOfInstallments ?? "N/A" },
-                    ].map(({ label, value }) => (
-                      <div className="col-6" key={label}>
-                        <div style={{ background: "#faf9fe", borderRadius: "8px", padding: "8px 12px" }}>
-                          <div style={{ fontSize: "10px", color: "#aaa", marginBottom: "2px" }}>{label}</div>
-                          <div style={{ fontSize: "12px", fontWeight: 600, color: "#333", textTransform: "capitalize" }}>{value}</div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* ORDER INFO */}
-                <div style={{ padding: "14px 20px 0", borderBottom: "1px solid #f5f5f5" }}>
-                  <div style={{ fontSize: "10px", fontWeight: 700, color: "#8059ca", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "10px" }}>
-                    Order Info
-                  </div>
-                  <div className="row g-2" style={{ marginBottom: "14px" }}>
-                    {[
-                      { label: "Order Status", value: selectedOrder?.orderStatus ? selectedOrder.orderStatus.charAt(0).toUpperCase() + selectedOrder.orderStatus.slice(1) : "N/A" },
-                      { label: "Payment Status", value: selectedOrder?.paymentStatus ? selectedOrder.paymentStatus.charAt(0).toUpperCase() + selectedOrder.paymentStatus.slice(1) : "N/A", color: selectedOrder?.paymentStatus === "paid" ? "#28a745" : "#e0a000" },
-                      { label: "Payment Method", value: selectedOrder?.paymentmethod ? selectedOrder.paymentmethod.charAt(0).toUpperCase() + selectedOrder.paymentmethod.slice(1) : "N/A" },
-                      { label: "Payment Type", value: selectedOrder?.paymentType || "N/A" },
-                    ].map(({ label, value, color }) => (
-                      <div className="col-6" key={label}>
-                        <div style={{ background: "#faf9fe", borderRadius: "8px", padding: "8px 12px" }}>
-                          <div style={{ fontSize: "10px", color: "#aaa", marginBottom: "2px" }}>{label}</div>
-                          <div style={{ fontSize: "12px", fontWeight: 600, color: color || "#333", textTransform: "capitalize" }}>{value}</div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* BILLING SUMMARY */}
-                <div style={{ padding: "14px 20px 20px" }}>
-                  <div style={{ fontSize: "10px", fontWeight: 700, color: "#8059ca", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "12px" }}>
-                    Billing Summary
-                  </div>
-                  {(() => {
-                    const bs = selectedOrder?.billingSummary || {};
-                    const item0 = selectedOrder?.items?.[0];
-
-                    const subtotal = bs.subtotal ?? selectedOrder?.subtotal ?? item0?.totalPrice ?? 0;
-                    const cgst = bs.cgst ?? selectedOrder?.cgst ?? 0;
-                    const sgst = bs.sgst ?? selectedOrder?.sgst ?? 0;
-                    const totalTax = bs?.tax;
-                    const baseRentalCharges = Math.max(0, subtotal - totalTax);
-
-                    const rentaDetails = selectedOrder?.items?.[0]?.rentalDetails || {};
-
-                    const rows = [
-                      { label: "Rental Charges (Enclusive of All Taxes)", value: subtotal, suffix: `(${rentaDetails?.totalDays} days × ₹${Number(rentaDetails?.basePricePerDay || 0).toFixed(2)})` },
-                      { label: "Deposit (Refundable)", value: bs.fixedDeposit ?? selectedOrder?.fixedDeposit ?? item0?.rentalDetails?.fixedDeposit ?? 0, prefix: "+" },
-                      { label: "Service Charges", value: bs.serviceCharges ?? selectedOrder?.serviceCharges ?? item0?.rentalDetails?.serviceCharges ?? 0, prefix: "+", },
-                      { label: "Return Charges", value: bs.returnCharge ?? selectedOrder?.returnCharge ?? item0?.rentalDetails?.returnCharge ?? 0, prefix: "+", },
-                      { label: "GST", value: totalTax },
-                      // { label: "SGST", value: sgst },
-                    ].filter(r => Number(r.value) > 0);
-
-                    const coupon = Number(bs.couponAmount ?? selectedOrder?.couponAmount ?? 0);
-                    const total = Number(bs.total ?? selectedOrder?.billingSummary?.total ?? 0);
-
-                    return (
-                      <div style={{ background: "#faf9fe", borderRadius: "12px", padding: "14px 16px", border: "1px solid #f1eff9" }}>
-                        <div className="d-flex justify-content-between align-items-center" style={{ marginBottom: "9px", fontSize: "13px" }}>
-                          <span style={{ color: "#666" }}>Per Day Rental Charges</span>
-                          <span style={{ fontWeight: 500 }}>₹{Number(rentaDetails?.basePricePerDay || 0).toFixed(2)}</span>
-                        </div>
-
-                        <div className="d-flex justify-content-between align-items-center" style={{ marginBottom: "9px", fontSize: "13px" }}>
-                          <span style={{ color: "#666" }}>Rental Duration</span>
-                          <span style={{ fontWeight: 500 }}>{rentaDetails?.totalDays || 0} days</span>
-                        </div>
-                        {rows.map(({ label, value, prefix, suffix }) => (
-                          <div key={label} className="d-flex justify-content-between align-items-center" style={{ marginBottom: "9px", fontSize: "13px" }}>
-                            <span style={{ color: "#666" }}>{label}</span>
-                            <span style={{ fontWeight: 500 }}>{prefix} ₹{Number(value).toFixed(2)}{suffix}</span>
-                          </div>
-                        ))}
-                        {coupon > 0 && (
-                          <div className="d-flex justify-content-between align-items-center" style={{ marginBottom: "9px", fontSize: "13px", color: "#28a745" }}>
-                            <span>Coupon Discount</span>
-                            <span style={{ fontWeight: 600 }}>-₹{coupon.toFixed(2)}</span>
-                          </div>
-                        )}
-                        <div className="d-flex justify-content-between align-items-center" style={{ borderTop: "1.5px dashed #e0daf5", paddingTop: "12px", marginTop: "6px", fontSize: "15px", fontWeight: 700 }}>
-                          <span style={{ color: "#333" }}>Total Amount</span>
-                          <span style={{ color: "#7c4dc4", fontSize: "16px" }}>₹{total.toFixed(2)}</span>
-                        </div>
-
-                        <div className="d-flex justify-content-between align-items-center" style={{ borderTop: "1.5px dashed #e0daf5", color: "green", paddingTop: "12px", marginTop: "6px", fontSize: "13px", fontWeight: 600 }}>
-                          <span >First Installment (Paid)</span>
-                          <span style={{ color: "green", fontSize: "16px" }}>₹{(bs?.paidAmount || 0).toFixed(2)}</span>
-                        </div>
-                      </div>
-                    );
-                  })()}
-
-                  {selectedOrder?.installments?.length > 0 && (
-                    <div style={{ marginTop: "18px", paddingTop: "14px", borderTop: "1px dashed #eaeaea" }}>
-                      <div style={{ fontSize: "10.5px", fontWeight: 700, color: "#8059ca", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "10px" }}>
-                        Installment Details
-                      </div>
-                      <div style={{ maxHeight: "200px", overflowY: "auto", border: "1px solid #f0f0f0", borderRadius: "10px", background: "#fcfcfd" }}>
-                        <table className="table table-sm mb-0" style={{ fontSize: "11.5px", width: "100%", borderCollapse: "collapse" }}>
-                          <thead>
-                            <tr style={{ background: "#faf9fe", borderBottom: "1.5px solid #eaeaea", color: "#666" }}>
-                              <th style={{ padding: "6px 8px", fontWeight: 600 }}>No.</th>
-                              <th style={{ padding: "6px 8px", fontWeight: 600 }}>Amount</th>
-                              <th style={{ padding: "6px 8px", fontWeight: 600 }}>Due Date</th>
-                              <th style={{ padding: "6px 8px", fontWeight: 600 }}>Method</th>
-                              <th style={{ padding: "6px 8px", fontWeight: 600 }}>Status</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {selectedOrder.installments.map((installment, idx) => (
-                              <tr key={installment._id || idx} style={{ borderBottom: "1px solid #f5f5f5" }}>
-                                <td style={{ padding: "6px 8px", fontWeight: 500 }}>{installment.installmentNumber}</td>
-                                <td style={{ padding: "6px 8px", fontWeight: 600 }}>₹{installment.amount?.toFixed(2) || "0.00"}</td>
-                                <td style={{ padding: "6px 8px", color: "#555" }}>{installment.dueDate ? installment.dueDate.slice(0, 10) : "N/A"}</td>
-                                <td style={{ padding: "6px 8px", textTransform: "capitalize", color: "#555" }}>{installment.paymentMethod || "N/A"}</td>
-                                <td style={{ padding: "6px 8px" }}>
-                                  <span style={{
-                                    fontSize: "10px",
-                                    fontWeight: 600,
-                                    padding: "2px 6px",
-                                    borderRadius: "12px",
-                                    background: installment.status === "paid" ? "#e6f4ea" : "#fff8e1",
-                                    color: installment.status === "paid" ? "#137333" : "#b06000",
-                                    textTransform: "capitalize"
-                                  }}>
-                                    {installment.status}
-                                  </span>
-                                </td>
-                              </tr>
-                            ))}
-                          </tbody>
-                        </table>
-                      </div>
+                {selectedOrder?.installments?.length > 0 && (
+                  <div style={{ marginTop: "18px", paddingTop: "14px", borderTop: "1px dashed #eaeaea" }}>
+                    <div style={{ fontSize: "10.5px", fontWeight: 700, color: "#8059ca", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "10px" }}>
+                      Installment Details
                     </div>
-                  )}
-                </div>
+                    <div style={{ maxHeight: "200px", overflowY: "auto", border: "1px solid #f0f0f0", borderRadius: "10px", background: "#fcfcfd" }}>
+                      <table className="table table-sm mb-0" style={{ fontSize: "11.5px", width: "100%", borderCollapse: "collapse" }}>
+                        <thead>
+                          <tr style={{ background: "#faf9fe", borderBottom: "1.5px solid #eaeaea", color: "#666" }}>
+                            <th style={{ padding: "6px 8px", fontWeight: 600 }}>No.</th>
+                            <th style={{ padding: "6px 8px", fontWeight: 600 }}>Amount</th>
+                            <th style={{ padding: "6px 8px", fontWeight: 600 }}>Due Date</th>
+                            <th style={{ padding: "6px 8px", fontWeight: 600 }}>Method</th>
+                            <th style={{ padding: "6px 8px", fontWeight: 600 }}>Status</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {selectedOrder.installments.map((installment, idx) => (
+                            <tr key={installment._id || idx} style={{ borderBottom: "1px solid #f5f5f5" }}>
+                              <td style={{ padding: "6px 8px", fontWeight: 500 }}>{installment.installmentNumber}</td>
+                              <td style={{ padding: "6px 8px", fontWeight: 600 }}>₹{installment.amount?.toFixed(2) || "0.00"}</td>
+                              <td style={{ padding: "6px 8px", color: "#555" }}>{installment.dueDate ? installment.dueDate.slice(0, 10) : "N/A"}</td>
+                              <td style={{ padding: "6px 8px", textTransform: "capitalize", color: "#555" }}>{installment.paymentMethod || "N/A"}</td>
+                              <td style={{ padding: "6px 8px" }}>
+                                <span style={{
+                                  fontSize: "10px",
+                                  fontWeight: 600,
+                                  padding: "2px 6px",
+                                  borderRadius: "12px",
+                                  background: installment.status === "paid" ? "#e6f4ea" : "#fff8e1",
+                                  color: installment.status === "paid" ? "#137333" : "#b06000",
+                                  textTransform: "capitalize"
+                                }}>
+                                  {installment.status}
+                                </span>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
-          </div>
+            {/* </div>
+            </div> */}
+
+          </BaseModal>
         )}
 
         {/* Vendor Modal */}

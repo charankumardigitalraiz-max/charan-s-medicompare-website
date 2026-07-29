@@ -62,18 +62,36 @@ const Wallet = ({ HomeNavigate, BackButton }) => {
 
             {/* Header Section */}
             <div className="col-12">
-              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-5 mt-2">
-                <div className="flex items-center gap-3">
-                  <i className="fa-solid fa-wallet text-[#8059ca] text-[20px] shrink-0" />
-                  <div className="flex flex-col gap-0.5">
-                    <h4 className="m-0 text-slate-800 font-bold text-[16px] md:text-[18px] tracking-tight leading-none">Wallet</h4>
-                    <p className="text-slate-500 text-[11px] md:text-[12px] m-0 font-medium">
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pb-2 mb-2 border-b border-slate-100 mt-2">
+                <div className="flex items-center gap-3.5">
+                  {HomeNavigate && <HomeNavigate />}
+                  <div className="w-11 h-11 rounded-xl bg-purple-50 text-[#8059ca] flex items-center justify-center text-[20px] shrink-0 border border-purple-100/50 shadow-sm">
+                    <i className="fa-solid fa-wallet" />
+                  </div>
+
+
+                  {/* <div className="flex flex-col gap-1">
+                    <div className="m-0 text-[#0f172a] text-[18px] md:text-[20px] tracking-tight leading-none" style={{ fontWeight: 600 }}>
+                      Wallet
+                    </div>
+                    <p className="text-slate-500 text-[12px] m-0 font-medium leading-none">
                       View and manage all your Wallet
                     </p>
+                  </div> */}
+
+
+
+
+                  <div className="flex flex-col gap-1">
+                    <div className="m-0 text-[#0f172a] font-medium text-[16px] md:text-[16px] tracking-tight leading-none" >
+                      Wallet
+                    </div>
+                    <div className="text-slate-500 text-[12px] m-0 font-medium leading-none">
+                      View and manage all your Wallet
+                    </div>
                   </div>
-                </div>
-                <div className="flex items-center gap-3 w-full sm:w-auto">
-                  {HomeNavigate && <HomeNavigate />}
+
+
                 </div>
               </div>
             </div>
@@ -149,17 +167,17 @@ const Wallet = ({ HomeNavigate, BackButton }) => {
                 </div>
               </div> */}
 
-              <div className="consultation-table-wrapper bg-white rounded-xl border border-[#ececf6] shadow-[0_4px_16px_rgba(0,0,0,0.03)] overflow-hidden mb-5 mt-4">
+              <div className="profile-table-wrapper mt-4">
                 <div className="table-responsive">
-                  <table className="w-full border-collapse mb-0">
+                  <table className="profile-table">
                     <thead>
                       <tr>
-                        <th className="bg-[#fbfbfe] text-[#777] text-[11px] font-semibold uppercase tracking-[0.5px] py-3.5 px-4 border-b border-[#ececf6] text-left">Date</th>
-                        <th className="bg-[#fbfbfe] text-[#777] text-[11px] font-semibold uppercase tracking-[0.5px] py-3.5 px-4 border-b border-[#ececf6] text-left">Transaction ID</th>
-                        <th className="bg-[#fbfbfe] text-[#777] text-[11px] font-semibold uppercase tracking-[0.5px] py-3.5 px-4 border-b border-[#ececf6] text-left">Amount</th>
-                        <th className="bg-[#fbfbfe] text-[#777] text-[11px] font-semibold uppercase tracking-[0.5px] py-3.5 px-4 border-b border-[#ececf6] text-left">Payment Type</th>
-                        <th className="bg-[#fbfbfe] text-[#777] text-[11px] font-semibold uppercase tracking-[0.5px] py-3.5 px-4 border-b border-[#ececf6] text-left">Payment Method</th>
-                        <th className="bg-[#fbfbfe] text-[#777] text-[11px] font-semibold uppercase tracking-[0.5px] py-3.5 px-4 border-b border-[#ececf6] text-left">Status</th>
+                        <th>Date</th>
+                        <th>Transaction ID</th>
+                        <th>Amount</th>
+                        <th>Payment Type</th>
+                        <th>Payment Method</th>
+                        <th>Status</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -169,13 +187,13 @@ const Wallet = ({ HomeNavigate, BackButton }) => {
                         const isFailed = wallet.status?.toLowerCase() === "failed" || wallet.status?.toLowerCase() === "failure";
 
                         return (
-                          <tr key={wallet._id} className="capitalize group hover:bg-[#faf9fe]">
-                            <td className="py-3.5 px-4 text-[13px] text-[#333] border-b border-[#ececf6] align-middle group-last:border-b-0">{wallet.createdAt ? new Date(wallet.createdAt).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) : "-"}</td>
-                            <td className="py-3.5 px-4 text-[13px] text-[#333] border-b border-[#ececf6] align-middle group-last:border-b-0 font-medium text-[#666]">{wallet.transactionId}</td>
-                            <td className={`py-3.5 px-4 text-[13px] border-b border-[#ececf6] align-middle group-last:border-b-0 font-semibold ${isCredit ? "text-[#2ecc71]" : "text-[#e74c3c]"}`}>
+                          <tr key={wallet._id} className="capitalize">
+                            <td>{wallet.createdAt ? new Date(wallet.createdAt).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) : "-"}</td>
+                            <td className="font-medium text-[#666]">{wallet.transactionId}</td>
+                            <td className={`font-semibold ${isCredit ? "text-[#2ecc71]" : "text-[#e74c3c]"}`}>
                               {isCredit ? "+" : "-"}₹{wallet.amount.toFixed(2)}
                             </td>
-                            <td className="py-3.5 px-4 text-[13px] text-[#333] border-b border-[#ececf6] align-middle group-last:border-b-0">
+                            <td>
                               <span
                                 className={`py-[3px] px-2 rounded text-[11px] font-semibold inline-block ${isCredit ? "bg-[rgba(46,204,113,0.1)] text-[#2ecc71]" : "bg-[rgba(231,76,60,0.1)] text-[#e74c3c]"
                                   }`}
@@ -183,8 +201,8 @@ const Wallet = ({ HomeNavigate, BackButton }) => {
                                 {wallet.type}
                               </span>
                             </td>
-                            <td className="py-3.5 px-4 text-[13px] text-[#333] border-b border-[#ececf6] align-middle group-last:border-b-0">{wallet.paymentMethod || "N/A"}</td>
-                            <td className="py-3.5 px-4 text-[13px] text-[#333] border-b border-[#ececf6] align-middle group-last:border-b-0">
+                            <td>{wallet.paymentMethod || "N/A"}</td>
+                            <td>
                               <span
                                 className={`py-[3px] px-2 rounded text-[11px] font-semibold inline-block ${isSuccess
                                   ? "bg-[#d4edda] text-[#155724]"

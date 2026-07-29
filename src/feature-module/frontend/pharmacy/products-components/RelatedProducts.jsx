@@ -1,57 +1,19 @@
-import { useNavigate, useParams } from "react-router-dom";
-import { FaRegShareSquare, FaHeart } from "react-icons/fa";
-import { IoIosHeartEmpty } from "react-icons/io";
+import { useNavigate } from "react-router-dom";
 import {
-  imgUrl,
   axiosCommonInstance,
-  axiosUserInstance,
 } from "../../../../Apiservice.jsx";
 import toast from "react-hot-toast";
 import { useCart } from "../../../../hooks/useCart";
 import { useAddToCart } from "../../../../hooks/useAddToCart";
 import { getImageUrl } from "../../../../utils/index";
-import CartQuantityControls from "../../../../components/ui/CartQuantityControls.jsx";
 import VendorActions from "../../../../components/ui/VendorActions.jsx";
+import CompareOverlayButton from "../../../../components/ui/CompareOverlayButton.jsx";
 import LeadModal from "./LeadModal.jsx";
 import RentModal from "./RentModal.jsx";
 import ConsultationModal from "./ConsultationModal.jsx";
 import AppointmentModal from "./AppointmentModal.jsx";
 import { useState, useRef, useEffect } from "react";
-import { redirectToLoginWithPendingBooking } from "../../../../utils/pendingBookingUtils.js";
-
-const COMPACT_CART_BTN_STYLES = {
-  fontSize: "10px",
-  padding: "4px 6px",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  width: "100%",
-  gap: "4px",
-  backgroundColor: "#8059ca",
-  color: "#fff",
-  border: "none",
-  borderRadius: "6px",
-  minHeight: "26px",
-};
-
-const COMPACT_CART_CONTAINER = {
-  display: "flex",
-  alignItems: "center",
-  width: "100%",
-};
-
-const COMPACT_QTY_WRAP = {
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  gap: "4px",
-  width: "100%",
-  border: "1px solid #8059ca",
-  borderRadius: "6px",
-  backgroundColor: "#f8f4ff",
-  padding: "2px 6px",
-  minHeight: "28px",
-};
+import { redirectToLoginWithPendingBooking } from "../../../../utils/pendingBookingUtils";
 
 const SERVICE_BOOKING_TYPES = [
   "consultation",
@@ -208,87 +170,32 @@ const CollapsibleVendorList = ({
   }, [isOpen]);
 
   return (
-    <div ref={containerRef} style={{ width: "100%", position: "relative" }}>
+    <div ref={containerRef} className="w-full relative">
       {/* Collapsible Trigger Header */}
       <div
         onClick={(e) => {
           e.stopPropagation();
           setIsOpen(!isOpen);
         }}
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          padding: "8px 12px",
-          backgroundColor: "#f9f6ff",
-          borderRadius: "8px",
-          cursor: "pointer",
-          border: "1px solid rgba(128, 89, 202, 0.15)",
-          userSelect: "none",
-          transition: "all 0.2s ease",
-        }}
-        onMouseEnter={(e) => {
-          e.currentTarget.style.borderColor = "rgba(128, 89, 202, 0.3)";
-          e.currentTarget.style.backgroundColor = "#f4edff";
-        }}
-        onMouseLeave={(e) => {
-          e.currentTarget.style.borderColor = "rgba(128, 89, 202, 0.15)";
-          e.currentTarget.style.backgroundColor = "#f9f6ff";
-        }}
+        className="flex items-center justify-between py-2 px-3 bg-purple-50/40 hover:bg-purple-50 border border-purple-100 rounded-lg cursor-pointer select-none transition-all duration-200"
       >
-        <span style={{ fontSize: "12px", fontWeight: "600", color: "#8059ca" }}>
+        <span className="text-xs font-bold text-[#8059ca]">
           {vendorCount} {vendorCount === 1 ? "Vendor" : "Vendors"} Available
         </span>
         <i
-          className={`fas fa-chevron-${isOpen ? "up" : "down"}`}
-          style={{
-            fontSize: "10px",
-            color: "#8059ca",
-            transition: "transform 0.2s ease",
-          }}
+          className={`fas fa-chevron-${isOpen ? "up" : "down"} text-[10px] text-[#8059ca] transition-transform duration-200`}
         ></i>
       </div>
 
       {/* Expanded Vendor List + action button */}
       {isOpen && (
         <div
-          style={{
-            position: "absolute",
-            bottom: "100%",
-            left: 0,
-            right: 0,
-            backgroundColor: "#fff",
-            border: "1px solid #e0e0e0",
-            borderRadius: "8px",
-            boxShadow: "0 -4px 16px rgba(0,0,0,0.12)",
-            zIndex: 99,
-            padding: "6px",
-            display: "flex",
-            flexDirection: "column",
-            gap: "6px",
-            marginBottom: "6px",
-          }}
+          className="absolute bottom-[calc(100%+6px)] left-0 right-0 bg-white border border-slate-200 rounded-lg shadow-lg z-[99] p-1.5 flex flex-col gap-1.5 mb-1.5"
           onClick={(e) => e.stopPropagation()}
         >
-          <div
-            style={{
-              maxHeight: "220px",
-              overflowY: "auto",
-              display: "flex",
-              flexDirection: "column",
-              gap: "4px",
-            }}
-          >
+          <div className="max-h-[220px] overflow-y-auto flex flex-col gap-1">
             {vendorCount === 0 ? (
-              <div
-                style={{
-                  width: "100%",
-                  padding: "12px",
-                  textAlign: "center",
-                  color: "#999",
-                  fontSize: "12px",
-                }}
-              >
+              <div className="w-full py-3 text-center text-slate-400 text-xs">
                 No vendor available
               </div>
             ) : (
@@ -299,7 +206,6 @@ const CollapsibleVendorList = ({
                 const vendorName = vendor?.bussinessdetails?.name || "N/A";
                 const vendorAddress = vendor?.bussinessdetails?.address || "N/A";
 
-                // Price Calculation
                 const basePrice = parseFloat(vendor?.price || 0);
                 const discountPrice = parseFloat(vendor?.discountprice || vendor?.discountPrice || 0);
                 const discountType = vendor?.discountType;
@@ -318,61 +224,41 @@ const CollapsibleVendorList = ({
                 return (
                   <div
                     key={vendor?._id || idx}
-                    className="rp-vendor-row"
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.backgroundColor = "#f8f4ff";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.backgroundColor = "transparent";
-                    }}
+                    className="flex items-center gap-2 py-1.5 px-2 rounded-md transition-colors hover:bg-purple-50/30"
                   >
                     <div
-                      className="rp-vendor-row-info"
+                      className="flex-1 min-w-0 flex items-center gap-2 cursor-pointer"
                       onClick={(e) => {
                         e.stopPropagation();
                         handleVendorClick(vendor);
                       }}
                     >
-                      <div style={{ flexShrink: 0 }}>
+                      <div className="shrink-0">
                         <img
                           src={vendorImage}
                           alt={vendorName}
-                          style={{
-                            width: "28px",
-                            height: "28px",
-                            objectFit: "contain",
-                            borderRadius: "4px",
-                            border: "1px solid #e2e8f0",
-                            padding: "2px",
-                            backgroundColor: "#fff",
-                          }}
+                          className="w-7 h-7 object-contain rounded border border-slate-200 p-0.5 bg-white"
                           onError={(e) => {
                             e.target.src = "/assets/default.png";
                           }}
                         />
                       </div>
-                      <div
-                        style={{
-                          display: "flex",
-                          flexDirection: "column",
-                          minWidth: 0,
-                          flex: 1,
-                        }}
-                      >
-                        <div className="rp-vendor-row-name">{vendorName}</div>
-                        <div className="rp-vendor-row-address">
-                          <i className="fas fa-map-marker-alt" />
-                          <span style={{ marginRight: "6px" }}>{vendorAddress}</span>
+                      <div className="flex flex-col min-w-0 flex-1">
+                        <div className="text-[11px] font-bold text-slate-700 truncate">
+                          {vendorName}
+                        </div>
+                        <div className="text-[9px] text-slate-400 flex items-center gap-0.5 mt-0.5 truncate">
+                          <i className="fas fa-map-marker-alt text-[8px] text-[#8059ca] shrink-0"></i>
+                          <span className="truncate">{vendorAddress}</span>
                         </div>
 
-                        {/* Price Info */}
                         {basePrice > 0 && (
-                          <div style={{ display: "flex", alignItems: "baseline", gap: "4px", marginTop: "1px" }}>
-                            <span style={{ fontSize: "10px", fontWeight: "700", color: "#1a1a1a" }}>
+                          <div className="flex items-baseline gap-1 mt-0.5">
+                            <span className="text-[10px] font-bold text-slate-800">
                               ₹{finalPrice.toFixed(2)}
                             </span>
                             {hasDiscount && (
-                              <span style={{ fontSize: "9px", color: "#999", textDecoration: "line-through" }}>
+                              <span className="text-[9px] text-slate-400 line-through">
                                 ₹{basePrice.toFixed(2)}
                               </span>
                             )}
@@ -382,7 +268,7 @@ const CollapsibleVendorList = ({
                     </div>
                     {renderVendorAction && (
                       <div
-                        className="rp-vendor-action-col"
+                        className="shrink-0 w-[82px]"
                         onClick={(e) => e.stopPropagation()}
                       >
                         {renderVendorAction(vendor)}
@@ -402,14 +288,12 @@ const CollapsibleVendorList = ({
 const RelatedProducts = ({
   relatedproducts = [],
   service,
-  onShareClick,
-  onFavoriteToggle,
   isMobile = false,
   isLoggedIn = false,
   userProfile = null,
+  composition
 }) => {
   const navigate = useNavigate();
-  const params = useParams();
   const scrollRef = useRef(null);
 
   const scrollLeft = () => {
@@ -426,14 +310,12 @@ const RelatedProducts = ({
   const { getCartQuantity, incrementItem, decrementItem } = useCart();
   const { addToCart } = useAddToCart();
 
-  // Modal states
   const [showLeadModal, setShowLeadModal] = useState(false);
   const [showRentModal, setShowRentModal] = useState(false);
   const [showConsultationModal, setShowConsultationModal] = useState(false);
   const [showAppointmentModal, setShowAppointmentModal] = useState(false);
   const [currentModalData, setCurrentModalData] = useState(null);
 
-  // Form data states for modals
   const [rentalFormData, setRentalFormData] = useState({
     startDate: "",
     startTime: "",
@@ -464,7 +346,6 @@ const RelatedProducts = ({
     relation: "",
   });
 
-  // Form change handlers
   const handleRentalFormChange = (e) => {
     const { name, value } = e.target;
     setRentalFormData((prev) => ({ ...prev, [name]: value }));
@@ -513,28 +394,12 @@ const RelatedProducts = ({
       return true;
     }
 
-    if (
-      tablet.files &&
-      Array.isArray(tablet.files) &&
-      tablet.files.length > 0
-    ) {
-      return true;
-    }
-
     if (tablet.variant && Array.isArray(tablet.variant)) {
       for (const variant of tablet.variant) {
         if (
           variant.imageUrl &&
           Array.isArray(variant.imageUrl) &&
           variant.imageUrl.length > 0
-        ) {
-          return true;
-        }
-
-        if (
-          variant.files &&
-          Array.isArray(variant.files) &&
-          variant.files.length > 0
         ) {
           return true;
         }
@@ -553,424 +418,67 @@ const RelatedProducts = ({
   }
 
   return (
-    <div style={{ marginTop: isMobile ? "0px" : "20px" }}>
-      <div className="rp-section-header">
-        <div className="rp-section-title-wrap">
-          <span className="rp-section-accent" aria-hidden="true" />
-          <div
-            style={{
-              fontSize: isMobile ? '20px' : '20px',
-              fontWeight: 500,
-              color: '#0f172a',
-              margin: 0
-            }}>
+    <div className={isMobile ? "mt-0" : "mt-5"}>
+      <div className="flex justify-between items-center gap-3 mb-4 pb-3.5 border-b border-[#ede9f5]">
+        <div className="flex items-center gap-3 min-w-0">
+          <span className="w-1.5 h-7 rounded-full bg-gradient-to-b from-[#8059ca] to-[#5a3a9c] shrink-0" aria-hidden="true" />
+          <div className="text-[20px] font-semibold text-slate-800 margin-0">
             Related Products
           </div>
-          <div
-            style={{
-              fontSize: '12px',
-              fontWeight: 600,
-              color: '#8059ca',
-              padding: '4px 10px',
-              borderRadius: '20px'
-            }}>{validProducts.length}</div>
+          <div className="bg-[#8059ca]/10 text-[#8059ca] text-[11px] font-bold px-2 py-0.5 rounded-full shrink-0 leading-none">
+            {validProducts.length}
+          </div>
         </div>
 
         <button
           type="button"
-          className="rp-view-all-btn"
+          className="text-xs font-bold text-white bg-gradient-to-r from-[#8059ca] to-[#6d48b8] hover:shadow-md hover:shadow-purple-500/20 active:scale-[0.98] py-1.5 px-3.5 !rounded-md inline-flex items-center gap-1.5 transition-all duration-300 cursor-pointer border-none"
           onClick={() => {
-            const currentService = service || params.service || "medicine";
-            localStorage.setItem("fixedType", currentService);
-            navigate(`/${currentService}/all`);
+            const firstProduct = relatedproducts[0];
+            const firstProductComp = firstProduct?.tablet?.compositions || firstProduct?.tablet?.composition;
+            const compSlug = composition || (firstProductComp?._id && firstProductComp?.name
+              ? `${firstProductComp.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "")}-${firstProductComp._id}`
+              : firstProductComp);
+
+            if (compSlug && compSlug !== "N/A") {
+              navigate(`/composition/${compSlug}`);
+            } else {
+              toast.error("Composition page not found");
+            }
           }}
         >
           View All
-          <i className="fas fa-arrow-right" aria-hidden="true" />
+          <i className="fas fa-arrow-right text-[10px]" aria-hidden="true" />
         </button>
       </div>
 
-      <style>{`
-        .rp-section-header {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          gap: 12px;
-          margin-bottom: 16px;
-          padding-bottom: 14px;
-          border-bottom: 1px solid #ede9f5;
-        }
-
-        .rp-section-title-wrap {
-          display: flex;
-          align-items: center;
-          gap: 12px;
-          min-width: 0;
-        }
-
-        .rp-section-accent {
-          width: 4px;
-          height: 38px;
-          border-radius: 4px;
-          background: linear-gradient(180deg, #8059ca 0%, #6d48b8 100%);
-          flex-shrink: 0;
-        }
-
-        .rp-section-text {
-          min-width: 0;
-        }
-
-        .rp-section-title {
-          font-size: 18px;
-          font-weight: 700;
-          color: #191c1f;
-          margin: 0;
-          line-height: 1.25;
-        }
-
-        .rp-section-subtitle {
-          font-size: 12px;
-          color: #667085;
-          margin: 3px 0 0;
-          line-height: 1.35;
-        }
-
-        .rp-section-count {
-          background: #f3f0fa;
-          color: #8059ca;
-          font-size: 12px;
-          font-weight: 600;
-          padding: 4px 10px;
-          border-radius: 20px;
-          flex-shrink: 0;
-          line-height: 1.2;
-        }
-
-        .rp-view-all-btn {
-          font-size: 13px;
-          font-weight: 600;
-          color: #8059ca;
-          cursor: pointer;
-          border: 1.5px solid #8059ca;
-          padding: 7px 14px;
-          border-radius: 8px;
-          background: #fdfbff;
-          display: inline-flex;
-          align-items: center;
-          gap: 7px;
-          transition: all 0.2s ease-in-out;
-          white-space: nowrap;
-          flex-shrink: 0;
-        }
-
-        .rp-view-all-btn i {
-          font-size: 10px;
-        }
-
-        .rp-view-all-btn:hover {
-          background: #8059ca;
-          color: #fff;
-        }
-
-        @media (max-width: 576px) {
-          .rp-section-title {
-            font-size: 16px;
-          }
-
-          .rp-section-accent {
-            height: 32px;
-          }
-
-          .rp-view-all-btn {
-            font-size: 12px;
-            padding: 6px 10px;
-          }
-        }
-
-        .related-products-scroll::-webkit-scrollbar {
-          display: none !important;
-        }
-
-        .rp-action-row {
-          display: flex;
-          flex-direction: row;
-          gap: 6px;
-          width: 100%;
-        }
-
-        .rp-action-row > * {
-          flex: 1;
-          min-width: 0;
-        }
-
-        .rp-vendor-row {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          padding: 6px 8px;
-          border-radius: 6px;
-          transition: background-color 0.2s ease;
-        }
-
-        .rp-vendor-row-info {
-          flex: 1;
-          min-width: 0;
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          cursor: pointer;
-        }
-
-        .rp-vendor-row-name {
-          font-size: 11px;
-          font-weight: 600;
-          color: #1a1a1a;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-        }
-
-        .rp-vendor-row-address {
-          font-size: 9px;
-          color: #64748b;
-          display: flex;
-          align-items: center;
-          gap: 3px;
-          overflow: hidden;
-        }
-
-        .rp-vendor-row-address i {
-          font-size: 8px;
-          color: #8059ca;
-          flex-shrink: 0;
-        }
-
-        .rp-vendor-row-address span {
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-        }
-
-        .rp-vendor-action-col {
-          flex-shrink: 0;
-          width: 82px;
-        }
-
-        .rp-action-row--stack {
-          flex-direction: column;
-          gap: 4px;
-        }
-
-        .rp-action-btn {
-          width: 100%;
-          font-size: 11px;
-          font-weight: 600;
-          border-radius: 6px;
-          padding: 5px 8px;
-          border: none;
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          gap: 4px;
-          transition: all 0.2s ease;
-          min-height: 28px;
-          line-height: 1.2;
-          white-space: nowrap;
-        }
-
-        .rp-action-btn i {
-          font-size: 10px;
-          flex-shrink: 0;
-        }
-
-        .rp-action-btn--primary {
-          color: #fff !important;
-          background: #8059ca !important;
-          border: none !important;
-          cursor: pointer;
-        }
-
-        .rp-action-btn--primary i {
-          color: #fff !important;
-        }
-
-        .rp-action-btn--primary:hover:not(:disabled) {
-          background: #6b21d6 !important;
-        }
-
-        .rp-action-btn--primary:disabled {
-          background: #ccc !important;
-          color: #fff !important;
-          cursor: not-allowed;
-        }
-
-        .rp-action-btn--disabled {
-          background: #e5e7eb;
-          color: #9ca3af;
-          cursor: not-allowed;
-        }
-
-        .rp-vendor-action-col .vendor-add-btn,
-        .rp-vendor-action-col .vendor-add-btn.rp-cart-control,
-        .rp-vendor-action-col .vendor-action-btn.vendor-add-btn {
-          min-width: 0 !important;
-          width: 100%;
-          font-size: 10px !important;
-          min-height: 26px !important;
-          padding: 4px 6px !important;
-          color: #fff !important;
-          border: none !important;
-          background-color: #8059ca !important;
-          border-radius: 6px !important;
-        }
-
-        .rp-vendor-action-col .vendor-add-btn i,
-        .rp-vendor-action-col .vendor-action-btn i {
-          color: #fff !important;
-        }
-
-        .rp-cart-control.cart-qty-controls {
-          color: #8059ca !important;
-          border: 1px solid #8059ca !important;
-          background-color: #f8f4ff !important;
-        }
-
-        .rp-qty-box {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 4px;
-          width: 100%;
-          border: 1px solid #8059ca;
-          border-radius: 6px;
-          background-color: #f8f4ff;
-          padding: 2px 6px;
-          min-height: 28px;
-        }
-
-        .rp-qty-btn {
-          width: 24px;
-          height: 24px;
-          border-radius: 5px;
-          border: none;
-          background-color: transparent;
-          color: #8059ca;
-          cursor: pointer;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          padding: 0;
-          flex-shrink: 0;
-          transition: background 0.15s ease;
-        }
-
-        .rp-qty-btn:hover:not(:disabled) {
-          background-color: rgba(128, 89, 202, 0.1);
-        }
-
-        .rp-qty-btn:disabled {
-          opacity: 0.45;
-          cursor: not-allowed;
-        }
-
-        .rp-qty-btn i {
-          font-size: 9px;
-        }
-
-        .rp-qty-count {
-          font-weight: 600;
-          font-size: 11px;
-          min-width: 24px;
-          text-align: center;
-          color: #1a1a1a;
-        }
-      `}</style>
-
-      <div style={{ position: "relative", width: "100%" }}>
+      <div className="relative w-full">
         {/* Scroll Left Button */}
         <button
           type="button"
           onClick={scrollLeft}
-          style={{
-            position: "absolute",
-            left: "8px",
-            top: "50%",
-            transform: "translateY(-50%)",
-            zIndex: 10,
-            width: "36px",
-            height: "36px",
-            borderRadius: "50%",
-            backgroundColor: "#ffffff",
-            border: "1px solid rgba(128, 89, 202, 0.2)",
-            boxShadow: "0 2px 8px rgba(0, 0, 0, 0.12)",
-            color: "#8059ca",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            cursor: "pointer",
-            transition: "all 0.2s ease",
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.backgroundColor = "#8059ca";
-            e.currentTarget.style.color = "#ffffff";
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.backgroundColor = "#ffffff";
-            e.currentTarget.style.color = "#8059ca";
-          }}
+          className="absolute left-2 top-1/2 -translate-y-1/2 z-10 w-9 h-9 !rounded-full bg-white border border-purple-200/50 shadow-md text-[#8059ca] flex items-center justify-center cursor-pointer transition-all hover:bg-[#8059ca] hover:text-white"
         >
-          <i className="fa-solid fa-chevron-left" style={{ fontSize: "14px" }}></i>
+          <i className="fa-solid fa-chevron-left text-[14px]"></i>
         </button>
 
         {/* Scroll Right Button */}
         <button
           type="button"
           onClick={scrollRight}
-          style={{
-            position: "absolute",
-            right: "8px",
-            top: "50%",
-            transform: "translateY(-50%)",
-            zIndex: 10,
-            width: "36px",
-            height: "36px",
-            borderRadius: "50%",
-            backgroundColor: "#ffffff",
-            border: "1px solid rgba(128, 89, 202, 0.2)",
-            boxShadow: "0 2px 8px rgba(0, 0, 0, 0.12)",
-            color: "#8059ca",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            cursor: "pointer",
-            transition: "all 0.2s ease",
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.backgroundColor = "#8059ca";
-            e.currentTarget.style.color = "#ffffff";
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.backgroundColor = "#ffffff";
-            e.currentTarget.style.color = "#8059ca";
-          }}
+          className="absolute right-2 top-1/2 -translate-y-1/2 z-10 w-9 h-9 !rounded-full bg-white border border-purple-200/50 shadow-md text-[#8059ca] flex items-center justify-center cursor-pointer transition-all hover:bg-[#8059ca] hover:text-white"
         >
-          <i className="fa-solid fa-chevron-right" style={{ fontSize: "14px" }}></i>
+          <i className="fa-solid fa-chevron-right text-[14px]"></i>
         </button>
 
         <div
           ref={scrollRef}
+          className="grid grid-auto-cols-[250px] grid-flow-col gap-4 overflow-x-auto overflow-y-hidden pb-2 scrollbar-none [&::-webkit-scrollbar]:hidden"
           style={{
-            display: "grid",
             gridAutoColumns: "250px",
             gridAutoFlow: "column",
-            gap: "16px",
-            overflowX: "auto",
-            overflowY: "hidden",
-            paddingBottom: "8px",
-            scrollbarWidth: "none",
             WebkitOverflowScrolling: "touch",
           }}
-          className="related-products-scroll"
         >
           {relatedproducts
             .filter((product) => hasValidImage(product))
@@ -999,11 +507,6 @@ const RelatedProducts = ({
                   ? getImageUrl(allImageFiles[0])
                   : allImageFiles[0]
                 : "/assets/default.png";
-              const vendorImage =
-                getImageUrl(
-                  firstVendor?.bussinessdetails?.bussiness_image?.url,
-                ) || "/assets/default.png";
-              const vendorName = firstVendor?.bussinessdetails?.name || "N/A";
               const bookingType =
                 firstVendor?.bookingType || firstVendor?.bookingtype || null;
               const isVariant = !!firstVariant;
@@ -1031,7 +534,6 @@ const RelatedProducts = ({
                 : (firstVendor?.discountType ??
                   null);
 
-              // Calculate effective price based on discountType
               let calculatedDiscountPrice = discountPrice;
               if (discountType === "percentage" && discountPrice && discountPrice > 0) {
                 calculatedDiscountPrice = basePrice - (basePrice * discountPrice / 100);
@@ -1045,7 +547,7 @@ const RelatedProducts = ({
               let discountPercent = 0;
               if (hasValidDiscount) {
                 if (discountType === "percentage") {
-                  discountPercent = discountPrice; // Use original percentage
+                  discountPercent = discountPrice;
                 } else {
                   discountPercent = Math.round(
                     ((basePrice - discountPrice) / basePrice) * 100,
@@ -1107,23 +609,11 @@ const RelatedProducts = ({
                     : 999;
               }
 
-              const vendorAddress =
-                firstVendor?.bussinessdetails?.address || "N/A";
               const composition = product?.tablet?.compositions || "N/A";
-              const isFavorite = product?.tablet?.isFavorite || false;
               const productSlug = product?.tablet?.slug;
               const productId = product?.tablet?._id || product?._id;
               const productType =
                 product?.tablet?.subcategorys?.category?.fixedType || "";
-              const isServiceType = [
-                "homecare",
-                "nursingcare",
-                "medicaltreatment",
-                "medicalequipment",
-                "dentalservice",
-                "diagnostics",
-                "labtests",
-              ].includes(productType);
               const categoryData = product?.tablet?.subcategorys?.category;
               const subcategoryData = product?.tablet?.subcategorys;
               const productService =
@@ -1172,7 +662,6 @@ const RelatedProducts = ({
                     packageId: null,
                     type: "normal",
                     bookingType: "buy_now",
-                    servicefixedTypes: service
                   },
                 ];
                 const token = localStorage.getItem("medicomparestoken");
@@ -1492,7 +981,8 @@ const RelatedProducts = ({
                     vendor={vendor || vendor || {}}
                     effectiveVariantId={effectiveVariantId}
                     price={vendorFinalPrice}
-                    // stock={vendorMaxStock}
+                    stock={vendorMaxStock}
+                    rentPerDay={vendor?.perDayRent}
                     service={product?.tablet?.category?.fixedType}
                     calculatedDiscountPrice={vendorDiscountPrice}
                     handleRentalBookinProcess={handleRentalBookinProcess}
@@ -1502,7 +992,7 @@ const RelatedProducts = ({
                     handleOpenAppointmentModal={handleOpenAppointmentModal}
                     handleAddToCart={handleAddToCart}
                     handleSingleAddToCart={handleSingleAddToCart}
-                    className="w-100"
+                    className="w-full"
                     containerStyle={{
                       display: "flex",
                       flexDirection: vendorBookingType === "rentals_addtocarts" ? "column" : "row",
@@ -1523,280 +1013,82 @@ const RelatedProducts = ({
               return (
                 <div
                   key={product._id || product?.tablet?._id || index}
-                  style={{
-                    width: "250px",
-                    border: "1px solid #e0e0e0",
-                    borderRadius: "12px",
-                    overflow: "visible",
-                    backgroundColor: "#fff",
-                    boxShadow: "0 2px 8px rgba(0,0,0,0.08)",
-                    cursor: "pointer",
-                    display: "flex",
-                    flexDirection: "column",
-                    height: "100%",
-                    position: "relative",
-                  }}
+                  className="w-[250px] border border-slate-200/80 !rounded-xl overflow-visible bg-white shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:-translate-y-1 hover:shadow-[0_12px_24px_rgba(128,89,202,0.12)] cursor-pointer flex flex-col h-full relative transition-all duration-300"
                 >
                   {product?.tablet?.medicineType && (
                     <div
-                      className="medicompare-ribbons"
-                      style={{ textTransform: "capitalize" }}
+                      className="absolute top-2 left-2 bg-gradient-to-r from-red-500 to-rose-600 text-white text-[9px] font-extrabold py-0.5 px-2 rounded-full uppercase tracking-wider z-10 shadow-sm"
                     >
                       {product.tablet.medicineType}
                     </div>
                   )}
 
                   <div
-                    style={{
-                      position: "relative",
-                      width: "100%",
-                      height: "140px",
-                      overflow: "hidden",
-                      flexShrink: 0,
-                    }}
+                    className="relative w-full h-[150px] bg-gradient-to-br from-purple-50/10 to-slate-50/50 p-2 flex items-center justify-center overflow-hidden shrink-0 rounded-t-xl"
                     onClick={handleProductClick}
                   >
                     <img
                       src={variantImage}
                       title={product?.tablet?.name || "Product"}
                       alt={product?.tablet?.name || "Product"}
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        objectFit: "contain",
-                        borderRadius: "10px 10px 0 0",
-                      }}
+                      className="max-w-full max-h-full h-auto w-auto object-contain mix-blend-multiply transition-transform duration-300 hover:scale-105"
                       onError={(e) => {
                         e.target.src = "/medicine.jpg";
                       }}
                     />
                     {productSlug && (
-                      <>
-                        <style>{`
-                          @keyframes comparePulse {
-                            0% {
-                              box-shadow: 0 0 0 0 rgba(128, 89, 202, 0.6);
-                            }
-                            70% {
-                              box-shadow: 0 0 0 6px rgba(128, 89, 202, 0);
-                            }
-                            100% {
-                              box-shadow: 0 0 0 0 rgba(128, 89, 202, 0);
-                            }
-                          }
-                          @keyframes compareAutoExpand {
-                            0%, 10%, 40%, 100% {
-                              width: 32px;
-                            }
-                            15%, 35% {
-                              width: 90px;
-                            }
-                          }
-                          @keyframes textFadeInOut {
-                            0%, 12%, 38%, 100% {
-                              opacity: 0;
-                            }
-                            15%, 35% {
-                              opacity: 1;
-                            }
-                          }
-                          .compare-btn-highlight {
-                            animation: comparePulse 2s infinite, compareAutoExpand 8s infinite ease-in-out;
-                          }
-                          .compare-text-label {
-                            animation: textFadeInOut 8s infinite ease-in-out;
-                          }
-                          .compare-btn-highlight:hover {
-                            animation: comparePulse 2s infinite !important;
-                          }
-                          .compare-btn-highlight:hover .compare-text-label {
-                            animation: none !important;
-                            opacity: 1 !important;
-                          }
-                        `}</style>
-                        <div
-                          className="compare-btn-highlight"
-                          onClick={(e) => {
-                            e.stopPropagation();
-
-                            const data = product?.tablet;
-
-                            const categorySlug = data?.subcategorys?.category?.slug;
-
-                            const subcategorySlug = data?.subcategorys?.slug;
-
-                            const productSlug = data?.slug;
-                            if (!categorySlug || !subcategorySlug || !productSlug)
-                              return;
-
-                            navigate(
-                              `/${categorySlug}/${subcategorySlug}/${productSlug}/compare`,
-                            );
-                          }}
-                          style={{
-                            position: "absolute",
-                            top: "8px",
-                            right: "8px",
-                            background: "#8059ca",
-                            color: "#ffffff",
-                            border: "1.5px solid #8059ca",
-                            borderRadius: "20px",
-                            width: "32px",
-                            height: "26px",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "flex-start",
-                            paddingLeft: "9px",
-                            cursor: "pointer",
-                            zIndex: 10,
-                            boxShadow: "0 2px 8px rgba(128, 89, 202, 0.4)",
-                            transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-                            overflow: "hidden",
-                            whiteSpace: "nowrap",
-                          }}
-                          onMouseEnter={(e) => {
-                            e.currentTarget.style.width = "90px";
-                            e.currentTarget.style.backgroundColor = "#6a45b3";
-                            e.currentTarget.style.borderColor = "#6a45b3";
-                          }}
-                          onMouseLeave={(e) => {
-                            e.currentTarget.style.width = "32px";
-                            e.currentTarget.style.backgroundColor = "#8059ca";
-                            e.currentTarget.style.borderColor = "#8059ca";
-                          }}
-                        >
-                          <i
-                            className="fa-solid fa-right-left shrink-0"
-                            style={{ fontSize: "11px", color: "inherit" }}
-                          ></i>
-                          <span
-                            className="compare-text-label"
-                            style={{
-                              marginLeft: "6px",
-                              fontSize: "11px",
-                              fontWeight: "600",
-                              color: "#ffffff",
-                              opacity: 0,
-                              transition: "opacity 0.2s ease-in-out",
-                            }}
-                          >
-                            Compare
-                          </span>
-                        </div>
-                      </>
+                      <CompareOverlayButton tablet={product?.tablet} serviceType={productService} />
                     )}
                   </div>
 
-                  <div
-                    style={{
-                      padding: "12px",
-                      flex: 1,
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "space-between",
-                    }}
-                  >
-                    <div
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "flex-start",
-                        marginBottom: "10px",
-                        gap: "8px",
-                      }}
-                    >
+                  <div className="p-3 flex-1 flex flex-col justify-between">
+                    <div className="flex flex-col gap-1 mb-2">
+                      {product?.tablet?.manufacture?.name && (
+                        <div className="flex">
+                          <span
+                            className="text-[9px] text-[#8059ca] bg-[#8059ca]/10 border border-[#8059ca]/15 px-1.5 py-0.5 !rounded-md font-bold tracking-wide truncate max-w-full"
+                            title={product.tablet.manufacture.name}
+                          >
+                            By {product.tablet.manufacture.name}
+                          </span>
+                        </div>
+                      )}
                       <h6
-                        style={{
-                          fontSize: "14px",
-                          fontWeight: "600",
-                          color: "#2d3748",
-                          margin: 0,
-                          flex: 1,
-                          lineHeight: "1.4",
-                          display: "-webkit-box",
-                          WebkitLineClamp: 2,
-                          WebkitBoxOrient: "vertical",
-                          overflow: "hidden",
-                        }}
+                        className="text-[13px] font-bold text-slate-800 margin-0 leading-normal line-clamp-2 overflow-hidden text-ellipsis h-9 hover:text-[#8059ca] transition-colors"
                         onClick={handleProductClick}
                       >
                         {(() => {
                           const name = product?.tablet?.name || "Product Name";
                           const capitalizedName = typeof name === 'string' ? name.charAt(0).toUpperCase() + name.slice(1) : name;
-                          return capitalizedName.length > 80
-                            ? `${capitalizedName.substring(0, 80)}...`
-                            : capitalizedName;
+                          return capitalizedName;
                         })()}
                       </h6>
                     </div>
-                    {/* {typeof finalPrice === "number" && finalPrice > 0 && (
-                      <div
-                        style={{
-                          display: "flex",
-                          alignItems: "baseline",
-                          gap: "8px",
-                          marginBottom: "12px",
-                          flexWrap: "wrap",
-                        }}
-                      >
-                        <span
-                          style={{
-                            fontSize: "16px",
-                            fontWeight: "700",
-                            color: "#1a1a1a",
-                            lineHeight: "1",
-                          }}
-                        >
+
+                    {typeof finalPrice === "number" && finalPrice > 0 && (
+                      <div className="flex items-baseline gap-1.5 mb-2.5 flex-wrap">
+                        <span className="text-[14px] font-extrabold text-[#8059ca]">
                           ₹{finalPrice.toFixed(2)}
                         </span>
                         {originalPrice && originalPrice > finalPrice && (
                           <>
-                            <span
-                              style={{
-                                fontSize: "14px",
-                                color: "#999",
-                                textDecoration: "line-through",
-                              }}
-                            >
+                            <span className="text-[11px] text-slate-400 line-through">
                               ₹{originalPrice.toFixed(2)}
                             </span>
                             {discountPercent > 0 && (
-                              <span
-                                style={{
-                                  fontSize: "11px",
-                                  fontWeight: "600",
-                                  color: "#fff",
-                                  backgroundColor: "#FF6B35",
-                                  padding: "2px 8px",
-                                  borderRadius: "4px",
-                                }}
-                              >
+                              <span className="text-[9px] font-extrabold text-emerald-600 bg-emerald-50 border border-emerald-100/50 px-1 py-0.5 !rounded-md">
                                 {discountPercent}% OFF
                               </span>
                             )}
                           </>
                         )}
                       </div>
-                    )} */}
+                    )}
+
                     {(product?.tablet?.reportsDuration ||
                       product?.tablet?.reportDuration) && (
-                        <div
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "6px",
-                            fontSize: "12px",
-                            color: "#666",
-                          }}
-                        >
-                          <i
-                            className="fas fa-file-alt"
-                            style={{
-                              color: "#8059ca",
-                              fontSize: "12px",
-                              flexShrink: 0,
-                            }}
-                          ></i>
+                        <div className="flex items-center gap-1.5 mb-3 text-[11px] text-slate-500">
+                          <i className="fas fa-file-alt text-[#8059ca] text-[11px] shrink-0"></i>
                           <span>
                             Reports in{" "}
                             <strong>
@@ -1806,24 +1098,11 @@ const RelatedProducts = ({
                           </span>
                         </div>
                       )}
-                    {/* {product?.tablet?.medicineType || "Product Name"} */}
-
-
 
                     {(() => {
                       const tablet = product?.tablet || {};
                       const availableKeys = [];
 
-                      if (tablet.manufacture?.name) {
-                        availableKeys.push({
-                          icon: "fas fa-industry",
-                          label: "Manufacturer",
-                          value:
-                            tablet.manufacture.name.length > 25
-                              ? tablet.manufacture.name.slice(0, 25) + "..."
-                              : tablet.manufacture.name,
-                        });
-                      }
                       if (tablet.form) {
                         availableKeys.push({
                           icon: "fas fa-pills",
@@ -1901,45 +1180,19 @@ const RelatedProducts = ({
                         });
                       }
 
-                      const keysToShow = availableKeys.slice(0, 4);
+                      const keysToShow = availableKeys.slice(0, 3);
 
                       return keysToShow.length > 0 ? (
-                        <div
-                          style={{
-                            display: "flex",
-                            flexDirection: "column",
-                            gap: "6px",
-                            marginBottom: "12px",
-                            fontSize: "11px",
-                            color: "#666",
-                          }}
-                        >
+                        <div className="flex flex-col gap-1 mb-3 text-[10.5px] text-slate-500">
                           {keysToShow.map((key, idx) => (
                             <div
                               key={idx}
-                              style={{
-                                display: "flex",
-                                alignItems: "center",
-                                gap: "6px",
-                              }}
+                              className="flex items-center gap-1.5"
                             >
                               <i
-                                className={key.icon}
-                                style={{
-                                  color: "#8059ca",
-                                  fontSize: "10px",
-                                  minWidth: "14px",
-                                  flexShrink: 0,
-                                }}
+                                className={`${key.icon} text-[#8059ca] text-[9.5px] w-3 shrink-0`}
                               ></i>
-                              <span
-                                style={{
-                                  display: "flex",
-                                  alignItems: "center",
-                                  gap: "4px",
-                                  flexWrap: "wrap",
-                                }}
-                              >
+                              <span className="flex items-center gap-1 flex-wrap">
                                 <strong>{key.label}:</strong>
                                 <span
                                   style={{
@@ -1958,15 +1211,7 @@ const RelatedProducts = ({
                       ) : null;
                     })()}
 
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        width: "100%",
-                        marginTop: "auto",
-                        position: "relative",
-                      }}
-                    >
+                    <div className="flex flex-col w-full mt-auto relative">
                       <CollapsibleVendorList
                         vendors={product?.vendors}
                         handleVendorClick={handleVendorClick}

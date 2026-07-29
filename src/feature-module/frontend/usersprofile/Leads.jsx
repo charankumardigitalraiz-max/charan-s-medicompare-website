@@ -91,80 +91,43 @@ const Enquiries = ({ HomeNavigate, BackButton }) => {
                 <BackButton />
               </div>
             )}
-            {HomeNavigate && (
-              <div className="col-12 mb-3 d-flex justify-content-end">
-                <HomeNavigate />
-              </div>
-            )}
             <div className="col-lg-12">
-              <div
-                className="dashboard-header"
-                style={{
-                  backgroundColor: "#fff",
-                  borderRadius: "12px",
-                  padding: isMobile ? "20px 15px" : "25px",
-                  marginBottom: "20px",
-                  boxShadow: "0 4px 20px rgba(0, 0, 0, 0.05)",
-                  width: "100%",
-                  overflow: "visible",
-                }}
-              >
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: isMobile ? "column" : "row",
-                    justifyContent: "space-between",
-                    alignItems: isMobile ? "flex-start" : "center",
-                    gap: isMobile ? "16px" : "24px",
-                    width: "100%",
-                  }}
-                >
-                  <div
-                    style={{
-                      flex: "1",
-                      minWidth: 0,
-                      maxWidth: isMobile ? "100%" : "calc(100% - 280px)",
-                      wordBreak: "break-word",
-                      overflow: "hidden",
-                    }}
-                  >
-                    <h3
-                      style={{
-                        fontSize: isMobile ? "20px" : "24px",
-                        fontWeight: "600",
-                        color: "#333",
-                        margin: "0",
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "10px",
-                        flexWrap: isMobile ? "wrap" : "nowrap",
-                      }}
-                    >
-                      <i
-                        className="fa-solid fa-users"
-                        style={{ color: "#8059ca", flexShrink: 0 }}
-                      ></i>
-                      <span>Enquiries</span>
-                    </h3>
-                    <p
-                      style={{
-                        color: "#666",
-                        fontSize: isMobile ? "13px" : "14px",
-                        marginTop: "5px",
-                        marginBottom: "0",
-                      }}
-                    >
-                      Manage and track all your potential Enquiries
-                    </p>
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pb-2 mb-2 border-b border-slate-100 mt-2">
+                <div className="flex items-center gap-3.5">
+                  {HomeNavigate && <HomeNavigate />}
+                  <div className="w-11 h-11 rounded-xl bg-purple-50 text-[#8059ca] flex items-center justify-center text-[20px] shrink-0 border border-purple-100/50 shadow-sm">
+                    <i className="fa-solid fa-users" />
                   </div>
 
-                  <div
-                    style={{
-                      position: "relative",
-                      width: isMobile ? "100%" : "250px",
-                      flexShrink: 0,
-                    }}
-                  >
+
+
+                  {/* <div className="flex flex-col gap-1">
+                    <div className="m-0 text-[#0f172a] text-[18px] md:text-[20px] tracking-tight leading-none" style={{ fontWeight: 600 }}>
+                      Enquiries
+                    </div>
+                    <p className="text-slate-500 text-[12px] m-0 font-medium leading-none">
+                      Manage and track all your potential Enquiries
+                    </p>
+                  </div> */}
+
+
+
+                  <div className="flex flex-col gap-1">
+                    <div className="m-0 text-[#0f172a] font-medium text-[16px] md:text-[16px] tracking-tight leading-none" >
+                      Enquiries
+                    </div>
+                    <div className="text-slate-500 text-[12px] m-0 font-medium leading-none">
+                      Manage and track all your potential Enquiries
+                    </div>
+                  </div>
+
+
+
+
+
+                </div>
+                <div className="flex items-center gap-3 w-full sm:w-auto">
+                  <div className="relative w-full sm:w-[260px] shrink-0">
                     <input
                       type="text"
                       placeholder="Search by Name..."
@@ -173,65 +136,18 @@ const Enquiries = ({ HomeNavigate, BackButton }) => {
                         setSearchTerm(e.target.value);
                         setCurrentPage(1);
                       }}
-                      style={{
-                        height: "42px",
-                        borderRadius: "8px",
-                        border: "1px solid #e0e0e0",
-                        padding: "10px 15px 10px 40px",
-                        fontSize: "14px",
-                        width: "100%",
-                        outline: "none",
-                      }}
+                      className="h-[38px] rounded-lg border border-slate-200 pl-9 pr-3 text-[13px] w-full outline-none bg-slate-50 hover:bg-white hover:border-[#8059ca] focus:bg-white focus:border-[#8059ca] transition-all duration-200"
                     />
-                    <span
-                      style={{
-                        position: "absolute",
-                        left: "15px",
-                        top: "50%",
-                        transform: "translateY(-50%)",
-                        color: "#999",
-                      }}
-                    >
+                    <span className="absolute left-[12px] top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none text-[13px]">
                       <i className="fa-solid fa-search" />
                     </span>
                   </div>
                 </div>
               </div>
 
-              <div className="consultation-table-wrapper" style={{ background: "#fff", borderRadius: "12px", border: "1px solid #ececf6", boxShadow: "0 4px 16px rgba(0, 0, 0, 0.03)", overflow: "hidden", marginBottom: "20px" }}>
-                <style>{`
-                  .consultation-table {
-                    width: 100%;
-                    border-collapse: collapse;
-                    margin-bottom: 0;
-                  }
-                  .consultation-table th {
-                    background: #fbfbfe;
-                    color: #777;
-                    font-size: 11px;
-                    font-weight: 600;
-                    text-transform: uppercase;
-                    letter-spacing: 0.5px;
-                    padding: 14px 16px;
-                    border-bottom: 1px solid #ececf6;
-                    text-align: left;
-                  }
-                  .consultation-table td {
-                    padding: 14px 16px;
-                    font-size: 13px;
-                    color: #333;
-                    border-bottom: 1px solid #ececf6;
-                    vertical-align: middle;
-                  }
-                  .consultation-table tr:last-child td {
-                    border-bottom: none;
-                  }
-                  .consultation-table tr:hover td {
-                    background-color: #faf9fe;
-                  }
-                `}</style>
+              <div className="profile-table-wrapper">
                 <div className="table-responsive">
-                  <table className="consultation-table">
+                  <table className="profile-table">
                     <thead>
                       <tr>
                         {columnConfig.date && <th>Date</th>}

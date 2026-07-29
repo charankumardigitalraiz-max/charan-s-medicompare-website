@@ -238,7 +238,7 @@ const ViewAllPackages = () => {
 
       <section
         className="content-categories"
-        style={{ padding: "140px 0px 40px", backgroundColor: "#f8f9fa" }}
+        style={{ padding: "30px 0px 40px", backgroundColor: "#f8f9fa" }}
       >
         <div className="container-fluid">
           {loading ? (

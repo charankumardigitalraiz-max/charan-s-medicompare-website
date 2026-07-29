@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import BaseModal from "../../../../components/ui/BaseModal";
 import { createPortal } from "react-dom";
 import {
   axiosCommonInstance,
@@ -7,7 +8,7 @@ import {
 import { fetchDoctorsList } from "../../../../services/doctorService";
 import { fetchFamilyMembersList, createFamilyMember } from "../../../../services/familyMemberService";
 import { Autocomplete, useJsApiLoader } from "@react-google-maps/api";
-import { DatePicker } from "rsuite";
+import CustomDatePicker from "../../../../components/ui/CustomDatePicker";
 import Select from "react-select";
 import toast from "react-hot-toast";
 import {
@@ -358,730 +359,442 @@ const FamilyMemberSelectionModal = ({
   if (!show) return null;
 
   const modalContent = (
-    <div
-      className="modal fade show"
-      onClick={onClose}
-      onMouseDown={onClose}
-      style={{
-        display: "block",
-        backgroundColor: "rgba(0,0,0,0.6)",
-        position: "fixed",
-        top: 0,
-        left: 0,
-        width: "100%",
-        height: "100%",
-        zIndex: 999999999,
-        backdropFilter: "blur(4px)",
-      }}
-    >
-      <div
-        className="modal-dialog modal-dialog-centered"
-        onClick={(e) => e.stopPropagation()}
-        onMouseDown={(e) => e.stopPropagation()}
-        style={{
-          maxWidth: isAddingFamilyMember ? "500px" : "420px",
-          transition: "max-width 0.3s ease",
-        }}
-      >
-        <div
-          className="modal-content shadow-lg border-0"
-          style={{
-            borderRadius: "16px",
-            overflow: "hidden",
-          }}
-        >
-          <div
-            className="modal-header border-0 pb-0"
-            style={{ padding: "20px 24px" }}
+    <BaseModal
+      show={show}
+      onClose={onClose}
+      title={isAddingFamilyMember ? "Add New Family Member" : "Select Patient(s)"}
+      size="md"
+      className={isAddingFamilyMember ? "max-w-[500px]" : "max-w-[420px]"}
+      bodyClassName="!p-6"
+      headerClassName="border-b-0 pb-0"
+      footer={
+        !isAddingFamilyMember && (
+          <button
+            type="button"
+            onClick={() => onProceed(selectedPatients, familyMembersData)}
+            className="px-6 py-2 text-sm font-medium rounded-full bg-[#8059ca] hover:bg-[#6f42c1] text-white border-none transition-colors"
           >
-            <h5
-              className="modal-title"
-              style={{ fontSize: "18px", fontWeight: "600", color: "#0f172a" }}
-            >
-              {isAddingFamilyMember
-                ? "Add New Family Member"
-                : "Select Patient(s)"}
-            </h5>
-            <button
-              type="button"
-              className="btn-close"
-              onClick={onClose}
-            ></button>
-          </div>
+            Proceed
+          </button>
+        )
+      }
+    >
+      <div id="family-member-modal-body" className="relative overflow-visible">
+        {!isAddingFamilyMember ? (
+          <>
+            <p className="text-xs text-slate-500 mb-4">
+              Please select who this lab test booking is for (you can select
+              multiple).
+            </p>
 
-          <div className="modal-body" style={{ padding: "20px 24px" }}>
-            {!isAddingFamilyMember ? (
-              <>
-                <p
-                  style={{
-                    fontSize: "13px",
-                    color: "#64748b",
-                    marginBottom: "16px",
-                  }}
-                >
-                  Please select who this lab test booking is for (you can select
-                  multiple).
-                </p>
-
-                <div
-                  className="d-flex flex-column gap-2"
-                  style={{
-                    maxHeight: "280px",
-                    overflowY: "auto",
-                    paddingRight: "4px",
-                  }}
-                >
-                  <div
-                    style={{
-                      fontSize: "11px",
-                      fontWeight: "700",
-                      color: "#8059ca",
-                      textTransform: "uppercase",
-                      letterSpacing: "0.5px",
-                      marginTop: "4px",
-                      marginBottom: "2px",
-                    }}
-                  >
+            <div className="d-flex flex-column gap-2 max-h-[280px] overflow-y-auto pr-1">
+              <div className="text-[11px] font-bold text-[#8059ca] uppercase tracking-[0.5px] mt-1 mb-0.5">
+                Self
+              </div>
+              {/* Self Checkbox Option */}
+              <div
+                onClick={() => {
+                  if (selectedPatients.includes("self")) {
+                    setSelectedPatients(
+                      selectedPatients.filter((id) => id !== "self"),
+                    );
+                  } else {
+                    setSelectedPatients([...selectedPatients, "self"]);
+                  }
+                }}
+                className={`px-3.5 py-2.5 rounded-lg border-[1.5px] cursor-pointer flex items-center gap-2.5 transition-all duration-150 ${selectedPatients.includes("self")
+                    ? "border-[#8059ca] bg-[#fdfaff]"
+                    : "border-slate-200 bg-white"
+                  }`}
+              >
+                <input
+                  type="checkbox"
+                  checked={selectedPatients.includes("self")}
+                  onChange={() => { }}
+                  className="accent-[#8059ca] w-4 h-4 cursor-pointer"
+                />
+                <div>
+                  <span className="text-[13.5px] font-semibold text-slate-900">
                     Self
-                  </div>
-                  {/* Self Checkbox Option */}
-                  <div
-                    onClick={() => {
-                      if (selectedPatients.includes("self")) {
-                        setSelectedPatients(
-                          selectedPatients.filter((id) => id !== "self"),
-                        );
-                      } else {
-                        setSelectedPatients([...selectedPatients, "self"]);
-                      }
-                    }}
-                    style={{
-                      padding: "10px 14px",
-                      borderRadius: "8px",
-                      border: `1.5px solid ${selectedPatients.includes("self") ? "#8059ca" : "#e2e8f0"}`,
-                      backgroundColor: selectedPatients.includes("self")
-                        ? "#fdfaff"
-                        : "#fff",
-                      cursor: "pointer",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "10px",
-                      transition: "all 0.15s ease",
-                    }}
-                  >
-                    <input
-                      type="checkbox"
-                      checked={selectedPatients.includes("self")}
-                      onChange={() => { }}
-                      style={{
-                        accentColor: "#8059ca",
-                        width: "16px",
-                        height: "16px",
-                        cursor: "pointer",
-                      }}
-                    />
-                    <div>
-                      <span
-                        style={{
-                          fontSize: "13.5px",
-                          fontWeight: "600",
-                          color: "#0f172a",
-                        }}
-                      >
-                        Self
-                      </span>
-                      <span
-                        style={{
-                          fontSize: "11px",
-                          color: "#64748b",
-                          marginLeft: "6px",
-                        }}
-                      >
-                        (
-                        {userProfile?.first_name
-                          ? `${userProfile.first_name} ${userProfile.last_name || ""}`
-                          : "Account Owner"}
-                        )
-                      </span>
-                    </div>
-                  </div>
-
-                  <div
-                    style={{
-                      fontSize: "11px",
-                      fontWeight: "700",
-                      color: "#8059ca",
-                      textTransform: "uppercase",
-                      letterSpacing: "0.5px",
-                      marginTop: "12px",
-                      marginBottom: "2px",
-                    }}
-                  >
-                    Family Members
-                  </div>
-                  {/* Family Members Checkbox Options */}
-                  {familyMembersData && familyMembersData.length > 0 ? (
-                    familyMembersData.map((member) => {
-                      const capName = member.name
-                        ? member.name
-                          .split(" ")
-                          .map(
-                            (w) =>
-                              w.charAt(0).toUpperCase() +
-                              w.slice(1).toLowerCase(),
-                          )
-                          .join(" ")
-                        : "";
-                      const capRelation = member.relationship
-                        ? member.relationship.charAt(0).toUpperCase() +
-                        member.relationship.slice(1).toLowerCase()
-                        : "Family";
-                      const isSelected = selectedPatients.includes(member._id);
-                      return (
-                        <div
-                          key={member._id}
-                          onClick={() => {
-                            if (isSelected) {
-                              setSelectedPatients(
-                                selectedPatients.filter(
-                                  (id) => id !== member._id,
-                                ),
-                              );
-                            } else {
-                              setSelectedPatients([
-                                ...selectedPatients,
-                                member._id,
-                              ]);
-                            }
-                          }}
-                          style={{
-                            padding: "10px 14px",
-                            borderRadius: "8px",
-                            border: `1.5px solid ${isSelected ? "#8059ca" : "#e2e8f0"}`,
-                            backgroundColor: isSelected ? "#fdfaff" : "#fff",
-                            cursor: "pointer",
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "10px",
-                            transition: "all 0.15s ease",
-                          }}
-                        >
-                          <input
-                            type="checkbox"
-                            checked={isSelected}
-                            onChange={() => { }}
-                            style={{
-                              accentColor: "#8059ca",
-                              width: "16px",
-                              height: "16px",
-                              cursor: "pointer",
-                            }}
-                          />
-                          <div>
-                            <span
-                              style={{
-                                fontSize: "13.5px",
-                                fontWeight: "600",
-                                color: "#0f172a",
-                              }}
-                            >
-                              {capName}
-                            </span>
-                            <span
-                              style={{
-                                fontSize: "11px",
-                                color: "#64748b",
-                                marginLeft: "6px",
-                              }}
-                            >
-                              ({capRelation})
-                            </span>
-                          </div>
-                        </div>
-                      );
-                    })
-                  ) : (
-                    <div
-                      style={{
-                        fontSize: "12px",
-                        color: "#64748b",
-                        padding: "8px 0",
-                        textAlign: "center",
-                      }}
-                    >
-                      No saved family members found.
-                    </div>
-                  )}
-
-                  {/* Add Family Member Button */}
-                  <div
-                    onClick={() => {
-                      setIsAddingFamilyMember(true);
-                    }}
-                    style={{
-                      padding: "10px 14px",
-                      borderRadius: "8px",
-                      border: "1.5px dashed #8059ca",
-                      backgroundColor: "#fff",
-                      cursor: "pointer",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      gap: "8px",
-                      transition: "all 0.15s ease",
-                      marginTop: "8px",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.backgroundColor = "#fdfaff";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.backgroundColor = "#fff";
-                    }}
-                  >
-                    <i
-                      className="fas fa-plus"
-                      style={{ color: "#8059ca", fontSize: "14px" }}
-                    ></i>
-                    <span
-                      style={{
-                        fontSize: "13.5px",
-                        fontWeight: "600",
-                        color: "#8059ca",
-                      }}
-                    >
-                      Add Family Member
-                    </span>
-                  </div>
+                  </span>
+                  <span className="text-[11px] text-slate-500 ml-1.5">
+                    (
+                    {userProfile?.first_name
+                      ? `${userProfile.first_name} ${userProfile.last_name || ""}`
+                      : "Account Owner"}
+                    )
+                  </span>
                 </div>
-              </>
-            ) : (
-              <form onSubmit={handleSubmit}>
-                <div className="row">
-                  <div className="col-md-6 mb-2">
-                    <label
-                      className="form-label"
-                      style={{
-                        fontSize: "12px",
-                        fontWeight: "600",
-                        color: "#475569",
+              </div>
+
+              <div className="text-[11px] font-bold text-[#8059ca] uppercase tracking-[0.5px] mt-3 mb-0.5">
+                Family Members
+              </div>
+              {/* Family Members Checkbox Options */}
+              {familyMembersData && familyMembersData.length > 0 ? (
+                familyMembersData.map((member) => {
+                  const capName = member.name
+                    ? member.name
+                      .split(" ")
+                      .map(
+                        (w) =>
+                          w.charAt(0).toUpperCase() +
+                          w.slice(1).toLowerCase(),
+                      )
+                      .join(" ")
+                    : "";
+                  const capRelation = member.relationship
+                    ? member.relationship.charAt(0).toUpperCase() +
+                    member.relationship.slice(1).toLowerCase()
+                    : "Family";
+                  const isSelected = selectedPatients.includes(member._id);
+                  return (
+                    <div
+                      key={member._id}
+                      onClick={() => {
+                        if (isSelected) {
+                          setSelectedPatients(
+                            selectedPatients.filter(
+                              (id) => id !== member._id,
+                            ),
+                          );
+                        } else {
+                          setSelectedPatients([
+                            ...selectedPatients,
+                            member._id,
+                          ]);
+                        }
                       }}
+                      className={`px-3.5 py-2.5 rounded-lg border-[1.5px] cursor-pointer flex items-center gap-2.5 transition-all duration-150 ${isSelected
+                          ? "border-[#8059ca] bg-[#fdfaff]"
+                          : "border-slate-200 bg-white"
+                        }`}
                     >
-                      Name
-                    </label>
+                      <input
+                        type="checkbox"
+                        checked={isSelected}
+                        onChange={() => { }}
+                        className="accent-[#8059ca] w-4 h-4 cursor-pointer"
+                      />
+                      <div>
+                        <span className="text-[13.5px] font-semibold text-slate-900">
+                          {capName}
+                        </span>
+                        <span className="text-[11px] text-slate-500 ml-1.5">
+                          ({capRelation})
+                        </span>
+                      </div>
+                    </div>
+                  );
+                })
+              ) : (
+                <div className="text-xs text-slate-500 py-2 text-center">
+                  No saved family members found.
+                </div>
+              )}
+
+              {/* Add Family Member Button */}
+              <div
+                onClick={() => {
+                  setIsAddingFamilyMember(true);
+                }}
+                className="px-3.5 py-2.5 rounded-lg border-[1.5px] border-dashed border-[#8059ca] bg-white hover:bg-[#fdfaff] cursor-pointer flex items-center justify-center gap-2 transition-all duration-150 mt-2"
+              >
+                <i className="fas fa-plus text-[#8059ca] text-sm"></i>
+                <span className="text-[13.5px] font-semibold text-[#8059ca]">
+                  Add Family Member
+                </span>
+              </div>
+            </div>
+          </>
+        ) : (
+          <form onSubmit={handleSubmit}>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-2">
+              <div className="flex flex-col mb-2">
+                <label
+                  className="block text-xs font-semibold text-slate-600 mb-1.5"
+                >
+                  Name
+                </label>
+                <input
+                  type="text"
+                  className="w-full px-3 py-2 border border-slate-300 rounded-lg text-[13.5px] outline-none transition-colors focus:border-[#8059ca] focus:ring-1 focus:ring-[#8059ca]"
+                  name="name"
+                  placeholder="Enter Name"
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+
+              <div
+                className="flex flex-col mb-2 relative z-[9999999999]"
+              >
+                <label
+                  className="block text-xs font-semibold text-slate-600 mb-1.5"
+                >
+                  Date of Birth
+                </label>
+                <CustomDatePicker
+                  value={formData.dateOfBirth}
+                  onChange={handleDateChange}
+                  format="MM/dd/yyyy"
+                  placeholder="Select Date of Birth"
+                  style={{
+                    width: "100%",
+                  }}
+                  shouldDisableDate={(date) => date && date > new Date()}
+                  cleanable
+                  editable={false}
+                  container={() => document.getElementById("family-member-modal-body") || document.body}
+                />
+                {formData.dateOfBirth && (
+                  <small
+                    className="mt-1 block text-[11px] text-[#8059ca] font-semibold"
+                  >
+                    Age: {calculateAge(formData.dateOfBirth)} years
+                  </small>
+                )}
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-2">
+              <div className="flex flex-col mb-2">
+                <label
+                  className="block text-xs font-semibold text-slate-600 mb-1.5"
+                >
+                  Gender
+                </label>
+                <select
+                  className="w-full px-3 py-2 border border-slate-300 rounded-lg text-[13.5px] outline-none bg-white transition-colors focus:border-[#8059ca] focus:ring-1 focus:ring-[#8059ca]"
+                  name="gender"
+                  value={formData.gender}
+                  onChange={handleInputChange}
+                  required
+                >
+                  <option value="">Select Gender</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+
+              <div className="flex flex-col mb-2">
+                <label
+                  className="block text-xs font-semibold text-slate-600 mb-1.5"
+                >
+                  Referred By Doctor
+                </label>
+                <Select
+                  name="referedByDoctor"
+                  value={(() => {
+                    if (!formData.referedByDoctor) return null;
+                    const doctorId = String(formData.referedByDoctor);
+                    let selectedDoctor = filteredDoctors.find(
+                      (doctor) => String(doctor._id) === doctorId,
+                    );
+                    if (!selectedDoctor) {
+                      selectedDoctor = allDoctors.find(
+                        (doctor) => String(doctor._id) === doctorId,
+                      );
+                    }
+                    if (selectedDoctor && selectedDoctor.name) {
+                      return {
+                        value: String(selectedDoctor._id),
+                        label: `${selectedDoctor.name}${selectedDoctor["AreaOfPractice "] ? ` (${selectedDoctor["AreaOfPractice "]})` : ""}${selectedDoctor.place ? `, ${selectedDoctor.place}` : ""}`,
+                      };
+                    }
+                    return null;
+                  })()}
+                  onChange={handleDoctorSelect}
+                  onInputChange={handleDoctorSearch}
+                  components={referredDoctorSelectComponents}
+                  options={getReferredDoctorSelectOptions(
+                    filteredDoctors.filter(
+                      (doctor) => doctor && doctor._id && doctor.name,
+                    ),
+                  )}
+                  placeholder={
+                    isLoadingDoctors ? "Loading..." : "Select..."
+                  }
+                  isClearable
+                  isSearchable
+                  isLoading={isLoadingDoctors}
+                  className="basic-select"
+                  classNamePrefix="select"
+                  noOptionsMessage={() =>
+                    isLoadingDoctors ? "Loading..." : "No doctors found"
+                  }
+                  menuPortalTarget={typeof document !== "undefined" ? document.body : null}
+                  menuPosition="fixed"
+                  styles={{
+                    control: (baseStyles, state) => ({
+                      ...baseStyles,
+                      borderColor: state.isFocused ? "#8059ca" : "#ccc",
+                      boxShadow: state.isFocused
+                        ? "0 0 0 1px #8059ca"
+                        : "none",
+                      "&:hover": { borderColor: "#8059ca" },
+                      fontSize: "13.5px",
+                    }),
+                    menu: (baseStyles) => ({
+                      ...baseStyles,
+                      zIndex: 9999999999,
+                      maxHeight: "150px",
+                    }),
+                    menuList: (baseStyles) => ({
+                      ...baseStyles,
+                      maxHeight: "150px",
+                    }),
+                    menuPortal: (baseStyles) => ({
+                      ...baseStyles,
+                      zIndex: 9999999999,
+                    }),
+                    option: (baseStyles) => ({
+                      ...baseStyles,
+                      padding: "8px 12px",
+                      fontSize: "13px",
+                    }),
+                  }}
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-2">
+              <div className="flex flex-col mb-2">
+                <label
+                  className="block text-xs font-semibold text-slate-600 mb-1.5"
+                >
+                  Mobile
+                </label>
+                <input
+                  type="tel"
+                  className="w-full px-3 py-2 border border-slate-300 rounded-lg text-[13.5px] outline-none transition-colors focus:border-[#8059ca] focus:ring-1 focus:ring-[#8059ca]"
+                  placeholder="Enter 10-digit Mobile Number"
+                  name="mobile"
+                  value={formData.mobile}
+                  onChange={handleInputChange}
+                  maxLength="10"
+                  pattern="[0-9]{10}"
+                  title="Mobile number must be exactly 10 digits"
+                  required
+                />
+                {formData.mobile && formData.mobile.length > 0 && formData.mobile.length < 10 && (
+                  <small className="text-red-500 mt-1 block text-[11px]">
+                    Mobile number must be exactly 10 digits
+                  </small>
+                )}
+              </div>
+
+              <div className="flex flex-col mb-2">
+                <label
+                  className="block text-xs font-semibold text-slate-600 mb-1.5"
+                >
+                  Relationship
+                </label>
+                <select
+                  name="relationship"
+                  value={formData.relationship}
+                  onChange={handleInputChange}
+                  required
+                  className="w-full px-3 py-2 border border-slate-300 rounded-lg text-[13.5px] outline-none bg-white transition-colors focus:border-[#8059ca] focus:ring-1 focus:ring-[#8059ca]"
+                >
+                  <option value="">Select relationship</option>
+                  <option value="Brother">Brother</option>
+                  <option value="Cousin">Cousin</option>
+                  <option value="Daughter">Daughter</option>
+                  <option value="Father">Father</option>
+                  <option value="Granddaughter">Granddaughter</option>
+                  <option value="Grandfather">Grandfather</option>
+                  <option value="Grandmother">Grandmother</option>
+                  <option value="Grandson">Grandson</option>
+                  <option value="Husband">Husband</option>
+                  <option value="Me">Me</option>
+                  <option value="Mother">Mother</option>
+                  <option value="Other">Other</option>
+                  <option value="Sister">Sister</option>
+                  <option value="Son">Son</option>
+                  <option value="Wife">Wife</option>
+                </select>
+              </div>
+            </div>
+
+            <div className="w-full mb-3">
+              <label
+                className="block text-xs font-semibold text-slate-600 mb-1.5"
+              >
+                Location
+              </label>
+              <div className="relative">
+                {isLoaded ? (
+                  <Autocomplete
+                    onLoad={(autocomplete) =>
+                      (autocompleteRef.current = autocomplete)
+                    }
+                    onPlaceChanged={onPlaceChanged}
+                    options={{
+                      componentRestrictions: { country: "in" },
+                      fields: [
+                        "formatted_address",
+                        "geometry",
+                        "name",
+                        "place_id",
+                        "address_components",
+                      ],
+                      types: ["geocode"],
+                    }}
+                  >
                     <input
                       type="text"
-                      className="form-control"
-                      name="name"
-                      placeholder="Enter Name"
-                      value={formData.name}
+                      className="w-full pl-9 pr-3 py-2 border border-slate-300 rounded-lg text-[13.5px] outline-none transition-colors focus:border-[#8059ca] focus:ring-1 focus:ring-[#8059ca]"
+                      name="location"
+                      value={formData.location}
                       onChange={handleInputChange}
+                      placeholder="Search by city, state, pincode, or area..."
                       required
-                      style={{ fontSize: "13.5px", padding: "8px 12px" }}
+                      autoComplete="off"
                     />
-                  </div>
+                  </Autocomplete>
+                ) : (
+                  <input
+                    type="text"
+                    className="w-full pl-9 pr-3 py-2 border border-slate-300 rounded-lg text-[13.5px] outline-none bg-slate-100 cursor-not-allowed"
+                    name="location"
+                    value={formData.location}
+                    onChange={handleInputChange}
+                    placeholder="City / Location"
+                    required
+                    disabled
+                  />
+                )}
+                <i className="fas fa-map-marker-alt absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
+              </div>
+            </div>
 
-                  <div
-                    className="col-md-6 mb-2"
-                    style={{ position: "relative", zIndex: 9999999999 }}
-                  >
-                    <label
-                      className="form-label"
-                      style={{
-                        fontSize: "12px",
-                        fontWeight: "600",
-                        color: "#475569",
-                      }}
-                    >
-                      Date of Birth
-                    </label>
-                    <DatePicker
-                      value={formData.dateOfBirth}
-                      onChange={handleDateChange}
-                      format="MM/dd/yyyy"
-                      placeholder="Select Date of Birth"
-                      style={{
-                        width: "100%",
-                      }}
-                      shouldDisableDate={(date) => date && date > new Date()}
-                      cleanable
-                      editable={false}
-                    />
-                    {formData.dateOfBirth && (
-                      <small
-                        className="mt-1 d-block"
-                        style={{
-                          fontSize: "11px",
-                          color: "#8059ca",
-                          fontWeight: "600",
-                        }}
-                      >
-                        Age: {calculateAge(formData.dateOfBirth)} years
-                      </small>
-                    )}
-                  </div>
-                </div>
-
-                <div className="row">
-                  <div className="col-md-6 mb-2">
-                    <label
-                      className="form-label"
-                      style={{
-                        fontSize: "12px",
-                        fontWeight: "600",
-                        color: "#475569",
-                      }}
-                    >
-                      Gender
-                    </label>
-                    <select
-                      className="form-select"
-                      style={{ padding: "8px 12px", fontSize: "13.5px" }}
-                      name="gender"
-                      value={formData.gender}
-                      onChange={handleInputChange}
-                      required
-                    >
-                      <option value="">Select Gender</option>
-                      <option value="Male">Male</option>
-                      <option value="Female">Female</option>
-                      <option value="Other">Other</option>
-                    </select>
-                  </div>
-
-                  <div className="col-md-6 mb-2">
-                    <label
-                      className="form-label"
-                      style={{
-                        fontSize: "12px",
-                        fontWeight: "600",
-                        color: "#475569",
-                      }}
-                    >
-                      Referred By Doctor
-                    </label>
-                    <Select
-                      name="referedByDoctor"
-                      value={(() => {
-                        if (!formData.referedByDoctor) return null;
-                        const doctorId = String(formData.referedByDoctor);
-                        let selectedDoctor = filteredDoctors.find(
-                          (doctor) => String(doctor._id) === doctorId,
-                        );
-                        if (!selectedDoctor) {
-                          selectedDoctor = allDoctors.find(
-                            (doctor) => String(doctor._id) === doctorId,
-                          );
-                        }
-                        if (selectedDoctor && selectedDoctor.name) {
-                          return {
-                            value: String(selectedDoctor._id),
-                            label: `${selectedDoctor.name}${selectedDoctor["AreaOfPractice "] ? ` (${selectedDoctor["AreaOfPractice "]})` : ""}${selectedDoctor.place ? `, ${selectedDoctor.place}` : ""}`,
-                          };
-                        }
-                        return null;
-                      })()}
-                      onChange={handleDoctorSelect}
-                      onInputChange={handleDoctorSearch}
-                      components={referredDoctorSelectComponents}
-                      options={getReferredDoctorSelectOptions(
-                        filteredDoctors.filter(
-                          (doctor) => doctor && doctor._id && doctor.name,
-                        ),
-                      )}
-                      placeholder={
-                        isLoadingDoctors ? "Loading..." : "Select..."
-                      }
-                      isClearable
-                      isSearchable
-                      isLoading={isLoadingDoctors}
-                      className="basic-select"
-                      classNamePrefix="select"
-                      noOptionsMessage={() =>
-                        isLoadingDoctors ? "Loading..." : "No doctors found"
-                      }
-                      styles={{
-                        control: (baseStyles, state) => ({
-                          ...baseStyles,
-                          borderColor: state.isFocused ? "#8059ca" : "#ccc",
-                          boxShadow: state.isFocused
-                            ? "0 0 0 1px #8059ca"
-                            : "none",
-                          "&:hover": { borderColor: "#8059ca" },
-                          fontSize: "13.5px",
-                        }),
-                        menu: (baseStyles) => ({
-                          ...baseStyles,
-                          zIndex: 9999,
-                          maxHeight: "150px",
-                        }),
-                        menuList: (baseStyles) => ({
-                          ...baseStyles,
-                          maxHeight: "150px",
-                        }),
-                        option: (baseStyles) => ({
-                          ...baseStyles,
-                          padding: "8px 12px",
-                          fontSize: "13px",
-                        }),
-                      }}
-                    />
-                  </div>
-                </div>
-
-                <div className="row">
-                  <div className="col-md-6 mb-2">
-                    <label
-                      className="form-label"
-                      style={{
-                        fontSize: "12px",
-                        fontWeight: "600",
-                        color: "#475569",
-                      }}
-                    >
-                      Mobile
-                    </label>
-                    <input
-                      type="tel"
-                      className="form-control"
-                      placeholder="Enter 10-digit Mobile Number"
-                      name="mobile"
-                      value={formData.mobile}
-                      onChange={handleInputChange}
-                      maxLength="10"
-                      pattern="[0-9]{10}"
-                      title="Mobile number must be exactly 10 digits"
-                      required
-                      style={{ fontSize: "13.5px", padding: "8px 12px" }}
-                    />
-                    {formData.mobile && formData.mobile.length > 0 && formData.mobile.length < 10 && (
-                      <small className="text-danger mt-1 d-block" style={{ fontSize: "11px" }}>
-                        Mobile number must be exactly 10 digits
-                      </small>
-                    )}
-                  </div>
-
-                  <div className="col-md-6 mb-2">
-                    <label
-                      className="form-label"
-                      style={{
-                        fontSize: "12px",
-                        fontWeight: "600",
-                        color: "#475569",
-                      }}
-                    >
-                      Relationship
-                    </label>
-                    <select
-                      name="relationship"
-                      value={formData.relationship}
-                      onChange={handleInputChange}
-                      required
-                      className="form-select"
-                      style={{ padding: "8px 12px", fontSize: "13.5px" }}
-                    >
-                      <option value="">Select relationship</option>
-                      <option value="Brother">Brother</option>
-                      <option value="Cousin">Cousin</option>
-                      <option value="Daughter">Daughter</option>
-                      <option value="Father">Father</option>
-                      <option value="Granddaughter">Granddaughter</option>
-                      <option value="Grandfather">Grandfather</option>
-                      <option value="Grandmother">Grandmother</option>
-                      <option value="Grandson">Grandson</option>
-                      <option value="Husband">Husband</option>
-                      <option value="Me">Me</option>
-                      <option value="Mother">Mother</option>
-                      <option value="Other">Other</option>
-                      <option value="Sister">Sister</option>
-                      <option value="Son">Son</option>
-                      <option value="Wife">Wife</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div className="row">
-                  <div className="col-12 mb-3">
-                    <label
-                      className="form-label"
-                      style={{
-                        fontSize: "12px",
-                        fontWeight: "600",
-                        color: "#475569",
-                      }}
-                    >
-                      Location
-                    </label>
-                    <div className="position-relative">
-                      {isLoaded ? (
-                        <Autocomplete
-                          onLoad={(autocomplete) =>
-                            (autocompleteRef.current = autocomplete)
-                          }
-                          onPlaceChanged={onPlaceChanged}
-                          options={{
-                            componentRestrictions: { country: "in" },
-                            fields: [
-                              "formatted_address",
-                              "geometry",
-                              "name",
-                              "place_id",
-                              "address_components",
-                            ],
-                            types: ["geocode"],
-                          }}
-                        >
-                          <input
-                            type="text"
-                            className="form-control"
-                            name="location"
-                            value={formData.location}
-                            onChange={handleInputChange}
-                            placeholder="Search by city, state, pincode, or area..."
-                            required
-                            style={{
-                              paddingLeft: "35px",
-                              fontSize: "13.5px",
-                              padding: "8px 12px 8px 35px",
-                            }}
-                            autoComplete="off"
-                          />
-                        </Autocomplete>
-                      ) : (
-                        <input
-                          type="text"
-                          className="form-control"
-                          name="location"
-                          value={formData.location}
-                          onChange={handleInputChange}
-                          placeholder="City / Location"
-                          required
-                          style={{
-                            paddingLeft: "35px",
-                            fontSize: "13.5px",
-                            padding: "8px 12px 8px 35px",
-                          }}
-                          disabled
-                        />
-                      )}
-                      <i className="fas fa-map-marker-alt position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"></i>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="d-flex justify-content-end gap-2 mt-3">
-                  <button
-                    type="button"
-                    className="btn btn-light rounded-pill px-4"
-                    onClick={() => setIsAddingFamilyMember(false)}
-                    style={{
-                      fontSize: "14px",
-                      fontWeight: "500",
-                      borderRadius: "50px",
-                    }}
-                  >
-                    Back
-                  </button>
-                  <button
-                    type="submit"
-                    className="btn btn-primary rounded-pill px-4"
-                    disabled={isSubmitting}
-                    style={{
-                      backgroundColor: "#8059ca",
-                      borderColor: "#8059ca",
-                      fontSize: "14px",
-                      fontWeight: "500",
-                      color: "#fff",
-                      borderRadius: "50px",
-                    }}
-                  >
-                    {isSubmitting ? "Adding..." : "Add Profile"}
-                  </button>
-                </div>
-              </form>
-            )}
-          </div>
-
-          {!isAddingFamilyMember && (
-            <div
-              className="modal-footer border-0 pt-0"
-              style={{ padding: "20px 24px" }}
-            >
-              {/* <button
-                type="button"
-                className="btn btn-light rounded-pill px-4"
-                onClick={onClose}
-                style={{ fontSize: "14px", fontWeight: "500", borderRadius: "50px" }}
-              >
-                Cancel
-              </button> */}
+            <div className="flex justify-end gap-2 mt-4">
               <button
                 type="button"
-                className="btn btn-primary rounded-pill px-4"
-                onClick={() => onProceed(selectedPatients, familyMembersData)}
-                style={{
-                  backgroundColor: "#8059ca",
-                  borderColor: "#8059ca",
-                  fontSize: "14px",
-                  fontWeight: "500",
-                  color: "#fff",
-                  borderRadius: "50px",
-                }}
+                onClick={() => setIsAddingFamilyMember(false)}
+                className="px-6 py-2 text-sm font-medium rounded-full border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 transition-colors"
               >
-                Proceed
+                Back
+              </button>
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="px-6 py-2 text-sm font-medium rounded-full bg-[#8059ca] hover:bg-[#6f42c1] text-white border-none transition-colors"
+              >
+                {isSubmitting ? "Adding..." : "Add Profile"}
               </button>
             </div>
-          )}
-        </div>
+          </form>
+        )}
       </div>
-    </div>
-  );
-
-  const modalElement = (
-    <>
-      <style>{`
-        .rs-picker {
-          z-index: 9999999999 !important;
-        }
-        .rs-picker-popup {
-          z-index: 9999999999 !important;
-        }
-        .rs-calendar {
-          z-index: 9999999999 !important;
-        }
-        .rs-picker-date-menu {
-          z-index: 9999999999 !important;
-        }
-        .rs-picker-dropdown {
-          z-index: 9999999999 !important;
-        }
-        .pac-container { 
-          z-index: 2147483647 !important;
-          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-          border-radius: 8px;
-          margin-top: 4px;
-        }
-        .pac-item {
-          padding: 8px 12px;
-          cursor: pointer;
-          transition: background-color 0.2s;
-        }
-        .pac-item:hover {
-          background-color: #f8f9fa;
-        }
-        .pac-item-query {
-          font-size: 0.875rem;
-          color: #212529;
-        }
-        .pac-icon {
-          margin-right: 8px;
-        }
-      `}</style>
-      {modalContent}
-    </>
+    </BaseModal>
   );
 
   return typeof document !== "undefined"
-    ? createPortal(modalElement, document.body)
+    ? createPortal(modalContent, document.body)
     : null;
 };
 

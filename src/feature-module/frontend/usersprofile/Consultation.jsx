@@ -75,17 +75,30 @@ const Consultation = ({ HomeNavigate, BackButton }) => {
 
             {/* Header Section */}
             <div className="col-12">
-              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-5 mt-2">
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-2 mt-2">
                 <div className="flex items-center gap-3">
                   <i className="fa-solid fa-users text-[#8059ca] text-[20px] shrink-0" />
-                  <div className="flex flex-col gap-0.5">
+
+                  {/* <div className="flex flex-col gap-0.5">
                     <h4 className="m-0 text-slate-800 font-bold text-[16px] md:text-[18px] tracking-tight leading-none">
                       Consultation
                     </h4>
                     <p className="text-slate-500 text-[11px] md:text-[12px] m-0 font-medium">
                       Manage and track all your potential Consultation
                     </p>
+                  </div> */}
+
+                  <div className="flex flex-col gap-1">
+                    <div className="m-0 text-[#0f172a] font-medium text-[16px] md:text-[16px] tracking-tight leading-none" >
+                      Consultation
+                    </div>
+                    <div className="text-slate-500 text-[12px] m-0 font-medium leading-none">
+                      Manage and track all your potential Consultation
+                    </div>
                   </div>
+
+
+
                 </div>
 
                 <div className="flex items-center gap-3 w-full sm:w-auto">
@@ -248,15 +261,14 @@ const Consultation = ({ HomeNavigate, BackButton }) => {
                             {columnConfig.status && (
                               <td className="px-4 py-3.5 text-[13px] text-[#333] border-b border-[#ececf6] align-middle">
                                 <span
-                                  className={`py-[3px] px-2 rounded text-[11px] font-semibold inline-block ${
-                                    lead.status === "pending"
-                                      ? "bg-[#fff3cd] text-[#856404]"
-                                      : lead.status === "confirmed"
-                                        ? "bg-[#d4edda] text-[#155724]"
-                                        : lead.status === "completed"
-                                          ? "bg-[#cce5ff] text-[#004085]"
-                                          : "bg-[#f8d7da] text-[#721c24]"
-                                  }`}
+                                  className={`py-[3px] px-2 rounded text-[11px] font-semibold inline-block ${lead.status === "pending"
+                                    ? "bg-[#fff3cd] text-[#856404]"
+                                    : lead.status === "confirmed"
+                                      ? "bg-[#d4edda] text-[#155724]"
+                                      : lead.status === "completed"
+                                        ? "bg-[#cce5ff] text-[#004085]"
+                                        : "bg-[#f8d7da] text-[#721c24]"
+                                    }`}
                                 >
                                   {lead.status?.charAt(0).toUpperCase() +
                                     lead.status?.slice(1)}
@@ -305,9 +317,8 @@ const Consultation = ({ HomeNavigate, BackButton }) => {
                         return (
                           <li key={page}>
                             <button
-                              className={`page-link ${
-                                currentPage === page ? "active" : ""
-                              }`}
+                              className={`page-link ${currentPage === page ? "active" : ""
+                                }`}
                               onClick={() => handlePageChange(page)}
                             >
                               {page}

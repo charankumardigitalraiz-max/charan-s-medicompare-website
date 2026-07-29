@@ -22,7 +22,6 @@ import { useProfile } from "../../../context/ProfileContext";
 import { Offcanvas } from "react-bootstrap";
 import VendorCalendarSlotPicker from "../../../components/VendorCalendarSlotPicker";
 import PageLoader from "../../../components/ui/PageLoader.jsx";
-import "./bookingprocess.css";
 import {
   getReferredDoctorSelectOptions,
   handleReferredDoctorInputChange,
@@ -576,8 +575,6 @@ export const LabTestCheckout = () => {
     setCouponInputText("");
   };
 
-
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (isSubmitting) return;
@@ -996,167 +993,82 @@ export const LabTestCheckout = () => {
   }
 
   return (
-    <div className="main-wrapper" style={{ backgroundColor: "#f8f9fa", minHeight: "100vh" }}>
+    <div className="main-wrapper bg-[#f8f9fa] min-h-screen">
       <Home2Header />
       <CategoryProvider />
 
       <div
-        style={{
-          display: "flex",
-          flexDirection: isMobile || isTablet ? "column" : "row",
-          gap: "24px",
-          paddingTop: xsMobile ? "180px" : isMobile ? "110px" : "150px",
-          paddingBottom: "48px",
-          background: "#f8f9fa",
-          alignItems: "flex-start",
-          paddingRight: isMobile ? "12px" : "30px",
-          paddingLeft: isMobile ? "12px" : "30px",
-          maxWidth: "1440px",
-          margin: "0 auto",
-        }}
+        className={`flex gap-4 md:gap-6 items-start max-w-[1440px] mx-auto pt-4 pb-12 ${isMobile || isTablet ? "flex-col px-3" : "flex-row px-[30px]"
+          } 
+          }`}
       >
         <div
-          className="card shadow-sm"
-          style={{
-            width:
-              labTestItems.length === 0
-                ? "100%"
-                : isMobile || isTablet
-                  ? "100%"
-                  : "67%",
-            borderRadius: "12px",
-            border: "none",
-            backgroundColor: "#fff",
-            padding: isMobile ? "16px" : "24px",
-            marginBottom: isMobile ? "20px" : "0",
-            position: "relative",
-          }}
+          className={`card shadow-sm border-none bg-white relative rounded-xl ${labTestItems.length === 0 || isMobile || isTablet ? "w-full" : "w-[67%]"
+            } ${isMobile ? "p-4 mb-1" : "p-6 mb-0"
+            }`}
         >
-          <div style={{ paddingTop: "0px", marginBottom: "15px" }}>
+          <div className="pt-0 mb-[15px]">
             <Link
               to="/"
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "8px",
-                color: "#8059ca",
-                border: "1px solid #e9d5ff",
-                borderRadius: "30px",
-                padding: "6px 18px",
-                textDecoration: "none",
-                fontSize: "13px",
-                fontWeight: "600",
-                background: "#fdfaff",
-                transition: "all 0.25s cubic-bezier(0.4, 0, 0.2, 1)",
-                boxShadow: "0 2px 5px rgba(128, 89, 202, 0.05)",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.color = "#ffffff";
-                e.currentTarget.style.background = "linear-gradient(135deg, #8059ca 0%, #6f42c1 100%)";
-                e.currentTarget.style.borderColor = "#8059ca";
-                e.currentTarget.style.boxShadow = "0 4px 12px rgba(128, 89, 202, 0.2)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.color = "#8059ca";
-                e.currentTarget.style.background = "#fdfaff";
-                e.currentTarget.style.borderColor = "#e9d5ff";
-                e.currentTarget.style.boxShadow = "0 2px 5px rgba(128, 89, 202, 0.05)";
-              }}
+              className="inline-flex items-center gap-2 text-[#8059ca] border border-[#e9d5ff] rounded-[30px] px-[18px] py-1.5 no-underline text-[13px] font-semibold bg-[#fdfaff] transition-all duration-200 hover:text-white hover:bg-gradient-to-r hover:from-[#8059ca] hover:to-[#6f42c1] hover:border-[#8059ca] hover:shadow-[0_4px_12px_rgba(128,89,202,0.2)] shadow-[0_2px_5px_rgba(128,89,202,0.05)]"
             >
-              <i className="fas fa-arrow-left" style={{ fontSize: "11px" }} />
+              <i className="fas fa-arrow-left text-[11px]" />
               Back to Home
             </Link>
           </div>
 
           {labTestItems.length === 0 ? (
-            <div className="text-center py-5">
-              <i
-                className="fas fa-microscope text-muted mb-3"
-                style={{ fontSize: "48px", color: "#8059ca" }}
-              ></i>
-              <h5 className="text-muted">
+            <div className="text-center py-8">
+              <i className="fas fa-microscope text-slate-400 mb-3 text-[48px] !text-[#8059ca]" />
+              <h5 className="text-slate-500 font-bold mb-1">
                 Your Lab Cart is Empty
               </h5>
-              <p className="text-muted mb-3">No lab tests added to your cart yet</p>
+              <p className="text-slate-400 mb-5">No lab tests added to your cart yet</p>
               <Link
                 to="/"
-                className="btn btn-primary"
-                style={{ width: "180px", backgroundColor: "#8059ca", borderColor: "#8059ca", borderRadius: "30px" }}
+                className="inline-flex items-center justify-center w-[180px] bg-[#8059ca] hover:bg-[#6d3fc7] text-white font-semibold py-2.5 rounded-full shadow-sm text-sm border-none transition-colors duration-200"
               >
                 Browse Lab Tests
               </Link>
             </div>
           ) : (
-            <div className="row g-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
               {/* Vendor Details Card */}
               {labTestItems?.[0]?.vendorDetails && (
-                <div className="col-12">
+                <div className="col-span-1 md:col-span-2">
                   <div
-                    style={{
-                      borderRadius: "16px",
-                      border: "1px solid #e9d5ff",
-                      background: "linear-gradient(135deg, #fdfaff 0%, #f5f0ff 100%)",
-                      padding: "18px 20px",
-                      marginBottom: "4px",
-                      boxShadow: "0 4px 16px rgba(128, 89, 202, 0.07)",
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "16px"
-                    }}
+                    className="rounded-2xl border border-[#e9d5ff] bg-gradient-to-br from-[#fdfaff] to-[#f5f0ff] px-5 py-[18px] mb-1 flex items-center gap-4 shadow-[0_4px_16px_rgba(128,89,202,0.07)]"
                   >
                     {/* Vendor logo/icon */}
                     <div
-                      style={{
-                        width: 52,
-                        height: 52,
-                        borderRadius: "14px",
-                        background: "#ffffff",
-                        border: "1.5px solid #e9d5ff",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        flexShrink: 0,
-                        overflow: "hidden",
-                        boxShadow: "0 2px 8px rgba(128,89,202,0.1)"
-                      }}
+                      className="w-[52px] h-[52px] rounded-[14px] bg-white border-[1.5px] border-[#e9d5ff] flex items-center justify-center shrink-0 overflow-hidden shadow-[0_2px_8px_rgba(128,89,202,0.1)]"
                     >
                       {labTestItems[0].vendorDetails?.businessProfile?.files?.[0] || labTestItems[0].vendorDetails?.files?.[0] ? (
                         <img
                           src={getImageUrl(labTestItems[0].vendorDetails?.businessProfile?.files?.[0] || labTestItems[0].vendorDetails?.files?.[0])}
                           alt="vendor"
-                          style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                          className="w-full h-full object-cover"
                         />
                       ) : (
-                        <i className="fas fa-microscope" style={{ fontSize: "22px", color: "#8059ca" }} />
+                        <i className="fas fa-microscope text-[22px] text-[#8059ca]" />
                       )}
                     </div>
 
                     {/* Vendor info */}
-                    <div style={{ flex: 1, minWidth: 0 }}>
-                      <div
-                        style={{
-                          fontSize: "15px",
-                          fontWeight: "700",
-                          color: "#1e1b4b",
-                          marginBottom: "4px",
-                          overflow: "hidden",
-                          textOverflow: "ellipsis",
-                          whiteSpace: "nowrap",
-                          textTransform: "capitalize"
-                        }}
-                      >
+                    <div className="flex-1 min-w-0">
+                      <div className="text-[15px] font-bold text-[#1e1b4b] mb-1 overflow-hidden text-ellipsis whitespace-nowrap capitalize">
                         {labTestItems[0]?.vendorDetails?.businessProfile?.name ||
                           labTestItems[0]?.vendorDetails?.name ||
                           labTestItems[0]?.vendorName ||
                           "Diagnostic Centre"}
                       </div>
 
-                      <div style={{ display: "flex", flexWrap: "wrap", gap: "10px", fontSize: "12px", color: "#64748b" }}>
+                      <div className="flex flex-wrap gap-2.5 text-xs text-[#64748b]">
                         {(labTestItems[0].vendorDetails?.businessProfile?.mobile ||
                           labTestItems[0].vendorDetails?.mobile ||
                           labTestItems[0].vendorDetails?.phone) && (
-                            <span style={{ display: "flex", alignItems: "center", gap: "4px" }}>
-                              <i className="fas fa-phone" style={{ color: "#8059ca", fontSize: "10px" }} />
+                            <span className="flex items-center gap-1">
+                              <i className="fas fa-phone text-[#8059ca] text-[10px]" />
                               {labTestItems[0].vendorDetails?.businessProfile?.mobile ||
                                 labTestItems[0].vendorDetails?.mobile ||
                                 labTestItems[0].vendorDetails?.phone}
@@ -1166,10 +1078,10 @@ export const LabTestCheckout = () => {
                           labTestItems[0].vendorDetails?.businessProfile?.location?.address ||
                           labTestItems[0].vendorDetails?.residentaladdress) && (
                             <span
-                              style={{ display: "flex", alignItems: "center", gap: "4px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}
+                              className="flex items-center gap-1 overflow-hidden text-ellipsis whitespace-nowrap"
                             >
-                              <i className="fas fa-map-marker-alt" style={{ color: "#8059ca", fontSize: "10px" }} />
-                              <span style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", maxWidth: "260px" }}>
+                              <i className="fas fa-map-marker-alt text-[#8059ca] text-[10px]" />
+                              <span className="overflow-hidden text-ellipsis whitespace-nowrap max-w-[260px]">
                                 {vendorLocation?.address ||
                                   labTestItems[0].vendorDetails?.businessProfile?.location?.address ||
                                   labTestItems[0].vendorDetails?.residentaladdress}
@@ -1181,21 +1093,9 @@ export const LabTestCheckout = () => {
 
                     {/* Verified badge */}
                     <div
-                      style={{
-                        background: "#ecfdf5",
-                        border: "1px solid #a7f3d0",
-                        borderRadius: "8px",
-                        padding: "5px 10px",
-                        fontSize: "11px",
-                        fontWeight: "700",
-                        color: "#059669",
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "4px",
-                        flexShrink: 0
-                      }}
+                      className="bg-[#ecfdf5] border border-[#a7f3d0] rounded-lg px-2.5 py-1 text-[11px] font-bold text-[#059669] flex items-center gap-1 shrink-0"
                     >
-                      <i className="fas fa-check-circle" style={{ fontSize: "10px" }} />
+                      <i className="fas fa-check-circle text-[10px]" />
                       Verified
                     </div>
                   </div>
@@ -1204,54 +1104,23 @@ export const LabTestCheckout = () => {
               {/* Patient assignment block */}
 
               {/* Delivery / Collection Address */}
-              <div className="col-md-6 col-12">
+              <div className="col-span-1">
                 <div
-                  style={{
-                    borderRadius: "16px",
-                    overflow: "hidden",
-                    border: "1px solid #e9ecef",
-                    boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05)",
-                    background: "#ffffff",
-                    marginBottom: "24px"
-                  }}
+                  className="rounded-2xl overflow-hidden border border-[#e9ecef] bg-white mb-4 md:mb-6 shadow-[0_10px_25px_-5px_rgba(0,0,0,0.05),_0_8px_10px_-6px_rgba(0,0,0,0.05)]"
                 >
                   <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      padding: "16px 20px",
-                      backgroundColor: "#faf8ff",
-                      borderBottom: "1px solid #f3e8ff"
-                    }}
+                    className="flex justify-between items-center px-3 py-4 bg-[#faf8ff] border-b border-[#f3e8ff]"
                   >
                     <div
-                      style={{
-                        fontSize: "13px",
-                        fontWeight: "700",
-                        color: "#5b21b6",
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "8px"
-                      }}
+                      className="text-[13px] font-bold text-[#5b21b6] flex items-center gap-2"
                     >
-                      <i className="fas fa-map-marker-alt" style={{ color: "#8059ca" }}></i>
+                      <i className="fas fa-map-marker-alt text-[#8059ca]"></i>
                       <span>{getAddressTypeLabel()}</span>
                     </div>
                     <div>
                       {collectionMethod === "home" && (
                         <button
-                          style={{
-                            color: "#ffffff",
-                            background: "linear-gradient(135deg, #8059ca 0%, #6f42c1 100%)",
-                            border: "none",
-                            fontWeight: "600",
-                            cursor: "pointer",
-                            fontSize: "11px",
-                            padding: "6px 16px",
-                            borderRadius: "5px",
-                            boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
-                          }}
+                          className="text-white bg-gradient-to-r from-[#8059ca] to-[#6f42c1] border-none font-semibold cursor-pointer text-[11px] px-4 py-1.5 rounded-[20px] shadow-[0_2px_4px_rgba(0,0,0,0.1)] hover:-translate-y-px transition-all duration-200"
                           onClick={() => {
                             const token = localStorage.getItem("medicomparestoken");
                             if (!token) {
@@ -1271,32 +1140,21 @@ export const LabTestCheckout = () => {
                   {collectionMethod === "home" ? (
                     selectedAddress ? (
                       <div
-                        style={{
-                          padding: "20px",
-                          backgroundColor: "#fff",
-                          fontSize: "13.5px",
-                          color: "#475569",
-                          lineHeight: "1.6"
-                        }}
+                        className="p-5 bg-white text-[13.5px] text-[#475569] leading-relaxed"
                       >
                         <div>
                           {selectedAddress.name && (
                             <div
-                              style={{
-                                fontWeight: "700",
-                                color: "#0f172a",
-                                marginBottom: "6px",
-                                fontSize: "14.5px"
-                              }}
+                              className="font-bold text-[#0f172a] mb-1.5 text-[14.5px]"
                             >
                               {selectedAddress.name}
                             </div>
                           )}
                           {selectedAddress.phone && (
-                            <div style={{ color: "#64748b", fontSize: "13px", marginBottom: "4px" }}>{selectedAddress.phone}</div>
+                            <div className="text-[#64748b] text-[13px] mb-1">{selectedAddress.phone}</div>
                           )}
                           {selectedAddress.addressLine1 || selectedAddress.location?.address ? (
-                            <div style={{ color: "#334155" }}>
+                            <div className="text-[#334155]">
                               {selectedAddress.addressLine1 || selectedAddress.location?.address}
                               {selectedAddress.addressLine2 ? `, ${selectedAddress.addressLine2}` : ""}
                             </div>
@@ -1305,42 +1163,19 @@ export const LabTestCheckout = () => {
                       </div>
                     ) : (
                       <div
-                        style={{
-                          padding: "24px 20px",
-                          backgroundColor: "#fff",
-                          fontSize: "13.5px",
-                          color: "#64748b",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          gap: "10px",
-                          flexDirection: "column",
-                          textAlign: "center"
-                        }}
+                        className="px-5 py-6 bg-white text-[13.5px] text-[#64748b] flex flex-col items-center justify-center gap-2.5 text-center"
                       >
-                        <i className="fas fa-map-marked-alt" style={{ fontSize: "24px", color: "#cbd5e1" }}></i>
+                        <i className="fas fa-map-marked-alt text-[24px] text-[#cbd5e1]"></i>
                         <span>No collection address selected yet</span>
                       </div>
                     )
                   ) : (
                     <div
-                      style={{
-                        padding: "20px",
-                        backgroundColor: "#fff",
-                        fontSize: "13.5px",
-                        color: "#475569",
-                        lineHeight: "1.6"
-                      }}
+                      className="p-5 bg-white text-[13.5px] text-[#475569] leading-relaxed"
                     >
                       <div>
                         <div
-                          style={{
-                            fontWeight: "700",
-                            color: "#0f172a",
-                            marginBottom: "6px",
-                            fontSize: "14.5px",
-                            textTransform: "capitalize"
-                          }}
+                          className="font-bold text-[#0f172a] mb-1.5 text-[14.5px] capitalize"
                         >
                           {labTestItems[0]?.vendorDetails?.businessProfile?.name ||
                             labTestItems[0]?.vendorDetails?.name ||
@@ -1348,11 +1183,11 @@ export const LabTestCheckout = () => {
                             "Diagnostic Centre"}
                         </div>
                         {(labTestItems?.[0]?.vendorDetails?.businessProfile?.mobile || labTestItems?.[0]?.vendorDetails?.mobile || labTestItems?.[0]?.vendorDetails?.phone) && (
-                          <div style={{ color: "#64748b", fontSize: "13px", marginBottom: "4px" }}>
+                          <div className="text-[#64748b] text-[13px] mb-1">
                             Phone: {labTestItems?.[0]?.vendorDetails?.businessProfile?.mobile || labTestItems?.[0]?.vendorDetails?.mobile || labTestItems?.[0]?.vendorDetails?.phone}
                           </div>
                         )}
-                        <div style={{ color: "#334155" }}>
+                        <div className="text-[#334155]">
                           {vendorLocation?.address || labTestItems?.[0]?.vendorDetails?.businessProfile?.location?.address || labTestItems?.[0]?.vendorDetails?.businessProfile?.address || labTestItems?.[0]?.vendorDetails?.residentaladdress || "Address not available"}
                         </div>
                       </div>
@@ -1363,20 +1198,14 @@ export const LabTestCheckout = () => {
 
 
               {/* Referred Doctor Selection */}
-              <div className="col-md-6 col-12 mb-4">
+              <div className="col-span-1 mb-4 md:mb-6">
                 <div
-                  style={{
-                    borderRadius: "16px",
-                    border: "1px solid #e9ecef",
-                    boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.05)",
-                    background: "#ffffff",
-                    padding: "20px"
-                  }}
+                  className="rounded-2xl border border-[#e9ecef] shadow-[0_10px_25px_-5px_rgba(0,0,0,0.05)] bg-white p-3"
                 >
-                  <h5 style={{ fontSize: "15px", fontWeight: "500", color: "#0f172a", marginBottom: "12px" }} className="d-flex align-items-center gap-2">
-                    <i className="fa-solid fa-user-doctor" style={{ color: "#8059ca" }}></i>
+                  <div className="text-[15px] font-[500] text-[#0f172a] mb-3 flex items-center gap-2">
+                    <i className="fa-solid fa-user-doctor text-[#8059ca] "></i>
                     Referred Doctor
-                  </h5>
+                  </div>
                   <Select
                     styles={customSelectStyles}
                     options={getReferredDoctorSelectOptions(doctors)}
@@ -1415,65 +1244,48 @@ export const LabTestCheckout = () => {
               </div>
 
               {/* Lab Tests — Patient-wise Grouped View */}
-              <div className="col-12">
+              <div className="col-span-1 md:col-span-2">
                 <div
-                  style={isMobile ? {
-                    background: "transparent",
-                    borderRadius: "0",
-                    boxShadow: "none",
-                    padding: "0"
-                  } : {
-                    background: "#fff",
-                    borderRadius: "16px",
-                    border: "1px solid #e2e8f0",
-                    boxShadow: "0 4px 20px rgba(0, 0, 0, 0.02)",
-                    padding: "24px"
-                  }}
+                  className={isMobile ? "bg-transparent rounded-none shadow-none p-0" : "bg-white rounded-2xl border border-[#e2e8f0] shadow-[0_4px_20px_rgba(0,0,0,0.02)] p-6"}
                 >
                   {/* Section header — Vendor details (highlighted) */}
                   <div
-                    style={{
-                      background: "linear-gradient(135deg, #f5f0ff 0%, #ede9ff 100%)",
-                      border: "1.5px solid #c4b5fd",
-                      borderLeft: "4px solid #8059ca",
-                      borderRadius: "12px",
-                      padding: "14px 16px",
-                      marginBottom: "20px",
-                      boxShadow: "0 4px 14px rgba(128, 89, 202, 0.12)"
-                    }}
+                    className="border-[1.5px] border-l-4 border-[#c4b5fd] border-l-[#8059ca] rounded-xl px-4 py-3.5 mb-5 flex items-center gap-3 bg-gradient-to-br from-[#f5f0ff] to-[#ede9ff] shadow-[0_4px_14px_rgba(128,89,202,0.12)]"
                   >
-                    <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+                    <div className="flex items-center gap-3 w-full">
                       {/* Vendor icon */}
-                      <div style={{ width: 44, height: 44, borderRadius: "12px", background: "#ffffff", border: "2px solid #e9d5ff", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, overflow: "hidden", boxShadow: "0 2px 8px rgba(128,89,202,0.15)" }}>
+                      <div
+                        className="w-11 h-11 rounded-xl bg-white border-2 border-[#e9d5ff] flex items-center justify-center shrink-0 overflow-hidden shadow-[0_2px_8px_rgba(128,89,202,0.15)]"
+                      >
                         {labTestItems[0]?.vendorDetails?.businessProfile?.files?.[0] || labTestItems[0]?.vendorDetails?.files?.[0] ? (
                           <img
                             src={getImageUrl(labTestItems[0]?.vendorDetails?.businessProfile?.files?.[0] || labTestItems[0]?.vendorDetails?.files?.[0])}
                             alt="vendor"
-                            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                            className="w-full h-full object-cover"
                           />
                         ) : (
-                          <i className="fas fa-microscope" style={{ fontSize: "18px", color: "#8059ca" }} />
+                          <i className="fas fa-microscope text-[18px] text-[#8059ca]" />
                         )}
                       </div>
 
                       {/* Vendor name + details */}
-                      <div style={{ flex: 1, minWidth: 0 }}>
-                        <div style={{ fontWeight: "800", color: "#3b0764", fontSize: "14.5px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", marginBottom: "4px", textTransform: "capitalize" }}>
+                      <div className="flex-1 min-w-0">
+                        <div className="font-extrabold text-[#3b0764] text-[14.5px] overflow-hidden text-ellipsis whitespace-nowrap mb-1 capitalize">
                           {labTestItems[0]?.vendorDetails?.businessProfile?.name ||
                             labTestItems[0]?.vendorDetails?.name ||
                             labTestItems[0]?.vendorName ||
                             "Diagnostic Centre"}
                         </div>
-                        <div style={{ display: "flex", flexWrap: "wrap", gap: "12px" }}>
+                        <div className="flex flex-wrap gap-3">
                           {(labTestItems[0]?.vendorDetails?.businessProfile?.mobile || labTestItems[0]?.vendorDetails?.mobile || labTestItems[0]?.vendorDetails?.phone) && (
-                            <span style={{ fontSize: "11.5px", color: "#6d28d9", display: "flex", alignItems: "center", gap: "4px", fontWeight: "600" }}>
-                              <i className="fas fa-phone" style={{ color: "#8059ca", fontSize: "9px" }} />
+                            <span className="text-[11.5px] text-[#6d28d9] flex items-center gap-1 font-semibold">
+                              <i className="fas fa-phone text-[#8059ca] text-[9px]" />
                               {labTestItems[0]?.vendorDetails?.businessProfile?.mobile || labTestItems[0]?.vendorDetails?.mobile || labTestItems[0]?.vendorDetails?.phone}
                             </span>
                           )}
                           {(vendorLocation?.address || labTestItems[0]?.vendorDetails?.businessProfile?.location?.address || labTestItems[0]?.vendorDetails?.residentaladdress) && (
-                            <span style={{ fontSize: "11.5px", color: "#6d28d9", display: "flex", alignItems: "center", gap: "4px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", maxWidth: "300px", fontWeight: "500" }}>
-                              <i className="fas fa-map-marker-alt" style={{ color: "#8059ca", fontSize: "9px" }} />
+                            <span className="text-[11.5px] text-[#6d28d9] flex items-center gap-1 overflow-hidden text-ellipsis whitespace-nowrap max-w-[300px] font-medium">
+                              <i className="fas fa-map-marker-alt text-[#8059ca] text-[9px]" />
                               {vendorLocation?.address || labTestItems[0]?.vendorDetails?.businessProfile?.location?.address || labTestItems[0]?.vendorDetails?.residentaladdress}
                             </span>
                           )}
@@ -1481,13 +1293,15 @@ export const LabTestCheckout = () => {
                       </div>
 
                       {/* Test count badge */}
-                      <div style={{ background: "#8059ca", borderRadius: "8px", padding: "5px 12px", fontSize: "12px", fontWeight: "700", color: "#fff", whiteSpace: "nowrap", flexShrink: 0, boxShadow: "0 2px 6px rgba(128,89,202,0.3)" }}>
+                      <div
+                        className="bg-[#8059ca] rounded-lg px-3 py-1.5 text-xs font-bold text-white whitespace-nowrap shrink-0 shadow-[0_2px_6px_rgba(128,89,202,0.3)]"
+                      >
                         {labTestItems.length} test{labTestItems.length !== 1 ? "s" : ""}
                       </div>
                     </div>
                   </div>
 
-                  <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+                  <div className="flex flex-col gap-4">
                     {uniquePatientsInCart.map((patientId, pIdx) => {
                       const patientItems = labTestItems.filter(item =>
                         (item.labTestPatients || []).some(p =>
@@ -1500,37 +1314,30 @@ export const LabTestCheckout = () => {
                       const patientName = getPatientDisplayName(patientId);
                       const initials = patientName
                         .split(" ").slice(0, 2).map(w => w[0]).join("").toUpperCase();
-                      const avatarColors = ["#8059ca", "#6d28d9", "#7c3aed", "#5b21b6"];
-                      const avatarColor = avatarColors[pIdx % avatarColors.length];
 
                       return (
                         <div
                           key={patientId}
-                          style={{
-                            background: "#ffffff",
-                            borderRadius: "14px",
-                            border: "1px solid #e9ecef",
-                            overflow: "hidden"
-                          }}
+                          className="bg-white rounded-2xl border border-[#e9ecef] overflow-hidden"
                         >
                           {/* Patient header */}
-                          <div style={{ padding: "14px 16px", display: "flex", alignItems: "center", gap: "12px", borderBottom: displayItems.length > 0 ? "1px solid #f1f5f9" : "none" }}>
+                          <div className={`px-4 py-3.5 flex items-center gap-3 ${displayItems.length > 0 ? "border-b border-[#f1f5f9]" : "border-b-0"}`}>
                             {/* Avatar */}
-                            <div style={{ width: 38, height: 38, borderRadius: "50%", background: "#8059ca", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, color: "#fff", fontSize: "13px", fontWeight: "800", letterSpacing: "0.5px" }}>
+                            <div className="w-[38px] h-[38px] rounded-full bg-[#8059ca] flex items-center justify-center shrink-0 text-white text-xs font-extrabold tracking-wide">
                               {initials}
                             </div>
                             {/* Name & count */}
-                            <div style={{ flex: 1, minWidth: 0 }}>
-                              <div style={{ fontSize: "14px", fontWeight: "700", color: "#1e293b", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                            <div className="flex-1 min-w-0">
+                              <div className="text-sm font-bold text-[#1e293b] overflow-hidden text-ellipsis whitespace-nowrap">
                                 {patientName}
                               </div>
-                              <div style={{ fontSize: "11.5px", color: "#64748b", marginTop: "1px" }}>
+                              <div className="text-[11.5px] text-[#64748b] mt-0.5">
                                 {displayItems.length === 0 ? "No tests assigned" : `${displayItems.length} test${displayItems.length !== 1 ? "s" : ""} booked`}
                               </div>
                             </div>
                             {/* Count chip */}
                             {displayItems.length > 0 && (
-                              <div style={{ background: "#f1f5f9", border: "1px solid #e2e8f0", borderRadius: "20px", padding: "3px 10px", fontSize: "11px", fontWeight: "700", color: "#475569", whiteSpace: "nowrap", flexShrink: 0 }}>
+                              <div className="bg-[#f1f5f9] border border-[#e2e8f0] rounded-[20px] px-2.5 py-1 text-[11px] font-bold text-[#475569] whitespace-nowrap shrink-0">
                                 {displayItems.length} test{displayItems.length !== 1 ? "s" : ""}
                               </div>
                             )}
@@ -1538,11 +1345,11 @@ export const LabTestCheckout = () => {
 
                           {/* Test rows */}
                           {displayItems.length === 0 ? (
-                            <div style={{ padding: "18px 16px", textAlign: "center", color: "#94a3b8", fontSize: "12.5px", fontStyle: "italic" }}>
+                            <div className="px-4 py-4 text-center text-[#94a3b8] text-[12.5px] italic">
                               No tests assigned to this patient yet
                             </div>
                           ) : (
-                            <div style={{ padding: "8px 16px 14px" }}>
+                            <div className="px-4 pt-2 pb-3.5">
                               {displayItems.map((item, idx) => {
                                 const isPackage = item?.type === "package" || !!item?.packageId;
                                 const targetDetails = isPackage ? item?.packageDetails : item;
@@ -1559,33 +1366,27 @@ export const LabTestCheckout = () => {
                                 return (
                                   <div
                                     key={item.cartKey || item._id}
-                                    style={{
-                                      display: "flex",
-                                      alignItems: "center",
-                                      gap: "12px",
-                                      padding: "10px 0",
-                                      borderBottom: idx < displayItems.length - 1 ? "1px solid #f8fafc" : "none"
-                                    }}
+                                    className={`flex items-center gap-3 py-2.5 ${idx < displayItems.length - 1 ? "border-b border-[#f8fafc]" : ""}`}
                                   >
                                     {/* Flask icon or image */}
-                                    <div style={{ width: 42, height: 42, borderRadius: "10px", background: "#f5f3ff", border: "1px solid #ede9fe", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, overflow: "hidden" }}>
+                                    <div className="w-[42px] h-[42px] rounded-[10px] bg-[#f5f3ff] border border-[#ede9fe] flex items-center justify-center shrink-0 overflow-hidden">
                                       {resolveImage(item) ? (
-                                        <img src={resolveImage(item)} alt={name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                                        <img src={resolveImage(item)} alt={name} className="w-full h-full object-cover" />
                                       ) : (
-                                        <i className="fa-solid fa-flask" style={{ fontSize: "16px", color: "#8059ca" }} />
+                                        <i className="fa-solid fa-flask text-[16px] text-[#8059ca]" />
                                       )}
                                     </div>
 
                                     {/* Name + price */}
-                                    <div style={{ flex: 1, minWidth: 0 }}>
-                                      <div style={{ fontSize: "13px", fontWeight: "600", color: "#1e293b", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", marginBottom: "3px", textTransform: "capitalize" }}>
+                                    <div className="flex-1 min-w-0">
+                                      <div className="text-[13px] font-semibold text-[#1e293b] overflow-hidden text-ellipsis whitespace-nowrap mb-[3px] capitalize">
                                         {name}
                                       </div>
-                                      <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-                                        <span style={{ fontSize: "13px", fontWeight: "800", color: "#0f172a" }}>₹{(billingSummary?.unitPrice || 0).toFixed(0)}</span>
-                                        {billingSummary?.isDiscount && <span style={{ fontSize: "11px", color: "#94a3b8", textDecoration: "line-through" }}>₹{(billingSummary?.basePrice || 0).toFixed(0)}</span>}
+                                      <div className="flex items-center gap-1.5">
+                                        <span className="text-[13px] font-extrabold text-[#0f172a]">₹{(billingSummary?.unitPrice || 0).toFixed(0)}</span>
+                                        {billingSummary?.isDiscount && <span className="text-[11px] text-[#94a3b8] line-through">₹{(billingSummary?.basePrice || 0).toFixed(0)}</span>}
                                         {billingSummary?.isDiscount && (
-                                          <span style={{ background: "#f0fdf4", color: "#16a34a", fontSize: "9.5px", fontWeight: "700", padding: "1px 6px", borderRadius: "4px", border: "1px solid #bbf7d0" }}>
+                                          <span className="bg-[#f0fdf4] text-[#16a34a] text-[9.5px] font-bold px-1.5 py-0.5 rounded border border-[#bbf7d0]">
                                             {`${Math.round(((billingSummary.basePrice - billingSummary.unitPrice) / billingSummary.basePrice) * 100)}% OFF`}
                                           </span>
                                         )}
@@ -1596,7 +1397,7 @@ export const LabTestCheckout = () => {
                                     <button
                                       type="button"
                                       onClick={() => handleRemovePatientItem(item._id, patientId)}
-                                      style={{ width: 30, height: 30, borderRadius: "8px", background: "#fff5f5", border: "1px solid #fecaca", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", flexShrink: 0 }}
+                                      className="w-[30px] h-[30px] rounded-lg bg-[#fff5f5] border border-[#fecaca] flex items-center justify-center cursor-pointer shrink-0"
                                     >
                                       <Trash2 size={13} color="#ef4444" />
                                     </button>
@@ -1615,31 +1416,24 @@ export const LabTestCheckout = () => {
                       if (unassigned.length === 0) return null;
                       return (
                         <div
-                          style={{
-                            background: "#fff",
-                            borderRadius: "14px",
-                            border: "1px solid #fecaca",
-                            borderLeft: "4px solid #ef4444",
-                            boxShadow: "0 2px 12px rgba(239,68,68,0.06)",
-                            overflow: "hidden"
-                          }}
+                          className="bg-white rounded-2xl border border-[#fecaca] border-l-4 border-l-[#ef4444] shadow-[0_2px_12px_rgba(239,68,68,0.06)] overflow-hidden"
                         >
                           {/* Header */}
-                          <div style={{ padding: "12px 16px", display: "flex", alignItems: "center", gap: "10px", borderBottom: "1px solid #fee2e2", background: "#fff5f5" }}>
-                            <div style={{ width: 34, height: 34, borderRadius: "50%", background: "#fee2e2", border: "1.5px solid #fecaca", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                          <div className="px-4 py-3 flex items-center gap-2.5 border-b border-[#fee2e2] bg-[#fff5f5]">
+                            <div className="w-[34px] h-[34px] rounded-full bg-[#fee2e2] border-[1.5px] border-[#fecaca] flex items-center justify-center shrink-0">
                               <AlertCircle size={16} color="#ef4444" />
                             </div>
-                            <div style={{ flex: 1 }}>
-                              <div style={{ fontSize: "13.5px", fontWeight: "700", color: "#991b1b" }}>Unassigned Tests</div>
-                              <div style={{ fontSize: "11px", color: "#dc2626", marginTop: "1px" }}>Assign a patient to each test before checkout</div>
+                            <div className="flex-grow">
+                              <div className="text-[13.5px] font-bold text-[#991b1b]">Unassigned Tests</div>
+                              <div className="text-[11px] text-[#dc2626] mt-0.5">Assign a patient to each test before checkout</div>
                             </div>
-                            <div style={{ background: "#fee2e2", border: "1px solid #fecaca", borderRadius: "20px", padding: "3px 10px", fontSize: "11px", fontWeight: "700", color: "#ef4444", flexShrink: 0 }}>
+                            <div className="bg-[#fee2e2] border border-[#fecaca] rounded-[20px] px-2.5 py-1 text-[11px] font-bold text-[#ef4444] shrink-0">
                               {unassigned.length} pending
                             </div>
                           </div>
 
                           {/* Items */}
-                          <div style={{ padding: "8px 16px 14px" }}>
+                          <div className="px-4 pt-2 pb-3.5">
                             {unassigned.map((item, idx) => {
                               const isPackage = item?.type === "package" || !!item?.packageId;
                               const targetDetails = isPackage ? item?.packageDetails : item;
@@ -1648,23 +1442,23 @@ export const LabTestCheckout = () => {
                               return (
                                 <div
                                   key={item.cartKey || item._id}
-                                  style={{ display: "flex", alignItems: "center", gap: "12px", padding: "10px 0", borderBottom: idx < unassigned.length - 1 ? "1px solid #fff5f5" : "none" }}
+                                  className={`flex items-center gap-3 py-2.5 ${idx < unassigned.length - 1 ? "border-b border-[#fff5f5]" : ""}`}
                                 >
-                                  <div style={{ width: 42, height: 42, borderRadius: "10px", background: "#fff5f5", border: "1px solid #fecaca", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, overflow: "hidden" }}>
+                                  <div className="w-[42px] h-[42px] rounded-[10px] bg-[#fff5f5] border border-[#fecaca] flex items-center justify-center shrink-0 overflow-hidden">
                                     {resolveImage(item) ? (
-                                      <img src={resolveImage(item)} alt={name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                                      <img src={resolveImage(item)} alt={name} className="w-full h-full object-cover" />
                                     ) : (
-                                      <i className="fa-solid fa-flask" style={{ fontSize: "16px", color: "#ef4444" }} />
+                                      <i className="fa-solid fa-flask text-[16px] text-[#ef4444]" />
                                     )}
                                   </div>
-                                  <div style={{ flex: 1, minWidth: 0 }}>
-                                    <div style={{ fontSize: "13px", fontWeight: "600", color: "#1e293b", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", marginBottom: "2px" }}>{name}</div>
-                                    <span style={{ fontSize: "13px", fontWeight: "800", color: "#0f172a" }}>₹{price.toFixed(0)}</span>
+                                  <div className="flex-grow min-w-0">
+                                    <div className="text-[13px] font-semibold text-[#1e293b] overflow-hidden text-ellipsis whitespace-nowrap mb-0.5">{name}</div>
+                                    <span className="text-[13px] font-extrabold text-[#0f172a]">₹{price.toFixed(0)}</span>
                                   </div>
                                   <button
                                     type="button"
                                     onClick={() => removeItem(item.vendorId, item.productId, item.variantId, item.packageId)}
-                                    style={{ width: 30, height: 30, borderRadius: "8px", background: "#fff5f5", border: "1px solid #fecaca", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", flexShrink: 0 }}
+                                    className="w-[30px] h-[30px] rounded-lg bg-[#fff5f5] border border-[#fecaca] flex items-center justify-center cursor-pointer shrink-0"
                                   >
                                     <Trash2 size={13} color="#ef4444" />
                                   </button>
@@ -1684,94 +1478,70 @@ export const LabTestCheckout = () => {
 
         {labTestItems.length > 0 && (
           <div
-            className="card shadow-sm"
-            style={{
-              width: isMobile || isTablet ? "100%" : "33%",
-              position: isMobile || isTablet ? "static" : "sticky",
-              top: "100px",
-              borderRadius: "16px",
-              border: "1px solid #f1f5f9",
-              backgroundColor: "#fff",
-              padding: isMobile ? "20px" : "28px",
-              boxShadow: "0 10px 25px -5px rgba(0,0,0,0.05)",
-              marginTop: "10px",
-            }}
+            className={`card shadow-sm border border-[#f1f5f9] bg-white rounded-2xl ${isMobile || isTablet ? "w-full static" : "w-[33%] sticky top-[0px]"
+              } ${isMobile ? "p-4 " : "p-7"
+              }`}
           >
             {/* Coupon Card Summary */}
-            <div style={{ marginBottom: "28px" }}>
-              <div
-                style={{
-                  fontSize: "15.5px",
-                  fontWeight: "600",
-                  marginBottom: "12px",
-                  color: "#1e293b",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "8px"
-                }}
-              >
-                <i className="fas fa-percentage" style={{ color: "#8059ca" }}></i>
-                Offers & Discounts
+            <div className="mb-6 bg-white rounded-2xl border border-[#e5e7eb] shadow-[0_8px_24px_rgba(15,23,42,0.06)] p-3">
+              {/* Heading */}
+              <div className="flex items-center gap-2 text-[17px] font-[600] text-[#1f2937] mb-2">
+                <i className="fas fa-percentage text-[#8059ca] text-[18px]"></i>
+                <span>Offers & Discounts</span>
               </div>
 
+              {/* Coupon Card */}
               <div
-                style={{
-                  display: "flex",
-                  gap: "12px",
-                  background: appliedCoupon ? "#f0fdf4" : "#fdfaff",
-                  padding: "16px",
-                  borderRadius: "12px",
-                  alignItems: "center",
-                  cursor: "pointer",
-                  border: appliedCoupon ? "1.5px dashed #bbf7d0" : "1.5px dashed #e9d5ff",
-                  transition: "all 0.2s ease",
-                }}
+                className={`group flex items-center gap-4 p-3 rounded-2xl cursor-pointer transition-all duration-300 border ${appliedCoupon
+                  ? "bg-gradient-to-r from-[#f0fdf4] to-[#ecfdf5] border-[#86efac] shadow-[0_8px_20px_rgba(34,197,94,0.12)]"
+                  : "bg-gradient-to-r from-[#faf5ff] to-[#ffffff] border-[#d8b4fe] hover:border-[#8059ca] hover:shadow-[0_10px_25px_rgba(128,89,202,0.18)] hover:-translate-y-1"
+                  }`}
                 onClick={() => {
                   const token = localStorage.getItem("medicomparestoken");
+
                   if (!token) {
                     toast.error("Please login to apply coupons");
                     navigateToLogin(navigate, "/labtest-checkout");
                     return;
                   }
+
                   setShowOffersModal(true);
                 }}
               >
+                {/* Icon */}
                 <div
-                  style={{
-                    width: 38,
-                    height: 38,
-                    background: appliedCoupon ? "#16a34a" : "#8059ca",
-                    borderRadius: "10px",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    color: "#fff",
-                    fontSize: "14px",
-                    fontWeight: 700,
-                  }}
+                  className={`w-[42px] h-[42px] rounded-xl flex items-center justify-center text-white text-lg shadow-md ${appliedCoupon
+                    ? "bg-gradient-to-br from-[#22c55e] to-[#15803d]"
+                    : "bg-gradient-to-br from-[#8059ca] to-[#6d28d9]"
+                    }`}
                 >
-                  <i className="fas fa-tag" />
+                  <i className="fas fa-tags"></i>
                 </div>
 
-                <div style={{ flex: 1 }}>
+                {/* Content */}
+                <div className="flex-1">
                   <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      fontSize: "14px",
-                      fontWeight: 600,
-                      color: appliedCoupon ? "#166534" : "#8059ca",
-                      marginBottom: "2px",
-                    }}
+                    className={`flex items-center justify-between font-semibold text-[13px] ${appliedCoupon ? "text-[#166534]" : "text-[#6d28d9]"
+                      }`}
                   >
-                    <span>{appliedCoupon ? "Coupon Applied!" : "Apply Coupon"}</span>
-                    <i className="fas fa-chevron-right" style={{ fontSize: "11px" }} />
+                    <span>
+                      {appliedCoupon ? "Coupon Applied Successfully!" : "Apply Coupon"}
+                    </span>
+
+                    <i className="fas fa-chevron-right text-[11px] opacity-60 group-hover:translate-x-1 transition-transform duration-200"></i>
                   </div>
-                  <div style={{ fontSize: "12px", color: appliedCoupon ? "#15803d" : "#64748b" }}>
+
+                  <div
+                    className={`text-[11px] mt-1 ${appliedCoupon ? "text-[#15803d]" : "text-[#64748b]"
+                      }`}
+                  >
                     {appliedCoupon ? (
-                      <div className="d-flex align-items-center justify-content-between gap-2 mt-1">
-                        <span style={{ fontWeight: 600 }}>{appliedCoupon.code}</span>
+                      <div className="flex items-center justify-between flex-wrap gap-3">
+                        <span className="inline-flex items-center gap-2 bg-[#ede9fe] text-[#6d28d9] px-3 py-1 rounded-full font-bold tracking-wide">
+                          <i className="fas fa-ticket-alt text-[11px]" />
+                          {appliedCoupon.code}
+                        </span>
+
                         <button
                           type="button"
                           onClick={(e) => {
@@ -1779,210 +1549,114 @@ export const LabTestCheckout = () => {
                             e.stopPropagation();
                             setAppliedCoupon(null);
                           }}
-                          style={{
-                            background: "#fee2e2",
-                            border: "none",
-                            padding: "2px 8px",
-                            borderRadius: "4px",
-                            cursor: "pointer",
-                            color: "#ef4444",
-                            fontWeight: 700,
-                            fontSize: "10px",
-                          }}
+                          className="bg-red-50 hover:bg-red-100 text-red-600 px-3 py-1 rounded-full text-[11px] font-semibold transition-all duration-200"
                         >
                           Remove
                         </button>
                       </div>
-                    ) : "View available coupons & save more"}
+                    ) : (
+                      <span>
+                        View available coupons and save more on your order.
+                      </span>
+                    )}
                   </div>
                 </div>
               </div>
 
-              {/* Manual Coupon Input */}
-              <div style={{ display: "flex", gap: "8px", marginTop: "12px" }}>
-                <input
-                  type="text"
-                  placeholder="Enter Coupon Code"
-                  value={couponInputText}
-                  onChange={(e) => setCouponInputText(e.target.value)}
-                  style={{
-                    flex: 1,
-                    border: "1px solid #cbd5e1",
-                    borderRadius: "8px",
-                    padding: "8px 12px",
-                    fontSize: "13px",
-                    outline: "none",
-                    transition: "border-color 0.2s",
-                  }}
-                  onFocus={(e) => e.target.style.borderColor = "#8059ca"}
-                  onBlur={(e) => e.target.style.borderColor = "#cbd5e1"}
-                />
-                <button
-                  type="button"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleManualCouponApply();
-                  }}
-                  style={{
-                    background: "#8059ca",
-                    color: "#fff",
-                    border: "none",
-                    borderRadius: "8px",
-                    padding: "8px 16px",
-                    fontSize: "13px",
-                    fontWeight: "600",
-                    cursor: "pointer",
-                    transition: "background 0.2s",
-                  }}
-                  onMouseEnter={(e) => e.currentTarget.style.background = "#6f42c1"}
-                  onMouseLeave={(e) => e.currentTarget.style.background = "#8059ca"}
-                >
-                  Apply
-                </button>
+              {/* Manual Coupon */}
+              <div className="mt-2">
+                <label className="block text-[13px] font-medium text-[#475569] mb-2">
+                  Have a Coupon Code?
+                </label>
+
+                <div className="flex gap-2 mt-2 flex-row w-full">
+                  <input
+                    type="text"
+                    placeholder="Enter Coupon Code"
+                    value={couponInputText}
+                    onChange={(e) => setCouponInputText(e.target.value)}
+                    className="flex-1 min-w-0 border border-slate-300 rounded-lg px-3 py-2 text-sm bg-[#f8fafc] outline-none transition-colors focus:border-[#8059ca]"
+                  />
+
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleManualCouponApply();
+                    }}
+                    className="px-4 py-2 bg-gradient-to-r from-[#8059ca] to-[#6d28d9] hover:from-[#7148c5] hover:to-[#5b21b6] text-white text-sm font-semibold rounded-lg border-none transition-all duration-200 shrink-0"
+                  >
+                    Apply
+                  </button>
+                </div>
+
+                {!appliedCoupon && (
+                  <div className="mt-2 text-[12px] font-[500] text-[#94a3b8]">
+                    Enter your coupon code to get instant discounts on your booking.
+                  </div>
+                )}
               </div>
             </div>
 
 
             {/* Sample Collection Schedule */}
-            <div style={{ marginBottom: "28px" }}>
+            <div className="mb-7">
               <div
-                style={{
-                  fontSize: "15.5px",
-                  fontWeight: "600",
-                  marginBottom: "12px",
-                  color: "#1e293b",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "8px"
-                }}
+                className="text-[15.5px] font-semibold mb-3 text-[#1e293b] flex items-center gap-2"
               >
-                <Calendar size={16} style={{ color: "#8059ca" }} />
+                <Calendar size={16} className="text-[#8059ca]" />
                 Collection Schedule & Method
               </div>
 
               <div
-                style={{
-                  borderRadius: "14px",
-                  border: "1.5px solid #f3e8ff",
-                  background: "#fdfaff",
-                  padding: "18px",
-                  boxShadow: "0 2px 8px rgba(128, 89, 202, 0.04)"
-                }}
+                className="rounded-[14px] border border-[1.5px] border-[#f3e8ff] bg-[#fdfaff] p-[12px] shadow-[0_2px_8px_rgba(128,89,202,0.04)]"
               >
                 {/* Collection Method Toggle */}
                 {visitType === "both" ? (
-                  <div style={{
-                    display: "flex",
-                    background: "#f1f5f9",
-                    padding: "4px",
-                    borderRadius: "10px",
-                    marginBottom: "18px"
-                  }}>
+                  <div className="flex bg-[#f1f5f9] p-1 rounded-[10px] mb-[18px]">
                     {/* Home Collection */}
                     <div
                       onClick={() => setCollectionMethod("home")}
-                      style={{
-                        flex: 1,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        gap: "8px",
-                        padding: "10px 14px",
-                        borderRadius: "8px",
-                        cursor: "pointer",
-                        transition: "all 0.2s ease",
-                        backgroundColor: collectionMethod === "home" ? "#ffffff" : "transparent",
-                        color: collectionMethod === "home" ? "#8059ca" : "#64748b",
-                        fontWeight: "600",
-                        fontSize: "13px",
-                        boxShadow: collectionMethod === "home" ? "0 2px 6px rgba(0,0,0,0.08)" : "none"
-                      }}
+                      className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-3.5 rounded-lg cursor-pointer transition-all duration-200 text-[13px] font-semibold ${collectionMethod === "home"
+                        ? "bg-white text-[#8059ca] shadow-[0_2px_6px_rgba(0,0,0,0.08)]"
+                        : "bg-transparent text-[#64748b]"
+                        }`}
                     >
-                      <i className="fas fa-house-medical" style={{ fontSize: "14px" }} />
+                      <i className="fas fa-house-medical text-sm" />
                       <span>Home Collection</span>
                     </div>
 
                     {/* Lab Visit */}
                     <div
                       onClick={() => setCollectionMethod("lab")}
-                      style={{
-                        flex: 1,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        gap: "8px",
-                        padding: "10px 14px",
-                        borderRadius: "8px",
-                        cursor: "pointer",
-                        transition: "all 0.2s ease",
-                        backgroundColor: collectionMethod === "lab" ? "#ffffff" : "transparent",
-                        color: collectionMethod === "lab" ? "#8059ca" : "#64748b",
-                        fontWeight: "600",
-                        fontSize: "13px",
-                        boxShadow: collectionMethod === "lab" ? "0 2px 6px rgba(0,0,0,0.08)" : "none"
-                      }}
+                      className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-3.5 rounded-lg cursor-pointer transition-all duration-200 text-[13px] font-semibold ${collectionMethod === "lab"
+                        ? "bg-white text-[#8059ca] shadow-[0_2px_6px_rgba(0,0,0,0.08)]"
+                        : "bg-transparent text-[#64748b]"
+                        }`}
                     >
-                      <i className="fas fa-flask" style={{ fontSize: "14px" }} />
+                      <i className="fas fa-flask text-sm" />
                       <span>Lab Visit</span>
                     </div>
                   </div>
                 ) : visitType === "home" ? (
-                  <div style={{ marginBottom: "18px" }}>
-                    <div style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "8px",
-                      padding: "12px 16px",
-                      borderRadius: "10px",
-                      backgroundColor: "#fdfaff",
-                      color: "#8059ca",
-                      fontWeight: "700",
-                      fontSize: "13.5px",
-                      border: "1.5px solid #e9d5ff"
-                    }}>
-                      <i className="fas fa-house-medical" style={{ fontSize: "15px" }} />
+                  <div className="mb-[12px]">
+                    <div className="flex items-center gap-2 px-4 py-3 rounded-[10px] bg-[#fdfaff] text-[#8059ca] font-bold text-[13.5px] border-[1.5px] border-[#e9d5ff]">
+                      <i className="fas fa-house-medical text-[15px]" />
                       <span>Home Collection Only</span>
                     </div>
-                    <div style={{
-                      fontSize: "12px",
-                      color: "#7c3aed",
-                      background: "#faf5ff",
-                      padding: "8px 12px",
-                      borderRadius: "8px",
-                      marginTop: "8px",
-                      border: "1px solid #f3e8ff"
-                    }}>
-                      <i className="fas fa-info-circle" style={{ marginRight: "6px" }} />
+                    <div className="text-xs text-[#7c3aed] bg-[#faf5ff] px-3 py-2 rounded-lg mt-2 border border-[#f3e8ff]">
+                      <i className="fas fa-info-circle mr-1.5" />
                       Note: This diagnostic center only supports Home Sample Collection. A technician will visit your address.
                     </div>
                   </div>
                 ) : (
-                  <div style={{ marginBottom: "18px" }}>
-                    <div style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "8px",
-                      padding: "12px 16px",
-                      borderRadius: "10px",
-                      backgroundColor: "#f8fafc",
-                      color: "#475569",
-                      fontWeight: "700",
-                      fontSize: "13.5px",
-                      border: "1.5px solid #e2e8f0"
-                    }}>
-                      <i className="fas fa-flask" style={{ fontSize: "15px" }} />
+                  <div className="mb-[12px]">
+                    <div className="flex-1 flex items-center justify-center gap-2 py-2.5 px-3.5 rounded-lg transition-all duration-200 text-[13.5px] font-bold border border-[#e2e8f0] bg-[#f8fafc] text-[#475569] cursor-default">
+                      <i className="fas fa-flask text-[15px]" />
                       <span>Lab Visit Only</span>
                     </div>
-                    <div style={{
-                      fontSize: "12px",
-                      color: "#475569",
-                      background: "#f1f5f9",
-                      padding: "8px 12px",
-                      borderRadius: "8px",
-                      marginTop: "8px",
-                      border: "1px solid #e2e8f0"
-                    }}>
-                      <i className="fas fa-info-circle" style={{ marginRight: "6px" }} />
+                    <div className="text-xs text-[#475569] bg-[#f1f5f9] px-3 py-2 rounded-lg mt-2 border border-[#e2e8f0]">
+                      <i className="fas fa-info-circle mr-1.5" />
                       Note: You must visit the diagnostic center for sample collection.
                     </div>
                   </div>
@@ -1990,35 +1664,21 @@ export const LabTestCheckout = () => {
 
 
                 {/* Divider */}
-                <hr style={{ margin: "0 0 16px 0", border: "none", borderTop: "1.5px dashed #e9d5ff" }} />
+                <hr className="my-2 border-none border-t-[1.5px] border-dashed border-[#e9d5ff]" />
 
                 {/* Appointment Slot */}
                 <div>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "10px" }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-                      <Clock size={13} style={{ color: "#8059ca" }} />
-                      <label style={{ fontSize: "11px", fontWeight: "700", color: "#475569", margin: 0, letterSpacing: "0.5px" }}>
+                  <div className="flex justify-between items-center mb-2.5">
+                    <div className="flex items-center gap-1.5">
+                      <Clock size={13} className="text-[#8059ca]" />
+                      <label className="text-[11px] font-bold text-[#475569] m-0 tracking-[0.5px]">
                         APPOINTMENT SLOT
                       </label>
                     </div>
                     <button
                       type="button"
                       onClick={() => setShowSlotPicker(true)}
-                      style={{
-                        background: "linear-gradient(135deg, #8059ca 0%, #6d3fc7 100%)",
-                        border: "none",
-                        color: "#fff",
-                        borderRadius: "8px",
-                        padding: "7px 14px",
-                        fontSize: "12px",
-                        fontWeight: "700",
-                        cursor: "pointer",
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "5px",
-                        boxShadow: "0 2px 6px rgba(128,89,202,0.35)",
-                        letterSpacing: "0.3px"
-                      }}
+                      className="bg-gradient-to-r from-[#8059ca] to-[#6d3fc7] border-none text-white rounded-sm px-3.5 py-[7px] text-xs font-bold cursor-pointer flex items-center gap-1.5 shadow-[0_2px_6px_rgba(128,89,202,0.35)] tracking-[0.3px] hover:-translate-y-px transition-all duration-200"
                     >
                       <Calendar size={12} />
                       {selectedDate && selectedTimeSlot ? "CHANGE SLOT" : "PICK SLOT"}
@@ -2027,33 +1687,16 @@ export const LabTestCheckout = () => {
 
                   {selectedDate && selectedTimeSlot ? (
                     <div
-                      style={{
-                        background: "linear-gradient(135deg, #f5f0ff 0%, #ede9ff 100%)",
-                        borderRadius: "10px",
-                        padding: "12px 14px",
-                        border: "1.5px solid #c4b5fd",
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "10px"
-                      }}
+                      className="bg-gradient-to-br from-[#f5f0ff] to-[#ede9ff] rounded-[10px] px-3.5 py-3 border border-[#c4b5fd] flex items-center gap-2.5"
                     >
-                      <span style={{
-                        width: "36px",
-                        height: "36px",
-                        borderRadius: "10px",
-                        backgroundColor: "#8059ca",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        flexShrink: 0
-                      }}>
+                      <span className="w-9 h-9 rounded-[10px] bg-[#8059ca] flex items-center justify-center shrink-0">
                         <Calendar size={16} color="#fff" />
                       </span>
-                      <div style={{ flex: 1 }}>
-                        <div style={{ fontSize: "11px", color: "#7c3aed", fontWeight: "600", marginBottom: "2px" }}>
+                      <div className="flex-1">
+                        <div className="text-[11px] text-[#7c3aed] font-semibold mb-0.5">
                           Selected Slot
                         </div>
-                        <div style={{ fontSize: "13px", color: "#1e293b", fontWeight: "700" }}>
+                        <div className="text-sm text-[#1e293b] font-bold">
                           {selectedSlotText || (
                             selectedDate instanceof Date
                               ? `${selectedDate.toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" })} · ${selectedTimeSlot}`
@@ -2061,37 +1704,19 @@ export const LabTestCheckout = () => {
                           )}
                         </div>
                       </div>
-                      <span style={{
-                        width: "22px",
-                        height: "22px",
-                        borderRadius: "50%",
-                        backgroundColor: "#16a34a",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        flexShrink: 0
-                      }}>
+                      <span className="w-[22px] h-[22px] rounded-full bg-[#16a34a] flex items-center justify-center shrink-0">
                         <Check size={12} color="#fff" />
                       </span>
                     </div>
                   ) : (
                     <div
                       onClick={() => setShowSlotPicker(true)}
-                      style={{
-                        border: "1.5px dashed #c4b5fd",
-                        borderRadius: "10px",
-                        padding: "10px 14px",
-                        background: "#faf5ff",
-                        cursor: "pointer",
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "12px"
-                      }}
+                      className="border-[1.5px] border-dashed border-[#c4b5fd] rounded-[10px] px-3.5 py-2.5 bg-[#faf5ff] cursor-pointer flex items-center gap-3"
                     >
-                      <div style={{ fontSize: "24px", flexShrink: 0 }}>📅</div>
+                      <div className="text-2xl shrink-0">📅</div>
                       <div>
-                        <div style={{ fontSize: "12.5px", color: "#7c3aed", fontWeight: "600" }}>No slot selected</div>
-                        <div style={{ fontSize: "11px", color: "#a78bfa", marginTop: "2px" }}>Tap to pick a date &amp; time</div>
+                        <div className="text-[12.5px] text-[#7c3aed] font-semibold">No slot selected</div>
+                        <div className="text-[11px] text-[#a78bfa] mt-0.5">Tap to pick a date &amp; time</div>
                       </div>
                     </div>
                   )}
@@ -2100,241 +1725,157 @@ export const LabTestCheckout = () => {
             </div>
 
             {/* Bill details */}
-            <div style={{ marginBottom: "5px" }}>
+            <div className="mb-[5px]">
               <div
-                style={{
-                  fontSize: "15.5px",
-                  fontWeight: "600",
-                  marginBottom: "12px",
-                  color: "#1e293b",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "8px"
-                }}>
+                className="text-[15.5px] font-semibold mb-3 text-[#1e293b] flex items-center gap-2"
+              >
                 Booking Summary
               </div>
               <div
-                style={{
-                  background: "#fdfaff",
-                  border: "1.5px solid #f3e8ff",
-                  borderRadius: "14px",
-                  padding: "20px",
-                  boxShadow: "0 2px 8px rgba(128, 89, 202, 0.02)"
-                }}
+                className="rounded-[14px] bg-[#fdfaff] border border-[#f3e8ff] p-3 shadow-[0_2px_8px_rgba(128,89,202,0.02)]"
               >
-                <div style={{ display: "flex", justifySpace: "space-between", justifyContent: "space-between", fontSize: "13px", color: "#475569", marginBottom: "14px" }}>
-                  <span style={{ fontWeight: 500 }}>Subtotal <span style={{ fontSize: "11px", color: "#94a3b8", fontWeight: 400 }}>(Included of all taxes)</span></span>
-                  <span style={{ fontWeight: 600, color: "#1e293b" }}>₹{cartBilling?.subtotal?.toFixed(2)}</span>
+                <div className="flex justify-between items-start gap-3 text-[13px] text-[#475569] mb-3.5">
+                  <span className="font-semibold flex flex-row leading-tight">
+                    Subtotal
+                    <span className="block text-[11px] text-[#94a3b8] font-normal mt-0.5"> (Included of all taxes)</span>
+                  </span>
+                  <span className="font-semibold text-[#1e293b] shrink-0">₹{cartBilling?.subtotal?.toFixed(2)}</span>
                 </div>
 
-
-
-                <div style={{ display: "flex", justifyContent: "space-between", fontSize: "13px", color: "#475569", marginBottom: "14px" }}>
-                  <span style={{ fontWeight: 500 }}>GST</span>
-                  <span style={{ fontWeight: 600, color: "#1e293b" }}>₹{(cartBilling?.totalGst || 0).toFixed(2)}</span>
+                <div className="flex justify-between items-center text-[13px] text-[#475569] mb-3.5">
+                  <span className="font-medium">GST</span>
+                  <span className="font-semibold text-[#1e293b]">₹{(cartBilling?.totalGst || 0).toFixed(2)}</span>
                 </div>
 
                 {appliedCoupon && (
-                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: "13px", color: "#16a34a", marginBottom: "14px" }}>
-                    <span style={{ fontWeight: 600 }}>Coupon Discount</span>
-                    <span style={{ fontWeight: 750 }}>- ₹{couponDiscount.toFixed(2)}</span>
+                  <div className="flex justify-between items-center text-[13px] text-[#16a34a] mb-3.5">
+                    <span className="font-semibold">Coupon Discount</span>
+                    <span className="font-bold">- ₹{couponDiscount.toFixed(2)}</span>
                   </div>
                 )}
-                {/* <div style={{ display: "flex", justifyContent: "space-between", fontSize: "13px", color: "#475569", marginBottom: "14px" }}>
-                  <span style={{ fontWeight: 500 }}>SGST (14%)</span>
-                  <span style={{ fontWeight: 600, color: "#1e293b" }}>₹{SGstCalculate(subtotal).toFixed(2)}</span>
+                {/* SGST (14%) row intentionally kept disabled, matches original markup:
+                <div className="flex justify-between items-center text-[13px] text-[#475569] mb-3.5">
+                  <span className="font-medium">SGST (14%)</span>
+                  <span className="font-semibold text-[#1e293b]">₹{SGstCalculate(subtotal).toFixed(2)}</span>
                 </div> */}
 
                 {homeVisitFee > 0 && (
-                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: "13px", color: "#475569", marginBottom: "14px", backgroundColor: "#fdf8ff", padding: "8px 12px", borderRadius: "8px", border: "1px dashed #e9d5ff" }}>
-                    <span style={{ fontWeight: 600, display: "flex", alignItems: "center", gap: "6px" }}>
-                      <i className="fas fa-house-medical" style={{ color: "#8059ca", fontSize: "11px" }} />
+                  <div className="flex justify-between items-center text-[13px] text-[#475569] mb-3.5 bg-[#fdf8ff] px-3 py-2 rounded-lg border border-dashed border-[#e9d5ff]">
+                    <span className="font-semibold flex items-center gap-1.5">
+                      <i className="fas fa-house-medical text-[#8059ca] text-[11px]" />
                       Home Visit Fee
                     </span>
-                    <span style={{ fontWeight: 700, color: "#8059ca" }}>+ ₹{(serviceDetails?.homeVisitFee || 0).toFixed(2)}</span>
+                    <span className="font-bold text-[#8059ca] shrink-0">+ ₹{(serviceDetails?.homeVisitFee || 0).toFixed(2)}</span>
                   </div>
                 )}
                 {(walletUsed > 0 && selectedPayment === "online") && (
                   <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      fontSize: "13px",
-                      color: "#059669",
-                      marginBottom: "14px",
-                    }}
+                    className="flex justify-between items-center text-[13px] text-[#059669] mb-3.5"
                   >
-                    <span style={{ fontWeight: 500 }}>
+                    <span className="font-medium">
                       Wallet Deduction
                     </span>
-                    <span style={{ fontWeight: 600, color: "#059669" }}>
+                    <span className="font-semibold text-[#059669]">
                       - ₹{walletUsed.toFixed(2)}
                     </span>
                   </div>
                 )}
-                <hr style={{ margin: "14px 0", border: '2px solid #c4b5fd' }} />
+                <hr className="my-2 border-t-2 border-[#c4b5fd]" />
 
-
-                <div style={{ display: "flex", justifyContent: "space-between", fontSize: "15px", fontWeight: 600, color: '#8059ca' }}>
+                <div className="flex justify-between items-center text-[15px] font-semibold text-[#8059ca]">
                   <span>Amount To Pay</span>
-                  <span style={{ color: "#8059ca", fontSize: "17.5px" }}>₹{amountToPay.toFixed(2)}</span>
+                  <span className="text-[#8059ca] text-[17.5px] leading-none">₹{amountToPay.toFixed(2)}</span>
                 </div>
 
                 <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    fontSize: "12.5px",
-                    color: "#1e293b",
-                    fontWeight: "600"
-                  }}
+                  className="flex justify-between items-center text-[12.5px] text-[#1e293b] font-semibold mt-2.5"
                 >
                   <span>Remaining Wallet Balance</span>
-                  <span style={{ color: "#475569" }}>₹{(walletAmount - walletUsed).toFixed(2)}</span>
+                  <span className="text-[#475569]">₹{(walletAmount - walletUsed).toFixed(2)}</span>
                 </div>
 
               </div>
 
 
               {appliedCoupon && couponDiscount > 0 && (
-                <div style={{ background: "#f0fdf4", padding: "10px", borderRadius: "10px", fontSize: "12px", fontWeight: 700, color: "#15803d", marginTop: "12px", textAlign: "center", border: "1px solid #bbf7d0", display: "flex", alignItems: "center", justifyContent: "center", gap: "6px" }}>
-                  <i className="fas fa-sparkles" style={{ color: "#16a34a" }} />
+                <div className="bg-[#f0fdf4] p-2.5 rounded-lg text-xs font-bold text-[#15803d] mt-3.5 text-center border border-[#bbf7d0] flex items-center justify-center gap-1.5">
+                  <i className="fas fa-sparkles text-[#16a34a]" />
                   <span>YOU SAVED ₹{couponDiscount.toFixed(2)} ON THIS ORDER!</span>
                 </div>
               )}
 
-              <div style={{
-                // fontSize: "15.5px", 
-                // fontWeight: "600", 
-                margin: isMobile ? "16px 0 10px 0" : "28px 0 12px 0",
-                // color: "#1e293b"
-                fontSize: "15.5px",
-                fontWeight: "600",
-                marginBottom: "12px",
-                color: "#1e293b",
-                display: "flex",
-                alignItems: "center",
-                gap: "8px"
-              }}>
+              <div className={`text-[15.5px] font-semibold text-[#1e293b] flex items-center gap-2 ${isMobile ? "mt-4 mb-2.5" : "mt-7 mb-3"
+                }`}>
                 Choose Payment Method
               </div>
 
-              <div style={{ display: "flex", flexDirection: isMobile || isTablet ? "column" : "row", gap: "8px", marginBottom: "16px", width: "100%", boxSizing: "border-box" }}>
+              <div className={`flex gap-2.5 mb-4 w-full ${isMobile || isTablet ? "flex-col" : "flex-row"}`}>
                 {/* Online Option */}
                 <div
-                  style={{
-                    flex: "1 1 0%",
-                    minWidth: 0,
-                    border: selectedPayment === "online" ? "2px solid #8059ca" : "1.5px solid #e2e8f0",
-                    borderRadius: "12px",
-                    padding: "10px 12px",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "8px",
-                    backgroundColor: selectedPayment === "online" ? "#fdfaff" : "#ffffff",
-                    cursor: "pointer",
-                    transition: "all 0.2s ease",
-                    boxShadow: selectedPayment === "online" ? "0 4px 12px rgba(128, 89, 202, 0.08)" : "none",
-                    boxSizing: "border-box"
-                  }}
+                  className={`flex-1 min-w-0 border rounded-xl px-3.5 py-3 flex items-center gap-2.5 cursor-pointer transition-all duration-200 ${selectedPayment === "online"
+                    ? "border-[#8059ca] bg-[#fdfaff] shadow-[0_4px_12px_rgba(128,89,202,0.08)]"
+                    : "border-[#e2e8f0] bg-white hover:border-[#cbd5e1] hover:bg-[#fafbfc]"
+                    }`}
                   onClick={() => setSelectedPayment("online")}
-                  onMouseEnter={(e) => {
-                    if (selectedPayment !== "online") {
-                      e.currentTarget.style.borderColor = "#cbd5e1";
-                      e.currentTarget.style.backgroundColor = "#fafbfc";
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (selectedPayment !== "online") {
-                      e.currentTarget.style.borderColor = "#e2e8f0";
-                      e.currentTarget.style.backgroundColor = "#ffffff";
-                    }
-                  }}
                 >
-                  <div style={{ width: "28px", height: "28px", borderRadius: "8px", background: selectedPayment === "online" ? "#8059ca" : "#f1f5f9", display: "flex", alignItems: "center", justifyContent: "center", color: selectedPayment === "online" ? "#fff" : "#64748b", fontSize: "12px", transition: "all 0.2s ease", flexShrink: 0 }}>
+                  <div className={`w-7 h-7 rounded-lg flex items-center justify-center text-xs transition-all duration-200 shrink-0 ${selectedPayment === "online" ? "bg-[#8059ca] text-white" : "bg-[#f1f5f9] text-[#64748b]"
+                    }`}>
                     <i className="fas fa-credit-card" />
                   </div>
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontSize: "12px", fontWeight: "700", color: selectedPayment === "online" ? "#8059ca" : "#1e293b", marginBottom: "1px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                  <div className="flex-1 min-w-0">
+                    <div className={`text-xs font-bold mb-0.5 whitespace-nowrap overflow-hidden text-ellipsis ${selectedPayment === "online" ? "text-[#8059ca]" : "text-[#1e293b]"
+                      }`}>
                       Online Payment
                     </div>
-                    <div style={{ fontSize: "10px", color: "#64748b", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>UPI, Cards, NetBanking</div>
+                    <div className="text-[10px] text-[#64748b] whitespace-nowrap overflow-hidden text-ellipsis">UPI, Cards, NetBanking</div>
                   </div>
-                  <div style={{ width: "14px", height: "14px", borderRadius: "50%", border: selectedPayment === "online" ? "4px solid #8059ca" : "2px solid #cbd5e1", background: "#fff", transition: "all 0.2s ease", flexShrink: 0 }} />
+                  <div className={`w-3.5 h-3.5 rounded-full border bg-white transition-all duration-200 shrink-0 ${selectedPayment === "online" ? "border-4 border-[#8059ca]" : "border-2 border-[#cbd5e1]"
+                    }`} />
                 </div>
 
                 {/* COD Option */}
                 <div
-                  style={{
-                    flex: "1 1 0%",
-                    minWidth: 0,
-                    border: selectedPayment === "cod" ? "2px solid #8059ca" : "1.5px solid #e2e8f0",
-                    borderRadius: "12px",
-                    padding: "10px 12px",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "8px",
-                    backgroundColor: selectedPayment === "cod" ? "#fdfaff" : "#ffffff",
-                    cursor: "pointer",
-                    transition: "all 0.2s ease",
-                    boxShadow: selectedPayment === "cod" ? "0 4px 12px rgba(128, 89, 202, 0.08)" : "none",
-                    boxSizing: "border-box"
-                  }}
+                  className={`flex-1 min-w-0 border rounded-xl px-3.5 py-3 flex items-center gap-2.5 cursor-pointer transition-all duration-200 ${selectedPayment === "cod"
+                    ? "border-[#8059ca] bg-[#fdfaff] shadow-[0_4px_12px_rgba(128,89,202,0.08)]"
+                    : "border-[#e2e8f0] bg-white hover:border-[#cbd5e1] hover:bg-[#fafbfc]"
+                    }`}
                   onClick={() => {
                     setSelectedPayment("cod");
                     setAppliedCoupon(null);
                   }}
-                  onMouseEnter={(e) => {
-                    if (selectedPayment !== "cod") {
-                      e.currentTarget.style.borderColor = "#cbd5e1";
-                      e.currentTarget.style.backgroundColor = "#fafbfc";
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (selectedPayment !== "cod") {
-                      e.currentTarget.style.borderColor = "#e2e8f0";
-                      e.currentTarget.style.backgroundColor = "#ffffff";
-                    }
-                  }}
                 >
-                  <div style={{ width: "28px", height: "28px", borderRadius: "8px", background: selectedPayment === "cod" ? "#8059ca" : "#f1f5f9", display: "flex", alignItems: "center", justifyContent: "center", color: selectedPayment === "cod" ? "#fff" : "#64748b", fontSize: "12px", transition: "all 0.2s ease", flexShrink: 0 }}>
+                  <div className={`w-7 h-7 rounded-lg flex items-center justify-center text-xs transition-all duration-200 shrink-0 ${selectedPayment === "cod" ? "bg-[#8059ca] text-white" : "bg-[#f1f5f9] text-[#64748b]"
+                    }`}>
                     <i className="fas fa-money-bill-wave" />
                   </div>
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontSize: "12px", fontWeight: "700", color: selectedPayment === "cod" ? "#8059ca" : "#1e293b", marginBottom: "1px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                  <div className="flex-1 min-w-0">
+                    <div className={`text-xs font-bold mb-0.5 whitespace-nowrap overflow-hidden text-ellipsis ${selectedPayment === "cod" ? "text-[#8059ca]" : "text-[#1e293b]"
+                      }`}>
                       Pay at Sample Collection
                     </div>
-                    <div style={{ fontSize: "10px", color: "#64748b", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>Pay at the time of sample collection</div>
+                    <div className="text-[10px] text-[#64748b] whitespace-nowrap overflow-hidden text-ellipsis">Pay at sample collection</div>
                   </div>
-                  <div style={{ width: "14px", height: "14px", borderRadius: "50%", border: selectedPayment === "cod" ? "4px solid #8059ca" : "2px solid #cbd5e1", background: "#fff", transition: "all 0.2s ease", flexShrink: 0 }} />
+                  <div className={`w-3.5 h-3.5 rounded-full border bg-white transition-all duration-200 shrink-0 ${selectedPayment === "cod" ? "border-4 border-[#8059ca]" : "border-2 border-[#cbd5e1]"
+                    }`} />
                 </div>
               </div>
 
-              <hr style={{ margin: "18px 0", borderColor: "#f1f5f9" }} />
+              <hr className="my-1 border-[#f1f5f9]" />
 
               {/* Checkout Actions */}
-              <div style={{ display: "flex", flexDirection: "row", gap: "12px", backgroundColor: "#fdfaff", padding: "16px", borderRadius: "14px", alignItems: "center", border: "1px solid #f3e8ff" }}>
-                <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-                  <div style={{ fontSize: "12px", fontWeight: 600, color: "#6b7280" }}>Total Payable</div>
-                  <div style={{ fontSize: "20px", fontWeight: 800, color: "#1e1b4b" }}>₹{amountToPay.toFixed(2)}</div>
+              <div className="flex gap-3 bg-[#fdfaff] p-4 rounded-2xl items-center border border-[#f3e8ff]">
+                <div className="flex-1 min-w-0 flex flex-col items-start justify-center leading-tight">
+                  <div className="text-xs font-semibold text-gray-500">Total Payable</div>
+                  <div className="text-xl font-semibold text-[#1e1b4b] mt-0.5">₹{amountToPay.toFixed(2)}</div>
                 </div>
                 <button
                   type="button"
                   onClick={handleSubmit}
                   disabled={isSubmitting}
-                  style={{
-                    flex: 1,
-                    padding: "8px 20px",
-                    background: isSubmitting ? "#cbd5e1" : "linear-gradient(135deg, #8059ca 0%, #6f42c1 100%)",
-                    color: "#fff",
-                    border: "none",
-                    borderRadius: "10px",
-                    fontSize: "14.5px",
-                    fontWeight: 600,
-                    cursor: isSubmitting ? "not-allowed" : "pointer",
-                    boxShadow: isSubmitting ? "none" : "0 4px 14px rgba(128, 89, 202, 0.25)",
-                    transition: "all 0.2s ease"
-                  }}
+                  className={`flex-1 min-w-0 flex items-center justify-center py-2.5 px-3 text-white border-none rounded-[20px] text-[14.5px] font-semibold transition-all duration-200 ${isSubmitting
+                    ? "bg-slate-350 cursor-not-allowed"
+                    : "bg-gradient-to-r from-[#8059ca] to-[#6f42c1] cursor-pointer shadow-[0_4px_14px_rgba(128,89,202,0.25)] hover:-translate-y-px"
+                    }`}
                 >
                   {isSubmitting ? "Processing..." : "Pay Now"}
                 </button>
@@ -2348,7 +1889,7 @@ export const LabTestCheckout = () => {
         show={showSlotPicker}
         onHide={() => setShowSlotPicker(false)}
         placement="end"
-        style={{ zIndex: "9999999999" }}
+        className="z-[9999999999]"
       >
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>Book A Slot</Offcanvas.Title>
@@ -2407,18 +1948,17 @@ export const LabTestCheckout = () => {
       {/* Coupon modal */}
       {showOffersModal && (
         <div
-          className="offers-modal-overlay"
+          className="fixed inset-0 z-[100000] bg-black/50 flex items-center justify-center px-3"
           onClick={() => setShowOffersModal(false)}
         >
           <div
-            className="offers-modal-content"
+            className="w-full max-w-[580px] max-h-[85vh] overflow-y-auto bg-white rounded-2xl shadow-2xl"
             onClick={(e) => e.stopPropagation()}
-            style={{ maxWidth: "580px" }}
           >
-            <div className="offers-modal-header">
-              <h3 className="offers-modal-title">Apply Coupon</h3>
+            <div className="flex items-center justify-between px-5 py-4 border-b border-[#f1f5f9] sticky top-0 bg-white rounded-t-2xl">
+              <h3 className="text-[16px] font-bold text-[#1e293b] m-0">Apply Coupon</h3>
               <button
-                className="offers-modal-close"
+                className="w-8 h-8 rounded-full bg-[#f1f5f9] border-none text-[#64748b] text-xl leading-none flex items-center justify-center cursor-pointer hover:bg-[#e2e8f0] transition-colors duration-150"
                 onClick={() => setShowOffersModal(false)}
               >
                 ×
@@ -2446,8 +1986,8 @@ export const LabTestCheckout = () => {
 
               return (
                 <>
-                  <div className="offers-modal-body" style={{ padding: '20px', background: '#f8fafc' }}>
-                    <div className="offers-list" style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
+                  <div className="bg-[#f8fafc] p-5">
+                    <div className="flex flex-col gap-3.5">
                       {(() => {
                         const cartVendorIds = Array.isArray(cartItems) ? cartItems.map(item => String(item.vendorId)) : [];
 
@@ -2482,47 +2022,47 @@ export const LabTestCheckout = () => {
                         const couponThemes = {
                           saver: {
                             label: "Saver",
-                            bg: "#fafffb",
-                            border: "#d1fae5",
-                            accent: "#22c55e",
-                            badgeBg: "#f0fdf4",
-                            badgeText: "#16a34a",
-                            btnBg: "#f0fdf4",
-                            btnText: "#16a34a",
-                            btnBorder: "#bbf7d0",
+                            bg: "bg-[#fafffb]",
+                            border: "border-[#d1fae5]",
+                            accent: "text-[#22c55e]",
+                            badgeBg: "bg-[#f0fdf4]",
+                            badgeText: "text-[#16a34a]",
+                            btnBg: "bg-[#f0fdf4]",
+                            btnText: "text-[#16a34a]",
+                            btnBorder: "border-[#bbf7d0]",
                           },
                           good: {
                             label: "Good Deal",
-                            bg: "#f8fbff",
-                            border: "#dbeafe",
-                            accent: "#3b82f6",
-                            badgeBg: "#eff6ff",
-                            badgeText: "#2563eb",
-                            btnBg: "#eff6ff",
-                            btnText: "#2563eb",
-                            btnBorder: "#bfdbfe",
+                            bg: "bg-[#f8fbff]",
+                            border: "border-[#dbeafe]",
+                            accent: "text-[#3b82f6]",
+                            badgeBg: "bg-[#eff6ff]",
+                            badgeText: "text-[#2563eb]",
+                            btnBg: "bg-[#eff6ff]",
+                            btnText: "text-[#2563eb]",
+                            btnBorder: "border-[#bfdbfe]",
                           },
                           hot: {
                             label: "Hot Deal",
-                            bg: "#fffdf7",
-                            border: "#fde68a",
-                            accent: "#d97706",
-                            badgeBg: "#fffbeb",
-                            badgeText: "#b45309",
-                            btnBg: "#fffbeb",
-                            btnText: "#d97706",
-                            btnBorder: "#fcd34d",
+                            bg: "bg-[#fffdf7]",
+                            border: "border-[#fde68a]",
+                            accent: "text-[#d97706]",
+                            badgeBg: "bg-[#fffbeb]",
+                            badgeText: "text-[#b45309]",
+                            btnBg: "bg-[#fffbeb]",
+                            btnText: "text-[#d97706]",
+                            btnBorder: "border-[#fcd34d]",
                           },
                           mega: {
                             label: "Mega Save",
-                            bg: "#fcfaff",
-                            border: "#e9d5ff",
-                            accent: "#8059ca",
-                            badgeBg: "#f5f3ff",
-                            badgeText: "#7c3aed",
-                            btnBg: "#f3e8ff",
-                            btnText: "#8059ca",
-                            btnBorder: "#ddd6fe",
+                            bg: "bg-[#fcfaff]",
+                            border: "border-[#e9d5ff]",
+                            accent: "text-[#8059ca]",
+                            badgeBg: "bg-[#f5f3ff]",
+                            badgeText: "text-[#7c3aed]",
+                            btnBg: "bg-[#f3e8ff]",
+                            btnText: "text-[#8059ca]",
+                            btnBorder: "border-[#ddd6fe]",
                           },
                         };
 
@@ -2588,25 +2128,25 @@ export const LabTestCheckout = () => {
                           const tier = getDiscountTier(ele);
                           const theme = couponThemes[tier];
                           const inactiveTheme = {
-                            bg: "#f8fafc",
-                            border: "#e2e8f0",
-                            accent: "#94a3b8",
-                            badgeBg: "#f1f5f9",
-                            badgeText: "#64748b",
-                            btnBg: "#f1f5f9",
-                            btnText: "#94a3b8",
-                            btnBorder: "#e2e8f0",
+                            bg: "bg-[#f8fafc]",
+                            border: "border-[#e2e8f0]",
+                            accent: "text-[#94a3b8]",
+                            badgeBg: "bg-[#f1f5f9]",
+                            badgeText: "text-[#64748b]",
+                            btnBg: "bg-[#f1f5f9]",
+                            btnText: "text-[#94a3b8]",
+                            btnBorder: "border-[#e2e8f0]",
                             label: "Unavailable",
                           };
                           const appliedTheme = {
-                            bg: "#f6fef9",
-                            border: "#a7f3d0",
-                            accent: "#10b981",
-                            badgeBg: "#ecfdf5",
-                            badgeText: "#059669",
-                            btnBg: "#ecfdf5",
-                            btnText: "#059669",
-                            btnBorder: "#a7f3d0",
+                            bg: "bg-[#f6fef9]",
+                            border: "border-[#a7f3d0]",
+                            accent: "text-[#10b981]",
+                            badgeBg: "bg-[#ecfdf5]",
+                            badgeText: "text-[#059669]",
+                            btnBg: "bg-[#ecfdf5]",
+                            btnText: "text-[#059669]",
+                            btnBorder: "border-[#a7f3d0]",
                             label: "Applied",
                           };
                           const activeTheme = !isEligible
@@ -2622,136 +2162,50 @@ export const LabTestCheckout = () => {
                           return (
                             <div
                               key={ele._id || `${ele.code}-${ind}`}
-                              style={{
-                                display: "flex",
-                                alignItems: "stretch",
-                                width: "100%",
-                                background: activeTheme.bg,
-                                border: `1px solid ${activeTheme.border}`,
-                                borderRadius: "12px",
-                                overflow: "hidden",
-                                transition: "all 0.2s ease",
-                                boxShadow: "none",
-                                opacity: isEligible ? 1 : 0.72,
-                              }}
+                              className={`flex items-stretch w-full rounded-xl overflow-hidden border ${activeTheme.bg} ${activeTheme.border} transition-all duration-200 ${isEligible ? "opacity-100" : "opacity-[0.72]"
+                                }`}
                             >
                               {/* Discount badge column */}
                               <div
-                                style={{
-                                  minWidth: "88px",
-                                  maxWidth: "88px",
-                                  padding: "14px 10px",
-                                  background: activeTheme.badgeBg,
-                                  borderRight: `1px dashed ${activeTheme.border}`,
-                                  display: "flex",
-                                  flexDirection: "column",
-                                  alignItems: "center",
-                                  justifyContent: "center",
-                                  gap: "4px",
-                                  textAlign: "center",
-                                }}
+                                className={`w-[88px] min-w-[88px] max-w-[88px] py-3.5 px-2.5 border-r border-dashed ${activeTheme.badgeBg} ${activeTheme.border} flex flex-col items-center justify-center gap-1 text-center`}
                               >
-                                <span
-                                  style={{
-                                    fontSize: "20px",
-                                    fontWeight: "800",
-                                    color: activeTheme.badgeText,
-                                    lineHeight: 1.1,
-                                  }}
-                                >
+                                <span className={`text-[20px] font-extrabold leading-tight ${activeTheme.badgeText}`}>
                                   {discountText}
                                 </span>
-                                <span
-                                  style={{
-                                    fontSize: "9px",
-                                    fontWeight: "700",
-                                    color: activeTheme.badgeText,
-                                    textTransform: "uppercase",
-                                    letterSpacing: "0.3px",
-                                  }}
-                                >
+                                <span className={`text-[9px] font-bold uppercase tracking-[0.3px] ${activeTheme.badgeText}`}>
                                   OFF
                                 </span>
-                                <span
-                                  style={{
-                                    fontSize: "8.5px",
-                                    fontWeight: "700",
-                                    color: activeTheme.accent,
-                                    background: "#ffffff",
-                                    padding: "2px 6px",
-                                    borderRadius: "10px",
-                                    marginTop: "4px",
-                                  }}
-                                >
+                                <span className={`text-[8.5px] font-bold bg-white px-1.5 py-0.5 rounded-[10px] mt-1 ${activeTheme.accent}`}>
                                   {activeTheme.label}
                                 </span>
                               </div>
 
                               {/* Details column */}
-                              <div
-                                style={{
-                                  flex: 1,
-                                  padding: "12px 14px",
-                                  display: "flex",
-                                  flexDirection: "column",
-                                  gap: "6px",
-                                  minWidth: 0,
-                                }}
-                              >
-                                <h4
-                                  style={{
-                                    fontSize: "14px",
-                                    fontWeight: "700",
-                                    color: "#0f172a",
-                                    margin: 0,
-                                    lineHeight: 1.3,
-                                  }}
-                                >
+                              <div className="flex-1 p-3 flex flex-col gap-1.5 min-w-0">
+                                <h4 className="text-sm font-bold text-[#0f172a] m-0 leading-snug">
                                   {ele.name}
                                 </h4>
 
-                                <div style={{ display: "flex", flexWrap: "wrap", gap: "6px", alignItems: "center" }}>
-                                  <span
-                                    style={{
-                                      fontSize: "11px",
-                                      fontWeight: "700",
-                                      fontFamily: "monospace",
-                                      color: activeTheme.accent,
-                                      background: "#ffffff",
-                                      border: `1px dashed ${activeTheme.border}`,
-                                      borderRadius: "6px",
-                                      padding: "3px 8px",
-                                    }}
-                                  >
+                                <div className="flex flex-wrap gap-1.5 items-center">
+                                  <span className={`text-[11px] font-bold font-mono bg-white border border-dashed rounded px-2 py-0.5 ${activeTheme.accent} ${activeTheme.border}`}>
                                     {ele.code}
                                   </span>
                                   {ele.minimumPurchase > 0 && (
-                                    <span style={{ fontSize: "10px", color: "#64748b" }}>
+                                    <span className="text-[10px] text-[#64748b]">
                                       Minimum order ₹{ele.minimumPurchase}
                                     </span>
                                   )}
                                 </div>
 
                                 {ele.description && (
-                                  <p
-                                    style={{
-                                      fontSize: "11px",
-                                      color: "#475569",
-                                      margin: 0,
-                                      lineHeight: 1.45,
-                                      display: "-webkit-box",
-                                      WebkitLineClamp: 2,
-                                      WebkitBoxOrient: "vertical",
-                                      overflow: "hidden",
-                                    }}
-                                  >
+                                  <p className="text-[11px] text-[#475569] m-0 leading-relaxed line-clamp-2">
                                     {ele.description}
                                   </p>
                                 )}
 
-                                <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", fontSize: "10px", color: "#64748b" }}>
+                                <div className="flex flex-wrap gap-2 text-[10px] text-[#64748b]">
                                   {isEligible && savingsPreview > 0 && (
-                                    <span style={{ fontWeight: "600", color: activeTheme.accent }}>
+                                    <span className={`font-semibold ${activeTheme.accent}`}>
                                       You save ₹{savingsPreview.toFixed(2)}
                                     </span>
                                   )}
@@ -2764,38 +2218,22 @@ export const LabTestCheckout = () => {
                                 </div>
 
                                 {!isEligible && criteriaText && (
-                                  <span style={{ fontSize: "10px", color: "#dc2626", fontWeight: "600" }}>
+                                  <span className="text-[10px] text-[#dc2626] font-semibold">
                                     ⚠️ {criteriaText}
                                   </span>
                                 )}
                               </div>
 
                               {/* Apply button column */}
-                              <div
-                                style={{
-                                  display: "flex",
-                                  alignItems: "center",
-                                  padding: "12px 12px 12px 0",
-                                  flexShrink: 0,
-                                }}
-                              >
+                              <div className="flex items-center pr-3 shrink-0 py-3">
                                 <button
                                   type="button"
                                   disabled={!isEligible}
                                   onClick={() => handleCouponApply(ele)}
-                                  style={{
-                                    padding: "7px 14px",
-                                    borderRadius: "8px",
-                                    border: `1px solid ${activeTheme.btnBorder}`,
-                                    background: activeTheme.btnBg,
-                                    color: activeTheme.btnText,
-                                    fontSize: "12px",
-                                    fontWeight: "600",
-                                    cursor: !isEligible ? "not-allowed" : "pointer",
-                                    transition: "all 0.2s ease",
-                                    whiteSpace: "nowrap",
-                                    boxShadow: "none",
-                                  }}
+                                  className={`px-3.5 py-1.5 rounded-lg border text-xs font-semibold whitespace-nowrap transition-all duration-200 ${!isEligible
+                                    ? "bg-slate-100 text-[#94a3b8] border-[#e2e8f0] cursor-not-allowed"
+                                    : `${activeTheme.btnBg} ${activeTheme.btnText} ${activeTheme.btnBorder} cursor-pointer`
+                                    }`}
                                 >
                                   {isApplied ? "Applied" : "Apply"}
                                 </button>
@@ -2812,20 +2250,12 @@ export const LabTestCheckout = () => {
 
                         if (sortedVendorCoupons.length === 0 && sortedAdminCoupons.length === 0) {
                           return (
-                            <div style={{
-                              display: 'flex',
-                              flexDirection: 'column',
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                              padding: '40px 20px',
-                              textAlign: 'center',
-                              color: '#94a3b8'
-                            }}>
-                              <div style={{ fontSize: '32px', marginBottom: '12px', color: '#cbd5e1' }}>🎟️</div>
-                              <span style={{ fontSize: '14px', fontWeight: '600', color: '#64748b' }}>
+                            <div className="flex flex-col items-center justify-center py-10 px-5 text-center text-[#94a3b8]">
+                              <div className="text-[32px] mb-3 text-[#cbd5e1]">🎟️</div>
+                              <span className="text-sm font-semibold text-[#64748b]">
                                 No Coupons Available
                               </span>
-                              <span style={{ fontSize: '12px', color: '#94a3b8', marginTop: '4px' }}>
+                              <span className="text-xs text-[#94a3b8] mt-1">
                                 There are no active coupons at the moment.
                               </span>
                             </div>
@@ -2836,13 +2266,7 @@ export const LabTestCheckout = () => {
                           <>
                             {renderSection(sortedVendorCoupons, true)}
                             {sortedVendorCoupons.length > 0 && sortedAdminCoupons.length > 0 && (
-                              <div
-                                style={{
-                                  height: "1px",
-                                  background: "#e2e8f0",
-                                  margin: "4px 0",
-                                }}
-                              />
+                              <div className="h-px bg-[#e2e8f0] my-1" />
                             )}
                             {renderSection(sortedAdminCoupons, false)}
                           </>

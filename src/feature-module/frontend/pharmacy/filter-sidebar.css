@@ -981,6 +981,7 @@ input[type="checkbox"] {
   display: flex;
   align-items: center;
   gap: 8px;
+  flex-direction: row;
 }
 
 .filter-lists .form-check-input {

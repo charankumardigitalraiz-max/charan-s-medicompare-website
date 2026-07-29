@@ -145,189 +145,187 @@ const LabTestPackageDetails = () => {
     <div className="main-wrapper">
       <Home2Header />
 
-      <div className={`content pb-10 ${isMobile ? "mt-[75px]" : "mt-[50px]"} pt-6`}>
-        <div className="container-fluid">
-          <button
-            onClick={() => navigate(-1)}
-            className="inline-flex items-center gap-2 bg-white border border-[#ddd] text-[#666] rounded px-[14px] py-[6px] text-[12px] font-medium cursor-pointer mb-2 hover:bg-gray-50 transition-colors"
-          >
-            <i className="fas fa-arrow-left" /> Back
-          </button>
+      <div className="max-w-[1440px] mx-auto px-4 py-6 md:py-8">
+        <button
+          onClick={() => navigate(-1)}
+          className="inline-flex items-center gap-2 text-[#8059ca] border border-[#e9d5ff] rounded-[30px] px-4 py-1.5 no-underline text-[12px] font-semibold bg-[#fdfaff] transition-all duration-200 hover:text-white hover:bg-gradient-to-r hover:from-[#8059ca] hover:to-[#6f42c1] hover:border-[#8059ca] hover:shadow-[0_4px_12px_rgba(128,89,202,0.2)] shadow-[0_2px_5px_rgba(128,89,202,0.05)] mb-4"
+        >
+          <i className="fas fa-arrow-left" /> Back
+        </button>
 
-          <div className="row">
-            {/* Left: Details */}
-            <div className="col-lg-8">
-              {/* Package Hero Card */}
-              <div className="bg-white rounded-[12px] shadow-[0_4px_20px_rgba(128,89,202,0.06)] border border-[#ede9f8] p-5 mb-5 overflow-hidden">
-                <div className="flex items-center gap-4 flex-wrap mb-4">
-                  <img
-                    src={pkg.files?.[0] ? getImageUrl(pkg.files[0]) : "/assets/default.png"}
-                    alt={pkg.name}
-                    className="w-[100px] h-[100px] object-contain rounded-lg bg-[#f8f6ff] p-2 flex-shrink-0 border border-[#f0ebff]"
-                    onError={(e) => { e.target.src = "/assets/default.png"; }}
-                  />
-                  <div className="flex-1 min-w-[250px]">
-                    <div className="flex items-center gap-2 flex-wrap mb-2">
-                      <span className="bg-[#f0ebff] text-[#8059ca] text-[10px] font-semibold px-2 py-[2px] rounded-full">
-                        Lab Test Package
+        <div className="row">
+          {/* Left: Details */}
+          <div className="col-lg-8">
+            {/* Package Hero Card */}
+            <div className="bg-white rounded-[12px] shadow-[0_4px_20px_rgba(128,89,202,0.06)] border border-[#ede9f8] p-5 mb-5 overflow-hidden">
+              <div className="flex items-center gap-4 flex-wrap mb-4">
+                <img
+                  src={pkg.files?.[0] ? getImageUrl(pkg.files[0]) : "/assets/default.png"}
+                  alt={pkg.name}
+                  className="w-[100px] h-[100px] object-contain rounded-lg bg-[#f8f6ff] p-2 flex-shrink-0 border border-[#f0ebff]"
+                  onError={(e) => { e.target.src = "/assets/default.png"; }}
+                />
+                <div className="flex-1 min-w-[250px]">
+                  <div className="flex items-center gap-2 flex-wrap mb-2">
+                    <span className="bg-[#f0ebff] text-[#8059ca] text-[10px] font-semibold px-2 py-[2px] rounded-full">
+                      Lab Test Package
+                    </span>
+                    {discount > 0 && (
+                      <span className="bg-[#dcfce7] text-[#16a34a] text-[10px] font-semibold px-2 py-[2px] rounded-full">
+                        {discount}% OFF
                       </span>
-                      {discount > 0 && (
-                        <span className="bg-[#dcfce7] text-[#16a34a] text-[10px] font-semibold px-2 py-[2px] rounded-full">
-                          {discount}% OFF
-                        </span>
-                      )}
-                    </div>
-                    <h1 className={`${isMobile ? "text-[18px]" : "text-[20px]"} font-semibold text-[#1a1a2e] mb-2 capitalize`}>
-                      {pkg.name}
-                    </h1>
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <span className={`${isMobile ? "text-[18px]" : "text-[20px]"} font-semibold text-[#8059ca]`}>
-                        {formatCurrency(effectivePrice)}
-                      </span>
-                      {discount > 0 && (
-                        <span className="text-[13px] text-[#aaa] line-through">{formatCurrency(price)}</span>
-                      )}
-                      {savings > 0 && (
-                        <span className="text-[12px] text-[#16a34a] font-semibold">Save {formatCurrency(savings)}</span>
-                      )}
-                    </div>
+                    )}
                   </div>
-                </div>
-
-                {pkg.subcategories?.length > 0 && (
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {pkg.subcategories.map((sub) => (
-                      <span
-                        key={sub._id}
-                        className="text-[11px] text-[#666] bg-[#f5f5f5] border border-[#e5e5e5] px-[10px] py-[3px] rounded-[30px] font-medium"
-                      >
-                        <i className="fas fa-tags mr-1 text-[#8059ca]" />
-                        {sub.name}
-                      </span>
-                    ))}
-                  </div>
-                )}
-
-                <hr className="border-[#ede9f8] mb-4" />
-
-                {/* Stats row */}
-                <div className="flex flex-wrap gap-2">
-                  {[
-                    { icon: "fa-vial", label: "Tests Included", value: `${tablets.length} Tests` },
-                    { icon: "fa-flask", label: "Parameters", value: `${totalParams}` },
-                  ].map((stat, i) => (
-                    <div key={i} className="flex-[1_1_120px] flex items-center gap-3 p-[10px] rounded-lg bg-[#faf8ff] border border-[#f0ebff]">
-                      <div className="w-8 h-8 rounded-md bg-[#f0ebff] flex items-center justify-center text-[#8059ca] text-[13px] flex-shrink-0">
-                        <i className={`fas ${stat.icon}`} />
-                      </div>
-                      <div>
-                        <span className="text-[10px] text-[#888] block">{stat.label}</span>
-                        <span className="text-[12px] font-semibold text-[#1a1a2e]">{stat.value}</span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                {pkg.description && (
-                  <div className="mt-5 pt-4 border-t border-[#ede9f8]">
-                    <h3 className="text-[14px] font-semibold text-[#1a1a2e] mb-2">Description</h3>
-                    <p className="text-[12px] text-[#555] leading-relaxed m-0">{pkg.description}</p>
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* Right: Sticky Booking Panel */}
-            <div className="col-lg-4">
-              <div className={`flex flex-col gap-4 ${isMobile ? "" : "sticky top-[80px]"}`}>
-                {/* Price + CTA Card */}
-                <div className="bg-white rounded-[12px] shadow-[0_4px_20px_rgba(128,89,202,0.08)] border border-[#ede9f8] p-5 overflow-hidden">
-                  <p className="text-[#888] text-[11px] mb-[2px] font-semibold uppercase tracking-wide">Package Price</p>
-                  <div className="flex items-baseline gap-2 mb-3">
-                    <span className="text-[20px] font-semibold text-[#1a1a2e]">{formatCurrency(effectivePrice)}</span>
+                  <h1 className="text-xl md:text-2xl !font-bold text-[#1a1a2e] mb-2 capitalize">
+                    {pkg.name}
+                  </h1>
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className="text-xl md:text-2xl !font-bold text-[#8059ca]">
+                      {formatCurrency(effectivePrice)}
+                    </span>
                     {discount > 0 && (
                       <span className="text-[13px] text-[#aaa] line-through">{formatCurrency(price)}</span>
                     )}
-                  </div>
-                  {discount > 0 && (
-                    <span className="inline-block mb-4 bg-[#fef3c7] text-[#d97706] text-[11px] font-semibold px-2 py-[2px] rounded-[20px]">
-                      {discount}% OFF · Save {formatCurrency(savings)}
-                    </span>
-                  )}
-                  <div className="w-full">
-                    <VendorActions
-                      bookingType={pkg?.categories?.categoryType || "cartslots"}
-                      IsPackage={true}
-                      med={pkg}
-                      vendor={pkg?.vendor || {}}
-                      price={price}
-                      calculatedDiscountPrice={discountprice > 0 ? discountprice : null}
-                      stock={pkg?.stock || 999}
-                      service={pkg?.categories?.fixedType || "labtests"}
-                      handleRentalBookinProcess=""
-                      handleNavigateToBooking={handleBooking}
-                      handleAddLead=""
-                      handleOpenConsultationModal=""
-                      handleOpenAppointmentModal=""
-                      handleOpenRideModal=""
-                      className="w-100"
-                      containerStyle={{ display: "flex", flexDirection: "column", width: "100%", gap: "8px" }}
-                    />
+                    {savings > 0 && (
+                      <span className="text-[12px] text-[#16a34a] font-semibold">Save {formatCurrency(savings)}</span>
+                    )}
                   </div>
                 </div>
+              </div>
 
-                {/* Vendor Card */}
-                {pkg.vendor && (
-                  <div className="bg-white rounded-[12px] shadow-[0_4px_20px_rgba(128,89,202,0.06)] border border-[#ede9f8] p-4">
-                    <div className="text-[11px] font-semibold text-[#888] uppercase tracking-[0.5px] mb-3">
-                      Provided By Lab
+              {pkg.subcategories?.length > 0 && (
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {pkg.subcategories.map((sub) => (
+                    <span
+                      key={sub._id}
+                      className="text-[11px] text-[#666] bg-[#f5f5f5] border border-[#e5e5e5] px-[10px] py-[3px] rounded-[30px] font-medium"
+                    >
+                      <i className="fas fa-tags mr-1 text-[#8059ca]" />
+                      {sub.name}
+                    </span>
+                  ))}
+                </div>
+              )}
+
+              <hr className="border-[#ede9f8] mb-4" />
+
+              {/* Stats row */}
+              <div className="flex flex-wrap gap-2">
+                {[
+                  { icon: "fa-vial", label: "Tests Included", value: `${tablets.length} Tests` },
+                  { icon: "fa-flask", label: "Parameters", value: `${totalParams}` },
+                ].map((stat, i) => (
+                  <div key={i} className="flex-[1_1_120px] flex items-center gap-3 p-[10px] rounded-lg bg-[#faf8ff] border border-[#f0ebff]">
+                    <div className="w-8 h-8 rounded-md bg-[#f0ebff] flex items-center justify-center text-[#8059ca] text-[13px] flex-shrink-0">
+                      <i className={`fas ${stat.icon}`} />
                     </div>
-                    <div className="flex items-center gap-3">
-                      <img
-                        src={vendorBiz?.bussiness_image?.url ? getImageUrl(vendorBiz.bussiness_image.url) : "/assets/default.png"}
-                        alt={vendorBiz?.name || "Vendor"}
-                        className="w-11 h-11 rounded-lg object-cover border border-[#ede9f8] flex-shrink-0"
-                        onError={(e) => { e.target.src = "/assets/default.png"; }}
-                      />
-                      <div>
-                        <p className="text-[13px] font-semibold text-[#1a1a2e] mb-[2px]">
-                          {vendorBiz?.name || `${pkg.vendor.firstName} ${pkg.vendor.lastName}`}
-                        </p>
-                        {vendorBiz?.address && (
-                          <p className="text-[11px] text-[#777] m-0 flex items-start gap-1">
-                            <i className="fas fa-map-marker-alt text-[#8059ca] mt-[2px] flex-shrink-0" />
-                            {vendorBiz.address}
-                          </p>
-                        )}
-                      </div>
+                    <div>
+                      <span className="text-[10px] text-[#888] block">{stat.label}</span>
+                      <span className="text-[12px] font-semibold text-[#1a1a2e]">{stat.value}</span>
                     </div>
                   </div>
-                )}
+                ))}
               </div>
+
+              {pkg.description && (
+                <div className="mt-5 pt-4 border-t border-[#ede9f8]">
+                  <h3 className="text-[14px] font-semibold text-[#1a1a2e] mb-2">Description</h3>
+                  <p className="text-[12px] text-[#555] leading-relaxed m-0">{pkg.description}</p>
+                </div>
+              )}
             </div>
           </div>
 
-          {/* Tests Included (Full Width) */}
-          {tablets.length > 0 && (
-            <div className="row mt-4">
-              <div className="col-12">
-                <div className="bg-white rounded-[12px] shadow-[0_4px_20px_rgba(128,89,202,0.06)] border border-[#ede9f8] mb-5 overflow-hidden">
-                  <div className="flex items-center justify-between px-5 py-[14px] border-b border-[#f3eeff]">
-                    <h3 className="text-[13px] font-semibold text-[#1a1a2e] m-0 flex items-center gap-2">
-                      <i className="fas fa-vial text-[#8059ca]" />
-                      Tests Included ({tablets.length})
-                    </h3>
+          {/* Right: Sticky Booking Panel */}
+          <div className="col-lg-4">
+            <div className={`flex flex-col gap-4 ${isMobile ? "" : "sticky top-[80px]"}`}>
+              {/* Price + CTA Card */}
+              <div className="bg-white rounded-[12px] shadow-[0_4px_20px_rgba(128,89,202,0.08)] border border-[#ede9f8] p-5 overflow-hidden">
+                <p className="text-[#888] text-[11px] mb-[2px] font-semibold uppercase tracking-wide">Package Price</p>
+                <div className="flex items-baseline gap-2 mb-3">
+                  <span className="text-[20px] font-semibold text-[#1a1a2e]">{formatCurrency(effectivePrice)}</span>
+                  {discount > 0 && (
+                    <span className="text-[13px] text-[#aaa] line-through">{formatCurrency(price)}</span>
+                  )}
+                </div>
+                {discount > 0 && (
+                  <span className="inline-block mb-4 bg-[#fef3c7] text-[#d97706] text-[11px] font-semibold px-2 py-[2px] rounded-[20px]">
+                    {discount}% OFF · Save {formatCurrency(savings)}
+                  </span>
+                )}
+                <div className="w-full">
+                  <VendorActions
+                    bookingType={pkg?.categories?.categoryType || "cartslots"}
+                    IsPackage={true}
+                    med={pkg}
+                    vendor={pkg?.vendor || {}}
+                    price={price}
+                    calculatedDiscountPrice={discountprice > 0 ? discountprice : null}
+                    stock={pkg?.stock || 999}
+                    service={pkg?.categories?.fixedType || "labtests"}
+                    handleRentalBookinProcess=""
+                    handleNavigateToBooking={handleBooking}
+                    handleAddLead=""
+                    handleOpenConsultationModal=""
+                    handleOpenAppointmentModal=""
+                    handleOpenRideModal=""
+                    className="w-100"
+                    containerStyle={{ display: "flex", flexDirection: "column", width: "100%", gap: "8px" }}
+                  />
+                </div>
+              </div>
+
+              {/* Vendor Card */}
+              {pkg.vendor && (
+                <div className="bg-white rounded-[12px] shadow-[0_4px_20px_rgba(128,89,202,0.06)] border border-[#ede9f8] p-4">
+                  <div className="text-[11px] font-semibold text-[#888] uppercase tracking-[0.5px] mb-3">
+                    Provided By Lab
                   </div>
-                  <div className="p-4">
-                    {tablets.map((test, i) => (
-                      <TestAccordionRow key={test._id} test={test} index={i} />
-                    ))}
+                  <div className="flex items-center gap-3">
+                    <img
+                      src={vendorBiz?.bussiness_image?.url ? getImageUrl(vendorBiz.bussiness_image.url) : "/assets/default.png"}
+                      alt={vendorBiz?.name || "Vendor"}
+                      className="w-11 h-11 rounded-lg object-cover border border-[#ede9f8] flex-shrink-0"
+                      onError={(e) => { e.target.src = "/assets/default.png"; }}
+                    />
+                    <div>
+                      <p className="text-[13px] font-semibold text-[#1a1a2e] mb-[2px]">
+                        {vendorBiz?.name || `${pkg.vendor.firstName} ${pkg.vendor.lastName}`}
+                      </p>
+                      {vendorBiz?.address && (
+                        <p className="text-[11px] text-[#777] m-0 flex items-start gap-1">
+                          <i className="fas fa-map-marker-alt text-[#8059ca] mt-[2px] flex-shrink-0" />
+                          {vendorBiz.address}
+                        </p>
+                      )}
+                    </div>
                   </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Tests Included (Full Width) */}
+        {tablets.length > 0 && (
+          <div className="row mt-4">
+            <div className="col-12">
+              <div className="bg-white rounded-[12px] shadow-[0_4px_20px_rgba(128,89,202,0.06)] border border-[#ede9f8] mb-5 overflow-hidden">
+                <div className="flex items-center justify-between px-5 py-[14px] border-b border-[#f3eeff]">
+                  <h3 className="text-[13px] font-semibold text-[#1a1a2e] m-0 flex items-center gap-2">
+                    <i className="fas fa-vial text-[#8059ca]" />
+                    Tests Included ({tablets.length})
+                  </h3>
+                </div>
+                <div className="p-4">
+                  {tablets.map((test, i) => (
+                    <TestAccordionRow key={test._id} test={test} index={i} />
+                  ))}
                 </div>
               </div>
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </div>
 
       <Footer />

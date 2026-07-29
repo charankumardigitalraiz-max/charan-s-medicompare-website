@@ -17,5 +17,6 @@ export { default as AddToCartButton } from "./AddToCartButton";
 export { default as CartQuantityControls } from "./CartQuantityControls";
 export { default as ProductCard } from "./ProductCard";
 export { default as VendorActions } from "./VendorActions";
+export { default as CompareOverlayButton } from "./CompareOverlayButton";
 
 

@@ -2933,7 +2933,7 @@ const ProductDescription = () => {
             className="col-lg-9 col-md-12"
           // style={{ marginTop: isMobile ? "40px" : "40px" }}
           >
-            <div className="content" >
+            <div className="lg:mt-1 md:mt-1">
               <div className="mb-2">
                 <button
                   className="flex items-center gap-[6px] p-[4px_10px] border border-[#e0e0e0] bg-white text-[#333] font-[500] text-[12px] rounded-[6px] shadow-sm cursor-pointer transition-all duration-300 hover:border-[#8059ca] hover:text-[#8059ca] hover:bg-[#f8f5ff] hover:shadow-[0_4px_8px_rgba(125,46,255,0.15)] hover:-translate-y-px"

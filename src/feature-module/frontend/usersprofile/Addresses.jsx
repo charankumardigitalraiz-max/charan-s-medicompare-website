@@ -113,18 +113,35 @@ const Address = ({ HomeNavigate, BackButton }) => {
         <div className="container">
           <div className="row">
             {/* Header Section */}
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-5 mt-2">
-              <div className="flex items-center gap-3">
-                <i className="fa-solid fa-map-location-dot text-[#8059ca] text-[20px] shrink-0" />
-                <div className="flex flex-col gap-0.5">
-                  <h4 className="m-0 text-slate-800 font-bold text-[16px] md:text-[18px] tracking-tight leading-none">My Address</h4>
-                  <p className="text-slate-500 text-[11px] md:text-[12px] m-0 font-medium">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pb-5 mb-6 border-b border-slate-100 mt-2">
+              <div className="flex items-center gap-3.5">
+                {HomeNavigate && <HomeNavigate />}
+                <div className="w-11 h-11 rounded-xl bg-purple-50 text-[#8059ca] flex items-center justify-center text-[20px] shrink-0 border border-purple-100/50 shadow-sm">
+                  <i className="fa-solid fa-map-location-dot" />
+                </div>
+
+
+                {/* <div className="flex flex-col gap-1">
+                  <div className="m-0 text-[#0f172a] text-[18px] md:text-[20px] tracking-tight leading-none" style={{ fontWeight: 600 }}>
+                    My Address
+                  </div>
+                  <p className="text-slate-500 text-[12px] m-0 font-medium leading-none">
                     Manage your saved delivery Address
                   </p>
+                </div> */}
+
+
+                <div className="flex flex-col gap-1">
+                  <div className="m-0 text-[#0f172a] font-medium text-[16px] md:text-[16px] tracking-tight leading-none" >
+                    My Address
+                  </div>
+                  <div className="text-slate-500 text-[12px] m-0 font-medium leading-none">
+                    Manage your saved delivery Address
+                  </div>
                 </div>
-              </div>
-              <div className="flex items-center gap-3 w-full sm:w-auto">
-                {HomeNavigate && <HomeNavigate />}
+
+
+
               </div>
             </div>
 
@@ -133,7 +150,7 @@ const Address = ({ HomeNavigate, BackButton }) => {
                 <>
                   <div className="col-lg-4 col-md-6 col-12">
                     <div
-                      className="flex items-center justify-center bg-[#fafafd] rounded-[14px] border-[1.5px] border-dashed border-[#dcdbe6]! h-full min-h-[200px] relative p-6 flex-col cursor-pointer transition-all duration-300 ease hover:-translate-y-1 hover:!border-[#8059ca] hover:bg-[#faf8ff]"
+                      className="profile-card-add"
                       onClick={() => handleAddAddress()}
                     >
                       <div className="w-[60px] h-[60px] rounded-full bg-[rgba(13,110,253,0.1)] flex items-center justify-center mb-[15px]">
@@ -144,9 +161,9 @@ const Address = ({ HomeNavigate, BackButton }) => {
                   </div>
                   {currentAddresses.map((addr) => (
                     <div key={addr._id} className="col-lg-4 col-md-6 col-12 ">
-                      <div className="bg-white rounded-[14px] p-6 shadow-[0_4px_16px_rgba(0,0,0,0.03)] border-[1.5px] border-[#f0f0f0] transition-all duration-300 ease hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(0,0,0,0.08)] hover:!border-[#8059ca] h-full">
+                      <div className="profile-card">
                         <div className="d-flex justify-content-between align-items-center">
-                          <div className="font-semibold text-[15px] inline-flex items-center bg-[#faf8ff] text-[#8059ca] py-1 px-3 rounded-[20px] border border-[#f3effc]">
+                          <div className="profile-card-badge">
                             <i
                               className={`${getAddressIcon(addr.addressType)} me-2`}
                             ></i>{" "}
@@ -211,13 +228,13 @@ const Address = ({ HomeNavigate, BackButton }) => {
                 <div className="col-12">
                   <div className="col-lg-4 col-md-6 col-12 mx-auto">
                     <div
-                      className="flex items-center justify-center bg-[#fafafd] rounded-[14px] border-[1.5px] border-dashed border-[#dcdbe6]! h-full min-h-[200px] relative p-6 flex-col cursor-pointer transition-all duration-300 ease hover:-translate-y-1 hover:!border-[#8059ca] hover:bg-[#faf8ff]"
+                      className="profile-card-add"
                       onClick={() => handleAddAddress()}
                     >
                       <div className="w-[60px] h-[60px] rounded-full bg-[rgba(13,110,253,0.1)] flex items-center justify-center mb-[15px]">
                         <i className="fa-solid fa-plus text-2xl text-[#0d6efd]"></i>
                       </div>
-                      <h6 className="text-[#444] text-[15px] mb-1 font-[500]">Add New Address</h6>
+                      <h6 className="text-[#444] text-[15px] mb-1 font-[600]">Add New Address</h6>
                       <p className="text-muted text-center small mt-2">
                         You haven't saved any addresses yet.
                       </p>

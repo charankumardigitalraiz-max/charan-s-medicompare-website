@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
+import BaseModal from "../../../components/ui/BaseModal";
 import { axiosCommonInstance, axiosUserInstance } from "../../../Apiservice";
 import { useResponsive } from "../../../hooks/useResponsive";
 import { Autocomplete, useJsApiLoader } from "@react-google-maps/api";
-import { DatePicker } from "rsuite";
+import CustomDatePicker from "../../../components/ui/CustomDatePicker";
 import Select from "react-select";
 import toast from "react-hot-toast";
 
@@ -502,17 +504,34 @@ const FamilyMembers = ({ HomeNavigate, BackButton }) => {
         )}
 
         {/* Header Section - Matches Transactions component style */}
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-5 mt-2">
-          <div className="flex items-center gap-3">
-            <i className="fa-solid fa-users text-[#8059ca] text-[20px] shrink-0" />
-            <div className="flex flex-col gap-0.5">
-              <h4 className="m-0 text-slate-800 font-bold text-[18px] md:text-[20px] tracking-tight leading-none">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pb-3 mb-3 border-b border-slate-100 mt-2">
+          <div className="flex items-center gap-3.5">
+            {HomeNavigate && <HomeNavigate />}
+            <div className="w-11 h-11 rounded-xl bg-purple-50 text-[#8059ca] flex items-center justify-center text-[20px] shrink-0 border border-purple-100/50 shadow-sm">
+              <i className="fa-solid fa-users" />
+            </div>
+
+
+            {/* <div className="flex flex-col gap-1">
+              <div className="m-0 text-[#0f172a] text-[18px] md:text-[20px] tracking-tight leading-none" style={{ fontWeight: 600 }}>
                 Manage Family Members
-              </h4>
-              <p className="text-slate-500 text-[12px] md:text-[13px] m-0 font-medium">
+              </div>
+              <p className="text-slate-500 text-[12px] m-0 font-medium leading-none">
                 Manage and track all your family members' details
               </p>
+            </div> */}
+
+
+            <div className="flex flex-col gap-1">
+              <div className="m-0 text-[#0f172a] font-medium text-[16px] md:text-[16px] tracking-tight leading-none" >
+                Manage Family Members
+              </div>
+              <div className="text-slate-500 text-[12px] m-0 font-medium leading-none">
+                Manage and track all your family members' details
+              </div>
             </div>
+
+
           </div>
           <div className="flex items-center gap-3 w-full sm:w-auto">
             <div className="relative w-full sm:w-[220px] shrink-0">
@@ -528,13 +547,12 @@ const FamilyMembers = ({ HomeNavigate, BackButton }) => {
               </span>
             </div>
             <button
-              className="h-[38px] inline-flex items-center justify-center gap-1.5 whitespace-nowrap bg-[#8059ca] hover:bg-[#6a4ab0] text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200"
+              className="h-[38px] inline-flex items-center justify-center gap-1.5 whitespace-nowrap bg-[#8059ca] hover:bg-[#6a4ab0] text-white px-4 py-2 !rounded-md text-sm font-medium transition-all duration-200"
               onClick={handleAdd}
             >
               <i className="fa-solid fa-plus" />
               <span>Add Family Member</span>
             </button>
-            {HomeNavigate && <HomeNavigate />}
           </div>
         </div>
 
@@ -550,71 +568,78 @@ const FamilyMembers = ({ HomeNavigate, BackButton }) => {
             <div className="row g-4 mb-4">
               {familyMembers.map((member) => (
                 <div className="col-md-6 col-12" key={member._id}>
-                  <div className="p-5 border border-slate-100 rounded-[14px] bg-white shadow-[0_4px_16px_rgba(0,0,0,0.04)] flex flex-col justify-between gap-3.5 h-full transition-all duration-200 ease-in-out">
+                  <div className="p-3 border border-slate-100 rounded-2xl bg-white shadow-sm hover:shadow-md flex flex-col justify-between gap-4 h-full transition-all duration-200 ease-in-out">
                     {/* Card Header */}
-                    <div className="flex justify-between items-center">
-                      <div className="flex items-center gap-2">
-                        <div
-                          className="w-[38px] h-[38px] rounded-[10px] bg-[#f3e8ff] text-[#8059ca] flex items-center justify-center text-[15px] shrink-0"
-                        >
+                    <div className="flex justify-between items-start gap-2">
+                      <div className="flex items-center gap-3 min-w-0">
+                        <div className="w-10 h-10 rounded-xl bg-[#f3e8ff] text-[#8059ca] flex items-center justify-center text-base font-semibold shrink-0">
                           {member?.name?.charAt(0)?.toUpperCase() || "?"}
                         </div>
-                        <div>
-                          <span className="text-sm font-semibold text-slate-800 block capitalize">
+                        <div className="min-w-0">
+                          <span className="text-sm font-semibold text-slate-800 block capitalize truncate">
                             {member.name}
                           </span>
-                          <span className="text-[11px] text-[#8059ca] font-semibold uppercase">
+                          <span className="text-[11px] text-[#8059ca] font-semibold uppercase tracking-wide">
                             {member.relationship}
                           </span>
                         </div>
                       </div>
 
-                      <div className="flex gap-1.5">
+                      <div className="flex gap-1.5 shrink-0">
                         <button
                           type="button"
-                          className="w-[30px] h-[30px] rounded-full flex items-center justify-center hover:bg-slate-100 transition-colors"
+                          className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-100 transition-colors"
                           onClick={() => handleEdit(member)}
                           title="Edit"
                         >
-                          <i className="fa-solid fa-pen text-slate-500 text-[12px]" />
+                          <i className="fa-solid fa-pen text-slate-500 text-xs" />
                         </button>
                         <button
                           type="button"
-                          className="w-[30px] h-[30px] rounded-full flex items-center justify-center hover:bg-slate-100 transition-colors"
+                          className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-red-50 transition-colors"
                           onClick={() => handleDelete(member._id)}
                           title="Delete"
                         >
-                          <i className="fa-solid fa-trash text-red-500 text-[12px]" />
+                          <i className="fa-solid fa-trash text-red-500 text-xs" />
                         </button>
                       </div>
                     </div>
 
                     {/* Details Grid */}
-                    <div className="grid grid-cols-4 gap-2 pt-1 border-t border-dashed border-slate-200">
+                    <div className="grid grid-cols-4 gap-x-3 gap-y-3 pt-3 border-t border-dashed border-slate-200">
                       <div className="col-span-1">
-                        <span className="text-[11px] text-slate-500 block">Gender</span>
-                        <span className="text-[13px] font-medium text-slate-700">{member.gender}</span>
+                        <span className="text-[11px] text-slate-500 block mb-0.5">Gender</span>
+                        <span className="text-[13px] font-medium text-slate-700">{member.gender || "N/A"}</span>
                       </div>
+
                       <div className="col-span-1">
-                        <span className="text-[11px] text-slate-500 block">Age</span>
+                        <span className="text-[11px] text-slate-500 block mb-0.5">Age</span>
                         <span className="text-[13px] font-medium text-slate-700">
-                          {member.dateOfBirth ? `${calculateAge(member.dateOfBirth)} Years` : "N/A"}
+                          {member.dateOfBirth ? `${calculateAge(member.dateOfBirth)} Yrs` : "N/A"}
                         </span>
                       </div>
-                      <div className="col-span-2">
-                        <span className="text-[11px] text-slate-500 block">Mobile</span>
-                        <span className="text-[13px] font-medium text-slate-700">{member.mobile || "N/A"}</span>
+
+                      <div className="col-span-2 min-w-0">
+                        <span className="text-[11px] text-slate-500 block mb-0.5">Mobile</span>
+                        <span className="text-[13px] font-medium text-slate-700 truncate block" title={member.mobile}>
+                          {member.mobile || "N/A"}
+                        </span>
                       </div>
-                      <div className="col-span-4">
-                        <span className="text-[11px] text-slate-500 block">Referred Doctor</span>
-                        <span className="text-[13px] font-medium text-slate-700 block truncate" title={member.doctorDetails?.name || getDoctorNameById(member.referedByDoctor)}>
+
+                      <div className="col-span-4 min-w-0">
+                        <span className="text-[11px] text-slate-500 block mb-0.5">Referred Doctor</span>
+                        <span
+                          className="text-[13px] font-medium text-slate-700 block truncate"
+                          title={member.doctorDetails?.name || getDoctorNameById(member.referedByDoctor)}
+                        >
                           {member.doctorDetails?.name
                             ? `${member.doctorDetails.name}${member.doctorDetails["AreaOfPractice "] ? ` (${member.doctorDetails["AreaOfPractice "]})` : ""}${member.doctorDetails.place ? `, ${member.doctorDetails.place}` : ""}`
                             : getDoctorNameById(member.referedByDoctor) || "N/A"}
                         </span>
                       </div>
-                      <div className="col-span-4">
-                        <span className="text-[11px] text-slate-500 block">Location</span>
+
+                      <div className="col-span-4 min-w-0">
+                        <span className="text-[11px] text-slate-500 block mb-0.5">Location</span>
                         <span className="text-[13px] font-medium text-slate-700 block truncate" title={member.address}>
                           {member.address || "N/A"}
                         </span>
@@ -700,294 +725,289 @@ const FamilyMembers = ({ HomeNavigate, BackButton }) => {
       </div>
 
       {/* Modal */}
-      {showModal && (
-        <div
-          className="modal fade show d-block fixed inset-0 bg-black/80 z-[999999999] flex items-center justify-center animate-fade-in"
-          tabIndex="-1"
-          role="dialog"
+      {typeof document !== "undefined" && createPortal(
+        <BaseModal
+          show={showModal}
+          onClose={handleCloseModal}
+          title={isEditMode ? "Edit Family Member" : "Add New Family Member"}
+          size="md"
+          className="max-w-md mx-auto"
+          bodyClassName="!p-6"
         >
-          <div className="modal-dialog modal-dialog-centered modal-md w-full max-w-md mx-4" role="document">
-            <div className="modal-content bg-white rounded-lg shadow-xl">
-              <div className="modal-header px-6 pt-5 pb-4 flex justify-between items-center border-b border-slate-200">
-                <h5 className="font-semibold text-lg m-0">
-                  {isEditMode ? "Edit Family Member" : "Add New Family Member"}
-                </h5>
-                <button
-                  type="button"
-                  className="border-0 text-2xl leading-none text-slate-500 hover:text-slate-700 transition-colors"
-                  onClick={handleCloseModal}
-                >
-                  <span>&times;</span>
-                </button>
+          <div id="family-member-modal-body" className="relative overflow-visible">
+            <form onSubmit={handleSubmit}>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div className="mb-2">
+                  <label className="block text-sm font-medium text-slate-700 mb-1">Name</label>
+                  <input
+                    type="text"
+                    className="w-full px-3 py-2 text-sm border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#8059ca] focus:border-transparent"
+                    name="name"
+                    placeholder="Enter Name"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
+
+                <div className="mb-2 relative z-[9999999999]">
+                  <label className="block text-sm font-medium text-slate-700 mb-1">Date of Birth</label>
+                  <CustomDatePicker
+                    value={formData.dateOfBirth}
+                    onChange={handleDateChange}
+                    format="MM/dd/yyyy"
+                    placeholder="Select Date of Birth"
+                    className="w-full"
+                    shouldDisableDate={(date) => date && date > new Date()}
+                    cleanable
+                    editable={false}
+                    container={() => document.getElementById("family-member-modal-body") || document.body}
+                  />
+                  {formData.dateOfBirth && (
+                    <small className="mt-2 mb-0 text-primary block">
+                      Age: {calculateAge(formData.dateOfBirth)} years
+                    </small>
+                  )}
+                </div>
               </div>
 
-              <div className="modal-body max-h-[500px] overflow-y-auto px-6 py-4">
-                <form onSubmit={handleSubmit}>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    <div className="mb-2">
-                      <label className="block text-sm font-medium text-slate-700 mb-1">Name</label>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div className="mb-2">
+                  <label className="block text-sm font-medium text-slate-700 mb-1">Gender</label>
+                  <select
+                    className="w-full px-3 py-2 text-sm border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#8059ca] focus:border-transparent"
+                    name="gender"
+                    value={formData.gender}
+                    onChange={handleInputChange}
+                    required
+                  >
+                    <option value="">Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+
+                <div className="mb-2">
+                  <label className="block text-sm font-medium text-slate-700 mb-1">Referred By Doctor</label>
+                  <Select
+                    name="referedByDoctor"
+                    value={(() => {
+                      if (!formData.referedByDoctor) return null;
+
+                      const doctorId = String(formData.referedByDoctor);
+
+                      let selectedDoctor = filteredDoctors.find(
+                        (doctor) => String(doctor._id) === doctorId,
+                      );
+
+                      if (!selectedDoctor) {
+                        selectedDoctor = allDoctors.find(
+                          (doctor) => String(doctor._id) === doctorId,
+                        );
+                      }
+
+                      if (!selectedDoctor && editingId) {
+                        const editingMember = familyMembers.find(
+                          (m) => String(m._id) === String(editingId)
+                        );
+                        if (
+                          editingMember &&
+                          editingMember.doctorDetails &&
+                          String(editingMember.doctorDetails._id) === doctorId
+                        ) {
+                          selectedDoctor = editingMember.doctorDetails;
+                        }
+                      }
+
+                      if (
+                        selectedDoctor &&
+                        selectedDoctor.name &&
+                        typeof selectedDoctor.name === "string"
+                      ) {
+                        return {
+                          value: String(selectedDoctor._id),
+                          label: `${selectedDoctor.name}${selectedDoctor["AreaOfPractice "] ? ` (${selectedDoctor["AreaOfPractice "]})` : ""}${selectedDoctor.place ? `, ${selectedDoctor.place}` : ""}`,
+                        };
+                      }
+
+                      return null;
+                    })()}
+                    onChange={handleDoctorSelect}
+                    onInputChange={handleDoctorSearch}
+                    options={filteredDoctors
+                      .filter(
+                        (doctor) =>
+                          doctor &&
+                          doctor._id &&
+                          doctor.name &&
+                          typeof doctor.name === "string",
+                      )
+                      .map((doctor) => ({
+                        value: String(doctor._id),
+                        label: `${doctor.name}${doctor["AreaOfPractice "] ? ` (${doctor["AreaOfPractice "]})` : ""}${doctor.place ? `, ${doctor.place}` : ""}`,
+                      }))}
+                    placeholder={
+                      isLoadingDoctors
+                        ? "Loading doctors..."
+                        : "Select a doctor..."
+                    }
+                    isClearable
+                    isSearchable
+                    isLoading={isLoadingDoctors}
+                    className="basic-select"
+                    classNamePrefix="select"
+                    noOptionsMessage={() =>
+                      isLoadingDoctors ? "Loading..." : "No doctors found"
+                    }
+                    menuPortalTarget={typeof document !== "undefined" ? document.body : null}
+                    menuPosition="fixed"
+                    styles={{
+                      control: (baseStyles, state) => ({
+                        ...baseStyles,
+                        borderColor: state.isFocused ? "#2684ff" : "#ccc",
+                        boxShadow: state.isFocused
+                          ? "0 0 0 1px #2684ff"
+                          : "none",
+                        "&:hover": {
+                          borderColor: "#2684ff",
+                        },
+                        height: "38px",
+                        minHeight: "38px",
+                      }),
+                      menu: (baseStyles) => ({
+                        ...baseStyles,
+                        zIndex: 9999999999,
+                        maxHeight: "200px",
+                        overflowY: "auto",
+                      }),
+                      menuList: (baseStyles) => ({
+                        ...baseStyles,
+                        maxHeight: "200px",
+                        overflowY: "auto",
+                      }),
+                      menuPortal: (baseStyles) => ({
+                        ...baseStyles,
+                        zIndex: 9999999999,
+                      }),
+                      option: (baseStyles) => ({
+                        ...baseStyles,
+                        padding: "8px 12px",
+                        fontSize: "14px",
+                      }),
+                    }}
+                  />
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div className="mb-2">
+                  <label className="block text-sm font-medium text-slate-700 mb-1">Mobile</label>
+                  <input
+                    type="tel"
+                    className="w-full px-3 py-2 text-sm border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#8059ca] focus:border-transparent"
+                    placeholder="Enter Mobile Number"
+                    name="mobile"
+                    value={formData.mobile}
+                    onChange={handleInputChange}
+                    maxLength="10"
+                    pattern="[0-9]{10}"
+                    title="Mobile number must be exactly 10 digits"
+                    required
+                  />
+                </div>
+
+                <div className="mb-2">
+                  <label className="block text-sm font-medium text-slate-700 mb-1">Relationship</label>
+                  <select
+                    name="relationship"
+                    value={formData.relationship}
+                    onChange={handleInputChange}
+                    required
+                    className="w-full px-3 py-2 text-sm border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#8059ca] focus:border-transparent"
+                  >
+                    <option value="">Select relationship</option>
+                    <option value="Brother">Brother</option>
+                    <option value="Cousin">Cousin</option>
+                    <option value="Daughter">Daughter</option>
+                    <option value="Father">Father</option>
+                    <option value="Granddaughter">Granddaughter</option>
+                    <option value="Grandfather">Grandfather</option>
+                    <option value="Grandmother">Grandmother</option>
+                    <option value="Grandson">Grandson</option>
+                    <option value="Husband">Husband</option>
+                    <option value="Me">Me</option>
+                    <option value="Mother">Mother</option>
+                    <option value="Other">Other</option>
+                    <option value="Sister">Sister</option>
+                    <option value="Son">Son</option>
+                    <option value="Wife">Wife</option>
+                  </select>
+                </div>
+              </div>
+
+              <div className="mb-3">
+                <label className="block text-sm font-medium text-slate-700 mb-1">Location</label>
+                <div className="relative">
+                  {isLoaded ? (
+                    <Autocomplete
+                      onLoad={(autocomplete) =>
+                        (autocompleteRef.current = autocomplete)
+                      }
+                      onPlaceChanged={onPlaceChanged}
+                      options={{
+                        componentRestrictions: { country: "in" },
+                        fields: [
+                          "formatted_address",
+                          "geometry",
+                          "name",
+                          "place_id",
+                          "address_components",
+                        ],
+                        types: ["geocode"],
+                      }}
+                    >
                       <input
                         type="text"
-                        className="w-full px-3 py-2 text-sm border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#8059ca] focus:border-transparent"
-                        name="name"
-                        placeholder="Enter Name"
-                        value={formData.name}
+                        className="w-full px-3 py-2 text-sm border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#8059ca] focus:border-transparent pl-10"
+                        name="location"
+                        value={formData.location}
                         onChange={handleInputChange}
+                        placeholder="Search by city, state, pincode, or area..."
                         required
+                        autoComplete="off"
                       />
-                    </div>
-
-                    <div className="mb-2 relative z-[9999999999]">
-                      <label className="block text-sm font-medium text-slate-700 mb-1">Date of Birth</label>
-                      <DatePicker
-                        value={formData.dateOfBirth}
-                        onChange={handleDateChange}
-                        format="MM/dd/yyyy"
-                        placeholder="Select Date of Birth"
-                        className="w-full"
-                        shouldDisableDate={(date) => date && date > new Date()}
-                        cleanable
-                        editable={false}
-                      />
-                      {formData.dateOfBirth && (
-                        <small className="mt-2 mb-0 text-primary block">
-                          Age: {calculateAge(formData.dateOfBirth)} years
-                        </small>
-                      )}
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    <div className="mb-2">
-                      <label className="block text-sm font-medium text-slate-700 mb-1">Gender</label>
-                      <select
-                        className="w-full px-3 py-2 text-sm border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#8059ca] focus:border-transparent"
-                        name="gender"
-                        value={formData.gender}
-                        onChange={handleInputChange}
-                        required
-                      >
-                        <option value="">Select Gender</option>
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                        <option value="Other">Other</option>
-                      </select>
-                    </div>
-
-                    <div className="mb-2">
-                      <label className="block text-sm font-medium text-slate-700 mb-1">Referred By Doctor</label>
-                      <Select
-                        name="referedByDoctor"
-                        value={(() => {
-                          if (!formData.referedByDoctor) return null;
-
-                          const doctorId = String(formData.referedByDoctor);
-
-                          let selectedDoctor = filteredDoctors.find(
-                            (doctor) => String(doctor._id) === doctorId,
-                          );
-
-                          if (!selectedDoctor) {
-                            selectedDoctor = allDoctors.find(
-                              (doctor) => String(doctor._id) === doctorId,
-                            );
-                          }
-
-                          if (!selectedDoctor && editingId) {
-                            const editingMember = familyMembers.find(
-                              (m) => String(m._id) === String(editingId)
-                            );
-                            if (
-                              editingMember &&
-                              editingMember.doctorDetails &&
-                              String(editingMember.doctorDetails._id) === doctorId
-                            ) {
-                              selectedDoctor = editingMember.doctorDetails;
-                            }
-                          }
-
-                          if (
-                            selectedDoctor &&
-                            selectedDoctor.name &&
-                            typeof selectedDoctor.name === "string"
-                          ) {
-                            return {
-                              value: String(selectedDoctor._id),
-                              label: `${selectedDoctor.name}${selectedDoctor["AreaOfPractice "] ? ` (${selectedDoctor["AreaOfPractice "]})` : ""}${selectedDoctor.place ? `, ${selectedDoctor.place}` : ""}`,
-                            };
-                          }
-
-                          return null;
-                        })()}
-                        onChange={handleDoctorSelect}
-                        onInputChange={handleDoctorSearch}
-                        options={filteredDoctors
-                          .filter(
-                            (doctor) =>
-                              doctor &&
-                              doctor._id &&
-                              doctor.name &&
-                              typeof doctor.name === "string",
-                          )
-                          .map((doctor) => ({
-                            value: String(doctor._id),
-                            label: `${doctor.name}${doctor["AreaOfPractice "] ? ` (${doctor["AreaOfPractice "]})` : ""}${doctor.place ? `, ${doctor.place}` : ""}`,
-                          }))}
-                        placeholder={
-                          isLoadingDoctors
-                            ? "Loading doctors..."
-                            : "Select a doctor..."
-                        }
-                        isClearable
-                        isSearchable
-                        isLoading={isLoadingDoctors}
-                        className="basic-select"
-                        classNamePrefix="select"
-                        noOptionsMessage={() =>
-                          isLoadingDoctors ? "Loading..." : "No doctors found"
-                        }
-                        styles={{
-                          control: (baseStyles, state) => ({
-                            ...baseStyles,
-                            borderColor: state.isFocused ? "#2684ff" : "#ccc",
-                            boxShadow: state.isFocused
-                              ? "0 0 0 1px #2684ff"
-                              : "none",
-                            "&:hover": {
-                              borderColor: "#2684ff",
-                            },
-                            height: "38px",
-                            minHeight: "38px",
-                          }),
-                          menu: (baseStyles) => ({
-                            ...baseStyles,
-                            zIndex: 9999,
-                            maxHeight: "200px",
-                            overflowY: "auto",
-                          }),
-                          menuList: (baseStyles) => ({
-                            ...baseStyles,
-                            maxHeight: "200px",
-                            overflowY: "auto",
-                          }),
-                          option: (baseStyles) => ({
-                            ...baseStyles,
-                            padding: "8px 12px",
-                            fontSize: "14px",
-                          }),
-                        }}
-                      />
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    <div className="mb-2">
-                      <label className="block text-sm font-medium text-slate-700 mb-1">Mobile</label>
-                      <input
-                        type="tel"
-                        className="w-full px-3 py-2 text-sm border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#8059ca] focus:border-transparent"
-                        placeholder="Enter Mobile Number"
-                        name="mobile"
-                        value={formData.mobile}
-                        onChange={handleInputChange}
-                        maxLength="10"
-                        pattern="[0-9]{10}"
-                        title="Mobile number must be exactly 10 digits"
-                        required
-                      />
-                    </div>
-
-                    <div className="mb-2">
-                      <label className="block text-sm font-medium text-slate-700 mb-1">Relationship</label>
-                      <select
-                        name="relationship"
-                        value={formData.relationship}
-                        onChange={handleInputChange}
-                        required
-                        className="w-full px-3 py-2 text-sm border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#8059ca] focus:border-transparent"
-                      >
-                        <option value="">Select relationship</option>
-                        <option value="Brother">Brother</option>
-                        <option value="Cousin">Cousin</option>
-                        <option value="Daughter">Daughter</option>
-                        <option value="Father">Father</option>
-                        <option value="Granddaughter">Granddaughter</option>
-                        <option value="Grandfather">Grandfather</option>
-                        <option value="Grandmother">Grandmother</option>
-                        <option value="Grandson">Grandson</option>
-                        <option value="Husband">Husband</option>
-                        <option value="Me">Me</option>
-                        <option value="Mother">Mother</option>
-                        <option value="Other">Other</option>
-                        <option value="Sister">Sister</option>
-                        <option value="Son">Son</option>
-                        <option value="Wife">Wife</option>
-                      </select>
-                    </div>
-                  </div>
-
-                  <div className="mb-3">
-                    <label className="block text-sm font-medium text-slate-700 mb-1">Location</label>
-                    <div className="relative">
-                      {isLoaded ? (
-                        <Autocomplete
-                          onLoad={(autocomplete) =>
-                            (autocompleteRef.current = autocomplete)
-                          }
-                          onPlaceChanged={onPlaceChanged}
-                          options={{
-                            componentRestrictions: { country: "in" },
-                            fields: [
-                              "formatted_address",
-                              "geometry",
-                              "name",
-                              "place_id",
-                              "address_components",
-                            ],
-                            types: ["geocode"],
-                          }}
-                        >
-                          <input
-                            type="text"
-                            className="w-full px-3 py-2 text-sm border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#8059ca] focus:border-transparent pl-10"
-                            name="location"
-                            value={formData.location}
-                            onChange={handleInputChange}
-                            placeholder="Search by city, state, pincode, or area..."
-                            required
-                            autoComplete="off"
-                          />
-                        </Autocomplete>
-                      ) : (
-                        <input
-                          type="text"
-                          className="w-full px-3 py-2 text-sm border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#8059ca] focus:border-transparent pl-10"
-                          name="location"
-                          value={formData.location}
-                          onChange={handleInputChange}
-                          placeholder="City / Location"
-                          required
-                          disabled
-                        />
-                      )}
-                      <i className="fas fa-location absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
-                    </div>
-                  </div>
-
-                  <div className="text-end">
-                    <button
-                      type="submit"
-                      className="bg-[#8059ca] hover:bg-[#6a4ab0] text-white px-6 py-2 rounded-md text-sm font-medium transition-all duration-200"
-                    >
-                      {isEditMode ? "Update" : "Add"} Profile
-                    </button>
-                  </div>
-                </form>
+                    </Autocomplete>
+                  ) : (
+                    <input
+                      type="text"
+                      className="w-full px-3 py-2 text-sm border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#8059ca] focus:border-transparent pl-10"
+                      name="location"
+                      value={formData.location}
+                      onChange={handleInputChange}
+                      placeholder="City / Location"
+                      required
+                      disabled
+                    />
+                  )}
+                  <i className="fas fa-location absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                </div>
               </div>
-            </div>
+
+              <div className="text-end mt-4">
+                <button
+                  type="submit"
+                  className="bg-[#8059ca] hover:bg-[#6a4ab0] text-white px-6 py-2 rounded-md text-sm font-medium transition-all duration-200"
+                >
+                  {isEditMode ? "Update" : "Add"} Profile
+                </button>
+              </div>
+            </form>
           </div>
-        // </div>
+        </BaseModal>,
+        document.body
       )}
+
     </div>
   );
 };

@@ -107,6 +107,27 @@ const HealthcareNavigation = ({ categories: propCategories, isLoading: propLoadi
     };
   }, []);
 
+  useEffect(() => {
+    const updateNavHeight = () => {
+      const navEl = document.querySelector('.healthcare-navigation-wrapper');
+      let height = 0;
+      if (navEl && window.getComputedStyle(navEl).display !== 'none') {
+        height = navEl.offsetHeight;
+      }
+      document.documentElement.style.setProperty('--nav-height', `${height}px`);
+    };
+
+    updateNavHeight();
+    const interval = setInterval(updateNavHeight, 200);
+    window.addEventListener('resize', updateNavHeight);
+
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener('resize', updateNavHeight);
+      document.documentElement.style.setProperty('--nav-height', '0px');
+    };
+  }, [location.pathname, categories]);
+
   // Attach scroll listener to the nav list to keep arrow visibility updated
   useEffect(() => {
     const container = scrollRef.current;
@@ -206,7 +227,7 @@ const HealthcareNavigation = ({ categories: propCategories, isLoading: propLoadi
       )}
       <div className="py-[12px] bg-white">
         <div className="container-lg-fluid">
-          <div className="overflow-x-auto overflow-y-hidden whitespace-nowrap px-[32px] flex justify-center items-center no-scrollbar">
+          <div className="overflow-visible whitespace-nowrap px-[32px] flex justify-center items-center no-scrollbar w-full">
             <style>{`
               .no-scrollbar::-webkit-scrollbar {
                 display: none !important;
@@ -217,17 +238,17 @@ const HealthcareNavigation = ({ categories: propCategories, isLoading: propLoadi
               }
             `}</style>
             <ul
-              className="flex flex-row flex-nowrap overflow-x-auto overflow-y-hidden nav gap-[12px] no-scrollbar"
+              className="flex flex-row flex-nowrap overflow-x-auto overflow-y-hidden nav gap-[12px] no-scrollbar pb-[6px]"
               ref={scrollRef}
             >
               {categories.map((item) => (
                 <li key={item._id} className="nav-item text-center">
                   <div
-                    className={`flex items-center justify-center gap-[4px] rounded-[8px] bg-[#f7f7f7] text-[#374151] font-semibold text-[13px] px-[16px] py-[8px] border border-solid border-transparent cursor-pointer transition-all duration-200 no-underline hover:bg-[#f0ebff] hover:text-[#8059ca] whitespace-nowrap ${location.pathname.startsWith(`/${item.slug}`) ||
-                        (location.pathname.startsWith('/view-all-categories/') &&
-                          location.pathname.split('/')[2] === item.slug)
-                        ? "!bg-[#8059ca] !text-white !border-[#8059ca] shadow-[0_4px_12px_rgba(128,89,202,0.2)]"
-                        : ""
+                    className={`flex items-center justify-center gap-[4px] rounded-[8px] text-[#374151] font-semibold text-[13px] px-[16px] py-[8px] border-b-[3px] border-solid border-transparent cursor-pointer transition-all duration-200 no-underline hover:bg-[#f0ebff] hover:text-[#8059ca] whitespace-nowrap ${location.pathname.startsWith(`/${item.slug}`) ||
+                      (location.pathname.startsWith('/view-all-categories/') &&
+                        location.pathname.split('/')[2] === item.slug)
+                      ? "!border-b-[#8059ca] text-[#8059ca] !rounded-none"
+                      : ""
                       }`}
                     onClick={() => handleCategoryClick(item)}
                   >
@@ -262,7 +283,7 @@ const HealthcareNavigation = ({ categories: propCategories, isLoading: propLoadi
       >
         <i className="fa-solid fa-chevron-right"></i>
       </button>
-    </div>
+    </div >
   );
 };
 

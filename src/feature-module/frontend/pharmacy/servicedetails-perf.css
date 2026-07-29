@@ -18,11 +18,11 @@
     overflow: visible;
 }
 
-@media (max-width: 991px) {
+/* @media (max-width: 991px) {
     .service-details-page .service-cards-stack-wrapper {
         margin-top: 60px !important;
     }
-}
+} */
 
 .service-details-page .service-cards-section.is-tooltip-active {
     z-index: 12;
