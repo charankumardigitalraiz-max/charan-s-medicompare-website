@@ -260,7 +260,7 @@ const Profile = ({ HomeNavigate, BackButton }) => {
             <button
               type="button"
               onClick={handleEditClick}
-              className="bg-[#8059ca] hover:bg-[#6b1fe6] text-white border-none py-2.5 px-6 rounded-lg text-sm font-semibold inline-flex items-center gap-2 cursor-pointer transition-all duration-300 shadow-[0_4px_15px_rgba(125,46,255,0.3)] hover:shadow-[0_6px_20px_rgba(125,46,255,0.4)] hover:-translate-y-0.5"
+              className="bg-[#8059ca] hover:bg-[#6b1fe6] text-white border-none py-2.5 px-6 !rounded-lg !text-sm !font-semibold inline-flex items-center gap-2 cursor-pointer transition-all duration-300 shadow-[0_4px_15px_rgba(125,46,255,0.3)] hover:shadow-[0_6px_20px_rgba(125,46,255,0.4)] hover:-translate-y-0.5"
             >
               <i className="fa-solid fa-pen"></i>
               Edit Profile
@@ -577,14 +577,14 @@ const Profile = ({ HomeNavigate, BackButton }) => {
             <button
               type="button"
               onClick={handleCancelEdit}
-              className="bg-white hover:bg-slate-100 text-slate-600 border border-slate-200 hover:border-slate-300 py-3 px-[30px] rounded-lg text-base font-semibold inline-flex items-center gap-2 cursor-pointer transition-all duration-300"
+              className="bg-white hover:bg-slate-100 text-slate-600 border border-slate-200 hover:border-slate-300 py-2 px-[30px] !rounded-md !text-base !font-semibold inline-flex items-center gap-2 cursor-pointer transition-all duration-300"
             >
               <i className="fas fa-times"></i>
               Cancel
             </button>
             <button
               type="submit"
-              className="btn btn-gray bg-[#8059ca] hover:bg-[#6b1fe6] text-white border-none py-3 px-[30px] rounded-lg text-base font-semibold inline-flex items-center gap-2 cursor-pointer transition-all duration-300 shadow-[0_4px_15px_rgba(125,46,255,0.3)] hover:shadow-[0_6px_20px_rgba(125,46,255,0.4)] hover:-translate-y-0.5"
+              className="bg-[#8059ca] hover:bg-[#6b1fe6] text-white border-none py-2.5 px-6 !rounded-lg !text-sm !font-semibold inline-flex items-center gap-2 cursor-pointer transition-all duration-300 shadow-[0_4px_15px_rgba(125,46,255,0.3)] hover:shadow-[0_6px_20px_rgba(125,46,255,0.4)] hover:-translate-y-0.5"
             >
               <i className="fas fa-check-circle"></i>
               Update Profile

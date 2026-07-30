@@ -3059,7 +3059,7 @@ const ProductDescription = () => {
 
                           <div className="d-flex gap-2">
                             <button
-                              className="btn btn-light btn-sm rounded-circle shadow-sm"
+                              className="!btn !btn-light !btn-sm !rounded-circle shadow-sm"
                               onClick={() => setShowShareModal(true)}
                               data-tooltip-id="global-tooltip"
                               data-tooltip-content="Share"
@@ -3076,7 +3076,7 @@ const ProductDescription = () => {
                                 transition: "all 0.2s ease",
                               }}
                             >
-                              <FaRegShareSquare color="#000000" size={20} />
+                              <FaRegShareSquare color="#000000" size={18} />
                             </button>
                             <button
                               className={`w-[30px] h-[30px] rounded-full border border-[#e5e7eb] bg-white flex items-center justify-center cursor-pointer transition-all duration-200 hover:bg-[#f4f0ff] hover:border-[#8059ca] ${product?.tablet?.isFavorite ? "!bg-red-500 border-red-500" : ""}`}

@@ -997,7 +997,7 @@ const FamilyMembers = ({ HomeNavigate, BackButton }) => {
               <div className="text-end mt-4">
                 <button
                   type="submit"
-                  className="bg-[#8059ca] hover:bg-[#6a4ab0] text-white px-6 py-2 rounded-md text-sm font-medium transition-all duration-200"
+                  className="bg-[#8059ca] hover:bg-[#6a4ab0] text-white px-6 py-2 !rounded-md !text-sm !font-medium !transition-all !duration-200"
                 >
                   {isEditMode ? "Update" : "Add"} Profile
                 </button>

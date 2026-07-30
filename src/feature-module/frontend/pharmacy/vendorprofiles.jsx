@@ -673,13 +673,14 @@ const VendorProfile = () => {
                             className="py-1 text-muted cursor-pointer"
                           >
                             <label
-                              className="flex items-center gap-[10px] text-[12px] font-[500] text-[#374151] cursor-pointer"
+                              className="flex items-center !gap-[10px] !text-[14px] !font-[500] !text-[#374151] !cursor-pointer"
                             >
                               <input
                                 type="checkbox"
                                 checked={selectedSubcategories.includes(
                                   sub.slug,
                                 )}
+                                className="me-2"
                                 onChange={() =>
                                   handleSubcategoryToggle(sub.slug)
                                 }
@@ -704,7 +705,7 @@ const VendorProfile = () => {
           {categories.length > categoriesToShow && (
             <div className="text-center mt-2">
               <span
-                className="text-primary cursor-pointer text-[12px] underline"
+                className="!text-primary  !cursor-pointer !text-[12px] underline"
                 onClick={() =>
                   setCategoriesToShow(
                     categoriesToShow === 6 ? categories.length : 6,

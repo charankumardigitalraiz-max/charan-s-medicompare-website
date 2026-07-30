@@ -662,7 +662,7 @@ const ProductCardMC = ({
               e.stopPropagation();
               onProductClick(item);
             }}
-            className="w-full flex items-center justify-center gap-2 py-0.5 px-2 !rounded-md text-[8px] font-bold text-white bg-[#8059ca] shadow-sm shadow-[#8059ca]/20 hover:shadow-md transition-all duration-300 cursor-pointer border-none"
+            className="w-full flex items-center justify-center gap-2 py-0.5 px-2 !rounded-md !text-[13px] !font-semibold text-white bg-[#8059ca] shadow-sm shadow-[#8059ca]/20 hover:shadow-md transition-all duration-300 cursor-pointer border-none"
           >
             Order Now
             <i

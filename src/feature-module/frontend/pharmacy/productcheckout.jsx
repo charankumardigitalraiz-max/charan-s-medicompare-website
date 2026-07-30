@@ -965,7 +965,7 @@ export const Cart = () => {
                       </div>
                       <div>
                         <button
-                          className="text-white bg-gradient-to-br from-[#8059ca] to-[#6f42c1] border-0 font-semibold cursor-pointer text-[11px] px-4 py-1.5 rounded-[5px] shadow-[0_2px_4px_rgba(0,0,0,0.1)]"
+                          className="text-white bg-gradient-to-br from-[#8059ca] to-[#6f42c1] border-0 !font-semibold cursor-pointer !text-[11px] px-4 py-1.5 !rounded-[5px] shadow-[0_2px_4px_rgba(0,0,0,0.1)]"
                           onClick={() => {
                             const token =
                               localStorage.getItem("medicomparestoken");
@@ -1343,25 +1343,23 @@ export const Cart = () => {
                           className="flex justify-between items-center mt-3 pt-3 border-t border-[#f1f5f9]"
                         >
                           {/* Qty Controls */}
-                          <div
-                            className="inline-flex border-[1.5px] border-[#e9d5ff] rounded-md bg-white overflow-hidden"
-                          >
+                          <div className="inline-flex items-center !border-[1.5px] !border-[#e9d5ff] !rounded-md overflow-hidden bg-white">
                             <button
-                              className="btn btn-sm w-[26px] h-[26px] bg-transparent border-0 text-[#8059ca] text-[10px] p-0 flex items-center justify-center"
                               onClick={() => decrementQuantity(item.cartKey)}
+                              className="w-7 h-7 flex items-center justify-center !text-[#8059ca] hover:bg-purple-50 transition"
                             >
-                              <i className="fas fa-minus text-[7px]" />
+                              <i className="fas fa-minus !text-[8px]"></i>
                             </button>
-                            <span
-                              className="min-w-[24px] text-[#1e1b4b] font-bold text-xs text-center leading-[26px]"
-                            >
+
+                            <span className="w-8 h-7 flex items-center justify-center !text-xs !font-bold !text-[#1e1b4b]">
                               {item.quantity}
                             </span>
+
                             <button
-                              className="btn btn-sm w-[26px] h-[26px] bg-transparent border-0 text-[#8059ca] text-[10px] p-0 flex items-center justify-center"
                               onClick={() => incrementQuantity(item.cartKey)}
+                              className="w-7 h-7 flex items-center justify-center !text-[#8059ca] hover:bg-purple-50 transition"
                             >
-                              <i className="fas fa-plus text-[7px]" />
+                              <i className="fas fa-plus !text-[8px]"></i>
                             </button>
                           </div>
 
@@ -1615,41 +1613,60 @@ export const Cart = () => {
                   Offers & Discounts
                 </div>
 
+                {/* Coupon Card */}
                 <div
-                  className="flex gap-3 bg-[#f0fdf4] p-4 rounded-xl items-center cursor-pointer border-[1.5px] border-dashed border-[#bbf7d0] transition-all duration-200 ease-in-out hover:-translate-y-px hover:shadow-[0_4px_12px_rgba(22,163,74,0.08)]"
+                  className={`group flex items-center gap-4 p-3 rounded-2xl cursor-pointer transition-all duration-300 border ${appliedCoupon
+                    ? "bg-gradient-to-r from-[#f0fdf4] to-[#ecfdf5] border-[#86efac] shadow-[0_8px_20px_rgba(34,197,94,0.12)]"
+                    : "bg-gradient-to-r from-[#faf5ff] to-[#ffffff] border-[#d8b4fe] "
+                    }`}
                   onClick={(e) => {
                     e.preventDefault();
+
                     const token = localStorage.getItem("medicomparestoken");
+
                     if (!token) {
                       toast.error("Please login to apply coupons");
                       navigateToLogin(navigate, "/cart");
                       return;
                     }
+
                     setShowOffersModal(true);
                   }}
                 >
+                  {/* Icon */}
                   <div
-                    className="w-[38px] h-[38px] bg-[#16a34a] rounded-[10px] flex items-center justify-center text-white text-sm font-bold"
+                    className={`w-[42px] h-[42px] rounded-xl flex items-center justify-center text-white text-lg shadow-md ${appliedCoupon
+                      ? "bg-gradient-to-br from-[#22c55e] to-[#15803d]"
+                      : "bg-gradient-to-br from-[#8059ca] to-[#6d28d9]"
+                      }`}
                   >
-                    <i className="fas fa-tag" />
+                    <i className="fas fa-tags"></i>
                   </div>
 
+                  {/* Content */}
                   <div className="flex-1">
                     <div
-                      className="flex items-center justify-between text-sm font-semibold text-[#166534] mb-0.5"
+                      className={`flex items-center justify-between font-semibold text-[13px] ${appliedCoupon ? "text-[#166534]" : "text-[#6d28d9]"
+                        }`}
                     >
-                      <span>{appliedCoupon ? "Coupon Applied!" : "Apply Coupon"}</span>
-                      <i className="fas fa-chevron-right text-[11px] text-[#16a34a]" />
+                      <span>
+                        {appliedCoupon ? "Coupon Applied Successfully!" : "Apply Coupon"}
+                      </span>
+
+                      <i className="fas fa-chevron-right text-[11px] opacity-60 group-hover:translate-x-1 transition-transform duration-200"></i>
                     </div>
 
-                    <div className="text-xs text-[#15803d]">
+                    <div
+                      className={`text-[11px] mt-1 ${appliedCoupon ? "text-[#15803d]" : "text-[#64748b]"
+                        }`}
+                    >
                       {appliedCoupon ? (
-                        <div
-                          className="flex items-center justify-between gap-2 flex-wrap mt-1"
-                        >
-                          <span className="font-semibold">
+                        <div className="flex items-center justify-between flex-wrap gap-3">
+                          <span className="inline-flex items-center gap-2 bg-[#ede9fe] text-[#6d28d9] px-3 py-1 rounded-full font-bold tracking-wide">
+                            <i className="fas fa-ticket-alt text-[11px]" />
                             {appliedCoupon.code || appliedCoupon.name}
                           </span>
+
                           <button
                             type="button"
                             onClick={(e) => {
@@ -1657,15 +1674,17 @@ export const Cart = () => {
                               e.stopPropagation();
                               setAppliedCoupon(null);
                             }}
-                            className="bg-[#fee2e2] border-0 px-2 py-0.5 rounded cursor-pointer text-[#ef4444] font-bold text-[10px]"
+                            className="bg-red-50 hover:bg-red-100 text-red-600 px-3 py-1 rounded-full text-[11px] font-semibold transition-all duration-200"
                           >
                             Remove
                           </button>
                         </div>
                       ) : localStorage.getItem("medicomparestoken") ? (
-                        "View available coupons & save more"
+                        <span>
+                          View available coupons and save more on your order.
+                        </span>
                       ) : (
-                        "Login to apply coupons"
+                        <span>Login to apply coupons.</span>
                       )}
                     </div>
                   </div>
@@ -1716,7 +1735,7 @@ export const Cart = () => {
                         e.preventDefault();
                         handleManualCouponApply();
                       }}
-                      className="px-4 py-2 bg-gradient-to-r from-[#8059ca] to-[#6d28d9] hover:from-[#7148c5] hover:to-[#5b21b6] text-white text-sm font-semibold rounded-lg border-none transition-all duration-200 shrink-0"
+                      className="px-4 py-2 bg-gradient-to-r from-[#8059ca] to-[#6d28d9] hover:from-[#7148c5] hover:to-[#5b21b6] text-white !text-sm !font-semibold !rounded-lg !border-none transition-all duration-200 shrink-0"
                     >
                       Apply
                     </button>
@@ -1855,21 +1874,21 @@ export const Cart = () => {
                 >
                   {/* COD Option */}
                   <div
-                    className={`flex-1 min-w-0 rounded-xl px-3 py-2.5 flex items-center gap-2 cursor-pointer transition-all duration-200 ease-in-out box-border ${selectedPayment === "cod" ? "border-2 border-[#8059ca] bg-[#fdfaff] shadow-[0_4px_12px_rgba(128,89,202,0.08)]" : "border-[1.5px] border-[#e2e8f0] bg-white hover:border-[#cbd5e1] hover:bg-[#fafbfc]"}`}
+                    className={`flex-1 min-w-0 !rounded-xl px-3 py-2.5 flex items-center gap-2 cursor-pointer transition-all duration-200 ease-in-out !box-border ${selectedPayment === "cod" ? "!border-2 !border-[#8059ca] !bg-[#fdfaff] shadow-[0_4px_12px_rgba(128,89,202,0.08)]" : "border-[1.5px] border-[#e2e8f0] bg-white hover:border-[#cbd5e1] hover:bg-[#fafbfc]"}`}
                     onClick={() => setSelectedPayment("cod")}
                   >
                     <div
-                      className={`w-7 h-7 rounded-lg flex items-center justify-center text-xs transition-all duration-200 ease-in-out shrink-0 ${selectedPayment === "cod" ? "bg-[#8059ca] text-white" : "bg-[#f1f5f9] text-[#64748b]"}`}
+                      className={`w-7 h-7 !rounded-lg flex items-center justify-center text-xs transition-all duration-200 ease-in-out shrink-0 ${selectedPayment === "cod" ? "bg-[#8059ca] text-white" : "!bg-[#f1f5f9] !text-[#64748b]"}`}
                     >
                       <i className="fas fa-money-bill-wave" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <div
-                        className={`text-xs font-bold mb-[1px] whitespace-nowrap overflow-hidden text-ellipsis ${selectedPayment === "cod" ? "text-[#8059ca]" : "text-[#1e293b]"}`}
+                        className={`text-xs font-bold mb-[1px] whitespace-nowrap overflow-hidden text-ellipsis ${selectedPayment === "cod" ? "!text-[#8059ca]" : "!text-[#1e293b]"}`}
                       >
                         Cash on Delivery
                       </div>
-                      <div className="text-[10px] text-[#64748b] whitespace-nowrap overflow-hidden text-ellipsis">
+                      <div className="text-[10px] !text-[#64748b] whitespace-nowrap overflow-hidden text-ellipsis">
                         Pay at delivery
                       </div>
                     </div>
@@ -1880,11 +1899,11 @@ export const Cart = () => {
 
                   {/* Online Option */}
                   <div
-                    className={`flex-1 min-w-0 rounded-xl px-3 py-2.5 flex items-center gap-2 cursor-pointer transition-all duration-200 ease-in-out box-border ${selectedPayment === "online" ? "border-2 border-[#8059ca] bg-[#fdfaff] shadow-[0_4px_12px_rgba(128,89,202,0.08)]" : "border-[1.5px] border-[#e2e8f0] bg-white hover:border-[#cbd5e1] hover:bg-[#fafbfc]"}`}
+                    className={`flex-1 min-w-0 !rounded-xl px-3 py-2.5 flex items-center gap-2 cursor-pointer transition-all duration-200 ease-in-out !box-border ${selectedPayment === "online" ? "!border-2 !border-[#8059ca] !bg-[#fdfaff] shadow-[0_4px_12px_rgba(128,89,202,0.08)]" : "!border-[1.5px] !border-[#e2e8f0] !bg-white hover:border-[#cbd5e1] hover:bg-[#fafbfc]"}`}
                     onClick={() => setSelectedPayment("online")}
                   >
                     <div
-                      className={`w-7 h-7 rounded-lg flex items-center justify-center text-xs transition-all duration-200 ease-in-out shrink-0 ${selectedPayment === "online" ? "bg-[#8059ca] text-white" : "bg-[#f1f5f9] text-[#64748b]"}`}
+                      className={`w-7 h-7 !rounded-lg flex items-center justify-center text-xs transition-all duration-200 ease-in-out shrink-0 ${selectedPayment === "online" ? "!bg-[#8059ca] !text-white" : "!bg-[#f1f5f9] !text-[#64748b]"}`}
                     >
                       <i className="fas fa-credit-card" />
                     </div>
@@ -1917,13 +1936,13 @@ export const Cart = () => {
                       className="flex flex-row gap-1 items-center"
                     >
                       <div
-                        className="text-xs font-semibold text-[#6b7280]"
+                        className="!text-xs !font-semibold !text-[#6b7280]"
                       >
                         Total Payable
                       </div>
                     </div>
                     <div
-                      className="text-xl font-extrabold text-[#1e1b4b]"
+                      className="!text-xl !font-extrabold !text-[#1e1b4b]"
                     >
                       ₹{(amountToPay || 0).toFixed(2)}
                     </div>
@@ -1934,7 +1953,7 @@ export const Cart = () => {
                     type="button"
                     onClick={handleSubmit}
                     disabled={cartItems.length === 0 || isSubmitting}
-                    className={`flex-1 px-5 py-2 text-white border-0 rounded-[10px] text-[14.5px] font-semibold min-w-[140px] flex items-center justify-center gap-2 transition-all duration-200 ease-in-out ${isSubmitting ? "bg-[#cbd5e1] cursor-not-allowed shadow-none" : "bg-gradient-to-br from-[#8059ca] to-[#6f42c1] cursor-pointer shadow-[0_4px_14px_rgba(128,89,202,0.25)] hover:-translate-y-px hover:shadow-[0_6px_18px_rgba(128,89,202,0.35)]"}`}
+                    className={`flex-1 px-3 py-2 !text-white border-0 !rounded-[10px] !text-[14.5px] !font-semibold min-w-[140px] flex items-center justify-center gap-2 transition-all duration-200 ease-in-out ${isSubmitting ? "!bg-[#cbd5e1] cursor-not-allowed shadow-none" : "!bg-gradient-to-br from-[#8059ca] to-[#6f42c1] cursor-pointer shadow-[0_4px_14px_rgba(128,89,202,0.25)] hover:-translate-y-px hover:shadow-[0_6px_18px_rgba(128,89,202,0.35)]"}`}
                   >
                     {isSubmitting ? (
                       <>
@@ -2289,7 +2308,7 @@ export const Cart = () => {
                                   type="button"
                                   disabled={!isEligible}
                                   onClick={() => handleCouponApply(ele)}
-                                  className={`px-3.5 py-[7px] !rounded-lg text-xs font-semibold whitespace-nowrap shadow-none transition-all duration-200 ease-in-out ${!isEligible ? "cursor-not-allowed" : "cursor-pointer"}`}
+                                  className={`px-3.5 py-[7px] !rounded-lg !text-xs !font-semibold whitespace-nowrap shadow-none transition-all duration-200 ease-in-out ${!isEligible ? "cursor-not-allowed" : "cursor-pointer"}`}
                                   style={{
                                     border: `1px solid ${activeTheme.btnBorder}`,
                                     background: activeTheme.btnBg,

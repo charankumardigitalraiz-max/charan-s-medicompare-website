@@ -9,6 +9,7 @@ import { fetchDoctorsList } from "../../../../services/doctorService";
 import { fetchFamilyMembersList, createFamilyMember } from "../../../../services/familyMemberService";
 import { Autocomplete, useJsApiLoader } from "@react-google-maps/api";
 import CustomDatePicker from "../../../../components/ui/CustomDatePicker";
+import { useResponsive } from "../../../../hooks/useResponsive.js";
 import Select from "react-select";
 import toast from "react-hot-toast";
 import {
@@ -30,7 +31,7 @@ const FamilyMemberSelectionModal = ({
 }) => {
   const [familyMembersData, setFamilyMembersData] = useState([]);
   const [isAddingFamilyMember, setIsAddingFamilyMember] = useState(false);
-
+  const { isTablet } = useResponsive;
   // Form states
   const [formData, setFormData] = useState({
     name: "",
@@ -372,7 +373,7 @@ const FamilyMemberSelectionModal = ({
           <button
             type="button"
             onClick={() => onProceed(selectedPatients, familyMembersData)}
-            className="px-6 py-2 text-sm font-medium rounded-full bg-[#8059ca] hover:bg-[#6f42c1] text-white border-none transition-colors"
+            className="px-6 py-2 !text-sm !font-medium !rounded-full !bg-[#8059ca] hover:bg-[#6f42c1] text-white border-none transition-colors"
           >
             Proceed
           </button>
@@ -402,9 +403,9 @@ const FamilyMemberSelectionModal = ({
                     setSelectedPatients([...selectedPatients, "self"]);
                   }
                 }}
-                className={`px-3.5 py-2.5 rounded-lg border-[1.5px] cursor-pointer flex items-center gap-2.5 transition-all duration-150 ${selectedPatients.includes("self")
-                    ? "border-[#8059ca] bg-[#fdfaff]"
-                    : "border-slate-200 bg-white"
+                className={`px-3.5 py-2.5 !rounded-lg !border-[1.5px] cursor-pointer flex items-center gap-2.5 transition-all duration-150 ${selectedPatients.includes("self")
+                  ? "!border-[#8059ca] bg-[#fdfaff]"
+                  : "!border-slate-200 bg-white"
                   }`}
               >
                 <input
@@ -465,9 +466,9 @@ const FamilyMemberSelectionModal = ({
                           ]);
                         }
                       }}
-                      className={`px-3.5 py-2.5 rounded-lg border-[1.5px] cursor-pointer flex items-center gap-2.5 transition-all duration-150 ${isSelected
-                          ? "border-[#8059ca] bg-[#fdfaff]"
-                          : "border-slate-200 bg-white"
+                      className={`px-3.5 py-2.5 !rounded-lg !border-[1.5px] cursor-pointer flex items-center gap-2.5 transition-all duration-150 ${isSelected
+                        ? "!border-[#8059ca] bg-[#fdfaff]"
+                        : "!border-slate-200 bg-white"
                         }`}
                     >
                       <input
@@ -498,10 +499,10 @@ const FamilyMemberSelectionModal = ({
                 onClick={() => {
                   setIsAddingFamilyMember(true);
                 }}
-                className="px-3.5 py-2.5 rounded-lg border-[1.5px] border-dashed border-[#8059ca] bg-white hover:bg-[#fdfaff] cursor-pointer flex items-center justify-center gap-2 transition-all duration-150 mt-2"
+                className="px-3.5 py-2.5 !rounded-lg !border-[1.5px] !border-dashed !border-[#8059ca] !bg-white hover:bg-[#fdfaff] cursor-pointer flex items-center justify-center gap-2 transition-all duration-150 mt-2"
               >
                 <i className="fas fa-plus text-[#8059ca] text-sm"></i>
-                <span className="text-[13.5px] font-semibold text-[#8059ca]">
+                <span className="!text-[13.5px] !font-semibold text-[#8059ca]">
                   Add Family Member
                 </span>
               </div>
@@ -535,19 +536,35 @@ const FamilyMemberSelectionModal = ({
                 >
                   Date of Birth
                 </label>
-                <CustomDatePicker
-                  value={formData.dateOfBirth}
-                  onChange={handleDateChange}
-                  format="MM/dd/yyyy"
-                  placeholder="Select Date of Birth"
-                  style={{
-                    width: "100%",
-                  }}
-                  shouldDisableDate={(date) => date && date > new Date()}
-                  cleanable
-                  editable={false}
-                  container={() => document.getElementById("family-member-modal-body") || document.body}
-                />
+                {isTablet ? (
+                  <input
+                    type="date"
+                    value={formData.dateOfBirth}
+                    max={new Date().toISOString().split("T")[0]}
+                    onChange={(e) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        dateOfBirth: e.target.value,
+                      }))
+                    }
+                    className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#8059ca]"
+                  />
+                ) : (
+
+                  <CustomDatePicker
+                    value={formData.dateOfBirth}
+                    onChange={handleDateChange}
+                    format="MM/dd/yyyy"
+                    placeholder="Select Date of Birth"
+                    style={{
+                      width: "100%",
+                    }}
+                    shouldDisableDate={(date) => date && date > new Date()}
+                    cleanable
+                    editable={false}
+                    container={() => document.getElementById("family-member-modal-body") || document.body}
+                  />
+                )}
                 {formData.dateOfBirth && (
                   <small
                     className="mt-1 block text-[11px] text-[#8059ca] font-semibold"
@@ -775,14 +792,14 @@ const FamilyMemberSelectionModal = ({
               <button
                 type="button"
                 onClick={() => setIsAddingFamilyMember(false)}
-                className="px-6 py-2 text-sm font-medium rounded-full border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 transition-colors"
+                className="px-6 py-2 !text-sm !font-medium !rounded-full border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 transition-colors"
               >
                 Back
               </button>
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="px-6 py-2 text-sm font-medium rounded-full bg-[#8059ca] hover:bg-[#6f42c1] text-white border-none transition-colors"
+                className="px-6 py-2 !text-sm !font-medium !rounded-full !bg-[#8059ca] hover:bg-[#6f42c1] text-white border-none transition-colors"
               >
                 {isSubmitting ? "Adding..." : "Add Profile"}
               </button>

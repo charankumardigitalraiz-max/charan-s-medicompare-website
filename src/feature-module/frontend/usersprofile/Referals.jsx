@@ -92,7 +92,7 @@ const Referral = ({ HomeNavigate, BackButton, profile }) => {
             </div>
             <button
               onClick={handleCopyLink}
-              className="bg-white text-[#8059ca] border-0 py-2 px-3.75 rounded-md font-semibold cursor-pointer flex items-center gap-1.25"
+              className="bg-white !text-[#8059ca] border-0 py-2 px-3.75 rounded-md font-semibold cursor-pointer flex items-center gap-1.25"
             >
               {isCopied ? <FaCheck /> : <FaCopy />}
               {isCopied ? "Copied!" : "Copy"}
@@ -102,7 +102,7 @@ const Referral = ({ HomeNavigate, BackButton, profile }) => {
 
         <button
           onClick={handleShare}
-          className="bg-white text-[#8059ca] border-0 py-3 px-6 rounded-[30px] font-semibold cursor-pointer inline-flex items-center gap-2 text-base shadow-[0_4px_15px_rgba(0,0,0,0.1)] transition-all duration-300 ease hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(0,0,0,0.15)]"
+          className="bg-white !text-[#8059ca] !border-0 py-3 px-6 !rounded-[30px] !font-semibold cursor-pointer inline-flex items-center gap-2 text-base shadow-[0_4px_15px_rgba(0,0,0,0.1)] transition-all duration-300 ease hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(0,0,0,0.15)]"
         >
           <FaShareAlt /> Share Referral Link
         </button>
@@ -110,7 +110,7 @@ const Referral = ({ HomeNavigate, BackButton, profile }) => {
 
       {/* How It Works Section */}
       <div className="bg-white rounded-xl p-5 mb-5 shadow-[0_2px_10px_rgba(0,0,0,0.05)]">
-        <h4 className="mt-0 mb-3.75 text-[#2c3e50] font-semibold text-lg">How It Works</h4>
+        <h4 className="mt-0 !mb-3.75 !text-[#2c3e50] !font-semibold !text-lg">How It Works</h4>
         <div className="flex flex-col gap-3.75">
           {[
             {
@@ -134,8 +134,8 @@ const Referral = ({ HomeNavigate, BackButton, profile }) => {
                 {item.step}
               </div>
               <div>
-                <h5 className="m-0 mb-1.25 text-base font-semibold">{item.title}</h5>
-                <p className="m-0 text-[#666] text-sm">{item.description}</p>
+                <h5 className="m-0 mb-1.25 !text-base !font-semibold">{item.title}</h5>
+                <p className="m-0 !text-[#666] !text-sm">{item.description}</p>
               </div>
             </div>
           ))}
@@ -161,9 +161,8 @@ const Referral = ({ HomeNavigate, BackButton, profile }) => {
                     <td className="p-2.5 py-3 text-left">{user.name}</td>
                     <td className="p-2.5 py-3 text-left">{new Date(user.date).toLocaleDateString()}</td>
                     <td className="p-2.5 py-3 text-right">
-                      <span className={`px-2.5 py-1 rounded-[12px] text-[12px] font-medium ${
-                        user.status === 'Completed' ? 'bg-[#e6f7ee] text-[#10b981]' : 'bg-[#fff4e6] text-[#f59e0b]'
-                      }`}>
+                      <span className={`px-2.5 py-1 rounded-[12px] text-[12px] font-medium ${user.status === 'Completed' ? 'bg-[#e6f7ee] text-[#10b981]' : 'bg-[#fff4e6] text-[#f59e0b]'
+                        }`}>
                         {user.status}
                       </span>
                     </td>

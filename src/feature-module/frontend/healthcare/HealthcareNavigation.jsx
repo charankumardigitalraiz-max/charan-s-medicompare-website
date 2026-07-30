@@ -247,7 +247,7 @@ const HealthcareNavigation = ({ categories: propCategories, isLoading: propLoadi
                     className={`flex items-center justify-center gap-[4px] rounded-[8px] text-[#374151] font-semibold text-[13px] px-[16px] py-[8px] border-b-[3px] border-solid border-transparent cursor-pointer transition-all duration-200 no-underline hover:bg-[#f0ebff] hover:text-[#8059ca] whitespace-nowrap ${location.pathname.startsWith(`/${item.slug}`) ||
                       (location.pathname.startsWith('/view-all-categories/') &&
                         location.pathname.split('/')[2] === item.slug)
-                      ? "!border-b-[#8059ca] text-[#8059ca] !rounded-none"
+                      ? "!border-b-[3px] !border-b-primary !text-[#8059ca] !rounded-none"
                       : ""
                       }`}
                     onClick={() => handleCategoryClick(item)}

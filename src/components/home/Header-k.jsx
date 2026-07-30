@@ -746,7 +746,7 @@ const Home2Header = () => {
               e.preventDefault();
               setShowCartChoiceModal(true);
             }}
-            className="w-[32px] h-[32px] rounded-full border border-solid border-[#e5e7eb] flex items-center justify-center text-[#374151] bg-white cursor-pointer transition-all duration-200 no-underline relative"
+            className="w-[32px] h-[32px] !rounded-full border !border-solid !border-[#e5e7eb] flex items-center justify-center !text-[#374151] bg-white cursor-pointer transition-all duration-200 no-underline relative"
           >
             <i className="fas fa-shopping-cart"></i>
             {cartCount > 0 && (
@@ -775,7 +775,7 @@ const Home2Header = () => {
           {isLoggedIn && (
             <Link
               to="/notifications"
-              className="w-[32px] h-[32px] rounded-full border border-solid border-[#e5e7eb] flex items-center justify-center text-[#374151] bg-white cursor-pointer transition-all duration-200 no-underline relative"
+              className="w-[32px] h-[32px] !rounded-full !border !border-solid !border-[#e5e7eb] !flex !items-center !justify-center !text-[#374151] !bg-white !cursor-pointer !transition-all !duration-200 no-underline relative"
               title="Notifications"
             >
               <i

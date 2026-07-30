@@ -1364,7 +1364,7 @@ const BookingProcess = () => {
         <div className="card-body p-2">
           {/* Header */}
           <div className="flex justify-start gap-3 items-center mb-2 border-l-4 border-[#8059ca] pl-3 leading-none">
-            <div className="text-xl font-medium text-[#0f172a] m-0">
+            <div className="m-0 !text-lg !font-medium !text-[#0f172a] sm:!text-xl md:!text-2xl">
               Recently Viewed Products
             </div>
             <span className="text-[11px] text-[#8059ca] font-bold bg-[#f3e8ff] px-2.5 py-1 rounded-full uppercase tracking-wide">
@@ -1470,7 +1470,7 @@ const BookingProcess = () => {
                 return (
                   <div
                     key={`${product._id || "product"}-${product.vendor?.vendorId || "vendor"}-${product.combinedvariant?.variantId || "variant"}-${index}`}
-                    className="min-w-[220px] max-w-[220px] bg-white rounded-xl border border-slate-100 shadow-[0_4px_20px_rgba(0,0,0,0.08)] flex flex-col shrink-0 transition-all duration-300 relative overflow-hidden hover:-translate-y-[3px] hover:border-[#8059ca] hover:shadow-[0_8px_24px_rgba(128,89,202,0.15)]"
+                    className="min-w-[220px] max-w-[220px] bg-white rounded-md border border-slate-100 shadow-[0_4px_20px_rgba(0,0,0,0.08)] flex flex-col shrink-0 transition-all duration-300 relative overflow-hidden hover:-translate-y-[3px] hover:border-[#8059ca] hover:shadow-[0_8px_24px_rgba(128,89,202,0.15)]"
                   >
                     {/* Compare Button */}
                     <div className="compare-btn-highlight absolute right-2 top-2 z-10 cursor-pointer bg-[#8059ca] text-white border-[1.5px] border-[#8059ca] rounded-[20px] w-8 h-[26px] flex items-center justify-start pl-[9px] shadow-[0_2px_8px_rgba(128,89,202,0.4)] transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] overflow-hidden whitespace-nowrap hover:w-[90px] hover:bg-[#6a45b3] hover:border-[#6a45b3]">
@@ -1661,7 +1661,7 @@ const BookingProcess = () => {
                                     href={`https://www.google.com/maps/search/?api=1&query=${data.businessDetails.location.coordinates[1]},${data.businessDetails.location.coordinates[0]}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="inline-flex btn btn-primary items-center gap-2 py-[5px] px-2.5 bg-[#8059ca] text-white text-sm font-medium no-underline rounded-lg border border-[#6d46b5] shadow-[0_3px_8px_rgba(128,89,202,0.25)] transition-all duration-[250ms] ease cursor-pointer hover:bg-[#6d46b5] hover:-translate-y-0.5 hover:shadow-[0_6px_14px_rgba(128,89,202,0.35)]"
+                                    className="inline-flex items-center gap-2 py-[5px] px-2.5 !bg-[#8059ca] text-white !text-sm !font-medium no-underline !rounded-sm border border-[#6d46b5] shadow-[0_3px_8px_rgba(128,89,202,0.25)] transition-all duration-[250ms] ease cursor-pointer hover:bg-[#6d46b5] hover:-translate-y-0.5 hover:shadow-[0_6px_14px_rgba(128,89,202,0.35)]"
                                   >
                                     <i className="fas fa-map-marked-alt"></i>
                                     View on Map
@@ -1766,9 +1766,15 @@ const BookingProcess = () => {
                   <div className="rounded-[10px] shadow-[0_2px_8px_rgba(0,0,0,0.05)] bg-white border-0 p-4">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div className="col-span-1 md:col-span-2">
-                        <div className="choice-cards-container flex gap-3">
-                          <div className="choice-card-wrapper flex-1">
-                            <label className={`choice-card flex items-center gap-2 border rounded-lg p-1 cursor-pointer transition-all ${personType === "self" ? "selected border-[#8059ca] bg-[#f8f4ff]" : "border-[#e0e0e0] bg-white"}`}>
+                        <div className="!flex !w-full gap-1 !rounded-lg !bg-[#f1f3f9] p-1">
+                          {/* Self */}
+                          <div className="flex flex-1">
+                            <label
+                              className={`flex w-full items-center justify-center !gap-2 rounded-sm border px-3 py-1 shadow-sm transition-all duration-200 ${personType === "self"
+                                ? "!border-[#8059ca] bg-[#8059ca] text-white"
+                                : "!border-slate-300 bg-white hover:bg-white/50"
+                                }`}
+                            >
                               <input
                                 type="radio"
                                 name="personType"
@@ -1779,15 +1785,31 @@ const BookingProcess = () => {
                                   setDoctorSearchQuery("");
                                   setDoctors([]);
                                 }}
-                                className="hidden"
+                                className="sr-only"
                               />
-                              <i className="fas fa-user choice-card-icon"></i>
-                              <span className="choice-card-text">Self</span>
+
+                              <i
+                                className={`fas fa-user text-sm transition-colors duration-200 ${personType === "self" ? "text-white" : "text-gray-500"
+                                  }`}
+                              ></i>
+
+                              <span
+                                className={`!text-[13px] !font-semibold transition-colors duration-200 ${personType === "self" ? "text-white" : "text-gray-600"
+                                  }`}
+                              >
+                                Self
+                              </span>
                             </label>
                           </div>
 
-                          <div className="choice-card-wrapper flex-1">
-                            <label className={`choice-card flex items-center gap-2 border rounded-lg p-1 cursor-pointer transition-all ${personType === "forWhom" ? "selected border-[#8059ca] bg-[#f8f4ff]" : "border-[#e0e0e0] bg-white"}`}>
+                          {/* For Whom */}
+                          <div className="flex flex-1">
+                            <label
+                              className={`flex w-full !items-center !justify-center !gap-2 !rounded-sm !border px-3 py-1 shadow-sm transition-all duration-200 ${personType === "forWhom"
+                                ? "!border-[#8059ca] !bg-[#8059ca] text-white"
+                                : "!border-slate-300 !bg-white hover:bg-white/50"
+                                }`}
+                            >
                               <input
                                 type="radio"
                                 name="personType"
@@ -1800,10 +1822,20 @@ const BookingProcess = () => {
                                   setDoctorSearchQuery("");
                                   setDoctors([]);
                                 }}
-                                className="hidden"
+                                className="sr-only"
                               />
-                              <i className="fas fa-users choice-card-icon"></i>
-                              <span className="choice-card-text">For Whom</span>
+
+                              <i
+                                className={`fas fa-users text-sm transition-colors duration-200 ${personType === "forWhom" ? "text-white" : "text-gray-500"
+                                  }`}
+                              ></i>
+
+                              <span
+                                className={`!text-[13px] !font-semibold transition-colors duration-200 ${personType === "forWhom" ? "text-white" : "text-gray-600"
+                                  }`}
+                              >
+                                For Whom
+                              </span>
                             </label>
                           </div>
                         </div>
@@ -1977,24 +2009,25 @@ const BookingProcess = () => {
                       </div>
 
                       <div className={`${isMobile ? "ml-0 mt-3 w-full" : "ml-auto mt-0 w-auto"}`}>
-                        <div className={`flex items-center flex-wrap ${isMobile ? "gap-2" : "gap-3"} ${isMobile ? "mb-3" : "mb-0"}`}>
+                        <div className={`flex items-center flex-wrap ${isMobile ? "gap-2 mb-3" : "gap-3 mb-0"}`}>
                           {discountPrice && mrpPrice > pricePerItem ? (
                             <>
-                              <span className="text-xl font-semibold text-black">
+                              <span className="text-lg font-semibold text-black sm:text-xl md:text-2xl">
                                 ₹{pricePerItem.toFixed(2)}
                               </span>
-                              <span className="text-base text-gray-400 line-through">
+
+                              <span className="text-sm text-gray-400 line-through sm:text-base">
                                 ₹{mrpPrice.toFixed(2)}
                               </span>
 
                               {discountPercent > 0 && (
-                                <span className="badge bg-[#28a745] text-white text-xs py-1 px-2 rounded">
+                                <span className="rounded bg-[#28a745] px-2 py-1 text-[10px] font-medium text-white sm:text-xs">
                                   {discountPercent}% OFF
                                 </span>
                               )}
                             </>
                           ) : (
-                            <span className="text-xl font-bold text-black">
+                            <span className="text-lg font-bold text-black sm:text-xl md:text-2xl">
                               ₹{pricePerItem.toFixed(2)}
                             </span>
                           )}
@@ -2057,36 +2090,36 @@ const BookingProcess = () => {
                             </li>
                           )}
                           {data?.medicineDetails?.condition && (
-                            <li className="text-[13px] text-gray-600 mb-1.5 flex items-center gap-2">
-                              <i className="fas fa-info-circle text-[#8059ca] text-xs"></i>
+                            <li className="!text-[13px] !text-gray-600 mb-1.5 flex items-center gap-2">
+                              <i className="fas fa-info-circle !text-[#8059ca] !text-xs"></i>
                               Condition : {data?.medicineDetails?.condition}
                             </li>
                           )}
                           {data?.medicineDetails?.machineType && (
-                            <li className="text-[13px] text-gray-600 mb-1.5 flex items-center gap-2">
-                              <i className="fas fa-cogs text-[#8059ca] text-xs"></i>
+                            <li className="!text-[13px] !text-gray-600 mb-1.5 flex items-center gap-2">
+                              <i className="fas fa-cogs !text-[#8059ca] !text-xs"></i>
                               Machine Type : {data?.medicineDetails?.machineType}
                             </li>
                           )}
 
                           {data?.medicineDetails?.compositionDetails?.name && (
-                            <li className="text-[13px] text-gray-600 mb-1.5 flex items-center gap-2">
-                              <i className="fas fa-mortar-pestle text-[#8059ca] text-xs"></i>
+                            <li className="!text-[13px] !text-gray-600 mb-1.5 flex items-center gap-2">
+                              <i className="fas fa-mortar-pestle !text-[#8059ca] !text-xs"></i>
                               Composition : {data?.medicineDetails?.compositionDetails?.name}
                             </li>
                           )}
 
                           {data?.medicineDetails?.reportsDuration && (
-                            <li className="text-[13px] text-gray-600 mb-1.5 flex items-center gap-2">
-                              <i className="fas fa-clock text-[#8059ca] text-xs"></i>
+                            <li className="!text-[13px] !text-gray-600 mb-1.5 flex items-center gap-2">
+                              <i className="fas fa-clock !text-[#8059ca] !text-xs"></i>
                               {data?.medicineDetails?.reportsDuration.slice(0, 40) ||
                                 data?.reportsDuration ||
                                 "24"}
                             </li>
                           )}
                           {testsCount && (
-                            <li className="text-[13px] text-gray-600 mb-1.5 flex items-center gap-2">
-                              <i className="fas fa-vial text-[#8059ca] text-xs"></i>
+                            <li className="!text-[13px] !text-gray-600 mb-1.5 flex items-center gap-2">
+                              <i className="fas fa-vial !text-[#8059ca] !text-xs"></i>
                               Includes {testsCount} parameters
                             </li>
                           )}
@@ -2099,9 +2132,9 @@ const BookingProcess = () => {
                               e.preventDefault();
                               navigate(-1);
                             }}
-                            className="text-[13px] text-red-600 no-underline cursor-pointer flex items-center gap-1.5"
+                            className="!text-[13px] !text-red-600 no-underline cursor-pointer flex items-center gap-1.5"
                           >
-                            <i className="fas fa-trash-alt text-xs"></i>
+                            <i className="fas fa-trash-alt !text-xs"></i>
                             Delete
                           </a>
                         </div>
@@ -2192,7 +2225,7 @@ const BookingProcess = () => {
                       </h6>
                       <button
                         onClick={() => setShowSlotPicker(true)}
-                        className="highlighted-pick-slot-btn"
+                        className="!rounded-md !border !border-[#8059ca] !bg-[#8059ca] px-[14px] py-[6px] !text-[12px] !font-bold text-white transition-all duration-300 hover:scale-105 hover:border-[#6a1fcc] hover:bg-[#6a1fcc] animate-pulse "
                       >
                         PICK SLOT
                       </button>
@@ -2233,45 +2266,66 @@ const BookingProcess = () => {
 
                   {isTotalFareExpanded && (
                     <div className="p-4">
-                      <div className="mb-4 pb-4 border-b border-[#e0e0e0]">
-                        <div className="text-sm font-semibold mb-3 text-black">
+                      <div className="mb-2 pb-2 border-b border-[#e0e0e0]">
+                        <div className="!text-sm !font-semibold !mb-2 text-black">
                           Booking Summary
                         </div>
 
                         {/* OFFERS & COUPONS */}
-                        <div className="mb-4">
+                        <div className="mb-2">
                           <div
-                            className="flex gap-3 bg-[#ecfdf5] p-4 rounded-xl items-center cursor-pointer border border-[#d1fae5]"
+                            className={`group flex items-center gap-4 rounded-2xl border p-3 cursor-pointer transition-all duration-300 ${appliedCoupon
+                              ? "bg-gradient-to-r from-[#f0fdf4] to-[#ecfdf5] border-[#86efac] shadow-[0_8px_20px_rgba(34,197,94,0.12)]"
+                              : "bg-gradient-to-r from-[#faf5ff] to-[#ffffff] border-[#d8b4fe] hover:border-[#8059ca]"
+                              }`}
                             onClick={(e) => {
                               e.preventDefault();
-                              const token =
-                                localStorage.getItem("medicomparestoken");
+
+                              const token = localStorage.getItem("medicomparestoken");
+
                               if (!token) {
                                 toast.error("Please login to apply coupons");
                                 navigate("/login");
                                 return;
                               }
+
                               setShowOffersModal(true);
                             }}
                           >
-                            <div className="w-10 h-10 bg-[#16a34a] rounded-full flex items-center justify-center text-white text-base font-bold">
-                              %
+                            {/* Icon */}
+                            <div
+                              className={`flex h-[42px] w-[42px] items-center justify-center rounded-xl text-lg text-white shadow-md ${appliedCoupon
+                                ? "bg-gradient-to-br from-[#22c55e] to-[#15803d]"
+                                : "bg-gradient-to-br from-[#8059ca] to-[#6d28d9]"
+                                }`}
+                            >
+                              <i className="fas fa-tags"></i>
                             </div>
 
+                            {/* Content */}
                             <div className="flex-1">
-                              <div className="flex items-center justify-between text-sm font-semibold text-[#065f46] mb-0.5 cursor-pointer">
-                                <span>Apply Coupon</span>
-                                <i className="fas fa-chevron-right" />
+                              <div
+                                className={`flex items-center justify-between text-[13px] font-semibold ${appliedCoupon ? "text-[#166534]" : "text-[#6d28d9]"
+                                  }`}
+                              >
+                                <span>
+                                  {appliedCoupon ? "Coupon Applied Successfully!" : "Apply Coupon"}
+                                </span>
+
+                                <i className="fas fa-chevron-right text-[11px] opacity-60 transition-transform duration-200 group-hover:translate-x-1"></i>
                               </div>
 
-                              <div className="text-xs text-[#047857]">
+                              <div
+                                className={`mt-1 text-[11px] ${appliedCoupon ? "text-[#15803d]" : "text-[#64748b]"
+                                  }`}
+                              >
                                 {appliedCoupon ? (
-                                  <div className="flex items-center gap-2 flex-wrap">
-                                    <span>
-                                      Applied:{" "}
-                                      {appliedCoupon.code ||
-                                        appliedCoupon.name}
+                                  <div className="flex flex-wrap items-center justify-between gap-3">
+                                    <span className="inline-flex items-center gap-2 rounded-full bg-[#ede9fe] px-3 py-1 font-bold tracking-wide text-[#6d28d9]">
+                                      <i className="fas fa-ticket-alt text-[11px]" />
+                                      {appliedCoupon.code || appliedCoupon.name}
                                     </span>
+
                                     <button
                                       type="button"
                                       onClick={(e) => {
@@ -2279,30 +2333,30 @@ const BookingProcess = () => {
                                         e.stopPropagation();
                                         setAppliedCoupon(null);
                                       }}
-                                      className="bg-transparent border-0 p-0 cursor-pointer text-[#065f46] underline font-semibold text-xs"
+                                      className="rounded-full bg-red-50 px-3 py-1 text-[11px] font-semibold text-red-600 transition-all duration-200 hover:bg-red-100"
                                     >
                                       Remove
                                     </button>
                                   </div>
-                                ) : localStorage.getItem(
-                                  "medicomparestoken",
-                                ) ? (
-                                  "View available coupons"
+                                ) : localStorage.getItem("medicomparestoken") ? (
+                                  <span>
+                                    View available coupons and save more on your order.
+                                  </span>
                                 ) : (
-                                  "Login to apply coupons"
+                                  <span>Login to apply coupons.</span>
                                 )}
                               </div>
                             </div>
                           </div>
 
                           {/* Manual Coupon Input */}
-                          <div className="flex gap-2 mt-3 flex-row w-full">
+                          <div className="flex mt-3 flex-row w-full">
                             <input
                               type="text"
                               placeholder="Enter Coupon Code"
                               value={couponInputText}
                               onChange={(e) => setCouponInputText(e.target.value)}
-                              className="flex-1 min-w-0 border border-slate-300 rounded-lg py-2 px-3 text-[13px] outline-none transition-colors duration-200 focus:border-[#8059ca]"
+                              className="flex-1 min-w-0 border border-slate-300 rounded-l-sm py-2 px-3 text-[13px] outline-none transition-colors duration-200 focus:border-[#8059ca]"
                             />
                             <button
                               type="button"
@@ -2310,7 +2364,7 @@ const BookingProcess = () => {
                                 e.preventDefault();
                                 handleManualCouponApply();
                               }}
-                              className="bg-[#8059ca] text-white border-0 rounded-lg py-2 px-4 text-[13px] font-semibold cursor-pointer transition-colors duration-200 hover:bg-[#6f42c1] shrink-0"
+                              className="bg-[#8059ca] text-white border-0 !rounded-r-sm py-2 px-4 text-[13px] font-semibold cursor-pointer transition-colors duration-200 hover:bg-[#6f42c1] shrink-0"
                             >
                               Apply
                             </button>
@@ -2392,7 +2446,7 @@ const BookingProcess = () => {
 
               <div className="card shadow-sm mb-4 rounded-xl border-0">
                 <div className="card-body p-3">
-                  <div className="text-base font-semibold my-6 mb-4 text-black">
+                  <div className="text-base font-semibold my-2 mb-4 text-black">
                     Choose Payment Method
                   </div>
 
@@ -2453,7 +2507,7 @@ const BookingProcess = () => {
                     <button
                       type="submit"
                       disabled={isSubmitting || (isSlotCategory && !hasSelectedSlot)}
-                      className={`w-full text-white rounded-sm border-0 rounded-lg p-2 mb-3 transition-all duration-300 flex items-center justify-center gap-2 ${isSubmitting || (isSlotCategory && !hasSelectedSlot) ? "bg-gray-400 cursor-not-allowed" : "bg-[#8059ca] cursor-pointer"}`}
+                      className={`w-full text-white !rounded-sm border-0  p-2 mb-3 transition-all duration-300 flex items-center justify-center gap-2 ${isSubmitting || (isSlotCategory && !hasSelectedSlot) ? "bg-gray-400 cursor-not-allowed" : "bg-[#8059ca] cursor-pointer"}`}
                     >
                       {isSubmitting ? (
                         <>

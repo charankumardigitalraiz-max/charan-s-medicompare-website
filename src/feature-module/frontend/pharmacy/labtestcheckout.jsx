@@ -1010,7 +1010,7 @@ export const LabTestCheckout = () => {
           <div className="pt-0 mb-[15px]">
             <Link
               to="/"
-              className="inline-flex items-center gap-2 text-[#8059ca] border border-[#e9d5ff] rounded-[30px] px-[18px] py-1.5 no-underline text-[13px] font-semibold bg-[#fdfaff] transition-all duration-200 hover:text-white hover:bg-gradient-to-r hover:from-[#8059ca] hover:to-[#6f42c1] hover:border-[#8059ca] hover:shadow-[0_4px_12px_rgba(128,89,202,0.2)] shadow-[0_2px_5px_rgba(128,89,202,0.05)]"
+              className="inline-flex items-center gap-2 !text-[#8059ca] !border !border-[#e9d5ff] !rounded-[30px] px-[18px] py-1.5 no-underline !text-[13px] !font-semibold !bg-[#fdfaff] transition-all duration-200 !hover:!text-white !hover:bg-gradient-to-r !hover:from-[#8059ca] !hover:to-[#6f42c1] !hover:border-[#8059ca] !hover:shadow-[0_4px_12px_rgba(128,89,202,0.2)] !shadow-[0_2px_5px_rgba(128,89,202,0.05)]"
             >
               <i className="fas fa-arrow-left text-[11px]" />
               Back to Home
@@ -1106,7 +1106,7 @@ export const LabTestCheckout = () => {
               {/* Delivery / Collection Address */}
               <div className="col-span-1">
                 <div
-                  className="rounded-2xl overflow-hidden border border-[#e9ecef] bg-white mb-4 md:mb-6 shadow-[0_10px_25px_-5px_rgba(0,0,0,0.05),_0_8px_10px_-6px_rgba(0,0,0,0.05)]"
+                  className="rounded-md overflow-hidden border border-[#e9ecef] bg-white mb-4 md:mb-6 shadow-[0_10px_25px_-5px_rgba(0,0,0,0.05),_0_8px_10px_-6px_rgba(0,0,0,0.05)]"
                 >
                   <div
                     className="flex justify-between items-center px-3 py-4 bg-[#faf8ff] border-b border-[#f3e8ff]"
@@ -1120,7 +1120,7 @@ export const LabTestCheckout = () => {
                     <div>
                       {collectionMethod === "home" && (
                         <button
-                          className="text-white bg-gradient-to-r from-[#8059ca] to-[#6f42c1] border-none font-semibold cursor-pointer text-[11px] px-4 py-1.5 rounded-[20px] shadow-[0_2px_4px_rgba(0,0,0,0.1)] hover:-translate-y-px transition-all duration-200"
+                          className="text-white bg-gradient-to-r from-[#8059ca] to-[#6f42c1] border-none !font-semibold cursor-pointer !text-[11px] px-4 py-1.5 !rounded-[20px] shadow-[0_2px_4px_rgba(0,0,0,0.1)] hover:-translate-y-px transition-all duration-200"
                           onClick={() => {
                             const token = localStorage.getItem("medicomparestoken");
                             if (!token) {
@@ -1200,7 +1200,7 @@ export const LabTestCheckout = () => {
               {/* Referred Doctor Selection */}
               <div className="col-span-1 mb-4 md:mb-6">
                 <div
-                  className="rounded-2xl border border-[#e9ecef] shadow-[0_10px_25px_-5px_rgba(0,0,0,0.05)] bg-white p-3"
+                  className="rounded-md border border-[#e9ecef] shadow-[0_10px_25px_-5px_rgba(0,0,0,0.05)] bg-white p-3"
                 >
                   <div className="text-[15px] font-[500] text-[#0f172a] mb-3 flex items-center gap-2">
                     <i className="fa-solid fa-user-doctor text-[#8059ca] "></i>
@@ -1246,7 +1246,7 @@ export const LabTestCheckout = () => {
               {/* Lab Tests — Patient-wise Grouped View */}
               <div className="col-span-1 md:col-span-2">
                 <div
-                  className={isMobile ? "bg-transparent rounded-none shadow-none p-0" : "bg-white rounded-2xl border border-[#e2e8f0] shadow-[0_4px_20px_rgba(0,0,0,0.02)] p-6"}
+                  className={isMobile ? "bg-transparent rounded-none shadow-none p-0" : "bg-white rounded-md border border-[#e2e8f0] shadow-[0_4px_20px_rgba(0,0,0,0.02)] p-6"}
                 >
                   {/* Section header — Vendor details (highlighted) */}
                   <div
@@ -1318,7 +1318,7 @@ export const LabTestCheckout = () => {
                       return (
                         <div
                           key={patientId}
-                          className="bg-white rounded-2xl border border-[#e9ecef] overflow-hidden"
+                          className="bg-white rounded-md border border-[#e9ecef] overflow-hidden"
                         >
                           {/* Patient header */}
                           <div className={`px-4 py-3.5 flex items-center gap-3 ${displayItems.length > 0 ? "border-b border-[#f1f5f9]" : "border-b-0"}`}>
@@ -1483,7 +1483,7 @@ export const LabTestCheckout = () => {
               }`}
           >
             {/* Coupon Card Summary */}
-            <div className="mb-6 bg-white rounded-2xl border border-[#e5e7eb] shadow-[0_8px_24px_rgba(15,23,42,0.06)] p-3">
+            <div className="mb-6 bg-white rounded-md border border-[#e5e7eb] shadow-[0_8px_24px_rgba(15,23,42,0.06)] p-3">
               {/* Heading */}
               <div className="flex items-center gap-2 text-[17px] font-[600] text-[#1f2937] mb-2">
                 <i className="fas fa-percentage text-[#8059ca] text-[18px]"></i>
@@ -1492,9 +1492,9 @@ export const LabTestCheckout = () => {
 
               {/* Coupon Card */}
               <div
-                className={`group flex items-center gap-4 p-3 rounded-2xl cursor-pointer transition-all duration-300 border ${appliedCoupon
+                className={`group flex items-center gap-4 p-3 rounded-md cursor-pointer transition-all duration-300 border ${appliedCoupon
                   ? "bg-gradient-to-r from-[#f0fdf4] to-[#ecfdf5] border-[#86efac] shadow-[0_8px_20px_rgba(34,197,94,0.12)]"
-                  : "bg-gradient-to-r from-[#faf5ff] to-[#ffffff] border-[#d8b4fe] hover:border-[#8059ca] hover:shadow-[0_10px_25px_rgba(128,89,202,0.18)] hover:-translate-y-1"
+                  : "bg-gradient-to-r from-[#faf5ff] to-[#ffffff] border-[#d8b4fe] hover:border-[#8059ca] "
                   }`}
                 onClick={() => {
                   const token = localStorage.getItem("medicomparestoken");
@@ -1569,13 +1569,13 @@ export const LabTestCheckout = () => {
                   Have a Coupon Code?
                 </label>
 
-                <div className="flex gap-2 mt-2 flex-row w-full">
+                <div className="flex  mt-2 flex-row w-full">
                   <input
                     type="text"
                     placeholder="Enter Coupon Code"
                     value={couponInputText}
                     onChange={(e) => setCouponInputText(e.target.value)}
-                    className="flex-1 min-w-0 border border-slate-300 rounded-lg px-3 py-2 text-sm bg-[#f8fafc] outline-none transition-colors focus:border-[#8059ca]"
+                    className="flex-1 min-w-0 border border-slate-300 rounded-l-lg px-3 py-2 text-sm bg-[#f8fafc] outline-none transition-colors focus:border-[#8059ca]"
                   />
 
                   <button
@@ -1584,7 +1584,7 @@ export const LabTestCheckout = () => {
                       e.preventDefault();
                       handleManualCouponApply();
                     }}
-                    className="px-4 py-2 bg-gradient-to-r from-[#8059ca] to-[#6d28d9] hover:from-[#7148c5] hover:to-[#5b21b6] text-white text-sm font-semibold rounded-lg border-none transition-all duration-200 shrink-0"
+                    className="px-4 py-2 bg-gradient-to-r from-[#8059ca] to-[#6d28d9] hover:from-[#7148c5] hover:to-[#5b21b6] !text-white !text-sm !font-semibold !rounded-r-lg border-none transition-all duration-200 shrink-0"
                   >
                     Apply
                   </button>
@@ -1609,7 +1609,7 @@ export const LabTestCheckout = () => {
               </div>
 
               <div
-                className="rounded-[14px] border border-[1.5px] border-[#f3e8ff] bg-[#fdfaff] p-[12px] shadow-[0_2px_8px_rgba(128,89,202,0.04)]"
+                className="rounded-sm border border-[1.5px] border-[#f3e8ff] bg-[#fdfaff] p-[12px] shadow-[0_2px_8px_rgba(128,89,202,0.04)]"
               >
                 {/* Collection Method Toggle */}
                 {visitType === "both" ? (
@@ -1617,7 +1617,7 @@ export const LabTestCheckout = () => {
                     {/* Home Collection */}
                     <div
                       onClick={() => setCollectionMethod("home")}
-                      className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-3.5 rounded-lg cursor-pointer transition-all duration-200 text-[13px] font-semibold ${collectionMethod === "home"
+                      className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-3.5 rounded-sm cursor-pointer transition-all duration-200 text-[13px] font-semibold ${collectionMethod === "home"
                         ? "bg-white text-[#8059ca] shadow-[0_2px_6px_rgba(0,0,0,0.08)]"
                         : "bg-transparent text-[#64748b]"
                         }`}
@@ -1629,7 +1629,7 @@ export const LabTestCheckout = () => {
                     {/* Lab Visit */}
                     <div
                       onClick={() => setCollectionMethod("lab")}
-                      className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-3.5 rounded-lg cursor-pointer transition-all duration-200 text-[13px] font-semibold ${collectionMethod === "lab"
+                      className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-3.5 rounded-sm cursor-pointer transition-all duration-200 text-[13px] font-semibold ${collectionMethod === "lab"
                         ? "bg-white text-[#8059ca] shadow-[0_2px_6px_rgba(0,0,0,0.08)]"
                         : "bg-transparent text-[#64748b]"
                         }`}
@@ -1678,7 +1678,7 @@ export const LabTestCheckout = () => {
                     <button
                       type="button"
                       onClick={() => setShowSlotPicker(true)}
-                      className="bg-gradient-to-r from-[#8059ca] to-[#6d3fc7] border-none text-white rounded-sm px-3.5 py-[7px] text-xs font-bold cursor-pointer flex items-center gap-1.5 shadow-[0_2px_6px_rgba(128,89,202,0.35)] tracking-[0.3px] hover:-translate-y-px transition-all duration-200"
+                      className="bg-gradient-to-r from-[#8059ca] to-[#6d3fc7] border-none !text-white !rounded-sm px-3.5 py-[7px] !text-xs !font-bold cursor-pointer flex items-center gap-1.5 shadow-[0_2px_6px_rgba(128,89,202,0.35)] tracking-[0.3px] hover:-translate-y-px transition-all duration-200"
                     >
                       <Calendar size={12} />
                       {selectedDate && selectedTimeSlot ? "CHANGE SLOT" : "PICK SLOT"}
@@ -1732,7 +1732,7 @@ export const LabTestCheckout = () => {
                 Booking Summary
               </div>
               <div
-                className="rounded-[14px] bg-[#fdfaff] border border-[#f3e8ff] p-3 shadow-[0_2px_8px_rgba(128,89,202,0.02)]"
+                className="rounded-sm bg-[#fdfaff] border border-[#f3e8ff] p-3 shadow-[0_2px_8px_rgba(128,89,202,0.02)]"
               >
                 <div className="flex justify-between items-start gap-3 text-[13px] text-[#475569] mb-3.5">
                   <span className="font-semibold flex flex-row leading-tight">
@@ -1812,11 +1812,12 @@ export const LabTestCheckout = () => {
               <div className={`flex gap-2.5 mb-4 w-full ${isMobile || isTablet ? "flex-col" : "flex-row"}`}>
                 {/* Online Option */}
                 <div
-                  className={`flex-1 min-w-0 border rounded-xl px-3.5 py-3 flex items-center gap-2.5 cursor-pointer transition-all duration-200 ${selectedPayment === "online"
-                    ? "border-[#8059ca] bg-[#fdfaff] shadow-[0_4px_12px_rgba(128,89,202,0.08)]"
-                    : "border-[#e2e8f0] bg-white hover:border-[#cbd5e1] hover:bg-[#fafbfc]"
+                  className={`flex-1 min-w-0 !border !rounded-md px-3.5 py-2 flex items-center gap-2.5 cursor-pointer transition-all duration-200 ${selectedPayment === "online"
+                    ? "!border-[#8059ca] bg-[#fdfaff] shadow-[0_4px_12px_rgba(128,89,202,0.08)]"
+                    : "!border-[#e2e8f0] bg-white hover:!border-[#cbd5e1] hover:bg-[#fafbfc]"
                     }`}
                   onClick={() => setSelectedPayment("online")}
+                  title="Online Payment"
                 >
                   <div className={`w-7 h-7 rounded-lg flex items-center justify-center text-xs transition-all duration-200 shrink-0 ${selectedPayment === "online" ? "bg-[#8059ca] text-white" : "bg-[#f1f5f9] text-[#64748b]"
                     }`}>
@@ -1829,20 +1830,21 @@ export const LabTestCheckout = () => {
                     </div>
                     <div className="text-[10px] text-[#64748b] whitespace-nowrap overflow-hidden text-ellipsis">UPI, Cards, NetBanking</div>
                   </div>
-                  <div className={`w-3.5 h-3.5 rounded-full border bg-white transition-all duration-200 shrink-0 ${selectedPayment === "online" ? "border-4 border-[#8059ca]" : "border-2 border-[#cbd5e1]"
+                  <div className={`w-3.5 h-3.5 rounded-full border bg-white transition-all duration-200 shrink-0 ${selectedPayment === "online" ? "!border-4 !border-[#8059ca]" : "!border-2 !border-[#cbd5e1]"
                     }`} />
                 </div>
 
                 {/* COD Option */}
                 <div
-                  className={`flex-1 min-w-0 border rounded-xl px-3.5 py-3 flex items-center gap-2.5 cursor-pointer transition-all duration-200 ${selectedPayment === "cod"
-                    ? "border-[#8059ca] bg-[#fdfaff] shadow-[0_4px_12px_rgba(128,89,202,0.08)]"
-                    : "border-[#e2e8f0] bg-white hover:border-[#cbd5e1] hover:bg-[#fafbfc]"
+                  className={`flex-1 min-w-0 !border !rounded-md px-3.5 py-2 flex items-center gap-2.5 cursor-pointer transition-all duration-200 ${selectedPayment === "cod"
+                    ? "!border-[#8059ca] bg-[#fdfaff] shadow-[0_4px_12px_rgba(128,89,202,0.08)]"
+                    : "!border-[#e2e8f0] bg-white hover:!border-[#cbd5e1] hover:bg-[#fafbfc]"
                     }`}
                   onClick={() => {
                     setSelectedPayment("cod");
                     setAppliedCoupon(null);
                   }}
+                  title="Pay at Sample Collection"
                 >
                   <div className={`w-7 h-7 rounded-lg flex items-center justify-center text-xs transition-all duration-200 shrink-0 ${selectedPayment === "cod" ? "bg-[#8059ca] text-white" : "bg-[#f1f5f9] text-[#64748b]"
                     }`}>
@@ -1855,7 +1857,7 @@ export const LabTestCheckout = () => {
                     </div>
                     <div className="text-[10px] text-[#64748b] whitespace-nowrap overflow-hidden text-ellipsis">Pay at sample collection</div>
                   </div>
-                  <div className={`w-3.5 h-3.5 rounded-full border bg-white transition-all duration-200 shrink-0 ${selectedPayment === "cod" ? "border-4 border-[#8059ca]" : "border-2 border-[#cbd5e1]"
+                  <div className={`w-3.5 h-3.5 rounded-full border bg-white transition-all duration-200 shrink-0 ${selectedPayment === "cod" ? "!border-4 !border-[#8059ca]" : "!border-2 !border-[#cbd5e1]"
                     }`} />
                 </div>
               </div>
@@ -1872,7 +1874,7 @@ export const LabTestCheckout = () => {
                   type="button"
                   onClick={handleSubmit}
                   disabled={isSubmitting}
-                  className={`flex-1 min-w-0 flex items-center justify-center py-2.5 px-3 text-white border-none rounded-[20px] text-[14.5px] font-semibold transition-all duration-200 ${isSubmitting
+                  className={`flex-1 min-w-0 flex items-center justify-center py-2.5 px-3 !text-white border-none !rounded-[20px] !text-[14.5px] !font-semibold transition-all duration-200 ${isSubmitting
                     ? "bg-slate-350 cursor-not-allowed"
                     : "bg-gradient-to-r from-[#8059ca] to-[#6f42c1] cursor-pointer shadow-[0_4px_14px_rgba(128,89,202,0.25)] hover:-translate-y-px"
                     }`}

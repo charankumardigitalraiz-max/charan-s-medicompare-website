@@ -669,10 +669,10 @@ const diagnostics = ({
 
                               {vendor && (
                                 <div
-                                  className="mt-[12px] border-t border-solid border-[#0000002e]"
+                                  className="!mt-[12px] !border-t !border-solid !border-[#0000002e]"
                                 >
                                   <div
-                                    className="d-flex align-items-center footers pt-[10px] pb-0 px-0 cursor-pointer transition-all duration-200 hover:opacity-80 hover:translate-x-[4px]"
+                                    className="d-flex align-items-center justify-center footers pt-[10px] pb-0 px-0 cursor-pointer transition-all duration-200 hover:opacity-80 hover:translate-x-[4px]"
                                     onClick={(e) => {
                                       e.stopPropagation();
                                       const vendorId =
@@ -703,7 +703,7 @@ const diagnostics = ({
                                     }}
                                   >
                                     <div
-                                      className="w-[56px] h-[56px] rounded-[8px] overflow-hidden bg-white"
+                                      className="w-[56px] h-[56px] !rounded-[8px] overflow-hidden bg-white"
                                     >
                                       <img
                                         src={
@@ -723,20 +723,20 @@ const diagnostics = ({
 
                                     <div className="flex-grow-1">
                                       <div className="flex items-center">
-                                        <h6 className="!text-[14px] !sm:text-[9px] !md:text-[12px] !lg:text-[14px] font-semibold text-slate-800 leading-tight">
+                                        <h6 className="!text-[14px] !sm:text-[9px] !md:text-[12px] !lg:text-[14px] !font-semibold !text-slate-800 leading-tight">
                                           {vendor.name}
                                         </h6>
                                         {test?.averageRating > 0 && test?.ratingCount > 0 && (
                                           <div
-                                            className="flex items-center gap-[4px] text-[10px] text-[#666] mt-[2px] mb-[4px]"
+                                            className="flex items-center gap-[4px] !text-[10px] !text-[#666] mt-[2px] mb-[4px]"
                                           >
                                             <i
-                                              className="fas fa-star text-[#ffc107] text-[9px]"
+                                              className="fas fa-star !text-[#ffc107] !text-[9px]"
                                             ></i>
-                                            <span className="font-semibold">
+                                            <span className="!font-semibold">
                                               {test.averageRating.toFixed(1)}
                                             </span>
-                                            <span className="text-[#999]">
+                                            <span className="!text-[#999]">
                                               ({test.ratingCount}+)
                                             </span>
                                           </div>
@@ -744,7 +744,7 @@ const diagnostics = ({
                                       </div>
                                       <div className="d-flex align-items-center gap-2 text-dark">
                                         <i
-                                          className="fa-solid fa-location-dot text-[13px] text-[#8059ca]"
+                                          className="fa-solid fa-location-dot !text-[13px] !text-[#8059ca]"
                                         ></i>
                                         <span>
                                           {vendor.address?.length > 22

@@ -656,7 +656,7 @@ const Compositions = () => {
                   loadMoreBrands();
                 }}
                 disabled={brandLoading}
-                className="text-xs font-bold text-[#8059ca] border border-[#8059ca]/30 bg-purple-50/50 py-1.5 px-3 rounded-lg hover:bg-[#8059ca] hover:text-white transition-all duration-200"
+                className="!text-xs !font-bold !text-[#8059ca] !border !border-[#8059ca]/30 !bg-purple-50/50 !py-1.5 !px-3 !rounded-lg hover:bg-[#8059ca] hover:text-white transition-all duration-200"
               >
                 {brandLoading ? "Loading..." : "View More"}
               </button>

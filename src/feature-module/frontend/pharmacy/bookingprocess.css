@@ -1,12 +1,11 @@
-/* Booking Process - Design Pattern */
-
+/* 
 .booking-process-wrapper {
   background: #f5f5f5;
   min-height: 100vh;
   padding: 50px 0 30px;
 }
 
-/* Recently Searched Scroll */
+
 .recently-searched-scroll {
   scrollbar-width: thin;
   scrollbar-color: #8059ca #f0f0f0;
@@ -30,7 +29,7 @@
   background: #6a1fd9;
 }
 
-/* Responsive adjustments */
+
 @media (max-width: 768px) {
   .booking-process-wrapper {
     padding: 20px 0 20px;
@@ -66,7 +65,7 @@
   }
 }
 
-/* Left Panel - Tests List */
+
 .booking-left-panel {
   background: #ffffff;
   border-radius: 0;
@@ -155,7 +154,7 @@
   color: #ffffff;
 }
 
-/* Responsive styles for inline address */
+
 @media (max-width: 991px) {
   .booking-user-header {
     flex-direction: column;
@@ -202,7 +201,7 @@
   }
 }
 
-/* User Address Section */
+
 .booking-address-section {
   background: #ffffff;
   border: 1px solid #e9ecef;
@@ -330,7 +329,7 @@
   font-size: 16px;
 }
 
-/* Test List Container */
+
 .booking-tests-list {
   max-height: 600px;
   overflow-y: auto;
@@ -348,7 +347,7 @@
   background: #f8f9fa;
 }
 
-/* Test Card Content Wrapper */
+
 .booking-test-content-wrapper {
   display: flex;
   align-items: flex-start;
@@ -361,7 +360,7 @@
   min-width: 0;
 }
 
-/* Test Image Wrapper - Inside Header */
+
 .booking-test-image-wrapper {
   flex-shrink: 0;
   width: 120px;
@@ -482,7 +481,7 @@
   color: #1a1a1a;
 }
 
-/* Right Panel - Appointment & Payment */
+
 .booking-right-panel {
   background: #ffffff;
   border-radius: 0;
@@ -490,7 +489,7 @@
   margin-left: 10px;
 }
 
-/* Appointment Slot Section */
+
 .appointment-slot-section {
   padding: 20px;
   border-bottom: 1px solid #e9ecef;
@@ -555,7 +554,7 @@
   margin-top: 2px;
 }
 
-/* Total Charges Section */
+
 .total-charges-section {
   padding: 20px;
 }
@@ -675,14 +674,14 @@
   text-transform: uppercase;
   letter-spacing: 0.5px;
   display: none;
-  /* Hide the original button since we have sticky one */
+
 }
 
 .proceed-pay-btn:hover {
   background: #6a1fcc;
 }
 
-/* Sticky Proceed to Pay Button */
+
 .sticky-proceed-pay-container {
   position: fixed;
   bottom: 0;
@@ -730,7 +729,7 @@
   align-items: center;
 }
 
-/* Floating Call Button */
+
 .floating-call-btn {
   position: fixed;
   right: 20px;
@@ -764,7 +763,7 @@
   font-size: 18px;
 }
 
-/* Scrollbar Styling */
+
 .booking-tests-list::-webkit-scrollbar {
   width: 6px;
 }
@@ -782,7 +781,7 @@
   background: #14a085;
 }
 
-/* Responsive Design */
+
 @media (max-width: 991px) {
   .booking-process-wrapper {
     padding: 80px 0 40px;
@@ -1203,7 +1202,6 @@
   }
 }
 
-/* Extra small devices - ensure button is always visible */
 @media (max-width: 480px) {
   .sticky-proceed-pay-container {
     position: fixed !important;
@@ -1236,7 +1234,7 @@
   }
 }
 
-/* Slot Picker Modal */
+
 .slot-picker-modal-overlay {
   position: fixed;
   top: 0;
@@ -1487,7 +1485,7 @@
   box-shadow: 0 4px 12px rgba(125, 46, 255, 0.3);
 }
 
-/* Responsive for Modal */
+
 @media (max-width: 767px) {
   .slot-picker-modal {
     max-width: 100%;
@@ -1629,7 +1627,7 @@
   }
 }
 
-/* Offers & Discounts Modal */
+
 .offers-modal-overlay {
   position: fixed;
   top: 0;
@@ -1925,7 +1923,6 @@
   border-color: #d0d0d0;
 }
 
-/* Responsive Design for Offers Modal */
 @media (max-width: 767px) {
   .offers-modal-overlay {
     padding: 10px;
@@ -2080,7 +2077,6 @@
   transform: scale(1.05);
 }
 
-/* Modern Choice Cards (Self vs For Whom) */
 .choice-cards-container {
   display: flex;
   background: #f1f3f9;
@@ -2132,11 +2128,11 @@
   transition: all 0.2s ease;
 }
 
-/* Selected choice card style */
+
 .choice-card.selected {
   background: #8059ca;
   border: 1px solid #8059ca !important;
-  /* box-shadow: 0 4px 12px rgba(128, 89, 202, 0.35); */
+
 }
 
 .choice-card.selected .choice-card-icon {
@@ -2150,4 +2146,4 @@
 
 .choice-card:hover:not(.selected) {
   background: rgba(255, 255, 255, 0.5);
-}
+} */

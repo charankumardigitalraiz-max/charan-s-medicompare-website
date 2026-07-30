@@ -434,8 +434,8 @@ const AmbulanceBooking = ({ HomeNavigate, BackButton }) => {
                       {/* Card Footer Actions */}
                       <div className="flex gap-2 pt-2.5 border-t border-[#f1f5f9]">
                         <button
-                          className="flex-1 inline-flex items-center justify-center gap-1.5 text-[12px] font-medium py-[6px] px-3 bg-[#8059ca] text-white border-none cursor-pointer transition-all duration-200 hover:bg-[#6a4ab0] hover:-translate-y-px"
-                          style={{ borderRadius: '12px', boxShadow: '0 2px 8px rgba(128,89,202,0.2)' }}
+                          className="inline-flex items-center justify-center gap-1.5 !rounded-md !text-[11px] !font-medium p-[4px_8px] min-w-fit whitespace-nowrap leading-tight bg-[#8059ca] text-white border border-[#8059ca] transition-all duration-200 no-underline shadow-none hover:bg-[#6f42c1] hover:border-[#6f42c1] focus:bg-[#6f42c1] focus:border-[#6f42c1]"
+                          // style={{ borderRadius: '12px', boxShadow: '0 2px 8px rgba(128,89,202,0.2)' }}
                           onClick={() => setSelectedLead(lead)}
                         >
                           <i className="fas fa-eye text-[11px]" /> View Details
@@ -443,8 +443,8 @@ const AmbulanceBooking = ({ HomeNavigate, BackButton }) => {
 
                         {isUpcoming(lead) && (
                           <button
-                            className="inline-flex items-center justify-center gap-1.5 text-[12px] font-medium py-[6px] px-3 bg-white cursor-pointer transition-all duration-200 hover:bg-red-500 hover:text-white hover:-translate-y-px"
-                            style={{ borderRadius: '12px', border: '1px solid #f87171', color: '#ef4444' }}
+                            className="inline-flex items-center justify-center gap-1.5 !rounded-md !text-[11px] !font-medium p-[4px_8px] min-w-fit whitespace-nowrap leading-tight bg-red-500 text-white border border-red-500 transition-all duration-200 no-underline shadow-none hover:bg-red-600 hover:border-red-600 focus:bg-red-600 focus:border-red-600"
+                            // style={{ borderRadius: '12px', border: '1px solid #f87171', color: '#ef4444' }}
                             onClick={() => setConfirmCancelId(lead._id)}
                           >
                             <i className="fas fa-times text-[11px]" /> Cancel

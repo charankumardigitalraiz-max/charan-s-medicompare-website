@@ -800,7 +800,7 @@ const LocationOffcanvas = ({
                 <button
                   type="button"
                   onClick={handleLocateButtonClick}
-                  className="locate-btn d-flex align-items-center justify-content-center p-[6px_12px] border border-[#8059ca] rounded-[6px] bg-[#8059ca] text-white cursor-pointer transition-all duration-200 w-full hover:bg-[#6a45b3] hover:border-[#6a45b3]"
+                  className="locate-btn d-flex align-items-center justify-content-center p-[6px_12px] border border-[#8059ca] !rounded-[6px] !bg-[#8059ca] text-white cursor-pointer transition-all duration-200 w-full hover:bg-[#6a45b3] hover:border-[#6a45b3]"
                   title="Use current GPS location"
                 >
                   <svg

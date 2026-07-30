@@ -840,38 +840,43 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
             } ${isMobile ? "bg-[#f9f9f9]" : ""}`}
         >
           <Home2Header />
-          <section className="section section-search">
-            <div className="container-fluid">
-              <div className="banner-wrapper">
-                <div className="banner-header text-center aos" data-aos="fade-up">
-                  <h1 className="main-headings">
-                    Compare & Choose&nbsp;
-                    {homeLiteMode ? (
-                      <span ref={heroTypeRef}>Medicines</span>
-                    ) : (
-                      <TypeAnimation
-                        sequence={[
-                          "Medicines",
-                          3000,
-                          "Surgeries",
-                          3000,
-                          "Dental",
-                          3000,
-                          "Diagnostics",
-                          3000,
-                          "Lab Prices",
-                          3000,
-                        ]}
-                        wrapper="span"
-                        speed={200}
-                        repeat={Infinity}
-                        cursor={true}
-                      />
-                    )}
+          <section className="relative min-h-[420px] bg-[#f9f9f9] bg-[url('/assets/search-bg.png')] bg-no-repeat bg-bottom bg-[length:100%_auto] pt-10 pb-[60px] max-lg:min-h-[280px] max-md:pt-5 max-md:pb-[50px] max-[480px]:min-h-[220px] max-[480px]:px-[15px] max-[480px]:pb-[30px]">
+            {/* Overlay */}
+            <div className="pointer-events-none absolute inset-0 z-[1] bg-[linear-gradient(180deg,white_0%,white_20%,transparent_40%,rgba(128,70,241,0.3)_100%)] max-lg:bg-[linear-gradient(180deg,transparent_40%,rgba(128,70,241,0.3)_100%)] opacity-50" />
+
+            <div className="container-fluid relative z-10">
+              <div className="mx-auto w-full max-w-[800px] max-lg:max-w-[720px]">
+
+                <div
+                  className="mb-[25px] text-center"
+                  data-aos="fade-up"
+                >
+                  <h1 className="m-0 !mb-[10px] !text-[clamp(17px,4vw,45px)] font-semibold text-[#343434]">
+                    Compare &amp; Choose{" "}
+                    <span className="text-[#8059ca]">
+                      {homeLiteMode ? (
+                        <span ref={heroTypeRef}>Medicines</span>
+                      ) : (
+                        <TypeAnimation
+                          sequence={[
+                            "Medicines", 3000,
+                            "Surgeries", 3000,
+                            "Dental", 3000,
+                            "Diagnostics", 3000,
+                            "Lab Prices", 3000,
+                          ]}
+                          wrapper="span"
+                          speed={200}
+                          repeat={Infinity}
+                          cursor
+                        />
+                      )}
+                    </span>
                   </h1>
-                  <p className="text-[17px]">
+
+                  <p className="m-0 text-[clamp(13px,2vw,20px)] text-[#757575]">
                     Compare the best healthcare services near you only on
-                    MediCompares
+                    <span className="font-semibold text-[#8059ca]"> MediCompares</span>
                   </p>
                 </div>
                 <section
@@ -918,7 +923,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                                           setShowSuggestions(true);
                                         }
                                       }}
-                                      className="search-input border-none outline-none flex-1 text-[clamp(14px,2vw,16px)] p-0 text-[#111827] bg-transparent font-inherit font-normal min-w-0"
+                                      className="search-input !border-none !outline-none flex-1 text-[clamp(14px,2vw,16px)] p-0 text-[#111827] bg-transparent font-inherit font-normal min-w-0"
                                     />
 
                                     {isLoading && (
@@ -1239,7 +1244,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                   <div className="col-md-12">
                     <div className="section-header-one section-header-slider text-center">
                       <h2
-                        className="mb-[12px] text-[18px] font-semibold"
+                        className="mb-[12px] !text-[23px] !font-semibold"
                       >
                         Explore Multiple Categories Compare
                       </h2>

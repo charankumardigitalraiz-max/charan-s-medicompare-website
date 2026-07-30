@@ -1186,16 +1186,16 @@ const MedicineComparePage = () => {
       <CategoryProvider />
 
       <div
-        className="content medicine-compare"
+        className=""
         style={{
-          paddingTop: "100px",
+          // paddingTop: "100px",
           paddingBottom: "40px",
           background: "linear-gradient(to bottom, #f8f9fa 0%, #ffffff 100%)",
         }}
       >
         <div
           className="container-fluid"
-          style={{ marginTop: !isMobile && "50px" }}
+          style={{ marginTop: !isMobile && "10px" }}
         >
           <div className="row g-4">
             <div className="col-12 col-lg-8 col-xl-9">

@@ -125,19 +125,19 @@ const Reviews = ({ reviews = [] }) => {
           <div className="product-reviews-list cr-review-list">
             {loading ? (
               [1, 2, 3, 4].map((item) => (
-                  <div key={item} className="cr-skeleton-card">
-                    <div className="cr-skeleton-top">
-                      <div className="cr-skeleton-avatar" />
-                      <div className="cr-skeleton-meta">
-                        <div className="cr-skeleton-line cr-skeleton-line--short" />
-                        <div className="cr-skeleton-line" />
-                      </div>
+                <div key={item} className="cr-skeleton-card">
+                  <div className="cr-skeleton-top">
+                    <div className="cr-skeleton-avatar" />
+                    <div className="cr-skeleton-meta">
+                      <div className="cr-skeleton-line cr-skeleton-line--short" />
+                      <div className="cr-skeleton-line" />
                     </div>
-                    <div className="cr-skeleton-stars" />
-                    <div className="cr-skeleton-line" />
-                    <div className="cr-skeleton-line cr-skeleton-line--medium" />
                   </div>
-                ))
+                  <div className="cr-skeleton-stars" />
+                  <div className="cr-skeleton-line" />
+                  <div className="cr-skeleton-line cr-skeleton-line--medium" />
+                </div>
+              ))
             ) : allReviews.length === 0 ? (
               <div className="product-reviews-empty cr-review-list-full">
                 <div className="cr-empty-card">
@@ -189,13 +189,13 @@ const Reviews = ({ reviews = [] }) => {
 
                     {(review.userId?.email_verified ||
                       review.is_verified_purchase) && (
-                      <span className="cr-verified-badge">
-                        <i className="fas fa-check-circle" aria-hidden="true" />
-                        {review.is_verified_purchase
-                          ? "Verified Purchase"
-                          : "Verified Customer"}
-                      </span>
-                    )}
+                        <span className="cr-verified-badge">
+                          <i className="fas fa-check-circle" aria-hidden="true" />
+                          {review.is_verified_purchase
+                            ? "Verified Purchase"
+                            : "Verified Customer"}
+                        </span>
+                      )}
 
                     {review.title && (
                       <div className="cr-review-title">{review.title}</div>

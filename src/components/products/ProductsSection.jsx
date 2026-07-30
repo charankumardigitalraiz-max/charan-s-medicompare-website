@@ -233,7 +233,7 @@ const ProductsSection = ({
             <li>
               <button
                 type="button"
-                className={`flex items-center justify-center w-9 h-9 rounded-lg border border-slate-200 bg-white text-slate-500 hover:border-purple-300 hover:bg-purple-50/20 transition-all ${page <= 1 ? "opacity-40 cursor-not-allowed" : "cursor-pointer"}`}
+                className={`flex items-center justify-center w-9 h-9 !rounded-lg !border !border-slate-200 !bg-white !text-slate-500 hover:border-purple-300 hover:bg-purple-50/20 !transition-all !duration-150 !cursor-pointer ${page <= 1 ? "opacity-40 cursor-not-allowed" : "cursor-pointer"}`}
                 onClick={() => page > 1 && onPageChange(page - 1)}
                 disabled={page <= 1}
               >
@@ -284,7 +284,7 @@ const ProductsSection = ({
                   <li key={pageNum}>
                     <button
                       type="button"
-                      className={`flex items-center justify-center min-w-[36px] h-9 px-3 rounded-lg border text-sm font-semibold transition-all duration-150 cursor-pointer ${pageNum === page ? "bg-[#8059ca] border-[#8059ca] text-white" : "bg-white border-slate-200 text-slate-600 hover:border-purple-300 hover:bg-purple-50/20"}`}
+                      className={`flex items-center justify-center min-w-[36px] h-9 px-3 !rounded-lg !border !text-sm !font-semibold !transition-all !duration-150 !cursor-pointer ${pageNum === page ? "bg-[#8059ca] !border-[#8059ca] !text-white" : "!bg-white !border-slate-200 !text-slate-600 hover:border-purple-300 hover:bg-purple-50/20"}`}
                       onClick={() => onPageChange(pageNum)}
                     >
                       {pageNum}
@@ -296,7 +296,7 @@ const ProductsSection = ({
 
             {totalPages > 1 && page < totalPages - 3 && (
               <li>
-                <span className="flex items-center justify-center min-w-[36px] h-9 text-slate-400 text-sm font-semibold">...</span>
+                <span className="flex items-center justify-center min-w-[36px] h-9 !text-slate-400 !text-sm !font-semibold">...</span>
               </li>
             )}
 
@@ -304,7 +304,7 @@ const ProductsSection = ({
               <li>
                 <button
                   type="button"
-                  className="flex items-center justify-center min-w-[36px] h-9 px-3 rounded-lg border border-slate-200 bg-white text-slate-600 hover:border-purple-300 hover:bg-purple-50/20 text-sm font-semibold transition-all duration-150 cursor-pointer"
+                  className="flex items-center justify-center min-w-[36px] h-9 px-3 !rounded-lg !border !border-slate-200 bg-white !text-slate-600 hover:border-purple-300 hover:bg-purple-50/20 text-sm font-semibold transition-all duration-150 cursor-pointer"
                   onClick={() => onPageChange(totalPages)}
                 >
                   {totalPages}
@@ -315,7 +315,7 @@ const ProductsSection = ({
             <li>
               <button
                 type="button"
-                className={`flex items-center justify-center w-9 h-9 rounded-lg border border-slate-200 bg-white text-slate-500 hover:border-purple-300 hover:bg-purple-50/20 transition-all ${page >= totalPages ? "opacity-40 cursor-not-allowed" : "cursor-pointer"}`}
+                className={`flex items-center justify-center w-9 h-9 !rounded-lg !border !border-slate-200 bg-white !text-slate-500 hover:border-purple-300 hover:bg-purple-50/20 !transition-all !duration-150 !cursor-pointer ${page >= totalPages ? "opacity-40 cursor-not-allowed" : "cursor-pointer"}`}
                 onClick={() => page < totalPages && onPageChange(page + 1)}
                 disabled={page >= totalPages}
               >

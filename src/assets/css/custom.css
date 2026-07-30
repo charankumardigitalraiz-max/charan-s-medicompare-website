@@ -5652,6 +5652,7 @@ header.inner-header .header-nav .header-navbar-rht li.noti-nav>a i {
   font-size: 40px;
   font-weight: 600;
   margin: 0 0 10px;
+  /* color: #0c0c0c; */
 }
 
 @media (max-width: 991.98px) {

@@ -199,7 +199,7 @@ const CartOrderCard = ({
                 order?.paymentStatus !== "cancelled" && order?.orderStatus !== "cancelled" && order?.orderStatus !== "failed" && order?.orderStatus !== "returned" && (
                   <button
                     type="button"
-                    className="inline-flex items-center justify-center gap-1.5 !rounded-lg text-[11px] font-medium p-[4px_8px] min-w-fit whitespace-nowrap leading-tight bg-[#8059ca] text-white border border-[#8059ca] transition-all duration-200 no-underline shadow-none hover:bg-[#6f42c1] hover:border-[#6f42c1] focus:bg-[#6f42c1] focus:border-[#6f42c1]"
+                    className="inline-flex items-center justify-center gap-1.5 !rounded-md !text-[11px] !font-medium p-[4px_8px] min-w-fit whitespace-nowrap leading-tight bg-[#8059ca] text-white border border-[#8059ca] transition-all duration-200 no-underline shadow-none hover:bg-[#6f42c1] hover:border-[#6f42c1] focus:bg-[#6f42c1] focus:border-[#6f42c1]"
                     onClick={() => onInvoice(order)}
                   >
                     <i className="fa-solid fa-file-invoice text-[12px] w-3.5 text-center shrink-0" /> Invoice
@@ -210,7 +210,7 @@ const CartOrderCard = ({
                 order?.paymentStatus !== "cancelled" && order?.orderStatus !== "cancelled" && order?.orderStatus !== "failed" && order?.orderStatus !== "returned" && (
                   <button
                     type="button"
-                    className="inline-flex items-center justify-center gap-1.5 !rounded-lg text-[11px] font-medium p-[4px_8px] min-w-fit whitespace-nowrap leading-tight bg-[#8059ca] text-white border border-[#8059ca] transition-all duration-200 no-underline shadow-none hover:bg-[#6f42c1] hover:border-[#6f42c1] focus:bg-[#6f42c1] focus:border-[#6f42c1]"
+                    className="inline-flex items-center justify-center gap-1.5 !rounded-md !text-[11px] !font-medium p-[4px_8px] min-w-fit whitespace-nowrap leading-tight bg-[#8059ca] text-white border border-[#8059ca] transition-all duration-200 no-underline shadow-none hover:bg-[#6f42c1] hover:border-[#6f42c1] focus:bg-[#6f42c1] focus:border-[#6f42c1]"
                     onClick={() => onReview(order)}
                   >
                     <i className="fa-solid fa-star text-[12px] w-3.5 text-center shrink-0" /> Review
@@ -222,7 +222,7 @@ const CartOrderCard = ({
                 order?.paymentStatus !== "cancelled" && order?.orderStatus !== "cancelled" && order?.orderStatus !== "failed" && (
                   <button
                     type="button"
-                    className="inline-flex items-center justify-center gap-1.5 !rounded-lg text-[11px] font-medium p-[4px_8px] min-w-fit whitespace-nowrap leading-tight bg-[#8059ca] text-white border border-[#8059ca] transition-all duration-200 no-underline shadow-none hover:bg-[#6f42c1] hover:border-[#6f42c1] focus:bg-[#6f42c1] focus:border-[#6f42c1]"
+                    className="inline-flex items-center justify-center gap-1.5 !rounded-md !text-[11px] !font-medium p-[4px_8px] min-w-fit whitespace-nowrap leading-tight bg-[#8059ca] text-white border border-[#8059ca] transition-all duration-200 no-underline shadow-none hover:bg-[#6f42c1] hover:border-[#6f42c1] focus:bg-[#6f42c1] focus:border-[#6f42c1]"
                     onClick={() => onReportIssue(order)}
                   >
                     <i className="fas fa-headset text-[12px] w-3.5 text-center shrink-0" /> Report
@@ -233,7 +233,7 @@ const CartOrderCard = ({
               {!["completed", "delivered", "cancelled", "canceled", "failed", "returned"].includes(order.orderStatus?.toLowerCase()) && (
                 <button
                   type="button"
-                  className="inline-flex items-center justify-center gap-1.5 bg-danger !rounded-lg text-[11px] font-medium p-[4px_8px] min-w-fit whitespace-nowrap leading-tight border border-[#dc3545] text-[#dc3545] bg-white transition-all duration-200 no-underline shadow-none hover:bg-[#dc3545] hover:text-white hover:border-[#dc3545] focus:bg-[#dc3545] focus:text-white focus:border-[#dc3545]"
+                  className="inline-flex items-center justify-center gap-1.5 !rounded-md !text-[11px] !font-medium p-[4px_8px] min-w-fit whitespace-nowrap leading-tight bg-[#8059ca] text-white border border-[#8059ca] transition-all duration-200 no-underline shadow-none hover:bg-[#6f42c1] hover:border-[#6f42c1] focus:bg-[#6f42c1] focus:border-[#6f42c1]"
                   onClick={() => onCancel(order)}
                 >
                   <i className="fa-solid fa-ban text-[12px] w-3.5 text-center shrink-0" /> Cancel Order
