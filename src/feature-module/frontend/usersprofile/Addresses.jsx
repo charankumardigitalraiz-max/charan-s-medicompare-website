@@ -3,6 +3,7 @@ import { axiosCommonInstance } from "../../../Apiservice";
 import LocationModal from "../../../components/LocationModal";
 import { useResponsive } from "../../../hooks/useResponsive";
 import toast from "react-hot-toast";
+import BaseModal from "../../../components/ui/BaseModal"
 
 // Styles migrated to Tailwind CSS
 

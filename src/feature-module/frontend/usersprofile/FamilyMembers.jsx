@@ -752,7 +752,7 @@ const FamilyMembers = ({ HomeNavigate, BackButton }) => {
 
                 <div className="mb-2 relative z-[9999999999]">
                   <label className="block text-sm font-medium text-slate-700 mb-1">Date of Birth</label>
-                  <CustomDatePicker
+                  {/* <CustomDatePicker
                     value={formData.dateOfBirth}
                     onChange={handleDateChange}
                     format="MM/dd/yyyy"
@@ -762,6 +762,22 @@ const FamilyMembers = ({ HomeNavigate, BackButton }) => {
                     cleanable
                     editable={false}
                     container={() => document.getElementById("family-member-modal-body") || document.body}
+                  /> */}
+                  <input
+                    type="date"
+                    value={formData.dateOfBirth}
+                    max={new Date().toISOString().split("T")[0]}
+                    onChange={(e) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        dateOfBirth: e.target.value,
+                      }))
+                    }
+                    className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#8059ca]"
+                    style={{
+                      position: "relative",
+                      zIndex: 9999999999998,
+                    }}
                   />
                   {formData.dateOfBirth && (
                     <small className="mt-2 mb-0 text-primary block">

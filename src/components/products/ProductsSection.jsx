@@ -96,7 +96,7 @@ const ProductsSection = ({
             {onOpenFilterDrawer && (
               <button
                 type="button"
-                className="flex items-center gap-2 px-3.5 py-2 bg-[#8059ca] text-white border-0 rounded-lg text-xs font-semibold cursor-pointer hover:bg-[#6d3fc7] transition-all"
+                className="flex items-center gap-2 px-3.5 py-2 bg-[#8059ca] text-white border-0 !rounded-lg text-xs font-semibold cursor-pointer hover:bg-[#6d3fc7] transition-all"
                 onClick={onOpenFilterDrawer}
               >
                 <i className="fas fa-filter text-[10px]"></i>

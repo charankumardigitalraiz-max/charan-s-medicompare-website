@@ -31,7 +31,9 @@ const FamilyMemberSelectionModal = ({
 }) => {
   const [familyMembersData, setFamilyMembersData] = useState([]);
   const [isAddingFamilyMember, setIsAddingFamilyMember] = useState(false);
-  const { isTablet } = useResponsive;
+  const { isMobile, isTabletOrBelow, isTablet } = useResponsive;
+  const useNativeDateInput = isMobile || isTablet || isTabletOrBelow;
+
   // Form states
   const [formData, setFormData] = useState({
     name: "",
@@ -368,6 +370,7 @@ const FamilyMemberSelectionModal = ({
       className={isAddingFamilyMember ? "max-w-[500px]" : "max-w-[420px]"}
       bodyClassName="!p-6"
       headerClassName="border-b-0 pb-0"
+      disableBackdropBlur={true}   // ← add this
       footer={
         !isAddingFamilyMember && (
           <button
@@ -536,35 +539,38 @@ const FamilyMemberSelectionModal = ({
                 >
                   Date of Birth
                 </label>
-                {isTablet ? (
-                  <input
-                    type="date"
-                    value={formData.dateOfBirth}
-                    max={new Date().toISOString().split("T")[0]}
-                    onChange={(e) =>
-                      setFormData((prev) => ({
-                        ...prev,
-                        dateOfBirth: e.target.value,
-                      }))
-                    }
-                    className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#8059ca]"
-                  />
-                ) : (
+                {/* {useNativeDateInput ? ( */}
+                <input
+                  type="date"
+                  value={formData.dateOfBirth}
+                  max={new Date().toISOString().split("T")[0]}
+                  onChange={(e) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      dateOfBirth: e.target.value,
+                    }))
+                  }
+                  className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#8059ca]"
+                  style={{
+                    position: "relative",
+                    zIndex: 9999999999998,
+                  }}
+                />
+                {/* // ) : ( */}
 
-                  <CustomDatePicker
-                    value={formData.dateOfBirth}
-                    onChange={handleDateChange}
-                    format="MM/dd/yyyy"
-                    placeholder="Select Date of Birth"
-                    style={{
-                      width: "100%",
-                    }}
-                    shouldDisableDate={(date) => date && date > new Date()}
-                    cleanable
-                    editable={false}
-                    container={() => document.getElementById("family-member-modal-body") || document.body}
-                  />
-                )}
+                {/* //   <CustomDatePicker
+                  //     value={formData.dateOfBirth}
+                  //     onChange={handleDateChange}
+                  //     format="MM/dd/yyyy"
+                  //     placeholder="Select Date of Birth"
+                  //     style={{ width: "100%" }}
+                  //     shouldDisableDate={(date) => date && date > new Date()}
+                  //     cleanable
+                  //     editable={false}
+                  //     container={() => document.body}   // portal outside the clipping overflow container
+                  //     menuStyle={{ zIndex: 9999999999999998 }} // must exceed modal's 99999999
+                  //   />
+                  // )} */}
                 {formData.dateOfBirth && (
                   <small
                     className="mt-1 block text-[11px] text-[#8059ca] font-semibold"

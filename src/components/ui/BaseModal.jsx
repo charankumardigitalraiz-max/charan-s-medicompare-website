@@ -14,6 +14,7 @@ const BaseModal = ({
   closeButton = true,
   backdrop = true,
   zIndex = 99999999,
+  disableBackdropBlur = false, // new prop
 }) => {
   if (!show) return null;
 
@@ -27,15 +28,15 @@ const BaseModal = ({
   return (
     <div
       className="fixed inset-0 flex items-center justify-center p-4"
+
       style={{
-        backgroundColor: backdrop ? "rgba(0,0,0,0.50)" : "transparent",
         zIndex,
-        backdropFilter: backdrop ? "blur(4px)" : "none",
+        backgroundColor: "rgba(0,0,0,0.5)",
       }}
       onClick={backdrop ? onClose : undefined}
     >
       <div
-        className={`bg-white rounded-lg shadow-xl w-full ${sizeClasses[size]} transform transition-all flex flex-col ${className}`}
+        className={`bg-white rounded-lg shadow-xl w-full ${sizeClasses[size]} transition-all flex flex-col ${className}`}
         onClick={(e) => e.stopPropagation()}
         style={{
           maxHeight: "80vh",

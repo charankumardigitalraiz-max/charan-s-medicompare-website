@@ -59,9 +59,14 @@ const Reviews = ({ reviews = [] }) => {
     name?.charAt(0)?.toUpperCase() || "U";
 
   return (
-    <section className="cr-section product-reviews-section mt-5">
+    <section className="cr-section product-reviews-section my-5">
       <div className="cr-section-header rp-section-header">
-        <div className="cr-section-title-wrap rp-section-title-wrap">
+        <div style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "10px"
+
+        }}>
           <span className="cr-section-accent rp-section-accent" aria-hidden="true" />
           <div
             style={{

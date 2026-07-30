@@ -1140,7 +1140,7 @@ export const LabTestCheckout = () => {
                   {collectionMethod === "home" ? (
                     selectedAddress ? (
                       <div
-                        className="p-5 bg-white text-[13.5px] text-[#475569] leading-relaxed"
+                        className="p-3 bg-white text-[13.5px] text-[#475569] leading-relaxed"
                       >
                         <div>
                           {selectedAddress.name && (
@@ -1171,7 +1171,7 @@ export const LabTestCheckout = () => {
                     )
                   ) : (
                     <div
-                      className="p-5 bg-white text-[13.5px] text-[#475569] leading-relaxed"
+                      className="p-3 bg-white text-[13.5px] text-[#475569] leading-relaxed"
                     >
                       <div>
                         <div

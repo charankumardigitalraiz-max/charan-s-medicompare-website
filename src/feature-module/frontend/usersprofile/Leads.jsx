@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { axiosUserInstance } from "../../../Apiservice";
 import { useResponsive } from "../../../hooks/useResponsive";
-import { Modal } from "react-bootstrap";
+import BaseModal from "../../../components/ui/BaseModal";
 
 const Enquiries = ({ HomeNavigate, BackButton }) => {
   const [leadslist, setleadslist] = useState([]);
@@ -316,327 +316,274 @@ const Enquiries = ({ HomeNavigate, BackButton }) => {
             </div>
           </div>
         </div>
-        {showModal && (
-          <div
-            onClick={closeModal}
-            style={{
-              position: "fixed",
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              backgroundColor: "rgba(15, 23, 42, 0.55)",
-              backdropFilter: "blur(6px)",
-              WebkitBackdropFilter: "blur(6px)",
-              zIndex: 999999999,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              padding: "16px",
-            }}
-          >
-            <div
-              onClick={(e) => e.stopPropagation()}
-              style={{
-                width: "100%",
-                maxWidth: "760px",
-                background: "#ffffff",
-                borderRadius: "16px",
-                overflow: "hidden",
-                boxShadow: "0 24px 60px rgba(15, 23, 42, 0.22)",
-              }}
-            >
-              {selectedLead && (
-                <div style={{ background: "#ffffff", borderRadius: "16px", overflow: "hidden" }}>
-                  {/* HEADER */}
-                  <div
-                    style={{
-                      padding: "20px 24px",
-                      borderBottom: "1px solid #f1f5f9",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      background: "#ffffff",
-                    }}
-                  >
-                    <div className="d-flex align-items-center gap-2" style={{ gap: "10px" }}>
-                      <h5 style={{ margin: 0, fontWeight: "700", fontSize: "18px", color: "#0f172a" }}>
-                        Enquiry Details
-                      </h5>
-                      <span
-                        style={{
-                          fontSize: "12px",
-                          background: "#f1f5f9",
-                          color: "#64748b",
-                          padding: "3px 10px",
-                          borderRadius: "20px",
-                          fontWeight: "600",
-                        }}
-                      >
-                        #{selectedLead._id ? selectedLead._id.slice(-8).toUpperCase() : "N/A"}
-                      </span>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={closeModal}
-                      style={{
-                        background: "#f8fafc",
-                        border: "1px solid #e2e8f0",
-                        borderRadius: "50%",
-                        width: "32px",
-                        height: "32px",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        cursor: "pointer",
-                        color: "#64748b",
-                        fontSize: "14px",
-                        transition: "all 0.2s ease",
-                      }}
-                    >
-                      <i className="fas fa-times" />
-                    </button>
-                  </div>
 
-                  {/* BODY CONTENT */}
-                  <div style={{ padding: "24px", maxHeight: "75vh", overflowY: "auto" }}>
-                    {/* PRODUCT CARD */}
-                    {selectedLead.productdetails?.tabletdetails?.[0] && (
+
+        {showModal && (
+
+          <BaseModal
+            show={showModal}
+            onClose={() => setShowModal(false)}
+            title={
+              <div className="d-flex align-items-center gap-2" style={{ gap: "10px" }}>
+                <h5 style={{ margin: 0, fontWeight: "700", fontSize: "18px", color: "#0f172a" }}>
+                  Enquiry Details
+                </h5>
+                <span
+                  style={{
+                    fontSize: "12px",
+                    background: "#f1f5f9",
+                    color: "#64748b",
+                    padding: "3px 10px",
+                    borderRadius: "20px",
+                    fontWeight: "600",
+                  }}
+                >
+                  #{selectedLead._id ? selectedLead._id.slice(-8).toUpperCase() : "N/A"}
+                </span>
+              </div>}
+            size="xl"
+            // className="max-w-md mx-auto"
+            bodyClassName="!p-2"
+          >
+
+
+            {/* BODY CONTENT */}
+            <div style={{ padding: "24px", maxHeight: "75vh", overflowY: "auto" }}>
+              {/* PRODUCT CARD */}
+              {selectedLead.productdetails?.tabletdetails?.[0] && (
+                <div
+                  style={{
+                    background: "#faf5ff",
+                    border: "1px solid #f3e8ff",
+                    borderRadius: "12px",
+                    padding: "14px 18px",
+                    marginBottom: "20px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    gap: "12px",
+                  }}
+                >
+                  <div className="d-flex align-items-center gap-3">
+                    {selectedLead.productdetails?.tabletdetails?.[0]?.files?.length > 0 ? (
                       <div
                         style={{
-                          background: "#faf5ff",
-                          border: "1px solid #f3e8ff",
-                          borderRadius: "12px",
-                          padding: "14px 18px",
-                          marginBottom: "20px",
+                          width: "40px",
+                          height: "40px",
+                          borderRadius: "10px",
+                          background: "#ffffff",
+                          border: "1px solid #e9d5ff",
                           display: "flex",
                           alignItems: "center",
-                          justifyContent: "space-between",
-                          gap: "12px",
+                          justifyContent: "center",
+                          color: "#8059ca",
+                          fontSize: "16px",
+                          flexShrink: 0,
                         }}
                       >
-                        <div className="d-flex align-items-center gap-3">
-                          {selectedLead.productdetails?.tabletdetails?.[0]?.files?.length > 0 ? (
-                            <div
-                              style={{
-                                width: "40px",
-                                height: "40px",
-                                borderRadius: "10px",
-                                background: "#ffffff",
-                                border: "1px solid #e9d5ff",
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                color: "#8059ca",
-                                fontSize: "16px",
-                                flexShrink: 0,
-                              }}
-                            >
-                              <img src={selectedLead.productdetails?.tabletdetails?.[0]?.files?.[0]} alt="" />
-                            </div>
-                          ) : selectedLead.productdetails?.tabletdetails?.[0]?.imageUrl?.length > 0 ? (
-                            <div
-                              style={{
-                                width: "40px",
-                                height: "40px",
-                                borderRadius: "10px",
-                                background: "#ffffff",
-                                border: "1px solid #e9d5ff",
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                color: "#8059ca",
-                                fontSize: "16px",
-                                flexShrink: 0,
-                              }}
-                            >
-                              <img src={selectedLead.productdetails?.tabletdetails?.[0]?.imageUrl?.[0]} alt="" />
-                            </div>
-                          ) : (
-                            <div
-                              style={{
-                                width: "40px",
-                                height: "40px",
-                                borderRadius: "10px",
-                                background: "#ffffff",
-                                border: "1px solid #e9d5ff",
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                color: "#8059ca",
-                                fontSize: "16px",
-                                flexShrink: 0,
-                              }}
-                            >
-                              <i className="fas fa-box" />
-                            </div>
-                          )}
-
-                          <div>
-                            <div style={{ fontSize: "14px", fontWeight: "700", color: "#1e1b4b", textTransform: "capitalize" }}>
-                              {selectedLead.productdetails?.tabletdetails?.[0]?.name}
-                            </div>
-                            <div style={{ fontSize: "12px", color: "#6b21a8" }}>Requested Product / Item</div>
-                          </div>
-                        </div>
-                        {selectedLead.leadStage && (
-                          <span
-                            style={{
-                              fontSize: "12px",
-                              fontWeight: "600",
-                              padding: "3px 10px",
-                              borderRadius: "20px",
-                              background: "#ffffff",
-                              color: "#8059ca",
-                              border: "1px solid #e9d5ff",
-                              textTransform: "capitalize",
-                            }}
-                          >
-                            {selectedLead.leadStage}
-                          </span>
-                        )}
+                        <img src={selectedLead.productdetails?.tabletdetails?.[0]?.files?.[0]} alt="" />
+                      </div>
+                    ) : selectedLead.productdetails?.tabletdetails?.[0]?.imageUrl?.length > 0 ? (
+                      <div
+                        style={{
+                          width: "40px",
+                          height: "40px",
+                          borderRadius: "10px",
+                          background: "#ffffff",
+                          border: "1px solid #e9d5ff",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          color: "#8059ca",
+                          fontSize: "16px",
+                          flexShrink: 0,
+                        }}
+                      >
+                        <img src={selectedLead.productdetails?.tabletdetails?.[0]?.imageUrl?.[0]} alt="" />
+                      </div>
+                    ) : (
+                      <div
+                        style={{
+                          width: "40px",
+                          height: "40px",
+                          borderRadius: "10px",
+                          background: "#ffffff",
+                          border: "1px solid #e9d5ff",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          color: "#8059ca",
+                          fontSize: "16px",
+                          flexShrink: 0,
+                        }}
+                      >
+                        <i className="fas fa-box" />
                       </div>
                     )}
 
-                    {/* TWO COLUMN DETAILS GRID */}
-                    <div className="row g-4">
-                      {/* PERSONAL INFO */}
-                      <div className="col-md-6 col-12">
-                        <h6 style={{ fontSize: "13px", fontWeight: "700", color: "#8059ca", marginBottom: "12px" }}>
-                          Personal Information
-                        </h6>
-                        <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-                          {[
-                            { label: "Name", value: selectedLead.name || "N/A" },
-                            { label: "Phone", value: selectedLead.phone || "N/A" },
-                            { label: "Email", value: selectedLead.email || "N/A" },
-                            { label: "Age", value: selectedLead.age || "N/A" },
-                            ...(selectedLead.gender ? [{ label: "Gender", value: selectedLead.gender }] : []),
-                            ...(selectedLead.relation ? [{ label: "Relation", value: selectedLead.relation }] : []),
-                          ].map(({ label, value }) => (
-                            <div key={label} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingBottom: "6px", borderBottom: "1px solid #f8fafc" }}>
-                              <span style={{ fontSize: "13px", color: "#64748b" }}>{label}</span>
-                              <span style={{ fontSize: "13px", fontWeight: "600", color: "#0f172a", textTransform: "capitalize" }}>{value}</span>
-                            </div>
-                          ))}
-                        </div>
+                    <div>
+                      <div style={{ fontSize: "14px", fontWeight: "700", color: "#1e1b4b", textTransform: "capitalize" }}>
+                        {selectedLead.productdetails?.tabletdetails?.[0]?.name}
                       </div>
+                      <div style={{ fontSize: "12px", color: "#6b21a8" }}>Requested Product / Item</div>
+                    </div>
+                  </div>
+                  {selectedLead.leadStage && (
+                    <span
+                      style={{
+                        fontSize: "12px",
+                        fontWeight: "600",
+                        padding: "3px 10px",
+                        borderRadius: "20px",
+                        background: "#ffffff",
+                        color: "#8059ca",
+                        border: "1px solid #e9d5ff",
+                        textTransform: "capitalize",
+                      }}
+                    >
+                      {selectedLead.leadStage}
+                    </span>
+                  )}
+                </div>
+              )}
 
-                      {/* SERVICE DETAILS */}
-                      <div className="col-md-6 col-12">
-                        <h6 style={{ fontSize: "13px", fontWeight: "700", color: "#8059ca", marginBottom: "12px" }}>
-                          Service Information
-                        </h6>
-                        <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-                          {[
-                            {
-                              label: "Category",
-                              value: selectedLead.serviceType
-                                ? selectedLead.serviceType.charAt(0).toUpperCase() + selectedLead.serviceType.slice(1)
-                                : "N/A",
-                            },
-                            {
-                              label: "Vendor",
-                              value: selectedLead.vendorassined
-                                ? selectedLead.vendorassined.charAt(0).toUpperCase() + selectedLead.vendorassined.slice(1)
-                                : "N/A",
-                            },
-                            {
-                              label: "Source",
-                              value: selectedLead.leadSource
-                                ? selectedLead.leadSource.charAt(0).toUpperCase() + selectedLead.leadSource.slice(1)
-                                : "N/A",
-                            },
-                            {
-                              label: "Type",
-                              value: selectedLead.leadType
-                                ? selectedLead.leadType.charAt(0).toUpperCase() + selectedLead.leadType.slice(1)
-                                : "N/A",
-                            },
-                            {
-                              label: "Date",
-                              value: selectedLead.createdAt
-                                ? new Date(selectedLead.createdAt).toLocaleDateString("en-GB", {
-                                  day: "2-digit",
-                                  month: "short",
-                                  year: "numeric",
-                                })
-                                : "N/A",
-                            },
-                          ].map(({ label, value }) => (
-                            <div key={label} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingBottom: "6px", borderBottom: "1px solid #f8fafc" }}>
-                              <span style={{ fontSize: "13px", color: "#64748b" }}>{label}</span>
-                              <span style={{ fontSize: "13px", fontWeight: "600", color: "#0f172a", textTransform: "capitalize" }}>{value}</span>
-                            </div>
-                          ))}
-
-                          {/* City / Location (Stacked for long addresses) */}
-                          <div style={{ paddingBottom: "6px", borderBottom: "1px solid #f8fafc" }}>
-                            <div style={{ fontSize: "13px", color: "#64748b", marginBottom: "4px" }}>City / Location</div>
-                            <div style={{ fontSize: "13px", fontWeight: "600", color: "#0f172a", lineHeight: "1.4", wordBreak: "break-word" }}>
-                              {selectedLead.city || selectedLead.location?.address || "N/A"}
-                            </div>
-                          </div>
-                        </div>
+              {/* TWO COLUMN DETAILS GRID */}
+              <div className="row g-4">
+                {/* PERSONAL INFO */}
+                <div className="col-md-6 col-12">
+                  <h6 style={{ fontSize: "13px", fontWeight: "700", color: "#8059ca", marginBottom: "12px" }}>
+                    Personal Information
+                  </h6>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                    {[
+                      { label: "Name", value: selectedLead.name || "N/A" },
+                      { label: "Phone", value: selectedLead.phone || "N/A" },
+                      { label: "Email", value: selectedLead.email || "N/A" },
+                      { label: "Age", value: selectedLead.age || "N/A" },
+                      ...(selectedLead.gender ? [{ label: "Gender", value: selectedLead.gender }] : []),
+                      ...(selectedLead.relation ? [{ label: "Relation", value: selectedLead.relation }] : []),
+                    ].map(({ label, value }) => (
+                      <div key={label} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingBottom: "6px", borderBottom: "1px solid #f8fafc" }}>
+                        <span style={{ fontSize: "13px", color: "#64748b" }}>{label}</span>
+                        <span style={{ fontSize: "13px", fontWeight: "600", color: "#0f172a", textTransform: "capitalize" }}>{value}</span>
                       </div>
+                    ))}
+                  </div>
+                </div>
 
-                      {/* VARIANT DETAILS */}
-                      {selectedLead?.variantDetails && Object.keys(selectedLead.variantDetails).length > 0 && (
-                        <div className="col-12">
-                          <h6 style={{ fontSize: "13px", fontWeight: "700", color: "#8059ca", marginBottom: "12px" }}>
-                            Variant Details
-                          </h6>
-                          <div style={{ display: "flex", gap: "24px", flexWrap: "wrap", background: "#f8fafc", padding: "12px 16px", borderRadius: "10px" }}>
-                            <div>
-                              <span style={{ fontSize: "12px", color: "#64748b", display: "block" }}>Variant</span>
-                              <span style={{ fontSize: "13px", fontWeight: "600", color: "#0f172a" }}>{selectedLead.variantDetails.name || "N/A"}</span>
-                            </div>
-                            <div>
-                              <span style={{ fontSize: "12px", color: "#64748b", display: "block" }}>Price</span>
-                              <span style={{ fontSize: "13px", fontWeight: "600", color: "#0f172a" }}>{selectedLead.variantDetails.price ? `₹${selectedLead.variantDetails.price}` : "N/A"}</span>
-                            </div>
-                            <div>
-                              <span style={{ fontSize: "12px", color: "#64748b", display: "block" }}>Discounted</span>
-                              <span style={{ fontSize: "13px", fontWeight: "700", color: "#16a34a" }}>{selectedLead.variantDetails.discountprice ? `₹${selectedLead.variantDetails.discountprice}` : "N/A"}</span>
-                            </div>
-                          </div>
+                {/* SERVICE DETAILS */}
+                <div className="col-md-6 col-12">
+                  <h6 style={{ fontSize: "13px", fontWeight: "700", color: "#8059ca", marginBottom: "12px" }}>
+                    Service Information
+                  </h6>
+                  <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                    {[
+                      {
+                        label: "Category",
+                        value: selectedLead.serviceType
+                          ? selectedLead.serviceType.charAt(0).toUpperCase() + selectedLead.serviceType.slice(1)
+                          : "N/A",
+                      },
+                      {
+                        label: "Vendor",
+                        value: selectedLead.vendorassined
+                          ? selectedLead.vendorassined.charAt(0).toUpperCase() + selectedLead.vendorassined.slice(1)
+                          : "N/A",
+                      },
+                      {
+                        label: "Source",
+                        value: selectedLead.leadSource
+                          ? selectedLead.leadSource.charAt(0).toUpperCase() + selectedLead.leadSource.slice(1)
+                          : "N/A",
+                      },
+                      {
+                        label: "Type",
+                        value: selectedLead.leadType
+                          ? selectedLead.leadType.charAt(0).toUpperCase() + selectedLead.leadType.slice(1)
+                          : "N/A",
+                      },
+                      {
+                        label: "Date",
+                        value: selectedLead.createdAt
+                          ? new Date(selectedLead.createdAt).toLocaleDateString("en-GB", {
+                            day: "2-digit",
+                            month: "short",
+                            year: "numeric",
+                          })
+                          : "N/A",
+                      },
+                    ].map(({ label, value }) => (
+                      <div key={label} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingBottom: "6px", borderBottom: "1px solid #f8fafc" }}>
+                        <span style={{ fontSize: "13px", color: "#64748b" }}>{label}</span>
+                        <span style={{ fontSize: "13px", fontWeight: "600", color: "#0f172a", textTransform: "capitalize" }}>{value}</span>
+                      </div>
+                    ))}
+
+                    {/* City / Location (Stacked for long addresses) */}
+                    <div style={{ paddingBottom: "6px", borderBottom: "1px solid #f8fafc" }}>
+                      <div style={{ fontSize: "13px", color: "#64748b", marginBottom: "4px" }}>City / Location</div>
+                      <div style={{ fontSize: "13px", fontWeight: "600", color: "#0f172a", lineHeight: "1.4", wordBreak: "break-word" }}>
+                        {selectedLead.city || selectedLead.location?.address || "N/A"}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* VARIANT DETAILS */}
+                {selectedLead?.variantDetails && Object.keys(selectedLead.variantDetails).length > 0 && (
+                  <div className="col-12">
+                    <h6 style={{ fontSize: "13px", fontWeight: "700", color: "#8059ca", marginBottom: "12px" }}>
+                      Variant Details
+                    </h6>
+                    <div style={{ display: "flex", gap: "24px", flexWrap: "wrap", background: "#f8fafc", padding: "12px 16px", borderRadius: "10px" }}>
+                      <div>
+                        <span style={{ fontSize: "12px", color: "#64748b", display: "block" }}>Variant</span>
+                        <span style={{ fontSize: "13px", fontWeight: "600", color: "#0f172a" }}>{selectedLead.variantDetails.name || "N/A"}</span>
+                      </div>
+                      <div>
+                        <span style={{ fontSize: "12px", color: "#64748b", display: "block" }}>Price</span>
+                        <span style={{ fontSize: "13px", fontWeight: "600", color: "#0f172a" }}>{selectedLead.variantDetails.price ? `₹${selectedLead.variantDetails.price}` : "N/A"}</span>
+                      </div>
+                      <div>
+                        <span style={{ fontSize: "12px", color: "#64748b", display: "block" }}>Discounted</span>
+                        <span style={{ fontSize: "13px", fontWeight: "700", color: "#16a34a" }}>{selectedLead.variantDetails.discountprice ? `₹${selectedLead.variantDetails.discountprice}` : "N/A"}</span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* ADDITIONAL NOTES */}
+                {(selectedLead.problemDescription || selectedLead.preferredTimeline || selectedLead.policyNumber) && (
+                  <div className="col-12">
+                    <h6 style={{ fontSize: "13px", fontWeight: "700", color: "#8059ca", marginBottom: "12px" }}>
+                      Additional Notes
+                    </h6>
+                    <div style={{ background: "#f8fafc", padding: "14px 16px", borderRadius: "10px", display: "flex", flexDirection: "column", gap: "8px" }}>
+                      {selectedLead.policyNumber && (
+                        <div style={{ fontSize: "13px" }}>
+                          <strong style={{ color: "#64748b" }}>Insurance Policy: </strong>
+                          <span style={{ fontWeight: "600", color: "#0f172a" }}>{selectedLead.policyNumber}</span>
                         </div>
                       )}
-
-                      {/* ADDITIONAL NOTES */}
-                      {(selectedLead.problemDescription || selectedLead.preferredTimeline || selectedLead.policyNumber) && (
-                        <div className="col-12">
-                          <h6 style={{ fontSize: "13px", fontWeight: "700", color: "#8059ca", marginBottom: "12px" }}>
-                            Additional Notes
-                          </h6>
-                          <div style={{ background: "#f8fafc", padding: "14px 16px", borderRadius: "10px", display: "flex", flexDirection: "column", gap: "8px" }}>
-                            {selectedLead.policyNumber && (
-                              <div style={{ fontSize: "13px" }}>
-                                <strong style={{ color: "#64748b" }}>Insurance Policy: </strong>
-                                <span style={{ fontWeight: "600", color: "#0f172a" }}>{selectedLead.policyNumber}</span>
-                              </div>
-                            )}
-                            {selectedLead.preferredTimeline && (
-                              <div style={{ fontSize: "13px" }}>
-                                <strong style={{ color: "#64748b" }}>Preferred Timeline: </strong>
-                                <span style={{ fontWeight: "600", color: "#0f172a" }}>{selectedLead.preferredTimeline}</span>
-                              </div>
-                            )}
-                            {selectedLead.problemDescription && (
-                              <div style={{ fontSize: "13px" }}>
-                                <strong style={{ color: "#64748b", display: "block", marginBottom: "2px" }}>Description: </strong>
-                                <span style={{ color: "#334155", lineHeight: "1.5" }}>{selectedLead.problemDescription}</span>
-                              </div>
-                            )}
-                          </div>
+                      {selectedLead.preferredTimeline && (
+                        <div style={{ fontSize: "13px" }}>
+                          <strong style={{ color: "#64748b" }}>Preferred Timeline: </strong>
+                          <span style={{ fontWeight: "600", color: "#0f172a" }}>{selectedLead.preferredTimeline}</span>
+                        </div>
+                      )}
+                      {selectedLead.problemDescription && (
+                        <div style={{ fontSize: "13px" }}>
+                          <strong style={{ color: "#64748b", display: "block", marginBottom: "2px" }}>Description: </strong>
+                          <span style={{ color: "#334155", lineHeight: "1.5" }}>{selectedLead.problemDescription}</span>
                         </div>
                       )}
                     </div>
                   </div>
-                </div>
-              )}
+                )}
+              </div>
             </div>
-          </div>
+
+          </BaseModal>
         )}
       </div>
     </div>

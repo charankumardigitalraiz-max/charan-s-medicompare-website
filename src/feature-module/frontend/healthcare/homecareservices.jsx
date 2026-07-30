@@ -710,6 +710,7 @@ const HomeCareServices = ({
                               cursor: "pointer",
                               display: "flex",
                               flexDirection: "column",
+
                             }}
                             onClick={() => handleProductClick(treatment)}
                           >
@@ -869,13 +870,14 @@ const HomeCareServices = ({
                             handleOpenConsultationModal={handleConsultationClick}
                             handleOpenAppointmentModal={handleAppointmentClick}
                             handleOpenRideModal=""
-                            containerStyle={{ width: "100%" }}
+                            containerStyle={{ width: "100%", marginTop: "5px" }}
                             buttonStyle={{
                               width: "100%",
                               padding: "8px 8px",
                               borderRadius: "8px",
                               fontSize: "12px",
                               fontWeight: "600",
+
                             }}
                           />
                           {vendor && (

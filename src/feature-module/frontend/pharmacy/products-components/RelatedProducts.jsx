@@ -177,7 +177,7 @@ const CollapsibleVendorList = ({
           e.stopPropagation();
           setIsOpen(!isOpen);
         }}
-        className="flex items-center justify-between py-2 px-3 bg-purple-50/40 hover:bg-purple-50 border border-purple-100 rounded-lg cursor-pointer select-none transition-all duration-200"
+        className="flex items-center justify-between py-2 px-3 bg-purple-50/40 hover:bg-purple-50 border border-purple-100 rounded-sm cursor-pointer select-none transition-all duration-200"
       >
         <span className="text-xs font-bold text-[#8059ca]">
           {vendorCount} {vendorCount === 1 ? "Vendor" : "Vendors"} Available
@@ -422,7 +422,7 @@ const RelatedProducts = ({
       <div className="flex justify-between items-center gap-3 mb-4 pb-3.5 border-b border-[#ede9f5]">
         <div className="flex items-center gap-3 min-w-0">
           <span className="w-1.5 h-7 rounded-full bg-gradient-to-b from-[#8059ca] to-[#5a3a9c] shrink-0" aria-hidden="true" />
-          <div className="text-[20px] font-semibold text-slate-800 margin-0">
+          <div className="text-[20px] !font-[500] text-slate-800 margin-0">
             Related Products
           </div>
           <div className="bg-[#8059ca]/10 text-[#8059ca] text-[11px] font-bold px-2 py-0.5 rounded-full shrink-0 leading-none">
@@ -1013,7 +1013,7 @@ const RelatedProducts = ({
               return (
                 <div
                   key={product._id || product?.tablet?._id || index}
-                  className="w-[250px] border border-slate-200/80 !rounded-xl overflow-visible bg-white shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:-translate-y-1 hover:shadow-[0_12px_24px_rgba(128,89,202,0.12)] cursor-pointer flex flex-col h-full relative transition-all duration-300"
+                  className="w-[250px] border border-slate-200/80 !rounded-md overflow-visible bg-white shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:-translate-y-1 hover:shadow-[0_12px_24px_rgba(128,89,202,0.12)] cursor-pointer flex flex-col h-full relative transition-all duration-300"
                 >
                   {product?.tablet?.medicineType && (
                     <div
@@ -1054,7 +1054,7 @@ const RelatedProducts = ({
                         </div>
                       )}
                       <h6
-                        className="text-[13px] font-bold text-slate-800 margin-0 leading-normal line-clamp-2 overflow-hidden text-ellipsis h-9 hover:text-[#8059ca] transition-colors"
+                        className="!text-[13px] !font-semibold text-slate-800 margin-0 leading-normal line-clamp-2 overflow-hidden text-ellipsis h-5 hover:text-[#8059ca] transition-colors"
                         onClick={handleProductClick}
                       >
                         {(() => {

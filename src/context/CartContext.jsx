@@ -525,9 +525,9 @@ export const CartProvider = ({ children }) => {
             } else if (variantImages.length > 0) {
               producImage = variantImages;
             } else if (tabletDetails?.imageUrl?.length > 0) {
-              producImage = tabletDetails?.imageUrl;
+              producImage = tabletDetails?.imageUrl?.[0];
             } else if (tabletDetails?.files?.length > 0) {
-              producImage = tabletDetails?.files;
+              producImage = tabletDetails?.files?.[0];
             } else if (tabletDetails?.variant?.[0]?.files?.length > 0) {
               producImage = tabletDetails?.variant?.[0]?.files;
             } else {
@@ -1569,7 +1569,7 @@ export const CartProvider = ({ children }) => {
 
       // Check if they are on the same pathname and only "page" search param has changed
       const pathnameChanged = prevUrlObj.pathname !== currUrlObj.pathname;
-      
+
       // Compare search params excluding the 'page' parameter
       const prevParams = new URLSearchParams(prevUrlObj.search);
       const currParams = new URLSearchParams(currUrlObj.search);

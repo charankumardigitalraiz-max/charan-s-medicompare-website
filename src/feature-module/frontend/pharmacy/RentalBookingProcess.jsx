@@ -19,7 +19,7 @@ import PageLoader from "../../../components/ui/PageLoader.jsx";
 import { useProfile } from "../../../context/ProfileContext";
 import { useLocation } from "../../../context/LocationContext";
 import LeadModal from "./products-components/LeadModal.jsx";
-
+import BaseModal from "../../../components/ui/BaseModal.jsx";
 const TOKEN_STORAGE_KEY = "medicomparestoken";
 
 const RentalBookingProcess = () => {
@@ -1847,7 +1847,7 @@ const RentalBookingProcess = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="w-full">
                   <div className="mb-6">
-                    <div className="rounded-xl overflow-hidden shadow-sm border border-slate-200 bg-white">
+                    <div className="!rounded-md overflow-hidden shadow-sm border border-slate-200 bg-white">
                       <div className="flex justify-between items-center px-4 py-3.5 bg-white border-b border-slate-200">
                         <div className="text-[13px] font-bold text-[#8059ca] flex items-center gap-2">
                           <i className="fas fa-bolt"></i>{" "}
@@ -1858,7 +1858,7 @@ const RentalBookingProcess = () => {
 
                         <div>
                           <button
-                            className="text-[#8059ca] hover:text-[#6d3fc7] bg-transparent border-0 font-semibold cursor-pointer text-sm"
+                            className="!text-[#8059ca] hover:text-[#6d3fc7] bg-transparent border-0 !font-semibold cursor-pointer text-sm"
                             onClick={() => {
                               const token =
                                 localStorage.getItem("medicomparestoken");
@@ -1925,7 +1925,7 @@ const RentalBookingProcess = () => {
 
                 <div className="w-full">
                   <div className="mb-6">
-                    <div className="rounded-xl overflow-hidden shadow-sm border border-slate-200 bg-white">
+                    <div className="!rounded-md overflow-hidden shadow-sm border border-slate-200 bg-white">
                       <div className="p-4 border-b border-slate-200">
                         <h6 className="text-sm font-semibold text-slate-800 m-0">
                           Additional Information
@@ -3067,13 +3067,13 @@ const RentalBookingProcess = () => {
                             </div>
 
                             {/* Manual Coupon Input */}
-                            <div className="flex gap-2 mt-3 flex-row w-full">
+                            <div className="flex mt-3 flex-row w-full">
                               <input
                                 type="text"
                                 placeholder="Enter Coupon Code"
                                 value={couponInputText}
                                 onChange={(e) => setCouponInputText(e.target.value)}
-                                className="flex-1 min-w-0 border border-slate-300 rounded-lg px-3 py-2 text-sm outline-none transition-colors focus:border-[#8059ca]"
+                                className="flex-1 min-w-0 border border-slate-300 !rounded-l-lg px-3 py-2 text-sm outline-none transition-colors focus:border-[#8059ca]"
                               />
                               <button
                                 type="button"
@@ -3081,7 +3081,7 @@ const RentalBookingProcess = () => {
                                   e.preventDefault();
                                   handleManualCouponApply();
                                 }}
-                                className="bg-[#8059ca] hover:bg-[#6f42c1] text-white border-none rounded-lg px-4 py-2 text-sm font-semibold cursor-pointer transition-colors shrink-0"
+                                className="bg-[#8059ca] hover:bg-[#6f42c1] text-white border-none !rounded-r-lg px-4 py-2 text-sm font-semibold cursor-pointer transition-colors shrink-0"
                               >
                                 Apply
                               </button>
@@ -3555,522 +3555,512 @@ const RentalBookingProcess = () => {
       {/*  Coupon modal */}
 
       {showOffersModal && (
-        <div
-          className="offers-modal-overlay"
-          onClick={() => setShowOffersModal(false)}
+        <BaseModal
+          show={showOffersModal}
+          onClose={() => setShowOffersModal(false)}
+          title={"Apply Coupon"}
+          size="md"
+          className="max-w-md mx-auto"
+          bodyClassName="!p-2"
         >
-          <div
-            className="offers-modal-content"
-            onClick={(e) => e.stopPropagation()}
-            style={{ maxWidth: "580px" }}
-          >
-            <div className="offers-modal-header">
-              <h3 className="offers-modal-title">Apply Coupon</h3>
-              <button
-                className="offers-modal-close"
-                onClick={() => setShowOffersModal(false)}
-              >
-                ×
-              </button>
-            </div>
 
-            {(() => {
-              const getCouponsList = (type) => {
-                if (couponList) {
-                  if (type === "admin" && Array.isArray(couponList.adminCoupons)) {
-                    return couponList.adminCoupons;
-                  }
-                  if (type === "vendor" && Array.isArray(couponList.vendorCoupons)) {
-                    return couponList.vendorCoupons;
-                  }
-                  if (Array.isArray(couponList)) {
-                    return couponList.filter((c) => c.createdType === type);
-                  }
+          {(() => {
+            const getCouponsList = (type) => {
+              if (couponList) {
+                if (type === "admin" && Array.isArray(couponList.adminCoupons)) {
+                  return couponList.adminCoupons;
                 }
-                return [];
-              };
+                if (type === "vendor" && Array.isArray(couponList.vendorCoupons)) {
+                  return couponList.vendorCoupons;
+                }
+                if (Array.isArray(couponList)) {
+                  return couponList.filter((c) => c.createdType === type);
+                }
+              }
+              return [];
+            };
 
-              const adminCoupons = getCouponsList("admin");
-              const vendorCoupons = getCouponsList("vendor");
+            const adminCoupons = getCouponsList("admin");
+            const vendorCoupons = getCouponsList("vendor");
 
-              return (
-                <>
-                  <div className="offers-modal-body" style={{ padding: "20px", background: "#f8fafc" }}>
-                    <div className="offers-list" style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
-                      {(() => {
-                        const cartVendorIds = [
-                          String(
-                            data?.vendorDetails?.vendorId ||
-                            data?.vendorId ||
-                            cart?.vendorId ||
-                            data?.businessDetails?._id ||
-                            "",
-                          ),
-                        ];
+            return (
+              <>
+                <div className="offers-modal-body" style={{ padding: "20px", background: "#f8fafc" }}>
+                  <div className="offers-list" style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
+                    {(() => {
+                      const cartVendorIds = [
+                        String(
+                          data?.vendorDetails?.vendorId ||
+                          data?.vendorId ||
+                          cart?.vendorId ||
+                          data?.businessDetails?._id ||
+                          "",
+                        ),
+                      ];
 
-                        const sortedVendorCoupons = [...vendorCoupons].sort((a, b) => {
-                          const aMatches =
-                            cartVendorIds.includes(String(a.createdBy)) ||
-                            cartVendorIds.includes(String(a.businessDetails?._id));
-                          const bMatches =
-                            cartVendorIds.includes(String(b.createdBy)) ||
-                            cartVendorIds.includes(String(b.businessDetails?._id));
+                      const sortedVendorCoupons = [...vendorCoupons].sort((a, b) => {
+                        const aMatches =
+                          cartVendorIds.includes(String(a.createdBy)) ||
+                          cartVendorIds.includes(String(a.businessDetails?._id));
+                        const bMatches =
+                          cartVendorIds.includes(String(b.createdBy)) ||
+                          cartVendorIds.includes(String(b.businessDetails?._id));
 
-                          if (aMatches && !bMatches) return -1;
-                          if (!aMatches && bMatches) return 1;
+                        if (aMatches && !bMatches) return -1;
+                        if (!aMatches && bMatches) return 1;
 
-                          return (b.discount || 0) - (a.discount || 0);
-                        });
+                        return (b.discount || 0) - (a.discount || 0);
+                      });
 
-                        const sortedAdminCoupons = [...adminCoupons].sort(
-                          (a, b) => (b.discount || 0) - (a.discount || 0),
-                        );
+                      const sortedAdminCoupons = [...adminCoupons].sort(
+                        (a, b) => (b.discount || 0) - (a.discount || 0),
+                      );
 
-                        const getDiscountTier = (coupon) => {
-                          const amount = parseFloat(coupon.discount) || 0;
-                          if (coupon.discountType === "fixed") {
-                            if (amount >= 300) return "mega";
-                            if (amount >= 150) return "hot";
-                            if (amount >= 50) return "good";
-                            return "saver";
-                          }
-                          if (amount >= 30) return "mega";
-                          if (amount >= 20) return "hot";
-                          if (amount >= 10) return "good";
+                      const getDiscountTier = (coupon) => {
+                        const amount = parseFloat(coupon.discount) || 0;
+                        if (coupon.discountType === "fixed") {
+                          if (amount >= 300) return "mega";
+                          if (amount >= 150) return "hot";
+                          if (amount >= 50) return "good";
                           return "saver";
-                        };
+                        }
+                        if (amount >= 30) return "mega";
+                        if (amount >= 20) return "hot";
+                        if (amount >= 10) return "good";
+                        return "saver";
+                      };
 
-                        const couponThemes = {
-                          saver: {
-                            label: "Saver",
-                            bg: "#fafffb",
-                            border: "#d1fae5",
-                            accent: "#22c55e",
-                            badgeBg: "#f0fdf4",
-                            badgeText: "#16a34a",
-                            btnBg: "#f0fdf4",
-                            btnText: "#16a34a",
-                            btnBorder: "#bbf7d0",
-                          },
-                          good: {
-                            label: "Good Deal",
-                            bg: "#f8fbff",
-                            border: "#dbeafe",
-                            accent: "#3b82f6",
-                            badgeBg: "#eff6ff",
-                            badgeText: "#2563eb",
-                            btnBg: "#eff6ff",
-                            btnText: "#2563eb",
-                            btnBorder: "#bfdbfe",
-                          },
-                          hot: {
-                            label: "Hot Deal",
-                            bg: "#fffdf7",
-                            border: "#fde68a",
-                            accent: "#d97706",
-                            badgeBg: "#fffbeb",
-                            badgeText: "#b45309",
-                            btnBg: "#fffbeb",
-                            btnText: "#d97706",
-                            btnBorder: "#fcd34d",
-                          },
-                          mega: {
-                            label: "Mega Save",
-                            bg: "#fcfaff",
-                            border: "#e9d5ff",
-                            accent: "#8059ca",
-                            badgeBg: "#f5f3ff",
-                            badgeText: "#7c3aed",
-                            btnBg: "#f3e8ff",
-                            btnText: "#8059ca",
-                            btnBorder: "#ddd6fe",
-                          },
-                        };
+                      const couponThemes = {
+                        saver: {
+                          label: "Saver",
+                          bg: "#fafffb",
+                          border: "#d1fae5",
+                          accent: "#22c55e",
+                          badgeBg: "#f0fdf4",
+                          badgeText: "#16a34a",
+                          btnBg: "#f0fdf4",
+                          btnText: "#16a34a",
+                          btnBorder: "#bbf7d0",
+                        },
+                        good: {
+                          label: "Good Deal",
+                          bg: "#f8fbff",
+                          border: "#dbeafe",
+                          accent: "#3b82f6",
+                          badgeBg: "#eff6ff",
+                          badgeText: "#2563eb",
+                          btnBg: "#eff6ff",
+                          btnText: "#2563eb",
+                          btnBorder: "#bfdbfe",
+                        },
+                        hot: {
+                          label: "Hot Deal",
+                          bg: "#fffdf7",
+                          border: "#fde68a",
+                          accent: "#d97706",
+                          badgeBg: "#fffbeb",
+                          badgeText: "#b45309",
+                          btnBg: "#fffbeb",
+                          btnText: "#d97706",
+                          btnBorder: "#fcd34d",
+                        },
+                        mega: {
+                          label: "Mega Save",
+                          bg: "#fcfaff",
+                          border: "#e9d5ff",
+                          accent: "#8059ca",
+                          badgeBg: "#f5f3ff",
+                          badgeText: "#7c3aed",
+                          btnBg: "#f3e8ff",
+                          btnText: "#8059ca",
+                          btnBorder: "#ddd6fe",
+                        },
+                      };
 
-                        const renderCouponCard = (ele, ind, isVendorCoupon) => {
-                          const isApplied = appliedCoupon?._id === ele._id;
-                          const discountText =
-                            ele.discountType === "fixed"
-                              ? `₹${ele.discount}`
-                              : `${ele.discount}%`;
+                      const renderCouponCard = (ele, ind, isVendorCoupon) => {
+                        const isApplied = appliedCoupon?._id === ele._id;
+                        const discountText =
+                          ele.discountType === "fixed"
+                            ? `₹${ele.discount}`
+                            : `${ele.discount}%`;
 
-                          const matchesCartVendor =
-                            isVendorCoupon &&
-                            (cartVendorIds.includes(String(ele.createdBy)) ||
-                              cartVendorIds.includes(String(ele.businessDetails?._id)));
+                        const matchesCartVendor =
+                          isVendorCoupon &&
+                          (cartVendorIds.includes(String(ele.createdBy)) ||
+                            cartVendorIds.includes(String(ele.businessDetails?._id)));
 
-                          let applicableAmount = 0;
-                          let isEligible = true;
-                          let criteriaText = "";
-                          const getEffectivePrice = (item) => {
-                            const discountprice =
-                              parseFloat(item.discountprice || item.discountPrice) || null;
-                            const price = parseFloat(item.price) || 0;
-                            let calculatedDiscountPrice = discountprice;
-                            const discountType = item.discountType || null;
+                        let applicableAmount = 0;
+                        let isEligible = true;
+                        let criteriaText = "";
+                        const getEffectivePrice = (item) => {
+                          const discountprice =
+                            parseFloat(item.discountprice || item.discountPrice) || null;
+                          const price = parseFloat(item.price) || 0;
+                          let calculatedDiscountPrice = discountprice;
+                          const discountType = item.discountType || null;
 
-                            if (discountType === "percentage" && discountprice && discountprice > 0) {
-                              calculatedDiscountPrice = price - (price * discountprice) / 100;
-                            }
-
-                            return calculatedDiscountPrice && calculatedDiscountPrice > 0
-                              ? calculatedDiscountPrice
-                              : price;
-                          };
-
-                          const cartItems = typeof relevantProducts !== 'undefined' && relevantProducts.length > 0
-                            ? relevantProducts.map(item => ({
-                              vendorId: item.vendor?.vendorId || item.vendorId || item.vendor?._id || item.vendorDetails?.vendorId || item.vendorDetails?._id || "",
-                              price: item.price || item.tabletDetails?.price || pricePerItem,
-                              discountprice: item.discountprice || item.discountPrice || discountPrice,
-                              quantity: item.quantity || quantity || 1
-                            }))
-                            : [{
-                              vendorId: data?.vendorDetails?.vendorId || data?.vendorId || cart?.vendorId || data?.businessDetails?._id || "",
-                              price: pricePerItem,
-                              discountprice: discountPrice,
-                              quantity: quantity || 1
-                            }];
-
-                          let hasExpired = false;
-                          if (ele?.endDate) {
-                            const endDateStamp = new Date(ele.endDate).getTime();
-                            const nowStamp = new Date().getTime();
-                            if (endDateStamp < nowStamp) {
-                              hasExpired = true;
-                              criteriaText = "Coupon has expired";
-                            }
+                          if (discountType === "percentage" && discountprice && discountprice > 0) {
+                            calculatedDiscountPrice = price - (price * discountprice) / 100;
                           }
 
-                          if (isVendorCoupon) {
-                            const vendorIdStr = String(ele.createdBy || ele.businessDetails?._id || "");
-                            const vendorItems = cartItems.filter(item => String(item.vendorId) === vendorIdStr);
-                            applicableAmount = vendorItems.reduce((sum, item) => {
-                              const price = getEffectivePrice(item);
-                              return sum + (price * (parseInt(item.quantity) || 1));
-                            }, 0);
+                          return calculatedDiscountPrice && calculatedDiscountPrice > 0
+                            ? calculatedDiscountPrice
+                            : price;
+                        };
 
-                            if (hasExpired) {
-                              isEligible = false;
-                            } else if (rentalSubtotal < ele.minimumPurchase) {
-                              isEligible = false;
-                              const diff = (ele.minimumPurchase - rentalSubtotal).toFixed(2);
-                              criteriaText = `Add ₹${diff} more of this vendor's items`;
-                            } else if (ele?.canUseCoupon === false) {
-                              isEligible = false;
-                            } else if (ele?.remainingUses === 0) {
-                              isEligible = false;
-                            } else {
-                              isEligible = true;
-                            }
+                        const cartItems = typeof relevantProducts !== 'undefined' && relevantProducts.length > 0
+                          ? relevantProducts.map(item => ({
+                            vendorId: item.vendor?.vendorId || item.vendorId || item.vendor?._id || item.vendorDetails?.vendorId || item.vendorDetails?._id || "",
+                            price: item.price || item.tabletDetails?.price || pricePerItem,
+                            discountprice: item.discountprice || item.discountPrice || discountPrice,
+                            quantity: item.quantity || quantity || 1
+                          }))
+                          : [{
+                            vendorId: data?.vendorDetails?.vendorId || data?.vendorId || cart?.vendorId || data?.businessDetails?._id || "",
+                            price: pricePerItem,
+                            discountprice: discountPrice,
+                            quantity: quantity || 1
+                          }];
+
+                        let hasExpired = false;
+                        if (ele?.endDate) {
+                          const endDateStamp = new Date(ele.endDate).getTime();
+                          const nowStamp = new Date().getTime();
+                          if (endDateStamp < nowStamp) {
+                            hasExpired = true;
+                            criteriaText = "Coupon has expired";
+                          }
+                        }
+
+                        if (isVendorCoupon) {
+                          const vendorIdStr = String(ele.createdBy || ele.businessDetails?._id || "");
+                          const vendorItems = cartItems.filter(item => String(item.vendorId) === vendorIdStr);
+                          applicableAmount = vendorItems.reduce((sum, item) => {
+                            const price = getEffectivePrice(item);
+                            return sum + (price * (parseInt(item.quantity) || 1));
+                          }, 0);
+
+                          if (hasExpired) {
+                            isEligible = false;
+                          } else if (rentalSubtotal < ele.minimumPurchase) {
+                            isEligible = false;
+                            const diff = (ele.minimumPurchase - rentalSubtotal).toFixed(2);
+                            criteriaText = `Add ₹${diff} more of this vendor's items`;
+                          } else if (ele?.canUseCoupon === false) {
+                            isEligible = false;
+                          } else if (ele?.remainingUses === 0) {
+                            isEligible = false;
                           } else {
-                            applicableAmount = total;
-                            if (hasExpired) {
-                              isEligible = false;
-                            } else if (rentalSubtotal < ele.minimumPurchase) {
-                              isEligible = false;
-                              const diff = (ele.minimumPurchase - rentalSubtotal).toFixed(2);
-                              criteriaText = `Add ₹${diff} more to apply`;
-                            } else if (ele?.canUseCoupon === false) {
-                              isEligible = false;
-                            } else if (ele?.remainingUses === 0) {
-                              isEligible = false;
-                            } else {
-                              isEligible = true;
-                            }
+                            isEligible = true;
                           }
+                        } else {
+                          applicableAmount = total;
+                          if (hasExpired) {
+                            isEligible = false;
+                          } else if (rentalSubtotal < ele.minimumPurchase) {
+                            isEligible = false;
+                            const diff = (ele.minimumPurchase - rentalSubtotal).toFixed(2);
+                            criteriaText = `Add ₹${diff} more to apply`;
+                          } else if (ele?.canUseCoupon === false) {
+                            isEligible = false;
+                          } else if (ele?.remainingUses === 0) {
+                            isEligible = false;
+                          } else {
+                            isEligible = true;
+                          }
+                        }
 
-                          const tier = getDiscountTier(ele);
-                          const theme = couponThemes[tier];
-                          const inactiveTheme = {
-                            bg: "#f8fafc",
-                            border: "#e2e8f0",
-                            accent: "#94a3b8",
-                            badgeBg: "#f1f5f9",
-                            badgeText: "#64748b",
-                            btnBg: "#f1f5f9",
-                            btnText: "#94a3b8",
-                            btnBorder: "#e2e8f0",
-                            label: "Unavailable",
-                          };
-                          const appliedTheme = {
-                            bg: "#f6fef9",
-                            border: "#a7f3d0",
-                            accent: "#10b981",
-                            badgeBg: "#ecfdf5",
-                            badgeText: "#059669",
-                            btnBg: "#ecfdf5",
-                            btnText: "#059669",
-                            btnBorder: "#a7f3d0",
-                            label: "Applied",
-                          };
-                          const activeTheme = !isEligible
-                            ? inactiveTheme
-                            : isApplied
-                              ? appliedTheme
-                              : theme;
-
-                          const savingsPreview = isEligible
-                            ? calculateCouponDiscount(ele, rentalSubtotal)
-                            : 0;
-
-                          return (
-                            <div
-                              key={ele._id || `${ele.code}-${ind}`}
-                              style={{
-                                display: "flex",
-                                alignItems: "stretch",
-                                width: "100%",
-                                background: activeTheme.bg,
-                                border: `1px solid ${activeTheme.border}`,
-                                borderRadius: "12px",
-                                overflow: "hidden",
-                                transition: "all 0.2s ease",
-                                boxShadow: "none",
-                                opacity: isEligible ? 1 : 0.72,
-                              }}
-                            >
-                              <div
-                                style={{
-                                  minWidth: "88px",
-                                  maxWidth: "88px",
-                                  padding: "14px 10px",
-                                  background: activeTheme.badgeBg,
-                                  borderRight: `1px dashed ${activeTheme.border}`,
-                                  display: "flex",
-                                  flexDirection: "column",
-                                  alignItems: "center",
-                                  justifyContent: "center",
-                                  gap: "4px",
-                                  textAlign: "center",
-                                }}
-                              >
-                                <span
-                                  style={{
-                                    fontSize: "20px",
-                                    fontWeight: "800",
-                                    color: activeTheme.badgeText,
-                                    lineHeight: 1.1,
-                                  }}
-                                >
-                                  {discountText}
-                                </span>
-                                <span
-                                  style={{
-                                    fontSize: "9px",
-                                    fontWeight: "700",
-                                    color: activeTheme.badgeText,
-                                    textTransform: "uppercase",
-                                    letterSpacing: "0.3px",
-                                  }}
-                                >
-                                  OFF
-                                </span>
-                                <span
-                                  style={{
-                                    fontSize: "8.5px",
-                                    fontWeight: "700",
-                                    color: activeTheme.accent,
-                                    background: "#ffffff",
-                                    padding: "2px 6px",
-                                    borderRadius: "10px",
-                                    marginTop: "4px",
-                                  }}
-                                >
-                                  {activeTheme.label}
-                                </span>
-                              </div>
-
-                              <div
-                                style={{
-                                  flex: 1,
-                                  padding: "12px 14px",
-                                  display: "flex",
-                                  flexDirection: "column",
-                                  gap: "6px",
-                                  minWidth: 0,
-                                }}
-                              >
-                                <h5
-                                  style={{
-                                    fontSize: "14px",
-                                    fontWeight: "700",
-                                    color: "#1e293b",
-                                    margin: 0,
-                                  }}
-                                >
-                                  {ele.name}
-                                </h5>
-
-                                <div
-                                  style={{
-                                    display: "flex",
-                                    gap: "6px",
-                                    alignItems: "center",
-                                  }}
-                                >
-                                  <span
-                                    style={{
-                                      fontSize: "11px",
-                                      fontWeight: "700",
-                                      fontFamily: "monospace",
-                                      color: activeTheme.accent,
-                                      background: "#ffffff",
-                                      border: `1px dashed ${activeTheme.border}`,
-                                      borderRadius: "6px",
-                                      padding: "3px 8px",
-                                    }}
-                                  >
-                                    {ele.code}
-                                  </span>
-                                  {ele.minimumPurchase > 0 && (
-                                    <span style={{ fontSize: "10px", color: "#64748b" }}>
-                                      Minimum order ₹{ele.minimumPurchase}
-                                    </span>
-                                  )}
-                                </div>
-
-                                {ele.description && (
-                                  <p
-                                    style={{
-                                      fontSize: "11px",
-                                      color: "#475569",
-                                      margin: 0,
-                                      lineHeight: 1.45,
-                                      display: "-webkit-box",
-                                      WebkitLineClamp: 2,
-                                      WebkitBoxOrient: "vertical",
-                                      overflow: "hidden",
-                                    }}
-                                  >
-                                    {ele.description}
-                                  </p>
-                                )}
-
-                                <div
-                                  style={{
-                                    display: "flex",
-                                    flexWrap: "wrap",
-                                    gap: "8px",
-                                    fontSize: "10px",
-                                    color: "#64748b",
-                                  }}
-                                >
-                                  {isEligible && savingsPreview > 0 && (
-                                    <span style={{ fontWeight: "600", color: activeTheme.accent }}>
-                                      You save ₹{savingsPreview.toFixed(2)}
-                                    </span>
-                                  )}
-                                  {ele.discountType === "percentage" && (
-                                    <span>{ele.discount}% discount</span>
-                                  )}
-                                  {ele.discountType === "fixed" && (
-                                    <span>Flat ₹{ele.discount} off</span>
-                                  )}
-                                </div>
-
-                                {!isEligible && criteriaText && (
-                                  <span
-                                    style={{
-                                      fontSize: "10px",
-                                      color: "#dc2626",
-                                      fontWeight: "600",
-                                    }}
-                                  >
-                                    ⚠️ {criteriaText}
-                                  </span>
-                                )}
-                              </div>
-
-                              <div
-                                style={{
-                                  display: "flex",
-                                  alignItems: "center",
-                                  padding: "12px 12px 12px 0",
-                                  flexShrink: 0,
-                                }}
-                              >
-                                <button
-                                  type="button"
-                                  disabled={!isEligible}
-                                  onClick={() => handleCouponApply(ele)}
-                                  style={{
-                                    padding: "7px 14px",
-                                    borderRadius: "8px",
-                                    border: `1px solid ${activeTheme.btnBorder}`,
-                                    background: activeTheme.btnBg,
-                                    color: activeTheme.btnText,
-                                    fontSize: "12px",
-                                    fontWeight: "600",
-                                    cursor: !isEligible ? "not-allowed" : "pointer",
-                                    transition: "all 0.2s ease",
-                                    whiteSpace: "nowrap",
-                                    boxShadow: "none",
-                                  }}
-                                >
-                                  {isApplied ? "Applied" : "Apply"}
-                                </button>
-                              </div>
-                            </div>
-                          );
+                        const tier = getDiscountTier(ele);
+                        const theme = couponThemes[tier];
+                        const inactiveTheme = {
+                          bg: "#f8fafc",
+                          border: "#e2e8f0",
+                          accent: "#94a3b8",
+                          badgeBg: "#f1f5f9",
+                          badgeText: "#64748b",
+                          btnBg: "#f1f5f9",
+                          btnText: "#94a3b8",
+                          btnBorder: "#e2e8f0",
+                          label: "Unavailable",
                         };
-
-                        const renderSection = (coupons, isVendorCoupon) => {
-                          if (coupons.length === 0) return null;
-                          return coupons.map((ele, ind) =>
-                            renderCouponCard(ele, ind, isVendorCoupon),
-                          );
+                        const appliedTheme = {
+                          bg: "#f6fef9",
+                          border: "#a7f3d0",
+                          accent: "#10b981",
+                          badgeBg: "#ecfdf5",
+                          badgeText: "#059669",
+                          btnBg: "#ecfdf5",
+                          btnText: "#059669",
+                          btnBorder: "#a7f3d0",
+                          label: "Applied",
                         };
+                        const activeTheme = !isEligible
+                          ? inactiveTheme
+                          : isApplied
+                            ? appliedTheme
+                            : theme;
 
-                        if (sortedVendorCoupons.length === 0 && sortedAdminCoupons.length === 0) {
-                          return (
+                        const savingsPreview = isEligible
+                          ? calculateCouponDiscount(ele, rentalSubtotal)
+                          : 0;
+
+                        return (
+                          <div
+                            key={ele._id || `${ele.code}-${ind}`}
+                            style={{
+                              display: "flex",
+                              alignItems: "stretch",
+                              width: "100%",
+                              background: activeTheme.bg,
+                              border: `1px solid ${activeTheme.border}`,
+                              borderRadius: "12px",
+                              overflow: "hidden",
+                              transition: "all 0.2s ease",
+                              boxShadow: "none",
+                              opacity: isEligible ? 1 : 0.72,
+                            }}
+                          >
                             <div
                               style={{
+                                minWidth: "88px",
+                                maxWidth: "88px",
+                                padding: "14px 10px",
+                                background: activeTheme.badgeBg,
+                                borderRight: `1px dashed ${activeTheme.border}`,
                                 display: "flex",
                                 flexDirection: "column",
                                 alignItems: "center",
                                 justifyContent: "center",
-                                padding: "40px 20px",
+                                gap: "4px",
                                 textAlign: "center",
-                                color: "#94a3b8",
                               }}
                             >
-                              <div style={{ fontSize: "32px", marginBottom: "12px", color: "#cbd5e1" }}>
-                                🎟️
-                              </div>
-                              <span style={{ fontSize: "14px", fontWeight: "600", color: "#64748b" }}>
-                                No Coupons Available
+                              <span
+                                style={{
+                                  fontSize: "20px",
+                                  fontWeight: "800",
+                                  color: activeTheme.badgeText,
+                                  lineHeight: 1.1,
+                                }}
+                              >
+                                {discountText}
                               </span>
-                              <span style={{ fontSize: "12px", color: "#94a3b8", marginTop: "4px" }}>
-                                There are no active coupons at the moment.
+                              <span
+                                style={{
+                                  fontSize: "9px",
+                                  fontWeight: "700",
+                                  color: activeTheme.badgeText,
+                                  textTransform: "uppercase",
+                                  letterSpacing: "0.3px",
+                                }}
+                              >
+                                OFF
+                              </span>
+                              <span
+                                style={{
+                                  fontSize: "8.5px",
+                                  fontWeight: "700",
+                                  color: activeTheme.accent,
+                                  background: "#ffffff",
+                                  padding: "2px 6px",
+                                  borderRadius: "10px",
+                                  marginTop: "4px",
+                                }}
+                              >
+                                {activeTheme.label}
                               </span>
                             </div>
-                          );
-                        }
 
-                        return (
-                          <>
-                            {renderSection(sortedVendorCoupons, true)}
-                            {sortedVendorCoupons.length > 0 && sortedAdminCoupons.length > 0 && (
+                            <div
+                              style={{
+                                flex: 1,
+                                padding: "12px 14px",
+                                display: "flex",
+                                flexDirection: "column",
+                                gap: "6px",
+                                minWidth: 0,
+                              }}
+                            >
+                              <h5
+                                style={{
+                                  fontSize: "14px",
+                                  fontWeight: "700",
+                                  color: "#1e293b",
+                                  margin: 0,
+                                }}
+                              >
+                                {ele.name}
+                              </h5>
+
                               <div
                                 style={{
-                                  height: "1px",
-                                  background: "#e2e8f0",
-                                  margin: "4px 0",
+                                  display: "flex",
+                                  gap: "6px",
+                                  alignItems: "center",
                                 }}
-                              />
-                            )}
-                            {renderSection(sortedAdminCoupons, false)}
-                          </>
+                              >
+                                <span
+                                  style={{
+                                    fontSize: "11px",
+                                    fontWeight: "700",
+                                    fontFamily: "monospace",
+                                    color: activeTheme.accent,
+                                    background: "#ffffff",
+                                    border: `1px dashed ${activeTheme.border}`,
+                                    borderRadius: "6px",
+                                    padding: "3px 8px",
+                                  }}
+                                >
+                                  {ele.code}
+                                </span>
+                                {ele.minimumPurchase > 0 && (
+                                  <span style={{ fontSize: "10px", color: "#64748b" }}>
+                                    Minimum order ₹{ele.minimumPurchase}
+                                  </span>
+                                )}
+                              </div>
+
+                              {ele.description && (
+                                <p
+                                  style={{
+                                    fontSize: "11px",
+                                    color: "#475569",
+                                    margin: 0,
+                                    lineHeight: 1.45,
+                                    display: "-webkit-box",
+                                    WebkitLineClamp: 2,
+                                    WebkitBoxOrient: "vertical",
+                                    overflow: "hidden",
+                                  }}
+                                >
+                                  {ele.description}
+                                </p>
+                              )}
+
+                              <div
+                                style={{
+                                  display: "flex",
+                                  flexWrap: "wrap",
+                                  gap: "8px",
+                                  fontSize: "10px",
+                                  color: "#64748b",
+                                }}
+                              >
+                                {isEligible && savingsPreview > 0 && (
+                                  <span style={{ fontWeight: "600", color: activeTheme.accent }}>
+                                    You save ₹{savingsPreview.toFixed(2)}
+                                  </span>
+                                )}
+                                {ele.discountType === "percentage" && (
+                                  <span>{ele.discount}% discount</span>
+                                )}
+                                {ele.discountType === "fixed" && (
+                                  <span>Flat ₹{ele.discount} off</span>
+                                )}
+                              </div>
+
+                              {!isEligible && criteriaText && (
+                                <span
+                                  style={{
+                                    fontSize: "10px",
+                                    color: "#dc2626",
+                                    fontWeight: "600",
+                                  }}
+                                >
+                                  ⚠️ {criteriaText}
+                                </span>
+                              )}
+                            </div>
+
+                            <div
+                              style={{
+                                display: "flex",
+                                alignItems: "center",
+                                padding: "12px 12px 12px 0",
+                                flexShrink: 0,
+                              }}
+                            >
+                              <button
+                                type="button"
+                                disabled={!isEligible}
+                                onClick={() => handleCouponApply(ele)}
+                                style={{
+                                  padding: "7px 14px",
+                                  borderRadius: "8px",
+                                  border: `1px solid ${activeTheme.btnBorder}`,
+                                  background: activeTheme.btnBg,
+                                  color: activeTheme.btnText,
+                                  fontSize: "12px",
+                                  fontWeight: "600",
+                                  cursor: !isEligible ? "not-allowed" : "pointer",
+                                  transition: "all 0.2s ease",
+                                  whiteSpace: "nowrap",
+                                  boxShadow: "none",
+                                }}
+                              >
+                                {isApplied ? "Applied" : "Apply"}
+                              </button>
+                            </div>
+                          </div>
                         );
-                      })()}
-                    </div>
+                      };
+
+                      const renderSection = (coupons, isVendorCoupon) => {
+                        if (coupons.length === 0) return null;
+                        return coupons.map((ele, ind) =>
+                          renderCouponCard(ele, ind, isVendorCoupon),
+                        );
+                      };
+
+                      if (sortedVendorCoupons.length === 0 && sortedAdminCoupons.length === 0) {
+                        return (
+                          <div
+                            style={{
+                              display: "flex",
+                              flexDirection: "column",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              padding: "40px 20px",
+                              textAlign: "center",
+                              color: "#94a3b8",
+                            }}
+                          >
+                            <div style={{ fontSize: "32px", marginBottom: "12px", color: "#cbd5e1" }}>
+                              🎟️
+                            </div>
+                            <span style={{ fontSize: "14px", fontWeight: "600", color: "#64748b" }}>
+                              No Coupons Available
+                            </span>
+                            <span style={{ fontSize: "12px", color: "#94a3b8", marginTop: "4px" }}>
+                              There are no active coupons at the moment.
+                            </span>
+                          </div>
+                        );
+                      }
+
+                      return (
+                        <>
+                          {renderSection(sortedVendorCoupons, true)}
+                          {sortedVendorCoupons.length > 0 && sortedAdminCoupons.length > 0 && (
+                            <div
+                              style={{
+                                height: "1px",
+                                background: "#e2e8f0",
+                                margin: "4px 0",
+                              }}
+                            />
+                          )}
+                          {renderSection(sortedAdminCoupons, false)}
+                        </>
+                      );
+                    })()}
                   </div>
-                </>
-              );
-            })()}
-          </div>
-        </div>
+                </div>
+              </>
+            );
+          })()}
+
+        </BaseModal>
       )}
 
       <Footer />

@@ -29,6 +29,7 @@ import { fetchDoctorsList } from "../../../services/doctorService";
 import { fetchFamilyMembersList } from "../../../services/familyMemberService";
 import { useLocation } from "../../../context/LocationContext";
 import LeadModal from "./products-components/LeadModal.jsx";
+import BaseModal from "../../../components/ui/BaseModal.jsx";
 
 // NOTE: "./bookingprocess.css" import removed — its rules (.meq-arrow-btn,
 // .top-vendor-badge, .choice-cards-container/.choice-card etc, .scroll-container,
@@ -2356,7 +2357,7 @@ const BookingProcess = () => {
                               placeholder="Enter Coupon Code"
                               value={couponInputText}
                               onChange={(e) => setCouponInputText(e.target.value)}
-                              className="flex-1 min-w-0 border border-slate-300 rounded-l-sm py-2 px-3 text-[13px] outline-none transition-colors duration-200 focus:border-[#8059ca]"
+                              className="flex-1 min-w-0 border border-slate-300 rounded-l-lg py-2 px-3 text-[13px] outline-none transition-colors duration-200 focus:border-[#8059ca]"
                             />
                             <button
                               type="button"
@@ -2364,7 +2365,7 @@ const BookingProcess = () => {
                                 e.preventDefault();
                                 handleManualCouponApply();
                               }}
-                              className="bg-[#8059ca] text-white border-0 !rounded-r-sm py-2 px-4 text-[13px] font-semibold cursor-pointer transition-colors duration-200 hover:bg-[#6f42c1] shrink-0"
+                              className="bg-[#8059ca] text-white border-0 !rounded-r-lg py-2 px-4 text-[13px] font-semibold cursor-pointer transition-colors duration-200 hover:bg-[#6f42c1] shrink-0"
                             >
                               Apply
                             </button>
@@ -2615,372 +2616,383 @@ const BookingProcess = () => {
 
       {/*  Coupon modal */}
       {showOffersModal && (
-        <div
-          className="offers-modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-black/50"
-          onClick={() => setShowOffersModal(false)}
+        // <div
+        //   className="offers-modal-overlay fixed inset-0 z-50 flex items-center justify-center bg-black/50"
+        //   onClick={() => setShowOffersModal(false)}
+        // >
+        //   <div
+        //     className="offers-modal-content max-w-[580px] w-full bg-white rounded-xl overflow-hidden max-h-[85vh] flex flex-col"
+        //     onClick={(e) => e.stopPropagation()}
+        //   >
+        //     <div className="offers-modal-header flex items-center justify-between p-4 border-b border-gray-200">
+        //       <h3 className="offers-modal-title text-lg font-semibold m-0">Apply Coupon</h3>
+        //       <button
+        //         className="offers-modal-close bg-transparent border-0 text-2xl leading-none cursor-pointer"
+        //         onClick={() => setShowOffersModal(false)}
+        //       >
+        //         ×
+        //       </button>
+        //     </div>
+
+        <BaseModal
+
+          show={showOffersModal}
+          onClose={() => setShowOffersModal(false)}
+          title={"Apply Coupon"}
+          size="lg"
+          className="max-w-md mx-auto"
+          bodyClassName="!p-2"
         >
-          <div
-            className="offers-modal-content max-w-[580px] w-full bg-white rounded-xl overflow-hidden max-h-[85vh] flex flex-col"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="offers-modal-header flex items-center justify-between p-4 border-b border-gray-200">
-              <h3 className="offers-modal-title text-lg font-semibold m-0">Apply Coupon</h3>
-              <button
-                className="offers-modal-close bg-transparent border-0 text-2xl leading-none cursor-pointer"
-                onClick={() => setShowOffersModal(false)}
-              >
-                ×
-              </button>
-            </div>
 
-            {(() => {
-              const getCouponsList = (type) => {
-                if (couponList) {
-                  if (type === "admin" && Array.isArray(couponList.adminCoupons)) {
-                    return couponList.adminCoupons;
-                  }
-                  if (type === "vendor" && Array.isArray(couponList.vendorCoupons)) {
-                    return couponList.vendorCoupons;
-                  }
-                  if (Array.isArray(couponList)) {
-                    return couponList.filter((c) => c.createdType === type);
-                  }
+          {(() => {
+            const getCouponsList = (type) => {
+              if (couponList) {
+                if (type === "admin" && Array.isArray(couponList.adminCoupons)) {
+                  return couponList.adminCoupons;
                 }
-                return [];
-              };
+                if (type === "vendor" && Array.isArray(couponList.vendorCoupons)) {
+                  return couponList.vendorCoupons;
+                }
+                if (Array.isArray(couponList)) {
+                  return couponList.filter((c) => c.createdType === type);
+                }
+              }
+              return [];
+            };
 
-              const adminCoupons = getCouponsList("admin");
-              const vendorCoupons = getCouponsList("vendor");
+            const adminCoupons = getCouponsList("admin");
+            const vendorCoupons = getCouponsList("vendor");
 
-              return (
-                <>
-                  <div className="offers-modal-body p-3 bg-slate-50 overflow-y-auto">
-                    <div className="offers-list flex flex-col gap-3.5">
-                      {(() => {
-                        const cartVendorIds = [
-                          String(
-                            data?.vendorDetails?.vendorId ||
-                            data?.vendorId ||
-                            cart?.vendorId ||
-                            data?.businessDetails?._id ||
-                            "",
-                          ),
-                        ];
+            return (
+              <>
+                <div className="offers-modal-body p-3 bg-slate-50 overflow-y-auto">
+                  <div className="offers-list flex flex-col gap-3.5">
+                    {(() => {
+                      const cartVendorIds = [
+                        String(
+                          data?.vendorDetails?.vendorId ||
+                          data?.vendorId ||
+                          cart?.vendorId ||
+                          data?.businessDetails?._id ||
+                          "",
+                        ),
+                      ];
 
-                        const sortedVendorCoupons = [...vendorCoupons].sort((a, b) => {
-                          const aMatches =
-                            cartVendorIds.includes(String(a.createdBy)) ||
-                            cartVendorIds.includes(String(a.businessDetails?._id));
-                          const bMatches =
-                            cartVendorIds.includes(String(b.createdBy)) ||
-                            cartVendorIds.includes(String(b.businessDetails?._id));
+                      const sortedVendorCoupons = [...vendorCoupons].sort((a, b) => {
+                        const aMatches =
+                          cartVendorIds.includes(String(a.createdBy)) ||
+                          cartVendorIds.includes(String(a.businessDetails?._id));
+                        const bMatches =
+                          cartVendorIds.includes(String(b.createdBy)) ||
+                          cartVendorIds.includes(String(b.businessDetails?._id));
 
-                          if (aMatches && !bMatches) return -1;
-                          if (!aMatches && bMatches) return 1;
+                        if (aMatches && !bMatches) return -1;
+                        if (!aMatches && bMatches) return 1;
 
-                          return (b.discount || 0) - (a.discount || 0);
-                        });
+                        return (b.discount || 0) - (a.discount || 0);
+                      });
 
-                        const sortedAdminCoupons = [...adminCoupons].sort(
-                          (a, b) => (b.discount || 0) - (a.discount || 0),
-                        );
+                      const sortedAdminCoupons = [...adminCoupons].sort(
+                        (a, b) => (b.discount || 0) - (a.discount || 0),
+                      );
 
-                        const getDiscountTier = (coupon) => {
-                          const amount = parseFloat(coupon.discount) || 0;
-                          if (coupon.discountType === "fixed") {
-                            if (amount >= 300) return "mega";
-                            if (amount >= 150) return "hot";
-                            if (amount >= 50) return "good";
-                            return "saver";
-                          }
-                          if (amount >= 30) return "mega";
-                          if (amount >= 20) return "hot";
-                          if (amount >= 10) return "good";
+                      const getDiscountTier = (coupon) => {
+                        const amount = parseFloat(coupon.discount) || 0;
+                        if (coupon.discountType === "fixed") {
+                          if (amount >= 300) return "mega";
+                          if (amount >= 150) return "hot";
+                          if (amount >= 50) return "good";
                           return "saver";
-                        };
+                        }
+                        if (amount >= 30) return "mega";
+                        if (amount >= 20) return "hot";
+                        if (amount >= 10) return "good";
+                        return "saver";
+                      };
 
-                        const couponThemes = {
-                          saver: {
-                            label: "Saver",
-                            bg: "bg-[#fafffb]",
-                            border: "border-[#d1fae5]",
-                            accent: "text-[#22c55e]",
-                            badgeBg: "bg-[#f0fdf4]",
-                            badgeText: "text-[#16a34a]",
-                            btnBg: "bg-[#f0fdf4]",
-                            btnText: "text-[#16a34a]",
-                            btnBorder: "border-[#bbf7d0]",
-                          },
-                          good: {
-                            label: "Good Deal",
-                            bg: "bg-[#f8fbff]",
-                            border: "border-[#dbeafe]",
-                            accent: "text-[#3b82f6]",
-                            badgeBg: "bg-[#eff6ff]",
-                            badgeText: "text-[#2563eb]",
-                            btnBg: "bg-[#eff6ff]",
-                            btnText: "text-[#2563eb]",
-                            btnBorder: "border-[#bfdbfe]",
-                          },
-                          hot: {
-                            label: "Hot Deal",
-                            bg: "bg-[#fffdf7]",
-                            border: "border-[#fde68a]",
-                            accent: "text-[#d97706]",
-                            badgeBg: "bg-[#fffbeb]",
-                            badgeText: "text-[#b45309]",
-                            btnBg: "bg-[#fffbeb]",
-                            btnText: "text-[#d97706]",
-                            btnBorder: "border-[#fcd34d]",
-                          },
-                          mega: {
-                            label: "Mega Save",
-                            bg: "bg-[#fcfaff]",
-                            border: "border-[#e9d5ff]",
-                            accent: "text-[#8059ca]",
-                            badgeBg: "bg-[#f5f3ff]",
-                            badgeText: "text-[#7c3aed]",
-                            btnBg: "bg-[#f3e8ff]",
-                            btnText: "text-[#8059ca]",
-                            btnBorder: "border-[#ddd6fe]",
-                          },
-                        };
+                      const couponThemes = {
+                        saver: {
+                          label: "Saver",
+                          bg: "bg-[#fafffb]",
+                          border: "border-[#d1fae5]",
+                          accent: "text-[#22c55e]",
+                          badgeBg: "bg-[#f0fdf4]",
+                          badgeText: "text-[#16a34a]",
+                          btnBg: "bg-[#f0fdf4]",
+                          btnText: "text-[#16a34a]",
+                          btnBorder: "border-[#bbf7d0]",
+                        },
+                        good: {
+                          label: "Good Deal",
+                          bg: "bg-[#f8fbff]",
+                          border: "border-[#dbeafe]",
+                          accent: "text-[#3b82f6]",
+                          badgeBg: "bg-[#eff6ff]",
+                          badgeText: "text-[#2563eb]",
+                          btnBg: "bg-[#eff6ff]",
+                          btnText: "text-[#2563eb]",
+                          btnBorder: "border-[#bfdbfe]",
+                        },
+                        hot: {
+                          label: "Hot Deal",
+                          bg: "bg-[#fffdf7]",
+                          border: "border-[#fde68a]",
+                          accent: "text-[#d97706]",
+                          badgeBg: "bg-[#fffbeb]",
+                          badgeText: "text-[#b45309]",
+                          btnBg: "bg-[#fffbeb]",
+                          btnText: "text-[#d97706]",
+                          btnBorder: "border-[#fcd34d]",
+                        },
+                        mega: {
+                          label: "Mega Save",
+                          bg: "bg-[#fcfaff]",
+                          border: "border-[#e9d5ff]",
+                          accent: "text-[#8059ca]",
+                          badgeBg: "bg-[#f5f3ff]",
+                          badgeText: "text-[#7c3aed]",
+                          btnBg: "bg-[#f3e8ff]",
+                          btnText: "text-[#8059ca]",
+                          btnBorder: "border-[#ddd6fe]",
+                        },
+                      };
 
-                        const renderCouponCard = (ele, ind, isVendorCoupon) => {
-                          const isApplied = appliedCoupon?._id === ele._id;
-                          const discountText =
-                            ele.discountType === "fixed"
-                              ? `₹${ele.discount}`
-                              : `${ele.discount}%`;
+                      const renderCouponCard = (ele, ind, isVendorCoupon) => {
+                        const isApplied = appliedCoupon?._id === ele._id;
+                        const discountText =
+                          ele.discountType === "fixed"
+                            ? `₹${ele.discount}`
+                            : `${ele.discount}%`;
 
-                          const matchesCartVendor =
-                            isVendorCoupon &&
-                            (cartVendorIds.includes(String(ele.createdBy)) ||
-                              cartVendorIds.includes(String(ele.businessDetails?._id)));
+                        const matchesCartVendor =
+                          isVendorCoupon &&
+                          (cartVendorIds.includes(String(ele.createdBy)) ||
+                            cartVendorIds.includes(String(ele.businessDetails?._id)));
 
-                          let applicableAmount = 0;
-                          let isEligible = true;
-                          let criteriaText = "";
-                          const getEffectivePrice = (item) => {
-                            const discountprice =
-                              parseFloat(item.discountprice || item.discountPrice) || null;
-                            const price = parseFloat(item.price) || 0;
-                            let calculatedDiscountPrice = discountprice;
-                            const discountType = item.discountType || null;
+                        let applicableAmount = 0;
+                        let isEligible = true;
+                        let criteriaText = "";
+                        const getEffectivePrice = (item) => {
+                          const discountprice =
+                            parseFloat(item.discountprice || item.discountPrice) || null;
+                          const price = parseFloat(item.price) || 0;
+                          let calculatedDiscountPrice = discountprice;
+                          const discountType = item.discountType || null;
 
-                            if (discountType === "percentage" && discountprice && discountprice > 0) {
-                              calculatedDiscountPrice = price - (price * discountprice) / 100;
-                            }
-
-                            return calculatedDiscountPrice && calculatedDiscountPrice > 0
-                              ? calculatedDiscountPrice
-                              : price;
-                          };
-
-                          const cartItems = typeof relevantProducts !== 'undefined' && relevantProducts.length > 0
-                            ? relevantProducts.map(item => ({
-                              vendorId: item.vendor?.vendorId || item.vendorId || item.vendor?._id || item.vendorDetails?.vendorId || item.vendorDetails?._id || "",
-                              price: item.price || item.tabletDetails?.price || pricePerItem,
-                              discountprice: item.discountprice || item.discountPrice || discountPrice,
-                              quantity: item.quantity || quantity || 1
-                            }))
-                            : [{
-                              vendorId: data?.vendorDetails?.vendorId || data?.vendorId || cart?.vendorId || data?.businessDetails?._id || "",
-                              price: pricePerItem,
-                              discountprice: discountPrice,
-                              quantity: quantity || 1
-                            }];
-
-                          let hasExpired = false;
-                          if (ele?.endDate) {
-                            const endDateStamp = new Date(ele.endDate).getTime();
-                            const nowStamp = new Date().getTime();
-
-                            if (endDateStamp < nowStamp) {
-                              hasExpired = true;
-                              criteriaText = "Coupon has expired";
-                            }
+                          if (discountType === "percentage" && discountprice && discountprice > 0) {
+                            calculatedDiscountPrice = price - (price * discountprice) / 100;
                           }
-                          if (isVendorCoupon) {
-                            applicableAmount = subtotal;
-                            if (hasExpired) {
-                              isEligible = false;
-                            } else if (applicableAmount < ele.minimumPurchase) {
-                              isEligible = false;
-                              const diff = (ele.minimumPurchase - applicableAmount).toFixed(2);
-                              criteriaText = `Add ₹${diff} more to apply`;
-                            } else if (ele?.canUseCoupon === false) {
-                              isEligible = false;
-                            } else if (ele?.remainingUses === 0) {
-                              isEligible = false;
-                            } else {
-                              isEligible = true;
-                            }
+
+                          return calculatedDiscountPrice && calculatedDiscountPrice > 0
+                            ? calculatedDiscountPrice
+                            : price;
+                        };
+
+                        const cartItems = typeof relevantProducts !== 'undefined' && relevantProducts.length > 0
+                          ? relevantProducts.map(item => ({
+                            vendorId: item.vendor?.vendorId || item.vendorId || item.vendor?._id || item.vendorDetails?.vendorId || item.vendorDetails?._id || "",
+                            price: item.price || item.tabletDetails?.price || pricePerItem,
+                            discountprice: item.discountprice || item.discountPrice || discountPrice,
+                            quantity: item.quantity || quantity || 1
+                          }))
+                          : [{
+                            vendorId: data?.vendorDetails?.vendorId || data?.vendorId || cart?.vendorId || data?.businessDetails?._id || "",
+                            price: pricePerItem,
+                            discountprice: discountPrice,
+                            quantity: quantity || 1
+                          }];
+
+                        let hasExpired = false;
+                        if (ele?.endDate) {
+                          const endDateStamp = new Date(ele.endDate).getTime();
+                          const nowStamp = new Date().getTime();
+
+                          if (endDateStamp < nowStamp) {
+                            hasExpired = true;
+                            criteriaText = "Coupon has expired";
+                          }
+                        }
+                        if (isVendorCoupon) {
+                          applicableAmount = subtotal;
+                          if (hasExpired) {
+                            isEligible = false;
+                          } else if (applicableAmount < ele.minimumPurchase) {
+                            isEligible = false;
+                            const diff = (ele.minimumPurchase - applicableAmount).toFixed(2);
+                            criteriaText = `Add ₹${diff} more to apply`;
+                          } else if (ele?.canUseCoupon === false) {
+                            isEligible = false;
+                          } else if (ele?.remainingUses === 0) {
+                            isEligible = false;
                           } else {
-                            applicableAmount = total;
-                            if (hasExpired) {
-                              isEligible = false;
-                            } else if (applicableAmount < ele.minimumPurchase) {
-                              isEligible = false;
-                              const diff = (ele.minimumPurchase - applicableAmount).toFixed(2);
-                              criteriaText = `Add ₹${diff} more to apply`;
-                            } else if (ele?.canUseCoupon === false) {
-                              isEligible = false;
-                            } else if (ele?.remainingUses === 0) {
-                              isEligible = false;
-                            } else {
-                              isEligible = true;
-                            }
+                            isEligible = true;
                           }
-
-                          const tier = getDiscountTier(ele);
-                          const theme = couponThemes[tier];
-                          const inactiveTheme = {
-                            bg: "bg-slate-50",
-                            border: "border-slate-200",
-                            accent: "text-slate-400",
-                            badgeBg: "bg-slate-100",
-                            badgeText: "text-slate-500",
-                            btnBg: "bg-slate-100",
-                            btnText: "text-slate-400",
-                            btnBorder: "border-slate-200",
-                            label: "Unavailable",
-                          };
-                          const appliedTheme = {
-                            bg: "bg-[#f6fef9]",
-                            border: "border-[#a7f3d0]",
-                            accent: "text-[#10b981]",
-                            badgeBg: "bg-[#ecfdf5]",
-                            badgeText: "text-[#059669]",
-                            btnBg: "bg-[#ecfdf5]",
-                            btnText: "text-[#059669]",
-                            btnBorder: "border-[#a7f3d0]",
-                            label: "Applied",
-                          };
-                          const activeTheme = !isEligible
-                            ? inactiveTheme
-                            : isApplied
-                              ? appliedTheme
-                              : theme;
-
-                          const savingsPreview = isEligible
-                            ? calculateCouponDiscount(ele, applicableAmount)
-                            : 0;
-
-                          return (
-                            <div
-                              key={ele._id || `${ele.code}-${ind}`}
-                              className={`flex items-stretch w-full ${activeTheme.bg} border ${activeTheme.border} rounded-xl overflow-hidden transition-all duration-200 shadow-none ${isEligible ? "opacity-100" : "opacity-[0.72]"}`}
-                            >
-                              <div className={`min-w-[88px] max-w-[88px] py-3.5 px-2.5 ${activeTheme.badgeBg} border-r border-dashed ${activeTheme.border} flex flex-col items-center justify-center gap-1 text-center`}>
-                                <span className={`text-xl font-extrabold ${activeTheme.badgeText} leading-[1.1]`}>
-                                  {discountText}
-                                </span>
-                                <span className={`text-[9px] font-bold ${activeTheme.badgeText} uppercase tracking-[0.3px]`}>
-                                  OFF
-                                </span>
-                                <span className={`text-[8.5px] font-bold ${activeTheme.accent} bg-white py-0.5 px-1.5 rounded-[10px] mt-1`}>
-                                  {activeTheme.label}
-                                </span>
-                              </div>
-
-                              <div className="flex-1 py-3 px-3.5 flex flex-col gap-1.5 min-w-0">
-                                <h4 className="text-sm font-bold text-slate-900 m-0 leading-[1.3]">
-                                  {ele.name}
-                                </h4>
-
-                                <div className="flex flex-wrap gap-1.5 items-center">
-                                  <span className={`text-[11px] font-bold font-mono ${activeTheme.accent} bg-white border border-dashed ${activeTheme.border} rounded-md py-[3px] px-2`}>
-                                    {ele.code}
-                                  </span>
-                                  {ele.minimumPurchase > 0 && (
-                                    <span className="text-[10px] text-slate-500">
-                                      Minimum order ₹{ele.minimumPurchase}
-                                    </span>
-                                  )}
-                                </div>
-
-                                {ele.description && (
-                                  <p className="text-[11px] text-slate-600 m-0 leading-[1.45] line-clamp-2 [display:-webkit-box] [-webkit-box-orient:vertical]">
-                                    {ele.description}
-                                  </p>
-                                )}
-
-                                <div className="flex flex-wrap gap-2 text-[10px] text-slate-500">
-                                  {isEligible && savingsPreview > 0 && (
-                                    <span className={`font-semibold ${activeTheme.accent}`}>
-                                      You save ₹{savingsPreview.toFixed(2)}
-                                    </span>
-                                  )}
-                                  {ele.discountType === "percentage" && (
-                                    <span>{ele.discount}% discount</span>
-                                  )}
-                                  {ele.discountType === "fixed" && (
-                                    <span>Flat ₹{ele.discount} off</span>
-                                  )}
-                                </div>
-
-                                {!isEligible && criteriaText && (
-                                  <span className="text-[10px] text-red-600 font-semibold">
-                                    ⚠️ {criteriaText}
-                                  </span>
-                                )}
-                              </div>
-
-                              <div className="flex items-center py-3 pr-3 pl-0 shrink-0">
-                                <button
-                                  type="button"
-                                  disabled={!isEligible}
-                                  onClick={() => handleCouponApply(ele)}
-                                  className={`py-[7px] px-3.5 rounded-sm border ${activeTheme.btnBorder} ${activeTheme.btnBg} ${activeTheme.btnText} text-xs font-semibold transition-all duration-200 whitespace-nowrap shadow-none ${!isEligible ? "cursor-not-allowed" : "cursor-pointer"}`}
-                                >
-                                  {isApplied ? "Applied" : "Apply"}
-                                </button>
-                              </div>
-                            </div>
-                          );
-                        };
-
-                        const renderSection = (coupons, isVendorCoupon) => {
-                          if (coupons.length === 0) return null;
-                          return coupons.map((ele, ind) =>
-                            renderCouponCard(ele, ind, isVendorCoupon),
-                          );
-                        };
-
-                        if (sortedVendorCoupons.length === 0 && sortedAdminCoupons.length === 0) {
-                          return (
-                            <div className="flex flex-col items-center justify-center py-10 px-5 text-center text-slate-400">
-                              <div className="text-3xl mb-3 text-slate-300">
-                                🎟️
-                              </div>
-                              <span className="text-sm font-semibold text-slate-500">
-                                No Coupons Available
-                              </span>
-                              <span className="text-xs text-slate-400 mt-1">
-                                There are no active coupons at the moment.
-                              </span>
-                            </div>
-                          );
+                        } else {
+                          applicableAmount = total;
+                          if (hasExpired) {
+                            isEligible = false;
+                          } else if (applicableAmount < ele.minimumPurchase) {
+                            isEligible = false;
+                            const diff = (ele.minimumPurchase - applicableAmount).toFixed(2);
+                            criteriaText = `Add ₹${diff} more to apply`;
+                          } else if (ele?.canUseCoupon === false) {
+                            isEligible = false;
+                          } else if (ele?.remainingUses === 0) {
+                            isEligible = false;
+                          } else {
+                            isEligible = true;
+                          }
                         }
 
+                        const tier = getDiscountTier(ele);
+                        const theme = couponThemes[tier];
+                        const inactiveTheme = {
+                          bg: "bg-slate-50",
+                          border: "border-slate-200",
+                          accent: "text-slate-400",
+                          badgeBg: "bg-slate-100",
+                          badgeText: "text-slate-500",
+                          btnBg: "bg-slate-100",
+                          btnText: "text-slate-400",
+                          btnBorder: "border-slate-200",
+                          label: "Unavailable",
+                        };
+                        const appliedTheme = {
+                          bg: "bg-[#f6fef9]",
+                          border: "border-[#a7f3d0]",
+                          accent: "text-[#10b981]",
+                          badgeBg: "bg-[#ecfdf5]",
+                          badgeText: "text-[#059669]",
+                          btnBg: "bg-[#ecfdf5]",
+                          btnText: "text-[#059669]",
+                          btnBorder: "border-[#a7f3d0]",
+                          label: "Applied",
+                        };
+                        const activeTheme = !isEligible
+                          ? inactiveTheme
+                          : isApplied
+                            ? appliedTheme
+                            : theme;
+
+                        const savingsPreview = isEligible
+                          ? calculateCouponDiscount(ele, applicableAmount)
+                          : 0;
+
                         return (
-                          <>
-                            {renderSection(sortedVendorCoupons, true)}
-                            {sortedVendorCoupons.length > 0 && sortedAdminCoupons.length > 0 && (
-                              <div className="h-px bg-slate-200 my-1" />
-                            )}
-                            {renderSection(sortedAdminCoupons, false)}
-                          </>
+                          <div
+                            key={ele._id || `${ele.code}-${ind}`}
+                            className={`flex items-stretch w-full ${activeTheme.bg} border ${activeTheme.border} rounded-xl overflow-hidden transition-all duration-200 shadow-none ${isEligible ? "opacity-100" : "opacity-[0.72]"}`}
+                          >
+                            <div className={`min-w-[88px] max-w-[88px] py-3.5 px-2.5 ${activeTheme.badgeBg} border-r border-dashed ${activeTheme.border} flex flex-col items-center justify-center gap-1 text-center`}>
+                              <span className={`text-xl font-extrabold ${activeTheme.badgeText} leading-[1.1]`}>
+                                {discountText}
+                              </span>
+                              <span className={`text-[9px] font-bold ${activeTheme.badgeText} uppercase tracking-[0.3px]`}>
+                                OFF
+                              </span>
+                              <span className={`text-[8.5px] font-bold ${activeTheme.accent} bg-white py-0.5 px-1.5 rounded-[10px] mt-1`}>
+                                {activeTheme.label}
+                              </span>
+                            </div>
+
+                            <div className="flex-1 py-3 px-3.5 flex flex-col gap-1.5 min-w-0">
+                              <h4 className="text-sm font-bold text-slate-900 m-0 leading-[1.3]">
+                                {ele.name}
+                              </h4>
+
+                              <div className="flex flex-wrap gap-1.5 items-center">
+                                <span className={`text-[11px] font-bold font-mono ${activeTheme.accent} bg-white border border-dashed ${activeTheme.border} rounded-md py-[3px] px-2`}>
+                                  {ele.code}
+                                </span>
+                                {ele.minimumPurchase > 0 && (
+                                  <span className="text-[10px] text-slate-500">
+                                    Minimum order ₹{ele.minimumPurchase}
+                                  </span>
+                                )}
+                              </div>
+
+                              {ele.description && (
+                                <p className="text-[11px] text-slate-600 m-0 leading-[1.45] line-clamp-2 [display:-webkit-box] [-webkit-box-orient:vertical]">
+                                  {ele.description}
+                                </p>
+                              )}
+
+                              <div className="flex flex-wrap gap-2 text-[10px] text-slate-500">
+                                {isEligible && savingsPreview > 0 && (
+                                  <span className={`font-semibold ${activeTheme.accent}`}>
+                                    You save ₹{savingsPreview.toFixed(2)}
+                                  </span>
+                                )}
+                                {ele.discountType === "percentage" && (
+                                  <span>{ele.discount}% discount</span>
+                                )}
+                                {ele.discountType === "fixed" && (
+                                  <span>Flat ₹{ele.discount} off</span>
+                                )}
+                              </div>
+
+                              {!isEligible && criteriaText && (
+                                <span className="text-[10px] text-red-600 font-semibold">
+                                  ⚠️ {criteriaText}
+                                </span>
+                              )}
+                            </div>
+
+                            <div className="flex items-center py-3 pr-3 pl-0 shrink-0">
+                              <button
+                                type="button"
+                                disabled={!isEligible}
+                                onClick={() => handleCouponApply(ele)}
+                                className={`py-[7px] px-3.5 !rounded-sm border ${activeTheme.btnBorder} ${activeTheme.btnBg} ${activeTheme.btnText} text-xs font-semibold transition-all duration-200 whitespace-nowrap shadow-none ${!isEligible ? "cursor-not-allowed" : "cursor-pointer"}`}
+                              >
+                                {isApplied ? "Applied" : "Apply"}
+                              </button>
+                            </div>
+                          </div>
                         );
-                      })()}
-                    </div>
+                      };
+
+                      const renderSection = (coupons, isVendorCoupon) => {
+                        if (coupons.length === 0) return null;
+                        return coupons.map((ele, ind) =>
+                          renderCouponCard(ele, ind, isVendorCoupon),
+                        );
+                      };
+
+                      if (sortedVendorCoupons.length === 0 && sortedAdminCoupons.length === 0) {
+                        return (
+                          <div className="flex flex-col items-center justify-center py-10 px-5 text-center text-slate-400">
+                            <div className="text-3xl mb-3 text-slate-300">
+                              🎟️
+                            </div>
+                            <span className="text-sm font-semibold text-slate-500">
+                              No Coupons Available
+                            </span>
+                            <span className="text-xs text-slate-400 mt-1">
+                              There are no active coupons at the moment.
+                            </span>
+                          </div>
+                        );
+                      }
+
+                      return (
+                        <>
+                          {renderSection(sortedVendorCoupons, true)}
+                          {sortedVendorCoupons.length > 0 && sortedAdminCoupons.length > 0 && (
+                            <div className="h-px bg-slate-200 my-1" />
+                          )}
+                          {renderSection(sortedAdminCoupons, false)}
+                        </>
+                      );
+                    })()}
                   </div>
-                </>
-              );
-            })()}
-          </div>
-        </div>
+                </div>
+              </>
+            );
+          })()}
+        </BaseModal>
+        //   </div>
+        // </div >
       )}
 
       <LeadModal
@@ -2998,7 +3010,7 @@ const BookingProcess = () => {
       />
 
       <Footer />
-    </div>
+    </div >
   );
 };
 

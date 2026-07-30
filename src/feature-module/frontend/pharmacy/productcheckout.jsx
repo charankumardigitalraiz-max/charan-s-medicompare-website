@@ -30,7 +30,7 @@ import {
 } from "./referredDoctorSelectUtils";
 import { fetchDoctorsList } from "../../../services/doctorService";
 import { fetchFamilyMembersList } from "../../../services/familyMemberService";
-
+import BaseModal from "../../../components/ui/BaseModal.jsx";
 // NOTE: react-select requires its styling to be passed as a JS "styles" object via its own
 // styling API (it does not read className/Tailwind for its internal parts like control/option/
 // placeholder). This is a component configuration object, not manual/inline CSS on a DOM node
@@ -894,6 +894,10 @@ export const Cart = () => {
     };
   }, []);
 
+
+
+
+
   if (loading) {
     return <PageLoader />;
   }
@@ -906,10 +910,12 @@ export const Cart = () => {
     };
 
     const img =
+      getFirst(item?.productImage) ||
       getFirst(item?.varientDetails?.image) ||
       getFirst(item?.varientDetails?.files) ||
       getFirst(item?.variantDetails?.files) ||
       getFirst(item?.variantDetails?.image) ||
+      getFirst(item?.imageUrl) ||
       getFirst(item?.files) ||
       getFirst(item?.imageUrl) ||
       getFirst(item?.file) ||
@@ -924,15 +930,24 @@ export const Cart = () => {
 
   const isLoggedIn = !!localStorage.getItem("medicomparestoken");
 
-  const newLocal = <div className="offers-modal-header">
-    <h3 className="offers-modal-title">Apply Coupon</h3>
-    <button
-      className="offers-modal-close"
-      onClick={() => setShowOffersModal(false)}
-    >
-      ×
-    </button>
-  </div>;
+
+  const handleCloseModal = () => {
+    setShowOffersModal(false)
+  }
+
+
+
+
+
+  // const newLocal = <div className="offers-modal-header">
+  //   <h3 className="offers-modal-title">Apply Coupon</h3>
+  //   <button
+  //     className="offers-modal-close"
+  //     onClick={() => setShowOffersModal(false)}
+  //   >
+  //     ×
+  //   </button>
+  // </div>;
   return (
     <div className="main-wrapper">
       <Home2Header />
@@ -957,7 +972,7 @@ export const Cart = () => {
             <div className={`grid gap-6 ${isLoggedIn ? "grid-cols-1 md:grid-cols-2" : "grid-cols-1"}`}>
               <div className="w-full">
                 <div className="mb-6">
-                  <div className="rounded-2xl overflow-hidden border border-[#e9ecef] shadow-[0_10px_25px_-5px_rgba(0,0,0,0.05),0_8px_10px_-6px_rgba(0,0,0,0.05)] bg-white">
+                  <div className="rounded-md overflow-hidden border border-[#e9ecef] shadow-[0_10px_25px_-5px_rgba(0,0,0,0.05),0_8px_10px_-6px_rgba(0,0,0,0.05)] bg-white">
                     <div className="flex justify-between items-center px-3 py-4 bg-[#faf8ff] border-b border-[#f3e8ff]">
                       <div className="text-[13px] font-bold text-[#5b21b6] flex items-center gap-2">
                         <i className="fas fa-map-marker-alt text-[#8059ca]"></i>
@@ -1022,117 +1037,67 @@ export const Cart = () => {
 
               <div className="w-full">
                 {isLoggedIn && (
-                  <div className="rounded-2xl bg-white border border-[#e9ecef] p-3 shadow-[0_10px_25px_-5px_rgba(0,0,0,0.05),0_8px_10px_-6px_rgba(0,0,0,0.05)] mb-6">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div className="col-span-1 md:col-span-2">
-                        <div className="choice-cards-container flex gap-2.5">
-                          <div className="choice-card-wrapper flex-1">
-                            <label className={`choice-card ${personType === "self" ? "selected" : ""} w-full m-0`}>
-                              <input
-                                type="radio"
-                                name="personType"
-                                checked={personType === "self"}
-                                onChange={() => {
-                                  setPersonType("self");
-                                  setSelectedDoctor(null);
-                                  setDoctorSearchQuery("");
-                                  setDoctors([]);
-                                }}
-                              />
-                              <i className="fas fa-user choice-card-icon"></i>
-                              <span className="choice-card-text">Self</span>
-                            </label>
-                          </div>
-
-                          <div className="choice-card-wrapper flex-1">
-                            <label className={`choice-card ${personType === "forWhom" ? "selected" : ""} w-full m-0`}>
-                              <input
-                                type="radio"
-                                name="personType"
-                                checked={personType === "forWhom"}
-                                onChange={() => {
-                                  setPersonType("forWhom");
-                                  setSelectedFamilyMember(null);
-                                  setSelectedDoctor(null);
-                                  setDoctorName("");
-                                  setDoctorSearchQuery("");
-                                  setDoctors([]);
-                                }}
-                              />
-                              <i className="fas fa-users choice-card-icon"></i>
-                              <span className="choice-card-text">For Whom</span>
-                            </label>
-                          </div>
-                        </div>
-                      </div>
-
-                      {personType === "self" && (
+                  <div className="w-full">
+                    <div className="!border !border-[#e9ecef]  !rounded-[10px] !shadow-[0_2px_8px_rgba(0,0,0,0.05)] bg-white border-0 p-4">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div className="col-span-1 md:col-span-2">
-                          <label className="form-label text-[#333] text-sm font-medium mb-1.5">
-                            Select Referred Doctor{" "}
-                            <span className="text-red-600">*</span>
-                          </label>
-                          <Select
-                            styles={customSelectStyles}
-                            options={getReferredDoctorSelectOptions(doctors)}
-                            components={referredDoctorSelectComponents}
-                            filterOption={() => true}
-                            inputValue={doctorSearchQuery}
-                            value={selectedDoctor}
-                            onChange={(selectedOption) =>
-                              handleReferredDoctorSelectChange(
-                                selectedOption,
-                                setSelectedDoctor,
-                                setDoctorName,
-                                setDoctorSearchQuery,
-                              )
-                            }
-                            onInputChange={(inputValue, actionMeta) =>
-                              handleReferredDoctorInputChange(
-                                inputValue,
-                                actionMeta,
-                                setDoctorSearchQuery,
-                              )
-                            }
-                            openMenuOnFocus
-                            openMenuOnClick
-                            placeholder="Search and Select Referred Doctor"
-                            isClearable
-                            isSearchable
-                            isLoading={doctorSearchLoading}
-                            menuPortalTarget={document.body}
-                            menuPosition="fixed"
-                            noOptionsMessage={({ inputValue }) =>
-                              inputValue.trim() ? "No doctors found" : null
-                            }
-                          />
-                        </div>
-                      )}
+                          <div className="!flex !w-full gap-1 !rounded-lg !bg-[#f1f3f9] p-1">
 
-                      {personType === "forWhom" && (
-                        <>
-                          <div className="col-span-1">
-                            <label className="form-label text-[#333] text-sm font-medium mb-1.5">
-                              Select Family Member{" "}
-                              <span className="text-red-600">*</span>
-                            </label>
-                            <Select
-                              styles={customSelectStyles}
-                              options={familyMembers.map((member) => ({
-                                value: member._id,
-                                label: member.name,
-                              }))}
-                              value={selectedFamilyMember}
-                              onChange={(selectedOption) =>
-                                setSelectedFamilyMember(selectedOption)
-                              }
-                              placeholder="Select family members"
-                              isClearable
-                              menuPortalTarget={document.body}
-                              menuPosition="fixed"
-                            />
+                            <div className="flex flex-1">
+                              <label
+                                className={`flex w-full items-center justify-center !gap-2 !rounded-sm border !px-3 !py-1 shadow-sm transition-all duration-200 ${personType === "self"
+                                  ? "!border-[#8059ca] bg-[#8059ca] text-white"
+                                  : "!border-slate-300 bg-white hover:bg-white/50"
+                                  }`}
+                              >
+                                <input
+                                  type="radio"
+                                  name="personType"
+                                  checked={personType === "self"}
+                                  className="sr-only"
+                                  onChange={() => {
+                                    setPersonType("self");
+                                    setSelectedDoctor(null);
+                                    setDoctorSearchQuery("");
+                                    setDoctors([]);
+                                  }}
+                                />
+                                <i className="fas fa-user choice-card-icon"></i>
+                                <span className="choice-card-text">Self</span>
+                              </label>
+                            </div>
+
+                            <div className="flex flex-1">
+                              <label
+                                className={`flex w-full !items-center !justify-center !gap-2 !rounded-sm !border !px-3 !py-1 shadow-sm transition-all duration-200 ${personType === "forWhom"
+                                  ? "!border-[#8059ca] !bg-[#8059ca] text-white"
+                                  : "!border-slate-300 !bg-white hover:bg-white/50"
+                                  }`}
+                              >
+                                <input
+                                  type="radio"
+                                  name="personType"
+                                  checked={personType === "forWhom"}
+                                  className="sr-only"
+                                  onChange={() => {
+                                    setPersonType("forWhom");
+                                    setSelectedFamilyMember(null);
+                                    setSelectedDoctor(null);
+                                    setDoctorName("");
+                                    setDoctorSearchQuery("");
+                                    setDoctors([]);
+                                  }}
+                                />
+                                <i className="fas fa-users choice-card-icon"></i>
+                                <span className="choice-card-text">For Whom</span>
+                              </label>
+                            </div>
+
                           </div>
-                          <div className="col-span-1">
+                        </div>
+
+                        {personType === "self" && (
+                          <div className="col-span-1 md:col-span-2">
                             <label className="form-label text-[#333] text-sm font-medium mb-1.5">
                               Select Referred Doctor{" "}
                               <span className="text-red-600">*</span>
@@ -1172,8 +1137,74 @@ export const Cart = () => {
                               }
                             />
                           </div>
-                        </>
-                      )}
+                        )}
+
+                        {personType === "forWhom" && (
+                          <>
+                            <div className="col-span-1">
+                              <label className="form-label text-[#333] text-sm font-medium mb-1.5">
+                                Select Family Member{" "}
+                                <span className="text-red-600">*</span>
+                              </label>
+                              <Select
+                                styles={customSelectStyles}
+                                options={familyMembers.map((member) => ({
+                                  value: member._id,
+                                  label: member.name,
+                                }))}
+                                value={selectedFamilyMember}
+                                onChange={(selectedOption) =>
+                                  setSelectedFamilyMember(selectedOption)
+                                }
+                                placeholder="Select family members"
+                                isClearable
+                                menuPortalTarget={document.body}
+                                menuPosition="fixed"
+                              />
+                            </div>
+                            <div className="col-span-1">
+                              <label className="form-label text-[#333] text-sm font-medium mb-1.5">
+                                Select Referred Doctor{" "}
+                                <span className="text-red-600">*</span>
+                              </label>
+                              <Select
+                                styles={customSelectStyles}
+                                options={getReferredDoctorSelectOptions(doctors)}
+                                components={referredDoctorSelectComponents}
+                                filterOption={() => true}
+                                inputValue={doctorSearchQuery}
+                                value={selectedDoctor}
+                                onChange={(selectedOption) =>
+                                  handleReferredDoctorSelectChange(
+                                    selectedOption,
+                                    setSelectedDoctor,
+                                    setDoctorName,
+                                    setDoctorSearchQuery,
+                                  )
+                                }
+                                onInputChange={(inputValue, actionMeta) =>
+                                  handleReferredDoctorInputChange(
+                                    inputValue,
+                                    actionMeta,
+                                    setDoctorSearchQuery,
+                                  )
+                                }
+                                openMenuOnFocus
+                                openMenuOnClick
+                                placeholder="Search and Select Referred Doctor"
+                                isClearable
+                                isSearchable
+                                isLoading={doctorSearchLoading}
+                                menuPortalTarget={document.body}
+                                menuPosition="fixed"
+                                noOptionsMessage={({ inputValue }) =>
+                                  inputValue.trim() ? "No doctors found" : null
+                                }
+                              />
+                            </div>
+                          </>
+                        )}
+                      </div>
                     </div>
                   </div>
                 )}
@@ -1531,7 +1562,7 @@ export const Cart = () => {
                         {/* Quantity controls */}
                         <div className="flex items-center justify-center w-[120px] shrink-0">
                           <div
-                            className="inline-flex border-[1.5px] border-[#e9d5ff] rounded-lg bg-white shadow-[0_1px_4px_rgba(128,89,202,0.04)] overflow-hidden"
+                            className="inline-flex !border-[1.5px] !border-[#e9d5ff] rounded-lg bg-white !shadow-[0_1px_4px_rgba(128,89,202,0.04)] overflow-hidden"
                           >
                             <button
                               className="btn btn-sm w-7 h-7 bg-transparent border-0 text-[#8059ca] text-[11px] p-0 flex items-center justify-center transition-colors duration-200 ease-in-out hover:bg-[#fdfaff]"
@@ -1601,7 +1632,7 @@ export const Cart = () => {
 
         {cartItems.length > 0 && (
           <div
-            className={`card shadow-sm rounded-2xl border border-[#f1f5f9] bg-white shadow-[0_10px_25px_-5px_rgba(0,0,0,0.05)] mt-2.5 ${isMobile || isTablet ? "w-full static" : "w-[33%] sticky"} ${isMobile ? "p-3" : "p-7"}`}
+            className={`card shadow-sm rounded-2xl border border-[#f1f5f9] bg-white shadow-[0_10px_25px_-5px_rgba(0,0,0,0.05)]  ${isMobile || isTablet ? "w-full static" : "w-[33%] sticky"} ${isMobile ? "p-3" : "p-7"}`}
           >
             <div>
               {/* OFFERS */}
@@ -1615,7 +1646,7 @@ export const Cart = () => {
 
                 {/* Coupon Card */}
                 <div
-                  className={`group flex items-center gap-4 p-3 rounded-2xl cursor-pointer transition-all duration-300 border ${appliedCoupon
+                  className={`group flex items-center gap-4 p-3 rounded-md cursor-pointer transition-all duration-300 border ${appliedCoupon
                     ? "bg-gradient-to-r from-[#f0fdf4] to-[#ecfdf5] border-[#86efac] shadow-[0_8px_20px_rgba(34,197,94,0.12)]"
                     : "bg-gradient-to-r from-[#faf5ff] to-[#ffffff] border-[#d8b4fe] "
                     }`}
@@ -1720,13 +1751,13 @@ export const Cart = () => {
                     Have a Coupon Code?
                   </label>
 
-                  <div className="flex gap-2 mt-2 flex-row w-full">
+                  <div className="flex mt-2 flex-row w-full">
                     <input
                       type="text"
                       placeholder="Enter Coupon Code"
                       value={couponInputText}
                       onChange={(e) => setCouponInputText(e.target.value)}
-                      className="flex-1 min-w-0 border border-slate-300 rounded-lg px-3 py-2 text-sm bg-[#f8fafc] outline-none transition-colors focus:border-[#8059ca]"
+                      className="flex-1 min-w-0 border border-slate-300 rounded-l-lg px-3 py-2 text-sm bg-[#f8fafc] outline-none transition-colors focus:border-[#8059ca]"
                     />
 
                     <button
@@ -1735,7 +1766,7 @@ export const Cart = () => {
                         e.preventDefault();
                         handleManualCouponApply();
                       }}
-                      className="px-4 py-2 bg-gradient-to-r from-[#8059ca] to-[#6d28d9] hover:from-[#7148c5] hover:to-[#5b21b6] text-white !text-sm !font-semibold !rounded-lg !border-none transition-all duration-200 shrink-0"
+                      className="px-4 py-2 bg-gradient-to-r from-[#8059ca] to-[#6d28d9] hover:from-[#7148c5] hover:to-[#5b21b6] text-white !text-sm !font-semibold !rounded-r-lg !border-none transition-all duration-200 shrink-0"
                     >
                       Apply
                     </button>
@@ -1757,7 +1788,7 @@ export const Cart = () => {
                   Cart Summary
                 </div>
                 <div
-                  className="bg-[#fdfaff] border-[1.5px] border-[#f3e8ff] rounded-[14px] p-3 shadow-[0_2px_8px_rgba(128,89,202,0.02)]"
+                  className="bg-[#fdfaff] !border-[1.5px] !border-[#f3e8ff] !rounded-[14px] p-3 shadow-[0_2px_8px_rgba(128,89,202,0.02)]"
                 >
                   {cartItems.length > 0 && (
                     <>
@@ -1874,7 +1905,7 @@ export const Cart = () => {
                 >
                   {/* COD Option */}
                   <div
-                    className={`flex-1 min-w-0 !rounded-xl px-3 py-2.5 flex items-center gap-2 cursor-pointer transition-all duration-200 ease-in-out !box-border ${selectedPayment === "cod" ? "!border-2 !border-[#8059ca] !bg-[#fdfaff] shadow-[0_4px_12px_rgba(128,89,202,0.08)]" : "border-[1.5px] border-[#e2e8f0] bg-white hover:border-[#cbd5e1] hover:bg-[#fafbfc]"}`}
+                    className={`flex-1 min-w-0 !rounded-md px-3 py-2.5 flex items-center gap-2 cursor-pointer transition-all duration-200 ease-in-out !box-border ${selectedPayment === "cod" ? "!border-2 !border-[#8059ca] !bg-[#fdfaff] shadow-[0_4px_12px_rgba(128,89,202,0.08)]" : "!border-[1.5px] !border-[#e2e8f0] bg-white hover:border-[#cbd5e1] hover:bg-[#fafbfc]"}`}
                     onClick={() => setSelectedPayment("cod")}
                   >
                     <div
@@ -1899,7 +1930,7 @@ export const Cart = () => {
 
                   {/* Online Option */}
                   <div
-                    className={`flex-1 min-w-0 !rounded-xl px-3 py-2.5 flex items-center gap-2 cursor-pointer transition-all duration-200 ease-in-out !box-border ${selectedPayment === "online" ? "!border-2 !border-[#8059ca] !bg-[#fdfaff] shadow-[0_4px_12px_rgba(128,89,202,0.08)]" : "!border-[1.5px] !border-[#e2e8f0] !bg-white hover:border-[#cbd5e1] hover:bg-[#fafbfc]"}`}
+                    className={`flex-1 min-w-0 !rounded-md px-3 py-2.5 flex items-center gap-2 cursor-pointer transition-all duration-200 ease-in-out !box-border ${selectedPayment === "online" ? "!border-2 !border-[#8059ca] !bg-[#fdfaff] shadow-[0_4px_12px_rgba(128,89,202,0.08)]" : "!border-[1.5px] !border-[#e2e8f0] !bg-white hover:border-[#cbd5e1] hover:bg-[#fafbfc]"}`}
                     onClick={() => setSelectedPayment("online")}
                   >
                     <div
@@ -1978,389 +2009,366 @@ export const Cart = () => {
 
       {/*  Coupon modal */}
       {showOffersModal && (
-        <div
-          className="offers-modal-overlay"
-          onClick={() => setShowOffersModal(false)}
+        <BaseModal
+          show={showOffersModal}
+          onClose={handleCloseModal}
+          title={"Apply Coupon"}
+          size="md"
+          className="max-w-md mx-auto"
+          bodyClassName="!p-6"
         >
-          <div
-            className="offers-modal-content max-w-[580px]"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {newLocal}
+          {/* {newLocal} */}
 
-            {(() => {
-              const getCouponsList = (type) => {
-                if (couponDetails) {
-                  if (Array.isArray(couponDetails)) {
-                    return couponDetails.filter(c => c.createdType === type);
-                  }
-                  if (type === 'admin' && Array.isArray(couponDetails.adminCoupons)) {
-                    return couponDetails.adminCoupons;
-                  }
-                  if (type === 'vendor' && Array.isArray(couponDetails.vendorCoupons)) {
-                    return couponDetails.vendorCoupons;
-                  }
+          {(() => {
+            const getCouponsList = (type) => {
+              if (couponDetails) {
+                if (Array.isArray(couponDetails)) {
+                  return couponDetails.filter(c => c.createdType === type);
                 }
-                if (couponList) {
-                  if (Array.isArray(couponList) && couponList.length > 0) {
-                    return couponList.filter(c => c.createdType === type);
-                  }
-                  if (type === 'admin' && Array.isArray(couponList.adminCoupons)) {
-                    return couponList.adminCoupons;
-                  }
-                  if (type === 'vendor' && Array.isArray(couponList.vendorCoupons)) {
-                    return couponList.vendorCoupons;
-                  }
+                if (type === 'admin' && Array.isArray(couponDetails.adminCoupons)) {
+                  return couponDetails.adminCoupons;
                 }
-                return [];
-              };
+                if (type === 'vendor' && Array.isArray(couponDetails.vendorCoupons)) {
+                  return couponDetails.vendorCoupons;
+                }
+              }
+              if (couponList) {
+                if (Array.isArray(couponList) && couponList.length > 0) {
+                  return couponList.filter(c => c.createdType === type);
+                }
+                if (type === 'admin' && Array.isArray(couponList.adminCoupons)) {
+                  return couponList.adminCoupons;
+                }
+                if (type === 'vendor' && Array.isArray(couponList.vendorCoupons)) {
+                  return couponList.vendorCoupons;
+                }
+              }
+              return [];
+            };
 
-              const adminCoupons = getCouponsList('admin');
-              const vendorCoupons = getCouponsList('vendor');
+            const adminCoupons = getCouponsList('admin');
+            const vendorCoupons = getCouponsList('vendor');
 
-              return (
-                <>
-                  <div className="offers-modal-body p-3 bg-[#f8fafc]">
-                    <div className="offers-list flex flex-col gap-3.5">
-                      {(() => {
-                        const cartVendorIds = Array.isArray(cartItems) ? cartItems.map(item => String(item.vendorId)) : [];
+            return (
+              <>
+                <div className="offers-modal-body p-3 bg-[#f8fafc]">
+                  <div className="offers-list flex flex-col gap-3.5">
+                    {(() => {
+                      const cartVendorIds = Array.isArray(cartItems) ? cartItems.map(item => String(item.vendorId)) : [];
 
-                        // Sort vendor coupons: matching vendor first, then higher discount first
-                        const sortedVendorCoupons = [...vendorCoupons].sort((a, b) => {
-                          const aMatches = cartVendorIds.includes(String(a.createdBy)) || cartVendorIds.includes(String(a.businessDetails?._id));
-                          const bMatches = cartVendorIds.includes(String(b.createdBy)) || cartVendorIds.includes(String(b.businessDetails?._id));
+                      // Sort vendor coupons: matching vendor first, then higher discount first
+                      const sortedVendorCoupons = [...vendorCoupons].sort((a, b) => {
+                        const aMatches = cartVendorIds.includes(String(a.createdBy)) || cartVendorIds.includes(String(a.businessDetails?._id));
+                        const bMatches = cartVendorIds.includes(String(b.createdBy)) || cartVendorIds.includes(String(b.businessDetails?._id));
 
-                          if (aMatches && !bMatches) return -1;
-                          if (!aMatches && bMatches) return 1;
+                        if (aMatches && !bMatches) return -1;
+                        if (!aMatches && bMatches) return 1;
 
-                          return (b.discount || 0) - (a.discount || 0);
-                        });
+                        return (b.discount || 0) - (a.discount || 0);
+                      });
 
-                        // Sort admin coupons: higher discount first
-                        const sortedAdminCoupons = [...adminCoupons].sort((a, b) => (b.discount || 0) - (a.discount || 0));
+                      // Sort admin coupons: higher discount first
+                      const sortedAdminCoupons = [...adminCoupons].sort((a, b) => (b.discount || 0) - (a.discount || 0));
 
-                        const getDiscountTier = (coupon) => {
-                          const amount = parseFloat(coupon.discount) || 0;
-                          if (coupon.discountType === "fixed") {
-                            if (amount >= 300) return "mega";
-                            if (amount >= 150) return "hot";
-                            if (amount >= 50) return "good";
-                            return "saver";
-                          }
-                          if (amount >= 30) return "mega";
-                          if (amount >= 20) return "hot";
-                          if (amount >= 10) return "good";
+                      const getDiscountTier = (coupon) => {
+                        const amount = parseFloat(coupon.discount) || 0;
+                        if (coupon.discountType === "fixed") {
+                          if (amount >= 300) return "mega";
+                          if (amount >= 150) return "hot";
+                          if (amount >= 50) return "good";
                           return "saver";
-                        };
+                        }
+                        if (amount >= 30) return "mega";
+                        if (amount >= 20) return "hot";
+                        if (amount >= 10) return "good";
+                        return "saver";
+                      };
 
-                        const couponThemes = {
-                          saver: {
-                            label: "Saver",
-                            bg: "#fafffb",
-                            border: "#d1fae5",
-                            accent: "#22c55e",
-                            badgeBg: "#f0fdf4",
-                            badgeText: "#16a34a",
-                            btnBg: "#f0fdf4",
-                            btnText: "#16a34a",
-                            btnBorder: "#bbf7d0",
-                          },
-                          good: {
-                            label: "Good Deal",
-                            bg: "#f8fbff",
-                            border: "#dbeafe",
-                            accent: "#3b82f6",
-                            badgeBg: "#eff6ff",
-                            badgeText: "#2563eb",
-                            btnBg: "#eff6ff",
-                            btnText: "#2563eb",
-                            btnBorder: "#bfdbfe",
-                          },
-                          hot: {
-                            label: "Hot Deal",
-                            bg: "#fffdf7",
-                            border: "#fde68a",
-                            accent: "#d97706",
-                            badgeBg: "#fffbeb",
-                            badgeText: "#b45309",
-                            btnBg: "#fffbeb",
-                            btnText: "#d97706",
-                            btnBorder: "#fcd34d",
-                          },
-                          mega: {
-                            label: "Mega Save",
-                            bg: "#fcfaff",
-                            border: "#e9d5ff",
-                            accent: "#8059ca",
-                            badgeBg: "#f5f3ff",
-                            badgeText: "#7c3aed",
-                            btnBg: "#f3e8ff",
-                            btnText: "#8059ca",
-                            btnBorder: "#ddd6fe",
-                          },
-                        };
+                      const couponThemes = {
+                        saver: {
+                          label: "Saver",
+                          bg: "#fafffb",
+                          border: "#d1fae5",
+                          accent: "#22c55e",
+                          badgeBg: "#f0fdf4",
+                          badgeText: "#16a34a",
+                          btnBg: "#f0fdf4",
+                          btnText: "#16a34a",
+                          btnBorder: "#bbf7d0",
+                        },
+                        good: {
+                          label: "Good Deal",
+                          bg: "#f8fbff",
+                          border: "#dbeafe",
+                          accent: "#3b82f6",
+                          badgeBg: "#eff6ff",
+                          badgeText: "#2563eb",
+                          btnBg: "#eff6ff",
+                          btnText: "#2563eb",
+                          btnBorder: "#bfdbfe",
+                        },
+                        hot: {
+                          label: "Hot Deal",
+                          bg: "#fffdf7",
+                          border: "#fde68a",
+                          accent: "#d97706",
+                          badgeBg: "#fffbeb",
+                          badgeText: "#b45309",
+                          btnBg: "#fffbeb",
+                          btnText: "#d97706",
+                          btnBorder: "#fcd34d",
+                        },
+                        mega: {
+                          label: "Mega Save",
+                          bg: "#fcfaff",
+                          border: "#e9d5ff",
+                          accent: "#8059ca",
+                          badgeBg: "#f5f3ff",
+                          badgeText: "#7c3aed",
+                          btnBg: "#f3e8ff",
+                          btnText: "#8059ca",
+                          btnBorder: "#ddd6fe",
+                        },
+                      };
 
-                        const renderCouponCard = (ele, ind, isVendorCoupon) => {
-                          const isApplied = appliedCoupon?._id === ele._id;
-                          const discountText = ele?.discountType === "fixed"
-                            ? `₹${ele.discount}`
-                            : `${ele.discount}%`;
+                      const renderCouponCard = (ele, ind, isVendorCoupon) => {
+                        const isApplied = appliedCoupon?._id === ele._id;
+                        const discountText = ele?.discountType === "fixed"
+                          ? `₹${ele.discount}`
+                          : `${ele.discount}%`;
 
-                          let isEligible;
+                        let isEligible;
 
-                          const matchesCartVendor = isVendorCoupon && (
-                            cartVendorIds.includes(String(ele.createdBy)) ||
-                            cartVendorIds.includes(String(ele.businessDetails?._id))
-                          );
+                        const matchesCartVendor = isVendorCoupon && (
+                          cartVendorIds.includes(String(ele.createdBy)) ||
+                          cartVendorIds.includes(String(ele.businessDetails?._id))
+                        );
 
-                          let applicableAmount = 0;
-                          // let isEligible = false;
-                          let criteriaText = "";
+                        let applicableAmount = 0;
+                        let criteriaText = "";
 
-                          let hasExpired = false;
-                          if (ele?.endDate) {
-                            const endDateStamp = new Date(ele.endDate).getTime();
-                            const nowStamp = new Date().getTime();
-                            if (endDateStamp < nowStamp) {
-                              hasExpired = true;
-                              criteriaText = "Coupon has expired";
-                            }
+                        let hasExpired = false;
+                        if (ele?.endDate) {
+                          const endDateStamp = new Date(ele.endDate).getTime();
+                          const nowStamp = new Date().getTime();
+                          if (endDateStamp < nowStamp) {
+                            hasExpired = true;
+                            criteriaText = "Coupon has expired";
                           }
-
-                          if (isVendorCoupon) {
-                            const vendorIdStr = String(ele.createdBy || ele.businessDetails?._id || "");
-                            const vendorItems = cartItems.filter(item => String(item.vendorId) === vendorIdStr);
-                            applicableAmount = vendorItems.reduce((sum, item) => {
-                              const price = getEffectivePrice(item);
-                              return sum + (price * (parseInt(item.quantity) || 1));
-                            }, 0);
-
-                            if (hasExpired) {
-                              isEligible = false;
-                            } else if (applicableAmount < ele.minimumPurchase) {
-                              isEligible = false;
-                              const diff = (ele.minimumPurchase - applicableAmount).toFixed(2);
-                              criteriaText = `Add ₹${diff} more of this vendor's items`;
-                            } else if (ele?.canUseCoupon === false) {
-                              isEligible = false;
-                              // criteriaText = `Coupon cannot be applied to this vendor`;
-                            } else if (ele?.remainingUses === 0) {
-                              isEligible = false;
-                            } else {
-                              isEligible = true;
-                            }
-
-                            // isEligible = ele?.canUseCoupon;
-                          } else {
-                            applicableAmount = total;
-                            if (hasExpired) {
-                              isEligible = false;
-                            } else if (applicableAmount < ele.minimumPurchase) {
-                              isEligible = false;
-                              const diff = (ele.minimumPurchase - applicableAmount).toFixed(2);
-                              criteriaText = `Add ₹${diff} more to apply`;
-                            } else if (ele?.canUseCoupon === false) {
-                              isEligible = false;
-                              // criteriaText = `Coupon cannot be applied to this vendor`;
-                            } else if (ele?.remainingUses === 0) {
-                              isEligible = false;
-                            } else {
-                              isEligible = true;
-                            }
-                            // isEligible = ele?.canUseCoupon;
-                          }
-
-                          const tier = getDiscountTier(ele);
-                          const theme = couponThemes[tier];
-                          const inactiveTheme = {
-                            bg: "#f8fafc",
-                            border: "#e2e8f0",
-                            accent: "#94a3b8",
-                            badgeBg: "#f1f5f9",
-                            badgeText: "#64748b",
-                            btnBg: "#f1f5f9",
-                            btnText: "#94a3b8",
-                            btnBorder: "#e2e8f0",
-                            label: "Unavailable",
-                          };
-                          const appliedTheme = {
-                            bg: "#f6fef9",
-                            border: "#a7f3d0",
-                            accent: "#10b981",
-                            badgeBg: "#ecfdf5",
-                            badgeText: "#059669",
-                            btnBg: "#ecfdf5",
-                            btnText: "#059669",
-                            btnBorder: "#a7f3d0",
-                            label: "Applied",
-                          };
-                          const activeTheme = !isEligible
-                            ? inactiveTheme
-                            : isApplied
-                              ? appliedTheme
-                              : theme;
-
-                          const savingsPreview = isEligible
-                            ? calculateCouponDiscount(ele, applicableAmount)
-                            : 0;
-
-                          return (
-                            <div
-                              key={ele._id || `${ele.code}-${ind}`}
-                              className="flex items-stretch w-full rounded-xl overflow-hidden shadow-none"
-                              style={{
-                                background: activeTheme.bg,
-                                border: `1px solid ${activeTheme.border}`,
-                                opacity: isEligible ? 1 : 0.72,
-                              }}
-                            >
-                              {/* Discount badge column */}
-                              <div
-                                className="min-w-[88px] max-w-[88px] px-2.5 py-3.5 flex flex-col items-center justify-center gap-1 text-center"
-                                style={{
-                                  background: activeTheme.badgeBg,
-                                  borderRight: `1px dashed ${activeTheme.border}`,
-                                }}
-                              >
-                                <span
-                                  className="text-xl font-extrabold leading-[1.1]"
-                                  style={{ color: activeTheme.badgeText }}
-                                >
-                                  {discountText}
-                                </span>
-                                <span
-                                  className="text-[9px] font-bold uppercase tracking-[0.3px]"
-                                  style={{ color: activeTheme.badgeText }}
-                                >
-                                  OFF
-                                </span>
-                                <span
-                                  className="text-[8.5px] font-bold bg-white px-1.5 py-0.5 rounded-[10px] mt-1"
-                                  style={{ color: activeTheme.accent }}
-                                >
-                                  {activeTheme.label}
-                                </span>
-                              </div>
-
-                              {/* Details column */}
-                              <div
-                                className="flex-1 px-3.5 py-3 flex flex-col gap-1.5 min-w-0"
-                              >
-                                <h4
-                                  className="text-sm font-bold text-[#0f172a] m-0 leading-[1.3]"
-                                >
-                                  {ele.name}
-                                </h4>
-
-                                <div className="flex flex-wrap gap-1.5 items-center">
-                                  <span
-                                    className="text-[11px] font-bold font-mono bg-white rounded-md px-2 py-0.5"
-                                    style={{ color: activeTheme.accent, border: `1px dashed ${activeTheme.border}` }}
-                                  >
-                                    {ele.code}
-                                  </span>
-                                  {ele.minimumPurchase > 0 && (
-                                    <span className="text-[10px] text-[#64748b]">
-                                      Minimum order ₹{ele.minimumPurchase}
-                                    </span>
-                                  )}
-                                  {/* {matchesCartVendor && isEligible && (
-                                    <span className="text-[9px] font-bold text-[#8059ca] bg-[#f3e8ff] px-1.5 py-0.5 rounded">
-                                      Matches Cart
-                                    </span>
-                                  )} */}
-                                </div>
-
-                                {ele.description && (
-                                  <p
-                                    className="text-[11px] text-[#475569] m-0 leading-[1.45] [display:-webkit-box] [-webkit-line-clamp:2] [-webkit-box-orient:vertical] overflow-hidden"
-                                  >
-                                    {ele.description}
-                                  </p>
-                                )}
-
-                                <div className="flex flex-wrap gap-2 text-[10px] text-[#64748b]">
-                                  {isEligible && savingsPreview > 0 && (
-                                    <span className="font-semibold" style={{ color: activeTheme.accent }}>
-                                      You save ₹{savingsPreview.toFixed(2)}
-                                    </span>
-                                  )}
-                                  {ele.discountType === "percentage" && (
-                                    <span>{ele.discount}% discount</span>
-                                  )}
-                                  {ele.discountType === "fixed" && (
-                                    <span>Flat ₹{ele.discount} off</span>
-                                  )}
-                                </div>
-
-                                {!isEligible && criteriaText && (
-                                  <span className="text-[10px] text-[#dc2626] font-semibold">
-                                    ⚠️ {criteriaText}
-                                  </span>
-                                )}
-                              </div>
-
-                              {/* Apply button column */}
-                              <div
-                                className="flex items-center pr-3 pl-0 py-3 shrink-0"
-                              >
-                                <button
-                                  type="button"
-                                  disabled={!isEligible}
-                                  onClick={() => handleCouponApply(ele)}
-                                  className={`px-3.5 py-[7px] !rounded-lg !text-xs !font-semibold whitespace-nowrap shadow-none transition-all duration-200 ease-in-out ${!isEligible ? "cursor-not-allowed" : "cursor-pointer"}`}
-                                  style={{
-                                    border: `1px solid ${activeTheme.btnBorder}`,
-                                    background: activeTheme.btnBg,
-                                    color: activeTheme.btnText,
-                                  }}
-                                >
-                                  {isApplied ? "Applied" : "Apply"}
-                                </button>
-                              </div>
-                            </div>
-                          );
-                        };
-
-                        const renderSection = (coupons, isVendorCoupon) => {
-                          if (coupons.length === 0) return null;
-
-                          return coupons.map((ele, ind) => renderCouponCard(ele, ind, isVendorCoupon));
-                        };
-
-                        if (sortedVendorCoupons.length === 0 && sortedAdminCoupons.length === 0) {
-                          return (
-                            <div className="flex flex-col items-center justify-center py-10 px-5 text-center text-[#94a3b8]">
-                              <div className="text-[32px] mb-3 text-[#cbd5e1]">🎟️</div>
-                              <span className="text-sm font-semibold text-[#64748b]">
-                                No Coupons Available
-                              </span>
-                              <span className="text-xs text-[#94a3b8] mt-1">
-                                There are no active coupons at the moment.
-                              </span>
-                            </div>
-                          );
                         }
 
+                        if (isVendorCoupon) {
+                          const vendorIdStr = String(ele.createdBy || ele.businessDetails?._id || "");
+                          const vendorItems = cartItems.filter(item => String(item.vendorId) === vendorIdStr);
+                          applicableAmount = vendorItems.reduce((sum, item) => {
+                            const price = getEffectivePrice(item);
+                            return sum + (price * (parseInt(item.quantity) || 1));
+                          }, 0);
+
+                          if (hasExpired) {
+                            isEligible = false;
+                          } else if (applicableAmount < ele.minimumPurchase) {
+                            isEligible = false;
+                            const diff = (ele.minimumPurchase - applicableAmount).toFixed(2);
+                            criteriaText = `Add ₹${diff} more of this vendor's items`;
+                          } else if (ele?.canUseCoupon === false) {
+                            isEligible = false;
+                          } else if (ele?.remainingUses === 0) {
+                            isEligible = false;
+                          } else {
+                            isEligible = true;
+                          }
+                        } else {
+                          applicableAmount = total;
+                          if (hasExpired) {
+                            isEligible = false;
+                          } else if (applicableAmount < ele.minimumPurchase) {
+                            isEligible = false;
+                            const diff = (ele.minimumPurchase - applicableAmount).toFixed(2);
+                            criteriaText = `Add ₹${diff} more to apply`;
+                          } else if (ele?.canUseCoupon === false) {
+                            isEligible = false;
+                          } else if (ele?.remainingUses === 0) {
+                            isEligible = false;
+                          } else {
+                            isEligible = true;
+                          }
+                        }
+
+                        const tier = getDiscountTier(ele);
+                        const theme = couponThemes[tier];
+                        const inactiveTheme = {
+                          bg: "#f8fafc",
+                          border: "#e2e8f0",
+                          accent: "#94a3b8",
+                          badgeBg: "#f1f5f9",
+                          badgeText: "#64748b",
+                          btnBg: "#f1f5f9",
+                          btnText: "#94a3b8",
+                          btnBorder: "#e2e8f0",
+                          label: "Unavailable",
+                        };
+                        const appliedTheme = {
+                          bg: "#f6fef9",
+                          border: "#a7f3d0",
+                          accent: "#10b981",
+                          badgeBg: "#ecfdf5",
+                          badgeText: "#059669",
+                          btnBg: "#ecfdf5",
+                          btnText: "#059669",
+                          btnBorder: "#a7f3d0",
+                          label: "Applied",
+                        };
+                        const activeTheme = !isEligible
+                          ? inactiveTheme
+                          : isApplied
+                            ? appliedTheme
+                            : theme;
+
+                        const savingsPreview = isEligible
+                          ? calculateCouponDiscount(ele, applicableAmount)
+                          : 0;
+
                         return (
-                          <>
-                            {renderSection(sortedVendorCoupons, true)}
-                            {sortedVendorCoupons.length > 0 && sortedAdminCoupons.length > 0 && (
-                              <div
-                                className="h-px bg-[#e2e8f0] my-1"
-                              />
-                            )}
-                            {renderSection(sortedAdminCoupons, false)}
-                          </>
+                          <div
+                            key={ele._id || `${ele.code}-${ind}`}
+                            className="flex items-stretch w-full rounded-xl overflow-hidden shadow-none"
+                            style={{
+                              background: activeTheme.bg,
+                              border: `1px solid ${activeTheme.border}`,
+                              opacity: isEligible ? 1 : 0.72,
+                            }}
+                          >
+                            {/* Discount badge column */}
+                            <div
+                              className="min-w-[88px] max-w-[88px] px-2.5 py-3.5 flex flex-col items-center justify-center gap-1 text-center"
+                              style={{
+                                background: activeTheme.badgeBg,
+                                borderRight: `1px dashed ${activeTheme.border}`,
+                              }}
+                            >
+                              <span
+                                className="text-xl font-extrabold leading-[1.1]"
+                                style={{ color: activeTheme.badgeText }}
+                              >
+                                {discountText}
+                              </span>
+                              <span
+                                className="text-[9px] font-bold uppercase tracking-[0.3px]"
+                                style={{ color: activeTheme.badgeText }}
+                              >
+                                OFF
+                              </span>
+                              <span
+                                className="text-[8.5px] font-bold bg-white px-1.5 py-0.5 rounded-[10px] mt-1"
+                                style={{ color: activeTheme.accent }}
+                              >
+                                {activeTheme.label}
+                              </span>
+                            </div>
+
+                            {/* Details column */}
+                            <div className="flex-1 px-3.5 py-3 flex flex-col gap-1.5 min-w-0">
+                              <h4 className="text-sm font-bold text-[#0f172a] m-0 leading-[1.3]">
+                                {ele.name}
+                              </h4>
+
+                              <div className="flex flex-wrap gap-1.5 items-center">
+                                <span
+                                  className="text-[11px] font-bold font-mono bg-white rounded-md px-2 py-0.5"
+                                  style={{ color: activeTheme.accent, border: `1px dashed ${activeTheme.border}` }}
+                                >
+                                  {ele.code}
+                                </span>
+                                {ele.minimumPurchase > 0 && (
+                                  <span className="text-[10px] text-[#64748b]">
+                                    Minimum order ₹{ele.minimumPurchase}
+                                  </span>
+                                )}
+                              </div>
+
+                              {ele.description && (
+                                <p className="text-[11px] text-[#475569] m-0 leading-[1.45] [display:-webkit-box] [-webkit-line-clamp:2] [-webkit-box-orient:vertical] overflow-hidden">
+                                  {ele.description}
+                                </p>
+                              )}
+
+                              <div className="flex flex-wrap gap-2 text-[10px] text-[#64748b]">
+                                {isEligible && savingsPreview > 0 && (
+                                  <span className="font-semibold" style={{ color: activeTheme.accent }}>
+                                    You save ₹{savingsPreview.toFixed(2)}
+                                  </span>
+                                )}
+                                {ele.discountType === "percentage" && (
+                                  <span>{ele.discount}% discount</span>
+                                )}
+                                {ele.discountType === "fixed" && (
+                                  <span>Flat ₹{ele.discount} off</span>
+                                )}
+                              </div>
+
+                              {!isEligible && criteriaText && (
+                                <span className="text-[10px] text-[#dc2626] font-semibold">
+                                  ⚠️ {criteriaText}
+                                </span>
+                              )}
+                            </div>
+
+                            {/* Apply button column */}
+                            <div className="flex items-center pr-3 pl-0 py-3 shrink-0">
+                              <button
+                                type="button"
+                                disabled={!isEligible}
+                                onClick={() => handleCouponApply(ele)}
+                                className={`px-3.5 py-[7px] !rounded-lg !text-xs !font-semibold whitespace-nowrap shadow-none transition-all duration-200 ease-in-out ${!isEligible ? "cursor-not-allowed" : "cursor-pointer"}`}
+                                style={{
+                                  border: `1px solid ${activeTheme.btnBorder}`,
+                                  background: activeTheme.btnBg,
+                                  color: activeTheme.btnText,
+                                }}
+                              >
+                                {isApplied ? "Applied" : "Apply"}
+                              </button>
+                            </div>
+                          </div>
                         );
-                      })()}
-                    </div>
+                      };
+
+                      const renderSection = (coupons, isVendorCoupon) => {
+                        if (coupons.length === 0) return null;
+                        return coupons.map((ele, ind) => renderCouponCard(ele, ind, isVendorCoupon));
+                      };
+
+                      if (sortedVendorCoupons.length === 0 && sortedAdminCoupons.length === 0) {
+                        return (
+                          <div className="flex flex-col items-center justify-center py-10 px-5 text-center text-[#94a3b8]">
+                            <div className="text-[32px] mb-3 text-[#cbd5e1]">🎟️</div>
+                            <span className="text-sm font-semibold text-[#64748b]">
+                              No Coupons Available
+                            </span>
+                            <span className="text-xs text-[#94a3b8] mt-1">
+                              There are no active coupons at the moment.
+                            </span>
+                          </div>
+                        );
+                      }
+
+                      return (
+                        <>
+                          {renderSection(sortedVendorCoupons, true)}
+                          {sortedVendorCoupons.length > 0 && sortedAdminCoupons.length > 0 && (
+                            <div className="h-px bg-[#e2e8f0] my-1" />
+                          )}
+                          {renderSection(sortedAdminCoupons, false)}
+                        </>
+                      );
+                    })()}
                   </div>
-                </>
-              );
-            })()}
-          </div>
-        </div>
+                </div>
+              </>
+            );
+          })()}
+        </BaseModal>
       )}
 
       {relevantProducts?.length > 0 && (
@@ -2369,9 +2377,9 @@ export const Cart = () => {
           style={{ backgroundImage: "url('/assets/Medicompares Background.png')" }}
         >
           <div
-            className="flex justify-start gap-3 items-center mb-5 border-l-4 border-[#8059ca] pl-3 leading-none"
+            className="flex justify-start gap-3 items-center mb-2 border-l-4 border-[#8059ca] pl-3 leading-none"
           >
-            <div className="text-xl font-medium text-[#0f172a] m-0">
+            <div className="text-lg sm:text-xl md:text-2xl font-medium text-[#0f172a] m-0">
               Recently Viewed Products
             </div>
             <span
@@ -2435,7 +2443,7 @@ export const Cart = () => {
 
             <div
               id="productCarousel"
-              className="scroll-container flex items-stretch overflow-x-auto gap-5 px-[60px] py-4 scroll-smooth"
+              className="scroll-container flex items-stretch overflow-x-auto gap-3 px-[60px] py-3 scroll-smooth"
             >
               {relevantProducts?.map((product, index) => {
                 const originalPrice = product?.price || 0;
@@ -2471,7 +2479,7 @@ export const Cart = () => {
                 return (
                   <div
                     key={`${product._id || "product"}-${product.vendor?.vendorId || "vendor"}-${product.combinedvariant?.variantId || "variant"}-${index}`}
-                    className="min-w-[220px] max-w-[220px] self-stretch bg-white rounded-xl border border-[#f1f5f9] shadow-[0_4px_20px_rgba(0,0,0,0.08)] flex flex-col shrink-0 transition-all duration-300 ease-in-out relative overflow-hidden hover:-translate-y-[3px] hover:border-[#8059ca] hover:shadow-[0_8px_24px_rgba(128,89,202,0.15)]"
+                    className="min-w-[220px] max-w-[220px] self-stretch bg-white rounded-md border border-[#f1f5f9] shadow-[0_4px_20px_rgba(0,0,0,0.08)] flex flex-col shrink-0 transition-all duration-300 ease-in-out relative overflow-hidden hover:-translate-y-[3px] hover:border-[#8059ca] hover:shadow-[0_8px_24px_rgba(128,89,202,0.15)]"
                   >
                     {/* Compare Button */}
                     <div

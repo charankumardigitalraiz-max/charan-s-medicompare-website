@@ -343,6 +343,10 @@ const ProductsData = () => {
       } else {
         service = local;
       }
+
+      if (searchTerm) {
+        targetPage = 1
+      }
       const requestBody = {
         userId: userId || userProfile?._id || null,
         maincatId: (service === "medicine" || service === "medicines" || service === "rx-medicines-and-more") ? (maincategories || id || 'all' || null) : null,
@@ -361,6 +365,8 @@ const ProductsData = () => {
         page: targetPage,
         limit: limit,
         asortby: isAlphabetFilterActive && activeAlphabetLetter ? activeAlphabetLetter.toLowerCase() : null,
+        sortBy: sortOption || null, // ✅ send current sort to backend
+
       };
 
       if (selectedPincode) {
@@ -406,7 +412,6 @@ const ProductsData = () => {
           setProductsList([]);
           return;
         }
-
 
 
         const productsWithVendor = products.map((product) => {
@@ -1672,6 +1677,7 @@ const ProductsData = () => {
     latitude,
     longitude,
     searchTerm,
+    sortOption
   ]);
 
 
@@ -1987,13 +1993,10 @@ const ProductsData = () => {
                 complexityData={complexity}
                 activeAlphabetLetter={activeAlphabetLetter}
                 userId={userId}
-
                 loadMoreBrands={loadMoreBrands}
                 brandLoading={brandLoading}
-
                 loadMoreCompositions={loadMoreCompositions}
                 compositionLoading={compositionLoading}
-
                 loadMoreCategories={loadMoreCategories}
                 categoryLoading={categoryLoading}
               />
@@ -2093,6 +2096,7 @@ const ProductsData = () => {
                   }}
                   value={sortOption}
                   onChange={(e) => setSortOption(e.target.value)}
+                // onChange={(e) => handleSortOptionChange(e.target.value)}
                 />
 
                 {searchTerm && searchTerm.trim() && (

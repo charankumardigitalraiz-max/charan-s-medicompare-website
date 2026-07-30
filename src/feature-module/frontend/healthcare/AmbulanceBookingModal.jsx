@@ -521,7 +521,7 @@ const AmbulanceBookingModal = ({
               <button
                 type="submit"
                 disabled={isSearching || !isLoaded}
-                className={`w-full p-[10px] text-white border-none rounded-[8px] text-[13px] font-semibold flex items-center justify-center gap-[8px] ${isSearching ? "bg-[#9ca3af] cursor-not-allowed" : "bg-[#8059ca] cursor-pointer"}`}
+                className={`w-full p-[10px] text-white border-none !rounded-[8px] text-[13px] font-semibold flex items-center justify-center gap-[8px] ${isSearching ? "bg-[#9ca3af] cursor-not-allowed" : "bg-[#8059ca] cursor-pointer"}`}
               >
                 <i className="fas fa-search"></i> Search
               </button>
@@ -590,7 +590,7 @@ const AmbulanceBookingModal = ({
                     className="bg-white border border-solid border-[#e5e7eb] rounded-[12px] p-[10px] shadow-[0_1px_3px_rgba(0,0,0,0.1)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.12)] transition-all duration-200 ease h-full cursor-pointer"
                   >
                     <h4
-                      className="text-[13px] font-medium mb-[10px] text-[#111]"
+                      className="!text-[15px] !font-medium mb-[10px] !text-[#111]"
                     >
                       {name} {""}
                     </h4>
@@ -664,7 +664,7 @@ const AmbulanceBookingModal = ({
 
                       <button
                         type="submit"
-                        className="py-[5px] px-[10px] bg-[#8059ca] text-white border-none rounded-[4px] text-[12px] font-semibold cursor-pointer whitespace-nowrap"
+                        className="py-[5px] px-[10px] bg-[#8059ca] text-white border-none !rounded-[4px] text-[12px] font-semibold cursor-pointer whitespace-nowrap"
                         onClick={() => handleClick(vendorItem)}
                       >
                         Book Now
@@ -732,7 +732,7 @@ const AmbulanceBookingModal = ({
             <button
               type="button"
               onClick={onClose}
-              className="text-[28px] bg-none border-none cursor-pointer"
+              className="!text-[28px] !rounde-full bg-none border-none cursor-pointer"
             >
               ×
             </button>
@@ -766,7 +766,7 @@ const AmbulanceBookingModal = ({
             <button
               type="button"
               onClick={onClose}
-              className="bg-[#f3f4f6] border-none w-[36px] h-[36px] rounded-full text-[24px] cursor-pointer flex items-center justify-center pb-[4px]"
+              className="bg-[#f3f4f6] border-none w-[36px] h-[36px] !rounded-full !text-[24px] cursor-pointer flex items-center justify-center"
             >
               ×
             </button>
