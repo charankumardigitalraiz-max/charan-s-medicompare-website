@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+﻿import React, { useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 // import { UseMediaQuery } from "../../hooks/UseMediaQuery";
 import ProductImage from "./ProductImage.jsx";
@@ -331,7 +331,7 @@ const ProductCardMC = ({
       </div>
 
       {/* {price > 0 && (
-  <div className="d-flex justify-content-end fw-semibold mt-2 pe-2">
+  <div className="flex justify-end fw-semibold mt-2 pr-2">
     <PriceDisplay 
       price={price} 
       size="sm" 
@@ -485,15 +485,15 @@ const ProductCardMC = ({
       )}
 
       <div className="tablet-card-content">
-        <p className="tablet-card-title text-capitalize">
+        <p className="tablet-card-title capitalize">
           {truncateText(productName, titleMaxLength)}
         </p>
 
         <div
-          className="d-flex flex-wrap gap-1"
+          className="flex flex-wrap gap-1"
           style={{ fontSize: "10px", color: "#6b7280" }}
         >
-          <span className="d-flex align-items-center gap-1">
+          <span className="flex items-center gap-1">
             <i
               className="fas fa-shield-alt"
               style={{ fontSize: "9px", color: "#10b981" }}
@@ -504,7 +504,7 @@ const ProductCardMC = ({
           {composition && (
             <span
               ref={compositionRef}
-              className="d-flex align-items-center gap-1"
+              className="flex items-center gap-1"
               style={{ fontSize: "10px", color: "#6b7280", cursor: "help" }}
               data-bs-toggle="tooltip"
             >
@@ -518,7 +518,7 @@ const ProductCardMC = ({
 
           {manufacturerName && (
             <span
-              className="d-flex align-items-center gap-1"
+              className="flex items-center gap-1"
               style={{ fontSize: "10px", color: "#6b7280", cursor: "help" }}
             >
               <i
@@ -557,7 +557,7 @@ const ProductCardMC = ({
         )} */}
 
         {isMobile && effectivePrice > 0 && (
-          <div className="d-flex flex-row align-items-end price-details-wrapper">
+          <div className="flex flex-row items-end price-details-wrapper">
             <span className="tablet-card-price-amount">₹{formatCurrency(effectivePrice)}</span>
             {itemDiscountprice &&
               itemDiscountprice > 0 &&
@@ -570,16 +570,16 @@ const ProductCardMC = ({
       </div>
       <div className="tablet-card-vendor-area">
         <div
-          className="tablet-card-footer d-flex flex-column gap-1"
+          className="tablet-card-footer flex flex-col gap-1"
           onClick={handleVendorClick}
           style={{
             cursor:
               onVendorClick && item?.vendordetails ? "pointer" : "default",
           }}
         >
-          <div className="d-flex align-items-center justify-content-between w-100 vendor-price-summary gap-2">
+          <div className="flex items-center justify-between w-full vendor-price-summary gap-2">
             {vendorName ? (
-              <div className="d-flex align-items-center gap-2">
+              <div className="flex items-center gap-2">
                 <div className="vendor-img-wrapper">
                   {vendorImage ? (
                     <img src={vendorImage} alt={vendorName} />
@@ -589,7 +589,7 @@ const ProductCardMC = ({
                     </div>
                   )}
                 </div>
-                <div className="vendor-info d-flex flex-column align-items-start">
+                <div className="vendor-info flex flex-col items-start">
                   {/* <span className="vendor-label">Sold by</span> */}
                   <p className="tablet-card-footer-title m-0">
                     {truncateText(vendorName, vendorNameMaxLength)}
@@ -601,7 +601,7 @@ const ProductCardMC = ({
                     </p>
                   )}
                   {!isMobile && effectivePrice > 0 && (
-                    <div className="d-flex flex-row align-items-center justify-content-center gap-1 price-details-wrapper">
+                    <div className="flex flex-row items-center justify-center gap-1 price-details-wrapper">
                       <span className="tablet-card-price-amount">
                         ₹{formatCurrency(effectivePrice)}
                       </span>
@@ -618,7 +618,7 @@ const ProductCardMC = ({
                 </div>
               </div>
             ) : (
-              <div className="d-flex align-items-center gap-2">
+              <div className="flex items-center gap-2">
                 <div className="vendor-img-wrapper">
                   <img src="/assets/img/logo.png" alt="medicompare" />
 
@@ -626,7 +626,7 @@ const ProductCardMC = ({
                     Medicompares
                   </div> */}
                 </div>
-                <div className="vendor-info d-flex flex-column align-items-start">
+                <div className="vendor-info flex flex-col items-start">
                   {/* <span className="vendor-label">Sold by</span> */}
                   <p className="tablet-card-footer-title m-0">
                     {truncateText("MediCompares", vendorNameMaxLength)}
@@ -638,7 +638,7 @@ const ProductCardMC = ({
                     </p>
                   )}
                   {!isMobile && effectivePrice > 0 && (
-                    <div className="d-flex flex-row align-items-center justify-content-center price-details-wrapper">
+                    <div className="flex flex-row items-center justify-center price-details-wrapper">
                       <span className="tablet-card-price-amount">
                         ₹{formatCurrency(effectivePrice)}
                       </span>
@@ -681,3 +681,4 @@ const ProductCardMC = ({
   );
 };
 export default ProductCardMC;
+

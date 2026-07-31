@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+﻿import { useEffect, useState, useRef } from "react";
 import { createPortal } from "react-dom";
 import {
   Link,
@@ -17,13 +17,12 @@ import { axiosUserInstance, axiosCommonInstance } from "../../Apiservice";
 import { getImageUrl } from "../../utils/index";
 import { deleteFCMToken } from "../../core/redux/firebase/fcm";
 import toast from "react-hot-toast";
-
+import { GOOGLE_MAPS_API_KEY } from "../../utils/index"
 // Constants
 const CART_STORAGE_KEY = "pharmacyCart";
 const PHONE_STORAGE_KEY = "phone";
 const TOKEN_STORAGE_KEY = "medicomparestoken";
 const IS_CART_STORAGE_KEY = "isCart";
-const GOOGLE_MAPS_API_KEY = "AIzaSyBW_ML0ppoU2o_tsOmT5eMveCwCFP3AXHU";
 const libraries = ["places"];
 
 // Memory cache to prevent refetching addresses and notifications on every route transition
@@ -79,14 +78,14 @@ const Home2Header = () => {
       let height = 0;
       const isMobile = window.innerWidth <= 991;
 
-      const headerEl = document.querySelector('header.d-lg-none');
+      const headerEl = document.querySelector('header.mobile-header');
       if (headerEl) {
         setMobileHeaderHeight(headerEl.offsetHeight);
       }
 
       if (isMobile) {
-        const mobileHeader = document.querySelector('header.d-lg-none');
-        const mobileSearch = document.querySelector('section.d-lg-none');
+        const mobileHeader = document.querySelector('header.mobile-header');
+        const mobileSearch = document.querySelector('section.mobile-search');
         if (mobileHeader) {
           height += mobileHeader.offsetHeight;
         }
@@ -658,7 +657,7 @@ const Home2Header = () => {
     <>
       {/* Mobile Header */}
       <header
-        className="d-lg-none"
+        className="mobile-header lg:hidden"
         style={{
           position: "fixed",
           top: 0,
@@ -667,7 +666,7 @@ const Home2Header = () => {
           width: "100%",
           padding: "11px 15px",
           display: isLocationUpdating ? "none" : "flex",
-          flexDirection: "row",
+          flexDirection: "flex flex-wrap",
           flexWrap: "nowrap",
           alignItems: "center",
           justifyContent: "space-between",
@@ -683,7 +682,7 @@ const Home2Header = () => {
             gap: "6px",
             minWidth: 0,
             flex: 1,
-            flexDirection: "row",
+            flexDirection: "flex flex-wrap",
             flexWrap: "nowrap",
           }}
         >
@@ -736,7 +735,7 @@ const Home2Header = () => {
             alignItems: "center",
             gap: "8px",
             flexShrink: 0,
-            flexDirection: "row",
+            flexDirection: "flex flex-wrap",
             flexWrap: "nowrap",
           }}
         >
@@ -826,7 +825,7 @@ const Home2Header = () => {
             >
               {profiles?.files && profiles.files.length > 0 ? (
                 <img
-                  className="rounded-circle"
+                  className="!rounded-full"
                   src={getImageUrl(profiles.files[0])}
                   loading="lazy"
                   alt={profiles?.first_name}
@@ -914,7 +913,7 @@ const Home2Header = () => {
 
         return !isSearchExcluded && (
           <section
-            className="d-lg-none fixed left-0 right-0 px-[15px] py-[14px] bg-white border-b border-solid border-[#f1f1f1] z-[998]"
+            className="mobile-header lg:hidden fixed left-0 right-0 px-[15px] py-[14px] bg-white border-b border-solid border-[#f1f1f1] z-[998]"
             style={{
               top: `${mobileHeaderHeight}px`,
             }}
@@ -950,7 +949,7 @@ const Home2Header = () => {
 
       {/* Desktop Header */}
       <header
-        className="header header-custom header-fixed inner-header d-none d-lg-block"
+        className="header header-custom header-fixed inner-header hidden lg:block"
         style={{
           borderBottom: "none",
           zIndex: "999999999",
@@ -963,7 +962,7 @@ const Home2Header = () => {
         }}
       >
         <div
-          className="container-fluid "
+          className="w-full px-4 "
           style={{ backgroundColor: "#fcfcfc" }}
         >
           <nav className="navbar navbar-expand-lg header-nav ">
@@ -979,7 +978,7 @@ const Home2Header = () => {
               </Link>
 
               <span
-                className="d-flex align-items-center text-dark fw-semibold d-none d-lg-block location-selector"
+                className="flex items-center text-dark font-semibold hidden lg:block location-selector"
                 title={currentLocation?.name || "Select Location"}
                 style={{
                   marginLeft: "-10px",
@@ -989,7 +988,7 @@ const Home2Header = () => {
                 }}
                 onClick={() => handleLocationClick("right")}
               >
-                <div className="d-flex align-items-center">
+                <div className="flex items-center">
                   <div
                     style={{
                       width: "30px",
@@ -1010,7 +1009,7 @@ const Home2Header = () => {
                     ></i>
                   </div>
                   <div
-                    className="pointer d-flex flex-column tooltip-wrappers"
+                    className="pointer flex flex-col tooltip-wrappers"
                     id="locationTooltip"
                     style={{
                       minWidth: "180px",
@@ -1018,7 +1017,7 @@ const Home2Header = () => {
                     }}
                   >
                     {isLocationUpdating ? (
-                      <div className="d-flex align-items-center">
+                      <div className="flex items-center">
                         <i
                           className="fa-solid fa-spinner fa-spin me-2"
                           style={{
@@ -1026,7 +1025,7 @@ const Home2Header = () => {
                             fontSize: "12px",
                           }}
                         ></i>
-                        <div className="d-flex flex-column hover-texts">
+                        <div className="flex flex-col hover-texts">
                           <span
                             style={{
                               fontSize: "12px",
@@ -1053,7 +1052,7 @@ const Home2Header = () => {
                     ) : (
                       <>
                         <div
-                          className="d-flex align-items-center tooltip-wrappers"
+                          className="flex items-center tooltip-wrappers"
                           style={{ marginBottom: "3px" }}
                         >
                           <span
@@ -1083,7 +1082,7 @@ const Home2Header = () => {
                           ></i>
                         </div>
                         <div
-                          className="d-flex align-items-center"
+                          className="flex items-center"
                           style={{ maxWidth: "150px", minWidth: 0 }}
                         >
                           <small
@@ -1148,8 +1147,8 @@ const Home2Header = () => {
                         zIndex: 1,
                       }}
                     >
-                      <div className="row">
-                        <div className="col-12">
+                      <div className="flex flex-wrap">
+                        <div className="w-full">
                           <div
                             style={{
                               maxWidth: "100%",
@@ -1269,7 +1268,7 @@ const Home2Header = () => {
                         target="_blank"
                       >
                         <button
-                          className="btn btn-md btn-primary-gradient d-inline-flex align-items-center rounded-pill"
+                          className="btn btn-md btn-primary-gradient d-inline-flex items-center rounded-pill"
                           to=""
                           style={{
                             fontSize: "13px",
@@ -1284,7 +1283,7 @@ const Home2Header = () => {
                     </li> */}
                     <li>
                       <Link
-                        className="btn btn-md btn-primary-gradient d-inline-flex align-items-center rounded-pill"
+                        className="btn btn-md btn-primary-gradient d-inline-flex items-center rounded-pill"
                         to="/login"
                         style={{
                           fontSize: "13px",
@@ -1310,7 +1309,7 @@ const Home2Header = () => {
                       <span className="user-img">
                         {profiles?.files && profiles.files.length > 0 ? (
                           <img
-                            className="rounded-circle"
+                            className="!rounded-full"
                             src={getImageUrl(profiles.files[0])}
                             loading="lazy"
                             alt={profiles?.first_name}
@@ -1323,7 +1322,7 @@ const Home2Header = () => {
                           />
                         ) : (
                           <div
-                            className="rounded-circle d-flex align-items-center justify-content-center"
+                            className="!rounded-full flex items-center justify-center"
                             style={{
                               width: "36px",
                               height: "36px",
@@ -1352,7 +1351,7 @@ const Home2Header = () => {
                       >
                         {/* Header */}
                         <div
-                          className="d-flex align-items-center gap-1 px-3 py-2"
+                          className="flex items-center gap-1 px-3 py-2"
                           style={{ background: "#F8F9FA" }}
                         >
                           {profiles?.files && profiles.files.length > 0 ? (
@@ -1370,7 +1369,7 @@ const Home2Header = () => {
                             />
                           ) : (
                             <div
-                              className="d-flex align-items-center justify-content-center"
+                              className="flex items-center justify-center"
                               style={{
                                 width: "44px",
                                 height: "44px",
@@ -1416,14 +1415,14 @@ const Home2Header = () => {
                         {/* Items */}
                         <Link
                           to="/my-orders"
-                          className="dropdown-item d-flex align-items-center gap-2 px-3 py-2"
+                          className="dropdown-item flex items-center gap-2 px-3 py-2"
                           style={{ fontSize: "12px", color: "#555" }}
                         >
                           <i className="fas fa-user-circle"></i>
                           My Account
                         </Link>
                         <button
-                          className="dropdown-item d-flex align-items-center gap-2 px-3 py-2 text-danger"
+                          className="dropdown-item flex items-center gap-2 px-3 py-2 text-red-500"
                           onClick={confirmLogout}
                           style={{ fontSize: "12px" }}
                         >
@@ -1763,3 +1762,4 @@ const Home2Header = () => {
 };
 
 export default Home2Header;
+

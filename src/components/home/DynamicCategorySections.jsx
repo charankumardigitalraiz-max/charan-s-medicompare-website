@@ -168,7 +168,7 @@ const DynamicCategorySections = ({
 
       return (
         <section
-          className={`container-fluid px-3 py-3 my-3${liteMode ? " home-dynamic-section-lite" : ""
+          className={`w-full px-3 py-3 my-3${liteMode ? " home-dynamic-section-lite" : ""
             }`}
           style={
             liteMode
@@ -193,7 +193,7 @@ const DynamicCategorySections = ({
           key={section._id}
         >
 
-          <div className="d-flex align-items-center justify-content-between flex-wrap gap-3 mb-3">
+          <div className="flex items-center justify-between flex-wrap gap-3 mb-3">
             <div
               style={{
                 padding: "4px 10px",
@@ -205,7 +205,7 @@ const DynamicCategorySections = ({
                 color: "#8059ca",
               }}
             >
-              <i className="fas fa-bolt me-1"></i>
+              <i className="fas fa-bolt mr-1"></i>
               {title}
             </div>
 
@@ -226,13 +226,9 @@ const DynamicCategorySections = ({
                 e.currentTarget.style.background = "#8059ca";
                 e.currentTarget.style.color = "#ffffff";
               }}
-            // onMouseLeave={(e) => {
-            //   e.currentTarget.style.background = "#ffffff";
-            //   e.currentTarget.style.color = "#8059ca";
-            // }}
             >
               {isMobile ? "" : "View All"}
-              <i className={isMobile ? "fas fa-arrow-right" : "fas fa-arrow-right ms-1"}></i>
+              <i className={isMobile ? "fas fa-arrow-right" : "fas fa-arrow-right ml-1"}></i>
             </Link>
           </div>
 
@@ -266,7 +262,7 @@ const DynamicCategorySections = ({
                 })}
               </Slider>
             ) : (
-              <div className="row g-3">
+              <div className="flex flex-wrap -mx-3">
                 {products.map((item, i) => {
                   const normalizedItem = normalizeItem(item);
                   const variant = Array.isArray(normalizedItem?.variants)
@@ -276,7 +272,7 @@ const DynamicCategorySections = ({
                   return (
                     <div
                       key={i}
-                      className="col-xl-2 col-lg-3 col-md-4 col-6"
+                      className="w-1/2 md:w-[33.333%] lg:w-[25%] xl:w-[16.666%] px-3 mb-6"
                     >
                       <ProductCard
                         item={normalizedItem}

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+﻿import { useState, useEffect, useRef } from "react";
 import {
   GoogleMap,
   Marker,
@@ -8,6 +8,7 @@ import {
 import toast from "react-hot-toast";
 import { axiosCommonInstance } from "../Apiservice";
 import { useResponsive } from "../hooks";
+import { GOOGLE_MAPS_API_KEY } from "../utils";
 
 const libraries = ["places"];
 
@@ -238,16 +239,39 @@ const LocationModal = ({
     },
   });
 
-  const GOOGLE_MAPS_API_KEY =
-    import.meta.env.VITE_GOOGLE_MAPS_API_KEY ||
-    "AIzaSyBW_ML0ppoU2o_tsOmT5eMveCwCFP3AXHU";
+  // const GOOGLE_MAPS_API_KEY =
+  //   import.meta.env.VITE_GOOGLE_MAPS_API_KEY ||
+  //   "AIzaSyBW_ML0ppoU2o_tsOmT5eMveCwCFP3AXHU";
 
   const { isLoaded: localIsLoaded, loadError } = useJsApiLoader({
-    googleMapsApiKey: "AIzaSyBW_ML0ppoU2o_tsOmT5eMveCwCFP3AXHU",
+    googleMapsApiKey: GOOGLE_MAPS_API_KEY,
     libraries: libraries,
   });
 
   const isLoaded = isLoadedProp !== null ? isLoadedProp : localIsLoaded;
+
+  useEffect(() => {
+    const handleFocus = () => {
+      setTimeout(() => {
+        const pac = document.querySelector(".pac-container");
+        if (pac) {
+          pac.classList.add(
+            "!z-[10000000]",
+            "!max-h-[320px]",
+            "!overflow-y-auto",
+            "!rounded-lg",
+            "!shadow-lg",
+            "!border",
+            "!border-slate-100",
+            "!font-sans"
+          );
+        }
+      }, 300);
+    };
+
+    document.addEventListener("focusin", handleFocus);
+    return () => document.removeEventListener("focusin", handleFocus);
+  }, []);
 
   useEffect(() => {
     if (editingAddress) {
@@ -390,9 +414,9 @@ const LocationModal = ({
         // If still no pincode, try reverse geocoding for more detailed info
         if (!pincode) {
           try {
-            const GOOGLE_MAPS_API_KEY =
-              import.meta.env.VITE_GOOGLE_MAPS_API_KEY ||
-              "AIzaSyBW_ML0ppoU2o_tsOmT5eMveCwCFP3AXHU";
+            // const GOOGLE_MAPS_API_KEY =
+            //   import.meta.env.VITE_GOOGLE_MAPS_API_KEY ||
+            //   "AIzaSyBW_ML0ppoU2o_tsOmT5eMveCwCFP3AXHU";
             const response = await fetch(
               `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${GOOGLE_MAPS_API_KEY}`,
             );
@@ -955,10 +979,10 @@ const LocationModal = ({
                 flexDirection: "column",
               }}
             >
-              <div className="row g-0" style={{ flex: 1 }}>
+              <div className="flex flex-wrap" style={{ flex: 1 }}>
                 {/* Google Map - Mobile */}
                 <div
-                  className="col-12"
+                  className="w-full"
                   style={{
                     position: "relative",
                     height: "300px",
@@ -966,19 +990,19 @@ const LocationModal = ({
                   }}
                 >
                   {loadError ? (
-                    <div className="d-flex flex-column align-items-center justify-content-center h-100 bg-light border rounded p-4">
+                    <div className="flex flex-col items-center justify-center h-full bg-slate-50 border rounded p-4">
                       <i
-                        className="fas fa-exclamation-triangle text-warning mb-3"
+                        className="fas fa-exclamation-triangle text-amber-500 mb-3"
                         style={{ fontSize: "2rem" }}
                       ></i>
                       <h6
-                        className="text-danger mb-2"
+                        className="text-red-500 mb-2"
                         style={{ fontSize: "14px" }}
                       >
                         Google Maps Error
                       </h6>
                       <p
-                        className="text-muted text-center small mb-3"
+                        className="text-slate-500 text-center small mb-3"
                         style={{ fontSize: "12px" }}
                       >
                         Unable to load Google Maps. Please check your API key
@@ -1031,7 +1055,7 @@ const LocationModal = ({
                       </button>
                     </div>
                   ) : (
-                    <div className="d-flex flex-column align-items-center justify-content-center h-100 bg-light border rounded">
+                    <div className="flex flex-col items-center justify-center h-full bg-slate-50 border rounded">
                       <div
                         className="spinner-border text-primary mb-3"
                         role="status"
@@ -1039,7 +1063,7 @@ const LocationModal = ({
                         <span className="visually-hidden">Loading...</span>
                       </div>
                       <p
-                        className="text-muted mb-0"
+                        className="text-slate-500 mb-0"
                         style={{ fontSize: "12px" }}
                       >
                         Loading map...
@@ -1050,10 +1074,10 @@ const LocationModal = ({
 
                 {/* Form - Mobile */}
                 <div
-                  className="col-12 bg-white"
+                  className="w-full bg-white"
                   style={{ position: "relative" }}
                 >
-                  <div className="p-3 d-flex flex-column">
+                  <div className="p-3 flex flex-col">
                     {/* Tabs */}
                     <div className="mb-2">
                       <ul
@@ -1088,7 +1112,7 @@ const LocationModal = ({
                     </div>
 
                     <div
-                      className="tab-content pt-2 flex-grow-1 d-flex flex-column"
+                      className="tab-content pt-2 flex-grow-1 flex flex-col"
                       style={{ minHeight: "400px" }}
                     >
                       <div
@@ -1096,7 +1120,7 @@ const LocationModal = ({
                           }`}
                         id="address-details"
                       >
-                        <div className="d-flex flex-column">
+                        <div className="flex flex-col">
                           <div className="mb-3">
                             <label
                               className="form-label mb-2"
@@ -1104,7 +1128,7 @@ const LocationModal = ({
                             >
                               Search Location (optional)
                             </label>
-                            <div className="d-flex gap-2 align-items-center mb-2">
+                            <div className="flex gap-2 items-center mb-2">
                               <div className="position-relative flex-grow-1">
                                 <i
                                   className="fa-solid fa-location-dot position-absolute"
@@ -1216,8 +1240,8 @@ const LocationModal = ({
 
                           {/* Pincode, City, State */}
                           <div className="mb-3">
-                            <div className="row g-2">
-                              <div className="col-12 col-md-4">
+                            <div className="flex flex-wrap -mx-1 [&>*]:px-1">
+                              <div className="w-full md:w-[33.333%]">
                                 <label
                                   className="form-label small"
                                   style={{ fontSize: "12px" }}
@@ -1226,13 +1250,13 @@ const LocationModal = ({
                                 </label>
                                 <input
                                   type="text"
-                                  className="form-control bg-light"
+                                  className="form-control bg-slate-50"
                                   value={addressDetails.pincode}
                                   readOnly
                                   style={{ fontSize: "13px" }}
                                 />
                               </div>
-                              <div className="col-12 col-md-4">
+                              <div className="w-full md:w-[33.333%]">
                                 <label
                                   className="form-label small"
                                   style={{ fontSize: "12px" }}
@@ -1241,13 +1265,13 @@ const LocationModal = ({
                                 </label>
                                 <input
                                   type="text"
-                                  className="form-control bg-light"
+                                  className="form-control bg-slate-50"
                                   value={addressDetails.city}
                                   readOnly
                                   style={{ fontSize: "13px" }}
                                 />
                               </div>
-                              <div className="col-12 col-md-4">
+                              <div className="w-full md:w-[33.333%]">
                                 <label
                                   className="form-label small"
                                   style={{ fontSize: "12px" }}
@@ -1256,7 +1280,7 @@ const LocationModal = ({
                                 </label>
                                 <input
                                   type="text"
-                                  className="form-control bg-light"
+                                  className="form-control bg-slate-50"
                                   value={addressDetails.state}
                                   readOnly
                                   style={{ fontSize: "13px" }}
@@ -1264,10 +1288,10 @@ const LocationModal = ({
                               </div>
                             </div>
                             <small
-                              className="text-muted"
+                              className="text-slate-500"
                               style={{ fontSize: "10px" }}
                             >
-                              <i className="fas fa-info-circle me-1"></i>
+                              <i className="fas fa-info-circle mr-1"></i>
                               These fields are automatically filled when you
                               select a location
                             </small>
@@ -1276,7 +1300,7 @@ const LocationModal = ({
                           <div className="mt-auto">
                             <button
                               type="button"
-                              className="btn btn-primary w-100"
+                              className="btn btn-primary w-full"
                               onClick={() =>
                                 handleTabChange("recipient-details")
                               }
@@ -1296,7 +1320,7 @@ const LocationModal = ({
                       >
                         <form
                           onSubmit={handleSaveAddress}
-                          className="d-flex flex-column"
+                          className="flex flex-col"
                         >
                           <div className="mb-2">
                             <label
@@ -1304,9 +1328,9 @@ const LocationModal = ({
                               style={{ fontSize: "13px" }}
                             >
                               Save this address as{" "}
-                              <span className="text-danger">*</span>
+                              <span className="text-red-500">*</span>
                             </label>
-                            <div className="d-flex gap-2 flex-wrap">
+                            <div className="flex gap-2 flex-wrap">
                               <button
                                 type="button"
                                 className={`custom-btn ${formData.addressType === "home"
@@ -1392,8 +1416,8 @@ const LocationModal = ({
                             </div>
                           )}
 
-                          <div className="row g-2 mb-2">
-                            <div className="col-12 mb-2 d-flex gap-2 align-items-center">
+                          <div className="flex flex-wrap -mx-1 [&>*]:px-1 mb-2">
+                            <div className="w-full mb-2 flex gap-2 items-center">
                               <div className="position-relative flex-grow-1">
                                 <i
                                   className="fa-solid fa-location-dot position-absolute"
@@ -1476,7 +1500,7 @@ const LocationModal = ({
                                 {locationChange ? "Save" : "Change"}
                               </button>
                             </div>
-                            <div className="col-12">
+                            <div className="w-full">
                               <input
                                 type="text"
                                 className="form-control"
@@ -1489,7 +1513,7 @@ const LocationModal = ({
                                 style={{ fontSize: "14px" }}
                               />
                             </div>
-                            <div className="col-12">
+                            <div className="w-full">
                               <input
                                 type="text"
                                 className="form-control"
@@ -1504,8 +1528,8 @@ const LocationModal = ({
                             </div>
                           </div>
 
-                          <div className="row g-2 mb-2">
-                            <div className="col-12">
+                          <div className="flex flex-wrap -mx-1 [&>*]:px-1 mb-2">
+                            <div className="w-full">
                               <input
                                 type="text"
                                 className="form-control"
@@ -1517,7 +1541,7 @@ const LocationModal = ({
                                 style={{ fontSize: "14px" }}
                               />
                             </div>
-                            <div className="col-12">
+                            <div className="w-full">
                               <textarea
                                 className="form-control"
                                 rows="3"
@@ -1537,14 +1561,14 @@ const LocationModal = ({
                           <div className="mt-auto">
                             <button
                               type="submit"
-                              className="btn btn-primary w-100"
+                              className="btn btn-primary w-full"
                               disabled={isSubmitting}
                               style={{ fontSize: "14px", padding: "10px" }}
                             >
                               {isSubmitting ? (
                                 <>
                                   <div
-                                    className="spinner-border spinner-border-sm me-2"
+                                    className="spinner-border spinner-border-sm mr-2"
                                     role="status"
                                   >
                                     <span className="visually-hidden">
@@ -1555,7 +1579,7 @@ const LocationModal = ({
                                 </>
                               ) : (
                                 <>
-                                  <i className="fas fa-save me-2"></i>
+                                  <i className="fas fa-save mr-2"></i>
                                   {editingAddress
                                     ? "Update Address"
                                     : "Save Address"}
@@ -1627,20 +1651,20 @@ const LocationModal = ({
             }}
           >
             <div className="modal-body p-0">
-              <div className="row g-0">
+              <div className="flex flex-wrap">
                 {/* Google Map */}
                 <div
-                  className="col-md-7"
+                  className="md:w-[58.333%]"
                   style={{ position: "relative", height: "500px" }}
                 >
                   {loadError ? (
-                    <div className="d-flex flex-column align-items-center justify-content-center h-100 bg-light border rounded p-4">
+                    <div className="flex flex-col items-center justify-center h-full bg-slate-50 border rounded p-4">
                       <i
-                        className="fas fa-exclamation-triangle text-warning mb-3"
+                        className="fas fa-exclamation-triangle text-amber-500 mb-3"
                         style={{ fontSize: "3rem" }}
                       ></i>
-                      <h6 className="text-danger mb-2">Google Maps Error</h6>
-                      <p className="text-muted text-center small mb-3">
+                      <h6 className="text-red-500 mb-2">Google Maps Error</h6>
+                      <p className="text-slate-500 text-center small mb-3">
                         Unable to load Google Maps. Please check your API key
                         and configuration.
                       </p>
@@ -1687,22 +1711,22 @@ const LocationModal = ({
                       </button>
                     </div>
                   ) : (
-                    <div className="d-flex flex-column align-items-center justify-content-center h-100 bg-light border rounded">
+                    <div className="flex flex-col items-center justify-center h-full bg-slate-50 border rounded">
                       <div
                         className="spinner-border text-primary mb-3"
                         role="status"
                       >
                         <span className="visually-hidden">Loading...</span>
                       </div>
-                      <p className="text-muted mb-0">Loading map...</p>
+                      <p className="text-slate-500 mb-0">Loading map...</p>
                     </div>
                   )}
                 </div>
 
                 {/* Form */}
-                <div className="col-md-5 bg-white" style={{ height: "500px" }}>
-                  <div className="p-4 d-flex flex-column h-100">
-                    <div className="d-flex justify-content-between align-items-center mb-2">
+                <div className="md:w-[41.666%] bg-white" style={{ height: "500px" }}>
+                  <div className="p-4 flex flex-col h-full">
+                    <div className="flex justify-between items-center mb-2">
                       <h5 className="mb-0">
                         {editingAddress ? "Edit Address" : "Add New Address"}
                       </h5>
@@ -1743,20 +1767,20 @@ const LocationModal = ({
                       </ul>
                     </div>
 
-                    <div className="tab-content pt-2 flex-grow-1 d-flex flex-column">
+                    <div className="tab-content pt-2 flex-grow-1 flex flex-col">
                       {/* Address Details Tab */}
                       <div
                         className={`tab-pane ${activeTab === "address-details" ? "show active" : ""
                           }`}
                         id="address-details"
                       >
-                        <div className="d-flex flex-column h-100">
+                        <div className="flex flex-col h-full">
                           {/* Location Search with Google Places Autocomplete */}
                           <div className="mb-1">
                             <label className="form-label mb-2">
                               Search Location (optional)
                             </label>
-                            <div className="d-flex gap-2 align-items-center mb-1">
+                            <div className="flex gap-2 items-center mb-1">
                               <div className="position-relative flex-grow-1">
                                 <i
                                   className="fa-solid fa-location-dot position-absolute"
@@ -1855,14 +1879,14 @@ const LocationModal = ({
                           </div>
 
                           <div className="mb-4">
-                            <div className="row g-2">
+                            <div className="flex flex-wrap -mx-1 [&>*]:px-1">
                               <div className="col-md-6">
                                 <label className="form-label small">
                                   Pincode
                                 </label>
                                 <input
                                   type="text"
-                                  className="form-control bg-light"
+                                  className="form-control bg-slate-50"
                                   value={addressDetails.pincode}
                                   readOnly
                                   style={{ fontSize: "14px" }}
@@ -1872,7 +1896,7 @@ const LocationModal = ({
                                 <label className="form-label small">City</label>
                                 <input
                                   type="text"
-                                  className="form-control bg-light"
+                                  className="form-control bg-slate-50"
                                   value={addressDetails.city}
                                   readOnly
                                   style={{ fontSize: "14px" }}
@@ -1884,7 +1908,7 @@ const LocationModal = ({
                                 </label>
                                 <input
                                   type="text"
-                                  className="form-control bg-light"
+                                  className="form-control bg-slate-50"
                                   value={addressDetails.state}
                                   readOnly
                                   style={{ fontSize: "14px" }}
@@ -1892,10 +1916,10 @@ const LocationModal = ({
                               </div>
                             </div>
                             <small
-                              className="text-muted"
+                              className="text-slate-500"
                               style={{ fontSize: "11px" }}
                             >
-                              <i className="fas fa-info-circle me-1"></i>
+                              <i className="fas fa-info-circle mr-1"></i>
                               These fields are automatically filled when you
                               select a location
                             </small>
@@ -1904,7 +1928,7 @@ const LocationModal = ({
                           <div className="mt-auto">
                             <button
                               type="button"
-                              className="btn btn-primary w-100"
+                              className="btn btn-primary w-full"
                               onClick={() =>
                                 handleTabChange("recipient-details")
                               }
@@ -1923,14 +1947,14 @@ const LocationModal = ({
                       >
                         <form
                           onSubmit={handleSaveAddress}
-                          className="d-flex flex-column h-100"
+                          className="flex flex-col h-full"
                         >
                           <div className="mb-2">
                             <label className="form-label mb-2">
                               Save this address as{" "}
-                              <span className="text-danger">*</span>
+                              <span className="text-red-500">*</span>
                             </label>
-                            <div className="d-flex gap-2 flex-wrap">
+                            <div className="flex gap-2 flex-wrap">
                               <button
                                 type="button"
                                 className={`custom-btn ${formData.addressType === "home"
@@ -1977,7 +2001,7 @@ const LocationModal = ({
                           </div>
 
                           <div className="row mb-2 mt-1">
-                            <div className="col-md-12 mb-2 d-flex gap-2 align-items-center">
+                            <div className="col-md-12 mb-2 flex gap-2 items-center">
                               <div className="position-relative flex-grow-1">
                                 <i
                                   className="fa-solid fa-location-dot position-absolute"
@@ -2122,13 +2146,13 @@ const LocationModal = ({
                           <div className="mt-auto">
                             <button
                               type="submit"
-                              className="btn btn-primary w-100"
+                              className="btn btn-primary w-full"
                               disabled={isSubmitting}
                             >
                               {isSubmitting ? (
                                 <>
                                   <div
-                                    className="spinner-border spinner-border-sm me-2"
+                                    className="spinner-border spinner-border-sm mr-2"
                                     role="status"
                                   >
                                     <span className="visually-hidden">
@@ -2139,7 +2163,7 @@ const LocationModal = ({
                                 </>
                               ) : (
                                 <>
-                                  <i className="fas fa-save me-2"></i>
+                                  <i className="fas fa-save mr-2"></i>
                                   {editingAddress
                                     ? "Update Address"
                                     : "Save Address"}
@@ -2162,3 +2186,4 @@ const LocationModal = ({
 };
 
 export default LocationModal;
+

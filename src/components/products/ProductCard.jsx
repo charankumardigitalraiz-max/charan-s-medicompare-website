@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+﻿import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { imgUrl } from "../../Apiservice.jsx";
 import VendorsSection from "./VendorsSection.jsx";
@@ -224,7 +224,7 @@ const ProductCard = ({
 
   if (isFull) {
     return (
-      <div className="col-12 mb-2">
+      <div className="w-full mb-2">
         {/* <div className="col-10 offset-1 col-md-8 offset-md-2 mb-2"> */}
         <div
           className="product-carddd w-100"
@@ -238,9 +238,9 @@ const ProductCard = ({
             transition: "all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)"
           }}
         >
-          <div className="row">
+          <div className="flex flex-wrap md:flex-nowrap gap-4">
             <div
-              className="col-md-2"
+              className="w-full md:w-2/12 min-w-0 flex items-center justify-center relative"
               style={{
                 display: "flex",
                 alignItems: "center",
@@ -295,7 +295,7 @@ const ProductCard = ({
               />
             </div>
 
-            <div className="col-md-6 product-details-divider">
+            <div className="w-full md:w-6/12 min-w-0 product-details-divider">
               <div
                 className="product-name-titles text-capitalize"
                 style={{
@@ -363,14 +363,14 @@ const ProductCard = ({
               {currentPrice && (
                 <div className="text-dark">
                   <span>MRP</span>
-                  <span className="text-primary ms-1">₹{formatCurrency(currentPrice)}</span>
-                  <small className="ms-4" style={{ fontSize: "11px" }}>
+                  <span className="text-[#8059ca] ml-1">₹{formatCurrency(currentPrice)}</span>
+                  <small className="ml-4" style={{ fontSize: "11px" }}>
                     {" "}
                     (Inclusive of all Taxes)
                   </small>
                   {/* <small className="ms-2">
                     <i
-                      className="fas fa-users text-primary ms-3 me-1"
+                      className="fas fa-users text-[#8059ca] ms-3 me-1"
                     ></i>
                     {tablet?.ratingCount > 0 ? `${tablet.ratingCount}+ ratings` : "0 ratings"}
                   </small> */}
@@ -750,9 +750,9 @@ const ProductCard = ({
             </div>
 
             {/* VENDOR SECTION */}
-            <div className="col-md-4">
+            <div className="w-full md:w-4/12 min-w-0">
               <div
-                className="d-flex justify-content-end gap-2 mb-2"
+                className="flex justify-end gap-2 mb-2"
                 onClick={(e) => e.stopPropagation()}
               >
                 <button
@@ -1061,3 +1061,4 @@ const ProductCard = ({
 };
 
 export default ProductCard;
+

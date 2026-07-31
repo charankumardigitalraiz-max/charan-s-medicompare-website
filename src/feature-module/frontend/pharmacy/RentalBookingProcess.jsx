@@ -10,10 +10,12 @@ import {
 import { getImageUrl } from "../../../utils/index";
 import toast from "react-hot-toast";
 import CategoryProvider from "../../../components/CategoryProvider.jsx";
-import "./bookingprocess.css";
+
 import { openRazorpayCheckout } from "../../../utils/razorpayUtils";
 import { useResponsive } from "../../../hooks";
 import VendorActions from "../../../components/ui/VendorActions.jsx";
+import RecentlyViewedProducts from "../../../components/ui/RecentlyViewedProducts.jsx";
+import CouponOffersModal from "../../../components/ui/CouponOffersModal.jsx";
 import { handleRentalBookingProcess, handleGeneralBookingProcess } from "../../../services/bookingService";
 import PageLoader from "../../../components/ui/PageLoader.jsx";
 import { useProfile } from "../../../context/ProfileContext";
@@ -1422,403 +1424,6 @@ const RentalBookingProcess = () => {
     return <PageLoader />;
   }
 
-  const renderRecentlyViewed = () => {
-    if (!(relevantProducts?.length > 0)) return null;
-    return (
-      <div
-        className="card shadow-sm mb-3"
-        style={{
-          borderRadius: "12px",
-          border: "none",
-          backgroundImage: "url('/assets/Medicompares Background.png')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-        }}
-      >
-        <div className="card-body" style={{ padding: "20px" }}>
-          {/* Header */}
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "flex-start",
-              gap: "12px",
-              alignItems: "center",
-              marginBottom: "16px",
-              borderLeft: "4px solid #8059ca",
-              paddingLeft: "12px",
-              lineHeight: "1",
-            }}
-          >
-            <div style={{ fontSize: "20px", fontWeight: 500, color: "#0f172a", margin: 0 }}>
-              Recently Viewed Products
-            </div>
-            <span
-              style={{
-                fontSize: "11px",
-                color: "#8059ca",
-                fontWeight: "700",
-                background: "#f3e8ff",
-                padding: "4px 10px",
-                borderRadius: "20px",
-                textTransform: "uppercase",
-                letterSpacing: "0.5px",
-              }}
-            >
-              {relevantProducts.length} items
-            </span>
-          </div>
-
-          <style>{`
-            @keyframes comparePulse {
-              0% {
-                box-shadow: 0 0 0 0 rgba(128, 89, 202, 0.6);
-              }
-              70% {
-                box-shadow: 0 0 0 6px rgba(128, 89, 202, 0);
-              }
-              100% {
-                box-shadow: 0 0 0 0 rgba(128, 89, 202, 0);
-              }
-            }
-            @keyframes compareAutoExpand {
-              0%, 10%, 40%, 100% {
-                width: 32px;
-              }
-              15%, 35% {
-                width: 90px;
-              }
-            }
-            @keyframes textFadeInOut {
-              0%, 12%, 38%, 100% {
-                opacity: 0;
-              }
-              15%, 35% {
-                opacity: 1;
-              }
-            }
-            .compare-btn-highlight {
-              animation: comparePulse 2s infinite, compareAutoExpand 8s infinite ease-in-out;
-            }
-            .compare-text-label {
-              animation: textFadeInOut 8s infinite ease-in-out;
-            }
-            .compare-btn-highlight:hover {
-              animation: comparePulse 2s infinite !important;
-            }
-            .compare-btn-highlight:hover .compare-text-label {
-              animation: none !important;
-              opacity: 1 !important;
-            }
-          `}</style>
-
-          {/* Carousel */}
-          <div style={{ position: "relative", display: "flex", alignItems: "center" }}>
-            {/* Left Scroll */}
-            <button
-              className="meq-arrow-btn dental-prev"
-              onClick={() => {
-                const container = document.getElementById("productCarousel");
-                if (container) container.scrollLeft -= 250;
-              }}
-              style={{
-                left: "-15px",
-                display: "flex",
-              }}
-            >
-              <i className="fas fa-chevron-left"></i>
-            </button>
-
-            {/* Cards */}
-            <div
-              id="productCarousel"
-              className="scroll-container"
-              style={{
-                display: "flex",
-                overflowX: "auto",
-                gap: "20px",
-                padding: "20px 60px",
-                scrollBehavior: "smooth",
-                scrollbarWidth: "none",
-                msOverflowStyle: "none",
-              }}
-            >
-              {relevantProducts?.map((product, index) => {
-                const originalPrice = product?.price || 0;
-                const discountPrice = product?.discountprice || null;
-                const discountType = product?.discountType || null;
-
-                let calculatedDiscountPrice = discountPrice;
-                let hasValidDiscount = false;
-
-                if (discountType === "percentage" && discountPrice && discountPrice > 0) {
-                  calculatedDiscountPrice = originalPrice - (originalPrice * discountPrice) / 100;
-                  hasValidDiscount = true;
-                } else if (discountPrice && discountPrice > 0 && discountPrice < originalPrice) {
-                  calculatedDiscountPrice = discountPrice;
-                  hasValidDiscount = true;
-                }
-
-                const displayPrice = hasValidDiscount ? calculatedDiscountPrice : originalPrice;
-                const discountPercent = hasValidDiscount
-                  ? discountType === "percentage"
-                    ? discountPrice
-                    : Math.round(((originalPrice - discountPrice) / originalPrice) * 100)
-                  : 0;
-
-                const productImage =
-                  product?.combinedvariant?.files?.[0] ||
-                  product?.tabletDetails?.files?.[0] ||
-                  (Array.isArray(product?.tabletDetails?.imageUrl)
-                    ? product.tabletDetails.imageUrl[0]
-                    : product?.tabletDetails?.imageUrl) ||
-                  "/assets/default.png";
-
-                const vendorName = product?.vendor?.name || "Vendor";
-                const vendorImage = product?.vendor?.bussiness_image?.[0]?.url || "";
-
-                return (
-                  <div
-                    key={`${product._id || "product"}-${product.vendor?.vendorId || "vendor"}-${product.combinedvariant?.variantId || "variant"}-${index}`}
-                    style={{
-                      minWidth: "220px",
-                      maxWidth: "220px",
-                      background: "#ffffff",
-                      borderRadius: "12px",
-                      border: "1px solid #f1f5f9",
-                      boxShadow: "0 4px 20px rgba(0, 0, 0, 0.08)",
-                      display: "flex",
-                      flexDirection: "column",
-                      flexShrink: 0,
-                      transition: "all 0.3s ease",
-                      position: "relative",
-                      overflow: "hidden",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = "translateY(-3px)";
-                      e.currentTarget.style.borderColor = "#8059ca";
-                      e.currentTarget.style.boxShadow = "0 8px 24px rgba(128, 89, 202, 0.15)";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = "translateY(0)";
-                      e.currentTarget.style.borderColor = "#f1f5f9";
-                      e.currentTarget.style.boxShadow = "0 4px 20px rgba(0, 0, 0, 0.08)";
-                    }}
-                  >
-                    {/* Compare Button */}
-                    <div
-                      className="compare-btn-highlight"
-                      style={{
-                        position: "absolute",
-                        right: "8px",
-                        top: "8px",
-                        zIndex: 10,
-                        cursor: "pointer",
-                        background: "#8059ca",
-                        color: "#ffffff",
-                        border: "1.5px solid #8059ca",
-                        borderRadius: "20px",
-                        width: "32px",
-                        height: "26px",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "flex-start",
-                        paddingLeft: "9px",
-                        boxShadow: "0 2px 8px rgba(128, 89, 202, 0.4)",
-                        transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-                        overflow: "hidden",
-                        whiteSpace: "nowrap",
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.width = "90px";
-                        e.currentTarget.style.backgroundColor = "#6a45b3";
-                        e.currentTarget.style.borderColor = "#6a45b3";
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.width = "32px";
-                        e.currentTarget.style.backgroundColor = "#8059ca";
-                        e.currentTarget.style.borderColor = "#8059ca";
-                      }}
-                    >
-                      <Link
-                        to={`/${product?.tabletDetails?.subcategoryDetails?.categoryDetails?.slug}/${product?.tabletDetails?.subcategoryDetails?.slug}/${product?.tabletDetails?.slug}/compare`}
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          color: "#ffffff",
-                          textDecoration: "none",
-                        }}
-                      >
-                        <i
-                          className="fa-solid fa-right-left shrink-0"
-                          style={{ fontSize: "11px", color: "#ffffff" }}
-                        ></i>
-                        <span
-                          className="compare-text-label"
-                          style={{
-                            marginLeft: "6px",
-                            fontSize: "11px",
-                            fontWeight: "600",
-                            color: "#ffffff",
-                            opacity: 0,
-                            transition: "opacity 0.2s ease-in-out",
-                          }}
-                        >
-                          Compare
-                        </span>
-                      </Link>
-                    </div>
-
-                    {/* Image */}
-                    <div
-                      style={{
-                        width: "100%",
-                        height: "130px",
-                        background: "#f8f4ff",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        padding: "12px",
-                        cursor: "pointer",
-                      }}
-                      onClick={() => handleProductClick(product)}
-                    >
-                      <img
-                        src={getImageUrl(productImage)}
-                        alt="product"
-                        style={{ maxHeight: "100%", maxWidth: "100%", objectFit: "contain" }}
-                      />
-                    </div>
-
-                    {/* Details */}
-                    <div style={{ padding: "12px", display: "flex", flexDirection: "column", gap: "8px", flex: 1 }}>
-                      {/* Name */}
-                      <div style={{ cursor: "pointer" }} onClick={() => handleProductClick(product)}>
-                        <h4
-                          style={{
-                            fontSize: "13px",
-                            fontWeight: "500",
-                            color: "#0f172a",
-                            margin: 0,
-                            lineHeight: "1.3",
-                            textTransform: "capitalize",
-                            display: "-webkit-box",
-                            WebkitLineClamp: 2,
-                            WebkitBoxOrient: "vertical",
-                            overflow: "hidden",
-                            height: "34px",
-                          }}
-                        >
-                          {product?.tabletDetails?.name}
-                        </h4>
-                      </div>
-
-                      {/* Seller & Rating */}
-                      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "6px" }}>
-                        <div style={{ display: "flex", alignItems: "center", gap: "6px", minWidth: 0, flex: 1 }}>
-                          <img
-                            src={getImageUrl(vendorImage)}
-                            alt={vendorName}
-                            style={{ width: "24px", height: "24px", borderRadius: "50%", objectFit: "cover", background: "#f1f5f9", flexShrink: 0 }}
-                            onError={(e) => { e.target.src = "/assets/img/logo.png"; }}
-                          />
-                          <span
-                            style={{ fontSize: "12.5px", fontWeight: "600", color: "#334155", textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap", flex: 1 }}
-                            title={vendorName}
-                          >
-                            {vendorName}
-                          </span>
-                        </div>
-                        <div style={{ display: "flex", alignItems: "center", gap: "2px", flexShrink: 0 }}>
-                          <span style={{ fontSize: "11px", color: "#fbbf24" }}>★</span>
-                          <span style={{ fontSize: "11px", fontWeight: "600", color: "#475569" }}>
-                            {product.tabletDetails?.averageRating ? product.tabletDetails.averageRating.toFixed(1) : "0.0"}
-                          </span>
-                        </div>
-                      </div>
-
-                      {/* Price */}
-                      <div style={{ display: "flex", flexDirection: "column", gap: "1px" }}>
-                        <div style={{ display: "flex", alignItems: "center", flexWrap: "wrap" }}>
-                          <span style={{ fontSize: "15px", fontWeight: "700", color: "#0f172a" }}>
-                            ₹{displayPrice.toFixed(2)}
-                          </span>
-                          {hasValidDiscount && (
-                            <span style={{ fontSize: "11px", textDecoration: "line-through", color: "#94a3b8", marginLeft: "6px" }}>
-                              ₹{Number(originalPrice).toFixed(2)}
-                            </span>
-                          )}
-                        </div>
-                        {hasValidDiscount && (
-                          <span style={{ fontSize: "10px", fontWeight: "700", color: "#dc2626" }}>
-                            {discountPercent}% OFF
-                          </span>
-                        )}
-                        {product?.perDayRent && (
-                          <span style={{ fontSize: "10px", color: "#64748b" }}>
-                            ₹{Number(product.perDayRent).toFixed(2)}/day
-                          </span>
-                        )}
-                      </div>
-
-                      <div style={{ marginTop: "auto", width: "100%" }}>
-                        <div style={{ borderTop: "1px solid #f1f5f9", margin: "2px 0 4px 0" }} />
-                        <VendorActions
-                          bookingType={
-                            product?.tabletDetails?.subcategoryDetails?.categoryDetails?.categoryType || product?.bookingType ||
-                            "cart"
-                          }
-                          med={{
-                            ...product.tabletDetails,
-                            productId: product.name,
-                          }}
-                          vendor={{
-                            ...product.vendor,
-                            vendorId: product.vendor?.vendorId,
-                          }}
-                          price={parseFloat(product.combinedvariant?.price) || 0}
-                          calculatedDiscountPrice={parseFloat(product.combinedvariant?.discountprice || product.discountprice) || null}
-                          service={
-                            product?.tabletDetails?.subcategoryDetails?.categoryDetails?.fixedType
-                          }
-                          className="custom-cart-controls w-100"
-                          containerStyle={{
-                            display: "flex",
-                            width: "100%",
-                          }}
-                          selectedVariant={product.combinedvariant}
-                          effectiveVariantId={product.combinedvariant?.variantId}
-                          isVariant={!!product.combinedvariant}
-                          handleRentalBookinProcess={handleRentalBookinProcess}
-                          handleNavigateToBooking={handleBooking}
-                          handleAddLead={handleAddLead}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-
-            {/* Right Scroll */}
-            <button
-              className="meq-arrow-btn dental-next"
-              onClick={() => {
-                const container = document.getElementById("productCarousel");
-                if (container) container.scrollLeft += 250;
-              }}
-              style={{
-                right: "-15px",
-                display: "flex",
-              }}
-            >
-              <i className="fas fa-chevron-right"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  };
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -1827,30 +1432,28 @@ const RentalBookingProcess = () => {
 
         <CategoryProvider />
 
-        <div className="max-w-[1440px] mx-auto px-4 md:px-6 lg:px-8 pt-4 pb-12">
-          <nav aria-label="breadcrumb" className="mb-4">
-            <ol className="flex items-center gap-1.5 text-sm text-slate-500 font-medium">
-              <li className="flex items-center gap-1.5 after:content-['/'] after:text-slate-300 after:ml-1.5 last:after:content-none last:text-slate-800">
-                <Link to="/" className="text-slate-500 hover:text-[#8059ca] no-underline">
-                  Home
-                </Link>
-              </li>
-
-              <li className="flex items-center gap-1.5 after:content-['/'] after:text-slate-300 after:ml-1.5 last:after:content-none last:text-slate-800" aria-current="page">
-                Booking
-              </li>
-            </ol>
-          </nav>
+        <div className="max-w-[1440px] mx-auto px-4 md:px-6 lg:px-8 pt-2 pb-12">
+          <div className="!mb-3">
+            <button
+              onClick={() => navigate(-1)}
+              className="!flex !items-center !gap-[6px] !p-[4px_10px] !border !border-[#e0e0e0] !bg-white !text-[#333] !font-[500] !text-[12px] !rounded-[6px] !shadow-sm !cursor-pointer !transition-all !duration-300 hover:!border-[#8059ca] hover:!text-[#8059ca] hover:!bg-[#f8f5ff] hover:!shadow-[0_4px_8px_rgba(125,46,255,0.15)] hover:!-translate-y-px"
+            >
+              <i className="fas fa-arrow-left text-[11px]"></i>
+              <span className="text-[12px] font-medium">Back</span>
+            </button>
+          </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div className="lg:col-span-2 flex flex-col gap-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="w-full">
-                  <div className="mb-6">
-                    <div className="!rounded-md overflow-hidden shadow-sm border border-slate-200 bg-white">
-                      <div className="flex justify-between items-center px-4 py-3.5 bg-white border-b border-slate-200">
-                        <div className="text-[13px] font-bold text-[#8059ca] flex items-center gap-2">
-                          <i className="fas fa-bolt"></i>{" "}
+            <div className="lg:col-span-2 flex flex-col gap-2">
+              <div className="card shadow-sm border-none bg-white relative rounded-xl p-4 md:p-6 !flex !flex-col !gap-6">
+
+                {/* Row 1: Address and Additional Info */}
+                <div className="grid grid-cols-1 md:grid-cols-12 gap-3.5 md:gap-6 !pb-6 !border-b !border-[#f1f5f9]">
+                  <div className="w-full md:col-span-5">
+                    <div className="rounded-md overflow-hidden border border-[#e9ecef] shadow-[0_10px_25px_-5px_rgba(0,0,0,0.05),0_8px_10px_-6px_rgba(0,0,0,0.05)] bg-white h-full flex flex-col">
+                      <div className="flex justify-between items-center px-3 py-4 bg-[#faf8ff] border-b border-[#f3e8ff]">
+                        <div className="text-[13px] font-semibold text-[#5b21b6] flex items-center gap-2">
+                          <i className="fas fa-map-marker-alt text-[#8059ca]"></i>{" "}
                           <span className="text-[13px]">
                             {getAddressTypeLabel()}
                           </span>
@@ -1858,7 +1461,7 @@ const RentalBookingProcess = () => {
 
                         <div>
                           <button
-                            className="!text-[#8059ca] hover:text-[#6d3fc7] bg-transparent border-0 !font-semibold cursor-pointer text-sm"
+                            className="text-white bg-gradient-to-br from-[#8059ca] to-[#6f42c1] border-0 !font-semibold cursor-pointer !text-[11px] px-4 py-1.5 !rounded-[5px] shadow-[0_2px_4px_rgba(0,0,0,0.1)]"
                             onClick={() => {
                               const token =
                                 localStorage.getItem("medicomparestoken");
@@ -1877,7 +1480,7 @@ const RentalBookingProcess = () => {
                       </div>
 
                       {selectedAddress ? (
-                        <div className="p-4 bg-white text-sm text-[#475569] leading-relaxed">
+                        <div className="p-4 bg-white text-sm text-[#475569] leading-relaxed flex-1">
                           {selectedAddress ? (
                             <div>
                               {selectedAddress.name && (
@@ -1909,7 +1512,7 @@ const RentalBookingProcess = () => {
                           )}
                         </div>
                       ) : (
-                        <div className="p-4 bg-white text-sm text-slate-400 flex items-center gap-2">
+                        <div className="p-4 bg-white text-sm text-slate-400 flex items-center gap-2 flex-1">
                           <i className="fas fa-map-marker-alt"></i>
 
                           <span>
@@ -1921,40 +1524,38 @@ const RentalBookingProcess = () => {
                       )}
                     </div>
                   </div>
-                </div>
 
-                <div className="w-full">
-                  <div className="mb-6">
-                    <div className="!rounded-md overflow-hidden shadow-sm border border-slate-200 bg-white">
-                      <div className="p-4 border-b border-slate-200">
-                        <h6 className="text-sm font-semibold text-slate-800 m-0">
-                          Additional Information
+                  <div className="w-full md:col-span-7">
+                    <div className="rounded-md overflow-hidden border border-[#e9ecef] shadow-[0_10px_25px_-5px_rgba(0,0,0,0.05),0_8px_10px_-6px_rgba(0,0,0,0.05)] bg-white h-full flex flex-col">
+                      <div className="px-3 !py-1 ">
+                        <h6 className="!text-sm !font-semibold !m-0 !text-slate-800 !uppercase">
+                          ADDITIONAL INFORMATION
                         </h6>
                       </div>
 
-                      <div className="px-4 pb-4 pt-1">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-3.5">
-                          <div className="flex flex-col mb-1">
-                            <label className="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">
+                      <div className="px-4 pb-4 pt-3 flex-1">
+                        <div className="!grid !grid-cols-1 md:!grid-cols-2 !gap-x-4 !gap-y-3.5">
+                          <div className="!flex !flex-col !mb-1">
+                            <label className="!text-[11px] !font-semibold !text-slate-500 !uppercase !tracking-wider !mb-1.5">
                               Start Date
                             </label>
                             <input
                               type="date"
                               value={startDate}
                               onChange={(e) => setStartDate(e.target.value)}
-                              className="w-full py-2 px-3 border border-slate-200 !rounded-sm text-sm text-slate-800 bg-slate-50/55 focus:border-[#8059ca] focus:bg-white focus:ring-1 focus:ring-[#8059ca] transition-all outline-none"
+                              className="!w-full !py-1 !px-2.5 !border !border-slate-200 !rounded-sm !text-[13px] !text-slate-800 !bg-slate-50/55 focus:!border-[#8059ca] focus:!bg-white focus:!ring-1 focus:!ring-[#8059ca] !transition-all !outline-none"
                               min={new Date().toISOString().split("T")[0]}
                             />
                           </div>
 
-                          <div className="flex flex-col mb-1">
-                            <label className="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">
+                          <div className="!flex !flex-col !mb-1">
+                            <label className="!text-[11px] !font-semibold !text-slate-500 !uppercase !tracking-wider !mb-1.5">
                               Rental Plan
                             </label>
                             <select
                               value={rentalPlan}
                               onChange={(e) => setRentalPlan(e.target.value)}
-                              className="w-full py-2 px-3 border border-slate-200 !rounded-sm text-sm text-slate-800 bg-slate-50/55 focus:border-[#8059ca] focus:bg-white focus:ring-1 focus:ring-[#8059ca] transition-all outline-none"
+                              className="!w-full !py-1 !px-2.5 !border !border-slate-200 !rounded-sm !text-[13px] !text-slate-800 !bg-slate-50/55 focus:!border-[#8059ca] focus:!bg-white focus:!ring-1 focus:!ring-[#8059ca] !transition-all !outline-none"
                             >
                               <option value="">Select Plan</option>
                               <option value="weekly">Weekly</option>
@@ -1963,8 +1564,8 @@ const RentalBookingProcess = () => {
                             </select>
                           </div>
 
-                          <div className="flex flex-col mb-1">
-                            <label className="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">
+                          <div className="!flex !flex-col !mb-1">
+                            <label className="!text-[11px] !font-semibold !text-slate-500 !uppercase !tracking-wider !mb-1.5">
                               Rental Duration{" "}
                               {rentalPlan &&
                                 `(${rentalPlan.charAt(0).toUpperCase() + rentalPlan.slice(1)})`}
@@ -1972,7 +1573,7 @@ const RentalBookingProcess = () => {
                             <select
                               value={rentalDuration}
                               onChange={(e) => setRentalDuration(e.target.value)}
-                              className="w-full py-2 px-3 border border-slate-200 !rounded-sm text-sm text-slate-800 bg-slate-50/55 focus:border-[#8059ca] focus:bg-white focus:ring-1 focus:ring-[#8059ca] transition-all outline-none"
+                              className="!w-full !py-1 !px-2.5 !border !border-slate-200 !rounded-sm !text-[13px] !text-slate-800 !bg-slate-50/55 focus:!border-[#8059ca] focus:!bg-white focus:!ring-1 focus:!ring-[#8059ca] !transition-all !outline-none"
                             >
                               <option value="">Select duration</option>
                               {rentalPlan === "weekly" && (
@@ -2011,14 +1612,14 @@ const RentalBookingProcess = () => {
                             </select>
                           </div>
 
-                          <div className="flex flex-col mb-1">
-                            <label className="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">
+                          <div className="!flex !flex-col !mb-1">
+                            <label className="!text-[11px] !font-semibold !text-slate-500 !uppercase !tracking-wider !mb-1.5">
                               Payment Type
                             </label>
                             <select
                               value={paymentType}
                               onChange={(e) => setPaymentType(e.target.value)}
-                              className="w-full py-2 px-3 border border-slate-200 !rounded-sm text-sm text-slate-800 bg-slate-50/55 focus:border-[#8059ca] focus:bg-white focus:ring-1 focus:ring-[#8059ca] transition-all outline-none"
+                              className="!w-full !py-1 !px-2.5 !border !border-slate-200 !rounded-sm !text-[13px] !text-slate-800 !bg-slate-50/55 focus:!border-[#8059ca] focus:!bg-white focus:!ring-1 focus:!ring-[#8059ca] !transition-all !outline-none"
                             >
                               <option value="">Select Type</option>
                               <option value="onetimepayment">One Time Payment</option>
@@ -2027,8 +1628,8 @@ const RentalBookingProcess = () => {
                           </div>
 
                           {paymentType !== "onetimepayment" && (
-                            <div className="flex flex-col mb-1 col-span-1 md:col-span-2">
-                              <label className="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">
+                            <div className="!flex !flex-col !mb-1 !col-span-1 md:!col-span-2">
+                              <label className="!text-[11px] !font-semibold !text-slate-500 !uppercase !tracking-wider !mb-1.5">
                                 No. of installments{" "}
                                 {rentalPlan &&
                                   `(${rentalPlan.charAt(0).toUpperCase() + rentalPlan.slice(1)})`}
@@ -2036,7 +1637,7 @@ const RentalBookingProcess = () => {
                               <select
                                 value={numberOfInstallments}
                                 onChange={(e) => setNumberOfInstallments(e.target.value)}
-                                className="w-full py-2 px-3 border border-slate-200 !rounded-sm text-sm text-slate-800 bg-slate-50/55 focus:border-[#8059ca] focus:bg-white focus:ring-1 focus:ring-[#8059ca] transition-all outline-none"
+                                className="!w-full !py-1 !px-2.5 !border !border-slate-200 !rounded-sm !text-[13px] !text-slate-800 !bg-slate-50/55 focus:!border-[#8059ca] focus:!bg-white focus:!ring-1 focus:!ring-[#8059ca] !transition-all !outline-none"
                               >
                                 <option value="">Select installments</option>
                                 {calculatedTotalAmount > 0 &&
@@ -2057,38 +1658,12 @@ const RentalBookingProcess = () => {
                     </div>
                   </div>
                 </div>
-              </div>
 
-              <div
-                className="card shadow-sm mb-3 order-lg-2"
-                style={{
-                  borderRadius: "12px",
-                  border: "none",
-                }}
-              >
-                <div className="card-body p-3 p-md-4">
-                  <div
-                    className="d-flex"
-                    style={{
-                      gap: isMobile ? "12px" : "16px",
-                      flexWrap: "wrap",
-                      alignItems: "flex-start",
-                    }}
-                  >
-                    <div style={{ position: "relative", flexShrink: 0 }}>
-                      <div
-                        style={{
-                          width: isMobile ? "80px" : "100px",
-                          height: isMobile ? "80px" : "100px",
-                          borderRadius: "8px",
-                          overflow: "hidden",
-                          backgroundColor: "#f0f4ff",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          border: "1px solid #e0e0e0",
-                        }}
-                      >
+                {/* Row 2: Product Details Section */}
+                <div className="!pb-6 !border-b !border-[#f1f5f9] mb-3 order-2 order-md-1">
+                  <div className={`flex flex-wrap items-start ${isMobile ? "gap-3" : "gap-4"}`}>
+                    <div className="relative shrink-0">
+                      <div className={`${isMobile ? "w-20 h-20" : "w-[100px] h-[100px]"} rounded-lg overflow-hidden bg-[#f0f4ff] flex items-center justify-center border border-[#e0e0e0]`}>
                         <img
                           src={
                             resolveImage(data) ||
@@ -2097,11 +1672,7 @@ const RentalBookingProcess = () => {
                             "/assets/img/doctors/labtest (3).svg"
                           }
                           alt={productName}
-                          style={{
-                            width: "100%",
-                            height: "100%",
-                            objectFit: "contain",
-                          }}
+                          className="w-full h-full object-contain"
                           onError={(e) => {
                             e.target.src =
                               "/assets/img/doctors/labtest (3).svg";
@@ -2110,157 +1681,18 @@ const RentalBookingProcess = () => {
                       </div>
                     </div>
 
-                    <div
-                      style={{
-                        flex: "1 1 auto",
-                        minWidth: isMobile ? "0" : "200px",
-                        width: isMobile ? "100%" : "auto",
-                      }}
-                    >
-                      <div
-                        className={`d-flex ${isMobile ? "flex-column" : "align-items-start"
-                          } w-100`}
-                      >
-                        <div
-                          className="d-flex flex-column"
-                          style={{ width: isMobile ? "100%" : "auto" }}
-                        >
-                          <h6
-                            style={{
-                              fontSize: isMobile ? "14px" : "16px",
-                              fontWeight: "600",
-                              marginBottom: isMobile ? "8px" : "12px",
-                              color: "#000",
-                              textTransform: "capitalize",
-                            }}
-                          >
+                    <div className={`flex-1 ${isMobile ? "min-w-0 w-full" : "min-w-[200px] w-auto"}`}>
+                      <div className={`flex ${isMobile ? "flex-column" : "items-start"} w-100`}>
+                        <div className={`flex flex-column ${isMobile ? "w-full" : "w-auto"}`}>
+                          <div className={`${isMobile ? "text-sm" : "text-base"} font-semibold ${isMobile ? "mb-2" : "mb-3"} text-black capitalize`}>
                             {productName}
-                          </h6>
+                          </div>
                         </div>
 
-                        <div
-                          style={{
-                            marginLeft: isMobile ? "0" : "auto",
-                            marginTop: isMobile ? "12px" : "0",
-                            width: isMobile ? "100%" : "auto",
-                          }}
-                        >
-                          <div
-                            className="d-flex align-items-center"
-                            style={{
-                              gap: isMobile ? "8px" : "12px",
-                              flexWrap: "wrap",
-                              marginBottom: isMobile ? "12px" : "0px",
-                            }}
-                          >
-                            {/* {discountPrice && mrpPrice > pricePerItem ? (
-
-                                <>
-
-                                  <span
-
-                                    style={{
-
-                                      fontSize: "20px",
-
-                                      fontWeight: "700",
-
-                                      color: "#000",
-
-                                    }}
-
-                                  >
-
-                                    ₹{pricePerItem.toFixed(2)}
-
-                                  </span>
-
-                                  <span
-
-                                    style={{
-
-                                      fontSize: "16px",
-
-                                      color: "#999",
-
-                                      textDecoration: "line-through",
-
-                                    }}
-
-                                  >
-
-                                    ₹{mrpPrice.toFixed(2)}
-
-                                  </span>
-
-
-
-                                  {discountPercent > 0 && (
-
-                                    <span
-
-                                      className="badge"
-
-                                      style={{
-
-                                        backgroundColor: "#28a745",
-
-                                        color: "#fff",
-
-                                        fontSize: "12px",
-
-                                        padding: "4px 8px",
-
-                                        borderRadius: "4px",
-
-                                      }}
-
-                                    >
-
-                                      {discountPercent}% OFF
-
-                                    </span>
-
-                                  )}
-
-                                </>
-
-                              ) : (
-
-                                <span
-
-                                  style={{
-
-                                    fontSize: "20px",
-
-                                    fontWeight: "700",
-
-                                    color: "#000",
-
-                                  }}
-
-                                >
-
-                                  ₹{pricePerItem.toFixed(2)}
-
-                                </span>
-
-                              )} */}
-
-                            <div
-                              style={{
-                                display: "flex",
-                                flexDirection: "column",
-                                gap: "4px",
-                              }}
-                            >
-                              <span
-                                style={{
-                                  fontSize: "16px",
-                                  fontWeight: "600",
-                                  color: "black",
-                                }}
-                              >
+                        <div className={`${isMobile ? "ml-0 mt-3 w-full" : "ml-auto mt-0 w-auto"}`}>
+                          <div className={`flex items-center flex-wrap ${isMobile ? "gap-2 mb-3" : "gap-3 mb-0"}`}>
+                            <div className="flex flex-col gap-1">
+                              <span className="text-base font-semibold text-black">
                                 {data?.perDayRent ? (
                                   <>
                                     {data?.rentalPricing
@@ -2281,289 +1713,89 @@ const RentalBookingProcess = () => {
                         </div>
                       </div>
 
-                      <div
-                        style={{
-                          display: "flex",
-                          flexDirection: "row",
-                          alignItems: "center",
-                          justifyContent: "space-between",
-                          gap: "20px",
-                          flexWrap: "wrap",
-                        }}
-                      >
+                      <div className="flex flex-row items-center justify-between gap-5 flex-wrap">
                         <div>
-                          {/* {['surgeries', 'diagnosis'].} */}
-
-                          <ul
-                            style={{
-                              listStyle: "none",
-                              padding: 0,
-                              margin: "0 0 12px 0",
-                            }}
-                          >
+                          <ul className="list-none p-0 mt-0 mb-3">
                             {data?.tabletDetails?.form && (
-                              <li
-                                style={{
-                                  fontSize: "13px",
-                                  color: "#0c0b0bff",
-                                  marginBottom: "6px",
-                                  display: "flex",
-                                  alignItems: "center",
-                                  gap: "8px",
-                                }}
-                              >
-                                <i
-                                  className="fas fa-capsules"
-                                  style={{
-                                    color: "#8059ca",
-                                    fontSize: "12px",
-                                  }}
-                                ></i>
+                              <li className="text-[13px] text-gray-600 mb-1.5 flex items-center gap-2">
+                                <i className="fas fa-capsules text-[#8059ca] text-xs"></i>
                                 Form : {data?.tabletDetails?.form}
                               </li>
                             )}
 
                             {data?.tabletDetails?.strength && (
-                              <li
-                                style={{
-                                  fontSize: "13px",
-                                  color: "#666",
-                                  marginBottom: "6px",
-                                  display: "flex",
-                                  alignItems: "center",
-                                  gap: "8px",
-                                }}
-                              >
-                                <i
-                                  className="fas fa-bolt"
-                                  style={{
-                                    color: "#8059ca",
-                                    fontSize: "12px",
-                                  }}
-                                ></i>
+                              <li className="text-[13px] text-gray-600 mb-1.5 flex items-center gap-2">
+                                <i className="fas fa-bolt text-[#8059ca] text-xs"></i>
                                 Strength : {data?.tabletDetails?.strength}
                               </li>
                             )}
 
                             {data?.tabletDetails?.duration && (
-                              <li
-                                style={{
-                                  fontSize: "13px",
-                                  color: "#666",
-                                  marginBottom: "6px",
-                                  display: "flex",
-                                  alignItems: "center",
-                                  gap: "8px",
-                                }}
-                              >
-                                <i
-                                  className="fas fa-clock"
-                                  style={{
-                                    color: "#8059ca",
-                                    fontSize: "12px",
-                                  }}
-                                ></i>
+                              <li className="text-[13px] text-gray-600 mb-1.5 flex items-center gap-2">
+                                <i className="fas fa-clock text-[#8059ca] text-xs"></i>
                                 Duration : {data?.tabletDetails?.duration}
                               </li>
                             )}
 
                             {data?.tabletDetails?.shiftType && (
-                              <li
-                                style={{
-                                  fontSize: "13px",
-                                  color: "#666",
-                                  marginBottom: "6px",
-                                  display: "flex",
-                                  alignItems: "center",
-                                  gap: "8px",
-                                }}
-                              >
-                                <i
-                                  className="fas fa-clock"
-                                  style={{
-                                    color: "#8059ca",
-                                    fontSize: "12px",
-                                  }}
-                                ></i>
+                              <li className="text-[13px] text-gray-600 mb-1.5 flex items-center gap-2">
+                                <i className="fas fa-clock text-[#8059ca] text-xs"></i>
                                 Shift Type : {data?.tabletDetails?.shiftType}
                               </li>
                             )}
 
                             {data?.tabletDetails?.nursecareType && (
-                              <li
-                                style={{
-                                  fontSize: "13px",
-                                  color: "#666",
-                                  marginBottom: "6px",
-                                  display: "flex",
-                                  alignItems: "center",
-                                  gap: "8px",
-                                }}
-                              >
-                                <i
-                                  className="fas fa-clock"
-                                  style={{
-                                    color: "#8059ca",
-                                    fontSize: "12px",
-                                  }}
-                                ></i>
+                              <li className="text-[13px] text-gray-600 mb-1.5 flex items-center gap-2">
+                                <i className="fas fa-clock text-[#8059ca] text-xs"></i>
                                 Type : {data?.tabletDetails?.nursecareType}
                               </li>
                             )}
 
                             {data?.tabletDetails?.gender && (
-                              <li
-                                style={{
-                                  fontSize: "13px",
-                                  color: "#666",
-                                  marginBottom: "6px",
-                                  display: "flex",
-                                  alignItems: "center",
-                                  gap: "8px",
-                                }}
-                              >
-                                <i
-                                  className="fas fa-venus-mars"
-                                  style={{
-                                    color: "#8059ca",
-                                    fontSize: "12px",
-                                  }}
-                                ></i>
+                              <li className="text-[13px] text-gray-600 mb-1.5 flex items-center gap-2">
+                                <i className="fas fa-venus-mars text-[#8059ca] text-xs"></i>
                                 Gender : {data?.tabletDetails?.gender}
                               </li>
                             )}
 
                             {data?.tabletDetails?.complexity && (
-                              <li
-                                style={{
-                                  fontSize: "13px",
-                                  color: "#666",
-                                  marginBottom: "6px",
-                                  display: "flex",
-                                  alignItems: "center",
-                                  gap: "8px",
-                                }}
-                              >
-                                <i
-                                  className="fas fa-layer-group"
-                                  style={{
-                                    color: "#8059ca",
-                                    fontSize: "12px",
-                                  }}
-                                ></i>
+                              <li className="text-[13px] text-gray-600 mb-1.5 flex items-center gap-2">
+                                <i className="fas fa-layer-group text-[#8059ca] text-xs"></i>
                                 Complexity : {data?.tabletDetails?.complexity}
                               </li>
                             )}
 
                             {data?.tabletDetails?.model && (
-                              <li
-                                style={{
-                                  fontSize: "13px",
-                                  color: "#666",
-                                  marginBottom: "6px",
-                                  display: "flex",
-                                  alignItems: "center",
-                                  gap: "8px",
-                                }}
-                              >
-                                <i
-                                  className="fas fa-cube"
-                                  style={{
-                                    color: "#8059ca",
-                                    fontSize: "12px",
-                                  }}
-                                ></i>
+                              <li className="text-[13px] text-gray-600 mb-1.5 flex items-center gap-2">
+                                <i className="fas fa-cube text-[#8059ca] text-xs"></i>
                                 Model : {data?.tabletDetails?.model}
                               </li>
                             )}
 
                             {data?.tabletDetails?.condition && (
-                              <li
-                                style={{
-                                  fontSize: "13px",
-                                  color: "#666",
-                                  marginBottom: "6px",
-                                  display: "flex",
-                                  alignItems: "center",
-                                  gap: "8px",
-                                }}
-                              >
-                                <i
-                                  className="fas fa-info-circle"
-                                  style={{
-                                    color: "#8059ca",
-                                    fontSize: "12px",
-                                  }}
-                                ></i>
+                              <li className="!text-[13px] !text-gray-600 mb-1.5 flex items-center gap-2">
+                                <i className="fas fa-info-circle !text-[#8059ca] !text-xs"></i>
                                 Condition : {data?.tabletDetails?.condition}
                               </li>
                             )}
 
                             {data?.tabletDetails?.machineType && (
-                              <li
-                                style={{
-                                  fontSize: "13px",
-                                  color: "#666",
-                                  marginBottom: "6px",
-                                  display: "flex",
-                                  alignItems: "center",
-                                  gap: "8px",
-                                }}
-                              >
-                                <i
-                                  className="fas fa-cogs"
-                                  style={{
-                                    color: "#8059ca",
-                                    fontSize: "12px",
-                                  }}
-                                ></i>
-                                Machine Type :{" "}
-                                {data?.tabletDetails?.machineType}
+                              <li className="!text-[13px] !text-gray-600 mb-1.5 flex items-center gap-2">
+                                <i className="fas fa-cogs !text-[#8059ca] !text-xs"></i>
+                                Machine Type : {data?.tabletDetails?.machineType}
                               </li>
                             )}
 
                             {data?.tabletDetails?.compositionDetails?.name && (
-                              <li
-                                style={{
-                                  fontSize: "13px",
-                                  color: "#666",
-                                  marginBottom: "6px",
-                                  display: "flex",
-                                  alignItems: "center",
-                                  gap: "8px",
-                                }}
-                              >
-                                <i
-                                  className="fas fa-mortar-pestle"
-                                  style={{
-                                    color: "#8059ca",
-                                    fontSize: "12px",
-                                  }}
-                                ></i>
-                                Composition :{" "}
-                                {data?.tabletDetails?.compositionDetails?.name}
+                              <li className="!text-[13px] !text-gray-600 mb-1.5 flex items-center gap-2">
+                                <i className="fas fa-mortar-pestle !text-[#8059ca] !text-xs"></i>
+                                Composition : {data?.tabletDetails?.compositionDetails?.name}
                               </li>
                             )}
 
                             {data?.tabletDetails?.reportsDuration && (
-                              <li
-                                style={{
-                                  fontSize: "13px",
-                                  color: "#666",
-                                  marginBottom: "6px",
-                                  display: "flex",
-                                  alignItems: "center",
-                                  gap: "8px",
-                                }}
-                              >
-                                <i
-                                  className="fas fa-clock"
-                                  style={{
-                                    color: "#8059ca",
-                                    fontSize: "12px",
-                                  }}
-                                ></i>
-
+                              <li className="!text-[13px] !text-gray-600 mb-1.5 flex items-center gap-2">
+                                <i className="fas fa-clock !text-[#8059ca] !text-xs"></i>
                                 {data?.tabletDetails?.reportsDuration.slice(
                                   0,
 
@@ -2575,35 +1807,14 @@ const RentalBookingProcess = () => {
                             )}
 
                             {testsCount && (
-                              <li
-                                style={{
-                                  fontSize: "13px",
-                                  color: "#666",
-                                  marginBottom: "6px",
-                                  display: "flex",
-                                  alignItems: "center",
-                                  gap: "8px",
-                                }}
-                              >
-                                <i
-                                  className="fas fa-vial"
-                                  style={{
-                                    color: "#8059ca",
-                                    fontSize: "12px",
-                                  }}
-                                ></i>
+                              <li className="!text-[13px] !text-gray-600 mb-1.5 flex items-center gap-2">
+                                <i className="fas fa-vial !text-[#8059ca] !text-xs"></i>
                                 Includes {testsCount} parameters
                               </li>
                             )}
                           </ul>
 
-                          <div
-                            style={{
-                              display: "flex",
-                              gap: "20px",
-                              flexWrap: "wrap",
-                            }}
-                          >
+                          <div className="flex gap-5 flex-wrap">
                             <a
                               href="#"
                               onClick={(e) => {
@@ -2611,20 +1822,9 @@ const RentalBookingProcess = () => {
 
                                 navigate(-1);
                               }}
-                              style={{
-                                fontSize: "13px",
-                                color: "#dc3545",
-                                textDecoration: "none",
-                                cursor: "pointer",
-                                display: "flex",
-                                alignItems: "center",
-                                gap: "6px",
-                              }}
+                              className="!text-[13px] !text-red-600 no-underline cursor-pointer flex items-center gap-1.5"
                             >
-                              <i
-                                className="fas fa-trash-alt"
-                                style={{ fontSize: "12px" }}
-                              ></i>
+                              <i className="fas fa-trash-alt !text-xs"></i>
                               Delete
                             </a>
                           </div>
@@ -2632,17 +1832,7 @@ const RentalBookingProcess = () => {
 
                         {(data?.businessDetails ||
                           data?.vendorDetails?.businessDetails) && (
-                            <div
-                              style={{
-                                padding: "10px",
-                                background: "#f8f9fa",
-                                borderRadius: "8px",
-                                display: "flex",
-                                alignItems: "center",
-                                gap: "12px",
-                                border: "1px solid #eee",
-                              }}
-                            >
+                            <div className="p-2.5 bg-gray-50 rounded-lg flex items-center gap-3 border border-gray-100">
                               <img
                                 src={getImageUrl(
                                   data?.businessDetails?.bussiness_image?.url ||
@@ -2651,22 +1841,11 @@ const RentalBookingProcess = () => {
                                   "",
                                 )}
                                 alt="business"
-                                style={{
-                                  width: "40px",
-                                  height: "40px",
-                                  borderRadius: "6px",
-                                  objectFit: "cover",
-                                }}
+                                className="w-10 h-10 rounded-md object-cover"
                               />
 
                               <div>
-                                <div
-                                  style={{
-                                    fontSize: "13px",
-                                    fontWeight: "600",
-                                    color: "#111",
-                                  }}
-                                >
+                                <div className="text-[13px] font-semibold text-gray-900">
                                   {
                                     (
                                       data?.businessDetails ||
@@ -2681,863 +1860,402 @@ const RentalBookingProcess = () => {
                     </div>
                   </div>
                 </div>
+
               </div>
 
-              {(relatedProducts && relatedProducts.length > 0 && !isMobile) && (
-                <div
-                  className="card shadow-sm order-lg-2"
-                  style={{
-                    borderRadius: "12px",
-                    border: "none",
-                  }}
-                >
-                  <div className="card-body p-3 p-md-4">
-                    <h5
-                      style={{
-                        fontSize: "18px",
-                        fontWeight: "600",
-                        marginBottom: "16px",
-                        color: "#333",
-                      }}
-                    >
-                      Related Vendors
-                    </h5>
-                    <div className="row">
-                      {relatedProducts.map((product, index) => (
-                        <div key={index} className="col-md-6 col-lg-3">
-                          <div
-                            className="card"
-                            style={{
-                              borderRadius: "8px",
-                              border: "1px solid #eee",
-                              overflow: "hidden",
-                            }}
-                          >
-                            <div
-                              style={{
-                                height: "150px",
-                                background: "#f8f9fa",
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                padding: "10px",
-                              }}
-                            >
-                              <img
-                                src={getImageUrl(
-                                  product?.businessDetails?.bussiness_image?.[0]
-                                    ?.url ||
-                                  product?.tabletDetails?.files?.[0] ||
-                                  "",
-                                )}
-                                alt={product?.tabletDetails?.name || "Product"}
-                                style={{
-                                  maxWidth: "100%",
-                                  maxHeight: "100%",
-                                  objectFit: "contain",
-                                }}
-                              />
-                            </div>
-                            <div className="card-body p-3">
-                              <div
-                                style={{
-                                  display: "flex",
-                                  alignItems: "center",
-                                  marginBottom: "8px",
-                                  gap: "8px",
-                                }}
-                              >
-                                <div
-                                  style={{
-                                    fontSize: "14px",
-                                    fontWeight: "bold",
-                                  }}
-                                >
+              {/* Row 3: Related Vendors Section */}
+              {(relatedProducts && relatedProducts.length > 0) && (
+                <div className="card shadow-sm border-none bg-white relative rounded-xl p-4 md:p-6 mt-2">
+                  <h6 className="!text-sm !font-semibold !m-0 !text-slate-800 !mb-4 !uppercase">
+                    RELATED VENDORS
+                  </h6>
+                  <div className="!grid !grid-cols-2 md:!grid-cols-4 !gap-4">
+                    {relatedProducts.map((product, index) => (
+                      <div key={index} className="!w-full">
+                        <div className="card rounded-lg border border-gray-100 overflow-hidden h-full flex flex-col justify-between">
+                          <div className="h-[150px] bg-gray-50 flex items-center justify-center p-2.5">
+                            <img
+                              src={getImageUrl(
+                                product?.businessDetails?.bussiness_image?.[0]
+                                  ?.url ||
+                                product?.tabletDetails?.files?.[0] ||
+                                "",
+                              )}
+                              alt={product?.tabletDetails?.name || "Product"}
+                              className="max-w-full max-h-full object-contain"
+                            />
+                          </div>
+                          <div className="card-body p-3 flex-1 flex flex-col justify-between">
+                            <div>
+                              <div className="flex items-center mb-2 gap-2">
+                                <div className="text-sm font-bold line-clamp-1">
                                   {product?.businessDetails?.name}
                                 </div>
                               </div>
 
                               {product?.vendorRating && (
-                                <div
-                                  style={{
-                                    display: "flex",
-                                    alignItems: "center",
-                                    gap: "4px",
-                                    marginBottom: "8px",
-                                    fontSize: "12px",
-                                  }}
-                                >
-                                  <div style={{ display: "flex", gap: "1px" }}>
-                                    <i
-                                      className="fas fa-star"
-                                      style={{
-                                        color: "#ffa500",
-                                        fontSize: "10px",
-                                      }}
-                                    />
+                                <div className="flex items-center gap-1 mb-2 text-xs">
+                                  <div className="flex gap-[1px]">
+                                    <i className="fas fa-star text-orange-400 text-[10px]" />
                                   </div>
-                                  <span style={{ color: "#666" }}>
+                                  <span className="text-gray-600">
                                     {product.vendorRating.averageRating?.toFixed(
                                       1,
                                     ) || "0.0"}
                                   </span>
-                                  <span style={{ color: "#999" }}>
-                                    (
-                                    {product.vendorRating.totalRatings.toFixed(
-                                      1,
-                                    ) || 0}{" "}
-                                    reviews)
+                                  <span className="text-gray-400">
+                                    ({product.vendorRating.totalRatings.toFixed(0) || 0})
                                   </span>
                                 </div>
                               )}
 
                               {product?.perDayRent && (
-                                <div
-                                  style={{
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                    marginBottom: "8px",
-                                    fontSize: "12px",
-                                  }}
-                                >
-                                  <span style={{ color: "#666" }}>
+                                <div className="flex justify-between mb-2 text-xs">
+                                  <span className="text-gray-600">
                                     Daily Rate
                                   </span>
-                                  <span
-                                    style={{ fontWeight: "600", color: "#000" }}
-                                  >
+                                  <span className="font-semibold text-black">
                                     ₹{product.perDayRent.toFixed(2)}
                                   </span>
                                 </div>
                               )}
-
-                              <button
-                                className="btn btn-primary btn-sm w-100"
-                                onClick={() => {
-                                  handleRentRelatedProduct(product);
-                                  window.scrollTo({
-                                    top: 0,
-                                    behavior: "smooth",
-                                  });
-                                }}
-                                disabled={!product?.perDayRent}
-                                style={{
-                                  fontSize: "13px",
-                                  padding: "6px 12px",
-                                  opacity: product?.perDayRent ? 1 : 0.6,
-                                  cursor: product?.perDayRent
-                                    ? "pointer"
-                                    : "not-allowed",
-                                }}
-                              >
-                                Rent
-                              </button>
                             </div>
+
+                            <button
+                              className="btn btn-primary btn-sm w-full text-white bg-[#8059ca] border-0 hover:bg-[#6f42c1] !rounded-sm py-1.5 px-3 text-xs mt-2"
+                              onClick={() => {
+                                handleRentRelatedProduct(product);
+                                window.scrollTo({
+                                  top: 0,
+                                  behavior: "smooth",
+                                });
+                              }}
+                              disabled={!product?.perDayRent}
+                              style={{
+                                opacity: product?.perDayRent ? 1 : 0.6,
+                                cursor: product?.perDayRent
+                                  ? "pointer"
+                                  : "not-allowed",
+                              }}
+                            >
+                              Rent
+                            </button>
                           </div>
                         </div>
-                      ))}
-                    </div>
+                      </div>
+                    ))}
                   </div>
-                </div>
-              )}
-
-              {!isMobile && productData?.length > 0 && (
-                <div className="mt-4 order-lg-last">
-                  {renderRecentlyViewed()}
                 </div>
               )}
             </div>
 
             <div className="lg:col-span-1">
-              <div
-                style={{
-                  position: isMobile ? "relative" : "sticky",
-                  top: isMobile ? "0" : "20px",
-                }}
-              >
-                <div
-                  className="card shadow-sm mb-3"
-                  style={{
-                    borderRadius: "12px",
-                    border: "none",
-                  }}
-                >
-                  <div className="card-body p-0">
-                    <div
-                      style={{
-                        padding: "16px",
-                        borderBottom: "1px solid #e0e0e0",
-                        cursor: "pointer",
-                      }}
-                      onClick={() =>
-                        setIsTotalFareExpanded(!isTotalFareExpanded)
-                      }
-                    >
+              <div className={`${isMobile ? "relative top-0" : "sticky top-5 flex flex-col gap-6"}`}>
+                <div className="card shadow-sm mb-4 rounded-xl border-0 !bg-white">
+                  <div className="card-body !p-4 !flex !flex-col !gap-4">
+
+                    {/* Cart Breakdown Section */}
+                    <div>
                       <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          alignItems: "center",
-                        }}
+                        className="!pb-3 !flex !justify-between !items-center !cursor-pointer"
+                        onClick={() =>
+                          setIsTotalFareExpanded(!isTotalFareExpanded)
+                        }
                       >
-                        <h6
-                          style={{
-                            fontSize: "16px",
-                            fontWeight: "600",
-                            margin: 0,
-                            color: "#000",
-                          }}
-                        >
+                        <h6 className="!text-sm !font-semibold !m-0 !text-slate-800">
                           CART BREAKDOWN
                         </h6>
-
                         <i
-                          className={`fas fa-chevron-${isTotalFareExpanded ? "up" : "down"
-                            }`}
-                          style={{ color: "#666", fontSize: "12px" }}
+                          className={`fas fa-chevron-${isTotalFareExpanded ? "up" : "down"} !text-gray-500 !text-xs`}
                         ></i>
                       </div>
-                    </div>
 
-                    {isTotalFareExpanded && (
-                      <div style={{ padding: "16px" }}>
-                        <div
-                          style={{
-                            marginBottom: "16px",
-                            paddingBottom: "16px",
-                            borderBottom: "1px solid #e0e0e0",
-                          }}
-                        >
-                          <div
-                            style={{
-                              fontSize: "14px",
-                              fontWeight: "600",
-                              marginBottom: "12px",
-                              color: "#000",
-                            }}
-                          >
-                            Booking Summary
-                          </div>
-
-                          {/* OFFERS & COUPONS */}
-
-                          <div
-                            style={{
-                              marginBottom: "16px",
-                            }}
-                          >
-                            <div
-                              style={{
-                                display: "flex",
-                                gap: "12px",
-                                background: "#ecfdf5",
-                                padding: "16px",
-                                borderRadius: "12px",
-                                alignItems: "center",
-                                cursor: "pointer",
-                                border: "1px solid #d1fae5",
-                              }}
-                              onClick={(e) => {
-                                e.preventDefault();
-
-                                const token =
-                                  localStorage.getItem("medicomparestoken");
-
-                                if (!token) {
-                                  toast.error("Please login to apply coupons");
-
-                                  navigate("/login");
-
-                                  return;
-                                }
-
-                                setShowOffersModal(true);
-                              }}
-                            >
-                              <div
-                                style={{
-                                  width: 40,
-                                  height: 40,
-                                  background: "#16a34a",
-                                  borderRadius: "50%",
-                                  display: "flex",
-                                  alignItems: "center",
-                                  justifyContent: "center",
-                                  color: "#fff",
-                                  fontSize: "16px",
-                                  fontWeight: 700,
-                                }}
-                              >
-                                %
-                              </div>
-
-                              <div style={{ flex: 1 }}>
-                                <div
-                                  style={{
-                                    display: "flex",
-                                    alignItems: "center",
-                                    justifyContent: "space-between",
-                                    fontSize: "14px",
-                                    fontWeight: 600,
-                                    color: "#065f46",
-                                    marginBottom: "2px",
-                                    cursor: "pointer",
-                                  }}
-                                >
-                                  <span>Apply Coupon</span>
-
-                                  <i className="fas fa-chevron-right" />
-                                </div>
-
-                                <div
-                                  style={{
-                                    fontSize: "12px",
-                                    color: "#047857",
-                                  }}
-                                >
-                                  {appliedCoupon ? (
-                                    <div
-                                      style={{
-                                        display: "flex",
-                                        alignItems: "center",
-                                        gap: "8px",
-                                        flexWrap: "wrap",
-                                      }}
-                                    >
-                                      <span>
-                                        Applied:{" "}
-                                        {appliedCoupon.code ||
-                                          appliedCoupon.name}
-                                      </span>
-
-                                      {/* <span
-
-                                        style={{
-
-                                          background: "#dcfce7",
-
-                                          color: "#166534",
-
-                                          fontSize: "11px",
-
-                                          padding: "2px 8px",
-
-                                          borderRadius: "999px",
-
-                                          fontWeight: 700,
-
-                                        }}
-
-                                      >
-
-                                        Coupon Applied
-
-                                      </span> */}
-
-                                      <button
-                                        type="button"
-                                        onClick={(e) => {
-                                          e.preventDefault();
-                                          e.stopPropagation();
-                                          setAppliedCoupon(null);
-                                        }}
-                                        style={{
-                                          background: "transparent",
-                                          border: "none",
-                                          padding: 0,
-                                          cursor: "pointer",
-                                          color: "#065f46",
-                                          textDecoration: "underline",
-                                          fontWeight: 600,
-                                          fontSize: "12px",
-                                        }}
-                                      >
-                                        Remove
-                                      </button>
-                                    </div>
-                                  ) : localStorage.getItem(
-                                    "medicomparestoken",
-                                  ) ? (
-                                    "View available coupons"
-                                  ) : (
-                                    "Login to apply coupons"
-                                  )}
-                                </div>
-                              </div>
+                      {isTotalFareExpanded && (
+                        <div className="!flex !flex-col !gap-3">
+                          <div className="!pb-3 !border-b !border-[#f1f5f9]">
+                            <div className="!text-[13px] !font-semibold !mb-2.5 !text-slate-800">
+                              Booking Summary
                             </div>
 
-                            {/* Manual Coupon Input */}
-                            <div className="flex mt-3 flex-row w-full">
-                              <input
-                                type="text"
-                                placeholder="Enter Coupon Code"
-                                value={couponInputText}
-                                onChange={(e) => setCouponInputText(e.target.value)}
-                                className="flex-1 min-w-0 border border-slate-300 !rounded-l-lg px-3 py-2 text-sm outline-none transition-colors focus:border-[#8059ca]"
-                              />
-                              <button
-                                type="button"
+                            {/* OFFERS & COUPONS */}
+                            <div className="!mb-3">
+                              <div
+                                className={`group !flex !items-center !gap-3.5 !rounded-xl !border !p-3 !cursor-pointer !transition-all !duration-300 ${appliedCoupon
+                                  ? "!bg-gradient-to-r !from-[#f0fdf4] !to-[#ecfdf5] !border-[#86efac] !shadow-[0_4px_12px_rgba(34,197,94,0.06)]"
+                                  : "!bg-gradient-to-r !from-[#fbf9ff] !to-[#ffffff] !border-[#e2d5f8] hover:!border-[#8059ca]"
+                                  }`}
                                 onClick={(e) => {
                                   e.preventDefault();
-                                  handleManualCouponApply();
+                                  const token = localStorage.getItem("medicomparestoken");
+                                  if (!token) {
+                                    toast.error("Please login to apply coupons");
+                                    navigate("/login");
+                                    return;
+                                  }
+                                  setShowOffersModal(true);
                                 }}
-                                className="bg-[#8059ca] hover:bg-[#6f42c1] text-white border-none !rounded-r-lg px-4 py-2 text-sm font-semibold cursor-pointer transition-colors shrink-0"
                               >
-                                Apply
-                              </button>
+                                {/* Icon */}
+                                <div
+                                  className={`!flex !h-10 !w-10 !items-center !justify-center !rounded-xl !text-base !text-white !shadow-sm ${appliedCoupon
+                                    ? "!bg-gradient-to-br !from-[#22c55e] !to-[#15803d]"
+                                    : "!bg-gradient-to-br !from-[#8059ca] !to-[#6d28d9]"
+                                    }`}
+                                >
+                                  <i className="fas fa-tags"></i>
+                                </div>
+
+                                {/* Content */}
+                                <div className="!flex-1">
+                                  <div
+                                    className={`!flex !items-center !justify-between !text-[12.5px] !font-semibold ${appliedCoupon ? "!text-[#166534]" : "!text-[#6d28d9]"
+                                      }`}
+                                  >
+                                    <span>
+                                      {appliedCoupon ? "Coupon Applied Successfully!" : "Apply Coupon"}
+                                    </span>
+                                    <i className="fas fa-chevron-right !text-[10px] !opacity-60 !transition-transform !duration-200 group-hover:!translate-x-0.5"></i>
+                                  </div>
+
+                                  <div
+                                    className={`!mt-1 !text-[11px] ${appliedCoupon ? "!text-[#15803d]" : "!text-slate-500"
+                                      }`}
+                                  >
+                                    {appliedCoupon ? (
+                                      <div className="!flex !flex-wrap !items-center !justify-between !gap-2">
+                                        <span className="!inline-flex !items-center !gap-1.5 !rounded-full !bg-[#ede9fe] !px-2.5 !py-0.5 !font-semibold !tracking-wide !text-[#6d28d9] !text-[10.5px]">
+                                          <i className="fas fa-ticket-alt !text-[10px]" />
+                                          {appliedCoupon.code || appliedCoupon.name}
+                                        </span>
+
+                                        <button
+                                          type="button"
+                                          onClick={(e) => {
+                                            e.preventDefault();
+                                            e.stopPropagation();
+                                            setAppliedCoupon(null);
+                                          }}
+                                          className="!rounded-full !bg-red-50 !px-2.5 !py-0.5 !text-[10.5px] !font-semibold !text-red-600 !transition-all !duration-200 hover:!bg-red-100 !border-0"
+                                        >
+                                          Remove
+                                        </button>
+                                      </div>
+                                    ) : localStorage.getItem("medicomparestoken") ? (
+                                      <span>
+                                        View available coupons and save more on your order.
+                                      </span>
+                                    ) : (
+                                      <span>Login to apply coupons.</span>
+                                    )}
+                                  </div>
+                                </div>
+                              </div>
+
+                              {/* Manual Coupon Input */}
+                              <div className="!flex !mt-2.5 !flex-row !w-full">
+                                <input
+                                  type="text"
+                                  placeholder="Enter Coupon Code"
+                                  value={couponInputText}
+                                  onChange={(e) => setCouponInputText(e.target.value)}
+                                  className="!flex-1 !min-w-0 !border !border-slate-200 !rounded-l-xl !py-2 !px-3 !text-[12.5px] !outline-none !transition-colors !duration-200 focus:!border-[#8059ca] !bg-white"
+                                />
+                                <button
+                                  type="button"
+                                  onClick={(e) => {
+                                    e.preventDefault();
+                                    handleManualCouponApply();
+                                  }}
+                                  className="!bg-[#8059ca] !text-white !border-0 !rounded-r-xl !py-2 !px-4 !text-[12.5px] !font-semibold !cursor-pointer !transition-colors !duration-200 hover:!bg-[#6f42c1] !shrink-0"
+                                >
+                                  Apply
+                                </button>
+                              </div>
                             </div>
+
+                            {data?.rentalPricing?.endDate && (
+                              <div className="!flex !justify-between !mb-2 !text-[12.5px]">
+                                <span className="!text-slate-500">End Date</span>
+                                <span className="!font-semibold !text-slate-800">
+                                  {new Date(data.rentalPricing.endDate).toLocaleDateString("en-IN", {
+                                    day: "2-digit",
+                                    month: "2-digit",
+                                    year: "numeric",
+                                  })}
+                                </span>
+                              </div>
+                            )}
+
+                            <div className="!flex !justify-between !mb-2 !text-[12.5px]">
+                              <span className="!text-slate-500">Daily Rate</span>
+                              <span className="!font-semibold !text-slate-800">
+                                ₹{(data?.perDayRent || perDayRent).toFixed(2)} ×{" "}
+                                {rentalDuration
+                                  ? rentalPlan === "weekly"
+                                    ? `${rentalDuration} weeks`
+                                    : rentalPlan === "monthly"
+                                      ? `${rentalDuration} months`
+                                      : rentalPlan === "yearly"
+                                        ? `${rentalDuration} years`
+                                        : `${rentalDuration} periods`
+                                  : "0 periods"}
+                              </span>
+                            </div>
+
+                            <div className="!flex !justify-between !mb-2 !text-[12.5px]">
+                              <span className="!text-slate-500">
+                                Sub-total<small> (Rental Charges)</small>
+                              </span>
+                              <span className="!font-semibold !text-slate-800">
+                                ₹{rentalSubtotal.toFixed(2)}
+                              </span>
+                            </div>
+
+                            {serviceCharges > 0 && (
+                              <div className="!flex !justify-between !mb-2 !text-[12.5px]">
+                                <span className="!text-slate-500">Delivery Charges</span>
+                                <span className="!font-semibold !text-slate-800">
+                                  ₹{serviceCharges.toFixed(2)}
+                                </span>
+                              </div>
+                            )}
+
+                            {returnCharge > 0 && (
+                              <div className="!flex !justify-between !mb-2 !text-[12.5px]">
+                                <span className="!text-slate-500">Return Charge</span>
+                                <span className="!font-semibold !text-slate-800">
+                                  ₹{returnCharge.toFixed(2)}
+                                </span>
+                              </div>
+                            )}
+
+                            {fixedDeposit > 0 && (
+                              <div className="!flex !justify-between !mb-2 !text-[12.5px]">
+                                <span className="!text-slate-500">Deposit (Refundable)</span>
+                                <span className="!font-semibold !text-slate-800">
+                                  ₹{fixedDeposit.toFixed(2)}
+                                </span>
+                              </div>
+                            )}
+
+                            <div className="!flex !justify-between !mb-2 !text-[12.5px]">
+                              <span className="!text-slate-500">GST</span>
+                              <span className="!font-semibold !text-slate-800">
+                                ₹{(tax || 0).toFixed(2)}
+                              </span>
+                            </div>
+
+                            {data?.rentalPricing?.totalAmount && (
+                              <div className="!flex !justify-between !mb-2 !text-[12.5px]">
+                                <span className="!text-slate-500">Total Amount</span>
+                                <span className="!font-semibold !text-slate-800">
+                                  ₹{data.rentalPricing.totalAmount.toFixed(2)}
+                                </span>
+                              </div>
+                            )}
+
+                            {couponDiscount > 0 && (
+                              <div className="!flex !justify-between !mb-2 !text-[12.5px] !text-[#065f46] !bg-emerald-50/50 !p-1.5 !rounded-lg !border !border-emerald-100">
+                                <span className="!font-semibold !text-[#065f46]">
+                                  Coupon Discount
+                                  {appliedCoupon?.code
+                                    ? ` (${appliedCoupon.code})`
+                                    : ""}
+                                </span>
+                                <span className="!font-semibold !text-[#065f46]">
+                                  -₹{couponDiscount.toFixed(2)}
+                                </span>
+                              </div>
+                            )}
                           </div>
 
-                          {data?.rentalPricing?.endDate && (
-                            <div
-                              style={{
-                                display: "flex",
-                                justifyContent: "space-between",
-                                marginBottom: "8px",
-                                fontSize: "13px",
-                              }}
-                            >
-                              <span style={{ color: "#666" }}>End Date</span>
-
-                              <span
-                                style={{ fontWeight: "600", color: "#000" }}
-                              >
-                                {new Date(
-                                  data.rentalPricing.endDate,
-                                ).toLocaleDateString("en-IN", {
-                                  day: "2-digit",
-                                  month: "2-digit",
-                                  year: "numeric",
-                                })}
-                              </span>
-                            </div>
-                          )}
-
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              marginBottom: "8px",
-                              fontSize: "13px",
-                            }}
-                          >
-                            <span style={{ color: "#666" }}>Daily Rate</span>
-
-                            <span style={{ fontWeight: "600", color: "#000" }}>
-                              ₹{(data?.perDayRent || perDayRent).toFixed(2)} ×{" "}
-                              {rentalDuration
-                                ? rentalPlan === "weekly"
-                                  ? `${rentalDuration} weeks`
-                                  : rentalPlan === "monthly"
-                                    ? `${rentalDuration} months`
-                                    : rentalPlan === "yearly"
-                                      ? `${rentalDuration} years`
-                                      : `${rentalDuration} periods`
-                                : "0 periods"}
-                            </span>
-                          </div>
-
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              marginBottom: "8px",
-                              fontSize: "13px",
-                            }}
-                          >
-                            <span style={{ color: "#666" }}>
-                              Sub-total<small> (Rental Charges)</small>
-                            </span>
-
-                            <span style={{ fontWeight: "600", color: "#000" }}>
-                              ₹{rentalSubtotal.toFixed(2)}
-                            </span>
-                          </div>
-
-                          {serviceCharges > 0 && (
-                            <div
-                              style={{
-                                display: "flex",
-                                justifyContent: "space-between",
-                                marginBottom: "8px",
-                                fontSize: "13px",
-                              }}
-                            >
-                              <span style={{ color: "#666" }}>
-                                Delivery Charges
-                              </span>
-
-                              <span
-                                style={{ fontWeight: "600", color: "#000" }}
-                              >
-                                ₹{serviceCharges.toFixed(2)}
-                              </span>
-                            </div>
-                          )}
-
-                          {returnCharge > 0 && (
-                            <div
-                              style={{
-                                display: "flex",
-                                justifyContent: "space-between",
-                                marginBottom: "8px",
-                                fontSize: "13px",
-                              }}
-                            >
-                              <span style={{ color: "#666" }}>
-                                Return Charge
-                              </span>
-
-                              <span
-                                style={{ fontWeight: "600", color: "#000" }}
-                              >
-                                ₹{returnCharge.toFixed(2)}
-                              </span>
-                            </div>
-                          )}
-
-                          {fixedDeposit > 0 && (
-                            <div
-                              style={{
-                                display: "flex",
-                                justifyContent: "space-between",
-                                marginBottom: "8px",
-                                fontSize: "13px",
-                              }}
-                            >
-                              <span style={{ color: "#666" }}>
-                                Deposit (Refundable)
-                              </span>
-
-                              <span
-                                style={{ fontWeight: "600", color: "#000" }}
-                              >
-                                ₹{fixedDeposit.toFixed(2)}
-                              </span>
-                            </div>
-                          )}
-
-                          {/* <div
-                            style={{
-                              display: "flex",
-
-                              justifyContent: "space-between",
-
-                              marginBottom: "8px",
-
-                              fontSize: "13px",
-                            }}
-                          >
-                            <span style={{ color: "#666" }}>CGST (4%)</span>
-
-                            <span style={{ fontWeight: "600", color: "#000" }}>
-                              ₹{cgst.toFixed(2)}
-                            </span>
-                          </div> */}
-
-                          {/* <div
-                            style={{
-                              display: "flex",
-
-                              justifyContent: "space-between",
-
-                              marginBottom: "8px",
-
-                              fontSize: "13px",
-                            }}
-                          >
-                            <span style={{ color: "#666" }}>SGST (14%)</span>
-
-                            <span style={{ fontWeight: "600", color: "#000" }}>
-                              ₹{sgst.toFixed(2)}
-                            </span>
-                          </div> */}
-
-
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              marginBottom: "8px",
-                              fontSize: "13px",
-                            }}
-                          >
-                            <span style={{ color: "#666" }}>GST</span>
-
-                            <span style={{ fontWeight: "600", color: "#000" }}>
-                              ₹{(tax || 0).toFixed(2)}
-                            </span>
-                          </div>
-
-                          {data?.rentalPricing?.totalAmount && (
-                            <div
-                              style={{
-                                display: "flex",
-                                justifyContent: "space-between",
-                                marginBottom: "8px",
-                                fontSize: "13px",
-                              }}
-                            >
-                              <span style={{ color: "#666" }}>
-                                Total Amount
-                              </span>
-
-                              <span
-                                style={{ fontWeight: "600", color: "#000" }}
-                              >
-                                ₹{data.rentalPricing.totalAmount.toFixed(2)}
-                              </span>
-                            </div>
-                          )}
-
-                          {couponDiscount > 0 && (
-                            <div
-                              style={{
-                                display: "flex",
-                                justifyContent: "space-between",
-                                marginBottom: "8px",
-                                fontSize: "13px",
-                                color: '#16a34a'
-                              }}
-                            >
-                              <span style={{ fontWeight: 600 }}>
-                                Coupon Discount
-                                {appliedCoupon?.code
-                                  ? ` (${appliedCoupon.code})`
-                                  : ""}
-                              </span>
-
-                              <span style={{ fontWeight: 700 }}>
-                                -₹{couponDiscount.toFixed(2)}
-                              </span>
-                            </div>
-                          )}
-                        </div>
-
-                        <div
-                          style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "flex-start",
-                          }}
-                        >
-                          <div>
-                            <span
-                              style={{
-                                fontSize: "16px",
-                                fontWeight: "700",
-                                color: "#000",
-                                display: "block",
-                              }}
-                            >
+                          <div className="!flex !justify-between !items-center !mb-1.5">
+                            <span className="!text-[13.5px] !font-semibold !text-slate-800">
                               Amount to Pay
                             </span>
-                          </div>
-
-                          <div style={{ textAlign: "right" }}>
-                            <span
-                              style={{
-                                fontSize: "18px",
-                                fontWeight: "700",
-                                color: "#000",
-                                display: "block",
-                              }}
-                            >
+                            <span className="!text-base !font-semibold !text-[#8059ca]">
                               ₹{amountToPay.toFixed(2)}
                             </span>
                           </div>
-                        </div>
 
-                        {paymentType === "installment" &&
-                          numberOfInstallments &&
-                          numberOfInstallments > 1 &&
-                          installmentAmount > 0 && (
-                            <div style={{ marginTop: "12px" }}>
-                              <div
-                                style={{
-                                  display: "flex",
-                                  justifyContent: "space-between",
-                                  alignItems: "center",
-                                  padding: "8px 0",
-                                  borderTop: "1px solid #e5e7eb",
-                                  backgroundColor: "#f8f9fa",
-                                  borderRadius: "6px",
-                                }}
-                              >
-                                <div>
-                                  <span
-                                    style={{
-                                      fontSize: "13px",
-                                      fontWeight: "600",
-                                      color: "#666",
-                                      display: "block",
-                                    }}
-                                  >
-                                    {numberOfInstallments} Installments
-                                  </span>
-
-                                  <span
-                                    style={{
-                                      fontSize: "11px",
-                                      color: "#999",
-                                      display: "block",
-                                      marginTop: "2px",
-                                    }}
-                                  >
-                                    {getInstallmentFrequencyText()}
+                          {paymentType === "installment" &&
+                            numberOfInstallments &&
+                            numberOfInstallments > 1 &&
+                            installmentAmount > 0 && (
+                              <div className="!mt-1.5">
+                                <div className="!flex !justify-between !items-center !p-2.5 !bg-slate-50 !rounded-lg !border !border-slate-100">
+                                  <div>
+                                    <span className="!text-[12px] !font-semibold !text-slate-600 !block">
+                                      {numberOfInstallments} Installments
+                                    </span>
+                                    <span className="!text-[10px] !text-slate-400 !block !mt-0.5">
+                                      {getInstallmentFrequencyText()}
+                                    </span>
+                                  </div>
+                                  <span className="!text-sm !font-semibold !text-[#8059ca]">
+                                    ₹{installmentAmount.toFixed(2)}
                                   </span>
                                 </div>
+                              </div>
+                            )}
 
-                                <span
-                                  style={{
-                                    fontSize: "16px",
-                                    fontWeight: "700",
-                                    color: "#007bff",
-                                  }}
-                                >
-                                  ₹{installmentAmount.toFixed(2)}
-                                </span>
+                          {appliedCoupon && couponDiscount > 0 && (
+                            <div className="!bg-emerald-50 !rounded-lg !p-2.5 !text-center !border !border-emerald-100">
+                              <div className="!text-[12px] !font-semibold !text-[#166534] !flex !items-center !justify-center !gap-1">
+                                <i className="fa-solid fa-sparkles !text-emerald-500 animate-pulse" />
+                                YOU SAVED A TOTAL OF ₹{couponDiscount.toFixed(2)}
                               </div>
                             </div>
                           )}
+                        </div>
+                      )}
+                    </div>
 
-                        {appliedCoupon && couponDiscount > 0 && (
-                          <div
-                            style={{
-                              backgroundColor: "#ECFDF5",
-                              borderRadius: "8px",
-                              padding: "12px",
-                              textAlign: "center",
-                              marginBottom: "16px",
-                              border: "1px solid #D1FAE5",
-                            }}
-                          >
-                            <div
-                              style={{
-                                fontSize: "13px",
-                                fontWeight: "600",
-                                color: "#166534",
-                              }}
-                            >
-                              YOU SAVED A TOTAL OF ₹{couponDiscount.toFixed(2)}
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    )}
-                  </div>
-                </div>
+                    {/* Submit Section */}
+                    <div className="!pt-4 !border-t !border-[#f1f5f9]">
+                      <form onSubmit={(e) => handleSubmit(e)}>
+                        <input
+                          type="hidden"
+                          name="paymentMethod"
+                          value={paymentMethod}
+                        />
+                        <button
+                          type="submit"
+                          disabled={isSubmitting}
+                          className={`!w-full !text-white !rounded-xl !border-0 !py-2.5 !px-4 !mb-3 !transition-all !duration-300 !flex !items-center !justify-center !gap-2 !font-semibold !text-xs ${isSubmitting ? "!bg-gray-400 !cursor-not-allowed" : "!bg-gradient-to-r !from-[#8059ca] !to-[#822BD4] hover:!shadow-md active:!scale-[0.98] !cursor-pointer"}`}
+                        >
+                          {isSubmitting ? (
+                            <>
+                              <div
+                                className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"
+                                role="status"
+                              />
+                              Processing...
+                            </>
+                          ) : (
+                            "PROCEED TO PAY"
+                          )}
+                        </button>
+                      </form>
 
-                <div
-                  className="card shadow-sm mb-4"
-                  style={{
-                    borderRadius: "12px",
-                    border: "none",
-                  }}
-                >
-                  <div className="card-body p-3">
-                    <form onSubmit={(e) => handleSubmit(e)}>
-                      <input
-                        type="hidden"
-                        name="paymentMethod"
-                        value={paymentMethod}
-                      />
-
-                      <button
-                        type="submit"
-                        disabled={isSubmitting}
-                        style={{
-                          width: "100%",
-                          backgroundColor: isSubmitting ? "#9ca3af" : "#8059ca",
-                          color: "#fff",
-                          border: "none",
-                          borderRadius: "8px",
-                          padding: "12px",
-                          cursor: isSubmitting ? "not-allowed" : "pointer",
-                          marginBottom: "12px",
-                          transition: "all 0.3s ease",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          gap: "8px",
-                        }}
-                      >
-                        {isSubmitting ? (
-                          <>
-                            <div
-                              className="spinner-border spinner-border-sm"
-                              role="status"
-                              style={{
-                                width: "16px",
-                                height: "16px",
-                                borderWidth: "2px",
-                              }}
-                            >
-                              <span className="visually-hidden">
-                                Loading...
-                              </span>
-                            </div>
-                            Processing...
-                          </>
-                        ) : (
-                          "PROCEED TO PAY"
-                        )}
-                      </button>
-                    </form>
-
-                    <div
-                      style={{
-                        display: "flex",
-                        gap: "16px",
-                        justifyContent: "center",
-                        flexWrap: "wrap",
-                      }}
-                    >
-                      <div
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          gap: "6px",
-                          fontSize: "11px",
-                          color: "#666",
-                        }}
-                      >
-                        <i
-                          className="fas fa-check-circle"
-                          style={{ color: "#28a745", fontSize: "14px" }}
-                        ></i>
-
-                        <span>Health satisfaction guarantee</span>
-                      </div>
-
-                      <div
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          gap: "6px",
-                          fontSize: "11px",
-                          color: "#666",
-                        }}
-                      >
-                        <i
-                          className="fas fa-shield-alt"
-                          style={{ color: "#007bff", fontSize: "14px" }}
-                        ></i>
-
-                        <span>Secure Payments</span>
+                      <div className="!flex !gap-4 !justify-center !flex-wrap">
+                        <div className="!flex !items-center !gap-1.5 !text-[11px] !text-gray-500">
+                          <i className="fas fa-check-circle !text-[#28a745] !text-xs"></i>
+                          <span>Health satisfaction guarantee</span>
+                        </div>
+                        <div className="flex items-center gap-1.5 text-[11px] text-gray-500">
+                          <i className="fas fa-shield-alt text-[#007bff] text-xs"></i>
+                          <span>Secure Payments</span>
+                        </div>
                       </div>
                     </div>
+
                   </div>
                 </div>
               </div>
             </div>
 
 
-            {isMobile && productData?.length > 0 && (
-              <div className="col-lg-12 col-md-12 order-3">
-                {renderRecentlyViewed()}
-              </div>
-            )}
           </div>
         </div>
       </div>
@@ -3559,7 +2277,7 @@ const RentalBookingProcess = () => {
           show={showOffersModal}
           onClose={() => setShowOffersModal(false)}
           title={"Apply Coupon"}
-          size="md"
+          size="lg"
           className="max-w-md mx-auto"
           bodyClassName="!p-2"
         >
@@ -3580,483 +2298,84 @@ const RentalBookingProcess = () => {
               return [];
             };
 
-            const adminCoupons = getCouponsList("admin");
-            const vendorCoupons = getCouponsList("vendor");
+            const cartVendorIds = [
+              String(
+                data?.vendorDetails?.vendorId ||
+                data?.vendorId ||
+                cart?.vendorId ||
+                data?.businessDetails?._id ||
+                "",
+              ),
+            ];
+
+            const mapCoupons = (coupons, isVendorCoupon) => {
+              return coupons.map((coupon) => {
+                const isApplied = appliedCoupon?._id === coupon._id;
+                const baseAmount = isVendorCoupon ? rentalSubtotal : (totalPayAmount || totalAmount || total);
+
+                let isEligible = true;
+                let criteriaText = "";
+                let hasExpired = false;
+
+                if (coupon?.endDate) {
+                  const endDateStamp = new Date(coupon.endDate).getTime();
+                  const nowStamp = new Date().getTime();
+                  if (endDateStamp < nowStamp) {
+                    hasExpired = true;
+                    criteriaText = "Coupon has expired";
+                  }
+                }
+
+                if (hasExpired) {
+                  isEligible = false;
+                } else if (baseAmount < coupon.minimumPurchase) {
+                  isEligible = false;
+                  const diff = (coupon.minimumPurchase - baseAmount).toFixed(2);
+                  criteriaText = `Add ₹${diff} more to apply`;
+                } else if (coupon?.canUseCoupon === false) {
+                  isEligible = false;
+                } else if (coupon?.remainingUses === 0) {
+                  isEligible = false;
+                }
+
+                const savingsPreview = isEligible ? calculateCouponDiscount(coupon, baseAmount) : 0;
+
+                return {
+                  ...coupon,
+                  isApplied,
+                  isEligible,
+                  criteriaText,
+                  savingsPreview,
+                };
+              });
+            };
+
+            const sortedVendorCoupons = mapCoupons(getCouponsList("vendor"), true).sort((a, b) => {
+              const aMatches =
+                cartVendorIds.includes(String(a.createdBy)) ||
+                cartVendorIds.includes(String(a.businessDetails?._id));
+              const bMatches =
+                cartVendorIds.includes(String(b.createdBy)) ||
+                cartVendorIds.includes(String(b.businessDetails?._id));
+
+              if (aMatches && !bMatches) return -1;
+              if (!aMatches && bMatches) return 1;
+
+              return (b.discount || 0) - (a.discount || 0);
+            });
+
+            const sortedAdminCoupons = mapCoupons(getCouponsList("admin"), false).sort(
+              (a, b) => (b.discount || 0) - (a.discount || 0),
+            );
 
             return (
-              <>
-                <div className="offers-modal-body" style={{ padding: "20px", background: "#f8fafc" }}>
-                  <div className="offers-list" style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
-                    {(() => {
-                      const cartVendorIds = [
-                        String(
-                          data?.vendorDetails?.vendorId ||
-                          data?.vendorId ||
-                          cart?.vendorId ||
-                          data?.businessDetails?._id ||
-                          "",
-                        ),
-                      ];
-
-                      const sortedVendorCoupons = [...vendorCoupons].sort((a, b) => {
-                        const aMatches =
-                          cartVendorIds.includes(String(a.createdBy)) ||
-                          cartVendorIds.includes(String(a.businessDetails?._id));
-                        const bMatches =
-                          cartVendorIds.includes(String(b.createdBy)) ||
-                          cartVendorIds.includes(String(b.businessDetails?._id));
-
-                        if (aMatches && !bMatches) return -1;
-                        if (!aMatches && bMatches) return 1;
-
-                        return (b.discount || 0) - (a.discount || 0);
-                      });
-
-                      const sortedAdminCoupons = [...adminCoupons].sort(
-                        (a, b) => (b.discount || 0) - (a.discount || 0),
-                      );
-
-                      const getDiscountTier = (coupon) => {
-                        const amount = parseFloat(coupon.discount) || 0;
-                        if (coupon.discountType === "fixed") {
-                          if (amount >= 300) return "mega";
-                          if (amount >= 150) return "hot";
-                          if (amount >= 50) return "good";
-                          return "saver";
-                        }
-                        if (amount >= 30) return "mega";
-                        if (amount >= 20) return "hot";
-                        if (amount >= 10) return "good";
-                        return "saver";
-                      };
-
-                      const couponThemes = {
-                        saver: {
-                          label: "Saver",
-                          bg: "#fafffb",
-                          border: "#d1fae5",
-                          accent: "#22c55e",
-                          badgeBg: "#f0fdf4",
-                          badgeText: "#16a34a",
-                          btnBg: "#f0fdf4",
-                          btnText: "#16a34a",
-                          btnBorder: "#bbf7d0",
-                        },
-                        good: {
-                          label: "Good Deal",
-                          bg: "#f8fbff",
-                          border: "#dbeafe",
-                          accent: "#3b82f6",
-                          badgeBg: "#eff6ff",
-                          badgeText: "#2563eb",
-                          btnBg: "#eff6ff",
-                          btnText: "#2563eb",
-                          btnBorder: "#bfdbfe",
-                        },
-                        hot: {
-                          label: "Hot Deal",
-                          bg: "#fffdf7",
-                          border: "#fde68a",
-                          accent: "#d97706",
-                          badgeBg: "#fffbeb",
-                          badgeText: "#b45309",
-                          btnBg: "#fffbeb",
-                          btnText: "#d97706",
-                          btnBorder: "#fcd34d",
-                        },
-                        mega: {
-                          label: "Mega Save",
-                          bg: "#fcfaff",
-                          border: "#e9d5ff",
-                          accent: "#8059ca",
-                          badgeBg: "#f5f3ff",
-                          badgeText: "#7c3aed",
-                          btnBg: "#f3e8ff",
-                          btnText: "#8059ca",
-                          btnBorder: "#ddd6fe",
-                        },
-                      };
-
-                      const renderCouponCard = (ele, ind, isVendorCoupon) => {
-                        const isApplied = appliedCoupon?._id === ele._id;
-                        const discountText =
-                          ele.discountType === "fixed"
-                            ? `₹${ele.discount}`
-                            : `${ele.discount}%`;
-
-                        const matchesCartVendor =
-                          isVendorCoupon &&
-                          (cartVendorIds.includes(String(ele.createdBy)) ||
-                            cartVendorIds.includes(String(ele.businessDetails?._id)));
-
-                        let applicableAmount = 0;
-                        let isEligible = true;
-                        let criteriaText = "";
-                        const getEffectivePrice = (item) => {
-                          const discountprice =
-                            parseFloat(item.discountprice || item.discountPrice) || null;
-                          const price = parseFloat(item.price) || 0;
-                          let calculatedDiscountPrice = discountprice;
-                          const discountType = item.discountType || null;
-
-                          if (discountType === "percentage" && discountprice && discountprice > 0) {
-                            calculatedDiscountPrice = price - (price * discountprice) / 100;
-                          }
-
-                          return calculatedDiscountPrice && calculatedDiscountPrice > 0
-                            ? calculatedDiscountPrice
-                            : price;
-                        };
-
-                        const cartItems = typeof relevantProducts !== 'undefined' && relevantProducts.length > 0
-                          ? relevantProducts.map(item => ({
-                            vendorId: item.vendor?.vendorId || item.vendorId || item.vendor?._id || item.vendorDetails?.vendorId || item.vendorDetails?._id || "",
-                            price: item.price || item.tabletDetails?.price || pricePerItem,
-                            discountprice: item.discountprice || item.discountPrice || discountPrice,
-                            quantity: item.quantity || quantity || 1
-                          }))
-                          : [{
-                            vendorId: data?.vendorDetails?.vendorId || data?.vendorId || cart?.vendorId || data?.businessDetails?._id || "",
-                            price: pricePerItem,
-                            discountprice: discountPrice,
-                            quantity: quantity || 1
-                          }];
-
-                        let hasExpired = false;
-                        if (ele?.endDate) {
-                          const endDateStamp = new Date(ele.endDate).getTime();
-                          const nowStamp = new Date().getTime();
-                          if (endDateStamp < nowStamp) {
-                            hasExpired = true;
-                            criteriaText = "Coupon has expired";
-                          }
-                        }
-
-                        if (isVendorCoupon) {
-                          const vendorIdStr = String(ele.createdBy || ele.businessDetails?._id || "");
-                          const vendorItems = cartItems.filter(item => String(item.vendorId) === vendorIdStr);
-                          applicableAmount = vendorItems.reduce((sum, item) => {
-                            const price = getEffectivePrice(item);
-                            return sum + (price * (parseInt(item.quantity) || 1));
-                          }, 0);
-
-                          if (hasExpired) {
-                            isEligible = false;
-                          } else if (rentalSubtotal < ele.minimumPurchase) {
-                            isEligible = false;
-                            const diff = (ele.minimumPurchase - rentalSubtotal).toFixed(2);
-                            criteriaText = `Add ₹${diff} more of this vendor's items`;
-                          } else if (ele?.canUseCoupon === false) {
-                            isEligible = false;
-                          } else if (ele?.remainingUses === 0) {
-                            isEligible = false;
-                          } else {
-                            isEligible = true;
-                          }
-                        } else {
-                          applicableAmount = total;
-                          if (hasExpired) {
-                            isEligible = false;
-                          } else if (rentalSubtotal < ele.minimumPurchase) {
-                            isEligible = false;
-                            const diff = (ele.minimumPurchase - rentalSubtotal).toFixed(2);
-                            criteriaText = `Add ₹${diff} more to apply`;
-                          } else if (ele?.canUseCoupon === false) {
-                            isEligible = false;
-                          } else if (ele?.remainingUses === 0) {
-                            isEligible = false;
-                          } else {
-                            isEligible = true;
-                          }
-                        }
-
-                        const tier = getDiscountTier(ele);
-                        const theme = couponThemes[tier];
-                        const inactiveTheme = {
-                          bg: "#f8fafc",
-                          border: "#e2e8f0",
-                          accent: "#94a3b8",
-                          badgeBg: "#f1f5f9",
-                          badgeText: "#64748b",
-                          btnBg: "#f1f5f9",
-                          btnText: "#94a3b8",
-                          btnBorder: "#e2e8f0",
-                          label: "Unavailable",
-                        };
-                        const appliedTheme = {
-                          bg: "#f6fef9",
-                          border: "#a7f3d0",
-                          accent: "#10b981",
-                          badgeBg: "#ecfdf5",
-                          badgeText: "#059669",
-                          btnBg: "#ecfdf5",
-                          btnText: "#059669",
-                          btnBorder: "#a7f3d0",
-                          label: "Applied",
-                        };
-                        const activeTheme = !isEligible
-                          ? inactiveTheme
-                          : isApplied
-                            ? appliedTheme
-                            : theme;
-
-                        const savingsPreview = isEligible
-                          ? calculateCouponDiscount(ele, rentalSubtotal)
-                          : 0;
-
-                        return (
-                          <div
-                            key={ele._id || `${ele.code}-${ind}`}
-                            style={{
-                              display: "flex",
-                              alignItems: "stretch",
-                              width: "100%",
-                              background: activeTheme.bg,
-                              border: `1px solid ${activeTheme.border}`,
-                              borderRadius: "12px",
-                              overflow: "hidden",
-                              transition: "all 0.2s ease",
-                              boxShadow: "none",
-                              opacity: isEligible ? 1 : 0.72,
-                            }}
-                          >
-                            <div
-                              style={{
-                                minWidth: "88px",
-                                maxWidth: "88px",
-                                padding: "14px 10px",
-                                background: activeTheme.badgeBg,
-                                borderRight: `1px dashed ${activeTheme.border}`,
-                                display: "flex",
-                                flexDirection: "column",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                gap: "4px",
-                                textAlign: "center",
-                              }}
-                            >
-                              <span
-                                style={{
-                                  fontSize: "20px",
-                                  fontWeight: "800",
-                                  color: activeTheme.badgeText,
-                                  lineHeight: 1.1,
-                                }}
-                              >
-                                {discountText}
-                              </span>
-                              <span
-                                style={{
-                                  fontSize: "9px",
-                                  fontWeight: "700",
-                                  color: activeTheme.badgeText,
-                                  textTransform: "uppercase",
-                                  letterSpacing: "0.3px",
-                                }}
-                              >
-                                OFF
-                              </span>
-                              <span
-                                style={{
-                                  fontSize: "8.5px",
-                                  fontWeight: "700",
-                                  color: activeTheme.accent,
-                                  background: "#ffffff",
-                                  padding: "2px 6px",
-                                  borderRadius: "10px",
-                                  marginTop: "4px",
-                                }}
-                              >
-                                {activeTheme.label}
-                              </span>
-                            </div>
-
-                            <div
-                              style={{
-                                flex: 1,
-                                padding: "12px 14px",
-                                display: "flex",
-                                flexDirection: "column",
-                                gap: "6px",
-                                minWidth: 0,
-                              }}
-                            >
-                              <h5
-                                style={{
-                                  fontSize: "14px",
-                                  fontWeight: "700",
-                                  color: "#1e293b",
-                                  margin: 0,
-                                }}
-                              >
-                                {ele.name}
-                              </h5>
-
-                              <div
-                                style={{
-                                  display: "flex",
-                                  gap: "6px",
-                                  alignItems: "center",
-                                }}
-                              >
-                                <span
-                                  style={{
-                                    fontSize: "11px",
-                                    fontWeight: "700",
-                                    fontFamily: "monospace",
-                                    color: activeTheme.accent,
-                                    background: "#ffffff",
-                                    border: `1px dashed ${activeTheme.border}`,
-                                    borderRadius: "6px",
-                                    padding: "3px 8px",
-                                  }}
-                                >
-                                  {ele.code}
-                                </span>
-                                {ele.minimumPurchase > 0 && (
-                                  <span style={{ fontSize: "10px", color: "#64748b" }}>
-                                    Minimum order ₹{ele.minimumPurchase}
-                                  </span>
-                                )}
-                              </div>
-
-                              {ele.description && (
-                                <p
-                                  style={{
-                                    fontSize: "11px",
-                                    color: "#475569",
-                                    margin: 0,
-                                    lineHeight: 1.45,
-                                    display: "-webkit-box",
-                                    WebkitLineClamp: 2,
-                                    WebkitBoxOrient: "vertical",
-                                    overflow: "hidden",
-                                  }}
-                                >
-                                  {ele.description}
-                                </p>
-                              )}
-
-                              <div
-                                style={{
-                                  display: "flex",
-                                  flexWrap: "wrap",
-                                  gap: "8px",
-                                  fontSize: "10px",
-                                  color: "#64748b",
-                                }}
-                              >
-                                {isEligible && savingsPreview > 0 && (
-                                  <span style={{ fontWeight: "600", color: activeTheme.accent }}>
-                                    You save ₹{savingsPreview.toFixed(2)}
-                                  </span>
-                                )}
-                                {ele.discountType === "percentage" && (
-                                  <span>{ele.discount}% discount</span>
-                                )}
-                                {ele.discountType === "fixed" && (
-                                  <span>Flat ₹{ele.discount} off</span>
-                                )}
-                              </div>
-
-                              {!isEligible && criteriaText && (
-                                <span
-                                  style={{
-                                    fontSize: "10px",
-                                    color: "#dc2626",
-                                    fontWeight: "600",
-                                  }}
-                                >
-                                  ⚠️ {criteriaText}
-                                </span>
-                              )}
-                            </div>
-
-                            <div
-                              style={{
-                                display: "flex",
-                                alignItems: "center",
-                                padding: "12px 12px 12px 0",
-                                flexShrink: 0,
-                              }}
-                            >
-                              <button
-                                type="button"
-                                disabled={!isEligible}
-                                onClick={() => handleCouponApply(ele)}
-                                style={{
-                                  padding: "7px 14px",
-                                  borderRadius: "8px",
-                                  border: `1px solid ${activeTheme.btnBorder}`,
-                                  background: activeTheme.btnBg,
-                                  color: activeTheme.btnText,
-                                  fontSize: "12px",
-                                  fontWeight: "600",
-                                  cursor: !isEligible ? "not-allowed" : "pointer",
-                                  transition: "all 0.2s ease",
-                                  whiteSpace: "nowrap",
-                                  boxShadow: "none",
-                                }}
-                              >
-                                {isApplied ? "Applied" : "Apply"}
-                              </button>
-                            </div>
-                          </div>
-                        );
-                      };
-
-                      const renderSection = (coupons, isVendorCoupon) => {
-                        if (coupons.length === 0) return null;
-                        return coupons.map((ele, ind) =>
-                          renderCouponCard(ele, ind, isVendorCoupon),
-                        );
-                      };
-
-                      if (sortedVendorCoupons.length === 0 && sortedAdminCoupons.length === 0) {
-                        return (
-                          <div
-                            style={{
-                              display: "flex",
-                              flexDirection: "column",
-                              alignItems: "center",
-                              justifyContent: "center",
-                              padding: "40px 20px",
-                              textAlign: "center",
-                              color: "#94a3b8",
-                            }}
-                          >
-                            <div style={{ fontSize: "32px", marginBottom: "12px", color: "#cbd5e1" }}>
-                              🎟️
-                            </div>
-                            <span style={{ fontSize: "14px", fontWeight: "600", color: "#64748b" }}>
-                              No Coupons Available
-                            </span>
-                            <span style={{ fontSize: "12px", color: "#94a3b8", marginTop: "4px" }}>
-                              There are no active coupons at the moment.
-                            </span>
-                          </div>
-                        );
-                      }
-
-                      return (
-                        <>
-                          {renderSection(sortedVendorCoupons, true)}
-                          {sortedVendorCoupons.length > 0 && sortedAdminCoupons.length > 0 && (
-                            <div
-                              style={{
-                                height: "1px",
-                                background: "#e2e8f0",
-                                margin: "4px 0",
-                              }}
-                            />
-                          )}
-                          {renderSection(sortedAdminCoupons, false)}
-                        </>
-                      );
-                    })()}
-                  </div>
-                </div>
-              </>
+              <CouponOffersModal
+                show={showOffersModal}
+                onClose={() => setShowOffersModal(false)}
+                onApplyCoupon={handleCouponApply}
+                adminCoupons={sortedAdminCoupons}
+                vendorCoupons={sortedVendorCoupons}
+              />
             );
           })()}
 

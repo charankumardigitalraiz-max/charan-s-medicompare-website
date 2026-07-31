@@ -26,6 +26,7 @@ import AppointmentModal from "./products-components/AppointmentModal.jsx";
 import { useProfile } from "../../../context/ProfileContext";
 import { handleRentalBookingProcess, handleGeneralBookingProcess } from "../../../services/bookingService";
 import { useLocation as useLocationContext } from "../../../context/LocationContext";
+import { GOOGLE_MAPS_API_KEY } from "../../../utils/index.js"
 
 // Constants
 const UI_QTY_KEY = "pharmacyCartQuantitiesUI";
@@ -488,7 +489,7 @@ const MedicineComparePage = () => {
     let locationName = "Selected Location";
     let coordinates = null;
     try {
-      const GOOGLE_MAPS_API_KEY = "AIzaSyBW_ML0ppoU2o_tsOmT5eMveCwCFP3AXHU";
+      // const GOOGLE_MAPS_API_KEY = "AIzaSyBW_ML0ppoU2o_tsOmT5eMveCwCFP3AXHU";
       const response = await fetch(
         `https://maps.googleapis.com/maps/api/geocode/json?components=postal_code:${pin}|country:IN&key=${GOOGLE_MAPS_API_KEY}`,
       );

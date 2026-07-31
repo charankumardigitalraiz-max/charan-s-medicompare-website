@@ -12,7 +12,7 @@ import Home2Header from "../../../../components/home/Header-k.jsx";
 import Footer from "../../../../components/home/Footer-f.jsx";
 import CategoryProvider from "../../../../components/CategoryProvider.jsx";
 import PageLoader from "../../../../components/ui/PageLoader.jsx";
-import { Offcanvas } from "react-bootstrap";
+import { Offcanvas } from "../../../../components/ui/Offcanvas";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 import breadcrumbBg from "/assets/Medicompares Background.png";

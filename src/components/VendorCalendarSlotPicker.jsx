@@ -443,10 +443,10 @@ const VendorCalendarSlotPicker = ({
         <div className="slots-column">
           {isLoading ? (
             <div
-              className="d-flex align-items-center justify-content-center"
+              className="flex items-center justify-center"
               style={{ minHeight: "150px" }}
             >
-              <div className="spinner-border spinner-border-sm text-primary" role="status">
+              <div className="spinner-border spinner-border-sm text-[#8059ca]" role="status">
                 <span className="visually-hidden">Loading...</span>
               </div>
             </div>

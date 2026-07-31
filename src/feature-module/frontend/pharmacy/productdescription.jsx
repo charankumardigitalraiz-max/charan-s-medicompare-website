@@ -50,9 +50,10 @@ import VideoPopupModal from "./products-components/VideoPopupModal.jsx";
 import { FaPlay } from "react-icons/fa";
 import axios from "axios";
 import { Autocomplete, useJsApiLoader } from "@react-google-maps/api";
+import { GOOGLE_MAPS_API_KEY } from "../../../utils/index.js"
 
 const libraries = ["places"];
-const GOOGLE_MAPS_API_KEY = "AIzaSyBW_ML0ppoU2o_tsOmT5eMveCwCFP3AXHU";
+// const GOOGLE_MAPS_API_KEY = "AIzaSyBW_ML0ppoU2o_tsOmT5eMveCwCFP3AXHU";
 
 const UI_QTY_KEY = "pharmacyCartQuantitiesUI";
 const INITIAL_LEAD_FORM = {
@@ -687,7 +688,7 @@ const ProductDescription = () => {
     // If still no pincode, try reverse geocoding for more detailed info
     if (!postalCode) {
       try {
-        const GOOGLE_MAPS_API_KEY = "AIzaSyBW_ML0ppoU2o_tsOmT5eMveCwCFP3AXHU";
+        // const GOOGLE_MAPS_API_KEY = "AIzaSyBW_ML0ppoU2o_tsOmT5eMveCwCFP3AXHU";
         const response = await fetch(
           `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${GOOGLE_MAPS_API_KEY}`
         );
@@ -787,7 +788,7 @@ const ProductDescription = () => {
       let postalCode = null;
       let coordinates = null;
 
-      const GOOGLE_MAPS_API_KEY = "AIzaSyBW_ML0ppoU2o_tsOmT5eMveCwCFP3AXHU";
+      // const GOOGLE_MAPS_API_KEY = "AIzaSyBW_ML0ppoU2o_tsOmT5eMveCwCFP3AXHU";
       const isNumber = /^\d+$/.test(queryValue);
 
       let url = "";
@@ -2448,7 +2449,7 @@ const ProductDescription = () => {
       <div
         key={vendor._id || vendor.vendorId || index}
         onClick={() => handleVendorClick(vendor)}
-        className="p-[10px_12px] border border-[#e5e7eb] rounded-lg mb-2 bg-white transition-all duration-200 flex flex-wrap items-start gap-2 w-full last:mb-0 hover:border-[#8059ca] hover:shadow-sm cursor-pointer"
+        className="p-[10px_12px] border border-[#e5e7eb] rounded-sm mb-2 bg-white transition-all duration-200 flex flex-wrap items-start gap-2 w-full last:mb-0 hover:border-[#8059ca] hover:shadow-sm cursor-pointer"
       >
         {bookingType === "rentals_addtocarts" ? (
           <div
@@ -2527,7 +2528,7 @@ const ProductDescription = () => {
                   >
                     {discount > 0 && (
                       <small
-                        className="text-success text-[11px] font-sans whitespace-nowrap"
+                        className="text-green-600 text-[11px] font-sans whitespace-nowrap"
                       >
                         {discountType === "percentage" && discountPrice
                           ? `${discountPrice}% OFF`
@@ -2609,7 +2610,7 @@ const ProductDescription = () => {
                         className="flex items-center gap-1"
                       >
                         <i
-                          className="fas fa-truck me-1 text-[10px]"
+                          className="fas fa-truck mr-1 text-[10px]"
                         ></i>
                         <span
                           className="text-[10px] font-semibold font-sans"
@@ -2705,7 +2706,7 @@ const ProductDescription = () => {
                 >
                   {discount > 0 && (
                     <small
-                      className="text-success text-[11px] font-sans whitespace-nowrap"
+                      className="text-green-600 text-[11px] font-sans whitespace-nowrap"
                     >
                       {discountType === "percentage" && discountPrice
                         ? `${discountPrice}% OFF`
@@ -2745,7 +2746,7 @@ const ProductDescription = () => {
 
                   (product?.tablet?.category?.fixedType === 'medicine' || product?.tablet?.category?.fixedType === 'medicines') && (
                     <div className="flex items-center gap-1">
-                      <i className="fas fa-truck me-1 text-[10px]"></i>
+                      <i className="fas fa-truck mr-1 text-[10px]"></i>
                       <span className="text-[10px] font-semibold font-sans">
                         {distance}
                       </span>
@@ -2771,23 +2772,23 @@ const ProductDescription = () => {
 
   if (!product) {
     return (
-      <div className="container-fluid p-0">
-        <div className="w-100 overflow-hidden position-relative flex-wrap d-block vh-100">
-          <div className="row justify-content-center align-items-center vh-100 overflow-auto flex-wrap ">
-            <div className="col-lg-8 col-md-12 text-center">
+      <div className="w-full px-4 p-0">
+        <div className="w-full overflow-hidden relative flex-wrap block h-screen">
+          <div className="flex flex-wrap justify-center items-center h-screen overflow-auto flex-wrap ">
+            <div className="lg:w-[66.666%] md:w-full text-center">
               <div className="error-info">
                 <div className="error-404-img">
                   <img
                     src="/assets/404error.png"
-                    className="img-fluid bg-white errorimage"
+                    className="max-w-full h-auto bg-white errorimage"
                     alt="error-404-image"
                     title="error image"
                   />
                   <div className="error-content">
                     <h5 className="mb-2">Oops! That Page Can’t Be Found.</h5>
                     <p>The page you are looking for was never existed.</p>
-                    <Link to="/" className="btn btn-primary-gradient btn-sm">
-                      <i className="fas fa-home me-1"></i> Back to Home
+                    <Link to="/" className="inline-flex items-center gap-1 px-4 py-2 bg-[#8059ca] text-white rounded-lg text-sm font-medium hover:bg-[#6d46b8] transition-colors">
+                      <i className="fas fa-home mr-1"></i> Back to Home
                     </Link>
                   </div>
                 </div>
@@ -2900,9 +2901,9 @@ const ProductDescription = () => {
       const isShortItems = items.every(item => item.length < 30);
       if (isShortItems) {
         return (
-          <div className="d-flex flex-wrap gap-1 mt-1">
+          <div className="flex flex-wrap gap-1 mt-1">
             {items.map((item, idx) => (
-              <span key={idx} className="badge bg-light text-dark border" style={{ fontSize: "11px", fontWeight: "500", padding: "4px 8px", borderRadius: "12px", textTransform: "capitalize" }}>
+              <span key={idx} className="inline-block bg-gray-100 text-gray-900 border border-gray-200 text-[11px] font-medium px-2 py-1 rounded-xl capitalize">
                 {item}
               </span>
             ))}
@@ -2910,7 +2911,7 @@ const ProductDescription = () => {
         );
       } else {
         return (
-          <ul className="mb-0 ps-3" style={{ listStyleType: "disc", paddingLeft: "15px" }}>
+          <ul className="mb-0 pl-3" style={{ listStyleType: "disc", paddingLeft: "15px" }}>
             {items.map((item, idx) => (
               <li key={idx} style={{ marginBottom: "2px", lineHeight: "1.4" }}>
                 {item}
@@ -2927,16 +2928,16 @@ const ProductDescription = () => {
     <>
       {<Home2Header />}
       <CategoryProvider isLoading={loading} />
-      <div className="container-fluid">
-        <div className="row">
+      <div className="w-full max-w-[1440px] mx-auto px-3 md:px-5 mt-3 mb-6">
+        <div className="grid grid-cols-1 lg:grid-cols-[74%_1fr] gap-6">
           <div
-            className="col-lg-9 col-md-12"
+            className="min-w-0"
           // style={{ marginTop: isMobile ? "40px" : "40px" }}
           >
             <div className="lg:mt-1 md:mt-1">
               <div className="mb-2">
                 <button
-                  className="flex items-center gap-[6px] p-[4px_10px] border border-[#e0e0e0] bg-white text-[#333] font-[500] text-[12px] rounded-[6px] shadow-sm cursor-pointer transition-all duration-300 hover:border-[#8059ca] hover:text-[#8059ca] hover:bg-[#f8f5ff] hover:shadow-[0_4px_8px_rgba(125,46,255,0.15)] hover:-translate-y-px"
+                  className="flex items-center gap-[6px] p-[4px_10px] border border-[#e0e0e0] bg-white text-[#333] font-[500] text-[12px] !rounded-[6px] shadow-sm cursor-pointer transition-all duration-300 hover:border-[#8059ca] hover:text-[#8059ca] hover:bg-[#f8f5ff] hover:shadow-[0_4px_8px_rgba(125,46,255,0.15)] hover:-translate-y-px"
                   onClick={async (e) => {
                     e.preventDefault();
                     e.stopPropagation();
@@ -2975,33 +2976,15 @@ const ProductDescription = () => {
                       }, 500);
                     }
                   }}
-                  style={{
-                    padding: "4px 10px",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "6px",
-                    border: "1px solid #e0e0e0",
-                    background: "#ffffff",
-                    color: "#333",
-                    fontWeight: "500",
-                    fontSize: "12px",
-                    borderRadius: "6px",
-                    boxShadow: "0 2px 4px rgba(56, 54, 54, 0.08)08)",
-                    transition: "all 0.3s ease",
-                    cursor: "pointer",
-                  }}
                 >
-                  <i
-                    className="fas fa-arrow-left"
-                    style={{ fontSize: "11px" }}
-                  ></i>
-                  <span style={{ fontSize: "12px", fontWeight: "500" }}>
+                  <i className="fas fa-arrow-left text-[11px]"></i>
+                  <span className="text-[12px] font-medium">
                     Back
                   </span>
                 </button>
               </div>
 
-              <div className="container">
+              <div className="w-full">
                 {descriptionTop && descriptionTop.length > 0 && (
                   <div className="text-center mb-3">
                     <Slider
@@ -3026,16 +3009,16 @@ const ProductDescription = () => {
                   </div>
                 )}
 
-                <div className="card shadow-sm rounded-3">
-                  <div className="card-body">
-                    <div className="row g-4 align-items-start">
-                      <div className="col-lg-7 col-12 position-relative">
-                        <div className="position-absolute top-0 start-0 end-0 px-3 d-flex  flex-md-row justify-content-between gap-2">
-                          <div className="d-flex flex-column flex-md-row align-items-start align-items-md-center gap-2">
-                            <div className="d-flex align-items-center gap-2 bg-white px-2 py-1 rounded  small">
-                              <span className="text-warning fw-semibold bg-primary px-1 rounded ">
+                <div className="bg-white rounded-sm shadow-sm">
+                  <div className="p-4">
+                    <div className="grid grid-cols-1 lg:grid-cols-[58%_1fr] gap-4 items-start">
+                      <div className="relative">
+                        <div className="relative w-full px-3 flex flex-wrap justify-between gap-2 mb-4">
+                          <div className="flex flex-col flex-wrap items-start md:items-center gap-2">
+                            <div className="flex items-center gap-2 bg-white px-2 py-1 rounded small">
+                              <span className="text-yellow-500 font-semibold bg-primary px-1 rounded ">
                                 <i
-                                  className="fas fa-star me-1"
+                                  className="fas fa-star mr-1"
                                   style={{ fontSize: "10px" }}
                                 ></i>{" "}
                                 <span
@@ -3050,36 +3033,24 @@ const ProductDescription = () => {
                                     : "0"}
                                 </span>
                               </span>
-                              <span className="text-muted">
-                                <i className="fas fa-users me-1"></i>(
+                              <span className="text-gray-500">
+                                <i className="fas fa-users mr-1"></i>(
                                 {ratingpeople > 0 ? `${ratingpeople}+` : "0"})
                               </span>
                             </div>
                           </div>
 
-                          <div className="d-flex gap-2">
-                            <button
-                              className="!btn !btn-light !btn-sm !rounded-circle shadow-sm"
+                          <div className="flex gap-2">
+                            <div
+                              className="w-9 h-9 !rounded-full bg-slate-100/80 hover:bg-purple-50 flex items-center justify-center transition-all duration-150 shadow-[0_2px_4px_rgba(0,0,0,0.06)] border border-slate-200/60 cursor-pointer"
                               onClick={() => setShowShareModal(true)}
                               data-tooltip-id="global-tooltip"
                               data-tooltip-content="Share"
-                              style={{
-                                width: "35px",
-                                height: "35px",
-                                borderRadius: "50%",
-                                border: "1px solid #e0e0e0",
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                cursor: "pointer",
-                                backgroundColor: "#fff",
-                                transition: "all 0.2s ease",
-                              }}
                             >
-                              <FaRegShareSquare color="#000000" size={18} />
-                            </button>
-                            <button
-                              className={`w-[30px] h-[30px] rounded-full border border-[#e5e7eb] bg-white flex items-center justify-center cursor-pointer transition-all duration-200 hover:bg-[#f4f0ff] hover:border-[#8059ca] ${product?.tablet?.isFavorite ? "!bg-red-500 border-red-500" : ""}`}
+                              <FaRegShareSquare color="#374151" size={18} />
+                            </div>
+                            <div
+                              className="w-9 h-9 !rounded-full bg-slate-100/80 hover:bg-red-50 flex items-center justify-center transition-all duration-150 shadow-[0_2px_4px_rgba(0,0,0,0.06)] border border-slate-200/60 cursor-pointer"
                               data-tooltip-id="global-tooltip"
                               data-tooltip-content="Wishlist"
                               onClick={() =>
@@ -3088,26 +3059,15 @@ const ProductDescription = () => {
                                   product.tablet.isFavorite,
                                 )
                               }
-                              style={{
-                                width: "35px",
-                                height: "35px",
-                                borderRadius: "50%",
-                                border: "1px solid #e0e0e0",
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                cursor: "pointer",
-                                backgroundColor: "#fff",
-                                transition: "all 0.2s ease",
-                              }}
                             >
                               {product?.tablet?.isFavorite ? (
-                                <FaHeart color="red" size={20} />
+                                <FaHeart color="#ef4444" size={18} />
                               ) : (
-                                <IoIosHeartEmpty size={20} />
+                                <IoIosHeartEmpty color="#374151" size={18} />
                               )}
-                            </button>
-                            <button
+                            </div>
+                            <div
+                              className="w-9 h-9 !rounded-full bg-slate-100/80 hover:bg-blue-50 flex items-center justify-center transition-all duration-150 shadow-[0_2px_4px_rgba(0,0,0,0.06)] border border-slate-200/60 cursor-pointer"
                               data-tooltip-id="global-tooltip"
                               data-tooltip-content="Compare"
                               onClick={(e) => {
@@ -3124,28 +3084,16 @@ const ProductDescription = () => {
                                   );
                                 }
                               }}
-                              style={{
-                                width: "35px",
-                                height: "35px",
-                                borderRadius: "50%",
-                                border: "1px solid #e0e0e0",
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                cursor: "pointer",
-                                backgroundColor: "#fff",
-                                transition: "all 0.2s ease",
-                              }}
                             >
                               <FaExchangeAlt
-                                style={{ fontSize: "14px", color: "#000" }}
+                                style={{ fontSize: "14px", color: "#374151" }}
                               />
-                            </button>
+                            </div>
                           </div>
                         </div>
 
-                        <div className="row mt-4 align-items-start g-3">
-                          <div className="col-12 col-sm-5 text-center">
+                        <div className="grid grid-cols-1 sm:grid-cols-[2fr_3fr] mt-4 items-start gap-3">
+                          <div className="min-w-0 text-center">
                             <div
                               className="relative overflow-hidden max-w-full inline-block mx-auto hover:cursor-zoom-in"
                               style={{ marginTop: isMobile && "10px" }}
@@ -3322,12 +3270,12 @@ const ProductDescription = () => {
                               return (
                                 <div className="flex flex-col items-center">
                                   {maxThumbnails > 1 && (
-                                    <div className="d-flex align-items-center gap-1">
+                                    <div className="flex items-center gap-1">
                                       {maxThumbnails > visibleThumbnails && (
                                         <button
                                           onClick={handlePrevThumbnails}
                                           disabled={thumbnailStartIndex === 0}
-                                          className="btn btn-sm btn-outline-secondary mt-3 "
+                                          className="flex items-center justify-center rounded-full border border-gray-300 text-gray-500 hover:border-[#8059ca] hover:text-[#8059ca] transition-colors cursor-pointer bg-white mt-3 "
                                           style={{
                                             borderRadius: "50%",
                                             width: "20px",
@@ -3402,7 +3350,7 @@ const ProductDescription = () => {
                                             thumbnailStartIndex >=
                                             maxThumbnails - visibleThumbnails
                                           }
-                                          className="btn btn-sm btn-outline-secondary mt-3"
+                                          className="flex items-center justify-center rounded-full border border-gray-300 text-gray-500 hover:border-[#8059ca] hover:text-[#8059ca] transition-colors cursor-pointer bg-white mt-3"
                                           style={{
                                             borderRadius: "50%",
                                             width: "20px",
@@ -3433,7 +3381,7 @@ const ProductDescription = () => {
                                   )}
 
                                   <button
-                                    className="btn btn-outline-primary btn-sm mt-2 d-inline-flex align-items-center gap-1"
+                                    className="inline-flex items-center gap-1 px-[10px] py-[4px] text-xs font-medium border border-[#8059ca] text-[#8059ca] rounded hover:bg-[#8059ca] hover:text-white transition-colors cursor-pointer mt-2 inline-flex items-center gap-1"
                                     style={{
                                       padding: "4px 10px",
                                       fontSize: "12px",
@@ -3462,7 +3410,7 @@ const ProductDescription = () => {
                                       setShowReviewModal(true);
                                     }}
                                   >
-                                    <i className="fas fa-edit fs-sm"></i>
+                                    <i className="fas fa-edit text-sm"></i>
                                     <span>Write a Review</span>
                                   </button>
                                 </div>
@@ -3470,14 +3418,14 @@ const ProductDescription = () => {
                             })()}
                           </div>
 
-                          <div className="col-12 col-sm-7">
-                            <h5 className="fw-semibold mb-1 text-capitalize">
+                          <div className="min-w-0">
+                            <h5 className="font-semibold mb-1 capitalize">
                               {tablet?.name ? tablet.name.charAt(0).toUpperCase() + tablet.name.slice(1) : ""}
                             </h5>
                             {tablet?.medicineType && (
                               <div className="mb-1">
                                 <span
-                                  className="badge bg-primary rounded-pill"
+                                  className="inline-block bg-[#8059ca] text-white text-xs px-2 py-0.5 rounded-full capitalize"
                                   style={{ textTransform: "capitalize" }}
                                 >
                                   {tablet?.medicineType}
@@ -3488,13 +3436,13 @@ const ProductDescription = () => {
                             {med?.variant && med.variant.length > 0 && (
                               <div className="mb-2" style={{ maxWidth: "200px" }}>
                                 <label
-                                  className="fw-semibold text-muted mb-1"
+                                  className="font-semibold text-gray-500 mb-1"
                                   style={{ fontSize: "11px", display: "block" }}
                                 >
                                   Select Variant
                                 </label>
                                 <select
-                                  className="form-select form-select-sm"
+                                  className="w-full text-xs border border-gray-200 rounded px-2 py-1 outline-none focus:border-[#8059ca]"
                                   style={{
                                     width: "100%",
                                     fontSize: "12px",
@@ -3528,14 +3476,14 @@ const ProductDescription = () => {
                                 className="mb-2"
                                 style={{ fontSize: "16px" }}
                               >
-                                <span className="text-muted me-1">MRP</span>
-                                <span className="fw-bold text-primary">
+                                <span className="text-gray-500 mr-1">MRP</span>
+                                <span className="font-bold text-[#8059ca]">
                                   ₹
                                   {(
                                     selectedVariant?.price || tablet?.price
                                   ).toFixed(2)}
                                 </span>
-                                <small className="text-muted ms-1">
+                                <small className="text-gray-500 ml-1 text-sm">
                                   {selectedVariant?.pricePerUnit} (Inclusive of
                                   all Taxes)
                                 </small>
@@ -3543,7 +3491,7 @@ const ProductDescription = () => {
                             )}
 
                             {med?.prescriptionRequired && (
-                              <div className="col-10 mb-2">
+                              <div className="w-[83.333%] mb-2">
                                 <span
                                   style={{
                                     color: "red",
@@ -3586,15 +3534,15 @@ const ProductDescription = () => {
 
                                   if (isSurgeryKey) {
                                     const isComplexity = label.toLowerCase() === "complexity";
-                                    const complexityIcon = value === "simple" ? "fa-check text-success" : value === "medium" ? "fa-exclamation-triangle text-warning" : "fa-exclamation-circle text-danger";
+                                    const complexityIcon = value === "simple" ? "fa-check text-green-600" : value === "medium" ? "fa-exclamation-triangle text-yellow-500" : "fa-exclamation-circle text-red-600";
                                     const finalIconClass = isComplexity ? `fa ${complexityIcon}` : iconClass;
 
                                     return (
-                                      <div className="d-flex align-items-start gap-1" style={{ fontSize: "12px" }}>
+                                      <div className="flex items-start gap-1" style={{ fontSize: "12px" }}>
                                         <i className={`${finalIconClass} fa-xs mt-1`} style={{ width: "14px", flexShrink: 0, color: isComplexity ? undefined : "#8059ca" }}></i>
                                         <span style={{ wordBreak: "break-word" }}>
-                                          <span className="text-muted fw-normal me-1" style={{ fontSize: "12px" }}>{label}:</span>
-                                          <span className="fw-semibold" style={{ fontSize: "12px", color: '#495057', textTransform: isComplexity ? "capitalize" : "none" }}>{formatDynamicFieldValue(value)}</span>
+                                          <span className="text-gray-500 font-normal mr-1" style={{ fontSize: "12px" }}>{label}:</span>
+                                          <span className="font-semibold" style={{ fontSize: "12px", color: '#495057', textTransform: isComplexity ? "capitalize" : "none" }}>{formatDynamicFieldValue(value)}</span>
                                         </span>
                                       </div>
                                     );
@@ -3602,7 +3550,7 @@ const ProductDescription = () => {
 
                                   return (
                                     <div
-                                      className="d-flex align-items-center gap-2 p-2 rounded"
+                                      className="flex items-center gap-2 p-2 rounded"
                                       style={{
                                         background: "#f7f4fc",
                                         border: "1px solid #eadef7",
@@ -3611,17 +3559,17 @@ const ProductDescription = () => {
                                     >
                                       <i className={`${iconClass} fa-sm`} style={{ color: "#8059ca", flexShrink: 0, width: "14px", textAlign: "center" }}></i>
                                       <span style={{ fontSize: "12px", wordBreak: "break-word", lineHeight: "1.3" }}>
-                                        <span className="text-muted fw-normal me-1" style={{ fontSize: "12px" }}>{label}:</span>
+                                        <span className="text-gray-500 font-normal mr-1" style={{ fontSize: "12px" }}>{label}:</span>
                                         {isLink ? (
                                           <span
-                                            className="fw-semibold text-primary"
+                                            className="font-semibold text-primary"
                                             style={{ cursor: "pointer", textDecoration: "underline", fontSize: "12px" }}
                                             onClick={onLinkClick}
                                           >
                                             {formatDynamicFieldValue(value)}
                                           </span>
                                         ) : (
-                                          <span className="fw-semibold text-dark" style={{ fontSize: "12px", textTransform: label === "Complexity" || label === "Body Part" || label === "Contrast" || label === "Model" || label === "Machine Type" || label === "Reports" ? "capitalize" : "none" }}>{formatDynamicFieldValue(value)}</span>
+                                          <span className="font-semibold text-gray-900" style={{ fontSize: "12px", textTransform: label === "Complexity" || label === "Body Part" || label === "Contrast" || label === "Model" || label === "Machine Type" || label === "Reports" ? "capitalize" : "none" }}>{formatDynamicFieldValue(value)}</span>
                                         )}
                                       </span>
                                     </div>
@@ -3632,66 +3580,66 @@ const ProductDescription = () => {
                                   <>
                                     {(tablet?.category?.name || tablet?.subcategorys?.category?.name || tablet?.subcategory?.category?.name) && (
                                       <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
-                                        <div className="d-flex align-items-center gap-1 text-muted fw-normal">
+                                        <div className="flex items-center gap-1 text-gray-500 font-normal">
                                           <i className="fa fa-folder fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
                                           <span>Category:</span>
                                         </div>
-                                        <span className="fw-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
+                                        <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
                                           {tablet?.category?.name || tablet?.subcategorys?.category?.name || tablet?.subcategory?.category?.name}
                                         </span>
                                       </div>
                                     )}
                                     {tablet?.complexity && (
                                       <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
-                                        <div className="d-flex align-items-center gap-1 text-muted fw-normal">
-                                          <i className={`fa ${tablet.complexity === "simple" ? "fa-check text-success" : tablet.complexity === "medium" ? "fa-exclamation-triangle text-warning" : "fa-exclamation-circle text-danger"} fa-xs`} style={{ width: "14px", flexShrink: 0 }}></i>
+                                        <div className="flex items-center gap-1 text-gray-500 font-normal">
+                                          <i className={`fa ${tablet.complexity === "simple" ? "fa-check text-green-600" : tablet.complexity === "medium" ? "fa-exclamation-triangle text-yellow-500" : "fa-exclamation-circle text-red-600"} fa-xs`} style={{ width: "14px", flexShrink: 0 }}></i>
                                           <span>Complexity:</span>
                                         </div>
-                                        <span className="fw-semibold text-capitalize" style={{ color: '#495057', wordBreak: "break-word" }}>
+                                        <span className="font-semibold capitalize" style={{ color: '#495057', wordBreak: "break-word" }}>
                                           {tablet.complexity}
                                         </span>
                                       </div>
                                     )}
                                     {tablet?.duration && (
                                       <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
-                                        <div className="d-flex align-items-center gap-1 text-muted fw-normal">
+                                        <div className="flex items-center gap-1 text-gray-500 font-normal">
                                           <i className="fa fa-clock fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
                                           <span>Duration:</span>
                                         </div>
-                                        <span className="fw-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
+                                        <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
                                           {tablet.duration}
                                         </span>
                                       </div>
                                     )}
                                     {tablet?.procedureType && (
                                       <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
-                                        <div className="d-flex align-items-center gap-1 text-muted fw-normal">
+                                        <div className="flex items-center gap-1 text-gray-500 font-normal">
                                           <i className="fa fa-stethoscope fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
                                           <span>Procedure Type:</span>
                                         </div>
-                                        <span className="fw-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
+                                        <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
                                           {tablet.procedureType}
                                         </span>
                                       </div>
                                     )}
                                     {tablet?.recoveryTime && (
                                       <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
-                                        <div className="d-flex align-items-center gap-1 text-muted fw-normal">
+                                        <div className="flex items-center gap-1 text-gray-500 font-normal">
                                           <i className="fa fa-clock fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
                                           <span>Recovery Time:</span>
                                         </div>
-                                        <span className="fw-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
+                                        <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
                                           {tablet.recoveryTime}
                                         </span>
                                       </div>
                                     )}
                                     {tablet?.dynamicFields?.map((field) => (
                                       <div key={field.label} style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
-                                        <div className="d-flex align-items-center gap-1 text-muted fw-normal">
+                                        <div className="flex items-center gap-1 text-gray-500 font-normal">
                                           <i className="fas fa-info-circle fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
                                           <span>{field.label}:</span>
                                         </div>
-                                        <span className="fw-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
+                                        <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
                                           {formatDynamicFieldValue(field.value)}
                                         </span>
                                       </div>
@@ -3703,23 +3651,23 @@ const ProductDescription = () => {
                                   <>
                                     {(tablet?.subcategorys?.name || tablet?.subcategorys?.category?.name || tablet?.subcategory?.category?.name) && (
                                       <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
-                                        <div className="d-flex align-items-center gap-1 text-muted fw-normal">
+                                        <div className="flex items-center gap-1 text-gray-500 font-normal">
                                           <i className="fa fa-folder fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
                                           <span>Category:</span>
                                         </div>
-                                        <span className="fw-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
+                                        <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
                                           {tablet?.subcategorys?.name || tablet?.subcategorys?.category?.name || tablet?.subcategory?.category?.name}
                                         </span>
                                       </div>
                                     )}
                                     {tablet?.manufacture?.name && (
                                       <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
-                                        <div className="d-flex align-items-center gap-1 text-muted fw-normal">
+                                        <div className="flex items-center gap-1 text-gray-500 font-normal">
                                           <i className="fas fa-industry fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
                                           <span>Manufacturer:</span>
                                         </div>
                                         <span
-                                          className="fw-semibold text-primary"
+                                          className="font-semibold text-primary"
                                           style={{ cursor: "pointer", textDecoration: "underline", wordBreak: "break-word" }}
                                           onClick={() => navigate(`/manufacture/${createSlug(tablet.manufacture.name)}-${tablet.manufacture._id}`)}
                                         >
@@ -3729,44 +3677,44 @@ const ProductDescription = () => {
                                     )}
                                     {tablet?.form && (
                                       <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
-                                        <div className="d-flex align-items-center gap-1 text-muted fw-normal">
+                                        <div className="flex items-center gap-1 text-gray-500 font-normal">
                                           <i className="fas fa-tablets fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
                                           <span>Form:</span>
                                         </div>
-                                        <span className="fw-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
+                                        <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
                                           {tablet.form}
                                         </span>
                                       </div>
                                     )}
                                     {tablet?.packagingDetails && (
                                       <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
-                                        <div className="d-flex align-items-center gap-1 text-muted fw-normal">
+                                        <div className="flex items-center gap-1 text-gray-500 font-normal">
                                           <i className="fas fa-box fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
                                           <span>Pack Size:</span>
                                         </div>
-                                        <span className="fw-semibold text-capitalize" style={{ color: '#495057', wordBreak: "break-word" }}>
+                                        <span className="font-semibold capitalize" style={{ color: '#495057', wordBreak: "break-word" }}>
                                           {tablet.packagingDetails}
                                         </span>
                                       </div>
                                     )}
                                     {tablet?.strength && (
                                       <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
-                                        <div className="d-flex align-items-center gap-1 text-muted fw-normal">
+                                        <div className="flex items-center gap-1 text-gray-500 font-normal">
                                           <i className="fas fa-prescription-bottle fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
                                           <span>Storage:</span>
                                         </div>
-                                        <span className="fw-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
+                                        <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
                                           {tablet.strength}
                                         </span>
                                       </div>
                                     )}
                                     {tablet?.dynamicFields?.map((field) => (
                                       <div key={field.label} style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
-                                        <div className="d-flex align-items-center gap-1 text-muted fw-normal">
+                                        <div className="flex items-center gap-1 text-gray-500 font-normal">
                                           <i className="fas fa-info-circle fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
                                           <span>{field.label}:</span>
                                         </div>
-                                        <span className="fw-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
+                                        <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
                                           {formatDynamicFieldValue(field.value)}
                                         </span>
                                       </div>
@@ -3778,44 +3726,44 @@ const ProductDescription = () => {
                                   <>
                                     {(tablet?.subcategorys?.name) && (
                                       <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
-                                        <div className="d-flex align-items-center gap-1 text-muted fw-normal">
+                                        <div className="flex items-center gap-1 text-gray-500 font-normal">
                                           <i className="fa fa-folder fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
                                           <span>Category:</span>
                                         </div>
-                                        <span className="fw-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
+                                        <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
                                           {tablet?.subcategorys?.name}
                                         </span>
                                       </div>
                                     )}
                                     {(tablet?.smapletype || tablet?.sampleType || tablet?.sampletype) && (
                                       <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
-                                        <div className="d-flex align-items-center gap-1 text-muted fw-normal">
+                                        <div className="flex items-center gap-1 text-gray-500 font-normal">
                                           <i className="fa fa-flask fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
                                           <span>Sample Type:</span>
                                         </div>
-                                        <span className="fw-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
+                                        <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
                                           {tablet?.smapletype || tablet?.sampleType || tablet?.sampletype}
                                         </span>
                                       </div>
                                     )}
                                     {tablet?.gender && (
                                       <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
-                                        <div className="d-flex align-items-center gap-1 text-muted fw-normal">
+                                        <div className="flex items-center gap-1 text-gray-500 font-normal">
                                           <i className="fa fa-venus-mars fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
                                           <span>Gender:</span>
                                         </div>
-                                        <span className="fw-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
+                                        <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
                                           {tablet?.gender}
                                         </span>
                                       </div>
                                     )}
                                     {(tablet?.reportsDuration || tablet?.reportDuration || tablet?.reportduration) && (
                                       <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
-                                        <div className="d-flex align-items-center gap-1 text-muted fw-normal">
+                                        <div className="flex items-center gap-1 text-gray-500 font-normal">
                                           <i className="fas fa-file-alt fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
                                           <span>Report Duration:</span>
                                         </div>
-                                        <span className="fw-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
+                                        <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
                                           {tablet?.reportsDuration || tablet?.reportDuration || tablet?.reportduration}
                                         </span>
                                       </div>
@@ -3823,44 +3771,44 @@ const ProductDescription = () => {
 
                                     {(tablet?.isFasting || tablet?.isFasting || tablet?.isFasting) && (
                                       <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
-                                        <div className="d-flex align-items-center gap-1 text-muted fw-normal">
+                                        <div className="flex items-center gap-1 text-gray-500 font-normal">
                                           <i className="fas fa-file-alt fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
                                           <span>Fasting:</span>
                                         </div>
-                                        <span className="fw-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
+                                        <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
                                           {tablet?.isFasting || tablet?.isFasting || tablet?.isFasting}
                                         </span>
                                       </div>
                                     )}
                                     {tablet?.parameterss?.length > 0 && (
                                       <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
-                                        <div className="d-flex align-items-center gap-1 text-muted fw-normal">
+                                        <div className="flex items-center gap-1 text-gray-500 font-normal">
                                           <i className="fa fa-cogs fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
                                           <span>Parameters:</span>
                                         </div>
-                                        <span className="fw-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
+                                        <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
                                           {tablet.parameterss.length === 1 ? "1 Parameter" : `${tablet.parameterss.length} Parameters`}
                                         </span>
                                       </div>
                                     )}
                                     {(tablet?.keywords || tablet?.keyword) && (
                                       <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
-                                        <div className="d-flex align-items-center gap-1 text-muted fw-normal">
+                                        <div className="flex items-center gap-1 text-gray-500 font-normal">
                                           <i className="fa fa-tags fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
                                           <span>Keywords:</span>
                                         </div>
-                                        <span className="fw-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
+                                        <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
                                           {Array.isArray(tablet?.keywords) ? tablet.keywords.join(", ") : tablet?.keywords || tablet?.keyword}
                                         </span>
                                       </div>
                                     )}
                                     {tablet?.dynamicFields?.map((field) => (
                                       <div key={field.label} style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
-                                        <div className="d-flex align-items-center gap-1 text-muted fw-normal">
+                                        <div className="flex items-center gap-1 text-gray-500 font-normal">
                                           <i className="fas fa-info-circle fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
                                           <span>{field.label}:</span>
                                         </div>
-                                        <span className="fw-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
+                                        <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
                                           {formatDynamicFieldValue(field.value)}
                                         </span>
                                       </div>
@@ -3872,66 +3820,66 @@ const ProductDescription = () => {
                                   <>
                                     {(tablet?.subcategorys?.name || tablet?.subcategorys?.category?.name || tablet?.subcategory?.category?.name) && (
                                       <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
-                                        <div className="d-flex align-items-center gap-1 text-muted fw-normal">
+                                        <div className="flex items-center gap-1 text-gray-500 font-normal">
                                           <i className="fa fa-folder fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
                                           <span>Category:</span>
                                         </div>
-                                        <span className="fw-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
+                                        <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
                                           {tablet?.subcategorys?.name}
                                         </span>
                                       </div>
                                     )}
                                     {tablet?.bodypart && (
                                       <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
-                                        <div className="d-flex align-items-center gap-1 text-muted fw-normal">
+                                        <div className="flex items-center gap-1 text-gray-500 font-normal">
                                           <i className="fas fa-person fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
                                           <span>Body Part:</span>
                                         </div>
-                                        <span className="fw-semibold text-capitalize" style={{ color: '#495057', wordBreak: "break-word" }}>
+                                        <span className="font-semibold capitalize" style={{ color: '#495057', wordBreak: "break-word" }}>
                                           {tablet.bodypart}
                                         </span>
                                       </div>
                                     )}
                                     {tablet?.iscontrast && (
                                       <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
-                                        <div className="d-flex align-items-center gap-1 text-muted fw-normal">
+                                        <div className="flex items-center gap-1 text-gray-500 font-normal">
                                           <i className="fas fa-adjust fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
                                           <span>Contrast:</span>
                                         </div>
-                                        <span className="fw-semibold text-capitalize" style={{ color: '#495057', wordBreak: "break-word" }}>
+                                        <span className="font-semibold capitalize" style={{ color: '#495057', wordBreak: "break-word" }}>
                                           {tablet.iscontrast}
                                         </span>
                                       </div>
                                     )}
                                     {(tablet?.reportsDuration || tablet?.reportDuration || tablet?.reportduration) && (
                                       <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
-                                        <div className="d-flex align-items-center gap-1 text-muted fw-normal">
+                                        <div className="flex items-center gap-1 text-gray-500 font-normal">
                                           <i className="fas fa-file-alt fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
                                           <span>Report Duration:</span>
                                         </div>
-                                        <span className="fw-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
+                                        <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
                                           {tablet?.reportsDuration || tablet?.reportDuration || tablet?.reportduration}
                                         </span>
                                       </div>
                                     )}
                                     {(tablet?.keywords || tablet?.keyword) && (
                                       <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
-                                        <div className="d-flex align-items-center gap-1 text-muted fw-normal">
+                                        <div className="flex items-center gap-1 text-gray-500 font-normal">
                                           <i className="fa fa-tags fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
                                           <span>Keywords:</span>
                                         </div>
-                                        <span className="fw-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
+                                        <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
                                           {Array.isArray(tablet?.keywords) ? tablet.keywords.join(", ") : tablet?.keywords || tablet?.keyword}
                                         </span>
                                       </div>
                                     )}
                                     {tablet?.dynamicFields?.map((field) => (
                                       <div key={field.label} style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
-                                        <div className="d-flex align-items-center gap-1 text-muted fw-normal">
+                                        <div className="flex items-center gap-1 text-gray-500 font-normal">
                                           <i className="fas fa-info-circle fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
                                           <span>{field.label}:</span>
                                         </div>
-                                        <span className="fw-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
+                                        <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
                                           {formatDynamicFieldValue(field.value)}
                                         </span>
                                       </div>
@@ -3943,66 +3891,66 @@ const ProductDescription = () => {
                                   <>
                                     {tablet?.subcategorys?.name && (
                                       <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
-                                        <div className="d-flex align-items-center gap-1 text-muted fw-normal">
+                                        <div className="flex items-center gap-1 text-gray-500 font-normal">
                                           <i className="fa fa-folder fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
                                           <span>Category:</span>
                                         </div>
-                                        <span className="fw-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
+                                        <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
                                           {tablet.subcategorys.name}
                                         </span>
                                       </div>
                                     )}
                                     {tablet?.nursecareType && (
                                       <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
-                                        <div className="d-flex align-items-center gap-1 text-muted fw-normal">
+                                        <div className="flex items-center gap-1 text-gray-500 font-normal">
                                           <i className="fas fa-house-user fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
                                           <span>Care Type:</span>
                                         </div>
-                                        <span className="fw-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
+                                        <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
                                           {tablet.nursecareType.replace(/_/g, " ")}
                                         </span>
                                       </div>
                                     )}
                                     {tablet?.duration && (
                                       <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
-                                        <div className="d-flex align-items-center gap-1 text-muted fw-normal">
+                                        <div className="flex items-center gap-1 text-gray-500 font-normal">
                                           <i className="fa fa-clock fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
                                           <span>Duration:</span>
                                         </div>
-                                        <span className="fw-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
+                                        <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
                                           {tablet.duration}
                                         </span>
                                       </div>
                                     )}
                                     {tablet?.shiftType && (
                                       <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
-                                        <div className="d-flex align-items-center gap-1 text-muted fw-normal">
+                                        <div className="flex items-center gap-1 text-gray-500 font-normal">
                                           <i className="fas fa-clock fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
                                           <span>Shift Type:</span>
                                         </div>
-                                        <span className="fw-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
+                                        <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
                                           {tablet.shiftType.replace(/_/g, " ")}
                                         </span>
                                       </div>
                                     )}
                                     {(tablet?.keywords || tablet?.keyword) && (
                                       <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
-                                        <div className="d-flex align-items-center gap-1 text-muted fw-normal">
+                                        <div className="flex items-center gap-1 text-gray-500 font-normal">
                                           <i className="fa fa-tags fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
                                           <span>Keywords:</span>
                                         </div>
-                                        <span className="fw-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
+                                        <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
                                           {Array.isArray(tablet?.keywords) ? tablet.keywords.join(", ") : tablet?.keywords || tablet?.keyword}
                                         </span>
                                       </div>
                                     )}
                                     {tablet?.dynamicFields?.map((field) => (
                                       <div key={field.label} style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
-                                        <div className="d-flex align-items-center gap-1 text-muted fw-normal">
+                                        <div className="flex items-center gap-1 text-gray-500 font-normal">
                                           <i className="fas fa-info-circle fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
                                           <span>{field.label}:</span>
                                         </div>
-                                        <span className="fw-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
+                                        <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
                                           {formatDynamicFieldValue(field.value)}
                                         </span>
                                       </div>
@@ -4016,77 +3964,77 @@ const ProductDescription = () => {
                                     <>
                                       {brandName && (
                                         <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
-                                          <div className="d-flex align-items-center gap-1 text-muted fw-normal">
+                                          <div className="flex items-center gap-1 text-gray-500 font-normal">
                                             <i className="fas fa-copyright fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
                                             <span>Brand:</span>
                                           </div>
-                                          <span className="fw-semibold text-capitalize" style={{ color: '#495057', wordBreak: "break-word" }}>
+                                          <span className="font-semibold capitalize" style={{ color: '#495057', wordBreak: "break-word" }}>
                                             {brandName}
                                           </span>
                                         </div>
                                       )}
                                       {(tablet?.subcategorys?.name) && (
                                         <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
-                                          <div className="d-flex align-items-center gap-1 text-muted fw-normal">
+                                          <div className="flex items-center gap-1 text-gray-500 font-normal">
                                             <i className="fa fa-folder fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
                                             <span>Category:</span>
                                           </div>
-                                          <span className="fw-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
+                                          <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
                                             {tablet?.subcategorys?.name}
                                           </span>
                                         </div>
                                       )}
                                       {tablet?.model && (
                                         <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
-                                          <div className="d-flex align-items-center gap-1 text-muted fw-normal">
+                                          <div className="flex items-center gap-1 text-gray-500 font-normal">
                                             <i className="fas fa-microchip fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
                                             <span>Model:</span>
                                           </div>
-                                          <span className="fw-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
+                                          <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
                                             {tablet.model}
                                           </span>
                                         </div>
                                       )}
                                       {tablet?.condition && (
                                         <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
-                                          <div className="d-flex align-items-center gap-1 text-muted fw-normal">
+                                          <div className="flex items-center gap-1 text-gray-500 font-normal">
                                             <i className="fas fa-circle-check fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
                                             <span>Condition:</span>
                                           </div>
-                                          <span className="fw-semibold text-capitalize" style={{ color: '#495057', wordBreak: "break-word" }}>
+                                          <span className="font-semibold capitalize" style={{ color: '#495057', wordBreak: "break-word" }}>
                                             {tablet.condition}
                                           </span>
                                         </div>
                                       )}
                                       {tablet?.machineType && (
                                         <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
-                                          <div className="d-flex align-items-center gap-1 text-muted fw-normal">
+                                          <div className="flex items-center gap-1 text-gray-500 font-normal">
                                             <i className="fas fa-toolbox fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
                                             <span>Machine Type:</span>
                                           </div>
-                                          <span className="fw-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
+                                          <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
                                             {tablet.machineType}
                                           </span>
                                         </div>
                                       )}
                                       {(tablet?.keywords || tablet?.keyword) && (
                                         <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
-                                          <div className="d-flex align-items-center gap-1 text-muted fw-normal">
+                                          <div className="flex items-center gap-1 text-gray-500 font-normal">
                                             <i className="fa fa-tags fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
                                             <span>Keywords:</span>
                                           </div>
-                                          <span className="fw-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
+                                          <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
                                             {Array.isArray(tablet?.keywords) ? tablet.keywords.join(", ") : tablet?.keywords || tablet?.keyword}
                                           </span>
                                         </div>
                                       )}
                                       {tablet?.dynamicFields?.map((field) => (
                                         <div key={field.label} style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
-                                          <div className="d-flex align-items-center gap-1 text-muted fw-normal">
+                                          <div className="flex items-center gap-1 text-gray-500 font-normal">
                                             <i className="fas fa-info-circle fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
                                             <span>{field.label}:</span>
                                           </div>
-                                          <span className="fw-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
+                                          <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
                                             {formatDynamicFieldValue(field.value)}
                                           </span>
                                         </div>
@@ -4100,55 +4048,55 @@ const ProductDescription = () => {
                                     <>
                                       {tablet?.subcategorys?.name && (
                                         <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
-                                          <div className="d-flex align-items-center gap-1 text-muted fw-normal">
+                                          <div className="flex items-center gap-1 text-gray-500 font-normal">
                                             <i className="fa fa-folder fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
                                             <span>Category:</span>
                                           </div>
-                                          <span className="fw-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
+                                          <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
                                             {tablet.subcategorys.name}
                                           </span>
                                         </div>
                                       )}
                                       {tablet?.duration && (
                                         <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
-                                          <div className="d-flex align-items-center gap-1 text-muted fw-normal">
+                                          <div className="flex items-center gap-1 text-gray-500 font-normal">
                                             <i className="fa fa-clock fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
                                             <span>Duration:</span>
                                           </div>
-                                          <span className="fw-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
+                                          <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
                                             {tablet.duration}
                                           </span>
                                         </div>
                                       )}
                                       {tablet?.homecareMode && (
                                         <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
-                                          <div className="d-flex align-items-center gap-1 text-muted fw-normal">
+                                          <div className="flex items-center gap-1 text-gray-500 font-normal">
                                             <i className="fas fa-house-user fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
                                             <span>Homecare Mode:</span>
                                           </div>
-                                          <span className="fw-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
+                                          <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
                                             {tablet.homecareMode}
                                           </span>
                                         </div>
                                       )}
                                       {(tablet?.keywords || tablet?.keyword) && (
                                         <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
-                                          <div className="d-flex align-items-center gap-1 text-muted fw-normal">
+                                          <div className="flex items-center gap-1 text-gray-500 font-normal">
                                             <i className="fa fa-tags fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
                                             <span>Keywords:</span>
                                           </div>
-                                          <span className="fw-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
+                                          <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
                                             {Array.isArray(tablet?.keywords) ? tablet.keywords.join(", ") : tablet?.keywords || tablet?.keyword}
                                           </span>
                                         </div>
                                       )}
                                       {tablet?.dynamicFields?.map((field) => (
                                         <div key={field.label} style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
-                                          <div className="d-flex align-items-center gap-1 text-muted fw-normal">
+                                          <div className="flex items-center gap-1 text-gray-500 font-normal">
                                             <i className="fas fa-info-circle fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
                                             <span>{field.label}:</span>
                                           </div>
-                                          <span className="fw-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
+                                          <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
                                             {formatDynamicFieldValue(field.value)}
                                           </span>
                                         </div>
@@ -4162,66 +4110,66 @@ const ProductDescription = () => {
                                     <>
                                       {tablet?.subcategorys?.name && (
                                         <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
-                                          <div className="d-flex align-items-center gap-1 text-muted fw-normal">
+                                          <div className="flex items-center gap-1 text-gray-500 font-normal">
                                             <i className="fa fa-folder fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
                                             <span>Category:</span>
                                           </div>
-                                          <span className="fw-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
+                                          <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
                                             {tablet.subcategorys.name}
                                           </span>
                                         </div>
                                       )}
                                       {tablet?.duration && (
                                         <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
-                                          <div className="d-flex align-items-center gap-1 text-muted fw-normal">
+                                          <div className="flex items-center gap-1 text-gray-500 font-normal">
                                             <i className="fa fa-clock fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
                                             <span>Duration:</span>
                                           </div>
-                                          <span className="fw-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
+                                          <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
                                             {tablet.duration}
                                           </span>
                                         </div>
                                       )}
                                       {tablet?.gender && (
                                         <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
-                                          <div className="d-flex align-items-center gap-1 text-muted fw-normal">
+                                          <div className="flex items-center gap-1 text-gray-500 font-normal">
                                             <i className="fa fa-venus-mars fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
                                             <span>Gender:</span>
                                           </div>
-                                          <span className="fw-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
+                                          <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
                                             {tablet.gender}
                                           </span>
                                         </div>
                                       )}
                                       {tablet?.complexity && (
                                         <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
-                                          <div className="d-flex align-items-center gap-1 text-muted fw-normal">
-                                            <i className={`fa ${tablet.complexity === "simple" ? "fa-check text-success" : tablet.complexity === "medium" ? "fa-exclamation-triangle text-warning" : "fa-exclamation-circle text-danger"} fa-xs`} style={{ width: "14px", flexShrink: 0 }}></i>
+                                          <div className="flex items-center gap-1 text-gray-500 font-normal">
+                                            <i className={`fa ${tablet.complexity === "simple" ? "fa-check text-green-600" : tablet.complexity === "medium" ? "fa-exclamation-triangle text-yellow-500" : "fa-exclamation-circle text-red-600"} fa-xs`} style={{ width: "14px", flexShrink: 0 }}></i>
                                             <span>Complexity:</span>
                                           </div>
-                                          <span className="fw-semibold text-capitalize" style={{ color: '#495057', wordBreak: "break-word" }}>
+                                          <span className="font-semibold capitalize" style={{ color: '#495057', wordBreak: "break-word" }}>
                                             {tablet.complexity}
                                           </span>
                                         </div>
                                       )}
                                       {(tablet?.keywords || tablet?.keyword) && (
                                         <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
-                                          <div className="d-flex align-items-center gap-1 text-muted fw-normal">
+                                          <div className="flex items-center gap-1 text-gray-500 font-normal">
                                             <i className="fa fa-tags fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
                                             <span>Keywords:</span>
                                           </div>
-                                          <span className="fw-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
+                                          <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
                                             {Array.isArray(tablet?.keywords) ? tablet.keywords.join(", ") : tablet?.keywords || tablet?.keyword}
                                           </span>
                                         </div>
                                       )}
                                       {tablet?.dynamicFields?.map((field) => (
                                         <div key={field.label} style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
-                                          <div className="d-flex align-items-center gap-1 text-muted fw-normal">
+                                          <div className="flex items-center gap-1 text-gray-500 font-normal">
                                             <i className="fas fa-info-circle fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
                                             <span>{field.label}:</span>
                                           </div>
-                                          <span className="fw-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
+                                          <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
                                             {formatDynamicFieldValue(field.value)}
                                           </span>
                                         </div>
@@ -4235,55 +4183,55 @@ const ProductDescription = () => {
                                     <>
                                       {(tablet?.subcategorys?.name || tablet?.subcategorys?.category?.name || tablet?.subcategory?.category?.name) && (
                                         <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
-                                          <div className="d-flex align-items-center gap-1 text-muted fw-normal">
+                                          <div className="flex items-center gap-1 text-gray-500 font-normal">
                                             <i className="fa fa-folder fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
                                             <span>Category:</span>
                                           </div>
-                                          <span className="fw-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
+                                          <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
                                             {tablet?.subcategorys?.name || tablet?.subcategorys?.category?.name || tablet?.subcategory?.category?.name}
                                           </span>
                                         </div>
                                       )}
                                       {tablet?.treatmenttype && (
                                         <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
-                                          <div className="d-flex align-items-center gap-1 text-muted fw-normal">
+                                          <div className="flex items-center gap-1 text-gray-500 font-normal">
                                             <i className="fa fa-tooth fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
                                             <span>Treatment Type:</span>
                                           </div>
-                                          <span className="fw-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
+                                          <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
                                             {tablet.treatmenttype}
                                           </span>
                                         </div>
                                       )}
                                       {tablet?.complexity && (
                                         <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
-                                          <div className="d-flex align-items-center gap-1 text-muted fw-normal">
-                                            <i className={`fa ${tablet.complexity === "simple" ? "fa-check text-success" : tablet.complexity === "medium" ? "fa-exclamation-triangle text-warning" : "fa-exclamation-circle text-danger"} fa-xs`} style={{ width: "14px", flexShrink: 0 }}></i>
+                                          <div className="flex items-center gap-1 text-gray-500 font-normal">
+                                            <i className={`fa ${tablet.complexity === "simple" ? "fa-check text-green-600" : tablet.complexity === "medium" ? "fa-exclamation-triangle text-yellow-500" : "fa-exclamation-circle text-red-600"} fa-xs`} style={{ width: "14px", flexShrink: 0 }}></i>
                                             <span>Complexity:</span>
                                           </div>
-                                          <span className="fw-semibold text-capitalize" style={{ color: '#495057', wordBreak: "break-word" }}>
+                                          <span className="font-semibold capitalize" style={{ color: '#495057', wordBreak: "break-word" }}>
                                             {tablet.complexity}
                                           </span>
                                         </div>
                                       )}
                                       {(tablet?.keywords || tablet?.keyword) && (
                                         <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
-                                          <div className="d-flex align-items-center gap-1 text-muted fw-normal">
+                                          <div className="flex items-center gap-1 text-gray-500 font-normal">
                                             <i className="fa fa-tags fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
                                             <span>Keywords:</span>
                                           </div>
-                                          <span className="fw-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
+                                          <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
                                             {Array.isArray(tablet?.keywords) ? tablet.keywords.join(", ") : tablet?.keywords || tablet?.keyword}
                                           </span>
                                         </div>
                                       )}
                                       {tablet?.dynamicFields?.map((field) => (
                                         <div key={field.label} style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
-                                          <div className="d-flex align-items-center gap-1 text-muted fw-normal">
+                                          <div className="flex items-center gap-1 text-gray-500 font-normal">
                                             <i className="fas fa-info-circle fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
                                             <span>{field.label}:</span>
                                           </div>
-                                          <span className="fw-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
+                                          <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
                                             {formatDynamicFieldValue(field.value)}
                                           </span>
                                         </div>
@@ -4368,7 +4316,7 @@ const ProductDescription = () => {
                                     {renderField("fas fa-toolbox", "Machine Type", tablet?.machineType)}
                                     {renderField("fas fa-file-alt", "Reports", tablet.reportsDuration || tablet.reportDuration)}
                                     {renderField(
-                                      tablet.complexity === "simple" ? "fa fa-check text-success" : tablet.complexity === "medium" ? "fa-exclamation-triangle text-warning" : "fa-exclamation-circle text-danger",
+                                      tablet.complexity === "simple" ? "fa fa-check text-green-600" : tablet.complexity === "medium" ? "fa-exclamation-triangle text-yellow-500" : "fa-exclamation-circle text-red-600",
                                       "Complexity",
                                       tablet.complexity
                                     )}
@@ -4394,7 +4342,7 @@ const ProductDescription = () => {
 
                             {tablet?.compositions?.name && (
                               <div
-                                className="col-10 mb-2"
+                                className="w-[83.333%] mb-2"
                                 style={{ fontSize: "12px" }}
                               >
                                 <strong>Composition:</strong>
@@ -4421,7 +4369,7 @@ const ProductDescription = () => {
 
                             {(product?.tablet?.category?.fixedType === "medicine" ||
                               product?.tablet?.category?.fixedType === "medicines") && (
-                                <div className="d-flex justify-content-center mt-4">
+                                <div className="flex justify-center mt-4">
                                   <a
                                     href="#related-products-section"
                                     className="cta-button"
@@ -4452,7 +4400,7 @@ const ProductDescription = () => {
                           <div>
                             {tablet?.complexity && (
                               <div
-                                className="col-12"
+                                className="w-full"
                                 style={{ fontSize: "12px" }}
                               >
                                 This procedure’s complexity depends on several
@@ -4467,11 +4415,11 @@ const ProductDescription = () => {
                         </div>
                       </div>
 
-                      <div className="col-lg-5 col-12">
-                        <div className="border rounded-3 p-2">
+                      <div className="min-w-0">
+                        <div className="border border-gray-200 rounded-sm p-2">
                           {/* pincode */}
-                          <div className="row g-2 align-items-center mb-3">
-                            <div className="col">
+                          <div className="flex flex-wrap gap-2 items-center mb-3">
+                            <div className="flex-1">
                               {isLoaded ? (
                                 <div style={{ position: "relative" }}>
                                   <Autocomplete
@@ -4587,33 +4535,25 @@ const ProductDescription = () => {
                           </div>
 
                           {/* vendors */}
-                          <div className="vendor-list-wrapper position-relative">
+                          <div className="relative">
                             {loadingVendors && (
-                              <div
-                                className="position-absolute top-0 start-0 end-0 bottom-0 d-flex align-items-center justify-content-center"
-                                style={{
-                                  backgroundColor: "rgba(255, 255, 255, 0.8)",
-                                  zIndex: 10,
-                                  borderRadius: "8px",
-                                }}
-                              >
+                              <div className="absolute inset-0 flex items-center justify-center bg-white/80 z-10 rounded-lg">
                                 <div
-                                  className="spinner-border text-primary"
+                                  className="animate-spin rounded-full h-8 w-8 border-2 border-t-transparent border-[#8059ca]"
                                   role="status"
                                 >
-                                  <span className="visually-hidden">
+                                  <span className="sr-only">
                                     Loading...
                                   </span>
                                 </div>
                               </div>
                             )}
                             {!headerPincode && !checkedPincode ? (
-                              <div className="text-center py-4 text-[#6b7280] text-[14px]">
+                              <div className="text-center py-4 text-gray-500 text-sm">
                                 <i
-                                  className="fas fa-map-marker-alt mb-2"
-                                  style={{ fontSize: "2rem", color: "#ccc" }}
+                                  className="fas fa-map-marker-alt mb-2 text-3xl text-gray-300"
                                 ></i>
-                                <p className="mb-0" style={{ color: "#666" }}>
+                                <p className="mb-0 text-gray-500">
                                   Please enter a pincode and click "Check" to
                                   see available vendors
                                 </p>
@@ -4631,12 +4571,11 @@ const ProductDescription = () => {
                                 renderVendorCard(v, i, false),
                               )
                             ) : (
-                              <div className="text-center py-4 text-[#6b7280] text-[14px]">
+                              <div className="text-center py-4 text-gray-500 text-sm">
                                 <i
-                                  className="fas fa-store-slash mb-2"
-                                  style={{ fontSize: "2rem", color: "#ccc" }}
+                                  className="fas fa-store-slash mb-2 text-3xl text-gray-300"
                                 ></i>
-                                <p className="mb-0" style={{ color: "#666" }}>
+                                <p className="mb-0 text-gray-500">
                                   No vendors available for this pincode
                                 </p>
                               </div>
@@ -4649,11 +4588,11 @@ const ProductDescription = () => {
                 </div>
 
                 {tablet?.points && tablet.points.length > 0 && (
-                  <div className="card shadow-sm rounded-3 mb-4 p-3" style={{ background: "#fcfaff", border: "1px solid #f2ebfa" }}>
-                    <h5 className="fw-bold mb-3 d-flex align-items-center gap-2" style={{ fontSize: "15px", color: "#8059ca" }}>
+                  <div className="bg-white rounded-2xl shadow-sm rounded-3 mb-4 mt-4 p-3" style={{ background: "#fcfaff", border: "1px solid #f2ebfa" }}>
+                    <h5 className="font-bold mb-3 flex items-center gap-2" style={{ fontSize: "15px", color: "#8059ca" }}>
                       <i className="fas fa-handshake-alt"></i>Interactions
                     </h5>
-                    <div className="row g-3 drug-interactions-row">
+                    <div className="flex flex-wrap gap-3 drug-interactions-row">
                       {tablet.points?.slice().map((item, index) => {
                         const key = Object.keys(item)[0];
                         const label = key
@@ -4671,19 +4610,19 @@ const ProductDescription = () => {
                           : "Points";
                         const value = item[key];
                         return (
-                          <div key={index} className="col-md-4 col-12 drug-interaction-col">
+                          <div key={index} className="md:w-1/3 w-full drug-interaction-col">
                             <div
-                              className="p-3 rounded bg-white border border-start border-1 drug-interaction-card"
+                              className="p-3 rounded bg-white border-l-[3px] border-l-[#8059ca] border border-gray-100 drug-interaction-card"
                               style={{
                                 borderLeft: "3px solid #8059ca"
                               }}
                             >
                               <div>
-                                <div className="fw-bold text-dark mb-1 text-capitalize" style={{ fontSize: "12px" }}>
+                                <div className="font-bold text-gray-900 mb-1 capitalize" style={{ fontSize: "12px" }}>
                                   {label?.replace(/_/g, " ")}
                                 </div>
                                 <div
-                                  className="text-muted text-capitalize"
+                                  className="text-gray-500 capitalize"
                                   style={{
                                     fontSize: "12px",
                                     lineHeight: "1.5",
@@ -4699,7 +4638,7 @@ const ProductDescription = () => {
                               </div>
                               {value && value.length > 90 && (
                                 <span
-                                  className="fw-semibold text-primary mt-2 d-inline-block"
+                                  className="font-semibold text-[#8059ca] mt-2 d-inline-block"
                                   style={{ cursor: "pointer", fontSize: "11px", textDecoration: "underline", alignSelf: "flex-start" }}
                                   onClick={() => setSelectedInteraction({
                                     label: label?.replace(/_/g, " "),
@@ -4744,14 +4683,14 @@ const ProductDescription = () => {
 
           {/* banners */}
           <div
-            className="col-lg-3 col-md-12"
-            style={{ marginTop: isMobile ? "0px" : "60px", display: isMobile ? "none" : "block" }}
+            className="min-w-0"
+            style={{ marginTop: isMobile ? "0px" : "36px", display: isMobile ? "none" : "block" }}
           >
-            <div className="d-lg-block ">
+            <div className="lg:block ">
               {/* Promo video — same responsive box as right-side banners (zoom-safe) */}
               <div className="text-center" style={{ marginBottom: "16px", }}>
                 <div
-                  className="rounded w-100"
+                  className="rounded w-full"
                   style={{
                     width: "100%",
                     maxWidth: "100%",
@@ -4767,7 +4706,7 @@ const ProductDescription = () => {
                     autoPlay
                     muted
                     playsInline
-                    className="rounded w-100"
+                    className="rounded w-full"
                     style={{
                       width: "100%",
                       height: "auto",
@@ -4795,7 +4734,7 @@ const ProductDescription = () => {
                           src={banner.src || "/assets/img/surgeriesShort.png"}
                           alt={banner.alt}
                           loading="lazy"
-                          className="img-fluid rounded"
+                          className="max-w-full h-auto rounded"
                           style={{
                             width: "100%",
                             height: "165px",
@@ -4812,7 +4751,7 @@ const ProductDescription = () => {
                       <img
                         src="/assets/img/surgeriesShort.png"
                         alt="Default Banner"
-                        className="img-fluid rounded"
+                        className="max-w-full h-auto rounded"
                         style={{
                           width: "100%",
                           height: "165px",
@@ -4840,7 +4779,7 @@ const ProductDescription = () => {
                           src={banner.src || "/assets/img/longSugery.png"}
                           alt={banner.alt}
                           loading="lazy"
-                          className="img-fluid rounded"
+                          className="max-w-full h-auto rounded"
                           style={{
                             width: "100%",
                             height: "482px",
@@ -4857,7 +4796,7 @@ const ProductDescription = () => {
                       <img
                         src="/assets/img/longSugery.png"
                         alt="Default Banner"
-                        className="img-fluid rounded"
+                        className="max-w-full h-auto rounded"
                         style={{
                           width: "100%",
                           height: "482px",
@@ -4871,7 +4810,7 @@ const ProductDescription = () => {
             </div>
           </div>
         </div>
-        <div>
+        <div className="mt-8 space-y-8">
 
           {service == "medicines" && (
             <>
@@ -4943,14 +4882,14 @@ const ProductDescription = () => {
 
 
           <div
-            className="col-lg-3 col-md-12"
+            className="w-full lg:w-1/4 min-w-0 shrink-0"
             style={{ marginTop: isMobile ? "0px" : "145px", display: isMobile ? "block" : "none" }}
           >
-            <div className="d-lg-block ">
+            <div className="lg:block ">
               {/* Promo video — same responsive box as right-side banners (zoom-safe) */}
               <div className="text-center" style={{ marginBottom: "16px", }}>
                 <div
-                  className="rounded w-100"
+                  className="rounded w-full"
                   style={{
                     width: "100%",
                     maxWidth: "100%",
@@ -4966,7 +4905,7 @@ const ProductDescription = () => {
                     autoPlay
                     muted
                     playsInline
-                    className="rounded w-100"
+                    className="rounded w-full"
                     style={{
                       width: "100%",
                       height: "auto",
@@ -4994,7 +4933,7 @@ const ProductDescription = () => {
                           src={banner.src || "/assets/img/surgeriesShort.png"}
                           alt={banner.alt}
                           loading="lazy"
-                          className="img-fluid rounded"
+                          className="max-w-full h-auto rounded"
                           style={{
                             width: "100%",
                             height: "165px",
@@ -5011,7 +4950,7 @@ const ProductDescription = () => {
                       <img
                         src="/assets/img/surgeriesShort.png"
                         alt="Default Banner"
-                        className="img-fluid rounded"
+                        className="max-w-full h-auto rounded"
                         style={{
                           width: "100%",
                           height: "165px",
@@ -5039,7 +4978,7 @@ const ProductDescription = () => {
                           src={banner.src || "/assets/img/longSugery.png"}
                           alt={banner.alt}
                           loading="lazy"
-                          className="img-fluid rounded"
+                          className="max-w-full h-auto rounded"
                           style={{
                             width: "100%",
                             height: "482px",
@@ -5056,7 +4995,7 @@ const ProductDescription = () => {
                       <img
                         src="/assets/img/longSugery.png"
                         alt="Default Banner"
-                        className="img-fluid rounded"
+                        className="max-w-full h-auto rounded"
                         style={{
                           width: "100%",
                           height: "482px",
@@ -5362,22 +5301,22 @@ const ProductDescription = () => {
       )}
 
       {selectedInteraction && (
-        <div className="modal fade show d-block" tabIndex="-1" style={{ backgroundColor: "rgba(0,0,0,0.5)", zIndex: 1050 }}>
+        <div className="modal fade show block" tabIndex="-1" style={{ backgroundColor: "rgba(0,0,0,0.5)", zIndex: 1050 }}>
           <div className="modal-dialog modal-dialog-centered">
             <div className="modal-content" style={{ borderRadius: "12px", border: "none", boxShadow: "0 10px 30px rgba(0,0,0,0.15)" }}>
               <div className="modal-header border-0 pb-0" style={{ padding: "20px 20px 10px 20px" }}>
-                <h5 className="modal-title fw-bold text-capitalize" style={{ fontSize: "16px", color: "#8059ca" }}>
+                <h5 className="modal-title font-bold capitalize" style={{ fontSize: "16px", color: "#8059ca" }}>
                   {selectedInteraction.label}
                 </h5>
                 <button type="button" className="btn-close" onClick={() => setSelectedInteraction(null)} aria-label="Close"></button>
               </div>
               <div className="modal-body" style={{ padding: "10px 20px 20px 20px" }}>
-                <p className="text-muted text-capitalize" style={{ fontSize: "13px", lineHeight: "1.6", margin: 0 }}>
+                <p className="text-gray-500 capitalize" style={{ fontSize: "13px", lineHeight: "1.6", margin: 0 }}>
                   {selectedInteraction.value}
                 </p>
               </div>
               <div className="modal-footer border-0 pt-0" style={{ padding: "0 20px 20px 20px" }}>
-                <button type="button" className="btn btn-sm text-white" style={{ background: "#8059ca", borderColor: "#8059ca", borderRadius: "6px", padding: "6px 16px" }} onClick={() => setSelectedInteraction(null)}>
+                <button type="button" className="px-4 py-[6px] bg-[#8059ca] text-white rounded-[6px] text-sm border-0 cursor-pointer hover:bg-[#6d46b8] transition-colors" onClick={() => setSelectedInteraction(null)}>
                   Close
                 </button>
               </div>
@@ -5401,3 +5340,5 @@ const ProductDescription = () => {
 };
 
 export default ProductDescription;
+
+

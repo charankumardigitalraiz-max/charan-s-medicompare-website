@@ -5,6 +5,7 @@ import { axiosUserInstance } from "../../../../Apiservice";
 import BaseModal from "../../../../components/ui/BaseModal";
 import toast from "react-hot-toast";
 import { Autocomplete, useJsApiLoader } from "@react-google-maps/api";
+import { GOOGLE_MAPS_API_KEY } from "../../../../utils/index"
 
 const libraries = ["places"];
 
@@ -46,9 +47,9 @@ const LeadModal = ({
   const autocompleteRef = useRef(null);
   const navigate = useNavigate();
 
-  const GOOGLE_MAPS_API_KEY =
-    import.meta.env.VITE_GOOGLE_MAPS_API_KEY ||
-    "AIzaSyBW_ML0ppoU2o_tsOmT5eMveCwCFP3AXHU";
+  // const GOOGLE_MAPS_API_KEY =
+  //   import.meta.env.VITE_GOOGLE_MAPS_API_KEY ||
+  //   "AIzaSyBW_ML0ppoU2o_tsOmT5eMveCwCFP3AXHU";
 
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: GOOGLE_MAPS_API_KEY,

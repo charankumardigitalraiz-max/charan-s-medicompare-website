@@ -2,9 +2,11 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { axiosUserInstance, imgUrl } from "../../../Apiservice";
 import { useResponsive } from "../../../hooks/useResponsive";
-import { Modal, Offcanvas } from "react-bootstrap";
+import Modal from "../../../components/ui/Modal";
+import { Offcanvas } from "../../../components/ui/Offcanvas";
 import toast from "react-hot-toast";
 import { io } from "socket.io-client";
+import { Table, Pagination } from "../../../components/ui";
 
 const TicketIssues = ({ HomeNavigate, BackButton }) => {
   const [leadslist, setleadslist] = useState([]);
@@ -284,17 +286,97 @@ const TicketIssues = ({ HomeNavigate, BackButton }) => {
     return "bg-slate-100 text-slate-600";
   };
 
+  const headers = [
+    columnConfig.ticketNo && {
+      key: "ticketNo",
+      label: "Ticket No",
+      render: (value) => (
+        <span className="font-semibold text-[#8059ca]">
+          {value}
+        </span>
+      )
+    },
+    columnConfig.subject && {
+      key: "subject",
+      label: "Subject"
+    },
+    columnConfig.category && {
+      key: "category",
+      label: "Category",
+      className: "capitalize"
+    },
+    columnConfig.priority && {
+      key: "priority",
+      label: "Priority",
+      render: (value) => (
+        <span
+          className={`text-[11px] px-2 py-[3px] rounded font-semibold capitalize inline-block ${priorityClasses(value)}`}
+        >
+          {value}
+        </span>
+      )
+    },
+    columnConfig.status && {
+      key: "status",
+      label: "Status",
+      render: (value) => (
+        <span
+          className={`text-[11px] px-2 py-[3px] rounded font-semibold capitalize inline-block ${statusClasses(value)}`}
+        >
+          {value}
+        </span>
+      )
+    },
+    columnConfig.date && {
+      key: "createdAt",
+      label: "Date",
+      render: (value) => value ? new Date(value).toLocaleDateString("en-GB", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+      }) : "-"
+    },
+    {
+      key: "chat",
+      label: "Chat",
+      className: "text-center",
+      render: (_, row) => (
+        <button
+          className={`rounded-full w-8 h-8 p-0 inline-flex items-center justify-center text-white cursor-pointer border ${row.status === "closed" ? "bg-[#ff6b6b] border-[#ff6b6b]" : "bg-[#8059ca] border-[#8059ca]"}`}
+          title={row.status === "closed" ? "View chat history (closed ticket)" : "Chat with Support"}
+          onClick={() => openChat(row)}
+        >
+          <i className="fas fa-comments"></i>
+        </button>
+      )
+    },
+    {
+      key: "action",
+      label: "Action",
+      className: "text-center",
+      render: (_, row) => (
+        <button
+          className="btn btn-sm btn-light rounded-full w-8 h-8 p-0 inline-flex items-center justify-center cursor-pointer"
+          title="View Ticket"
+          onClick={() => viewLead(row)}
+        >
+          <i className="fas fa-eye"></i>
+        </button>
+      )
+    }
+  ].filter(Boolean);
+
   return (
     <div className="w-full">
-      <div className="content doctor-content">
-        <div className="container">
-          <div className="row">
+      <div className="py-4 md:py-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col gap-4">
             {BackButton && (
               <div className="col-12 mb-3">
                 <BackButton />
               </div>
             )}
-            <div className="col-lg-12">
+            <div className="w-full">
               {/* Header Section — matches MedicineBookings styling */}
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pb-2 mb-2 border-b border-slate-100 mt-2">
                 <div className="flex items-center gap-3.5">
@@ -337,7 +419,7 @@ const TicketIssues = ({ HomeNavigate, BackButton }) => {
                         setSearchTerm(e.target.value);
                         setCurrentPage(1);
                       }}
-                      className="h-[38px] rounded-lg border border-slate-200 pl-9 pr-3 text-[13px] w-full outline-none bg-slate-50 hover:bg-white hover:border-[#8059ca] focus:bg-white focus:border-[#8059ca] transition-all duration-200"
+                      className="h-[38px] rounded-sm border border-slate-200 pl-9 pr-3 text-[13px] w-full outline-none bg-slate-50 hover:bg-white hover:border-[#8059ca] focus:bg-white focus:border-[#8059ca] transition-all duration-200"
                     />
                     <span className="absolute left-[12px] top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none text-[13px]">
                       <i className="fa-solid fa-search" />
@@ -345,173 +427,21 @@ const TicketIssues = ({ HomeNavigate, BackButton }) => {
                   </div>
                 </div>
               </div>
-
-              <div className="profile-table-wrapper">
-                <div className="table-responsive">
-                  <table className="profile-table">
-                    <thead>
-                      <tr>
-                        {columnConfig.ticketNo && <th>Ticket No</th>}
-                        {columnConfig.subject && <th>Subject</th>}
-                        {columnConfig.category && <th>Category</th>}
-                        {columnConfig.priority && <th>Priority</th>}
-                        {columnConfig.status && <th>Status</th>}
-                        {columnConfig.date && <th>Date</th>}
-                        <th className="text-center">Chat</th>
-                        <th className="text-center">Action</th>
-                      </tr>
-                    </thead>
-
-                    <tbody>
-                      {loading ? (
-                        <tr>
-                          <td colSpan="100%" className="text-center py-3">
-                            Loading...
-                          </td>
-                        </tr>
-                      ) : filteredOrders.length > 0 ? (
-                        filteredOrders.map((ticket) => (
-                          <tr key={ticket._id} className="group hover:bg-[#faf9fe]">
-                            {columnConfig.ticketNo && (
-                              <td className="py-3.5 px-4 text-[13px] text-[#333] border-b border-[#ececf6] align-middle group-last:border-b-0">
-                                <span className="font-semibold text-[#8059ca]">
-                                  {ticket.ticketNo}
-                                </span>
-                              </td>
-                            )}
-                            {columnConfig.subject && <td className="py-3.5 px-4 text-[13px] text-[#333] border-b border-[#ececf6] align-middle group-last:border-b-0">{ticket.subject}</td>}
-                            {columnConfig.category && (
-                              <td className="py-3.5 px-4 text-[13px] text-[#333] border-b border-[#ececf6] align-middle group-last:border-b-0 capitalize">{ticket.category}</td>
-                            )}
-
-                            {columnConfig.priority && (
-                              <td className="py-3.5 px-4 text-[13px] text-[#333] border-b border-[#ececf6] align-middle group-last:border-b-0">
-                                <span
-                                  className={`text-[11px] px-2 py-[3px] rounded font-semibold capitalize inline-block ${priorityClasses(ticket.priority)}`}
-                                >
-                                  {ticket.priority}
-                                </span>
-                              </td>
-                            )}
-                            {columnConfig.status && (
-                              <td className="py-3.5 px-4 text-[13px] text-[#333] border-b border-[#ececf6] align-middle group-last:border-b-0">
-                                <span
-                                  className={`text-[11px] px-2 py-[3px] rounded font-semibold capitalize inline-block ${statusClasses(ticket.status)}`}
-                                >
-                                  {ticket.status}
-                                </span>
-                              </td>
-                            )}
-                            {columnConfig.date && (
-                              <td className="py-3.5 px-4 text-[13px] text-[#333] border-b border-[#ececf6] align-middle group-last:border-b-0">
-                                {new Date(ticket.createdAt).toLocaleDateString(
-                                  "en-GB",
-                                  {
-                                    day: "2-digit",
-                                    month: "short",
-                                    year: "numeric",
-                                  },
-                                )}
-                              </td>
-                            )}
-                            <td className="py-3.5 px-4 text-[13px] text-[#333] border-b border-[#ececf6] align-middle group-last:border-b-0 text-center">
-                              <button
-                                className={`rounded-full w-8 h-8 p-0 inline-flex items-center justify-center text-white cursor-pointer border ${ticket.status === "closed" ? "bg-[#ff6b6b] border-[#ff6b6b]" : "bg-[#8059ca] border-[#8059ca]"
-                                  }`}
-                                title={ticket.status === "closed" ? "View chat history (closed ticket)" : "Chat with Support"}
-                                onClick={() => openChat(ticket)}
-                              >
-                                <i className="fas fa-comments"></i>
-                              </button>
-                            </td>
-                            <td className="py-3.5 px-4 text-[13px] text-[#333] border-b border-[#ececf6] align-middle group-last:border-b-0 text-center">
-                              <button
-                                className="btn btn-sm btn-light rounded-full w-8 h-8 p-0 inline-flex items-center justify-center cursor-pointer"
-                                title="View Ticket"
-                                onClick={() => viewLead(ticket)}
-                              >
-                                <i className="fas fa-eye"></i>
-                              </button>
-                            </td>
-                          </tr>
-                        ))
-                      ) : (
-                        <tr>
-                          <td colSpan="100%" className="text-center py-3">
-                            No data found
-                          </td>
-                        </tr>
-                      )}
-                    </tbody>
-                  </table>
-                </div>
+              <div className="mt-4">
+                <Table
+                  headers={headers}
+                  data={filteredOrders}
+                  loading={loading}
+                  emptyMessage="No tickets found."
+                />
               </div>
 
-              {totalPages > 1 && (
-                <div className="flex justify-center mt-4">
-                  <ul className="flex items-center gap-1 list-none m-0 p-0">
-                    <li>
-                      <button
-                        className="w-9 h-9 flex items-center justify-center rounded-lg border border-[#ececf6] text-[#666] text-[13px] disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[#faf9fe]"
-                        onClick={() =>
-                          handlePageChange(Math.max(currentPage - 1, 1))
-                        }
-                        disabled={currentPage === 1}
-                      >
-                        <i className="fa-solid fa-chevron-left" />
-                      </button>
-                    </li>
-
-                    {Array.from({ length: totalPages }, (_, i) => {
-                      const page = i + 1;
-                      if (
-                        page === 1 ||
-                        page === totalPages ||
-                        (page >= currentPage - 1 && page <= currentPage + 1)
-                      ) {
-                        return (
-                          <li key={page}>
-                            <button
-                              className={`w-9 h-9 flex items-center justify-center rounded-lg text-[13px] font-medium ${currentPage === page
-                                ? "bg-[#8059ca] text-white"
-                                : "border border-[#ececf6] text-[#666] hover:bg-[#faf9fe]"
-                                }`}
-                              onClick={() => handlePageChange(page)}
-                            >
-                              {page}
-                            </button>
-                          </li>
-                        );
-                      }
-                      if (
-                        page === currentPage - 2 ||
-                        page === currentPage + 2
-                      ) {
-                        return (
-                          <li key={`dots-${page}`}>
-                            <span className="w-9 h-9 flex items-center justify-center text-[#999] text-[13px]">…</span>
-                          </li>
-                        );
-                      }
-                      return null;
-                    })}
-
-                    <li>
-                      <button
-                        className="w-9 h-9 flex items-center justify-center rounded-lg border border-[#ececf6] text-[#666] text-[13px] disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[#faf9fe]"
-                        onClick={() =>
-                          handlePageChange(
-                            Math.min(currentPage + 1, totalPages),
-                          )
-                        }
-                        disabled={currentPage === totalPages}
-                      >
-                        <i className="fa-solid fa-chevron-right" />
-                      </button>
-                    </li>
-                  </ul>
-                </div>
-              )}
+              {/* Pagination */}
+              <Pagination
+                page={currentPage}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
+              />
             </div>
           </div>
         </div>
@@ -522,9 +452,8 @@ const TicketIssues = ({ HomeNavigate, BackButton }) => {
         onHide={closeModal}
         centered
         size="md"
-        className="[&_.modal-content]:rounded-xl [&_.modal-content]:border-none [&_.modal-content]:shadow-[0_5px_25px_rgba(0,0,0,0.1)] !z-[99999999999]"
       >
-        <Modal.Body className="p-0">
+      <Modal.Body>
           {selectedLead && (
             <div className="p-6 bg-white">
               {/* Header */}
@@ -681,9 +610,9 @@ const TicketIssues = ({ HomeNavigate, BackButton }) => {
         show={showChat}
         onHide={closeChat}
         placement="end"
-        className="w-[400px] !z-[999999999]"
+        className="w-[400px]"
       >
-        <Offcanvas.Header closeButton className="border-b border-[#eee] bg-slate-50">
+        <Offcanvas.Header closeButton onHide={closeChat}>
           <Offcanvas.Title>
             <div className="flex items-center gap-2">
               <div className="w-10 h-10 rounded-full bg-[#8059ca] text-white flex items-center justify-center text-lg">

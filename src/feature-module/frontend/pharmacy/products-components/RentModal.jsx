@@ -5,6 +5,7 @@ import { imgUrl, axiosUserInstance } from "../../../../Apiservice";
 import { getImageUrl } from "../../../../utils/index";
 import toast from "react-hot-toast";
 import { Autocomplete, useJsApiLoader } from "@react-google-maps/api";
+import { GOOGLE_MAPS_API_KEY } from "../../../../utils/index"
 
 const libraries = ["places"];
 
@@ -48,9 +49,9 @@ const RentModal = ({
   const autocompleteRef = useRef(null);
   const navigate = useNavigate();
 
-  const GOOGLE_MAPS_API_KEY =
-    import.meta.env.VITE_GOOGLE_MAPS_API_KEY ||
-    "AIzaSyBW_ML0ppoU2o_tsOmT5eMveCwCFP3AXHU";
+  // const GOOGLE_MAPS_API_KEY =
+  //   import.meta.env.VITE_GOOGLE_MAPS_API_KEY ||
+  //   "AIzaSyBW_ML0ppoU2o_tsOmT5eMveCwCFP3AXHU";
 
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: GOOGLE_MAPS_API_KEY,
@@ -205,8 +206,7 @@ const RentModal = ({
         "lead/create",
         {
           name: userProfile
-            ? `${userProfile.first_name || null} ${
-                userProfile.last_name || null
+            ? `${userProfile.first_name || null} ${userProfile.last_name || null
               }`.trim()
             : null,
           phone:
@@ -247,8 +247,8 @@ const RentModal = ({
     } catch (err) {
       toast.error(
         err?.response?.data?.message ||
-          err?.message ||
-          "Failed to submit rental request",
+        err?.message ||
+        "Failed to submit rental request",
       );
     } finally {
       setIsSubmitting(false);
@@ -375,21 +375,21 @@ const RentModal = ({
                       >
                         {rentProduct.vendordetails.bussiness_image?.[0]
                           ?.url && (
-                          <img
-                            alt="Vendor"
-                            src={getImageUrl(
-                              rentProduct.vendordetails.bussiness_image[0].url,
-                            )}
-                            style={{
-                              width: 50,
-                              height: 50,
-                              borderRadius: 8,
-                              objectFit: "cover",
-                              border: "2px solid rgba(125, 46, 255, 0.2)",
-                              flexShrink: 0,
-                            }}
-                          />
-                        )}
+                            <img
+                              alt="Vendor"
+                              src={getImageUrl(
+                                rentProduct.vendordetails.bussiness_image[0].url,
+                              )}
+                              style={{
+                                width: 50,
+                                height: 50,
+                                borderRadius: 8,
+                                objectFit: "cover",
+                                border: "2px solid rgba(125, 46, 255, 0.2)",
+                                flexShrink: 0,
+                              }}
+                            />
+                          )}
 
                         <div style={{ flex: "1 1 0%", minWidth: 0 }}>
                           <div
@@ -527,7 +527,7 @@ const RentModal = ({
                             </label>
                             <select
                               name="rentalPlan"
-                               value={formData.rentalPlan}
+                              value={formData.rentalPlan}
                               onChange={onFormChange}
                               required
                               className="form-select"
@@ -539,34 +539,34 @@ const RentModal = ({
                             </select>
                           </div>
                           {(formData.paymentType === "recurring payment" || !formData.paymentType) && (
-                          <div className="col-12 mb-3">
-                            <label className="form-label">
-                              {formData.rentalPlan === "yearly" 
-                                ? "Fixed Yearly Deposit" 
-                                : formData.rentalPlan === "monthly" 
-                                ? "Fixed Monthly Deposit"
-                                : formData.rentalPlan === "weekly"
-                                ? "Fixed Weekly Deposit"
-                                : "Fixed Deposit"} <span className="text-danger">*</span>
-                            </label>
-                            <input
-                              type="number"
-                              name="fixedDeposit"
-                              placeholder={`Enter ${formData.rentalPlan === "yearly" 
-                                ? "yearly" 
-                                : formData.rentalPlan === "monthly" 
-                                ? "monthly"
-                                : formData.rentalPlan === "weekly"
-                                ? "weekly"
-                                : ""} deposit amount`}
-                              className="form-control"
-                              required={formData.paymentType === "recurring payment"}
-                              value={formData.fixedDeposit}
-                              onChange={onFormChange}
-                            />
-                          </div>
+                            <div className="col-12 mb-3">
+                              <label className="form-label">
+                                {formData.rentalPlan === "yearly"
+                                  ? "Fixed Yearly Deposit"
+                                  : formData.rentalPlan === "monthly"
+                                    ? "Fixed Monthly Deposit"
+                                    : formData.rentalPlan === "weekly"
+                                      ? "Fixed Weekly Deposit"
+                                      : "Fixed Deposit"} <span className="text-danger">*</span>
+                              </label>
+                              <input
+                                type="number"
+                                name="fixedDeposit"
+                                placeholder={`Enter ${formData.rentalPlan === "yearly"
+                                  ? "yearly"
+                                  : formData.rentalPlan === "monthly"
+                                    ? "monthly"
+                                    : formData.rentalPlan === "weekly"
+                                      ? "weekly"
+                                      : ""} deposit amount`}
+                                className="form-control"
+                                required={formData.paymentType === "recurring payment"}
+                                value={formData.fixedDeposit}
+                                onChange={onFormChange}
+                              />
+                            </div>
                           )}
-                            <div className="col-md-6 col-12 mb-3">
+                          <div className="col-md-6 col-12 mb-3">
                             <label className="form-label">
                               Retun Charges{" "}
                               <span className="text-danger">*</span>
@@ -581,7 +581,7 @@ const RentModal = ({
                               onChange={onFormChange}
                             />
                           </div>
-                            <div className="col-md-6 col-12 mb-3">
+                          <div className="col-md-6 col-12 mb-3">
                             <label className="form-label">
                               Fitting/Delivery Charges{" "}
                               <span className="text-danger">*</span>

@@ -200,7 +200,7 @@ const Notifications = ({ HomeNavigate, BackButton }) => {
                               <td className="text-center">
                                 <button
                                   onClick={() => deleteNotification(nt._id)}
-                                  className="btn-profile-danger-icon"
+                                  className="!w-8 !h-8 !rounded-full !bg-slate-100 !inline-flex !items-center !justify-center !cursor-pointer hover:!bg-red-50 hover:!text-red-500 !transition-colors !duration-150 !border-0"
                                   title="Delete Notification"
                                 >
                                   <i className="fa-solid fa-trash text-[12px] text-red-400" />

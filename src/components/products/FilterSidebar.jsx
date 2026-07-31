@@ -204,61 +204,27 @@ const FilterSidebar = ({
               const newActiveLetter = alphabetData[Math.max(0, start - 3)]?.value;
               scrollToLetter(newActiveLetter);
             }}
-            style={{
-              width: "28px",
-              height: "28px",
-              borderRadius: "50%",
-              border: "1px solid #ccc",
-              backgroundColor: "#fff",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: "12px",
-              fontWeight: "600",
-              color: "#8059ca",
-              cursor: "pointer",
-              transition: "all 0.2s ease",
-            }}
+            className="w-7 h-7 !rounded-full border border-slate-300 bg-white flex items-center justify-center text-xs font-semibold text-[#8059ca] cursor-pointer hover:bg-slate-100 transition-all duration-200"
           >
             ...
           </div>
         )}
 
-        {alphabetData.slice(start, end + 1).map((alphaItem) => (
-          <div
-            key={alphaItem.value}
-            onClick={() => scrollToLetter(alphaItem.value)}
-            style={{
-              width: "28px",
-              height: "28px",
-              borderRadius: "50%",
-              border: `1px solid ${activeAlphabetLetter === alphaItem.value ? "#8059ca" : "#ccc"}`,
-              backgroundColor: activeAlphabetLetter === alphaItem.value ? "#8059ca" : "#fff",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: "12px",
-              fontWeight: "600",
-              color: activeAlphabetLetter === alphaItem.value ? "#fff" : "#8059ca",
-              cursor: "pointer",
-              transition: "all 0.2s ease",
-            }}
-            onMouseEnter={(e) => {
-              if (activeAlphabetLetter !== alphaItem.value) {
-                e.target.style.backgroundColor = "#e0e0e0";
-                e.target.style.color = "#8059ca";
-              }
-            }}
-            onMouseLeave={(e) => {
-              if (activeAlphabetLetter !== alphaItem.value) {
-                e.target.style.backgroundColor = "#fff";
-                e.target.style.color = "#8059ca";
-              }
-            }}
-          >
-            {alphaItem.label}
-          </div>
-        ))}
+        {alphabetData.slice(start, end + 1).map((alphaItem) => {
+          const isActive = activeAlphabetLetter === alphaItem.value;
+          return (
+            <div
+              key={alphaItem.value}
+              onClick={() => scrollToLetter(alphaItem.value)}
+              className={`w-7 h-7 !rounded-full border flex items-center justify-center text-xs font-semibold cursor-pointer transition-all duration-200 ${isActive
+                ? "border-[#8059ca] bg-[#8059ca] text-white"
+                : "border-slate-300 bg-white text-[#8059ca] hover:bg-slate-100"
+                }`}
+            >
+              {alphaItem.label}
+            </div>
+          );
+        })}
 
         {showEndDots && (
           <div
@@ -266,21 +232,7 @@ const FilterSidebar = ({
               const newActiveLetter = alphabetData[Math.min(alphabetData.length - 1, end + 3)]?.value;
               scrollToLetter(newActiveLetter);
             }}
-            style={{
-              width: "28px",
-              height: "28px",
-              borderRadius: "50%",
-              border: "1px solid #ccc",
-              backgroundColor: "#fff",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontSize: "12px",
-              fontWeight: "600",
-              color: "#8059ca",
-              cursor: "pointer",
-              transition: "all 0.2s ease",
-            }}
+            className="w-7 h-7 !rounded-full border border-slate-300 bg-white flex items-center justify-center text-xs font-semibold text-[#8059ca] cursor-pointer hover:bg-slate-100 transition-all duration-200"
           >
             ...
           </div>

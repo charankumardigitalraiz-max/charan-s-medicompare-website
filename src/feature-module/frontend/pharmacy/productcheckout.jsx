@@ -20,6 +20,8 @@ import { openRazorpayCheckout } from "../../../utils/razorpayUtils";
 import "./bookingprocess.css";
 import { useResponsive } from "../../../hooks";
 import VendorActions from "../../../components/ui/VendorActions.jsx";
+import RecentlyViewedProducts from "../../../components/ui/RecentlyViewedProducts.jsx";
+import CouponOffersModal from "../../../components/ui/CouponOffersModal.jsx";
 import { handleRentalBookingProcess, handleGeneralBookingProcess } from "../../../services/bookingService";
 import PageLoader from "../../../components/ui/PageLoader.jsx";
 import {
@@ -2009,629 +2011,150 @@ export const Cart = () => {
 
       {/*  Coupon modal */}
       {showOffersModal && (
-        <BaseModal
-          show={showOffersModal}
-          onClose={handleCloseModal}
-          title={"Apply Coupon"}
-          size="md"
-          className="max-w-md mx-auto"
-          bodyClassName="!p-6"
-        >
-          {/* {newLocal} */}
+        (() => {
+          const getCouponsList = (type) => {
+            if (couponDetails) {
+              if (Array.isArray(couponDetails)) {
+                return couponDetails.filter(c => c.createdType === type);
+              }
+              if (type === 'admin' && Array.isArray(couponDetails.adminCoupons)) {
+                return couponDetails.adminCoupons;
+              }
+              if (type === 'vendor' && Array.isArray(couponDetails.vendorCoupons)) {
+                return couponDetails.vendorCoupons;
+              }
+            }
+            if (couponList) {
+              if (Array.isArray(couponList) && couponList.length > 0) {
+                return couponList.filter(c => c.createdType === type);
+              }
+              if (type === 'admin' && Array.isArray(couponList.adminCoupons)) {
+                return couponList.adminCoupons;
+              }
+              if (type === 'vendor' && Array.isArray(couponList.vendorCoupons)) {
+                return couponList.vendorCoupons;
+              }
+            }
+            return [];
+          };
 
-          {(() => {
-            const getCouponsList = (type) => {
-              if (couponDetails) {
-                if (Array.isArray(couponDetails)) {
-                  return couponDetails.filter(c => c.createdType === type);
-                }
-                if (type === 'admin' && Array.isArray(couponDetails.adminCoupons)) {
-                  return couponDetails.adminCoupons;
-                }
-                if (type === 'vendor' && Array.isArray(couponDetails.vendorCoupons)) {
-                  return couponDetails.vendorCoupons;
+          const cartVendorIds = Array.isArray(cartItems) ? cartItems.map(item => String(item.vendorId)) : [];
+
+          const getEffectivePrice = (item) => {
+            const discountprice =
+              parseFloat(item.discountprice || item.discountPrice) || null;
+            const price = parseFloat(item.price) || 0;
+            let calculatedDiscountPrice = discountprice;
+            const discountType = item.discountType || null;
+
+            if (discountType === "percentage" && discountprice && discountprice > 0) {
+              calculatedDiscountPrice = price - (price * discountprice) / 100;
+            }
+
+            return calculatedDiscountPrice && calculatedDiscountPrice > 0
+              ? calculatedDiscountPrice
+              : price;
+          };
+
+          const mapCoupons = (coupons, isVendorCoupon) => {
+            return coupons.map((coupon) => {
+              const isApplied = appliedCoupon?._id === coupon._id;
+              let applicableAmount = 0;
+              let isEligible = true;
+              let criteriaText = "";
+              let hasExpired = false;
+
+              if (coupon?.endDate) {
+                const endDateStamp = new Date(coupon.endDate).getTime();
+                const nowStamp = new Date().getTime();
+                if (endDateStamp < nowStamp) {
+                  hasExpired = true;
+                  criteriaText = "Coupon has expired";
                 }
               }
-              if (couponList) {
-                if (Array.isArray(couponList) && couponList.length > 0) {
-                  return couponList.filter(c => c.createdType === type);
+
+              if (isVendorCoupon) {
+                const vendorIdStr = String(coupon.createdBy || coupon.businessDetails?._id || "");
+                const vendorItems = cartItems.filter(item => String(item.vendorId) === vendorIdStr);
+                applicableAmount = vendorItems.reduce((sum, item) => {
+                  const price = getEffectivePrice(item);
+                  return sum + (price * (parseInt(item.quantity) || 1));
+                }, 0);
+
+                if (hasExpired) {
+                  isEligible = false;
+                } else if (applicableAmount < coupon.minimumPurchase) {
+                  isEligible = false;
+                  const diff = (coupon.minimumPurchase - applicableAmount).toFixed(2);
+                  criteriaText = `Add ₹${diff} more of this vendor's items`;
+                } else if (coupon?.canUseCoupon === false) {
+                  isEligible = false;
+                } else if (coupon?.remainingUses === 0) {
+                  isEligible = false;
                 }
-                if (type === 'admin' && Array.isArray(couponList.adminCoupons)) {
-                  return couponList.adminCoupons;
-                }
-                if (type === 'vendor' && Array.isArray(couponList.vendorCoupons)) {
-                  return couponList.vendorCoupons;
+              } else {
+                applicableAmount = total;
+                if (hasExpired) {
+                  isEligible = false;
+                } else if (applicableAmount < coupon.minimumPurchase) {
+                  isEligible = false;
+                  const diff = (coupon.minimumPurchase - applicableAmount).toFixed(2);
+                  criteriaText = `Add ₹${diff} more to apply`;
+                } else if (coupon?.canUseCoupon === false) {
+                  isEligible = false;
+                } else if (coupon?.remainingUses === 0) {
+                  isEligible = false;
                 }
               }
-              return [];
-            };
 
-            const adminCoupons = getCouponsList('admin');
-            const vendorCoupons = getCouponsList('vendor');
+              const savingsPreview = isEligible ? calculateCouponDiscount(coupon, applicableAmount) : 0;
 
-            return (
-              <>
-                <div className="offers-modal-body p-3 bg-[#f8fafc]">
-                  <div className="offers-list flex flex-col gap-3.5">
-                    {(() => {
-                      const cartVendorIds = Array.isArray(cartItems) ? cartItems.map(item => String(item.vendorId)) : [];
+              return {
+                ...coupon,
+                isApplied,
+                isEligible,
+                criteriaText,
+                savingsPreview,
+              };
+            });
+          };
 
-                      // Sort vendor coupons: matching vendor first, then higher discount first
-                      const sortedVendorCoupons = [...vendorCoupons].sort((a, b) => {
-                        const aMatches = cartVendorIds.includes(String(a.createdBy)) || cartVendorIds.includes(String(a.businessDetails?._id));
-                        const bMatches = cartVendorIds.includes(String(b.createdBy)) || cartVendorIds.includes(String(b.businessDetails?._id));
+          const sortedVendorCoupons = mapCoupons(getCouponsList("vendor"), true).sort((a, b) => {
+            const aMatches =
+              cartVendorIds.includes(String(a.createdBy)) ||
+              cartVendorIds.includes(String(a.businessDetails?._id));
+            const bMatches =
+              cartVendorIds.includes(String(b.createdBy)) ||
+              cartVendorIds.includes(String(b.businessDetails?._id));
 
-                        if (aMatches && !bMatches) return -1;
-                        if (!aMatches && bMatches) return 1;
+            if (aMatches && !bMatches) return -1;
+            if (!aMatches && bMatches) return 1;
 
-                        return (b.discount || 0) - (a.discount || 0);
-                      });
+            return (b.discount || 0) - (a.discount || 0);
+          });
 
-                      // Sort admin coupons: higher discount first
-                      const sortedAdminCoupons = [...adminCoupons].sort((a, b) => (b.discount || 0) - (a.discount || 0));
+          const sortedAdminCoupons = mapCoupons(getCouponsList("admin"), false).sort(
+            (a, b) => (b.discount || 0) - (a.discount || 0),
+          );
 
-                      const getDiscountTier = (coupon) => {
-                        const amount = parseFloat(coupon.discount) || 0;
-                        if (coupon.discountType === "fixed") {
-                          if (amount >= 300) return "mega";
-                          if (amount >= 150) return "hot";
-                          if (amount >= 50) return "good";
-                          return "saver";
-                        }
-                        if (amount >= 30) return "mega";
-                        if (amount >= 20) return "hot";
-                        if (amount >= 10) return "good";
-                        return "saver";
-                      };
-
-                      const couponThemes = {
-                        saver: {
-                          label: "Saver",
-                          bg: "#fafffb",
-                          border: "#d1fae5",
-                          accent: "#22c55e",
-                          badgeBg: "#f0fdf4",
-                          badgeText: "#16a34a",
-                          btnBg: "#f0fdf4",
-                          btnText: "#16a34a",
-                          btnBorder: "#bbf7d0",
-                        },
-                        good: {
-                          label: "Good Deal",
-                          bg: "#f8fbff",
-                          border: "#dbeafe",
-                          accent: "#3b82f6",
-                          badgeBg: "#eff6ff",
-                          badgeText: "#2563eb",
-                          btnBg: "#eff6ff",
-                          btnText: "#2563eb",
-                          btnBorder: "#bfdbfe",
-                        },
-                        hot: {
-                          label: "Hot Deal",
-                          bg: "#fffdf7",
-                          border: "#fde68a",
-                          accent: "#d97706",
-                          badgeBg: "#fffbeb",
-                          badgeText: "#b45309",
-                          btnBg: "#fffbeb",
-                          btnText: "#d97706",
-                          btnBorder: "#fcd34d",
-                        },
-                        mega: {
-                          label: "Mega Save",
-                          bg: "#fcfaff",
-                          border: "#e9d5ff",
-                          accent: "#8059ca",
-                          badgeBg: "#f5f3ff",
-                          badgeText: "#7c3aed",
-                          btnBg: "#f3e8ff",
-                          btnText: "#8059ca",
-                          btnBorder: "#ddd6fe",
-                        },
-                      };
-
-                      const renderCouponCard = (ele, ind, isVendorCoupon) => {
-                        const isApplied = appliedCoupon?._id === ele._id;
-                        const discountText = ele?.discountType === "fixed"
-                          ? `₹${ele.discount}`
-                          : `${ele.discount}%`;
-
-                        let isEligible;
-
-                        const matchesCartVendor = isVendorCoupon && (
-                          cartVendorIds.includes(String(ele.createdBy)) ||
-                          cartVendorIds.includes(String(ele.businessDetails?._id))
-                        );
-
-                        let applicableAmount = 0;
-                        let criteriaText = "";
-
-                        let hasExpired = false;
-                        if (ele?.endDate) {
-                          const endDateStamp = new Date(ele.endDate).getTime();
-                          const nowStamp = new Date().getTime();
-                          if (endDateStamp < nowStamp) {
-                            hasExpired = true;
-                            criteriaText = "Coupon has expired";
-                          }
-                        }
-
-                        if (isVendorCoupon) {
-                          const vendorIdStr = String(ele.createdBy || ele.businessDetails?._id || "");
-                          const vendorItems = cartItems.filter(item => String(item.vendorId) === vendorIdStr);
-                          applicableAmount = vendorItems.reduce((sum, item) => {
-                            const price = getEffectivePrice(item);
-                            return sum + (price * (parseInt(item.quantity) || 1));
-                          }, 0);
-
-                          if (hasExpired) {
-                            isEligible = false;
-                          } else if (applicableAmount < ele.minimumPurchase) {
-                            isEligible = false;
-                            const diff = (ele.minimumPurchase - applicableAmount).toFixed(2);
-                            criteriaText = `Add ₹${diff} more of this vendor's items`;
-                          } else if (ele?.canUseCoupon === false) {
-                            isEligible = false;
-                          } else if (ele?.remainingUses === 0) {
-                            isEligible = false;
-                          } else {
-                            isEligible = true;
-                          }
-                        } else {
-                          applicableAmount = total;
-                          if (hasExpired) {
-                            isEligible = false;
-                          } else if (applicableAmount < ele.minimumPurchase) {
-                            isEligible = false;
-                            const diff = (ele.minimumPurchase - applicableAmount).toFixed(2);
-                            criteriaText = `Add ₹${diff} more to apply`;
-                          } else if (ele?.canUseCoupon === false) {
-                            isEligible = false;
-                          } else if (ele?.remainingUses === 0) {
-                            isEligible = false;
-                          } else {
-                            isEligible = true;
-                          }
-                        }
-
-                        const tier = getDiscountTier(ele);
-                        const theme = couponThemes[tier];
-                        const inactiveTheme = {
-                          bg: "#f8fafc",
-                          border: "#e2e8f0",
-                          accent: "#94a3b8",
-                          badgeBg: "#f1f5f9",
-                          badgeText: "#64748b",
-                          btnBg: "#f1f5f9",
-                          btnText: "#94a3b8",
-                          btnBorder: "#e2e8f0",
-                          label: "Unavailable",
-                        };
-                        const appliedTheme = {
-                          bg: "#f6fef9",
-                          border: "#a7f3d0",
-                          accent: "#10b981",
-                          badgeBg: "#ecfdf5",
-                          badgeText: "#059669",
-                          btnBg: "#ecfdf5",
-                          btnText: "#059669",
-                          btnBorder: "#a7f3d0",
-                          label: "Applied",
-                        };
-                        const activeTheme = !isEligible
-                          ? inactiveTheme
-                          : isApplied
-                            ? appliedTheme
-                            : theme;
-
-                        const savingsPreview = isEligible
-                          ? calculateCouponDiscount(ele, applicableAmount)
-                          : 0;
-
-                        return (
-                          <div
-                            key={ele._id || `${ele.code}-${ind}`}
-                            className="flex items-stretch w-full rounded-xl overflow-hidden shadow-none"
-                            style={{
-                              background: activeTheme.bg,
-                              border: `1px solid ${activeTheme.border}`,
-                              opacity: isEligible ? 1 : 0.72,
-                            }}
-                          >
-                            {/* Discount badge column */}
-                            <div
-                              className="min-w-[88px] max-w-[88px] px-2.5 py-3.5 flex flex-col items-center justify-center gap-1 text-center"
-                              style={{
-                                background: activeTheme.badgeBg,
-                                borderRight: `1px dashed ${activeTheme.border}`,
-                              }}
-                            >
-                              <span
-                                className="text-xl font-extrabold leading-[1.1]"
-                                style={{ color: activeTheme.badgeText }}
-                              >
-                                {discountText}
-                              </span>
-                              <span
-                                className="text-[9px] font-bold uppercase tracking-[0.3px]"
-                                style={{ color: activeTheme.badgeText }}
-                              >
-                                OFF
-                              </span>
-                              <span
-                                className="text-[8.5px] font-bold bg-white px-1.5 py-0.5 rounded-[10px] mt-1"
-                                style={{ color: activeTheme.accent }}
-                              >
-                                {activeTheme.label}
-                              </span>
-                            </div>
-
-                            {/* Details column */}
-                            <div className="flex-1 px-3.5 py-3 flex flex-col gap-1.5 min-w-0">
-                              <h4 className="text-sm font-bold text-[#0f172a] m-0 leading-[1.3]">
-                                {ele.name}
-                              </h4>
-
-                              <div className="flex flex-wrap gap-1.5 items-center">
-                                <span
-                                  className="text-[11px] font-bold font-mono bg-white rounded-md px-2 py-0.5"
-                                  style={{ color: activeTheme.accent, border: `1px dashed ${activeTheme.border}` }}
-                                >
-                                  {ele.code}
-                                </span>
-                                {ele.minimumPurchase > 0 && (
-                                  <span className="text-[10px] text-[#64748b]">
-                                    Minimum order ₹{ele.minimumPurchase}
-                                  </span>
-                                )}
-                              </div>
-
-                              {ele.description && (
-                                <p className="text-[11px] text-[#475569] m-0 leading-[1.45] [display:-webkit-box] [-webkit-line-clamp:2] [-webkit-box-orient:vertical] overflow-hidden">
-                                  {ele.description}
-                                </p>
-                              )}
-
-                              <div className="flex flex-wrap gap-2 text-[10px] text-[#64748b]">
-                                {isEligible && savingsPreview > 0 && (
-                                  <span className="font-semibold" style={{ color: activeTheme.accent }}>
-                                    You save ₹{savingsPreview.toFixed(2)}
-                                  </span>
-                                )}
-                                {ele.discountType === "percentage" && (
-                                  <span>{ele.discount}% discount</span>
-                                )}
-                                {ele.discountType === "fixed" && (
-                                  <span>Flat ₹{ele.discount} off</span>
-                                )}
-                              </div>
-
-                              {!isEligible && criteriaText && (
-                                <span className="text-[10px] text-[#dc2626] font-semibold">
-                                  ⚠️ {criteriaText}
-                                </span>
-                              )}
-                            </div>
-
-                            {/* Apply button column */}
-                            <div className="flex items-center pr-3 pl-0 py-3 shrink-0">
-                              <button
-                                type="button"
-                                disabled={!isEligible}
-                                onClick={() => handleCouponApply(ele)}
-                                className={`px-3.5 py-[7px] !rounded-lg !text-xs !font-semibold whitespace-nowrap shadow-none transition-all duration-200 ease-in-out ${!isEligible ? "cursor-not-allowed" : "cursor-pointer"}`}
-                                style={{
-                                  border: `1px solid ${activeTheme.btnBorder}`,
-                                  background: activeTheme.btnBg,
-                                  color: activeTheme.btnText,
-                                }}
-                              >
-                                {isApplied ? "Applied" : "Apply"}
-                              </button>
-                            </div>
-                          </div>
-                        );
-                      };
-
-                      const renderSection = (coupons, isVendorCoupon) => {
-                        if (coupons.length === 0) return null;
-                        return coupons.map((ele, ind) => renderCouponCard(ele, ind, isVendorCoupon));
-                      };
-
-                      if (sortedVendorCoupons.length === 0 && sortedAdminCoupons.length === 0) {
-                        return (
-                          <div className="flex flex-col items-center justify-center py-10 px-5 text-center text-[#94a3b8]">
-                            <div className="text-[32px] mb-3 text-[#cbd5e1]">🎟️</div>
-                            <span className="text-sm font-semibold text-[#64748b]">
-                              No Coupons Available
-                            </span>
-                            <span className="text-xs text-[#94a3b8] mt-1">
-                              There are no active coupons at the moment.
-                            </span>
-                          </div>
-                        );
-                      }
-
-                      return (
-                        <>
-                          {renderSection(sortedVendorCoupons, true)}
-                          {sortedVendorCoupons.length > 0 && sortedAdminCoupons.length > 0 && (
-                            <div className="h-px bg-[#e2e8f0] my-1" />
-                          )}
-                          {renderSection(sortedAdminCoupons, false)}
-                        </>
-                      );
-                    })()}
-                  </div>
-                </div>
-              </>
-            );
-          })()}
-        </BaseModal>
+          return (
+            <CouponOffersModal
+              show={showOffersModal}
+              onClose={handleCloseModal}
+              onApplyCoupon={handleCouponApply}
+              adminCoupons={sortedAdminCoupons}
+              vendorCoupons={sortedVendorCoupons}
+            />
+          );
+        })()
       )}
 
-      {relevantProducts?.length > 0 && (
-        <div
-          className={`p-5 relative bg-cover bg-center bg-no-repeat ${isMobile ? "mb-10" : "mb-0"}`}
-          style={{ backgroundImage: "url('/assets/Medicompares Background.png')" }}
-        >
-          <div
-            className="flex justify-start gap-3 items-center mb-2 border-l-4 border-[#8059ca] pl-3 leading-none"
-          >
-            <div className="text-lg sm:text-xl md:text-2xl font-medium text-[#0f172a] m-0">
-              Recently Viewed Products
-            </div>
-            <span
-              className="text-[11px] text-[#8059ca] font-bold bg-[#f3e8ff] px-2.5 py-1 rounded-[20px] uppercase tracking-[0.5px]"
-            >
-              {relevantProducts.length} items
-            </span>
-          </div>
-
-          {/*
-            Custom keyframe animations (comparePulse / compareAutoExpand / textFadeInOut) cannot be
-            expressed as Tailwind utility classes without extending tailwind.config.js with named
-            keyframes — Tailwind's animate-[...] arbitrary syntax still requires the @keyframes rule
-            to exist somewhere. This is the one piece of "custom CSS" intentionally kept, since a
-            config-less pure-utility equivalent doesn't exist. Static, non-animation styling for these
-            elements has been moved to Tailwind classes below.
-          */}
-          <style>{`
-            @keyframes comparePulse {
-              0% { box-shadow: 0 0 0 0 rgba(128, 89, 202, 0.6); }
-              70% { box-shadow: 0 0 0 6px rgba(128, 89, 202, 0); }
-              100% { box-shadow: 0 0 0 0 rgba(128, 89, 202, 0); }
-            }
-            @keyframes compareAutoExpand {
-              0%, 10%, 40%, 100% { width: 32px; }
-              15%, 35% { width: 90px; }
-            }
-            @keyframes textFadeInOut {
-              0%, 12%, 38%, 100% { opacity: 0; }
-              15%, 35% { opacity: 1; }
-            }
-            .compare-btn-highlight {
-              animation: comparePulse 2s infinite, compareAutoExpand 8s infinite ease-in-out;
-            }
-            .compare-text-label {
-              animation: textFadeInOut 8s infinite ease-in-out;
-            }
-            .compare-btn-highlight:hover {
-              animation: comparePulse 2s infinite !important;
-            }
-            .compare-btn-highlight:hover .compare-text-label {
-              animation: none !important;
-              opacity: 1 !important;
-            }
-          `}</style>
-
-          <div
-            className="relative flex items-stretch"
-          >
-            <button
-              className="meq-arrow-btn dental-prev flex self-center left-[-15px]"
-              onClick={() => {
-                const container = document.getElementById("productCarousel");
-                if (container) {
-                  container.scrollLeft -= 250;
-                }
-              }}
-            >
-              <i className="fas fa-chevron-left"></i>
-            </button>
-
-            <div
-              id="productCarousel"
-              className="scroll-container flex items-stretch overflow-x-auto gap-3 px-[60px] py-3 scroll-smooth"
-            >
-              {relevantProducts?.map((product, index) => {
-                const originalPrice = product?.price || 0;
-                const discountPrice = product?.discountprice || null;
-                const discountType = product?.discountType || null;
-
-                // Calculate effective price
-                let calculatedDiscountPrice = discountPrice;
-                let hasValidDiscount = false;
-
-                if (discountType === "percentage" && discountPrice && discountPrice > 0) {
-                  calculatedDiscountPrice = originalPrice - (originalPrice * discountPrice) / 100;
-                  hasValidDiscount = true;
-                } else if (discountPrice && discountPrice > 0 && discountPrice < originalPrice) {
-                  calculatedDiscountPrice = discountPrice;
-                  hasValidDiscount = true;
-                }
-
-                const displayPrice = hasValidDiscount ? calculatedDiscountPrice : originalPrice;
-                const discountPercent = hasValidDiscount
-                  ? (discountType === "percentage" ? discountPrice : Math.round(((originalPrice - discountPrice) / originalPrice) * 100))
-                  : 0;
-
-                const productImage = product?.combinedvariant?.files?.[0] ||
-                  product?.tabletDetails?.files?.[0] ||
-                  (Array.isArray(product?.tabletDetails?.imageUrl)
-                    ? product.tabletDetails.imageUrl[0]
-                    : product?.tabletDetails?.imageUrl) || "/assets/default.png";
-
-                const vendorName = product?.vendor?.name || "Vendor";
-                const vendorImage = product?.vendor?.bussiness_image?.[0]?.url || "";
-
-                return (
-                  <div
-                    key={`${product._id || "product"}-${product.vendor?.vendorId || "vendor"}-${product.combinedvariant?.variantId || "variant"}-${index}`}
-                    className="min-w-[220px] max-w-[220px] self-stretch bg-white rounded-md border border-[#f1f5f9] shadow-[0_4px_20px_rgba(0,0,0,0.08)] flex flex-col shrink-0 transition-all duration-300 ease-in-out relative overflow-hidden hover:-translate-y-[3px] hover:border-[#8059ca] hover:shadow-[0_8px_24px_rgba(128,89,202,0.15)]"
-                  >
-                    {/* Compare Button */}
-                    <div
-                      className="compare-btn-highlight absolute right-2 top-2 z-10 cursor-pointer bg-[#8059ca] text-white border-[1.5px] border-[#8059ca] rounded-[20px] w-8 h-[26px] flex items-center justify-start pl-[9px] shadow-[0_2px_8px_rgba(128,89,202,0.4)] transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] overflow-hidden whitespace-nowrap hover:w-[90px] hover:bg-[#6a45b3] hover:border-[#6a45b3]"
-                    >
-                      <Link
-                        to={`/${product?.tabletDetails?.subcategoryDetails?.categoryDetails?.slug}/${product?.tabletDetails?.subcategoryDetails?.slug}/${product?.tabletDetails?.slug}/compare`}
-                        className="flex items-center text-white no-underline"
-                      >
-                        <i
-                          className="fa-solid fa-right-left shrink-0 text-[11px] text-white"
-                        ></i>
-                        <span
-                          className="compare-text-label ml-1.5 text-[11px] font-semibold text-white transition-opacity duration-200 ease-in-out"
-                        >
-                          Compare
-                        </span>
-                      </Link>
-                    </div>
-
-                    {/* Image Area */}
-                    <div
-                      className="w-full h-[138px] bg-[#f8fafc] flex items-center justify-center p-2 cursor-pointer"
-                      onClick={() => handleProductClick(product)}
-                    >
-                      <img
-                        src={getImageUrl(productImage)}
-                        alt="product"
-                        className="max-h-full max-w-full object-contain"
-                      />
-                    </div>
-
-                    {/* Details Area */}
-                    <div className="p-2.5 flex flex-col gap-[7px] flex-1 min-h-0">
-                      {/* Name */}
-                      <div
-                        className="cursor-pointer mb-1"
-                        onClick={() => handleProductClick(product)}
-                      >
-                        <div
-                          className="text-[13px] font-medium text-[#0f172a] m-0 leading-[1.3] capitalize [display:-webkit-box] [-webkit-line-clamp:2] [-webkit-box-orient:vertical] overflow-hidden h-9"
-                        >
-                          {product?.tabletDetails?.name}
-                        </div>
-                      </div>
-
-                      {/* Ratings and Seller Row */}
-                      <div className="flex items-center justify-between gap-1.5">
-                        <div className="flex items-center gap-1.5 min-w-0 flex-1">
-                          <img
-                            src={getImageUrl(vendorImage)}
-                            alt={vendorName}
-                            className="w-5 h-5 rounded-full object-cover bg-[#f1f5f9] shrink-0"
-                            onError={(e) => {
-                              e.target.src = '/assets/img/logo.png';
-                            }}
-                          />
-                          <span
-                            className="text-[12.5px] font-semibold text-[#334155] text-ellipsis overflow-hidden whitespace-nowrap flex-1"
-                            title={vendorName}
-                          >
-                            {vendorName}
-                          </span>
-                        </div>
-
-                        <div className="flex items-center gap-0.5 shrink-0">
-                          <span className="text-[11px] text-[#fbbf24]">★</span>
-                          <span className="text-[11px] font-semibold text-[#475569]">
-                            {product.tabletDetails?.averageRating ? product.tabletDetails.averageRating.toFixed(1) : "0.0"}
-                          </span>
-                        </div>
-                      </div>
-
-                      {/* Pricing block — fixed min height keeps cards aligned */}
-                      <div className="flex flex-col gap-0.5 min-h-[32px]">
-                        <div className="flex items-center flex-wrap">
-                          <span className="text-sm font-bold text-[#0f172a]">
-                            ₹{displayPrice.toFixed(2)}
-                          </span>
-                          {hasValidDiscount && (
-                            <span className="text-[11px] line-through text-[#94a3b8] ml-1.5">
-                              ₹{Number(originalPrice).toFixed(2)}
-                            </span>
-                          )}
-                        </div>
-                        {hasValidDiscount && (
-                          <span className="text-[10px] font-bold text-[#dc2626]">
-                            {discountPercent}% OFF
-                          </span>
-                        )}
-                        {product?.perDayRent && (
-                          <span className="text-[10px] text-[#64748b]">
-                            ₹{Number(product.perDayRent).toFixed(2)}/day
-                          </span>
-                        )}
-                      </div>
-
-                      <div className="mt-auto w-full">
-                        <div className="border-t border-[#f1f5f9] my-0.5" />
-                        <VendorActions
-                          bookingType={
-                            product?.tabletDetails?.subcategoryDetails?.categoryDetails?.categoryType || product?.bookingType ||
-                            "cart"
-                          }
-                          med={{
-                            ...product.tabletDetails,
-                            productId: product.name,
-                          }}
-                          vendor={{
-                            ...product.vendor,
-                            vendorId: product.vendor?.vendorId,
-                          }}
-                          price={parseFloat(product.combinedvariant?.price) || 0}
-                          calculatedDiscountPrice={parseFloat(product.combinedvariant?.discountprice || product.discountprice) || null}
-                          service={
-                            product?.tabletDetails?.subcategoryDetails?.categoryDetails?.fixedType
-                          }
-                          className="custom-cart-controls w-100"
-                          containerStyle={{
-                            display: "flex",
-                            width: "100%",
-                          }}
-                          rentPerDay={product?.perDayRent}
-                          selectedVariant={product.combinedvariant}
-                          effectiveVariantId={product.combinedvariant?.variantId}
-                          isVariant={!!product.combinedvariant}
-                          handleRentalBookinProcess={handleRentalBookinProcess}
-                          handleNavigateToBooking={handleBooking}
-                        />
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-
-            {/* Right Scroll Button */}
-            <button
-              className="meq-arrow-btn dental-next flex self-center right-[-15px]"
-              onClick={() => {
-                const container = document.getElementById("productCarousel");
-                if (container) {
-                  container.scrollLeft += 250;
-                }
-              }}
-            >
-              <i className="fas fa-chevron-right"></i>
-            </button>
-          </div>
-        </div>
-      )
-      }
+      <RecentlyViewedProducts
+        products={relevantProducts}
+        onProductClick={handleProductClick}
+        onRentalBooking={handleRentalBookingProcess}
+        onBooking={handleBooking}
+      />
 
       <LocationOffcanvas
         isOpen={showLocationOffcanvas}

@@ -4,6 +4,7 @@ import LocationModal from "../../../components/LocationModal";
 import { useResponsive } from "../../../hooks/useResponsive";
 import toast from "react-hot-toast";
 import BaseModal from "../../../components/ui/BaseModal"
+import { Pagination } from "../../../components/ui";
 
 // Styles migrated to Tailwind CSS
 
@@ -109,12 +110,12 @@ const Address = ({ HomeNavigate, BackButton }) => {
   };
 
   return (
-    <div className="main-wrapper">
-      <div className="content doctor-content">
-        <div className="container">
-          <div className="row">
+    <div className="w-full">
+      <div className="py-4 md:py-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col gap-4">
             {/* Header Section */}
-            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pb-5 mb-6 border-b border-slate-100 mt-2">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pb-3 mb-2 border-b border-slate-100 mt-2">
               <div className="flex items-center gap-3.5">
                 {HomeNavigate && <HomeNavigate />}
                 <div className="w-11 h-11 rounded-xl bg-purple-50 text-[#8059ca] flex items-center justify-center text-[20px] shrink-0 border border-purple-100/50 shadow-sm">
@@ -146,12 +147,12 @@ const Address = ({ HomeNavigate, BackButton }) => {
               </div>
             </div>
 
-            <div className="row g-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {savedAddresses.length > 0 ? (
                 <>
-                  <div className="col-lg-4 col-md-6 col-12">
+                  <div>
                     <div
-                      className="profile-card-add"
+                      className="flex items-center justify-center bg-[#fafafd] rounded-[9px] border border-dashed border-[#dcdbe6] h-full min-h-[220px] relative p-6 flex-col cursor-pointer transition-all duration-300 ease-in-out hover:border-[#8059ca] hover:bg-[#faf8ff] hover:shadow-[0_8px_24px_rgba(128,89,202,0.1)]"
                       onClick={() => handleAddAddress()}
                     >
                       <div className="w-[60px] h-[60px] rounded-full bg-[rgba(13,110,253,0.1)] flex items-center justify-center mb-[15px]">
@@ -161,10 +162,10 @@ const Address = ({ HomeNavigate, BackButton }) => {
                     </div>
                   </div>
                   {currentAddresses.map((addr) => (
-                    <div key={addr._id} className="col-lg-4 col-md-6 col-12 ">
-                      <div className="profile-card">
+                    <div key={addr._id} className="h-full">
+                      <div className="bg-white border border-[#e2e8f0] rounded-[9px] shadow-[0_2px_10px_rgba(15,23,42,0.03)] transition-all duration-300 hover:shadow-[0_8px_24px_rgba(128,89,202,0.1)] hover:border-[#c0a6f3] p-4 h-full">
                         <div className="d-flex justify-content-between align-items-center">
-                          <div className="profile-card-badge">
+                          <div className="font-semibold text-[15px] inline-flex items-center bg-[#faf8ff] text-[#8059ca] py-1 px-3 rounded-[20px] border border-[#f3effc]">
                             <i
                               className={`${getAddressIcon(addr.addressType)} me-2`}
                             ></i>{" "}
@@ -172,11 +173,11 @@ const Address = ({ HomeNavigate, BackButton }) => {
                           </div>
                           <div className="flex gap-2">
                             <i
-                              className="fa-solid fa-pen cursor-pointer text-[13px] w-7 h-7 rounded-full bg-[#f8f9fa] text-[#666] inline-flex items-center justify-center transition-all duration-200 ease hover:bg-[#e8f0fe] hover:text-[#1a73e8]"
+                              className="fa-solid fa-pen cursor-pointer !text-[13px] !w-8 !h-8 !rounded-full !bg-blue-50 !text-blue-600 !inline-flex !items-center !justify-center !transition-all !duration-200 hover:!bg-blue-100"
                               onClick={() => handleEditAddress(addr)}
                             ></i>
                             <i
-                              className="fa-solid fa-trash cursor-pointer text-[13px] w-7 h-7 rounded-full bg-[#f8f9fa] text-[#666] inline-flex items-center justify-center transition-all duration-200 ease hover:bg-[#fce8e6] hover:text-[#d93025]"
+                              className="fa-solid fa-trash cursor-pointer !text-[13px] !w-8 !h-8 !rounded-full !bg-red-50 !text-red-600 !inline-flex !items-center !justify-center !transition-all !duration-200 hover:!bg-red-100"
                               onClick={() => handleDeleteAddress(addr._id)}
                             ></i>
                           </div>
@@ -226,10 +227,10 @@ const Address = ({ HomeNavigate, BackButton }) => {
                   ))}
                 </>
               ) : (
-                <div className="col-12">
-                  <div className="col-lg-4 col-md-6 col-12 mx-auto">
+                <div className="col-span-full flex justify-center">
+                  <div className="w-full max-w-md">
                     <div
-                      className="profile-card-add"
+                      className="flex items-center justify-center bg-[#fafafd] rounded-[9px] border border-dashed border-[#dcdbe6] h-full min-h-[220px] relative p-6 flex-col cursor-pointer transition-all duration-300 ease-in-out hover:border-[#8059ca] hover:bg-[#faf8ff] hover:shadow-[0_8px_24px_rgba(128,89,202,0.1)]"
                       onClick={() => handleAddAddress()}
                     >
                       <div className="w-[60px] h-[60px] rounded-full bg-[rgba(13,110,253,0.1)] flex items-center justify-center mb-[15px]">
@@ -247,67 +248,11 @@ const Address = ({ HomeNavigate, BackButton }) => {
 
             {/* Pagination */}
             {savedAddresses.length > 6 && totalPages > 1 && (
-              <div className="pagination dashboard-pagination mt-4">
-                <ul className="d-flex justify-content-center align-items-center gap-1">
-                  <li>
-                    <button
-                      className="page-link"
-                      onClick={() =>
-                        handlePageChange(Math.max(currentPage - 1, 1))
-                      }
-                      disabled={currentPage === 1}
-                    >
-                      <i className="fa-solid fa-chevron-left" />
-                    </button>
-                  </li>
-
-                  {Array.from({ length: totalPages }, (_, i) => {
-                    const page = i + 1;
-                    if (
-                      page === 1 ||
-                      page === totalPages ||
-                      (page >= currentPage - 1 && page <= currentPage + 1)
-                    ) {
-                      return (
-                        <li key={page}>
-                          <button
-                            className={`page-link ${currentPage === page ? "active" : ""
-                              }`}
-                            onClick={() => handlePageChange(page)}
-                          >
-                            {page}
-                          </button>
-                        </li>
-                      );
-                    }
-                    if (
-                      page === currentPage - 2 ||
-                      page === currentPage + 2
-                    ) {
-                      return (
-                        <li key={`dots-${page}`}>
-                          <span className="page-link disabled">…</span>
-                        </li>
-                      );
-                    }
-                    return null;
-                  })}
-
-                  <li>
-                    <button
-                      className="page-link"
-                      onClick={() =>
-                        handlePageChange(
-                          Math.min(currentPage + 1, totalPages),
-                        )
-                      }
-                      disabled={currentPage === totalPages}
-                    >
-                      <i className="fa-solid fa-chevron-right" />
-                    </button>
-                  </li>
-                </ul>
-              </div>
+              <Pagination
+                page={currentPage}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
+              />
             )}
           </div>
         </div>

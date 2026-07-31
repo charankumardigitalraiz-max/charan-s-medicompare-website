@@ -92,6 +92,29 @@ const LocationOffcanvas = ({
   });
 
   useEffect(() => {
+    const handleFocus = () => {
+      setTimeout(() => {
+        const pac = document.querySelector(".pac-container");
+        if (pac) {
+          pac.classList.add(
+            "!z-[10000000]",
+            "!max-h-[320px]",
+            "!overflow-y-auto",
+            "!rounded-lg",
+            "!shadow-lg",
+            "!border",
+            "!border-slate-100",
+            "!font-sans"
+          );
+        }
+      }, 300);
+    };
+
+    document.addEventListener("focusin", handleFocus);
+    return () => document.removeEventListener("focusin", handleFocus);
+  }, []);
+
+  useEffect(() => {
     if (isOpen) {
       loadSavedAddresses();
       loadRecentLocations();
@@ -755,9 +778,8 @@ const LocationOffcanvas = ({
 
           {/* Search Section */}
           <div className="p-[15px_20px] border-b border-b-[#eee]">
-            <div className="row g-2 align-items-center">
-              {/* INPUT - col-8 */}
-              <div className="col-9">
+            <div className="flex w-full items-stretch">
+              <div className="flex-1">
                 {isLoaded ? (
                   <Autocomplete
                     onLoad={(autocomplete) =>
@@ -783,7 +805,7 @@ const LocationOffcanvas = ({
                       placeholder="Search for area, street name..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      className="form-control p-[6px_12px] border border-[#c9c9c9ad] rounded-[6px] text-[14px]"
+                      className="w-full p-[8px_12px] border border-r-0 border-slate-200 rounded-l-lg rounded-r-none text-sm bg-white outline-none focus:border-[#8059ca] transition-all duration-150 h-full"
                     />
                   </Autocomplete>
                 ) : (
@@ -791,46 +813,44 @@ const LocationOffcanvas = ({
                     type="text"
                     placeholder="Loading places..."
                     disabled
-                    className="form-control"
+                    className="w-full p-[8px_12px] border border-r-0 border-slate-200 rounded-l-lg rounded-r-none text-sm bg-slate-50 text-slate-400 cursor-not-allowed outline-none h-full"
                   />
                 )}
               </div>
 
-              <div className="col-3">
-                <button
-                  type="button"
-                  onClick={handleLocateButtonClick}
-                  className="locate-btn d-flex align-items-center justify-content-center p-[6px_12px] border border-[#8059ca] !rounded-[6px] !bg-[#8059ca] text-white cursor-pointer transition-all duration-200 w-full hover:bg-[#6a45b3] hover:border-[#6a45b3]"
-                  title="Use current GPS location"
+              <button
+                type="button"
+                onClick={handleLocateButtonClick}
+                className="flex items-center justify-center gap-1.5 p-[8px_16px] border-none rounded-r-lg rounded-l-none bg-[#8059ca] hover:bg-[#6a45b3] text-white text-sm font-semibold cursor-pointer transition-all duration-200 shrink-0"
+                title="Use current GPS location"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="15"
+                  height="15"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
                 >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                  >
-                    <g transform="translate(-8921 -11863)">
-                      <rect
-                        width="24"
-                        height="24"
-                        transform="translate(8921 11863)"
-                        fill="none"
-                      />
-                      <g transform="translate(8923 11865)">
-                        <path d="M10,6.363A3.636,3.636,0,1,0,13.635,10,3.647,3.647,0,0,0,10,6.363Zm8.09,2.727a8.119,8.119,0,0,0-7.181-7.181V0H9.09V1.909A7.954,7.954,0,0,0,1.909,9.09H0v1.818H1.909A8.119,8.119,0,0,0,9.09,18.089V20h1.818V18.089a8.119,8.119,0,0,0,7.181-7.181H20V9.09ZM10,16.362A6.363,6.363,0,1,1,16.362,10,6.324,6.324,0,0,1,10,16.362Z" />
-                      </g>
+                  <g transform="translate(-8921 -11863)">
+                    <rect
+                      width="24"
+                      height="24"
+                      transform="translate(8921 11863)"
+                      fill="none"
+                    />
+                    <g transform="translate(8923 11865)">
+                      <path d="M10,6.363A3.636,3.636,0,1,0,13.635,10,3.647,3.647,0,0,0,10,6.363Zm8.09,2.727a8.119,8.119,0,0,0-7.181-7.181V0H9.09V1.909A7.954,7.954,0,0,0,1.909,9.09H0v1.818H1.909A8.119,8.119,0,0,0,9.09,18.089V20h1.818V18.089a8.119,8.119,0,0,0,7.181-7.181H20V9.09ZM10,16.362A6.363,6.363,0,1,1,16.362,10,6.324,6.324,0,0,1,10,16.362Z" />
                     </g>
-                  </svg>{" "}
-                  Locate
-                </button>
-              </div>
+                  </g>
+                </svg>{" "}
+                Locate
+              </button>
             </div>
 
             <div className="mt-2.5">
               <p className="text-[12px] text-[#6c757d] m-0">
                 Current Location:{" "}
-                <small className="text-dark">{currentAddress}</small>
+                <small className="text-dark font-medium">{currentAddress}</small>
               </p>
             </div>
           </div>
@@ -838,7 +858,7 @@ const LocationOffcanvas = ({
           <div
             className="border-b border-b-[#eee] p-[10px_20px] bg-[#f8f9fa]"
           >
-            <p className="mb-0 fw-bold">
+            <p className="mb-0 font-bold">
               Saved Addresses ({savedAddresses.length})
             </p>
           </div>
@@ -846,27 +866,27 @@ const LocationOffcanvas = ({
           <div className="flex-1 overflow-auto p-0">
             {isLoading ? (
               <div
-                className="d-flex justify-content-center align-items-center h-[200px]"
+                className="flex justify-center items-center h-[200px]"
               >
-                <div className="spinner-border text-primary" role="status">
+                <div className="spinner-border text-[#8059ca]" role="status">
                   <span className="visually-hidden">Loading...</span>
                 </div>
               </div>
             ) : savedAddresses.length === 0 ? (
               <div className="text-center p-[40px_20px]">
                 <i
-                  className="fas fa-map-marker-alt text-muted text-[2rem]"
+                  className="fas fa-map-marker-alt text-slate-300 text-[2rem] mb-2"
                 ></i>
-                <p className="text-muted mb-2">No saved addresses yet</p>
+                <p className="text-slate-500 mb-4 text-sm">No saved addresses yet</p>
                 <button
-                  className="btn btn-primary"
+                  className="px-4 py-2 bg-[#8059ca] hover:bg-[#6a45b3] text-white text-sm font-semibold rounded-lg shadow-sm shadow-[#8059ca]/20 hover:shadow-md transition-all duration-200 cursor-pointer border-none"
                   onClick={() => {
                     const token = localStorage.getItem("medicomparestoken");
                     if (!token) navigate("/login");
                     else setShowLocationModal(true);
                   }}
                 >
-                  <i className="fas fa-plus me-2"></i>Add Address
+                  <i className="fas fa-plus mr-2"></i>Add Address
                 </button>
               </div>
             ) : (
@@ -881,15 +901,15 @@ const LocationOffcanvas = ({
                   return (
                     <div
                       key={address._id}
-                      className={`p-3 border rounded-[8px] mb-2 transition-all duration-200 ${isSelected ? "border-2 border-[#007bff] bg-[#f0f8ff]" : "border-[#e9ecef] bg-white"
+                      className={`p-3.5 border border-solid rounded-lg mb-2.5 transition-all duration-200 shadow-[0_2px_8px_rgba(0,0,0,0.03)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.05)] ${isSelected ? "border-2 border-[#8059ca] bg-[#fdfaff]" : "border-slate-200 bg-white"
                         } ${hasLocation ? "cursor-pointer" : "cursor-default"}`}
                       onClick={() =>
                         hasLocation && handleAddressSelect(address._id, true)
                       }
                     >
-                      <div className="d-flex justify-content-between align-items-start">
+                      <div className="flex justify-between items-start">
                         <div className="flex-1">
-                          <div className="d-flex align-items-center mb-1">
+                          <div className="flex items-center mb-1">
                             {hasLocation && (
                               <input
                                 type="radio"
@@ -906,76 +926,76 @@ const LocationOffcanvas = ({
                             <i
                               className={`fas fa-${getAddressTypeIcon(
                                 address.addressType
-                              )} text-primary me-2`}
+                              )} text-[#8059ca] mr-2`}
                             />
-                            <span className="fw-bold text-capitalize">
+                            <span className="font-bold text-capitalize text-sm text-slate-800">
                               {address.addressType}
                             </span>
                             {hasLocation ? (
                               <span
-                                className="badge bg-success ms-2 text-[10px]"
+                                className="text-[10px] bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded-full font-bold ml-2 flex items-center gap-1"
                               >
-                                <i className="fas fa-map-marker-alt me-1"></i>
+                                <i className="fas fa-map-marker-alt"></i>
                                 Located
                               </span>
                             ) : (
                               <span
-                                className="badge bg-warning ms-2 text-[10px]"
+                                className="text-[10px] bg-amber-50 text-amber-700 px-2 py-0.5 rounded-full font-bold ml-2 flex items-center gap-1"
                               >
-                                <i className="fas fa-exclamation-triangle me-1"></i>
+                                <i className="fas fa-exclamation-triangle"></i>
                                 No Location
                               </span>
                             )}
                           </div>
                           <p
-                            className="mb-1 text-[14px] text-[#333]"
+                            className="mb-1 text-[13px] text-slate-700 font-medium"
                           >
                             {formatAddress(address)}
                           </p>
                           {address.description && (
                             <p
-                              className="mb-1 text-[12px] text-[#6c757d]"
+                              className="mb-1 text-[12px] text-slate-500"
                             >
                               {address.description}
                             </p>
                           )}
                           {hasLocation && address.location.address && (
                             <p
-                              className="mb-0 text-[11px] text-[#6c757d]"
+                              className="mb-0 text-[11px] text-slate-500"
                             >
-                              <i className="fas fa-map-pin me-1"></i>
+                              <i className="fas fa-map-pin mr-1"></i>
                               {address.location.address}
                             </p>
                           )}
                           {!hasLocation && (
                             <p
-                              className="mb-0 text-[11px] text-[#ffc107]"
+                              className="mb-0 text-[11px] text-amber-600"
                             >
-                              <i className="fas fa-exclamation-triangle me-1"></i>
+                              <i className="fas fa-exclamation-triangle mr-1"></i>
                               Location not set - Click edit to add location
                             </p>
                           )}
                         </div>
-                        <div className="d-flex gap-1">
+                        <div className="flex gap-1.5 ml-2">
                           <button
-                            className="btn btn-sm btn-outline-primary"
+                            className="p-1.5 border border-slate-200 hover:border-purple-300 rounded-md text-slate-500 hover:text-[#8059ca] bg-white transition-all cursor-pointer flex items-center justify-center"
                             onClick={(e) => {
                               e.stopPropagation();
                               handleEditAddress(address);
                             }}
                             title="Edit address"
                           >
-                            <i className="fas fa-edit"></i>
+                            <i className="fas fa-edit text-xs"></i>
                           </button>
                           <button
-                            className="btn btn-sm btn-outline-danger"
+                            className="p-1.5 border border-slate-200 hover:border-red-300 rounded-md text-slate-500 hover:text-red-500 bg-white transition-all cursor-pointer flex items-center justify-center"
                             onClick={(e) => {
                               e.stopPropagation();
                               handleDeleteAddress(address._id);
                             }}
                             title="Delete address"
                           >
-                            <i className="fas fa-trash"></i>
+                            <i className="fas fa-trash text-xs"></i>
                           </button>
                         </div>
                       </div>
@@ -998,9 +1018,9 @@ const LocationOffcanvas = ({
                   </div>
                 )}
 
-                <div className="text-center mt-3 mb-3">
+                <div className="text-center mt-4 mb-3">
                   <button
-                    className="btn btn-primary"
+                    className="px-4 py-2 bg-[#8059ca] hover:bg-[#6a45b3] text-white text-sm font-semibold rounded-lg shadow-sm shadow-[#8059ca]/20 hover:shadow-md transition-all duration-200 cursor-pointer border-none"
                     onClick={() => setShowLocationModal(true)}
                   >
                     Add New Address
@@ -1027,3 +1047,4 @@ const LocationOffcanvas = ({
 };
 
 export default LocationOffcanvas;
+

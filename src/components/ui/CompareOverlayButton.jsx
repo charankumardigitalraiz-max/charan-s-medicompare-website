@@ -71,7 +71,7 @@ const CompareOverlayButton = ({ tablet, serviceType = "medicine", onClick }) => 
         }
         .compare-btn-highlight {
           animation: comparePulse 2s infinite, compareAutoExpand 8s infinite ease-in-out;
-          border-radius: var(--radius-xl, 20px) !important;
+          border-radius: 20px !important;
         }
         .compare-text-label {
           animation: textFadeInOut 8s infinite ease-in-out;
@@ -86,7 +86,7 @@ const CompareOverlayButton = ({ tablet, serviceType = "medicine", onClick }) => 
       `}</style>
       <button
         data-tooltip-id="global-tooltip"
-        className="compare-btn-highlight absolute top-[10px] right-[10px] bg-[#8059ca] text-white border-[1.5px] border-[#8059ca] radius-xl w-8 h-[26px] flex items-center justify-start pl-[9px] cursor-pointer z-10 shadow-[0_2px_8px_rgba(128, 89, 202, 0.4)] transition-all duration-300 overflow-hidden whitespace-nowrap hover:w-[90px] hover:bg-[#6a45b3] hover:border-[#6a45b3] focus:outline-none"
+        className="compare-btn-highlight absolute top-[10px] right-[10px] bg-primary text-white border-[1.5px] border-primary !rounded-[20px] w-8 h-[26px] flex items-center justify-start pl-[9px] cursor-pointer z-10 shadow-[0_2px_8px_rgba(128,89,202,0.4)] transition-all duration-300 overflow-hidden whitespace-nowrap hover:w-[90px] hover:bg-profile-secondary hover:border-profile-secondary focus:outline-none"
         onClick={handleCompareClick}
       >
         <FaExchangeAlt className="text-[11px] text-inherit shrink-0" />

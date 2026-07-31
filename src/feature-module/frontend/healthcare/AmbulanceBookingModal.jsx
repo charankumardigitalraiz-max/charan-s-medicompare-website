@@ -8,6 +8,7 @@ import { getImageUrl } from "../../../utils/index";
 import { useProfile } from "../../../context/ProfileContext.jsx";
 import { useLocation } from "../../../context/LocationContext";
 import { useResponsive } from "../../../hooks";
+import { GOOGLE_MAPS_API_KEY } from "../../../utils/index.js"
 
 const libraries = ["places"];
 
@@ -42,9 +43,9 @@ const AmbulanceBookingModal = ({
   const pickupAutocompleteRef = useRef(null);
   const dropAutocompleteRef = useRef(null);
 
-  const GOOGLE_MAPS_API_KEY =
-    import.meta.env.VITE_GOOGLE_MAPS_API_KEY ||
-    "AIzaSyBW_ML0ppoU2o_tsOmT5eMveCwCFP3AXHU";
+  // const GOOGLE_MAPS_API_KEY =
+  //   import.meta.env.VITE_GOOGLE_MAPS_API_KEY ||
+  //   "AIzaSyBW_ML0ppoU2o_tsOmT5eMveCwCFP3AXHU";
 
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: GOOGLE_MAPS_API_KEY,

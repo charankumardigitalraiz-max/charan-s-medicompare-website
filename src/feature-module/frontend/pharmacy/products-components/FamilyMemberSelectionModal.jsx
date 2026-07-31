@@ -18,6 +18,7 @@ import {
   handleReferredDoctorSelectChange,
   referredDoctorSelectComponents,
 } from "../referredDoctorSelectUtils.jsx";
+import { GOOGLE_MAPS_API_KEY } from "../../../../utils/index.js"
 
 const libraries = ["places"];
 
@@ -63,9 +64,9 @@ const FamilyMemberSelectionModal = ({
   const [isLoadingDoctors, setIsLoadingDoctors] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const GOOGLE_MAPS_API_KEY =
-    import.meta.env.VITE_GOOGLE_MAPS_API_KEY ||
-    "AIzaSyBW_ML0ppoU2o_tsOmT5eMveCwCFP3AXHU";
+  // const GOOGLE_MAPS_API_KEY =
+  //   import.meta.env.VITE_GOOGLE_MAPS_API_KEY ||
+  //   "AIzaSyBW_ML0ppoU2o_tsOmT5eMveCwCFP3AXHU";
 
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: GOOGLE_MAPS_API_KEY,

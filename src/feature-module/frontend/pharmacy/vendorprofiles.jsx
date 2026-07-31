@@ -26,7 +26,7 @@ import {
   shareToEmail,
 } from "./utils/shareUtils.js";
 import CategoryProvider from "../../../components/CategoryProvider.jsx";
-import { Offcanvas } from "react-bootstrap";
+import { Offcanvas } from "../../../components/ui/Offcanvas";
 import { PriceDisplay, ProductImage, CompareOverlayButton } from "../../../components/ui";
 import { getDisplayPrice } from "./utils/productUtils.js";
 import { FaRegShareSquare, FaHeart, FaExchangeAlt, FaStar } from "react-icons/fa";

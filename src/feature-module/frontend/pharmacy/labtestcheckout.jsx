@@ -19,9 +19,12 @@ import { navigateToLogin } from "../../../utils/redirectUtils";
 import { openRazorpayCheckout } from "../../../utils/razorpayUtils";
 import { useResponsive } from "../../../hooks";
 import { useProfile } from "../../../context/ProfileContext";
-import { Offcanvas } from "react-bootstrap";
+import { Offcanvas } from "../../../components/ui/Offcanvas";
 import VendorCalendarSlotPicker from "../../../components/VendorCalendarSlotPicker";
 import PageLoader from "../../../components/ui/PageLoader.jsx";
+import RecentlyViewedProducts from "../../../components/ui/RecentlyViewedProducts.jsx";
+import CouponOffersModal from "../../../components/ui/CouponOffersModal.jsx";
+import { handleRentalBookingProcess, handleGeneralBookingProcess } from "../../../services/bookingService";
 import {
   getReferredDoctorSelectOptions,
   handleReferredDoctorInputChange,
@@ -78,11 +81,59 @@ export const LabTestCheckout = () => {
     clearCart,
     refreshCart,
     vendorLocation,
-    cartBilling
+    cartBilling,
+    relevantProducts,
   } = useCartContext();
   console.log("service fee details 1 ", serviceFeeDetails);
   console.log("service fee details 2", serviceDetails)
   const navigate = useNavigate();
+  const handleProductClick = (item) => {
+    if (item.type === "package" || item.packageId) return;
+
+    const product = item?.productDetails || item;
+    const tablet = product?.tabletDetails || item?.tabletDetails;
+
+    const subcategoryData =
+      tablet?.subcategoryDetails || product?.subcategoryDetails;
+
+    const categoryData =
+      subcategoryData?.categoryDetails || product?.categoryDetails;
+
+    const service =
+      categoryData?.slug ||
+      tablet?.subcategoryDetails?.categoryDetails?.slug ||
+      "pharmacy";
+    const subcategory =
+      subcategoryData?.slug || tablet?.subcategoryDetails?.slug || "otc";
+    const productSlug = tablet?.slug || product?.slug;
+
+    if (productSlug && subcategory && service) {
+      navigate(`/${service}/${subcategory}/${productSlug}`);
+    }
+  };
+
+  const handleBooking = async (
+    vendor,
+    med,
+    effectiveVariantId,
+    price,
+    stock,
+    path,
+    servicePassed
+  ) => {
+    const isLoggedIn = !!localStorage.getItem("medicomparestoken");
+    await handleGeneralBookingProcess(
+      isLoggedIn,
+      navigate,
+      vendor,
+      med,
+      effectiveVariantId,
+      price,
+      stock,
+      path,
+      servicePassed
+    );
+  };
   console.log("LabTestCheckout state:", { cartItems, loading });
   const { profile: userProfile } = useProfile();
 
@@ -1934,6 +1985,13 @@ export const LabTestCheckout = () => {
         </Offcanvas.Body>
       </Offcanvas>
 
+      <RecentlyViewedProducts
+        products={relevantProducts}
+        onProductClick={handleProductClick}
+        onRentalBooking={handleRentalBookingProcess}
+        onBooking={handleBooking}
+      />
+
       <Footer />
 
       {/* Location Offcanvas */}
@@ -1948,340 +2006,116 @@ export const LabTestCheckout = () => {
       />
 
       {/* Coupon modal */}
-      {showOffersModal && (
-        <div
-          className="fixed inset-0 z-[100000] bg-black/50 flex items-center justify-center px-3"
-          onClick={() => setShowOffersModal(false)}
-        >
-          <div
-            className="w-full max-w-[580px] max-h-[85vh] overflow-y-auto bg-white rounded-2xl shadow-2xl"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="flex items-center justify-between px-5 py-4 border-b border-[#f1f5f9] sticky top-0 bg-white rounded-t-2xl">
-              <h3 className="text-[16px] font-bold text-[#1e293b] m-0">Apply Coupon</h3>
-              <button
-                className="w-8 h-8 rounded-full bg-[#f1f5f9] border-none text-[#64748b] text-xl leading-none flex items-center justify-center cursor-pointer hover:bg-[#e2e8f0] transition-colors duration-150"
-                onClick={() => setShowOffersModal(false)}
-              >
-                ×
-              </button>
-            </div>
+      {showOffersModal && (() => {
+        const getCouponsList = (type) => {
+          if (couponDetails) {
+            if (Array.isArray(couponDetails)) {
+              return couponDetails.filter((c) => c.createdType === type);
+            }
+            if (type === "admin" && Array.isArray(couponDetails.adminCoupons)) {
+              return couponDetails.adminCoupons;
+            }
+            if (type === "vendor" && Array.isArray(couponDetails.vendorCoupons)) {
+              return couponDetails.vendorCoupons;
+            }
+          }
+          return [];
+        };
 
-            {(() => {
-              const getCouponsList = (type) => {
-                if (couponDetails) {
-                  if (Array.isArray(couponDetails)) {
-                    return couponDetails.filter(c => c.createdType === type);
-                  }
-                  if (type === 'admin' && Array.isArray(couponDetails.adminCoupons)) {
-                    return couponDetails.adminCoupons;
-                  }
-                  if (type === 'vendor' && Array.isArray(couponDetails.vendorCoupons)) {
-                    return couponDetails.vendorCoupons;
-                  }
-                }
-                return [];
-              };
+        const cartVendorIds = Array.isArray(cartItems)
+          ? cartItems.map((item) => String(item.vendorId))
+          : [];
 
-              const adminCoupons = getCouponsList('admin');
-              const vendorCoupons = getCouponsList('vendor');
+        const mapCoupons = (coupons, isVendorCoupon) => {
+          return coupons.map((coupon) => {
+            const isApplied = appliedCoupon?._id === coupon._id;
+            let applicableAmount = 0;
+            const resolvedHomeVisitFee = parseFloat(
+              serviceDetails?.homeVisitFee ||
+              serviceDetails?.visit?.homeVisitFee ||
+              serviceDetails?.services?.visit?.homeVisitFee ||
+              serviceFeeDetails?.services?.visit?.homeVisitFee ||
+              serviceFeeDetails?.labtests?.homeVisitFee ||
+              0
+            );
 
-              return (
-                <>
-                  <div className="bg-[#f8fafc] p-5">
-                    <div className="flex flex-col gap-3.5">
-                      {(() => {
-                        const cartVendorIds = Array.isArray(cartItems) ? cartItems.map(item => String(item.vendorId)) : [];
+            let totalAmountForCheck = parseFloat(cartBilling?.finalAmount || 0);
+            if (visitType?.toLowerCase() === "both" && (collectionMethod === "lab" || collectionMethod === "center")) {
+              totalAmountForCheck = totalAmountForCheck - resolvedHomeVisitFee;
+            }
 
-                        // Sort vendor coupons: matching vendor first, then higher discount first
-                        const sortedVendorCoupons = [...vendorCoupons].sort((a, b) => {
-                          const aMatches = cartVendorIds.includes(String(a.createdBy)) || cartVendorIds.includes(String(a.businessDetails?._id));
-                          const bMatches = cartVendorIds.includes(String(b.createdBy)) || cartVendorIds.includes(String(b.businessDetails?._id));
-
-                          if (aMatches && !bMatches) return -1;
-                          if (!aMatches && bMatches) return 1;
-
-                          return (b.discount || 0) - (a.discount || 0);
-                        });
-
-                        // Sort admin coupons: higher discount first
-                        const sortedAdminCoupons = [...adminCoupons].sort((a, b) => (b.discount || 0) - (a.discount || 0));
-
-                        const getDiscountTier = (coupon) => {
-                          const amount = parseFloat(coupon.discount) || 0;
-                          if (coupon.discountType === "fixed") {
-                            if (amount >= 300) return "mega";
-                            if (amount >= 150) return "hot";
-                            if (amount >= 50) return "good";
-                            return "saver";
-                          }
-                          if (amount >= 30) return "mega";
-                          if (amount >= 20) return "hot";
-                          if (amount >= 10) return "good";
-                          return "saver";
-                        };
-
-                        const couponThemes = {
-                          saver: {
-                            label: "Saver",
-                            bg: "bg-[#fafffb]",
-                            border: "border-[#d1fae5]",
-                            accent: "text-[#22c55e]",
-                            badgeBg: "bg-[#f0fdf4]",
-                            badgeText: "text-[#16a34a]",
-                            btnBg: "bg-[#f0fdf4]",
-                            btnText: "text-[#16a34a]",
-                            btnBorder: "border-[#bbf7d0]",
-                          },
-                          good: {
-                            label: "Good Deal",
-                            bg: "bg-[#f8fbff]",
-                            border: "border-[#dbeafe]",
-                            accent: "text-[#3b82f6]",
-                            badgeBg: "bg-[#eff6ff]",
-                            badgeText: "text-[#2563eb]",
-                            btnBg: "bg-[#eff6ff]",
-                            btnText: "text-[#2563eb]",
-                            btnBorder: "border-[#bfdbfe]",
-                          },
-                          hot: {
-                            label: "Hot Deal",
-                            bg: "bg-[#fffdf7]",
-                            border: "border-[#fde68a]",
-                            accent: "text-[#d97706]",
-                            badgeBg: "bg-[#fffbeb]",
-                            badgeText: "text-[#b45309]",
-                            btnBg: "bg-[#fffbeb]",
-                            btnText: "text-[#d97706]",
-                            btnBorder: "border-[#fcd34d]",
-                          },
-                          mega: {
-                            label: "Mega Save",
-                            bg: "bg-[#fcfaff]",
-                            border: "border-[#e9d5ff]",
-                            accent: "text-[#8059ca]",
-                            badgeBg: "bg-[#f5f3ff]",
-                            badgeText: "text-[#7c3aed]",
-                            btnBg: "bg-[#f3e8ff]",
-                            btnText: "text-[#8059ca]",
-                            btnBorder: "border-[#ddd6fe]",
-                          },
-                        };
-
-                        const renderCouponCard = (ele, ind, isVendorCoupon) => {
-                          const isApplied = appliedCoupon?._id === ele._id;
-                          const discountText = ele?.discountType === "fixed"
-                            ? `₹${ele.discount}`
-                            : `${ele.discount}%`;
-
-                          let isEligible;
-
-                          let applicableAmount = 0;
-                          let criteriaText = "";
-
-                          let hasExpired = false;
-                          if (ele?.endDate) {
-                            const endDateStamp = new Date(ele.endDate).getTime();
-                            const nowStamp = new Date().getTime();
-                            if (endDateStamp < nowStamp) {
-                              hasExpired = true;
-                              criteriaText = "Coupon has expired";
-                            }
-                          }
-
-                          if (isVendorCoupon) {
-                            const vendorIdStr = String(ele.createdBy || ele.businessDetails?._id || "");
-                            const vendorItems = cartItems.filter(item => String(item.vendorId) === vendorIdStr);
-                            applicableAmount = vendorItems.reduce((sum, item) => {
-                              const price = getEffectivePrice(item);
-                              return sum + (price * (parseInt(item.quantity) || 1));
-                            }, 0);
-
-                            if (hasExpired) {
-                              isEligible = false;
-                            } else if (applicableAmount < ele.minimumPurchase) {
-                              isEligible = false;
-                              const diff = (ele.minimumPurchase - applicableAmount).toFixed(2);
-                              criteriaText = `Add ₹${diff} more of this vendor's items`;
-                            } else if (ele?.canUseCoupon === false) {
-                              isEligible = false;
-                            } else if (ele?.remainingUses === 0) {
-                              isEligible = false;
-                            } else {
-                              isEligible = true;
-                            }
-                          } else {
-                            applicableAmount = total;
-                            if (hasExpired) {
-                              isEligible = false;
-                            } else if (applicableAmount < ele.minimumPurchase) {
-                              isEligible = false;
-                              const diff = (ele.minimumPurchase - applicableAmount).toFixed(2);
-                              criteriaText = `Add ₹${diff} more to apply`;
-                            } else if (ele?.canUseCoupon === false) {
-                              isEligible = false;
-                            } else if (ele?.remainingUses === 0) {
-                              isEligible = false;
-                            } else {
-                              isEligible = true;
-                            }
-                          }
-
-                          const tier = getDiscountTier(ele);
-                          const theme = couponThemes[tier];
-                          const inactiveTheme = {
-                            bg: "bg-[#f8fafc]",
-                            border: "border-[#e2e8f0]",
-                            accent: "text-[#94a3b8]",
-                            badgeBg: "bg-[#f1f5f9]",
-                            badgeText: "text-[#64748b]",
-                            btnBg: "bg-[#f1f5f9]",
-                            btnText: "text-[#94a3b8]",
-                            btnBorder: "border-[#e2e8f0]",
-                            label: "Unavailable",
-                          };
-                          const appliedTheme = {
-                            bg: "bg-[#f6fef9]",
-                            border: "border-[#a7f3d0]",
-                            accent: "text-[#10b981]",
-                            badgeBg: "bg-[#ecfdf5]",
-                            badgeText: "text-[#059669]",
-                            btnBg: "bg-[#ecfdf5]",
-                            btnText: "text-[#059669]",
-                            btnBorder: "border-[#a7f3d0]",
-                            label: "Applied",
-                          };
-                          const activeTheme = !isEligible
-                            ? inactiveTheme
-                            : isApplied
-                              ? appliedTheme
-                              : theme;
-
-                          const savingsPreview = isEligible
-                            ? calculateCouponDiscount(ele, applicableAmount)
-                            : 0;
-
-                          return (
-                            <div
-                              key={ele._id || `${ele.code}-${ind}`}
-                              className={`flex items-stretch w-full rounded-xl overflow-hidden border ${activeTheme.bg} ${activeTheme.border} transition-all duration-200 ${isEligible ? "opacity-100" : "opacity-[0.72]"
-                                }`}
-                            >
-                              {/* Discount badge column */}
-                              <div
-                                className={`w-[88px] min-w-[88px] max-w-[88px] py-3.5 px-2.5 border-r border-dashed ${activeTheme.badgeBg} ${activeTheme.border} flex flex-col items-center justify-center gap-1 text-center`}
-                              >
-                                <span className={`text-[20px] font-extrabold leading-tight ${activeTheme.badgeText}`}>
-                                  {discountText}
-                                </span>
-                                <span className={`text-[9px] font-bold uppercase tracking-[0.3px] ${activeTheme.badgeText}`}>
-                                  OFF
-                                </span>
-                                <span className={`text-[8.5px] font-bold bg-white px-1.5 py-0.5 rounded-[10px] mt-1 ${activeTheme.accent}`}>
-                                  {activeTheme.label}
-                                </span>
-                              </div>
-
-                              {/* Details column */}
-                              <div className="flex-1 p-3 flex flex-col gap-1.5 min-w-0">
-                                <h4 className="text-sm font-bold text-[#0f172a] m-0 leading-snug">
-                                  {ele.name}
-                                </h4>
-
-                                <div className="flex flex-wrap gap-1.5 items-center">
-                                  <span className={`text-[11px] font-bold font-mono bg-white border border-dashed rounded px-2 py-0.5 ${activeTheme.accent} ${activeTheme.border}`}>
-                                    {ele.code}
-                                  </span>
-                                  {ele.minimumPurchase > 0 && (
-                                    <span className="text-[10px] text-[#64748b]">
-                                      Minimum order ₹{ele.minimumPurchase}
-                                    </span>
-                                  )}
-                                </div>
-
-                                {ele.description && (
-                                  <p className="text-[11px] text-[#475569] m-0 leading-relaxed line-clamp-2">
-                                    {ele.description}
-                                  </p>
-                                )}
-
-                                <div className="flex flex-wrap gap-2 text-[10px] text-[#64748b]">
-                                  {isEligible && savingsPreview > 0 && (
-                                    <span className={`font-semibold ${activeTheme.accent}`}>
-                                      You save ₹{savingsPreview.toFixed(2)}
-                                    </span>
-                                  )}
-                                  {ele.discountType === "percentage" && (
-                                    <span>{ele.discount}% discount</span>
-                                  )}
-                                  {ele.discountType === "fixed" && (
-                                    <span>Flat ₹{ele.discount} off</span>
-                                  )}
-                                </div>
-
-                                {!isEligible && criteriaText && (
-                                  <span className="text-[10px] text-[#dc2626] font-semibold">
-                                    ⚠️ {criteriaText}
-                                  </span>
-                                )}
-                              </div>
-
-                              {/* Apply button column */}
-                              <div className="flex items-center pr-3 shrink-0 py-3">
-                                <button
-                                  type="button"
-                                  disabled={!isEligible}
-                                  onClick={() => handleCouponApply(ele)}
-                                  className={`px-3.5 py-1.5 rounded-lg border text-xs font-semibold whitespace-nowrap transition-all duration-200 ${!isEligible
-                                    ? "bg-slate-100 text-[#94a3b8] border-[#e2e8f0] cursor-not-allowed"
-                                    : `${activeTheme.btnBg} ${activeTheme.btnText} ${activeTheme.btnBorder} cursor-pointer`
-                                    }`}
-                                >
-                                  {isApplied ? "Applied" : "Apply"}
-                                </button>
-                              </div>
-                            </div>
-                          );
-                        };
-
-                        const renderSection = (coupons, isVendorCoupon) => {
-                          if (coupons.length === 0) return null;
-
-                          return coupons.map((ele, ind) => renderCouponCard(ele, ind, isVendorCoupon));
-                        };
-
-                        if (sortedVendorCoupons.length === 0 && sortedAdminCoupons.length === 0) {
-                          return (
-                            <div className="flex flex-col items-center justify-center py-10 px-5 text-center text-[#94a3b8]">
-                              <div className="text-[32px] mb-3 text-[#cbd5e1]">🎟️</div>
-                              <span className="text-sm font-semibold text-[#64748b]">
-                                No Coupons Available
-                              </span>
-                              <span className="text-xs text-[#94a3b8] mt-1">
-                                There are no active coupons at the moment.
-                              </span>
-                            </div>
-                          );
-                        }
-
-                        return (
-                          <>
-                            {renderSection(sortedVendorCoupons, true)}
-                            {sortedVendorCoupons.length > 0 && sortedAdminCoupons.length > 0 && (
-                              <div className="h-px bg-[#e2e8f0] my-1" />
-                            )}
-                            {renderSection(sortedAdminCoupons, false)}
-                          </>
-                        );
-                      })()}
-                    </div>
-                  </div>
-                </>
+            if (isVendorCoupon) {
+              const vendorIdStr = String(
+                coupon.createdBy || coupon.businessDetails?._id || "",
               );
-            })()}
-          </div>
-        </div>
-      )}
+              applicableAmount = cartItems
+                .filter((item) => String(item.vendorId) === vendorIdStr)
+                .reduce((sum, item) => sum + (getEffectivePrice(item) * item.quantity), 0);
+            } else {
+              applicableAmount = totalAmountForCheck;
+            }
+
+            let isEligible = true;
+            let criteriaText = "";
+            let hasExpired = false;
+
+            if (coupon?.endDate) {
+              const endDateStamp = new Date(coupon.endDate).getTime();
+              const nowStamp = new Date().getTime();
+              if (endDateStamp < nowStamp) {
+                hasExpired = true;
+                criteriaText = "Coupon has expired";
+              }
+            }
+
+            if (hasExpired) {
+              isEligible = false;
+            } else if (applicableAmount < coupon.minimumPurchase) {
+              isEligible = false;
+              const diff = (coupon.minimumPurchase - applicableAmount).toFixed(2);
+              criteriaText = `Add ₹${diff} more to apply`;
+            } else if (coupon?.canUseCoupon === false) {
+              isEligible = false;
+            } else if (coupon?.remainingUses === 0) {
+              isEligible = false;
+            }
+
+            const savingsPreview = isEligible ? (coupon.discountType === "fixed" ? coupon.discount : (applicableAmount * coupon.discount) / 100) : 0;
+
+            return {
+              ...coupon,
+              isApplied,
+              isEligible,
+              criteriaText,
+              savingsPreview,
+            };
+          });
+        };
+
+        const sortedVendorCoupons = mapCoupons(getCouponsList("vendor"), true).sort((a, b) => {
+          const aMatches = cartVendorIds.includes(String(a.createdBy)) || cartVendorIds.includes(String(a.businessDetails?._id));
+          const bMatches = cartVendorIds.includes(String(b.createdBy)) || cartVendorIds.includes(String(b.businessDetails?._id));
+
+          if (aMatches && !bMatches) return -1;
+          if (!aMatches && bMatches) return 1;
+
+          return (b.discount || 0) - (a.discount || 0);
+        });
+
+        const sortedAdminCoupons = mapCoupons(getCouponsList("admin"), false).sort(
+          (a, b) => (b.discount || 0) - (a.discount || 0),
+        );
+
+        return (
+          <CouponOffersModal
+            show={showOffersModal}
+            onClose={() => setShowOffersModal(false)}
+            onApplyCoupon={handleCouponApply}
+            adminCoupons={sortedAdminCoupons}
+            vendorCoupons={sortedVendorCoupons}
+          />
+        );
+      })()}
     </div>
   );
 };

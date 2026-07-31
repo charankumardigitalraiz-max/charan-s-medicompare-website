@@ -43,9 +43,9 @@ import "./servicedetails-perf.css";
 const getSearchItemId = (item) => item?.tablet?._id || item?._id || null;
 
 const ServiceCategoryCard = memo(({ cat, index, onClick }) => (
-  <div className="col-lg-2 col-md-3 col-4 col-sm-6 d-flex ">
+  <div className="lg:w-[16.666%] md:w-[25%] sm:w-[50%] w-[33.333%] flex ">
     <div
-      className="serv-wrap medi-bg service-category-card-lite flex-fill cursor-pointer bg-white flex flex-col justify-center items-center min-h-[135px] py-[15px] px-[10px] m-[0_0_12px]"
+      className="serv-wrap medi-bg service-category-card-lite flex-1 cursor-pointer bg-white flex flex-col justify-center items-center min-h-[135px] py-[15px] px-[10px] m-[0_0_12px]"
       onClick={() => onClick(cat)}
       role="button"
       tabIndex={0}
@@ -1080,18 +1080,18 @@ const ServiceDetails = () => {
           style={{
             background: PRIMARY_SECTION_BG,
           }}
-          className={`d-none d-lg-block search-section1${showSuggestions ? " is-search-open" : ""} py-[30px] px-0 relative mt-0 overflow-visible ${showSuggestions ? "z-25" : "z-[1]"}`}
+          className={`hidden lg:block search-section1${showSuggestions ? " is-search-open" : ""} py-[30px] px-0 relative mt-0 overflow-visible ${showSuggestions ? "z-25" : "z-[1]"}`}
         >
           <div
-            className="container-fluid px-3 px-md-4 relative z-[1] max-w-[850px]"
+            className="w-full px-3 md:px-4 relative z-[1] max-w-[850px] mx-auto"
           >
-            <div className="row">
-              <div className="col-12">
+            <div className="flex flex-wrap">
+              <div className="w-full">
                 <div
                   className="relative z-[1] max-w-[850px]"
                 >
-                  <div className="row">
-                    <div className="col-12 mt-3">
+                  <div className="flex flex-wrap">
+                    <div className="w-full mt-3">
                       <div
                         className={`search-wrapper1 mx-auto relative ${showSuggestions ? "z-30" : "z-[2]"}`}
                       >
@@ -1409,11 +1409,11 @@ const ServiceDetails = () => {
         <section
           className={`mobilemargin feedback-section-fifteen px-2 mb-3 `}
         >
-          <div className="container-fluid mt-0">
+          <div className="w-full mt-0">
             {topBanners.length > 1 ? (
               <Slider {...settings1}>
                 {topBanners.map((image, index) => (
-                  <div key={index} className="col-lg-12 d-flex">
+                  <div key={index} className="lg:w-full flex">
 
                     <img
                       src={image.src}
@@ -1426,7 +1426,7 @@ const ServiceDetails = () => {
                 ))}
               </Slider>
             ) : (
-              <div className="col-lg-12 d-flex">
+              <div className="lg:w-full flex">
                 <img
                   src={topBanners[0].src}
                   alt={topBanners[0].alt}
@@ -1442,8 +1442,8 @@ const ServiceDetails = () => {
 
       {myservice.fixedType !== "ambulanceservice" && (
         <section className="py-3" style={{ backgroundColor: PRIMARY_SECTION_BG }}>
-          <div className="container-fluid px-4">
-            <div className="d-flex align-items-center justify-content-between flex-wrap result-wrap gap-3 mb-4">
+          <div className="w-full px-4">
+            <div className="flex items-center justify-between flex-wrap result-wrap gap-3 mb-4">
               <h3 className="mb-2 top-vendor-badge">
                 <i className="fas fa-bolt mx-1"></i>
                 {service
@@ -1451,18 +1451,18 @@ const ServiceDetails = () => {
                   .replace(/\b\w/g, (c) => c.toUpperCase())}
               </h3>
 
-              <div className="d-flex align-items-center flex-wrap gap-3">
+              <div className="flex items-center flex-wrap gap-3">
                 <Link
                   to={`/view-all-categories/${service}`}
                   className={`top-vendor-badge service-link-hover border border-solid border-[#8059ca] bg-white text-[#8059ca] font-semibold flex items-center justify-center ${isMobile ? "p-[8px] rounded-[50%] text-[10px] w-[36px] h-[36px]" : "py-[8px] px-[20px] rounded-[50px] text-[14px] w-auto h-auto"}`}
                 >
                   {isMobile ? "" : "View All"}
-                  <i className={isMobile ? "isax isax-arrow-right-1" : "isax isax-arrow-right-1 ms-1"}></i>
+                  <i className={isMobile ? "isax isax-arrow-right-1" : "isax isax-arrow-right-1 ml-1"}></i>
                 </Link>
               </div>
             </div>
 
-            <div className="row g-2">
+            <div className="flex flex-wrap -mx-1 [&>*]:px-1">
               {displayCategories.length > 0 ? (
                 displayCategories.slice(0, 12).map((cat, index) => (
                   <ServiceCategoryCard
@@ -1473,7 +1473,7 @@ const ServiceDetails = () => {
                   />
                 ))
               ) : (
-                <div className="col-12 text-center py-5">
+                <div className="w-full text-center py-5">
                   <h5>No Data Available</h5>
                 </div>
               )}
@@ -1722,9 +1722,9 @@ const ServiceDetails = () => {
       )}
 
       {partners && partners.length > 0 && (
-        <section className="container-fluid px-3 py-3 my-3 service-partners-section-lite">
+        <section className="w-full px-3 py-3 my-3 service-partners-section-lite">
           <div>
-            <div className="d-flex align-items-center justify-content-between result-wrap gap-3 my-2">
+            <div className="flex items-center justify-between result-wrap gap-3 my-2">
               <div
                 className="home-dynamic-section-badge mb-2"
               >
@@ -1738,7 +1738,7 @@ const ServiceDetails = () => {
                 className={`top-vendor-badge service-link-hover flex items-center justify-center font-semibold ${isMobile ? "p-[8px] rounded-[50%] w-[36px] h-[36px]" : "py-[8px] px-[20px] rounded-[50px] w-auto h-auto"}`}
               >
                 {!isMobile && "View All"}
-                <i className={`isax isax-arrow-right-1 ${!isMobile ? "ms-1" : ""}`} />
+                <i className={`isax isax-arrow-right-1 ${!isMobile ? "ml-1" : ""}`} />
               </Link>
             </div>
 
@@ -1816,11 +1816,11 @@ const ServiceDetails = () => {
       {bottomBanners.length > 0 && (
         <section className="feedback-section-fifteen px-2 mb-5">
 
-          <div className="container-fluid mt-0">
+          <div className="w-full mt-0">
             {bottomBanners.length > 1 ? (
               <Slider {...settings1}>
                 {bottomBanners.map((image, index) => (
-                  <div key={index} className="col-lg-4 col-md-6 d-flex">
+                  <div key={index} className="lg:w-[33.333%] md:w-[50%] flex">
                     <img
                       src={image.src}
                       alt={image.alt}
@@ -1832,7 +1832,7 @@ const ServiceDetails = () => {
                 ))}
               </Slider>
             ) : (
-              <div className="col-lg-12 d-flex">
+              <div className="lg:w-full flex">
                 <img
                   src={bottomBanners[0].src}
                   alt={bottomBanners[0].alt}
@@ -1886,3 +1886,4 @@ const ServiceDetails = () => {
 };
 
 export default ServiceDetails;
+

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { axiosUserInstance, imgUrl } from "../../../Apiservice";
 import { useResponsive } from "../../../hooks/useResponsive";
+import { Table, Pagination } from "../../../components/ui";
 
 // Styles migrated to Tailwind CSS
 
@@ -61,6 +62,95 @@ const Consultation = ({ HomeNavigate, BackButton }) => {
     status: filteredOrders.some((l) => l.status),
     preferredTime: filteredOrders.some((l) => l.preferredTime),
   };
+
+  const headers = [
+    columnConfig.date && {
+      key: "createdAt",
+      label: "Date",
+      render: (value) => value ? new Date(value).toLocaleDateString("en-GB", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+      }) : "-"
+    },
+    columnConfig.name && {
+      key: "name",
+      label: "Name",
+      className: "capitalize"
+    },
+    columnConfig.phone && {
+      key: "phone",
+      label: "Phone"
+    },
+    columnConfig.email && {
+      key: "email",
+      label: "Email",
+      render: (value) => value || "-"
+    },
+    columnConfig.age && {
+      key: "age",
+      label: "Age"
+    },
+    columnConfig.city && {
+      key: "city",
+      label: "City"
+    },
+    columnConfig.doctor && {
+      key: "doctor",
+      label: "Doctor",
+      className: "max-w-[200px] overflow-hidden",
+      render: (value) => (
+        <div className="flex items-center gap-2">
+          {value?.profileImage?.[0] && (
+            <img
+              src={imgUrl + value.profileImage[0]}
+              alt={value.name}
+              className="w-8 h-8 rounded-full object-cover shrink-0"
+            />
+          )}
+          <div className="min-w-0 flex-1 overflow-hidden">
+            <div className="font-medium whitespace-nowrap overflow-hidden text-ellipsis">
+              {value?.name}
+            </div>
+            <div className="text-[11px] text-[#777] whitespace-nowrap overflow-hidden text-ellipsis font-normal">
+              {value?.position}
+            </div>
+          </div>
+        </div>
+      )
+    },
+    columnConfig.preferredTime && {
+      key: "preferredTime",
+      label: "Preferred Time",
+      render: (value) => (
+        <span className="py-[3px] px-2 rounded text-[11px] font-semibold inline-block bg-[#e0f2fe] text-[#0369a1]">
+          {value === "withinMonth"
+            ? "Within Month"
+            : value === "withinWeek"
+              ? "Within Week"
+              : value}
+        </span>
+      )
+    },
+    columnConfig.status && {
+      key: "status",
+      label: "Status",
+      render: (value) => (
+        <span
+          className={`py-[3px] px-2 rounded text-[11px] font-semibold inline-block ${value === "pending"
+            ? "bg-[#fff3cd] text-[#856404]"
+            : value === "confirmed"
+              ? "bg-[#d4edda] text-[#155724]"
+              : value === "completed"
+                ? "bg-[#cce5ff] text-[#004085]"
+                : "bg-[#f8d7da] text-[#721c24]"
+            }`}
+        >
+          {value?.charAt(0).toUpperCase() + value?.slice(1)}
+        </span>
+      )
+    }
+  ].filter(Boolean);
 
   return (
     <div className="main-wrapper">
@@ -123,238 +213,21 @@ const Consultation = ({ HomeNavigate, BackButton }) => {
             </div>
 
             <div className="col-lg-12">
-              <div className="bg-white rounded-xl border border-[#ececf6] shadow-[0_4px_16px_rgba(0,0,0,0.03)] overflow-hidden mb-5">
-                <div className="table-responsive">
-                  <table className="w-full border-collapse [&_tr:last-child_td]:border-b-0">
-                    <thead>
-                      <tr>
-                        {columnConfig.date && (
-                          <th className="bg-[#fbfbfe] text-[#777] text-[11px] font-semibold uppercase tracking-wide px-4 py-3.5 border-b border-[#ececf6] text-left">
-                            Date
-                          </th>
-                        )}
-                        {columnConfig.name && (
-                          <th className="bg-[#fbfbfe] text-[#777] text-[11px] font-semibold uppercase tracking-wide px-4 py-3.5 border-b border-[#ececf6] text-left">
-                            Name
-                          </th>
-                        )}
-                        {columnConfig.phone && (
-                          <th className="bg-[#fbfbfe] text-[#777] text-[11px] font-semibold uppercase tracking-wide px-4 py-3.5 border-b border-[#ececf6] text-left">
-                            Phone
-                          </th>
-                        )}
-                        {columnConfig.email && (
-                          <th className="bg-[#fbfbfe] text-[#777] text-[11px] font-semibold uppercase tracking-wide px-4 py-3.5 border-b border-[#ececf6] text-left">
-                            Email
-                          </th>
-                        )}
-                        {columnConfig.age && (
-                          <th className="bg-[#fbfbfe] text-[#777] text-[11px] font-semibold uppercase tracking-wide px-4 py-3.5 border-b border-[#ececf6] text-left">
-                            Age
-                          </th>
-                        )}
-                        {columnConfig.city && (
-                          <th className="bg-[#fbfbfe] text-[#777] text-[11px] font-semibold uppercase tracking-wide px-4 py-3.5 border-b border-[#ececf6] text-left">
-                            City
-                          </th>
-                        )}
-                        {columnConfig.doctor && (
-                          <th className="bg-[#fbfbfe] text-[#777] text-[11px] font-semibold uppercase tracking-wide px-4 py-3.5 border-b border-[#ececf6] text-left">
-                            Doctor
-                          </th>
-                        )}
-                        {columnConfig.preferredTime && (
-                          <th className="bg-[#fbfbfe] text-[#777] text-[11px] font-semibold uppercase tracking-wide px-4 py-3.5 border-b border-[#ececf6] text-left">
-                            Preferred Time
-                          </th>
-                        )}
-                        {columnConfig.status && (
-                          <th className="bg-[#fbfbfe] text-[#777] text-[11px] font-semibold uppercase tracking-wide px-4 py-3.5 border-b border-[#ececf6] text-left">
-                            Status
-                          </th>
-                        )}
-                      </tr>
-                    </thead>
-
-                    <tbody>
-                      {loading ? (
-                        <tr>
-                          <td
-                            colSpan="100%"
-                            className="text-center py-3 text-[13px] text-[#333] border-b border-[#ececf6]"
-                          >
-                            Loading...
-                          </td>
-                        </tr>
-                      ) : filteredOrders.length > 0 ? (
-                        filteredOrders.map((lead) => (
-                          <tr key={lead._id} className="hover:bg-[#faf9fe]">
-                            {columnConfig.date && (
-                              <td className="px-4 py-3.5 text-[13px] text-[#333] border-b border-[#ececf6] align-middle">
-                                {new Date(lead.createdAt).toLocaleDateString(
-                                  "en-GB",
-                                  {
-                                    day: "2-digit",
-                                    month: "short",
-                                    year: "numeric",
-                                  },
-                                )}
-                              </td>
-                            )}
-                            {columnConfig.name && (
-                              <td className="px-4 py-3.5 text-[13px] text-[#333] border-b border-[#ececf6] align-middle capitalize">
-                                {lead.name}
-                              </td>
-                            )}
-                            {columnConfig.phone && (
-                              <td className="px-4 py-3.5 text-[13px] text-[#333] border-b border-[#ececf6] align-middle">
-                                {lead.phone}
-                              </td>
-                            )}
-                            {columnConfig.email && (
-                              <td className="px-4 py-3.5 text-[13px] text-[#333] border-b border-[#ececf6] align-middle">
-                                {lead.email || "-"}
-                              </td>
-                            )}
-                            {columnConfig.age && (
-                              <td className="px-4 py-3.5 text-[13px] text-[#333] border-b border-[#ececf6] align-middle">
-                                {lead.age}
-                              </td>
-                            )}
-                            {columnConfig.city && (
-                              <td className="px-4 py-3.5 text-[13px] text-[#333] border-b border-[#ececf6] align-middle">
-                                {lead.city}
-                              </td>
-                            )}
-                            {columnConfig.doctor && (
-                              <td className="px-4 py-3.5 text-[13px] text-[#333] border-b border-[#ececf6] align-middle max-w-[200px] overflow-hidden">
-                                <div className="flex items-center gap-2">
-                                  {lead.doctor?.profileImage?.[0] && (
-                                    <img
-                                      src={imgUrl + lead.doctor.profileImage[0]}
-                                      alt={lead.doctor.name}
-                                      className="w-8 h-8 rounded-full object-cover shrink-0"
-                                    />
-                                  )}
-                                  <div className="min-w-0 flex-1 overflow-hidden">
-                                    <div className="font-medium whitespace-nowrap overflow-hidden text-ellipsis">
-                                      {lead.doctor?.name}
-                                    </div>
-                                    <div className="text-[11px] text-[#777] whitespace-nowrap overflow-hidden text-ellipsis">
-                                      {lead.doctor?.position}
-                                    </div>
-                                  </div>
-                                </div>
-                              </td>
-                            )}
-                            {columnConfig.preferredTime && (
-                              <td className="px-4 py-3.5 text-[13px] text-[#333] border-b border-[#ececf6] align-middle">
-                                <span className="py-[3px] px-2 rounded text-[11px] font-semibold inline-block bg-[#e0f2fe] text-[#0369a1]">
-                                  {lead.preferredTime === "withinMonth"
-                                    ? "Within Month"
-                                    : lead.preferredTime === "withinWeek"
-                                      ? "Within Week"
-                                      : lead.preferredTime}
-                                </span>
-                              </td>
-                            )}
-                            {columnConfig.status && (
-                              <td className="px-4 py-3.5 text-[13px] text-[#333] border-b border-[#ececf6] align-middle">
-                                <span
-                                  className={`py-[3px] px-2 rounded text-[11px] font-semibold inline-block ${lead.status === "pending"
-                                    ? "bg-[#fff3cd] text-[#856404]"
-                                    : lead.status === "confirmed"
-                                      ? "bg-[#d4edda] text-[#155724]"
-                                      : lead.status === "completed"
-                                        ? "bg-[#cce5ff] text-[#004085]"
-                                        : "bg-[#f8d7da] text-[#721c24]"
-                                    }`}
-                                >
-                                  {lead.status?.charAt(0).toUpperCase() +
-                                    lead.status?.slice(1)}
-                                </span>
-                              </td>
-                            )}
-                          </tr>
-                        ))
-                      ) : (
-                        <tr>
-                          <td
-                            colSpan="100%"
-                            className="text-center py-3 text-[13px] text-[#333] border-b border-[#ececf6]"
-                          >
-                            No data found
-                          </td>
-                        </tr>
-                      )}
-                    </tbody>
-                  </table>
-                </div>
+              <div className="mt-4">
+                <Table
+                  headers={headers}
+                  data={filteredOrders}
+                  loading={loading}
+                  emptyMessage="No consultations found."
+                />
               </div>
 
-              {totalPages > 1 && (
-                <div className="pagination dashboard-pagination mt-4">
-                  <ul className="d-flex justify-content-center align-items-center gap-1">
-                    <li>
-                      <button
-                        className="page-link"
-                        onClick={() =>
-                          handlePageChange(Math.max(currentPage - 1, 1))
-                        }
-                        disabled={currentPage === 1}
-                      >
-                        <i className="fa-solid fa-chevron-left" />
-                      </button>
-                    </li>
-
-                    {Array.from({ length: totalPages }, (_, i) => {
-                      const page = i + 1;
-                      if (
-                        page === 1 ||
-                        page === totalPages ||
-                        (page >= currentPage - 1 && page <= currentPage + 1)
-                      ) {
-                        return (
-                          <li key={page}>
-                            <button
-                              className={`page-link ${currentPage === page ? "active" : ""
-                                }`}
-                              onClick={() => handlePageChange(page)}
-                            >
-                              {page}
-                            </button>
-                          </li>
-                        );
-                      }
-                      if (
-                        page === currentPage - 2 ||
-                        page === currentPage + 2
-                      ) {
-                        return (
-                          <li key={`dots-${page}`}>
-                            <span className="page-link disabled">…</span>
-                          </li>
-                        );
-                      }
-                      return null;
-                    })}
-
-                    <li>
-                      <button
-                        className="page-link"
-                        onClick={() =>
-                          handlePageChange(
-                            Math.min(currentPage + 1, totalPages),
-                          )
-                        }
-                        disabled={currentPage === totalPages}
-                      >
-                        <i className="fa-solid fa-chevron-right" />
-                      </button>
-                    </li>
-                  </ul>
-                </div>
-              )}
+              {/* Pagination */}
+              <Pagination
+                page={currentPage}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
+              />
             </div>
           </div>
         </div>

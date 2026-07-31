@@ -21,19 +21,18 @@ const safeLazy = (importFunc) => {
 const ALLRoutes = safeLazy(() => import("./routes/router"));
 import PageLoader from "./components/ui/PageLoader.jsx";
 
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap/dist/js/bootstrap.bundle.min.js";
+// import "bootstrap/dist/css/bootstrap.min.css";
 import "@fortawesome/fontawesome-free/css/fontawesome.min.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./assets/css/iconsax.css";
 import "./assets/css/feather.css";
-import "./assets/scss/main.scss";
-import "./assets/css/custom.css";
 import "rsuite/dist/rsuite.min.css";
 import "./assets/css/healthcare-tabs.css";
 import "./assets/css/product-reviews.css";
+import "./assets/scss/main.scss";
+import "./assets/css/custom.css";
 import ScrollToTop from "./feature-module/frontend/pages/ScrollUp";
 import { CartProvider } from "./context/CartContext";
 import { ProfileProvider } from "./context/ProfileContext";

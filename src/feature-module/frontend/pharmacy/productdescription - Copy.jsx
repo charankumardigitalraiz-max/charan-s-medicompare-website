@@ -43,6 +43,7 @@ import GenericProducts from "./products-components/Generic.jsx";
 import { useLocation as useLocationContext } from "../../../context/LocationContext";
 import AlternateProducts from "./products-components/AlternateProducts.jsx";
 import VideoPopupModal from "./products-components/VideoPopupModal.jsx";
+import { GOOGLE_MAPS_API_KEY } from "../../../utils/index.js"
 import { FaPlay } from "react-icons/fa";
 import axios from "axios";
 
@@ -646,7 +647,7 @@ const ProductDescription = () => {
       let locationName = "Selected Location";
       let coordinates = null;
       try {
-        const GOOGLE_MAPS_API_KEY = "AIzaSyBW_ML0ppoU2o_tsOmT5eMveCwCFP3AXHU";
+        // const GOOGLE_MAPS_API_KEY = "AIzaSyBW_ML0ppoU2o_tsOmT5eMveCwCFP3AXHU";
         const response = await fetch(
           `https://maps.googleapis.com/maps/api/geocode/json?components=postal_code:${pincodeValue}|country:IN&key=${GOOGLE_MAPS_API_KEY}`,
         );

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { axiosUserInstance } from "../../../Apiservice";
 import { useResponsive } from "../../../hooks/useResponsive";
 import BaseModal from "../../../components/ui/BaseModal";
+import { Table, Pagination } from "../../../components/ui";
 
 const Enquiries = ({ HomeNavigate, BackButton }) => {
   const [leadslist, setleadslist] = useState([]);
@@ -78,20 +79,97 @@ const Enquiries = ({ HomeNavigate, BackButton }) => {
     city: filteredOrders.some((l) => l.city),
   };
 
+  const headers = [
+    columnConfig.date && {
+      key: "createdAt",
+      label: "Date",
+      render: (value) => value ? new Date(value).toLocaleDateString("en-GB", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+      }) : "-"
+    },
+    columnConfig.name && {
+      key: "name",
+      label: "Name",
+      className: "capitalize"
+    },
+    columnConfig.email && {
+      key: "email",
+      label: "Email"
+    },
+    columnConfig.phone && {
+      key: "phone",
+      label: "Phone"
+    },
+    columnConfig.age && {
+      key: "age",
+      label: "Age"
+    },
+    columnConfig.gender && {
+      key: "gender",
+      label: "Gender",
+      className: "capitalize"
+    },
+    columnConfig.price && {
+      key: "price",
+      label: "Price",
+      render: (_, row) => row.productdetails?.discountprice ? (
+        <span className="font-semibold">
+          ₹{row.productdetails.discountprice.toLocaleString()}
+        </span>
+      ) : (
+        <span className="font-semibold">
+          ₹{row.productdetails?.price?.toLocaleString() || "N/A"}
+        </span>
+      )
+    },
+    columnConfig.serviceType && {
+      key: "serviceType",
+      label: "Service Type",
+      render: (value) => (
+        <span className="py-[3px] px-2 rounded text-[11px] font-semibold inline-block capitalize bg-[#e0f2fe] text-[#0369a1]">
+          {value}
+        </span>
+      )
+    },
+    {
+      key: "actions",
+      label: "Action",
+      className: "text-center",
+      render: (_, row) => (
+        <button
+          className="btn btn-sm btn-light hover:bg-slate-100"
+          title="View Lead"
+          onClick={() => viewLead(row)}
+          style={{
+            borderRadius: "50%",
+            width: "32px",
+            height: "32px",
+            padding: "0",
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+            cursor: "pointer"
+          }}
+        >
+          <i className="fas fa-eye"></i>
+        </button>
+      )
+    }
+  ].filter(Boolean);
+
   return (
-    <div
-      className="main-wrapper"
-      style={{ paddingTop: isMobile ? "-200px" : "-50px" }}
-    >
-      <div className="content doctor-content">
-        <div className="container">
-          <div className="row">
+    <div className="!w-full">
+      <div className="!py-4 md:!py-6">
+        <div className="!max-w-7xl !mx-auto !px-4 sm:!px-6 lg:!px-8">
+          <div className="!flex !flex-col !gap-4">
             {BackButton && (
               <div className="col-12 mb-3">
                 <BackButton />
               </div>
             )}
-            <div className="col-lg-12">
+            <div className="!w-full">
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pb-2 mb-2 border-b border-slate-100 mt-2">
                 <div className="flex items-center gap-3.5">
                   {HomeNavigate && <HomeNavigate />}
@@ -136,7 +214,7 @@ const Enquiries = ({ HomeNavigate, BackButton }) => {
                         setSearchTerm(e.target.value);
                         setCurrentPage(1);
                       }}
-                      className="h-[38px] rounded-lg border border-slate-200 pl-9 pr-3 text-[13px] w-full outline-none bg-slate-50 hover:bg-white hover:border-[#8059ca] focus:bg-white focus:border-[#8059ca] transition-all duration-200"
+                      className="h-[38px] rounded-sm border border-slate-200 pl-9 pr-3 text-[13px] w-full outline-none bg-slate-50 hover:bg-white hover:border-[#8059ca] focus:bg-white focus:border-[#8059ca] transition-all duration-200"
                     />
                     <span className="absolute left-[12px] top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none text-[13px]">
                       <i className="fa-solid fa-search" />
@@ -145,174 +223,21 @@ const Enquiries = ({ HomeNavigate, BackButton }) => {
                 </div>
               </div>
 
-              <div className="profile-table-wrapper">
-                <div className="table-responsive">
-                  <table className="profile-table">
-                    <thead>
-                      <tr>
-                        {columnConfig.date && <th>Date</th>}
-                        {columnConfig.name && <th>Name</th>}
-                        {columnConfig.email && <th>Email</th>}
-                        {columnConfig.phone && <th>Phone</th>}
-                        {columnConfig.age && <th>Age</th>}
-                        {columnConfig.gender && <th>Gender</th>}
-                        {columnConfig.price && <th>Price</th>}
-                        {columnConfig.serviceType && <th>Service Type</th>}
-                        <th className="text-center">Action</th>
-                      </tr>
-                    </thead>
-
-                    <tbody>
-                      {loading ? (
-                        <tr>
-                          <td colSpan="100%" className="text-center py-3">
-                            Loading...
-                          </td>
-                        </tr>
-                      ) : filteredOrders.length > 0 ? (
-                        filteredOrders.map((lead) => (
-                          <tr key={lead._id}>
-                            {columnConfig.date && (
-                              <td>
-                                {new Date(lead.createdAt).toLocaleDateString(
-                                  "en-GB",
-                                  {
-                                    day: "2-digit",
-                                    month: "short",
-                                    year: "numeric",
-                                  },
-                                )}
-                              </td>
-                            )}
-                            {columnConfig.name && <td style={{ textTransform: "capitalize" }}>{lead.name}</td>}
-                            {columnConfig.email && <td>{lead.email}</td>}
-                            {columnConfig.phone && <td>{lead.phone}</td>}
-                            {columnConfig.age && <td>{lead.age}</td>}
-                            {columnConfig.gender && <td>{lead.gender}</td>}
-                            {columnConfig.price && (
-                              <td>
-                                {lead.productdetails?.discountprice ? (
-                                  <span style={{ fontWeight: "600" }}>
-                                    ₹{lead.productdetails.discountprice.toLocaleString()}
-                                  </span>
-                                ) : (
-                                  <span style={{ fontWeight: "600" }}>
-                                    ₹{lead.productdetails?.price?.toLocaleString() || "N/A"}
-                                  </span>
-                                )}
-                              </td>
-                            )}
-                            {columnConfig.serviceType && (
-                              <td style={{ textTransform: "capitalize" }}>
-                                <span style={{
-                                  padding: "3px 8px",
-                                  borderRadius: "4px",
-                                  fontSize: "11px",
-                                  fontWeight: "600",
-                                  backgroundColor: "#e0f2fe",
-                                  color: "#0369a1",
-                                  display: "inline-block"
-                                }}>
-                                  {lead.serviceType}
-                                </span>
-                              </td>
-                            )}
-                            <td className="text-center">
-                              <button
-                                className="btn btn-sm btn-light"
-                                title="View Lead"
-                                onClick={() => viewLead(lead)}
-                                style={{
-                                  borderRadius: "50%",
-                                  width: "32px",
-                                  height: "32px",
-                                  padding: "0",
-                                  display: "inline-flex",
-                                  alignItems: "center",
-                                  justifyContent: "center",
-                                  cursor: "pointer"
-                                }}
-                              >
-                                <i className="fas fa-eye"></i>
-                              </button>
-                            </td>
-                          </tr>
-                        ))
-                      ) : (
-                        <tr>
-                          <td colSpan="100%" className="text-center py-3">
-                            No data found
-                          </td>
-                        </tr>
-                      )}
-                    </tbody>
-                  </table>
-                </div>
+              <div className="mt-4">
+                <Table
+                  headers={headers}
+                  data={filteredOrders}
+                  loading={loading}
+                  emptyMessage="No enquiries found."
+                />
               </div>
 
-              {totalPages > 1 && (
-                <div className="pagination dashboard-pagination mt-4">
-                  <ul className="d-flex justify-content-center align-items-center gap-1">
-                    <li>
-                      <button
-                        className="page-link"
-                        onClick={() =>
-                          handlePageChange(Math.max(currentPage - 1, 1))
-                        }
-                        disabled={currentPage === 1}
-                      >
-                        <i className="fa-solid fa-chevron-left" />
-                      </button>
-                    </li>
-
-                    {Array.from({ length: totalPages }, (_, i) => {
-                      const page = i + 1;
-                      if (
-                        page === 1 ||
-                        page === totalPages ||
-                        (page >= currentPage - 1 && page <= currentPage + 1)
-                      ) {
-                        return (
-                          <li key={page}>
-                            <button
-                              className={`page-link ${currentPage === page ? "active" : ""
-                                }`}
-                              onClick={() => handlePageChange(page)}
-                            >
-                              {page}
-                            </button>
-                          </li>
-                        );
-                      }
-                      if (
-                        page === currentPage - 2 ||
-                        page === currentPage + 2
-                      ) {
-                        return (
-                          <li key={`dots-${page}`}>
-                            <span className="page-link disabled">…</span>
-                          </li>
-                        );
-                      }
-                      return null;
-                    })}
-
-                    <li>
-                      <button
-                        className="page-link"
-                        onClick={() =>
-                          handlePageChange(
-                            Math.min(currentPage + 1, totalPages),
-                          )
-                        }
-                        disabled={currentPage === totalPages}
-                      >
-                        <i className="fa-solid fa-chevron-right" />
-                      </button>
-                    </li>
-                  </ul>
-                </div>
-              )}
+              {/* Pagination */}
+              <Pagination
+                page={currentPage}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
+              />
             </div>
           </div>
         </div>

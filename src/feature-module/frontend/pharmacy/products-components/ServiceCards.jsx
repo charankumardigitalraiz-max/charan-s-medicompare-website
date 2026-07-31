@@ -377,7 +377,7 @@ const ServiceCards = ({ serviceType, liteMode = false }) => {
   const renderCard = (card, idx) => (
     <div
       key={idx}
-      className={isMobile && !liteMode ? "px-2" : isMobile ? "" : "col-md-4 col-sm-6"}
+      className={isMobile && !liteMode ? "px-2" : isMobile ? "" : "w-full md:w-1/3 sm:w-1/2 px-2.5 mb-4"}
     >
       <div
         className={`description-item tooltip-container${liteMode ? " service-card-lite" : ""}`}
@@ -411,8 +411,8 @@ const ServiceCards = ({ serviceType, liteMode = false }) => {
         <i
           className={
             hoveredIndex === idx
-              ? `fa-solid fa-${isMobile ? "arrow-up" : "chevron-up"} me-4`
-              : `fa-solid fa-${isMobile ? "arrow-down" : "chevron-down"} me-4`
+              ? `fa-solid fa-${isMobile ? "arrow-up" : "chevron-up"} mr-4`
+              : `fa-solid fa-${isMobile ? "arrow-down" : "chevron-down"} mr-4`
           }
         ></i>
 
@@ -451,11 +451,11 @@ const ServiceCards = ({ serviceType, liteMode = false }) => {
     }
   `}
       </style>
-      <div className="container">
+      <div className="max-w-[1440px] mx-auto px-4 md:px-6 lg:px-8">
         <div className="medical-descriptions">
           {isMobile ? (
             liteMode ? (
-              <div className="service-cards-stack d-flex flex-column gap-2">
+              <div className="service-cards-stack flex flex-col gap-2">
                 {cards.map((card, idx) => renderCard(card, idx))}
               </div>
             ) : (
@@ -464,7 +464,7 @@ const ServiceCards = ({ serviceType, liteMode = false }) => {
               </Slider>
             )
           ) : (
-            <div className="row">
+            <div className="flex flex-wrap -mx-2.5">
               {cards.map((card, idx) => renderCard(card, idx))}
             </div>
           )}

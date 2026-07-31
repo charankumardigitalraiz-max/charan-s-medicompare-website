@@ -54,7 +54,7 @@ const LoadingSpinner = ({
 
   if (text) {
     return (
-      <div className="d-flex flex-column align-items-center">
+      <div className="flex flex-col items-center">
         {spinner}
         <p className={`mt-2 ${colorClasses[color]}`} style={{ fontSize: "14px" }}>
           {text}

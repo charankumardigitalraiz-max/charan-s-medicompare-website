@@ -1,6 +1,7 @@
 import { useEffect, useState, useMemo } from "react";
 import ProductCard from "./ProductCard.jsx";
 import { ViewToggleButtons, SortSelect, } from "../ui";
+import Pagination from "../ui/Pagination.jsx";
 
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
@@ -89,7 +90,7 @@ const ProductsSection = ({
   return (
     <div>
       {/* Products Section Header */}
-      <div className="flex items-center justify-between mt-5 mb-6 p-4 bg-white rounded-2xl shadow-sm border border-slate-100 lg:hidden">
+      <div className="flex items-center justify-between mt-2 mb-4 p-4 bg-white rounded-2xl shadow-sm border border-slate-100 lg:hidden">
         <div className="flex items-center justify-between flex-wrap gap-2 w-full">
           <div className="flex items-center gap-2">
             {/* Mobile Filter Button */}
@@ -228,102 +229,11 @@ const ProductsSection = ({
 
       {/* Pagination */}
       {!isLoading && !isSkeletonLoading && totalPages > 0 && sortedProducts.length > 0 && (
-        <div className="mt-10 mb-6 flex justify-center">
-          <ul className="flex items-center gap-1.5 list-none p-0 m-0">
-            <li>
-              <button
-                type="button"
-                className={`flex items-center justify-center w-9 h-9 !rounded-lg !border !border-slate-200 !bg-white !text-slate-500 hover:border-purple-300 hover:bg-purple-50/20 !transition-all !duration-150 !cursor-pointer ${page <= 1 ? "opacity-40 cursor-not-allowed" : "cursor-pointer"}`}
-                onClick={() => page > 1 && onPageChange(page - 1)}
-                disabled={page <= 1}
-              >
-                <i className="fa-solid fa-chevron-left text-xs" />
-              </button>
-            </li>
-
-            {totalPages > 1 && page > 3 && (
-              <li>
-                <button
-                  type="button"
-                  className="flex items-center justify-center min-w-[36px] h-9 px-3 rounded-lg border border-slate-200 bg-white text-slate-600 hover:border-purple-300 hover:bg-purple-50/20 text-sm font-semibold transition-all duration-150 cursor-pointer"
-                  onClick={() => onPageChange(1)}
-                >
-                  1
-                </button>
-              </li>
-            )}
-
-            {totalPages > 1 && page > 4 && (
-              <li>
-                <span className="flex items-center justify-center min-w-[36px] h-9 text-slate-400 text-sm font-semibold">...</span>
-              </li>
-            )}
-
-            {(() => {
-              if (totalPages === 1) {
-                return (
-                  <li>
-                    <button
-                      type="button"
-                      className="flex items-center justify-center min-w-[36px] h-9 px-3 rounded-lg border bg-[#8059ca] border-[#8059ca] text-white text-sm font-semibold cursor-default"
-                    >
-                      1
-                    </button>
-                  </li>
-                );
-              }
-
-              let start = Math.max(1, page - 2);
-              let end = Math.min(totalPages, page + 2);
-              if (start === 1) end = Math.min(5, totalPages);
-              if (end === totalPages) start = Math.max(1, totalPages - 4);
-
-              return [...Array(end - start + 1)].map((_, i) => {
-                const pageNum = start + i;
-                return (
-                  <li key={pageNum}>
-                    <button
-                      type="button"
-                      className={`flex items-center justify-center min-w-[36px] h-9 px-3 !rounded-lg !border !text-sm !font-semibold !transition-all !duration-150 !cursor-pointer ${pageNum === page ? "bg-[#8059ca] !border-[#8059ca] !text-white" : "!bg-white !border-slate-200 !text-slate-600 hover:border-purple-300 hover:bg-purple-50/20"}`}
-                      onClick={() => onPageChange(pageNum)}
-                    >
-                      {pageNum}
-                    </button>
-                  </li>
-                );
-              });
-            })()}
-
-            {totalPages > 1 && page < totalPages - 3 && (
-              <li>
-                <span className="flex items-center justify-center min-w-[36px] h-9 !text-slate-400 !text-sm !font-semibold">...</span>
-              </li>
-            )}
-
-            {totalPages > 1 && page < totalPages - 2 && (
-              <li>
-                <button
-                  type="button"
-                  className="flex items-center justify-center min-w-[36px] h-9 px-3 !rounded-lg !border !border-slate-200 bg-white !text-slate-600 hover:border-purple-300 hover:bg-purple-50/20 text-sm font-semibold transition-all duration-150 cursor-pointer"
-                  onClick={() => onPageChange(totalPages)}
-                >
-                  {totalPages}
-                </button>
-              </li>
-            )}
-
-            <li>
-              <button
-                type="button"
-                className={`flex items-center justify-center w-9 h-9 !rounded-lg !border !border-slate-200 bg-white !text-slate-500 hover:border-purple-300 hover:bg-purple-50/20 !transition-all !duration-150 !cursor-pointer ${page >= totalPages ? "opacity-40 cursor-not-allowed" : "cursor-pointer"}`}
-                onClick={() => page < totalPages && onPageChange(page + 1)}
-                disabled={page >= totalPages}
-              >
-                <i className="fa-solid fa-chevron-right text-xs" />
-              </button>
-            </li>
-          </ul>
-        </div>
+        <Pagination
+          page={page}
+          totalPages={totalPages}
+          onPageChange={onPageChange}
+        />
       )}
     </div>
   );

@@ -14,7 +14,7 @@ import CategoryProvider from "../../../../components/CategoryProvider.jsx";
 import PageLoader from "../../../../components/ui/PageLoader.jsx";
 import doctors from "/assets/doctors.png";
 import { useLocation as useLocationContext } from "../../../../context/LocationContext";
-import { Offcanvas } from "react-bootstrap";
+import { Offcanvas } from "../../../../components/ui/Offcanvas";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 

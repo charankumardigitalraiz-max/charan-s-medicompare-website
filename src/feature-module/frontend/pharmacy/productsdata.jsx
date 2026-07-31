@@ -1823,8 +1823,8 @@ const ProductsData = () => {
     <>
       <Home2Header />
       <CategoryProvider />
-      <div className="py-12 bg-gradient-to-br from-[#f8f9fa] to-white min-h-screen">
-        <div className="max-w-[1440px] mx-auto px-4 md:px-6 lg:px-8 mb-6">
+      <div className="py-6 md:py-12 bg-gradient-to-br from-[#f8f9fa] to-white min-h-screen">
+        <div className="max-w-[1440px] mx-auto px-4 md:px-6 lg:px-8 mb-4 md:mb-6">
           <SearchInput
             value={searchTerm}
             onChange={(e) => {
@@ -2073,16 +2073,10 @@ const ProductsData = () => {
                 </div>
               </div>
               <div
-                style={{
-                  display: isTablet ? "none" : "flex",
-                  justifyContent: "flex-start",
-                  alignItems: "center",
-                  gap: "20px",
-                  marginBottom: "10px",
-                }}
+                className={`${isTablet ? "hidden" : "flex"} justify-start items-center gap-5 mb-2.5`}
               >
                 <div
-                  style={{ fontSize: "14px", fontWeight: "600", color: "#000" }}
+                  className="text-sm font-semibold text-gray-900"
                 >
                   Total {totalCount || 0}{" "}
                   {(totalCount || 0) === 1 ? "Item" : "Items"}
@@ -2098,24 +2092,13 @@ const ProductsData = () => {
                   onChange={(e) => setSortOption(e.target.value)}
                 // onChange={(e) => handleSortOptionChange(e.target.value)}
                 />
-
+ 
                 {searchTerm && searchTerm.trim() && (
                   <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "8px",
-                      padding: "4px 12px",
-                      backgroundColor: "#f8f9fa",
-                      borderRadius: "6px",
-                      fontSize: "12px",
-                      color: "#333",
-                      fontWeight: "500",
-                      flexShrink: 0,
-                    }}
+                    className="flex items-center gap-2 px-3 py-1 bg-slate-50 border border-slate-100 rounded-md text-xs text-gray-700 font-medium shrink-0"
                   >
                     <span>Search:</span>
-                    <span style={{ color: "#8059ca", fontWeight: "600" }}>
+                    <span className="text-[#8059ca] font-semibold">
                       "{searchTerm}"
                     </span>
                     <button
@@ -2198,7 +2181,7 @@ const ProductsData = () => {
                 }}
                 individualStyleForCart={{
                   display: "flex",
-                  flexDirection: "row",
+                  flexDirection: "flex flex-wrap",
                   alignItems: "center",
                   justifyContent: "space-between",
                   padding: "2px 10px",
@@ -2277,3 +2260,4 @@ const ProductsData = () => {
 };
 
 export default ProductsData;
+

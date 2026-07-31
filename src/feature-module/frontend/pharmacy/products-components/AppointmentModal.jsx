@@ -4,6 +4,7 @@ import { createPortal } from "react-dom";
 import { axiosUserInstance } from "../../../../Apiservice";
 import toast from "react-hot-toast";
 import { Autocomplete, useJsApiLoader } from "@react-google-maps/api";
+import { GOOGLE_MAPS_API_KEY } from "../../../../utils/index"
 
 const libraries = ["places"];
 
@@ -99,9 +100,9 @@ const AppointmentModal = ({
   const autocompleteRef = useRef(null);
   const navigate = useNavigate();
 
-  const GOOGLE_MAPS_API_KEY =
-    import.meta.env.VITE_GOOGLE_MAPS_API_KEY ||
-    "AIzaSyBW_ML0ppoU2o_tsOmT5eMveCwCFP3AXHU";
+  // const GOOGLE_MAPS_API_KEY =
+  //   import.meta.env.VITE_GOOGLE_MAPS_API_KEY ||
+  //   "AIzaSyBW_ML0ppoU2o_tsOmT5eMveCwCFP3AXHU";
 
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: GOOGLE_MAPS_API_KEY,
@@ -239,8 +240,8 @@ const AppointmentModal = ({
     } catch (err) {
       toast.error(
         err?.response?.data?.message ||
-          err?.message ||
-          "Failed to book appointment",
+        err?.message ||
+        "Failed to book appointment",
       );
     } finally {
       setIsSubmitting(false);
@@ -271,9 +272,8 @@ const AppointmentModal = ({
               <div>
                 <div className="d-flex align-items-center gap-2">
                   <i
-                    className={`${
-                      getModalDetails(fixedType).icon
-                    } text-primary`}
+                    className={`${getModalDetails(fixedType).icon
+                      } text-primary`}
                   ></i>
                   <h5 className="fw-bold mb-0">
                     {getModalDetails(fixedType).title}
@@ -1000,18 +1000,20 @@ const AppointmentModal = ({
                 </div>
                 {fixedType == "nursingcare" && (
                   <div>
-                    <span style={{color:
-                    "black", fontWeight:"500"}}>Instructions :-</span>
+                    <span style={{
+                      color:
+                        "black", fontWeight: "500"
+                    }}>Instructions :-</span>
                     <div style={{ paddingLeft: "20px", }}>
-                      <li style={{ marginBottom: "5px", fontSize:"12px", color:"black" }}>
+                      <li style={{ marginBottom: "5px", fontSize: "12px", color: "black" }}>
                         Do not request nurses to perform personal or household
                         tasks. They are assigned strictly for patient care only.
                       </li>
-                      <li style={{ marginBottom: "5px", fontSize:"12px", color:"black" }}>
+                      <li style={{ marginBottom: "5px", fontSize: "12px", color: "black" }}>
                         Do not share valuables such as cash, ATM/credit/debit
                         cards, or personal belongings with the caregiver.
                       </li>
-                      <li style={{ fontSize:"12px", color:"black" }}>
+                      <li style={{ fontSize: "12px", color: "black" }}>
                         Do not extend service hours directly with the nurse. All
                         changes or extensions must be coordinated through our
                         support team.

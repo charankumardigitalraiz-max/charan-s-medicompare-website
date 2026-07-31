@@ -15,7 +15,7 @@ import { useParams } from "react-router-dom";
 import { useMediaQuery } from "react-responsive";
 import CartQuantityControls from "../../../components/ui/CartQuantityControls.jsx";
 import { useProfile } from "../../../context/ProfileContext";
-import { Offcanvas } from "react-bootstrap";
+import { Offcanvas } from "../../../components/ui/Offcanvas";
 import SlotPickerComponent from "./SlotPickerComponent";
 import Select from "react-select";
 import { useLocation } from "../../../context/LocationContext";

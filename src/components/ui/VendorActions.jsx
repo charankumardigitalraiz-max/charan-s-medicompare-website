@@ -167,7 +167,7 @@ const VendorActions = ({
               );
             }
           }}
-          className="w-full flex-1 flex items-center justify-center gap-1.5 py-1.5 px-3 !rounded-lg !text-xs !font-bold text-white bg-gradient-to-r from-[#8059ca] to-[#822BD4] hover:shadow-md active:scale-[0.98] transition-all cursor-pointer border-none"
+          className="w-full flex-1 flex items-center justify-center gap-1.5 !py-1 px-3 !rounded-lg !text-xs !font-bold text-white bg-gradient-to-r from-[#8059ca] to-[#822BD4] hover:shadow-md active:scale-[0.98] transition-all cursor-pointer border-none"
         >
           <i
             className={

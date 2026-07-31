@@ -12,7 +12,6 @@ import "swiper/css/pagination";
 import { TypeAnimation } from "react-type-animation";
 import toast from "react-hot-toast";
 import Slider from "react-slick";
-import { Modal } from "react-bootstrap";
 import {
   axiosInstance,
   axiosCommonInstance,
@@ -1290,77 +1289,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
             </section>
           )}
 
-          <style>
-            {`
-              @keyframes floatBlob {
-                0% { transform: translate(0, 0) rotate(0deg); }
-                33% { transform: translate(30px, -50px) rotate(10deg); }
-                66% { transform: translate(-20px, 20px) rotate(-5deg); }
-                100% { transform: translate(0, 0) rotate(0deg); }
-              }
-              @keyframes pulseLight {
-                0% { opacity: 0.3; transform: scale(1); }
-                50% { opacity: 0.6; transform: scale(1.1); }
-                100% { opacity: 0.3; transform: scale(1); }
-              }
-              @keyframes wobble {
-                0% { transform: rotate(0deg); }
-                25% { transform: rotate(5deg); }
-                50% { transform: rotate(-5deg); }
-                75% { transform: rotate(3deg); }
-                100% { transform: rotate(0deg); }
-              }
-              @keyframes driftScale {
-                0% { transform: scale(1) translate(0,0); }
-                50% { transform: scale(1.1) translate(10px, -10px); }
-                100% { transform: scale(1) translate(0,0); }
-              }
-              .decorative-blob {
-                position: absolute;
-                filter: blur(50px);
-                z-index: 0;
-                pointer-events: none;
-                opacity: 0.3;
-                will-change: transform;
-                transform: translateZ(0);
-                contain: layout style paint;
-              }
-              .floating-shape {
-                position: absolute;
-                z-index: 0;
-                pointer-events: none;
-                opacity: 0.15;
-                will-change: transform;
-                transform: translateZ(0);
-                contain: layout style paint;
-              }
-              /* Premium Slider Dots */
-              .slick-dots li button:before {
-                font-size: 12px;
-                color: #d1d5db; /* Gray-300 */
-                opacity: 1;
-                transition: all 0.3s ease;
-              }
-              .slick-dots li.slick-active button:before {
-                color: #8059ca; /* Indigo-600 (Primary) */
-                font-size: 14px;
-              }
-              .modern-price-tag {
-                font-size: 19px;
-                font-weight: 700;
-                color: #059669; /* Emerald Green */
-                line-height: 1.2;
-                letter-spacing: -0.5px;
-              }
-              .old-price-tag {
-                font-size: 13px;
-                text-decoration: line-through;
-                color: #9ca3af;
-                font-weight: 400;
-                margin-right: 6px;
-              }
-            `}
-          </style>
+
 
           {mediciness?.length > 0 && (
             <MedicineSection
@@ -1529,143 +1458,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
               backgroundRepeat: "no-repeat",
             }}
           >
-            <style>
-              {`
-                @keyframes iconShimmer {
-                  0% {
-                    background-position: -200% center;
-                  }
-                  100% {
-                    background-position: 200% center;
-                  }
-                }
-                @keyframes iconRotate3D {
-                  0%, 100% {
-                    transform: rotateY(0deg) scale(1);
-                  }
-                  50% {
-                    transform: rotateY(180deg) scale(1.1);
-                  }
-                }
-                @keyframes iconGlowPulse {
-                  0%, 100% {
-                    box-shadow: 0 0 15px rgba(125, 46, 255, 0.4), 0 0 30px rgba(125, 46, 255, 0.2);
-                    transform: scale(1);
-                  }
-                  50% {
-                    box-shadow: 0 0 25px rgba(125, 46, 255, 0.6), 0 0 50px rgba(125, 46, 255, 0.4);
-                    transform: scale(1.05);
-                  }
-                }
-                @keyframes iconFloatSmooth {
-                  0%, 100% {
-                    transform: translateY(0px) rotate(0deg);
-                  }
-                  33% {
-                    transform: translateY(-8px) rotate(2deg);
-                  }
-                  66% {
-                    transform: translateY(-4px) rotate(-2deg);
-                  }
-                }
-                @keyframes rippleEffect {
-                  0% {
-                    transform: translate(-50%, -50%) scale(0);
-                    opacity: 0.8;
-                  }
-                  100% {
-                    transform: translate(-50%, -50%) scale(2);
-                    opacity: 0;
-                  }
-                }
-                @keyframes gradientShift {
-                  0% {
-                    background-position: 0% 50%;
-                  }
-                  50% {
-                    background-position: 100% 50%;
-                  }
-                  100% {
-                    background-position: 0% 50%;
-                  }
-                }
-                .surgery-benefit-icon {
-                  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-                  position: relative;
-                  overflow: visible;
-                }
-                .surgery-benefit-icon::before {
-                  content: '';
-                  position: absolute;
-                  top: 50%;
-                  left: 50%;
-                  transform: translate(-50%, -50%);
-                  width: 100%;
-                  height: 100%;
-                  border-radius: 12px;
-                  background: inherit;
-                  opacity: 0;
-                  z-index: -1;
-                  transition: all 0.4s ease;
-                }
-                .surgery-benefit-card {
-                  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-                  position: relative;
-                }
-                .surgery-benefit-card:hover {
-                  transform: translateY(-8px) scale(1.02);
-                  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15) !important;
-                }
-                .surgery-benefit-card:hover .surgery-benefit-icon {
-                  transform: scale(1.15) rotate(5deg);
-                }
-                .surgery-benefit-card:hover .surgery-benefit-icon::before {
-                  opacity: 0.3;
-                  transform: translate(-50%, -50%) scale(1.5);
-                  filter: blur(10px);
-                }
-                .surgery-benefit-icon-1 {
-                  animation: iconFloatSmooth 4s ease-in-out infinite;
-                  animation-delay: 0s;
-                }
-                .surgery-benefit-icon-2 {
-                  animation: iconFloatSmooth 4s ease-in-out infinite;
-                  animation-delay: 1.3s;
-                }
-                .surgery-benefit-icon-3 {
-                  animation: iconFloatSmooth 4s ease-in-out infinite;
-                  animation-delay: 2.6s;
-                }
-                .surgery-benefit-card:hover .surgery-benefit-icon-1 {
-                  animation: iconGlowPulse 1.2s ease-in-out infinite, iconFloatSmooth 4s ease-in-out infinite;
-                  background: linear-gradient(135deg, #8059ca 0%, #822BD4 50%, #8059ca 100%);
-                  background-size: 200% 200%;
-                  animation: iconGlowPulse 1.2s ease-in-out infinite, gradientShift 3s ease infinite;
-                }
-                .surgery-benefit-card:hover .surgery-benefit-icon-2 {
-                  animation: iconRotate3D 2s ease-in-out infinite;
-                }
-                .surgery-benefit-card:hover .surgery-benefit-icon-3 {
-                  animation: iconGlowPulse 1.4s ease-in-out infinite;
-                  background: linear-gradient(135deg, #8059ca 0%, #6d48b8 50%, #8059ca 100%);
-                  background-size: 200% 200%;
-                  animation: iconGlowPulse 1.4s ease-in-out infinite, gradientShift 3s ease infinite;
-                }
-                .surgery-icon-pulse {
-                  animation: rippleEffect 1.5s ease-out infinite;
-                }
-                .surgery-benefit-card:hover .surgery-icon-pulse {
-                  opacity: 1;
-                }
-                .surgery-benefit-icon i {
-                  transition: all 0.3s ease;
-                  display: inline-block;
-                }
-                .surgery-benefit-card:hover .surgery-benefit-icon i {
-                  transform: scale(1.2);
-                }
-              `}
-            </style>
+
             <div className="container">
               <div className="text-center mb-5 aos" data-aos="fade-up">
                 <h2
@@ -1685,15 +1478,12 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                 >
                   <div className="col-md-4 col-sm-6">
                     <div
-                      className="surgery-benefit-card p-[16px] bg-white rounded-[12px] shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-center cursor-pointer"
+                      className="group p-[16px] bg-white rounded-[12px] shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-center cursor-pointer transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:scale-[1.02]"
                     >
                       <div
-                        className="surgery-benefit-icon surgery-benefit-icon-1 w-[50px] h-[50px] mx-auto mb-[12px] bg-gradient-to-br from-[#8059ca] to-[#6d48b8] rounded-[12px] flex items-center justify-center text-[24px] text-white relative"
+                        className="w-[50px] h-[50px] mx-auto mb-[12px] bg-gradient-to-br from-[#8059ca] to-[#6d48b8] rounded-[12px] flex items-center justify-center text-[24px] text-white relative transition-all duration-300 group-hover:scale-110 group-hover:rotate-6"
                       >
-                        <i className="fas fa-search-dollar"></i>
-                        <div
-                          className="surgery-icon-pulse absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60px] h-[60px] rounded-full bg-[#7d2eff]/10 z-[-1] opacity-0 transition-all duration-300 ease"
-                        ></div>
+                        <i className="fas fa-search-dollar transition-all duration-300 group-hover:scale-110"></i>
                       </div>
                       <h5
                         className="!text-[16px] !font-semibold text-[#1f2937] mb-[6px]"
@@ -1707,15 +1497,12 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                   </div>
                   <div className="col-md-4 col-sm-6">
                     <div
-                      className="surgery-benefit-card p-[16px] bg-white rounded-[12px] shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-center cursor-pointer"
+                      className="group p-[16px] bg-white rounded-[12px] shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-center cursor-pointer transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:scale-[1.02]"
                     >
                       <div
-                        className="surgery-benefit-icon surgery-benefit-icon-2 w-[50px] h-[50px] mx-auto mb-[12px] bg-gradient-to-br from-[#8059ca] to-[#6d48b8] rounded-[12px] flex items-center justify-center text-[24px] text-white relative"
+                        className="w-[50px] h-[50px] mx-auto mb-[12px] bg-gradient-to-br from-[#8059ca] to-[#6d48b8] rounded-[12px] flex items-center justify-center text-[24px] text-white relative transition-all duration-300 group-hover:scale-110 group-hover:rotate-6"
                       >
-                        <i className="fas fa-user-md"></i>
-                        <div
-                          className="surgery-icon-pulse absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60px] h-[60px] rounded-full bg-[#8059ca]/10 z-[-1] opacity-0 transition-all duration-300 ease"
-                        ></div>
+                        <i className="fas fa-user-md transition-all duration-300 group-hover:scale-110"></i>
                       </div>
                       <h5
                         className="!text-[16px] !font-semibold text-[#1f2937] mb-[6px]"
@@ -1729,15 +1516,12 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                   </div>
                   <div className="col-md-4 col-sm-6">
                     <div
-                      className="surgery-benefit-card p-[16px] bg-white rounded-[12px] shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-center cursor-pointer"
+                      className="group p-[16px] bg-white rounded-[12px] shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-center cursor-pointer transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:scale-[1.02]"
                     >
                       <div
-                        className="surgery-benefit-icon surgery-benefit-icon-3 w-[50px] h-[50px] mx-auto mb-[12px] bg-gradient-to-br from-[#8059ca] to-[#6d48b8] rounded-[12px] flex items-center justify-center text-[24px] text-white relative"
+                        className="w-[50px] h-[50px] mx-auto mb-[12px] bg-gradient-to-br from-[#8059ca] to-[#6d48b8] rounded-[12px] flex items-center justify-center text-[24px] text-white relative transition-all duration-300 group-hover:scale-110 group-hover:rotate-6"
                       >
-                        <i className="fas fa-shield-alt"></i>
-                        <div
-                          className="surgery-icon-pulse absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60px] h-[60px] rounded-full bg-[#8059ca]/10 z-[-1] opacity-0 transition-all duration-300 ease"
-                        ></div>
+                        <i className="fas fa-shield-alt transition-all duration-300 group-hover:scale-110"></i>
                       </div>
                       <h5
                         className="!text-[16px] !font-semibold text-[#1f2937] mb-[6px]"
@@ -1763,126 +1547,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
               overflow: "hidden",
             }}
           >
-            <style>
-              {`
-                @keyframes float {
-                  0%, 100% {
-                    transform: translateY(0px) rotate(0deg);
-                  }
-                  50% {
-                    transform: translateY(-10px) rotate(3deg);
-                  }
-                }
-                @keyframes pulse {
-                  0%, 100% {
-                    transform: scale(1);
-                    opacity: 0.7;
-                  }
-                  50% {
-                    transform: scale(1.08);
-                    opacity: 1;
-                  }
-                }
-                @keyframes slideInUp {
-                  from {
-                    opacity: 0;
-                    transform: translateY(20px);
-                  }
-                  to {
-                    opacity: 1;
-                    transform: translateY(0);
-                  }
-                }
-                @keyframes gradient {
-                  0% {
-                    background-position: 0% 50%;
-                  }
-                  50% {
-                    background-position: 100% 50%;
-                  }
-                  100% {
-                    background-position: 0% 50%;
-                  }
-                }
-                @keyframes iconBounce {
-                  0%, 100% {
-                    transform: translateY(0) scale(1);
-                  }
-                  50% {
-                    transform: translateY(-8px) scale(1.05);
-                  }
-                }
-                @keyframes glow {
-                  0%, 100% {
-                    box-shadow: 0 0 15px rgba(125, 46, 255, 0.3);
-                  }
-                  50% {
-                    box-shadow: 0 0 25px rgba(125, 46, 255, 0.5);
-                  }
-                }
-                .quick-access-card {
-                  animation: slideInUp 0.5s ease-out both;
-                }
-                .quick-access-icon-wrapper {
-                  position: relative;
-                }
-                .quick-access-icon-wrapper::before {
-                  content: '';
-                  position: absolute;
-                  top: 50%;
-                  left: 50%;
-                  transform: translate(-50%, -50%);
-                  width: 70px;
-                  height: 70px;
-                  border-radius: 50%;
-                  background: rgba(125, 46, 255, 0.08);
-                  animation: pulse 2.5s ease-in-out infinite;
-                }
-                .quick-access-card:hover .quick-access-icon-wrapper::before {
-                  animation: pulse 1.2s ease-in-out infinite;
-                  width: 75px;
-                  height: 75px;
-                }
-                .quick-access-card:hover .quick-access-icon {
-                  animation: iconBounce 0.5s ease-in-out;
-                }
-                .quick-access-bg-shape {
-                  position: absolute;
-                  border-radius: 50%;
-                  opacity: 0.06;
-                  animation: float 12s ease-in-out infinite;
-                }
-                .quick-access-bg-shape-1 {
-                  width: 150px;
-                  height: 150px;
-                  background: linear-gradient(135deg, #8059ca, #3b82f6);
-                  top: -50px;
-                  right: -50px;
-                  animation-delay: 0s;
-                }
-                .quick-access-bg-shape-2 {
-                  width: 120px;
-                  height: 120px;
-                  background: linear-gradient(135deg, #3b82f6, #059669);
-                  bottom: -40px;
-                  left: -40px;
-                  animation-delay: 4s;
-                }
-                .quick-access-card::after {
-                  content: '';
-                  position: absolute;
-                  top: 0;
-                  left: -100%;
-                  width: 100%;
-                  height: 100%;
-                  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-                  transition: left 0.5s ease;
-                }
-                .quick-access-card:hover::after {
-                  left: 100%;
-                }
-              `}
-            </style>
+
             <div className="quick-access-bg-shape quick-access-bg-shape-1"></div>
             <div className="quick-access-bg-shape quick-access-bg-shape-2"></div>
             <div className="container relative z-10">
@@ -2266,103 +1931,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
               overflow: "hidden",
             }}
           >
-            <style>
-              {`
-            @keyframes float {
-              0%, 100% {
-                transform: translateY(0px) rotate(0deg);
-              }
-              50% {
-                transform: translateY(-15px) rotate(5deg);
-              }
-            }
-            @keyframes pulse {
-              0%, 100% {
-                transform: scale(1);
-                opacity: 0.8;
-              }
-              50% {
-                transform: scale(1.1);
-                opacity: 1;
-              }
-            }
-            @keyframes slideInUp {
-              from {
-                opacity: 0;
-                transform: translateY(30px);
-              }
-              to {
-                opacity: 1;
-                transform: translateY(0);
-              }
-            }
-            @keyframes gradient {
-              0% {
-                background-position: 0% 50%;
-              }
-              50% {
-                background-position: 100% 50%;
-              }
-              100% {
-                background-position: 0% 50%;
-              }
-            }
-            @keyframes iconBounce {
-              0%, 100% {
-                transform: translateY(0);
-              }
-              50% {
-                transform: translateY(-8px);
-              }
-            }
-            .feature-card-animated {
-              animation: slideInUp 0.6s ease-out both;
-            }
-            .feature-icon-wrapper {
-              position: relative;
-            }
-            .feature-icon-wrapper::before {
-              content: '';
-              position: absolute;
-              top: 50%;
-              left: 50%;
-              transform: translate(-50%, -50%);
-              width: 65px;
-              height: 65px;
-              border-radius: 50%;
-              background: rgba(125, 46, 255, 0.1);
-              animation: pulse 2s ease-in-out infinite;
-            }
-            .feature-card:hover .feature-icon-wrapper::before {
-              animation: pulse 1s ease-in-out infinite;
-            }
-            .feature-card:hover .feature-icon {
-              animation: iconBounce 0.6s ease-in-out;
-            }
-            .gradient-bg-shape {
-              position: absolute;
-              border-radius: 50%;
-              opacity: 0.1;
-              animation: float 8s ease-in-out infinite;
-            }
-            .gradient-bg-shape-1 {
-              width: 200px;
-              height: 200px;
-              background: linear-gradient(135deg, #8059ca, #3b82f6);
-              top: -60px;
-              right: -60px;
-              animation-delay: 0s;
-            }
-            .gradient-bg-shape-2 {
-              width: 180px;
-              height: 180px;
-              background: linear-gradient(135deg, #3b82f6, #059669);
-              bottom: -50px;
-              left: -50px;
-              animation-delay: 2s;
-            }
-          `}
-            </style>
+
             <div className="gradient-bg-shape gradient-bg-shape-1"></div>
             <div className="gradient-bg-shape gradient-bg-shape-2"></div>
             <div className="container" style={{ position: "relative", zIndex: 2 }}>
@@ -2825,7 +2394,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                       Our Blogs
                     </div>
                     <h2
-                      className="text-[36px] font-bold mb-[12px] inline-block w-full bg-gradient-to-br from-[#8059ca] to-[#6d48b8] bg-clip-text text-transparent text-[#8059ca]"
+                      className="text-[36px] !font-semibold mb-[12px] inline-block w-full bg-gradient-to-br from-[#8059ca] to-[#6d48b8] bg-clip-text text-transparent text-[#8059ca]"
                     >
                       Insights and Tips on Medicines
                     </h2>
@@ -2859,14 +2428,15 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                             className="bg-white rounded-[16px] overflow-hidden shadow-[0_2px_8px_rgba(128,89,202,0.08)] border border-solid border-[#8059ca]/10 h-full flex flex-col cursor-pointer"
                           >
                             <div
-                              className="w-full h-[180px] overflow-hidden bg-[#f8f4ff]"
+                              className="w-full h-[180px] overflow-hidden bg-[#f8f4ff] flex items-center justify-center"
                             >
                               <img
                                 src={getImageUrl(blog.files[0])}
                                 alt={blog.title}
                                 loading={index < 2 ? "eager" : "lazy"}
                                 decoding="async"
-                                className="w-full h-full object-contain"
+                                className="w-full h-full"
+                                style={{ objectFit: "contain", width: "100%", height: "100%" }}
                               />
                             </div>
                             <div className="p-[14px]">
@@ -2912,7 +2482,8 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                                 loading={index < 3 ? "eager" : "lazy"}
                                 fetchPriority={index === 0 ? "high" : "auto"}
                                 decoding="async"
-                                className="w-full h-full object-contain"
+                                className="w-full h-full"
+                                style={{ objectFit: "contain", width: "100%", height: "100%" }}
                               />
                             </div>
                             <div
@@ -3093,51 +2664,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
       </Modal> */}
           {/* <CustomerReviewsSuccessModal/> */}
 
-          <style>
-            {`
-          .products-swiper .swiper-button-next,
-          .products-swiper .swiper-button-prev {
-            background: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            color: #8059ca;
-            transition: all 0.3s ease;
-          }
-          .products-swiper .swiper-button-next:after,
-          .products-swiper .swiper-button-prev:after {
-            font-size: 16px;
-            font-weight: bold;
-          }
-          .products-swiper .swiper-button-next:hover,
-          .products-swiper .swiper-button-prev:hover {
-            background: #8059ca;
-            color: white;
-            transform: scale(1.1);
-            box-shadow: 0 6px 16px rgba(79, 70, 229, 0.3);
-          }
-          .products-swiper {
-            padding-bottom: 32px !important;
-          }
-          .products-swiper .swiper-pagination-bullet {
-            width: 10px;
-            height: 10px;
-            background: #d1d5db;
-            opacity: 1;
-            transition: all 0.3s ease;
-          }
-          .products-swiper .swiper-pagination-bullet-active {
-            background: #8059ca;
-            width: 25px;
-            border-radius: 5px;
-          }
-          .products-swiper .swiper-button-next,
-          .products-swiper .swiper-button-prev {
-            top: 40% !important;
-          }
-        `}
-          </style>
+
           <PrescriptionUploadModal
             show={showPrescriptionModal}
             onClose={() => setShowPrescriptionModal(false)}

@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-
+import { GOOGLE_MAPS_API_KEY } from "../utils/index"
 const LocationContext = createContext();
 
 export const useLocation = () => {
@@ -84,9 +84,9 @@ export const LocationProvider = ({ children }) => {
     navigator.geolocation.getCurrentPosition(
       async (position) => {
         const { latitude, longitude } = position.coords;
-        
+
         try {
-          const GOOGLE_MAPS_API_KEY = "AIzaSyBW_ML0ppoU2o_tsOmT5eMveCwCFP3AXHU";
+          // const GOOGLE_MAPS_API_KEY = "AIzaSyBW_ML0ppoU2o_tsOmT5eMveCwCFP3AXHU";
           const response = await fetch(
             `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${GOOGLE_MAPS_API_KEY}`
           );
@@ -132,9 +132,9 @@ export const LocationProvider = ({ children }) => {
           console.log('Location request timed out');
         }
       },
-      { 
-        enableHighAccuracy: true, 
-        timeout: 10000, 
+      {
+        enableHighAccuracy: true,
+        timeout: 10000,
         maximumAge: 300000 // 5 minutes
       }
     );

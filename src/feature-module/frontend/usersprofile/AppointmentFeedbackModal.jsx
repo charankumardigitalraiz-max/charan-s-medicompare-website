@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Offcanvas, OffcanvasHeader, OffcanvasBody } from "react-bootstrap";
+import { Offcanvas, OffcanvasHeader, OffcanvasBody } from "../../../components/ui/Offcanvas";
 import { axiosInstance } from "../../../Apiservice";
 import toast from "react-hot-toast";
 import { getImageUrl } from "../../../utils";
@@ -261,9 +261,9 @@ const AppointmentFeedbackOffcanvas = ({ isOpen, toggle, order, onReviewSubmitted
         show={isOpen}
         onHide={handleClose}
         placement="end"
-        className="w-[380px] !z-[1000000000]"
+        className="w-[380px]"
       >
-        <OffcanvasHeader closeButton className="fw-bold">
+        <OffcanvasHeader closeButton onHide={handleClose}>
           Appointment Feedback
         </OffcanvasHeader>
 

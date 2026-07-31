@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useResponsive } from "../../../hooks/useResponsive";
 import { axiosUserInstance } from "../../../Apiservice";
 import toast from "react-hot-toast";
+import { Table, Pagination } from "../../../components/ui";
 
 // Styles migrated to Tailwind CSS
 
@@ -49,11 +50,76 @@ const Wallet = ({ HomeNavigate, BackButton }) => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  const headers = [
+    {
+      key: "createdAt",
+      label: "Date",
+      render: (value) => value ? new Date(value).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) : "-"
+    },
+    {
+      key: "transactionId",
+      label: "Transaction ID",
+      className: "font-medium text-slate-500 normal-case"
+    },
+    {
+      key: "amount",
+      label: "Amount",
+      render: (value, row) => {
+        const isCredit = row.type?.toLowerCase() === "credit" || row.type?.toLowerCase() === "refund";
+        return (
+          <span className={`font-semibold ${isCredit ? "text-emerald-500" : "text-rose-500"}`}>
+            {isCredit ? "+" : "-"}₹{value.toFixed(2)}
+          </span>
+        );
+      }
+    },
+    {
+      key: "type",
+      label: "Payment Type",
+      render: (value) => {
+        const isCredit = value?.toLowerCase() === "credit" || value?.toLowerCase() === "refund";
+        return (
+          <span
+            className={`py-[3px] px-2 rounded-md text-[11px] font-bold inline-block capitalize ${isCredit ? "bg-emerald-50 text-emerald-700 border border-emerald-200/50" : "bg-rose-50 text-rose-700 border border-rose-200/50"
+              }`}
+          >
+            {value}
+          </span>
+        );
+      }
+    },
+    {
+      key: "paymentMethod",
+      label: "Payment Method",
+      render: (value) => <span className="capitalize">{value || "N/A"}</span>
+    },
+    {
+      key: "status",
+      label: "Status",
+      render: (value) => {
+        const isSuccess = value?.toLowerCase() === "success" || value?.toLowerCase() === "completed";
+        const isFailed = value?.toLowerCase() === "failed" || value?.toLowerCase() === "failure";
+        return (
+          <span
+            className={`py-[3px] px-2.5 rounded-full text-[11px] font-bold inline-block capitalize ${isSuccess
+              ? "bg-emerald-50 text-emerald-700 border border-emerald-200/50"
+              : isFailed
+                ? "bg-rose-50 text-rose-700 border border-rose-200/50"
+                : "bg-amber-50 text-amber-700 border border-amber-200/50"
+              }`}
+          >
+            {value}
+          </span>
+        );
+      }
+    }
+  ];
+
   return (
-    <div className="main-wrapper">
-      <div className="content doctor-content">
-        <div className="container">
-          <div className="row">
+    <div className="w-full">
+      <div className="py-4 md:py-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col gap-4">
             {BackButton && (
               <div className="col-12 mb-3">
                 <BackButton />
@@ -61,26 +127,13 @@ const Wallet = ({ HomeNavigate, BackButton }) => {
             )}
 
             {/* Header Section */}
-            <div className="col-12">
-              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pb-2 mb-2 border-b border-slate-100 mt-2">
+            <div className="w-full">
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pb-3 mb-2 border-b border-slate-100 mt-2">
                 <div className="flex items-center gap-3.5">
                   {HomeNavigate && <HomeNavigate />}
                   <div className="w-11 h-11 rounded-xl bg-purple-50 text-[#8059ca] flex items-center justify-center text-[20px] shrink-0 border border-purple-100/50 shadow-sm">
                     <i className="fa-solid fa-wallet" />
                   </div>
-
-
-                  {/* <div className="flex flex-col gap-1">
-                    <div className="m-0 text-[#0f172a] text-[18px] md:text-[20px] tracking-tight leading-none" style={{ fontWeight: 600 }}>
-                      Wallet
-                    </div>
-                    <p className="text-slate-500 text-[12px] m-0 font-medium leading-none">
-                      View and manage all your Wallet
-                    </p>
-                  </div> */}
-
-
-
 
                   <div className="flex flex-col gap-1">
                     <div className="m-0 text-[#0f172a] font-medium text-[16px] md:text-[16px] tracking-tight leading-none" >
@@ -90,27 +143,22 @@ const Wallet = ({ HomeNavigate, BackButton }) => {
                       View and manage all your Wallet
                     </div>
                   </div>
-
-
                 </div>
-              </div>
-            </div>
 
-            <div className="col-md-4 mb-3 mb-md-0">
-              <div className="bg-white rounded-xl border-none shadow-[5px_4px_10px_rgba(0,0,0,0.03)] p-5">
-                <div className="flex items-center">
-                  <div className="w-[50px] h-[50px] rounded-[10px] bg-[rgba(125,46,255,0.1)] flex items-center justify-center mr-[15px] shrink-0">
-                    <i className="fa-solid fa-wallet text-xl text-[#8059ca]"></i>
+                {/* Compact Current Balance on the Right */}
+                <div className="flex items-center gap-3 bg-purple-50/50 border border-purple-100/60 rounded-sm px-3 py-2 self-stretch sm:self-auto justify-between sm:justify-start shadow-[0_2px_10px_rgba(128,89,202,0.02)]">
+                  <div className="w-8 h-8 rounded-lg bg-[#8059ca] text-white flex items-center justify-center shrink-0 shadow-sm">
+                    <i className="fa-solid fa-wallet text-[14px]"></i>
                   </div>
-                  <div>
-                    <p className="text-slate-500 text-sm mb-1">Current Balance</p>
-                    <h3 className="text-slate-800 text-[28px] font-bold m-0">₹{balance?.toFixed(2) || "0.00"}</h3>
+                  <div className="text-left">
+                    <span className="text-[10px] text-slate-500 block leading-none mb-1 font-semibold uppercase tracking-wider">Balance</span>
+                    <span className="text-[#0f172a] text-[15px] font-bold block leading-none">₹{balance?.toFixed(2) || "0.00"}</span>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="col-lg-12">
+            <div className="w-full">
               {/* Search bar (kept commented out, preserved as-is from the original) */}
               {/* <div
                 style={{
@@ -167,118 +215,20 @@ const Wallet = ({ HomeNavigate, BackButton }) => {
                 </div>
               </div> */}
 
-              <div className="profile-table-wrapper mt-4">
-                <div className="table-responsive">
-                  <table className="profile-table">
-                    <thead>
-                      <tr>
-                        <th>Date</th>
-                        <th>Transaction ID</th>
-                        <th>Amount</th>
-                        <th>Payment Type</th>
-                        <th>Payment Method</th>
-                        <th>Status</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {filterWallet.map((wallet) => {
-                        const isCredit = wallet.type?.toLowerCase() === "credit" || wallet?.type?.toLowerCase() === "refund";
-                        const isSuccess = wallet.status?.toLowerCase() === "success" || wallet.status?.toLowerCase() === "completed";
-                        const isFailed = wallet.status?.toLowerCase() === "failed" || wallet.status?.toLowerCase() === "failure";
-
-                        return (
-                          <tr key={wallet._id} className="capitalize">
-                            <td>{wallet.createdAt ? new Date(wallet.createdAt).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) : "-"}</td>
-                            <td className="font-medium text-[#666]">{wallet.transactionId}</td>
-                            <td className={`font-semibold ${isCredit ? "text-[#2ecc71]" : "text-[#e74c3c]"}`}>
-                              {isCredit ? "+" : "-"}₹{wallet.amount.toFixed(2)}
-                            </td>
-                            <td>
-                              <span
-                                className={`py-[3px] px-2 rounded text-[11px] font-semibold inline-block ${isCredit ? "bg-[rgba(46,204,113,0.1)] text-[#2ecc71]" : "bg-[rgba(231,76,60,0.1)] text-[#e74c3c]"
-                                  }`}
-                              >
-                                {wallet.type}
-                              </span>
-                            </td>
-                            <td>{wallet.paymentMethod || "N/A"}</td>
-                            <td>
-                              <span
-                                className={`py-[3px] px-2 rounded text-[11px] font-semibold inline-block ${isSuccess
-                                  ? "bg-[#d4edda] text-[#155724]"
-                                  : isFailed
-                                    ? "bg-[#f8d7da] text-[#721c24]"
-                                    : "bg-[#fff3cd] text-[#856404]"
-                                  }`}
-                              >
-                                {wallet.status}
-                              </span>
-                            </td>
-                          </tr>
-                        );
-                      })}
-                    </tbody>
-                  </table>
-                </div>
+              <div className="mt-4">
+                <Table
+                  headers={headers}
+                  data={filterWallet}
+                  emptyMessage="No transactions found."
+                />
               </div>
 
               {/* Pagination */}
-              {pagination.totalPages > 1 && (
-                <div className="pagination dashboard-pagination mt-4">
-                  <ul className="d-flex justify-content-center">
-                    <li>
-                      <button
-                        className="page-link"
-                        onClick={() => handlePageChange(currentPage - 1)}
-                        disabled={currentPage === 1}
-                      >
-                        <i className="fa-solid fa-chevron-left" />
-                      </button>
-                    </li>
-
-                    {Array.from({ length: pagination.totalPages }, (_, i) => {
-                      const page = i + 1;
-                      if (
-                        page === 1 ||
-                        page === pagination.totalPages ||
-                        (page >= currentPage - 1 && page <= currentPage + 1)
-                      ) {
-                        return (
-                          <li key={page}>
-                            <button
-                              className={`page-link ${currentPage === page ? "active" : ""
-                                }`}
-                              onClick={() => handlePageChange(page)}
-                            >
-                              {page}
-                            </button>
-                          </li>
-                        );
-                      }
-
-                      if (page === currentPage - 2 || page === currentPage + 2) {
-                        return (
-                          <li key={`dots-${page}`}>
-                            <span className="page-link disabled">…</span>
-                          </li>
-                        );
-                      }
-
-                      return null;
-                    })}
-
-                    <li>
-                      <button
-                        className="page-link"
-                        onClick={() => handlePageChange(currentPage + 1)}
-                        disabled={currentPage === pagination.totalPages}
-                      >
-                        <i className="fa-solid fa-chevron-right" />
-                      </button>
-                    </li>
-                  </ul>
-                </div>
-              )}
+              <Pagination
+                page={currentPage}
+                totalPages={pagination.totalPages}
+                onPageChange={handlePageChange}
+              />
             </div>
           </div>
         </div>

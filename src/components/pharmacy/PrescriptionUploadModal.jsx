@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { getImageUrl } from "../../utils";
 import VendorActions from "../ui/VendorActions.jsx";
 import { useProfile } from "../../context/ProfileContext";
+import BaseModal from "../ui/BaseModal.jsx";
 import LeadModal from "../../feature-module/frontend/pharmacy/products-components/LeadModal.jsx";
 import RentModal from "../../feature-module/frontend/pharmacy/products-components/RentModal.jsx";
 import ConsultationModal from "../../feature-module/frontend/pharmacy/products-components/ConsultationModal.jsx";
@@ -542,641 +543,381 @@ const PrescriptionUploadModal = ({
   };
 
   return (
-    <div
-      className="modal fade show"
-      style={{
-        display: "block",
-        backgroundColor: "rgba(15, 23, 42, 0.4)",
-        position: "fixed",
-        top: 0,
-        left: 0,
-        width: "100%",
-        height: "100%",
-        zIndex: 999999999,
-        backdropFilter: "blur(6px)",
-        transition: "opacity 0.15s linear",
-      }}
-    >
-      <div className="modal-dialog modal-dialog-centered" onClick={(e) => e.stopPropagation()}>
-        <div
-          className="modal-content shadow-2xl"
-          style={{
-            borderRadius: "24px",
-            border: "none",
-            overflow: "hidden",
-            backgroundColor: "#ffffff",
-            fontFamily: "'Outfit', sans-serif",
-            boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.15)",
-          }}
-        >
-          {/* Header */}
-          <div
-            className="px-4 py-3.5 d-flex justify-content-between align-items-center"
-            style={{
-              borderBottom: "1px solid #f1f5f9",
-              backgroundColor: "#ffffff",
-            }}
-          >
-            <div className="d-flex align-items-center gap-2" style={{
-              padding: "10px"
-            }}>
-              <div
-                className="d-flex align-items-center justify-content-center"
-                style={{
-                  width: "36px",
-                  height: "36px",
-                  borderRadius: "10px",
-                  backgroundColor: "#f5f3ff",
-                  color: "#7c3aed",
-                }}
-              >
-                <i className="fa-solid fa-file-medical" style={{ fontSize: "1.1rem" }}></i>
-              </div>
-              <div>
-                <h5 className="mb-0" style={{ fontWeight: 600, color: "#0f172a", fontSize: "1.1rem" }}>
-                  {mode === "search" ? "Search by Prescription" : "Upload Prescription"}
-                </h5>
-              </div>
-            </div>
-            <button
-              type="button"
-              onClick={onClose}
-              aria-label="Close"
-              className="d-flex align-items-center justify-content-center"
-              style={{
-                width: "32px",
-                height: "32px",
-                borderRadius: "50%",
-                backgroundColor: "#f1f5f9",
-                border: "none",
-                color: "#64748b",
-                cursor: "pointer",
-                transition: "all 0.2s ease",
-                padding: 0,
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = "#e2e8f0";
-                e.currentTarget.style.color = "#0f172a";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = "#f1f5f9";
-                e.currentTarget.style.color = "#64748b";
-              }}
-            >
-              <i className="fa-solid fa-xmark" style={{ fontSize: "0.95rem" }}></i>
-            </button>
+    <BaseModal
+      show={show}
+      onClose={onClose}
+      title={
+        <div className="!flex !items-center !gap-3">
+          <div className="!flex !items-center !justify-center !w-9 !h-9 !rounded-[10px] !bg-purple-50 !text-[#7c3aed]">
+            <i className="fa-solid fa-file-medical !text-[16px]"></i>
           </div>
-
-          {/* Body */}
-          <div className="p-4" style={{ backgroundColor: "#ffffff" }}>
-            {hasSearched ? (
-              <div>
-                {mode === "search" ? (
-                  <>
-                    <h6 className="mb-3.5" style={{ fontWeight: 600, color: "#0f172a", fontSize: "0.95rem" }}>
-                      Matching Medicines Found ({searchResults.length})
-                    </h6>
-
-                    {searchResults.length === 0 ? (
-                      <div className="text-center py-5 text-muted" style={{ fontSize: "0.9rem" }}>
-                        <i className="fa-solid fa-face-frown d-block mb-2" style={{ fontSize: "1.5rem" }}></i>
-                        {validationError || "No matching medicines found in our database."}
-                      </div>
-                    ) : (
-                      <div
-                        style={{
-                          maxHeight: "360px",
-                          overflowY: "auto",
-                          display: "flex",
-                          flexDirection: "column",
-                          gap: "14px",
-                          paddingRight: "4px"
-                        }}
-                      >
-                        {searchResults.map((item) => (
-                          <div
-                            key={item._id}
-                            className="p-3"
-                            style={{
-                              border: "1px solid #e2e8f0",
-                              borderRadius: "16px",
-                              backgroundColor: "#f8fafc",
-                              display: "flex",
-                              flexDirection: "column",
-                              gap: "10px"
-                            }}
-                          >
-                            {/* Medicine Info */}
-                            <div className="d-flex align-items-center gap-2.5 min-w-0">
-                              <img
-                                src={getImageUrl(item.imageUrl?.[0] || item.files?.[0])}
-                                alt={item.name}
-                                style={{
-                                  width: "44px",
-                                  height: "44px",
-                                  borderRadius: "8px",
-                                  objectFit: "contain",
-                                  backgroundColor: "#ffffff",
-                                  border: "1px solid #f1f5f9",
-                                  padding: "2px"
-                                }}
-                                onError={(e) => { e.target.src = "/assets/default.png"; }}
-                              />
-                              <div className="min-w-0 flex-grow-1">
-                                <span
-                                  className="d-block text-dark text-truncate"
-                                  style={{
-                                    fontSize: "0.85rem",
-                                    fontWeight: 700,
-                                    lineHeight: 1.2,
-                                    marginBottom: "2px"
-                                  }}
-                                >
-                                  {item.name}
-                                </span>
-                                <span className="text-muted text-truncate d-block" style={{ fontSize: "0.75rem" }}>
-                                  {item.strength || item.form || "Medicine"}
-                                </span>
-                              </div>
-                            </div>
-
-                            {/* Vendors Array */}
-                            {item.vendors && item.vendors.length > 0 ? (
-                              <div className="d-flex flex-column gap-2" style={{ borderTop: "1px dashed #e2e8f0", paddingTop: "8px" }}>
-                                {item.vendors.map((v) => {
-                                  const price = v.discountprice ?? v.price;
-                                  const hasDiscount = v.discountprice && v.discountprice < v.price;
-                                  const serviceType = item.category?.fixedType || "medicine";
-                                  const bookingType = item.category?.categoryType || (serviceType === "medicine" ? "cart" : "leads");
-                                  //  let serviceType = searchResults?.
-                                  return (
-                                    <div
-                                      key={v._id}
-                                      className="d-flex flex-column p-3 gap-2"
-                                      style={{
-                                        backgroundColor: "#ffffff",
-                                        borderRadius: "12px",
-                                        border: "1px solid #e2e8f0",
-                                        boxShadow: "0 1px 3px rgba(0,0,0,0.05)"
-                                      }}
-                                    >
-                                      {/* Top: Vendor Info & Price */}
-                                      <div className="d-flex justify-content-between align-items-start gap-2">
-                                        <div className="min-w-0">
-                                          <span className="d-block text-dark text-truncate" style={{ fontSize: "0.85rem", fontWeight: 600 }}>
-                                            {v.businessDetails?.name || "Vendor"}
-                                          </span>
-                                          {v.businessDetails?.distance !== undefined && (
-                                            <span className="text-muted" style={{ fontSize: "0.7rem" }}>
-                                              <i className="fa-solid fa-location-dot me-1"></i>
-                                              {v.businessDetails.distance} km away
-                                            </span>
-                                          )}
-                                        </div>
-
-                                        <div className="text-end flex-shrink-0" style={{ minWidth: "60px" }}>
-                                          {hasDiscount && (
-                                            <span className="text-muted text-decoration-line-through d-block" style={{ fontSize: "0.7rem", lineHeight: 1 }}>
-                                              ₹{v.price}
-                                            </span>
-                                          )}
-                                          <span className="text-dark d-block" style={{ fontSize: "0.9rem", fontWeight: 700, color: "#7c3aed" }}>
-                                            ₹{price}
-                                          </span>
-                                        </div>
-                                      </div>
-
-                                      {/* Bottom: Action Buttons */}
-                                      <div className="mt-1" style={{ width: "100%" }}>
-                                        <VendorActions
-                                          bookingType={bookingType}
-                                          isInStock={v.stock !== 0}
-                                          isStockFalse={v.isStock === false || v.isStock === "false" || v.stock === 0}
-                                          isServiceType={bookingType !== "cart"}
-                                          med={item}
-                                          vendor={v}
-                                          effectiveVariantId={item.variants?.[0]?._id || null}
-                                          price={price}
-                                          service={serviceType}
-                                          calculatedDiscountPrice={v.discountprice}
-                                          handleRentalBookinProcess={handleRentalBookinProcess}
-                                          handleNavigateToBooking={handleNavigateToBooking}
-                                          handleAddLead={handleAddLead}
-                                          handleOpenConsultationModal={handleOpenConsultationModal}
-                                          handleOpenAppointmentModal={handleOpenAppointmentModal}
-                                          handleOpenRideModal={handleOpenRideModal}
-                                          rentAndCartButtonStyles={{
-                                            fontSize: "12px",
-                                            padding: "6px 12px",
-                                            borderRadius: "8px",
-                                            background: "linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%)",
-                                            border: "none",
-                                            width: "100%"
-                                          }}
-                                          containerStyle={{
-                                            width: "100%",
-                                            display: "flex"
-                                          }}
-                                          buttonStyle={{
-                                            fontSize: "12px",
-                                            padding: "6px 12px",
-                                            borderRadius: "8px",
-                                            background: "linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%)",
-                                            border: "none",
-                                            color: "white",
-                                            width: "100%"
-                                          }}
-                                        />
-                                      </div>
-                                    </div>
-                                  );
-                                })}
-                              </div>
-
-                            ) : (
-                              <div className="text-center py-1 text-muted" style={{ fontSize: "0.75rem", borderTop: "1px dashed #e2e8f0", paddingTop: "8px" }}>
-                                No local vendors available near your location.
-                              </div>
-                            )}
-                          </div>
-                        ))}
-                      </div>
-
-                    )}
-                  </>
-                ) : (
-                  <div className="text-center py-4">
-                    <div
-                      className="d-inline-flex align-items-center justify-content-center mb-3"
-                      style={{
-                        width: "56px",
-                        height: "56px",
-                        borderRadius: "50%",
-                        backgroundColor: "#fef2f2",
-                        color: "#ef4444",
-                      }}
-                    >
-                      <i className="fa-solid fa-circle-xmark" style={{ fontSize: "2rem" }}></i>
-                    </div>
-                    <h6 className="mb-2" style={{ fontWeight: 700, color: "#1e293b" }}>
-                      Verification Failed
-                    </h6>
-                    <p className="text-muted px-2" style={{ fontSize: "0.85rem", lineHeight: 1.5 }}>
-                      {validationError || "Your prescription doesn't contain this medicine."}
-                    </p>
-                  </div>
-                )}
-
-                <button
-                  type="button"
-                  className="btn w-100 mt-4 py-2.5"
-                  onClick={() => {
-                    setFile(null);
-                    setFilePreview(null);
-                    setSearchResults([]);
-                    setValidationError("");
-                    setHasSearched(false);
-                    if (fileInputRef.current) fileInputRef.current.value = "";
-                  }}
-                  style={{
-                    borderRadius: "12px",
-                    border: "1px solid #cbd5e1",
-                    backgroundColor: "#ffffff",
-                    color: "#475569",
-                    fontWeight: 600,
-                    fontSize: "0.9rem",
-                  }}
-                >
-                  Upload Another Prescription
-                </button>
-              </div>
-            ) : (
-              <>
-                {/* Prescription Requirements Note */}
-                {!noPrescription && (
-                  <div
-                    className="p-3 mb-4"
-                    style={{
-                      borderRadius: "12px",
-                      backgroundColor: "#faf5ff",
-                      borderLeft: "4px solid #7c3aed",
-                      fontSize: "0.85rem",
-                      color: "#475569",
-                      lineHeight: "1.6",
-                    }}
-                  >
-                    <div className="d-flex align-items-center gap-2 mb-2" style={{ color: "#7c3aed", fontWeight: "600" }}>
-                      <i className="fa-solid fa-circle-info" style={{ fontSize: "1rem" }}></i>
-                      <span>Prescription Requirements:</span>
-                    </div>
-                    <ul className="mb-2 ps-3 d-flex flex-column gap-1" style={{ listStyleType: "decimal" }}>
-                      <li>Must display <strong>Doctor's Name</strong>.</li>
-                      <li>Must display <strong>Patient's Name</strong>.</li>
-                      <li>Must display the <strong>Prescription Date</strong>.</li>
-                      <li><strong>Do not crop</strong> any part of the prescription image.</li>
-                      <li>Avoid uploading <strong>blurred images</strong>.</li>
-                    </ul>
-                    <div style={{ fontSize: "0.8rem", color: "#64748b", borderTop: "1px solid #f3e8ff", paddingTop: "8px", marginTop: "4px" }}>
-                      <i className="fa-solid fa-prescription-bottle-medical me-1.5" style={{ color: "#a78bfa" }}></i>
-                      Please ensure the uploaded image includes complete details of the doctor, patient, clinic visit, and medicines to be dispensed.
-                    </div>
-                  </div>
-                )}
-
-                <p className="mb-4" style={{ fontSize: "0.9rem", color: "#64748b", lineHeight: 1.5 }}>
-                  {mode === "search" ? (
-                    "Upload your doctor's prescription, and we will find all matching medicines and their prices for you."
-                  ) : (
-                    <>
-                      This medication <strong>({medicineData?.name})</strong> requires a valid doctor's prescription.
-                      Please upload a clear photo of your prescription to verify.
-                    </>
-                  )}
-                </p>
-
-                {/* Dropzone */}
-                {!noPrescription && (
-                  <div
-                    className="d-flex flex-column align-items-center justify-content-center p-4"
-                    style={{
-                      border: file ? "2px solid #8b5cf6" : "2px dashed #cbd5e1",
-                      borderRadius: "16px",
-                      cursor: "pointer",
-                      textAlign: "center",
-                      position: "relative",
-                      backgroundColor: file ? "#faf5ff" : "#f8fafc",
-                      transition: "all 0.2s ease-in-out",
-                      minHeight: "160px",
-                    }}
-                    onDragOver={handleDragOver}
-                    onDrop={handleDrop}
-                    onClick={() => {
-                      if (fileInputRef.current) {
-                        fileInputRef.current.click();
-                      }
-                    }}
-                  >
-                    <input
-                      type="file"
-                      ref={fileInputRef}
-                      accept="image/*"
-                      style={{ display: "none" }}
-                      onChange={handleFileChange}
-                    />
-
-                    {file ? (
-                      <div className="w-100 d-flex flex-column gap-3" onClick={(e) => e.stopPropagation()}>
-                        {/* Full Image Preview */}
-                        {filePreview && (
-                          <div
-                            className="d-flex align-items-center justify-content-center p-1.5"
-                            style={{
-                              backgroundColor: "#ffffff",
-                              border: "1px solid #e2e8f0",
-                              borderRadius: "12px",
-                              maxHeight: "180px",
-                              overflow: "hidden"
-                            }}
-                          >
-                            <img
-                              src={filePreview}
-                              alt="Prescription preview"
-                              style={{
-                                maxHeight: "168px",
-                                maxWidth: "100%",
-                                objectFit: "contain",
-                                borderRadius: "8px"
-                              }}
-                            />
-                          </div>
-                        )}
-
-                        {/* File Info Bar */}
-                        <div
-                          className="p-3 d-flex align-items-center gap-3"
-                          style={{
-                            backgroundColor: "#ffffff",
-                            border: "1px solid #e2e8f0",
-                            borderRadius: "14px",
-                            textAlign: "left",
-                            boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.06)"
-                          }}
-                        >
-                          {/* File Icon Badge */}
-                          <div
-                            className="d-flex align-items-center justify-content-center text-primary flex-shrink-0"
-                            style={{
-                              width: "40px",
-                              height: "40px",
-                              borderRadius: "10px",
-                              backgroundColor: "#eff6ff",
-                              color: "#3b82f6",
-                              fontSize: "1.2rem",
-                            }}
-                          >
-                            <i className="fa-regular fa-file-image"></i>
-                          </div>
-
-                          {/* Info */}
-                          <div className="flex-grow-1 min-w-0" style={{ textAlign: "left" }}>
-                            <span
-                              className="text-dark text-truncate d-block"
-                              style={{
-                                fontSize: "0.875rem",
-                                fontWeight: 600,
-                                lineHeight: 1.3,
-                                color: "#1e293b",
-                                marginBottom: "2px",
-                                maxWidth: "220px",
-                                overflow: "hidden",
-                                textOverflow: "ellipsis",
-                                whiteSpace: "nowrap"
-                              }}
-                              title={file.name}
-                            >
-                              {file.name}
-                            </span>
-                            <span className="text-muted d-block" style={{ fontSize: "0.75rem", color: "#64748b" }}>
-                              {(file.size / 1024).toFixed(1)} KB
-                            </span>
-                          </div>
-
-                          {/* Delete button */}
-                          <button
-                            onClick={clearFile}
-                            className="btn d-flex align-items-center justify-content-center flex-shrink-0"
-                            style={{
-                              width: "32px",
-                              height: "32px",
-                              borderRadius: "8px",
-                              backgroundColor: "#fef2f2",
-                              color: "#ef4444",
-                              border: "none",
-                              padding: 0,
-                              transition: "all 0.2s ease"
-                            }}
-                            onMouseEnter={(e) => {
-                              e.currentTarget.style.backgroundColor = "#fee2e2";
-                            }}
-                            onMouseLeave={(e) => {
-                              e.currentTarget.style.backgroundColor = "#fef2f2";
-                            }}
-                            title="Remove file"
-                          >
-                            <i className="fa-solid fa-trash-can" style={{ fontSize: "0.85rem" }}></i>
-                          </button>
-                        </div>
-                      </div>
-                    ) : (
-                      <>
-                        <div
-                          className="mb-2.5 d-flex align-items-center justify-content-center"
-                          style={{
-                            width: "48px",
-                            height: "48px",
-                            borderRadius: "50%",
-                            backgroundColor: "#f1f5f9",
-                            color: "#64748b",
-                          }}
-                        >
-                          <i className="fa-solid fa-cloud-arrow-up" style={{ fontSize: "1.25rem" }}></i>
-                        </div>
-                        <span className="text-slate-700" style={{ fontSize: "0.85rem", fontWeight: 600 }}>
-                          Click to upload or drag image here
-                        </span>
-                        <span className="text-muted mt-1" style={{ fontSize: "0.75rem" }}>
-                          Supports JPEG, PNG, WebP (Max 10MB)
-                        </span>
-                      </>
-                    )}
-                  </div>
-                )}
-
-                {/* Checkbox: I don't have a prescription */}
-                {mode !== "search" && (
-                  <div
-                    className="d-flex align-items-center gap-2 mt-3 mb-2 px-1"
-                    style={{
-                      userSelect: "none",
-                      backgroundColor: "#f8fafc",
-                      padding: "10px 14px",
-                      borderRadius: "12px",
-                      border: "1px solid #e2e8f0"
-                    }}
-                  >
-                    <input
-                      type="checkbox"
-                      id="noPrescription"
-                      checked={noPrescription}
-                      onChange={(e) => {
-                        setNoPrescription(e.target.checked);
-                        if (e.target.checked) {
-                          setFile(null);
-                          setFilePreview(null);
-                          setValidationError("");
-                        }
-                      }}
-                      style={{
-                        width: "16px",
-                        height: "16px",
-                        borderRadius: "4px",
-                        border: "1.5px solid #cbd5e1",
-                        cursor: "pointer",
-                        accentColor: "#7c3aed"
-                      }}
-                    />
-                    <label
-                      htmlFor="noPrescription"
-                      style={{
-                        fontSize: "0.875rem",
-                        fontWeight: 500,
-                        color: "#334155",
-                        cursor: "pointer",
-                        marginBottom: 0
-                      }}
-                    >
-                      I don't have a prescription
-                    </label>
-                  </div>
-                )}
-
-                {/* Info Note: Prescription Charge Policy */}
-                {mode !== "search" && noPrescription && (
-                  <div
-                    className="mt-3 p-3"
-                    style={{
-                      backgroundColor: "#fffbeb",
-                      border: "1px solid #fde68a",
-                      borderRadius: "12px",
-                      color: "#b45309",
-                      fontSize: "0.85rem",
-                      lineHeight: "1.4"
-                    }}
-                  >
-                    <div className="d-flex gap-2">
-                      <i className="fa-solid fa-circle-info mt-1" style={{ fontSize: "1.05rem" }}></i>
-                      <div>
-                        <strong className="d-block mb-1" style={{ fontSize: "0.9rem" }}>Prescription Options:</strong>
-                        <ul className="ps-3 mb-0" style={{ listStyleType: "disc" }}>
-                          <li className="mb-1.5">
-                            <strong>Upload After Payment:</strong> You can proceed to checkout now and upload your prescription later from your order details page.
-                          </li>
-                          <li>
-                            <strong>Get Doctor Prescription:</strong> Alternatively, Medicompares will arrange a doctor consultation and provide a valid prescription for all required medicines in this order for a fee of <strong>₹100</strong>.
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {/* Actions */}
-                <div className="d-flex gap-3 mt-4">
-                  <button
-                    type="button"
-                    className="btn w-50 py-2.5"
-                    onClick={onClose}
-                    style={{
-                      borderRadius: "12px",
-                      border: "1px solid #e2e8f0",
-                      backgroundColor: "#ffffff",
-                      color: "#475569",
-                      fontWeight: 600,
-                      fontSize: "0.9rem",
-                    }}
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="button"
-                    className="btn w-50 py-2.5 text-white"
-                    disabled={isUploading || (!file && !noPrescription)}
-                    onClick={handleVerify}
-                    style={{
-                      borderRadius: "12px",
-                      background: "linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%)",
-                      border: "none",
-                      fontWeight: 600,
-                      fontSize: "0.9rem",
-                      boxShadow: "0 4px 10px rgba(124, 58, 237, 0.25)",
-                    }}
-                  >
-                    {isUploading ? (
-                      <>
-                        <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                        {mode === "search" ? "Searching..." : "Verifying..."}
-                      </>
-                    ) : noPrescription ? (
-                      "Proceed"
-                    ) : (
-                      mode === "search" ? "Search Medicines" : "Verify & Add"
-                    )}
-                  </button>
-                </div>
-              </>
-            )}
+          <div>
+            <h5 className="!mb-0 !font-semibold !text-slate-800 !text-[16px]">
+              {mode === "search" ? "Search by Prescription" : "Upload Prescription"}
+            </h5>
           </div>
         </div>
+      }
+      size="lg"
+      className="!max-w-[620px]"
+      bodyClassName="!p-0"
+      closeButton={true}
+    >
+      <div className="!p-6 !bg-white">
+        {hasSearched ? (
+          <div>
+            {mode === "search" ? (
+              <>
+                <h6 className="!mb-3 !font-semibold !text-slate-800 !text-[13px] !uppercase !tracking-wider">
+                  Matching Medicines Found ({searchResults.length})
+                </h6>
+
+                {searchResults.length === 0 ? (
+                  <div className="!text-center !py-8 !text-slate-400 !text-[13px]">
+                    <i className="fa-solid fa-face-frown !block !mb-2 !text-[24px]"></i>
+                    {validationError || "No matching medicines found in our database."}
+                  </div>
+                ) : (
+                  <div className="!max-h-[360px] !overflow-y-auto !flex !flex-col !gap-3 !pr-1">
+                    {searchResults.map((item) => (
+                      <div
+                        key={item._id}
+                        className="!p-3.5 !border !border-slate-200 !rounded-[16px] !bg-slate-50/50 !flex !flex-col !gap-2.5"
+                      >
+                        {/* Medicine Info */}
+                        <div className="!flex !items-center !gap-3 !min-w-0">
+                          <img
+                            src={getImageUrl(item.imageUrl?.[0] || item.files?.[0])}
+                            alt={item.name}
+                            className="!w-11 !h-11 !rounded-[8px] !object-contain !bg-white !border !border-slate-100 !p-0.5"
+                            onError={(e) => { e.target.src = "/assets/default.png"; }}
+                          />
+                          <div className="!min-w-0 !flex-1">
+                            <span className="!block !text-slate-900 !truncate !text-[13px] !font-bold !leading-tight !mb-0.5">
+                              {item.name}
+                            </span>
+                            <span className="!text-slate-400 !truncate !block !text-[11px]">
+                              {item.strength || item.form || "Medicine"}
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Vendors Array */}
+                        {item.vendors && item.vendors.length > 0 ? (
+                          <div className="!flex !flex-col !gap-2.5 !border-t !border-dashed !border-slate-200 !pt-3">
+                            {item.vendors.map((v) => {
+                              const price = v.discountprice ?? v.price;
+                              const hasDiscount = v.discountprice && v.discountprice < v.price;
+                              const serviceType = item.category?.fixedType || "medicine";
+                              const bookingType = item.category?.categoryType || (serviceType === "medicine" ? "cart" : "leads");
+                              return (
+                                <div
+                                  key={v._id}
+                                  className="!flex !flex-col !p-3 !gap-2 !bg-white !rounded-xl !border !border-slate-200/80 !shadow-sm"
+                                >
+                                  {/* Top: Vendor Info & Price */}
+                                  <div className="!flex !justify-between !items-start !gap-2">
+                                    <div className="!min-w-0">
+                                      <span className="!block !text-slate-900 !truncate !text-[13px] !font-bold">
+                                        {v.businessDetails?.name || "Vendor"}
+                                      </span>
+                                      {v.businessDetails?.distance !== undefined && (
+                                        <span className="!text-slate-400 !text-[10px]">
+                                          <i className="fa-solid fa-location-dot !mr-1"></i>
+                                          {v.businessDetails.distance} km away
+                                        </span>
+                                      )}
+                                    </div>
+
+                                    <div className="!text-end !shrink-0 !min-w-[60px]">
+                                      {hasDiscount && (
+                                        <span className="!text-slate-400 !line-through !block !text-[10px] !leading-none">
+                                          ₹{v.price}
+                                        </span>
+                                      )}
+                                      <span className="!text-purple-600 !block !text-[14px] !font-bold">
+                                        ₹{price}
+                                      </span>
+                                    </div>
+                                  </div>
+
+                                  {/* Bottom: Action Buttons */}
+                                  <div className="!mt-1 !w-full">
+                                    <VendorActions
+                                      bookingType={bookingType}
+                                      isInStock={v.stock !== 0}
+                                      isStockFalse={v.isStock === false || v.isStock === "false" || v.stock === 0}
+                                      isServiceType={bookingType !== "cart"}
+                                      med={item}
+                                      vendor={v}
+                                      effectiveVariantId={item.variants?.[0]?._id || null}
+                                      price={price}
+                                      service={serviceType}
+                                      calculatedDiscountPrice={v.discountprice}
+                                      handleRentalBookinProcess={handleRentalBookingProcess}
+                                      handleNavigateToBooking={handleNavigateToBooking}
+                                      handleAddLead={handleAddLead}
+                                      handleOpenConsultationModal={handleOpenConsultationModal}
+                                      handleOpenAppointmentModal={handleOpenAppointmentModal}
+                                      handleOpenRideModal={handleOpenRideModal}
+                                      rentAndCartButtonStyles={{
+                                        fontSize: "12px",
+                                        padding: "6px 12px",
+                                        borderRadius: "8px",
+                                        background: "linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%)",
+                                        border: "none",
+                                        width: "100%"
+                                      }}
+                                      containerStyle={{
+                                        width: "100%",
+                                        display: "flex"
+                                      }}
+                                      buttonStyle={{
+                                        fontSize: "12px",
+                                        padding: "6px 12px",
+                                        borderRadius: "8px",
+                                        background: "linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%)",
+                                        border: "none",
+                                        color: "white",
+                                        width: "100%"
+                                      }}
+                                    />
+                                  </div>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        ) : (
+                          <div className="!text-center !py-2 !text-slate-400 !text-[11px] !border-t !border-dashed !border-slate-200 !pt-2">
+                            No local vendors available near your location.
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </>
+            ) : (
+              <div className="!text-center !py-6">
+                <div className="!inline-flex !items-center !justify-center !mb-3 !w-14 !h-14 !rounded-full !bg-red-50 !text-red-500">
+                  <i className="fa-solid fa-circle-xmark !text-[28px]"></i>
+                </div>
+                <h6 className="!mb-2 !font-bold !text-slate-800 !text-[16px]">
+                  Verification Failed
+                </h6>
+                <p className="!text-slate-400 !px-2 !text-[13px] !leading-normal">
+                  {validationError || "Your prescription doesn't contain this medicine."}
+                </p>
+              </div>
+            )}
+
+            <button
+              type="button"
+              className="!w-full !mt-4 !py-2.5 !rounded-xl !border !border-slate-300 !bg-white !text-slate-600 !font-semibold !text-[13px] hover:!bg-slate-50 hover:!border-slate-400 !transition-all"
+              onClick={() => {
+                setFile(null);
+                setFilePreview(null);
+                setSearchResults([]);
+                setValidationError("");
+                setHasSearched(false);
+                if (fileInputRef.current) fileInputRef.current.value = "";
+              }}
+            >
+              Upload Another Prescription
+            </button>
+          </div>
+        ) : (
+          <>
+            {/* Prescription Requirements Note */}
+            {!noPrescription && (
+              <div className="!p-4 !mb-4 !rounded-xl !bg-purple-50/50 !border !border-purple-100 !text-[13px] !text-slate-600 !leading-relaxed">
+                <div className="!flex !items-center !gap-2 !mb-2 !text-purple-600 !font-semibold">
+                  <i className="fa-solid fa-circle-info !text-[15px]"></i>
+                  <span>Prescription Requirements:</span>
+                </div>
+                <ul className="!mb-2 !pl-4 !flex !flex-col !gap-1 !list-decimal">
+                  <li>Must display <span className="!font-semibold !text-profile-primary">Doctor's Name</span>.</li>
+                  <li>Must display <span className="!font-semibold !text-profile-primary">Patient's Name</span>.</li>
+                  <li>Must display the <span className="!font-semibold !text-profile-primary">Prescription Date</span>.</li>
+                  <li><span className="!font-semibold !text-profile-primary">Do not crop</span> any part of the prescription image.</li>
+                  <li>Avoid uploading <span className="!font-semibold !text-profile-primary">blurred images</span>.</li>
+                </ul>
+                <div className="!text-[11px] !text-slate-400 !border-t !border-purple-100 !pt-2 !mt-2">
+                  <i className="fa-solid fa-prescription-bottle-medical !mr-1.5 !text-purple-400"></i>
+                  Please ensure the uploaded image includes complete details of the doctor, patient, clinic visit, and medicines to be dispensed.
+                </div>
+              </div>
+            )}
+
+            <p className="!mb-4 !text-[13px] !text-slate-500 !leading-relaxed">
+              {mode === "search" ? (
+                "Upload your doctor's prescription, and we will find all matching medicines and their prices for you."
+              ) : (
+                <>
+                  This medication <strong>({medicineData?.name})</strong> requires a valid doctor's prescription.
+                  Please upload a clear photo of your prescription to verify.
+                </>
+              )}
+            </p>
+
+            {/* Dropzone */}
+            {!noPrescription && (
+              <div
+                className={`!flex !flex-col !items-center !justify-center !p-6 !rounded-[16px] !cursor-pointer !text-center !relative !transition-all !duration-200 !min-h-[160px] ${file ? "!border-2 !border-purple-600 !bg-purple-50/30" : "!border-2 !border-dashed !border-slate-300 !bg-slate-50 hover:!border-purple-400 hover:!bg-slate-50/50"
+                  }`}
+                onDragOver={handleDragOver}
+                onDrop={handleDrop}
+                onClick={() => {
+                  if (fileInputRef.current) {
+                    fileInputRef.current.click();
+                  }
+                }}
+              >
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  accept="image/*"
+                  style={{ display: "none" }}
+                  onChange={handleFileChange}
+                />
+
+                {file ? (
+                  <div className="!w-full !flex !flex-col !gap-3" onClick={(e) => e.stopPropagation()}>
+                    {/* Full Image Preview */}
+                    {filePreview && (
+                      <div className="!flex !items-center !justify-center !p-1.5 !bg-white !border !border-slate-200 !rounded-xl !max-h-[180px] !overflow-hidden">
+                        <img
+                          src={filePreview}
+                          alt="Prescription preview"
+                          className="!max-h-[168px] !max-w-full !object-contain !rounded-lg"
+                        />
+                      </div>
+                    )}
+
+                    {/* File Info Bar */}
+                    <div className="!p-3 !flex !items-center !gap-3 !bg-white !border !border-slate-200 !rounded-[14px] !text-left !shadow-sm">
+                      {/* File Icon Badge */}
+                      <div className="!flex !items-center !justify-center !w-10 !h-10 !rounded-[10px] !bg-blue-50 !text-blue-500 !text-[18px] !shrink-0">
+                        <i className="fa-regular fa-file-image"></i>
+                      </div>
+
+                      {/* Info */}
+                      <div className="!flex-1 !min-w-0 !text-left">
+                        <span
+                          className="!text-slate-800 !truncate !block !text-[13px] !font-semibold !leading-tight !mb-0.5 !max-w-[220px]"
+                          title={file.name}
+                        >
+                          {file.name}
+                        </span>
+                        <span className="!text-slate-400 !block !text-[11px]">
+                          {(file.size / 1024).toFixed(1)} KB
+                        </span>
+                      </div>
+
+                      {/* Delete button */}
+                      <button
+                        onClick={clearFile}
+                        className="!flex !items-center !justify-center !w-8 !h-8 !rounded-lg !bg-red-50 !text-red-500 hover:!bg-red-100 hover:!text-red-600 !transition-all !duration-200 !border-0 !p-0 !shrink-0"
+                        title="Remove file"
+                      >
+                        <i className="fa-solid fa-trash-can !text-[12px]"></i>
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <>
+                    <div className="!mb-2.5 !flex !items-center !justify-center !w-12 !h-12 !rounded-full !bg-slate-100 !text-slate-400">
+                      <i className="fa-solid fa-cloud-arrow-up !text-[20px]"></i>
+                    </div>
+                    <span className="!text-slate-700 !text-[13px] !font-bold">
+                      Click to upload or drag image here
+                    </span>
+                    <span className="!text-slate-400 !text-[11px] !mt-1">
+                      Supports JPEG, PNG, WebP (Max 10MB)
+                    </span>
+                  </>
+                )}
+              </div>
+            )}
+
+            {/* Checkbox: I don't have a prescription */}
+            {mode !== "search" && (
+              <div className="!flex !items-center !gap-2 !mt-3 !mb-2 !px-3.5 !py-2.5 !rounded-sm !bg-slate-50 !border !border-slate-200 !select-none">
+                <input
+                  type="checkbox"
+                  id="noPrescription"
+                  checked={noPrescription}
+                  onChange={(e) => {
+                    setNoPrescription(e.target.checked);
+                    if (e.target.checked) {
+                      setFile(null);
+                      setFilePreview(null);
+                      setValidationError("");
+                    }
+                  }}
+                  className="!w-4 !h-4 !rounded !border-slate-300 !cursor-pointer !accent-purple-600"
+                />
+                <label
+                  htmlFor="noPrescription"
+                  className="!text-[13px] !font-medium !text-slate-600 !cursor-pointer !mb-0"
+                >
+                  I don't have a prescription
+                </label>
+              </div>
+            )}
+
+            {/* Info Note: Prescription Charge Policy */}
+            {mode !== "search" && noPrescription && (
+              <div className="!mt-3 !p-3 !bg-amber-50 !border !border-amber-200 !rounded-xl !text-amber-800 !text-[12px] !leading-relaxed">
+                <div className="!flex !gap-2">
+                  <i className="fa-solid fa-circle-info !mt-0.5 !text-[15px]"></i>
+                  <div>
+                    <strong className="!block !mb-1 !font-bold !text-[13px]">Prescription Options:</strong>
+                    <ul className="!pl-4 !mb-0 !list-disc !flex !flex-col !gap-1">
+                      <li className="!mb-1">
+                        <strong>Upload After Payment:</strong> You can proceed to checkout now and upload your prescription later from your order details page.
+                      </li>
+                      <li>
+                        <strong>Get Doctor Prescription:</strong> Alternatively, Medicompares will arrange a doctor consultation and provide a valid prescription for all required medicines in this order for a fee of <strong>₹100</strong>.
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Actions */}
+            <div className="!flex !gap-3 !mt-4">
+              <button
+                type="button"
+                className="!w-1/2 !py-2.5 !rounded-xl !border !border-slate-200 !bg-white !text-slate-600 !font-semibold !text-[14px] hover:!bg-slate-50 hover:!border-slate-300 !transition-all"
+                onClick={onClose}
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                disabled={isUploading || (!file && !noPrescription)}
+                onClick={handleVerify}
+                className={`!w-1/2 !py-2.5 !rounded-xl !font-semibold !text-[14px] !text-white !transition-all !shadow-md hover:!shadow-lg !border-0 ${isUploading || (!file && !noPrescription)
+                  ? "!bg-slate-200 !text-slate-400 !cursor-not-allowed !shadow-none hover:!shadow-none"
+                  : "!bg-profile-primary hover:!bg-profile-secondary hover:!opacity-95"
+                  }`}
+              >
+                {isUploading ? (
+                  <>
+                    <div className="!animate-spin !rounded-full !h-4 !w-4 !border-2 !border-white !border-t-transparent !inline-block !mr-2"></div>
+                    {mode === "search" ? "Searching..." : "Verifying..."}
+                  </>
+                ) : noPrescription ? (
+                  "Proceed"
+                ) : (
+                  mode === "search" ? "Search Medicines" : "Verify & Add"
+                )}
+              </button>
+            </div>
+          </>
+        )}
       </div>
 
       {/* Modal Portals */}
@@ -1263,7 +1004,7 @@ const PrescriptionUploadModal = ({
           }}
         />
       )}
-    </div>
+    </BaseModal>
   );
 };
 

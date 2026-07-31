@@ -69,46 +69,45 @@ const ShareModal = ({ show, onClose, onShare }) => {
       className=""
       bodyClassName="p-3"
     >
-      <div className="row g-1">
+      <div className="grid grid-cols-4 gap-2">
         {shareOptions.map((option) => (
-          <div key={option.id} className="col-3">
+          <div
+            key={option.id}
+            className="flex flex-col items-center hover:bg-slate-50 transition-colors duration-200 share-option"
+            onClick={option.onClick}
+            style={{
+              cursor: "pointer",
+              transition: "all 0.2s",
+              padding: "12px 8px",
+              borderRadius: "8px",
+            }}
+          >
             <div
-              className="d-flex flex-column align-items-center share-option"
-              onClick={option.onClick}
               style={{
-                cursor: "pointer",
-                transition: "all 0.2s",
-                padding: "12px 8px",
-                borderRadius: "8px",
+                width: "40px",
+                height: "40px",
+                borderRadius: "50%",
+                backgroundColor: option.bgColor,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                marginBottom: "8px",
               }}
             >
-              <div
-                style={{
-                  width: "40px",
-                  height: "40px",
-                  borderRadius: "50%",
-                  backgroundColor: option.bgColor,
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  marginBottom: "8px",
-                }}
-              >
-                <i
-                  className={option.icon}
-                  style={{ fontSize: "20px", color: option.iconColor }}
-                />
-              </div>
-              <span
-                style={{
-                  fontSize: "12px",
-                  fontWeight: "500",
-                  color: "#202124",
-                }}
-              >
-                {option.label}
-              </span>
+              <i
+                className={option.icon}
+                style={{ fontSize: "20px", color: option.iconColor }}
+              />
             </div>
+            <span
+              style={{
+                fontSize: "12px",
+                fontWeight: "500",
+                color: "#202124",
+              }}
+            >
+              {option.label}
+            </span>
           </div>
         ))}
       </div>

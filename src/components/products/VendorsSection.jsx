@@ -132,27 +132,20 @@ const VendorsSection = ({
   // if (!vendors || vendors.length === 0) return null;
   if (!vendors || vendors.length === 0) {
     return (
-      <div className="product-vendors-section-full" style={{ position: "relative" }}>
+      <div className="relative">
         {/* Toggle Bar with 0 offers */}
         {!showAllVendors && (
           <div style={{ position: "relative", marginTop: "4px" }}>
             <div
-              className="vendors-section-header d-flex justify-content-between align-items-center"
-              style={{
-                background: "#fafafa",
-                border: "1px dashed #cbd5e1",
-                borderRadius: "10px",
-                padding: "6px 12px",
-                cursor: "default"
-              }}
+              className="flex justify-between items-center bg-[#fafafa] border border-dashed border-slate-300 rounded-sm py-1.5 px-3 cursor-default"
             >
-              <div className="vendors-header-left d-flex align-items-center">
-                <i className="fa-solid fa-right-left me-2" style={{ color: "#a3a3a3", fontSize: "10px" }}></i>
-                <span style={{ fontSize: "11px", fontWeight: "500", color: "#8c8c8c", letterSpacing: "0.02em" }}>
+              <div className="flex items-center">
+                <i className="fa-solid fa-right-left mr-2 style-vendor-icon" style={{ color: "#a3a3a3", fontSize: "10px" }}></i>
+                <span className="text-[11px] font-medium text-[#8c8c8c] tracking-wide">
                   Not available
                 </span>
               </div>
-              <span className="badge text-secondary border-0" style={{ fontSize: "10px", padding: "2px 6px", borderRadius: "4px", background: "#f0f0f0" }}>0</span>
+              <span className="inline-block text-[10px] px-1.5 py-0.5 rounded-[4px] bg-[#f0f0f0] text-gray-500 font-medium border-0">0</span>
             </div>
           </div>
         )}
@@ -685,7 +678,7 @@ const VendorsSection = ({
     return (
       <div
         key={vendorIndex}
-        className="flex flex-col p-2.5 border border-slate-200 bg-white rounded-md mb-1.5 transition-all hover:border-purple-200"
+        className="flex flex-col p-2.5 border border-slate-200 bg-white rounded-sm mb-1.5 transition-all hover:border-purple-200"
       >
         <div className="flex items-center gap-2.5 w-full">
           <div
@@ -822,7 +815,7 @@ const VendorsSection = ({
     <div className="relative w-full">
       {/* Inline view: Default to all if showAllVendors is true */}
       {showAllVendors && (
-        <div className="max-h-none opacity-1 overflow-visible">
+        <div className="flex flex-col gap-2">
           {vendors.map((vendor, vendorIndex) => renderVendorItem(vendor, vendorIndex))}
         </div>
       )}
@@ -833,7 +826,7 @@ const VendorsSection = ({
           {/* Toggle Bar to Compare Others */}
           {vendors.length > 0 ? (
             <div
-              className="flex justify-between items-center bg-gradient-to-r from-purple-50 to-indigo-50/30 border border-purple-200 rounded-xl px-3.5 py-1.5 cursor-pointer shadow-sm hover:from-purple-100/60 hover:to-indigo-50 transition-all"
+              className="flex justify-between items-center bg-gradient-to-r from-purple-50 to-indigo-50/30 border border-purple-200 !rounded-sm px-3.5 py-1.5 cursor-pointer shadow-sm hover:from-purple-100/60 hover:to-indigo-50 transition-all"
               onClick={handleToggle}
             >
               <div className="flex items-center gap-1.5">
@@ -867,35 +860,38 @@ const VendorsSection = ({
           {isExpanded && (
             <div
               onClick={(e) => e.stopPropagation()}
-              className="absolute bottom-[calc(100%+4px)] left-0 right-0 bg-white border border-slate-200 rounded-2xl shadow-xl z-[9999] p-3 flex flex-col max-h-[250px]"
+              className="absolute bottom-[calc(100%+6px)] left-0 right-0 bg-white border border-slate-150 border-t-2 border-t-purple-500 rounded-sm shadow-[0_15px_35px_rgba(128,89,202,0.15),0_5px_15px_rgba(0,0,0,0.05)] z-[9999] p-3.5 flex flex-col max-h-[280px]"
             >
               {/* Header */}
-              <div className="flex justify-between items-center mb-2.5 pb-2 border-b border-slate-100">
-                <div className="flex items-center gap-1.5">
-                  <i className="fa-solid fa-right-left text-[#8059ca] text-[13px]"></i>
-                  <span className="font-bold text-xs text-slate-800">Compare</span>
-                  <span className="text-[10px] text-slate-500 bg-slate-100 px-2 py-0.5 rounded-full font-bold">
+              <div className="flex justify-between items-center mb-3 pb-2.5 border-b border-slate-100 bg-gradient-to-r from-purple-50/40 to-transparent -mx-3.5 -mt-3.5 px-3.5 pt-2.5 rounded-t-sm">
+                <div className="flex items-center gap-2">
+                  <div className="w-5 h-5 rounded-full bg-purple-50 flex items-center justify-center">
+                    <i className="fa-solid fa-right-left text-[#8059ca] text-[10px]"></i>
+                  </div>
+                  <span className="font-bold text-[12.5px] text-slate-800 tracking-wide">Compare Offers</span>
+                  <span className="text-[10px] text-purple-700 bg-purple-50 px-2 py-0.5 rounded-full font-bold">
                     {vendors.length}
                   </span>
                 </div>
-                <button
-                  type="button"
-                  className="border-0 bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-800 w-6 h-6 rounded-full flex items-center justify-center transition-all cursor-pointer"
+                <div
+                  className="bg-slate-100 hover:bg-red-50 text-slate-500 hover:text-red-600 w-6 h-6 !rounded-full flex items-center justify-center transition-all duration-150 cursor-pointer"
                   onClick={handleToggle}
                 >
-                  <i className="fas fa-times text-[10px]"></i>
-                </button>
+                  <i className="fas fa-times text-[9px]"></i>
+                </div>
               </div>
 
               {/* Scroll Up Button Indicator */}
               {showScrollUp && (
                 <div
-                  className="absolute top-11 left-3 right-3 h-7 bg-gradient-to-b from-white/95 to-transparent flex justify-center items-center z-10 cursor-pointer"
+                  className="absolute top-[48px] left-3.5 right-3.5 h-8 bg-gradient-to-b from-white/95 via-white/80 to-transparent flex justify-center items-center z-10 cursor-pointer transition-opacity duration-200"
                   onClick={() => {
                     scrollContainerRef.current?.scrollBy({ top: -80, behavior: "smooth" });
                   }}
                 >
-                  <i className="fas fa-chevron-up text-[#8059ca] text-xs"></i>
+                  <div className="bg-white shadow-sm border border-slate-100 rounded-full w-6 h-6 flex items-center justify-center hover:scale-105 transition-transform">
+                    <i className="fas fa-chevron-up text-[#8059ca] text-[10px]"></i>
+                  </div>
                 </div>
               )}
 
@@ -903,7 +899,7 @@ const VendorsSection = ({
               <div
                 ref={scrollContainerRef}
                 onScroll={updateScrollIndicators}
-                className="flex-1 overflow-y-auto pr-0.5 scrollbar-thin"
+                className="flex-1 overflow-y-auto pr-0.5 scrollbar-thin space-y-2"
               >
                 {vendors.map((vendor, vendorIndex) => renderVendorItem(vendor, vendorIndex))}
               </div>
@@ -911,12 +907,14 @@ const VendorsSection = ({
               {/* Scroll Down Button Indicator */}
               {showScrollDown && (
                 <div
-                  className="absolute bottom-3 left-3 right-3 h-7 bg-gradient-to-t from-white/95 to-transparent flex justify-center items-center z-10 cursor-pointer"
+                  className="absolute bottom-3.5 left-3.5 right-3.5 h-8 bg-gradient-to-t from-white/95 via-white/80 to-transparent flex justify-center items-center z-10 cursor-pointer transition-opacity duration-200"
                   onClick={() => {
                     scrollContainerRef.current?.scrollBy({ top: 80, behavior: "smooth" });
                   }}
                 >
-                  <i className="fas fa-chevron-down text-[#8059ca] text-xs"></i>
+                  <div className="bg-white shadow-sm border border-slate-100 rounded-full w-6 h-6 flex items-center justify-center hover:scale-105 transition-transform">
+                    <i className="fas fa-chevron-down text-[#8059ca] text-[10px]"></i>
+                  </div>
                 </div>
               )}
             </div>
