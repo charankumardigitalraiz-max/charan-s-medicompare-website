@@ -6,6 +6,7 @@ import "swiper/css/navigation";
 import Slider from "react-slick";
 import CategoryProvider from "../../../components/CategoryProvider.jsx";
 import PageLoader from "../../../components/ui/PageLoader.jsx";
+import { SectionHeader } from "../../../components/ui/index.js";
 import Home2Header from "../../../components/home/Header-k.jsx";
 import Footer from "../../../components/home/Footer-f.jsx";
 import { useEffect, useState, useRef, useCallback, useMemo, useLayoutEffect, lazy, Suspense, memo, use } from "react";
@@ -45,7 +46,7 @@ const getSearchItemId = (item) => item?.tablet?._id || item?._id || null;
 const ServiceCategoryCard = memo(({ cat, index, onClick }) => (
   <div className="lg:w-[16.666%] md:w-[25%] sm:w-[50%] w-[33.333%] flex ">
     <div
-      className="serv-wrap medi-bg service-category-card-lite flex-1 cursor-pointer bg-white flex flex-col justify-center items-center min-h-[135px] py-[15px] px-[10px] m-[0_0_12px]"
+      className="group service-category-card-lite w-full [contain:layout_style_paint] flex-1 cursor-pointer bg-white !border !border-[#eef1f6] !shadow-[0_8px_30px_rgb(0,0,0,0.03)] hover:!shadow-[0_20px_40px_rgba(128,89,202,0.12)] !rounded-2xl hover:!border-[#8059ca]/40 hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-center items-center min-h-[135px] !py-5 !px-3 !m-[0_0_12px]"
       onClick={() => onClick(cat)}
       role="button"
       tabIndex={0}
@@ -53,18 +54,18 @@ const ServiceCategoryCard = memo(({ cat, index, onClick }) => (
         if (e.key === "Enter" || e.key === " ") onClick(cat);
       }}
     >
-      <span className="flex items-center justify-center mb-[8px]" style={{ width: "45px", height: "45px" }}>
+      <span className="flex items-center justify-center mb-3 rounded-full bg-gradient-to-br from-[#f8f4ff] to-[#f3ebff] border border-[#f3effc] w-[50px] h-[50px] shrink-0 transition-all duration-300 group-hover:scale-105">
         <img
           src={getImageUrl(cat?.files?.[0]) || "/assets/default.png"}
           alt={cat?.name || "Category"}
           title={cat?.name}
-          className="h-full w-full object-contain"
+          className="h-[32px] w-[32px] object-contain transition-transform duration-[700ms] ease-in-out group-hover:[transform:rotateY(360deg)]"
           loading={index < 8 ? "eager" : "lazy"}
           fetchPriority={index < 4 ? "high" : "auto"}
           decoding="async"
         />
       </span>
-      <h4 className="text-[12px] leading-[1.3] font-semibold m-0 text-center line-clamp-2 h-auto min-h-[32px]">
+      <h4 className="!text-[12px] leading-[1.3] !font-semibold m-0 text-center line-clamp-2 h-auto min-h-[32px] !text-slate-700 group-hover:!text-[#8059ca] transition-colors duration-200">
         {cat?.name || "No Category"}
       </h4>
     </div>
@@ -1396,9 +1397,10 @@ const ServiceDetails = () => {
 
       {myservice.fixedType !== "ambulanceservice" && (
         <div
-          className={`service-cards-stack-wrapper relative overflow-visible ${showSuggestions ? "z-[1]" : "z-[5]"}`}
+          className={`relative overflow-visible ${showSuggestions ? "z-[1]" : "z-[5]"} -mt-4 md:mt-0`}
           style={{
             backgroundColor: PRIMARY_SECTION_BG,
+            contain: "none",
           }}
         >
           <ServiceCards serviceType={myservice?.fixedType} liteMode={pageLiteMode} />
@@ -1406,33 +1408,52 @@ const ServiceDetails = () => {
       )}
 
       {topBanners.length > 0 && (
-        <section
-          className={`mobilemargin feedback-section-fifteen px-2 mb-3 `}
-        >
+        <section className="relative pt-[30px] xl:!pt-[20px] px-2 mb-4 md:!mb-3">
           <div className="w-full mt-0">
             {topBanners.length > 1 ? (
-              <Slider {...settings1}>
-                {topBanners.map((image, index) => (
-                  <div key={index} className="lg:w-full flex">
-
-                    <img
-                      src={image.src}
-                      alt={image.alt}
-                      title={image.alt}
-                      loading="lazy"
-                      className="banner-image px-1"
-                    />
-                  </div>
-                ))}
-              </Slider>
+              <div className="relative banner-slider-wrap">
+                <style>{`
+                  .banner-slider-wrap .slick-dots {
+                    position: absolute !important;
+                    bottom: 8px !important;
+                    left: 0 !important;
+                    right: 0 !important;
+                    margin: 0 !important;
+                    padding: 0 4px !important;
+                    z-index: 10 !important;
+                  }
+                  .banner-slider-wrap .slick-dots li button:before {
+                    color: #fff !important;
+                    opacity: 0.7 !important;
+                    font-size: 8px !important;
+                  }
+                  .banner-slider-wrap .slick-dots li.slick-active button:before {
+                    color: #fff !important;
+                    opacity: 1 !important;
+                  }
+                `}</style>
+                <Slider {...settings1}>
+                  {topBanners.map((image, index) => (
+                    <div key={index} className="w-full flex">
+                      <img
+                        src={image.src}
+                        alt={image.alt}
+                        title={image.alt}
+                        loading="lazy"
+                        className="!w-full !rounded-[10px] !aspect-[5.5/1] !object-cover !block px-1"
+                      />
+                    </div>
+                  ))}
+                </Slider>
+              </div>
             ) : (
-              <div className="lg:w-full flex">
+              <div className="w-full flex">
                 <img
                   src={topBanners[0].src}
                   alt={topBanners[0].alt}
                   title={topBanners[0].alt}
                   loading="lazy"
-                  className="banner-image px-1"
+                  className="!w-full !rounded-[10px] !aspect-[5.5/1] !object-cover !block px-1"
                 />
               </div>
             )}
@@ -1454,7 +1475,7 @@ const ServiceDetails = () => {
               <div className="flex items-center flex-wrap gap-3">
                 <Link
                   to={`/view-all-categories/${service}`}
-                  className={`top-vendor-badge service-link-hover border border-solid border-[#8059ca] bg-white text-[#8059ca] font-semibold flex items-center justify-center ${isMobile ? "p-[8px] rounded-[50%] text-[10px] w-[36px] h-[36px]" : "py-[8px] px-[20px] rounded-[50px] text-[14px] w-auto h-auto"}`}
+                  className={`border border-solid border-[#8059ca] bg-white text-[#8059ca] hover:!bg-[#8059ca] hover:!text-white transition-all duration-300 font-semibold flex items-center justify-center ${isMobile ? "!p-0 !rounded-full !w-[36px] !h-[36px] !shrink-0 !grow-0 !self-center" : "py-[8px] px-[20px] rounded-[50px] text-[14px] w-auto h-auto"}`}
                 >
                   {isMobile ? "" : "View All"}
                   <i className={isMobile ? "isax isax-arrow-right-1" : "isax isax-arrow-right-1 ml-1"}></i>
@@ -1724,28 +1745,26 @@ const ServiceDetails = () => {
       {partners && partners.length > 0 && (
         <section className="w-full px-3 py-3 my-3 service-partners-section-lite">
           <div>
-            <div className="flex items-center justify-between result-wrap gap-3 my-2">
-              <div
-                className="home-dynamic-section-badge mb-2"
-              >
-                <i className="fas fa-bolt mr-[6px]"></i>
-                Trusted Partners
-                {isMobile ? "" : `(${partners.length})`}
-              </div>
-
-              <Link
-                to={`/partners/${service}`}
-                className={`top-vendor-badge service-link-hover flex items-center justify-center font-semibold ${isMobile ? "p-[8px] rounded-[50%] w-[36px] h-[36px]" : "py-[8px] px-[20px] rounded-[50px] w-auto h-auto"}`}
-              >
-                {!isMobile && "View All"}
-                <i className={`isax isax-arrow-right-1 ${!isMobile ? "ml-1" : ""}`} />
-              </Link>
-            </div>
+            <SectionHeader
+              title={`Trusted Partners${isMobile ? "" : ` (${partners.length})`}`}
+              icon="fas fa-bolt"
+              viewAllLink={`/partners/${service}`}
+              viewAllText="View All"
+            />
 
             <div
               className={`trusted-partners-scroll pb-1 mt-2 relative ${isMobile ? "py-[10px] px-[5px]" : "py-[10px] px-[20px]"}`}
+              style={{
+                msOverflowStyle: "none",
+                scrollbarWidth: "none",
+              }}
             >
-              <div className="doctor-slider-one owl-theme px-3">
+              <style>{`
+                .trusted-partners-scroll::-webkit-scrollbar {
+                  display: none !important;
+                }
+              `}</style>
+              <div className="owl-theme !p-0 !-mx-2 !mb-0 max-sm:!pt-[5px] max-sm:!pb-[20px] max-sm:!px-0">
                 <Slider {...partnerSliderSettings}>
                   {partners.map((partner, index) => {
                     const businessImage =
@@ -1846,7 +1865,7 @@ const ServiceDetails = () => {
         </section>
       )}
 
-      {myservice.fixedType == "dentalservice" && (
+      {/* {myservice.fixedType == "dentalservice" && (
         <section className="features-section bg-[#E8E4F5] bg-[url('/assets/Medicompares%20Background.png')] bg-cover bg-center bg-no-repeat"
         >
           <div className="features-container">
@@ -1878,7 +1897,7 @@ const ServiceDetails = () => {
             </div>
           </div>
         </section>
-      )}
+      )} */}
 
       <Footer />
     </div>

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { SectionHeader } from "../../../components/ui/index.js";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -365,101 +366,26 @@ const medicaltreatment = ({
   return (
     <>
       <SEOHelmet page="treatments" />
-      <section
-        style={{
-          padding: "40px 0",
-          background: "#f8f9fa",
-          position: "relative",
-          overflow: "hidden",
-        }}
-      >
-        <div
-          style={{
-            position: "absolute",
-            top: "-100px",
-            right: "-100px",
-            width: "300px",
-            height: "300px",
-            borderRadius: "50%",
-            background:
-              "linear-gradient(135deg, rgba(125, 46, 255, 0.1) 0%, rgba(125, 46, 255, 0.05) 100%)",
-            filter: "blur(40px)",
-            zIndex: 0,
-          }}
-        ></div>
-        <div
-          style={{
-            position: "absolute",
-            bottom: "-150px",
-            left: "-150px",
-            width: "400px",
-            height: "400px",
-            borderRadius: "50%",
-            background:
-              "linear-gradient(135deg, rgba(125, 46, 255, 0.08) 0%, rgba(125, 46, 255, 0.03) 100%)",
-            filter: "blur(50px)",
-            zIndex: 0,
-          }}
-        ></div>
+      <section className="!py-10 !bg-[#f8f9fa] !relative !overflow-hidden">
+        <div className="!absolute !top-[-100px] !right-[-100px] !w-[300px] !h-[300px] !rounded-full !bg-gradient-to-br !from-[rgba(125,46,255,0.1)] !to-[rgba(125,46,255,0.05)] !blur-[40px] !z-0"></div>
+        <div className="!absolute !bottom-[-150px] !left-[-150px] !w-[400px] !h-[400px] !rounded-full !bg-gradient-to-br !from-[rgba(125,46,255,0.08)] !to-[rgba(125,46,255,0.03)] !blur-[50px] !z-0"></div>
 
         {/* Geometric Shapes */}
-        <div
-          style={{
-            position: "absolute",
-            top: "20%",
-            left: "5%",
-            width: "60px",
-            height: "60px",
-            border: "3px solid rgba(125, 46, 255, 0.15)",
-            borderRadius: "12px",
-            transform: "rotate(45deg)",
-            zIndex: 0,
-          }}
-        ></div>
-        <div
-          style={{
-            position: "absolute",
-            bottom: "15%",
-            right: "8%",
-            width: "80px",
-            height: "80px",
-            border: "3px solid rgba(125, 46, 255, 0.12)",
-            borderRadius: "50%",
-            zIndex: 0,
-          }}
-        ></div>
+        <div className="!absolute !top-[20%] !left-[5%] !w-[60px] !h-[60px] !border-3 !border-solid !border-[rgba(125,46,255,0.15)] !rounded-[12px] !rotate-45 !z-0"></div>
+        <div className="!absolute !bottom-[15%] !right-[8%] !w-[80px] !h-[80px] !border-3 !border-solid !border-[rgba(125,46,255,0.12)] !rounded-full !z-0"></div>
 
-        <div
-          className="container-fluid"
-          style={{ position: "relative", zIndex: 1 }}
-        >
+        <div className="container-fluid !relative !z-10">
           <div className="row mb-3">
             <div className="col-12 text-center">
               <h2
-                style={{
-                  fontSize: "40px",
-                  fontWeight: "700",
-                  display: "inline-block",
-                  background:
-                    "linear-gradient(135deg, #8059ca 0%, #6d48b8 100%)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
-                  marginBottom: "15px",
-                  color: "#8059ca",
-                }}
+                className="!text-[40px] !font-semibold !inline-block !bg-gradient-to-br !from-[#8059ca] !to-[#6d48b8] !bg-clip-text !text-transparent !mb-[15px]"
                 data-aos="fade-up"
                 data-aos-delay="100"
               >
                 Our Treatment Process
               </h2>
               <p
-                style={{
-                  fontSize: "18px",
-                  color: "#67748e",
-                  maxWidth: "600px",
-                  margin: "0 auto",
-                }}
+                className="!text-[18px] !text-[#67748e] !max-w-[600px] !mx-auto"
                 data-aos="fade-up"
                 data-aos-delay="200"
               >
@@ -470,15 +396,7 @@ const medicaltreatment = ({
 
           <div className="row">
             <div className="col-12">
-              <div
-                style={{
-                  display: "flex",
-                  flexWrap: "wrap",
-                  justifyContent: "center",
-                  gap: "30px",
-                  position: "relative",
-                }}
-              >
+              <div className="!flex !flex-wrap !justify-center !gap-[30px] !relative">
                 {[
                   {
                     step: "01",
@@ -520,212 +438,75 @@ const medicaltreatment = ({
                   return (
                     <div
                       key={index}
-                      style={{
-                        flex: "1 1 250px",
-                        maxWidth: "280px",
-                        position: "relative",
-                      }}
+                      className="!flex-[1_1_250px] !max-w-[280px] !relative group"
                       data-aos="fade-up"
                       data-aos-delay={index * 150}
                     >
                       {/* Connecting Line with Primary Color */}
                       {index < 3 && (
-                        <div
-                          className="d-none d-lg-block"
-                          style={{
-                            position: "absolute",
-                            top: "50%",
-                            right: "-20px",
-                            transform: "translateY(-50%)",
-                            zIndex: 0,
-                          }}
-                        >
-                          <div
-                            style={{
-                              width: "40px",
-                              height: "3px",
-                              background:
-                                "linear-gradient(90deg, #8059ca 0%, rgba(125, 46, 255, 0.3) 100%)",
-                              borderRadius: "2px",
-                              position: "relative",
-                            }}
-                          >
-                            <div
-                              style={{
-                                position: "absolute",
-                                right: "-6px",
-                                top: "50%",
-                                transform: "translateY(-50%)",
-                                width: 0,
-                                height: 0,
-                                borderLeft: "8px solid #8059ca",
-                                borderTop: "4px solid transparent",
-                                borderBottom: "4px solid transparent",
-                              }}
-                            ></div>
+                        <div className="d-none d-lg-block !absolute !top-1/2 !right-[-20px] !-translate-y-1/2 !z-0">
+                          <div className="!w-[40px] !h-[3px] !bg-gradient-to-r !from-[#8059ca] !to-[rgba(125,46,255,0.3)] !rounded-[2px] !relative">
+                            <div className="!absolute !right-[-6px] !top-1/2 !-translate-y-1/2 !w-0 !h-0 !border-l-[8px] !border-l-solid !border-l-[#8059ca] !border-t-[4px] !border-t-transparent !border-b-[4px] !border-b-transparent"></div>
                           </div>
                         </div>
                       )}
 
                       {/* Top Accent Line */}
                       <div
+                        className="!absolute !top-0 !left-0 !right-0 !h-[4px] !rounded-t-[15px] !transition-all !duration-300 group-hover:!h-[6px]"
                         style={{
-                          position: "absolute",
-                          top: 0,
-                          left: 0,
-                          right: 0,
-                          height: "4px",
                           background: `linear-gradient(90deg, ${color.primary} 0%, rgba(125, 46, 255, 0.3) 100%)`,
-                          borderRadius: "15px 15px 0 0",
                         }}
                       ></div>
 
-                      <div
-                        style={{
-                          background: "#ffffff",
-                          borderRadius: "15px",
-                          padding: "40px 30px",
-                          boxShadow: "0 4px 20px rgba(0, 0, 0, 0.08)",
-                          border: "1px solid #e5e7eb",
-                          borderTop: "none",
-                          textAlign: "center",
-                          height: "100%",
-                          transition: "all 0.3s ease",
-                          position: "relative",
-                          zIndex: 1,
-                        }}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.transform = "translateY(-5px)";
-                          e.currentTarget.style.boxShadow =
-                            "0 8px 30px rgba(125, 46, 255, 0.2)";
-                          e.currentTarget.style.borderColor = "#8059ca";
-                          const accentLine =
-                            e.currentTarget.previousElementSibling;
-                          if (accentLine) {
-                            accentLine.style.height = "6px";
-                            accentLine.style.background = `linear-gradient(90deg, ${color.primary} 0%, ${color.primary}80 100%)`;
-                          }
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.transform = "translateY(0)";
-                          e.currentTarget.style.boxShadow =
-                            "0 4px 20px rgba(0, 0, 0, 0.08)";
-                          e.currentTarget.style.borderColor = "#e5e7eb";
-                          const accentLine =
-                            e.currentTarget.previousElementSibling;
-                          if (accentLine) {
-                            accentLine.style.height = "4px";
-                            accentLine.style.background = `linear-gradient(90deg, ${color.primary} 0%, rgba(125, 46, 255, 0.3) 100%)`;
-                          }
-                        }}
-                      >
+                      <div className="!bg-white !rounded-[15px] !py-10 !px-[30px] !shadow-[0_4px_20px_rgba(0,0,0,0.08)] !border !border-solid !border-[#e5e7eb] !border-t-0 !text-center !h-full !transition-all !duration-300 !relative !z-10 hover:!-translate-y-[5px] hover:!shadow-[0_8px_30px_rgba(125,46,255,0.2)] hover:!border-[#8059ca]">
                         {/* Icon Container with Primary Color Accent */}
-                        <div
-                          style={{
-                            position: "relative",
-                            display: "inline-block",
-                            marginBottom: "25px",
-                          }}
-                        >
+                        <div className="!relative !inline-block !mb-[25px]">
                           {/* Decorative Circle Behind Icon */}
                           <div
+                            className="!absolute !top-1/2 !left-1/2 !-translate-x-1/2 !-translate-y-1/2 !w-[100px] !h-[100px] !rounded-full !z-0"
                             style={{
-                              position: "absolute",
-                              top: "50%",
-                              left: "50%",
-                              transform: "translate(-50%, -50%)",
-                              width: "100px",
-                              height: "100px",
-                              borderRadius: "50%",
                               background: `linear-gradient(135deg, ${color.primary}15 0%, ${color.primary}05 100%)`,
-                              zIndex: 0,
                             }}
                           ></div>
                           <div
+                            className="!w-[80px] !h-[80px] !rounded-full !flex !items-center !justify-center !mx-auto !transition-all !duration-300 !relative !z-10 !border-3 !border-solid group-hover:!scale-[1.1] group-hover:!shadow-[0_8px_25px_rgba(128,89,202,0.4)]"
                             style={{
-                              width: "80px",
-                              height: "80px",
-                              borderRadius: "50%",
                               background: `linear-gradient(135deg, ${color.light} 0%, #ffffff 100%)`,
-                              border: `3px solid ${color.primary}30`,
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "center",
-                              margin: "0 auto",
-                              transition: "all 0.3s ease",
-                              position: "relative",
-                              zIndex: 1,
-                            }}
-                            onMouseEnter={(e) => {
-                              e.currentTarget.style.transform = "scale(1.1)";
-                              e.currentTarget.style.background = `linear-gradient(135deg, ${color.primary} 0%, #110EFD 100%)`;
-                              e.currentTarget.style.borderColor = color.primary;
-                              e.currentTarget.style.boxShadow = `0 8px 25px ${color.primary}40`;
-                              const icon = e.currentTarget.querySelector("i");
-                              if (icon) icon.style.color = "#ffffff";
-                            }}
-                            onMouseLeave={(e) => {
-                              e.currentTarget.style.transform = "scale(1)";
-                              e.currentTarget.style.background = `linear-gradient(135deg, ${color.light} 0%, #ffffff 100%)`;
-                              e.currentTarget.style.borderColor = `${color.primary}30`;
-                              e.currentTarget.style.boxShadow = "none";
-                              const icon = e.currentTarget.querySelector("i");
-                              if (icon) icon.style.color = color.primary;
+                              borderColor: `${color.primary}30`,
                             }}
                           >
                             <i
-                              className={process.icon}
+                              className={`${process.icon} !text-[32px] !transition-colors !duration-300`}
                               style={{
-                                fontSize: "32px",
                                 color: color.primary,
-                                transition: "color 0.3s ease",
                               }}
                             ></i>
                           </div>
                         </div>
 
                         <div
+                          className="!inline-block !py-[6px] !px-[16px] !rounded-[20px] !mb-[15px] !border !border-solid"
                           style={{
-                            display: "inline-block",
-                            padding: "6px 16px",
                             background: `linear-gradient(135deg, ${color.primary}15 0%, ${color.primary}05 100%)`,
-                            borderRadius: "20px",
-                            marginBottom: "15px",
-                            border: `1px solid ${color.primary}20`,
+                            borderColor: `${color.primary}20`,
                           }}
                         >
                           <span
+                            className="!text-[12px] !font-semibold !tracking-[2px] !uppercase"
                             style={{
-                              fontSize: "12px",
-                              fontWeight: "700",
                               color: color.primary,
-                              letterSpacing: "2px",
-                              textTransform: "uppercase",
                             }}
                           >
                             STEP {process.step}
                           </span>
                         </div>
 
-                        <h3
-                          style={{
-                            fontSize: "22px",
-                            fontWeight: "700",
-                            color: "#1a1a1a",
-                            marginBottom: "15px",
-                          }}
-                        >
+                        <h3 className="!text-[22px] !font-semibold !text-[#1a1a1a] !mb-[15px]">
                           {process.title}
                         </h3>
 
-                        <p
-                          style={{
-                            fontSize: "15px",
-                            color: "#67748e",
-                            lineHeight: "1.7",
-                            margin: 0,
-                          }}
-                        >
+                        <p className="!text-[15px] !text-[#67748e] !leading-[1.7] !m-0">
                           {process.description}
                         </p>
                       </div>
@@ -790,500 +571,341 @@ const medicaltreatment = ({
       )}
 
       {medicalTreatments && medicalTreatments.length > 0 && (
-        <div className="content doctor-content pb-0 mx-2"
+        <div className="!m-0 !pt-5 lg:!pt-[15px] !pb-0 !mx-2 !bg-cover !bg-center !bg-no-repeat"
           style={{
             backgroundImage: "url('/assets/Medicompares Background.png')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
-            // padding: '20px'
           }}>
-          <div className="container-fluid">
-            <div className="d-flex align-items-center justify-content-between flex-wrap result-wrap gap-3">
-              <h3 className="mb-2 top-vendor-badge">
-                <i className="fas fa-bolt"></i>
-                Top Popular Treatments
-              </h3>
+          <div className="container-fluid !px-4 md:!px-6">
+            <SectionHeader
+              title="Top Popular Treatments"
+              icon="fas fa-bolt"
+              viewAllLink={`/${currentService}/all`}
+              viewAllText="View All"
+            />
 
-              <div className="d-flex align-items-center flex-wrap gap-3 mb-3">
-                <Link
-                  to={`/${currentService}/all`}
-                  className="top-vendor-badge"
+            <div
+              className="meq-swiper-wrapper"
+              style={{ position: "relative" }}
+            >
+              {hasEnoughTreatments && (
+                <button
+                  className="meq-arrow-btn treatment-prev"
+                  aria-label="Previous"
                 >
-                  View All
-                  <i className="isax isax-arrow-right-1 ms-1"></i>
-                </Link>
-              </div>
-            </div>
-
-            <div className="row">
-              <div
-                className="meq-swiper-wrapper"
-                style={{ position: "relative" }}
-              >
-                {hasEnoughTreatments && (
-                  <button
-                    className="meq-arrow-btn treatment-prev"
-                    aria-label="Previous"
-                  >
-                    <i className="fas fa-chevron-left"></i>
-                  </button>
-                )}
-                <Swiper {...swiperSettings}>
-                  {medicalTreatments.map((treatment, index) => {
-                    const vendor = treatment?.vendordetails;
-                    const med = treatment?.tabletdetails;
-                    return (
-                      <SwiperSlide
-                        key={treatment?._id || index}
-                        style={{ display: "flex", alignSelf: "stretch" }}
+                  <i className="fas fa-chevron-left"></i>
+                </button>
+              )}
+              <Swiper {...swiperSettings}>
+                {medicalTreatments.map((treatment, index) => {
+                  const vendor = treatment?.vendordetails;
+                  const med = treatment?.tabletdetails;
+                  return (
+                    <SwiperSlide
+                      key={treatment?._id || index}
+                      style={{ display: "flex", alignSelf: "stretch" }}
+                    >
+                      <div
+                        className="!px-2 !mb-2 !h-full !flex !flex-col !cursor-pointer !w-full"
+                        onClick={() => handleProductClick(treatment)}
                       >
                         <div
-                          className="px-2 mb-2"
-                          onClick={() => handleProductClick(treatment)}
+                          className="!bg-white !rounded-[16px] !overflow-hidden !shadow-[0_8px_20px_rgba(0,0,0,0.08)] !my-[20px] !w-full !flex !flex-col !h-full"
                         >
-                          <div
-                            className="health-card"
-                            style={{
-                              cursor: "pointer",
-                              display: "flex",
-                              flexDirection: "column",
-                              height: "100%",
-                            }}
-                          >
-                            <div className="card-imgs">
-                              {med?.files?.[0] ? (
-                                <img
-                                  src={getImageUrl(med.files[0])}
-                                  alt={med.name}
-                                  loading="lazy"
-                                  style={{
-                                    height: "150px",
-                                    objectFit: "contain",
-                                    width: "100%",
-                                  }}
-                                />
-                              ) : (
-                                <div
-                                  style={{
-                                    height: "150px",
-                                    display: "flex",
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                    background: "#f8f9fa",
-                                    borderRadius: "8px",
-                                    width: "100%",
-                                  }}
-                                >
-                                  <i className="fas fa-briefcase-medical" style={{ fontSize: "40px", color: "#ccc" }}></i>
-                                </div>
-                              )}
+                          <div className="!relative">
+                            {med?.files?.[0] ? (
+                              <img
+                                src={getImageUrl(med.files[0])}
+                                alt={med.name}
+                                loading="lazy"
+                                className="!h-[150px] !object-contain !w-full"
+                              />
+                            ) : (
+                              <div className="!h-[150px] !flex !items-center !justify-center !bg-[#f8f9fa] !rounded-[8px] !w-full">
+                                <i className="fas fa-briefcase-medical" style={{ fontSize: "40px", color: "#ccc" }}></i>
+                              </div>
+                            )}
+                            <div
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                const data = treatment?.tabletdetails;
+                                const categorySlug =
+                                  data?.subcategorydetails?.catdetails
+                                    ?.slug;
+                                const subcategorySlug =
+                                  data?.subcategorydetails?.slug;
+                                const productSlug = data?.slug;
+                                if (
+                                  !categorySlug ||
+                                  !subcategorySlug ||
+                                  !productSlug
+                                )
+                                  return;
+                                navigate(
+                                  `/${categorySlug}/${subcategorySlug}/${productSlug}/compare`,
+                                );
+                              }}
+                              className="!absolute !top-[10px] !right-[10px] !bg-gradient-to-br !from-[#f59e0b] !to-[#d97706] !rounded-[30px] !px-[14px] !py-[3px] !flex !items-center !gap-[6px] !shadow-[0_4px_12px_rgba(245,158,11,0.4)] !z-10 !border-[1.5px] !border-solid !border-white !cursor-pointer !transition-all !duration-300 hover:!scale-[1.12] hover:!-translate-y-[2px] hover:!shadow-[0_8px_20px_rgba(245,158,11,0.55)]"
+                              title="Compare Package"
+                            >
+                              <i
+                                className="fa-solid fa-hand-pointer !text-[13px] !text-white !rotate-90 !inline-block"
+                              ></i>
+                              <span className="!text-[11px] !font-extrabold !text-white !uppercase !tracking-[0.6px]">
+                                Compare
+                              </span>
+                            </div>
+                          </div>
+                          <div className="!p-[6px_12px] !flex-grow !flex !flex-col">
+                            <div className="d-flex justify-content-between align-items-center">
+                              <h3 className="!font-medium !text-[#1a1a1a] !mb-[10px] !capitalize !text-[16px]">
+                                {med?.name?.length > 20
+                                  ? med.name.slice(0, 20) + "..."
+                                  : med?.name}
+                              </h3>
+
                               <div
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  const data = treatment?.tabletdetails;
-                                  const categorySlug =
-                                    data?.subcategorydetails?.catdetails
-                                      ?.slug;
-                                  const subcategorySlug =
-                                    data?.subcategorydetails?.slug;
-                                  const productSlug = data?.slug;
-                                  if (
-                                    !categorySlug ||
-                                    !subcategorySlug ||
-                                    !productSlug
-                                  )
-                                    return;
-                                  navigate(
-                                    `/${categorySlug}/${subcategorySlug}/${productSlug}/compare`,
-                                  );
-                                }}
-                                style={{
-                                  position: "absolute",
-                                  top: "10px",
-                                  right: "10px",
-                                  background: "linear-gradient(135deg, #f59e0b 0%, #d97706 100%)",
-                                  borderRadius: "30px",
-                                  padding: "3px 14px",
-                                  display: "flex",
-                                  alignItems: "center",
-                                  gap: "6px",
-                                  boxShadow: "0 4px 12px rgba(245, 158, 11, 0.4)",
-                                  zIndex: 10,
-                                  border: "1.5px solid #ffffff",
-                                  cursor: "pointer",
-                                  transition: "all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
-                                  transform: "scale(1)",
-                                }}
-                                onMouseEnter={(e) => {
-                                  e.currentTarget.style.transform = "scale(1.12) translateY(-2px)";
-                                  e.currentTarget.style.boxShadow = "0 8px 20px rgba(245, 158, 11, 0.55)";
-                                }}
-                                onMouseLeave={(e) => {
-                                  e.currentTarget.style.transform = "scale(1)";
-                                  e.currentTarget.style.boxShadow = "0 4px 12px rgba(245, 158, 11, 0.4)";
-                                }}
-                                title="Compare Package"
+                                className="d-flex align-items-center justify-content-end"
+                                style={{ minWidth: "80px", fontSize: "12px" }}
                               >
-                                <i
-                                  className="fa-solid fa-hand-pointer"
-                                  style={{
-                                    fontSize: "13px",
-                                    color: "#ffffff",
-                                    transform: "rotate(90deg)",
-                                    display: "inline-block",
-                                  }}
-                                ></i>
-                                <span
-                                  style={{
-                                    fontSize: "11px",
-                                    fontWeight: "800",
-                                    color: "#ffffff",
-                                    textTransform: "uppercase",
-                                    letterSpacing: "0.6px",
-                                  }}
-                                >
-                                  Compare
+                                <i className="fa fa-star text-warning me-1"></i>
+                                <span className="me-1">
+                                  {med?.averageRating?.toFixed(1) > 0
+                                    ? med.averageRating?.toFixed(1)
+                                    : 0}
+                                </span>
+
+                                <i className="fa fa-users me-1 text-primary"></i>
+                                <span>
+                                  (
+                                  {med?.ratingCount > 0
+                                    ? `${med.ratingCount}+`
+                                    : 0}
+                                  )
                                 </span>
                               </div>
                             </div>
-                            <div className="card-bodyyy">
-                              <div className="d-flex justify-content-between align-items-center">
-                                <h3 className="titlee text-dark mb-2">
-                                  {med?.name?.length > 20
-                                    ? med.name.slice(0, 20) + "..."
-                                    : med?.name}
-                                </h3>
-
-                                <div
-                                  className="d-flex align-items-center justify-content-end"
-                                  style={{ minWidth: "80px", fontSize: "12px" }}
-                                >
-                                  <i className="fa fa-star text-warning me-1"></i>
+                            {med?.subcategorydetails && (
+                              <div className="!flex-[0_0_50%]">
+                                <p className="mb-1 d-flex align-items-center !text-[11px] !text-black">
+                                  <i
+                                    className="fas fa-user-md me-1 text-primary"
+                                    style={{ width: "14px" }}
+                                  ></i>
                                   <span className="me-1">
-                                    {med?.averageRating?.toFixed(1) > 0
-                                      ? med.averageRating?.toFixed(1)
-                                      : 0}
+                                    Specialist Type :
                                   </span>
-
-                                  <i className="fa fa-users me-1 text-primary"></i>
-                                  <span>
-                                    (
-                                    {med?.ratingCount > 0
-                                      ? `${med.ratingCount}+`
-                                      : 0}
-                                    )
-                                  </span>
-                                </div>
-                              </div>
-                              {med?.subcategorydetails && (
-                                <div style={{ flex: "0 0 50%" }}>
-                                  <p
-                                    className="mb-1 d-flex align-items-center"
-                                    style={{ fontSize: "11px", color: "black" }}
-                                  >
-                                    <i
-                                      className="fas fa-user-md me-1 text-primary"
-                                      style={{ width: "14px" }}
-                                    ></i>
-                                    <span className="me-1">
-                                      Specialist Type :
-                                    </span>
-                                    <strong>
-                                      {med?.subcategorydetails?.name?.length >
-                                        15
-                                        ? med.subcategorydetails.name.slice(
-                                          0,
-                                          15,
-                                        ) + "..."
-                                        : med?.subcategorydetails?.name ||
-                                        "General"}
-                                    </strong>
-                                  </p>
-                                </div>
-                              )}
-                              <div style={{ flex: "0 0 50%" }}>
-                                <p
-                                  className="mb-1 d-flex align-items-center"
-                                  style={{ fontSize: "11px", color: "black" }}
-                                >
-                                  <i
-                                    className="fas fa-clock me-1 text-primary"
-                                    style={{ width: "14px" }}
-                                  ></i>
-                                  <span className="me-1">Duration :</span>
-                                  <strong>3-5 Hours</strong>
+                                  <strong>
+                                    {med?.subcategorydetails?.name?.length >
+                                      15
+                                      ? med.subcategorydetails.name.slice(
+                                        0,
+                                        15,
+                                      ) + "..."
+                                      : med?.subcategorydetails?.name ||
+                                      "General"}
+                                  </strong>
                                 </p>
                               </div>
+                            )}
+                            <div className="!flex-[0_0_50%]">
+                              <p className="mb-1 d-flex align-items-center !text-[11px] !text-black">
+                                <i
+                                  className="fas fa-clock me-1 text-primary"
+                                  style={{ width: "14px" }}
+                                ></i>
+                                <span className="me-1">Duration :</span>
+                                <strong>3-5 Hours</strong>
+                              </p>
+                            </div>
 
-                              <div style={{ flex: "0 0 50%" }}>
-                                <p
-                                  className="mb-1 d-flex align-items-center"
-                                  style={{ fontSize: "11px", color: "black" }}
-                                >
-                                  <i
-                                    className="fas fa-hospital me-1 text-primary"
-                                    style={{ width: "14px" }}
-                                  ></i>
-                                  <span className="me-1">Hospital stay :</span>
-                                  <strong>Required</strong>
-                                </p>
-                              </div>
+                            <div className="!flex-[0_0_50%]">
+                              <p className="mb-1 d-flex align-items-center !text-[11px] !text-black">
+                                <i
+                                  className="fas fa-hospital me-1 text-primary"
+                                  style={{ width: "14px" }}
+                                ></i>
+                                <span className="me-1">Hospital stay :</span>
+                                <strong>Required</strong>
+                              </p>
+                            </div>
 
-                              <div className="price-section d-flex align-items-center flex-wrap gap-2 pb-2">
-                                {(() => {
-                                  const originalPrice =
-                                    parseFloat(treatment?.price) || 0;
-                                  const discountPrice =
-                                    parseFloat(
-                                      treatment?.discountprice ||
-                                      treatment?.discountPrice,
-                                    ) || null;
+                            <div className="!flex !flex-row !items-center !gap-2 !pb-2">
+                              {(() => {
+                                const originalPrice =
+                                  parseFloat(treatment?.price) || 0;
+                                const discountPrice =
+                                  parseFloat(
+                                    treatment?.discountprice ||
+                                    treatment?.discountPrice,
+                                  ) || null;
 
-                                  const showDiscount =
-                                    discountPrice &&
-                                    discountPrice > 0 &&
-                                    discountPrice < originalPrice;
-                                  const displayPrice = showDiscount
-                                    ? discountPrice
-                                    : originalPrice;
+                                const showDiscount =
+                                  discountPrice &&
+                                  discountPrice > 0 &&
+                                  discountPrice < originalPrice;
+                                const displayPrice = showDiscount
+                                  ? discountPrice
+                                  : originalPrice;
 
-                                  const discountPercent = showDiscount
-                                    ? Math.round(
-                                      ((originalPrice - discountPrice) /
-                                        originalPrice) *
-                                      100,
-                                    )
-                                    : 0;
+                                const discountPercent = showDiscount
+                                  ? Math.round(
+                                    ((originalPrice - discountPrice) /
+                                      originalPrice) *
+                                    100,
+                                  )
+                                  : 0;
 
-                                  return (
-                                    <>
-                                      <span className="current-price text-dark">
-                                        ₹{displayPrice.toLocaleString("en-IN")}
-                                      </span>
-
-                                      {showDiscount && (
-                                        <>
-                                          <span className="old-price">
-                                            ₹
-                                            {originalPrice.toLocaleString(
-                                              "en-IN",
-                                            )}
-                                          </span>
-                                          <span
-                                            className="discountts"
-                                            style={{
-                                              backgroundColor: "#F97316",
-                                              fontSize: "12px",
-                                            }}
-                                          >
-                                            {discountPercent}% OFF
-                                          </span>
-                                        </>
-                                      )}
-                                    </>
-                                  );
-                                })()}
-                              </div>
-                              <div style={{ marginTop: 'auto' }}>
-                                <VendorActions
-                                  bookingType={
-                                    treatment?.vendordetails?.bookingType ||
-                                    service?.categoryType ||
-                                    "cart"
-                                  }
-                                  med={treatment?.tabletdetails || treatment}
-                                  vendor={treatment?.vendordetails || {}}
-                                  price={parseFloat(treatment?.price) || 0}
-                                  calculatedDiscountPrice={parseFloat(treatment?.discountprice || treatment?.discountPrice) || null}
-                                  stock={treatment?.stock || (treatment?.tabletdetails || treatment).stock || (treatment?.vendordetails || {}).stock || 999}
-                                  service={treatment?.tabletdetails?.subcategorydetails?.catdetails?.fixedType || "medicaltreatment"}
-                                  handleRentalBookinProcess={handleRentalBookinProcess}
-                                  handleNavigateToBooking={handleBooking}
-                                  handleAddLead={handleAddLead}
-                                  handleOpenConsultationModal={handleConsultationClick}
-                                  handleOpenAppointmentModal={handleAppointmentClick}
-                                  handleOpenRideModal=""
-                                  className="w-100"
-                                  containerStyle={{
-                                    display: "flex",
-                                    width: "100%",
-                                  }}
-                                />
-                              </div>
-                              {vendor && (
-                                <div
-                                  style={{
-                                    marginTop: "12px",
-                                    borderTop: "1px solid #0000002e",
-                                  }}
-                                >
-                                  <div
-                                    className="d-flex align-items-center gap-1 footers"
-                                    style={{
-                                      padding: "10px 0 0 0",
-                                      cursor: "pointer",
-                                      transition: "all 0.2s ease",
-                                    }}
-                                    onClick={(e) => {
-                                      e.stopPropagation();
-                                      const vendorId =
-                                        vendor?.slug ||
-                                        vendor?.vendorId ||
-                                        vendor?._id;
-                                      if (vendorId) {
-                                        sessionStorage.setItem(
-                                          "vendorId",
-                                          vendorId,
-                                        );
-                                        const name =
-                                          vendor?.bussinessdetails?.name ||
-                                          vendor?.name ||
-                                          "Vendor Store";
-                                        const vendorSlug = name
-                                          .toLowerCase()
-                                          .replace(/\s+/g, "-")
-                                          .replace(/[^a-z0-9-]/g, "");
-                                        navigate(
-                                          `/vendor-profile/${vendorSlug}`,
-                                        );
-                                      } else {
-                                        toast.error(
-                                          "Vendor information not available",
-                                        );
-                                      }
-                                    }}
-                                    onMouseEnter={(e) => {
-                                      e.currentTarget.style.opacity = "0.8";
-                                      e.currentTarget.style.transform =
-                                        "translateX(4px)";
-                                    }}
-                                    onMouseLeave={(e) => {
-                                      e.currentTarget.style.opacity = "1";
-                                      e.currentTarget.style.transform =
-                                        "translateX(0)";
-                                    }}
-                                  >
-                                    <div
-                                      style={{
-                                        width: "56px",
-                                        height: "56px",
-                                        borderRadius: "8px",
-                                        overflow: "hidden",
-                                        background: "#fff",
-                                      }}
+                                return (
+                                  <>
+                                    <span
+                                      className="!text-[16px] !font-bold !text-[#1a1a1a]"
                                     >
-                                      <img
-                                        src={getImageUrl(
-                                          vendor?.bussiness_image?.[0]?.url ||
-                                          vendor?.bussiness_image?.url,
-                                        )}
-                                        alt={vendor?.name}
-                                        style={{
-                                          width: "100%",
-                                          height: "100%",
-                                          objectFit: "contain",
-                                        }}
-                                      />
-                                    </div>
+                                      ₹{displayPrice.toLocaleString("en-IN")}
+                                    </span>
 
-                                    <div className="flex-grow-1">
-                                      <h6
-                                        className="mb-1 "
-                                        style={{
-                                          fontSize: "12px",
-                                          fontWeight: "600 !important"
-                                        }}
-                                      >
+                                    {showDiscount && (
+                                      <>
+                                        <span
+                                          className="!text-[#999] !line-through !text-[11.5px]"
+                                        >
+                                          ₹
+                                          {originalPrice.toLocaleString(
+                                            "en-IN",
+                                          )}
+                                        </span>
+                                        <span
+                                          className="!bg-[#F97316] !text-white !text-[10px] !py-[2px] !px-[6px] !rounded-[4px] !font-semibold !inline-block"
+                                        >
+                                          {discountPercent}% OFF
+                                        </span>
+                                      </>
+                                    )}
+                                  </>
+                                );
+                              })()}
+                            </div>
+                            <div style={{ marginTop: 'auto' }}>
+                              <VendorActions
+                                bookingType={
+                                  treatment?.vendordetails?.bookingType ||
+                                  service?.categoryType ||
+                                  "cart"
+                                }
+                                med={treatment?.tabletdetails || treatment}
+                                vendor={treatment?.vendordetails || {}}
+                                price={parseFloat(treatment?.price) || 0}
+                                calculatedDiscountPrice={parseFloat(treatment?.discountprice || treatment?.discountPrice) || null}
+                                stock={treatment?.stock || (treatment?.tabletdetails || treatment).stock || (treatment?.vendordetails || {}).stock || 999}
+                                service={treatment?.tabletdetails?.subcategorydetails?.catdetails?.fixedType || "medicaltreatment"}
+                                handleRentalBookinProcess={handleRentalBookinProcess}
+                                handleNavigateToBooking={handleBooking}
+                                handleAddLead={handleAddLead}
+                                handleOpenConsultationModal={handleConsultationClick}
+                                handleOpenAppointmentModal={handleAppointmentClick}
+                                handleOpenRideModal=""
+                                className="w-100"
+                                containerStyle={{
+                                  display: "flex",
+                                  width: "100%",
+                                }}
+                              />
+                            </div>
+                            {vendor && (
+                              <div className="!mt-[12px] !border-t !border-solid !border-[#0000002e]">
+                                <div
+                                  className="!flex !items-center !gap-1 !pt-[10px] !pb-0 !px-0 !cursor-pointer !transition-all !duration-200 hover:!opacity-80 hover:!translate-x-[4px]"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    const vendorId =
+                                      vendor?.slug ||
+                                      vendor?.vendorId ||
+                                      vendor?._id;
+                                    if (vendorId) {
+                                      sessionStorage.setItem(
+                                        "vendorId",
+                                        vendorId,
+                                      );
+                                      const name =
+                                        vendor?.bussinessdetails?.name ||
+                                        vendor?.name ||
+                                        "Vendor Store";
+                                      const vendorSlug = name
+                                        .toLowerCase()
+                                        .replace(/\s+/g, "-")
+                                        .replace(/[^a-z0-9-]/g, "");
+                                      navigate(
+                                        `/vendor-profile/${vendorSlug}`,
+                                      );
+                                    } else {
+                                      toast.error(
+                                        "Vendor information not available",
+                                      );
+                                    }
+                                  }}
+                                >
+                                  <div className="!w-[56px] !h-[56px] !rounded-[8px] !overflow-hidden !bg-white">
+                                    <img
+                                      src={getImageUrl(
+                                        vendor?.bussiness_image?.[0]?.url ||
+                                        vendor?.bussiness_image?.url,
+                                      )}
+                                      alt={vendor?.name}
+                                      className="!w-full !h-full !object-contain"
+                                    />
+                                  </div>
+
+                                  <div className="!grow !min-w-0">
+                                    <div className="!flex !items-center !justify-between !w-full !gap-2 !mb-[2px]">
+                                      <h6 className="!mb-0 !text-[12px] !font-semibold !tracking-[-0.2px] !whitespace-nowrap !overflow-hidden !text-ellipsis">
                                         {vendor?.name}
                                       </h6>
                                       {treatment?.averageRating > 0 && treatment?.ratingCount > 0 && (
-                                        <div
-                                          style={{
-                                            display: "flex",
-                                            alignItems: "center",
-                                            gap: "4px",
-                                            fontSize: "10px",
-                                            color: "#666",
-                                            marginTop: "2px",
-                                            marginBottom: "4px",
-                                          }}
-                                        >
-                                          {treatment?.averageRating > 0 && (
-                                            <>
-                                              <i
-                                                className="fas fa-star"
-                                                style={{
-                                                  color: "#ffc107",
-                                                  fontSize: "9px"
-                                                }}
-                                              ></i>
-                                              <span style={{ fontWeight: "500" }}>
-                                                {treatment?.averageRating.toFixed(1)}
-                                              </span>
-                                            </>
-                                          )}
-                                          {treatment?.ratingCount > 0 && (
-                                            <span style={{ color: "#999" }}>
-                                              ({treatment?.ratingCount}+)
-                                            </span>
-                                          )}
+                                        <div className="!flex !items-center !gap-[4px] !text-[10px] !text-[#666] !shrink-0">
+                                          <i className="fas fa-star !text-[#ffc107] !text-[9px]"></i>
+                                          <span className="!font-medium">
+                                            {treatment?.averageRating.toFixed(1)}
+                                          </span>
+                                          <span className="!text-[#999]">
+                                            ({treatment?.ratingCount}+)
+                                          </span>
                                         </div>
                                       )}
+                                    </div>
 
-                                      <div className="d-flex align-items-center text-dark">
-                                        <i
-                                          className="fa-solid fa-location-dot"
-                                          style={{
-                                            fontSize: "13px",
-                                            color: "#8059ca",
-                                          }}
-                                        ></i>
-                                        <span>
-                                          {vendor?.address?.length > 22
-                                            ? vendor.address.slice(0, 22) +
-                                            "..."
-                                            : vendor?.address}
+                                    <div className="!flex !items-center !gap-1 !text-[#6b7280] !text-[11px] !overflow-hidden">
+                                      <i className="fa-solid fa-location-dot !text-[11px] !text-[#8059ca]"></i>
+                                      <span className="!overflow-hidden !text-ellipsis !whitespace-nowrap">
+                                        {vendor?.address}
+                                      </span>
+                                    </div>
+                                    {treatment?.distanceInKm && (
+                                      <div className="!flex !items-center !gap-1 !text-[#6b7280] !text-[11px] !overflow-hidden">
+                                        <i className="fas fa-map-marker-alt !text-[10px] !text-[#8059ca] !mr-[4px]"></i>
+
+                                        <span className="!overflow-hidden !text-ellipsis !whitespace-nowrap">
+                                          {parseFloat(treatment.distanceInKm).toFixed(1)} km away
                                         </span>
                                       </div>
-                                      {treatment?.distanceInKm && (
-                                        <span
-                                          style={{
-                                            fontSize: "11px",
-                                            color: "#666",
-                                          }}
-                                        >
-                                          <i
-                                            className="isax isax-route-square"
-                                            style={{
-                                              fontSize: "11px",
-                                              color: "#8059ca",
-                                            }}
-                                          ></i>{" "}
-                                          {treatment.distanceInKm.toFixed(1)} km
-                                          away
-                                        </span>
-                                      )}
-                                    </div>
+                                    )}
                                   </div>
                                 </div>
-                              )}
-                            </div>
+                              </div>
+                            )}
                           </div>
                         </div>
-                      </SwiperSlide>
-                    );
-                  })}
-                </Swiper>
-                {hasEnoughTreatments && (
-                  <button
-                    className="meq-arrow-btn treatment-next"
-                    aria-label="Next"
-                  >
-                    <i className="fas fa-chevron-right"></i>
-                  </button>
-                )}
-              </div>
+                      </div>
+                    </SwiperSlide>
+                  );
+                })}
+              </Swiper>
+              {hasEnoughTreatments && (
+                <button
+                  className="meq-arrow-btn treatment-next"
+                  aria-label="Next"
+                >
+                  <i className="fas fa-chevron-right"></i>
+                </button>
+              )}
             </div>
           </div>
         </div>

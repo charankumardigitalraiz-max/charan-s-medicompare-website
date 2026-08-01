@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { SectionHeader } from "../../../components/ui/index.js";
 import { useNavigate, Link } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { axiosCommonInstance, axiosUserInstance } from "../../../Apiservice";
@@ -470,326 +471,133 @@ const NursingCare = ({
   return (
     <>
       <SEOHelmet page="clinics" />
+
       {medicalTreatments && medicalTreatments.length > 0 && (
-        <section
-          className="section pb-5"
-          style={{ backgroundColor: PRIMARY_SECTION_BG, paddingTop: "0" }}
-        >
-          <div className="container-fluid">
-            <div className="row align-items-center py-3">
-              <div className="col-6 text-start">
-                <h3 className="mb-2 top-vendor-badge">
-                  <i className="fas fa-bolt"></i>
-                  Top Services
-                </h3>
-              </div>
+        <div className="!py-3 !mx-2 !px-2">
+          <div className="!w-full">
+            <SectionHeader
+              title="Top Services"
+              icon="fas fa-bolt"
+              viewAllLink={`/${currentService}/all`}
+              viewAllText="View All"
+            />
 
-              <div className="col-6 text-end">
-                <Link
-                  to={`/${currentService}/all`}
-                  className="top-vendor-badge"
-                  style={{
-                    fontWeight: "600"
-                  }}
-
-                >
-                  {isMobileLocal ? "" : "View All"}
-                  <i className={isMobileLocal ? "fas fa-arrow-right" : "fas fa-arrow-right ms-1"}></i>
-                </Link>
-              </div>
-            </div>
-
-            <div className="px-2">
+            <div className="!px-2">
               <Slider {...medicalSliderSettings}>
                 {medicalTreatments?.map((treatment, index) => {
                   const vendor = treatment?.vendordetails;
                   return (
-                    <div key={index} className="px-2">
-                      <div
-                        className="card border-0 h-100"
-                        style={{
-                          borderRadius: "16px",
-                          backgroundColor: "#ffffff",
-                          boxShadow: "0 4px 20px rgba(0,0,0,0.1)",
-                          transition: "transform 0.3s, box-shadow 0.3s",
-                          overflow: "hidden",
-                          height: "100%",
-                        }}
-                      >
+                    <div key={index} className="!px-2 !py-2">
+                      <div className="!flex !flex-col !h-full !w-full !rounded-[16px] !bg-white !shadow-[0_4px_20px_rgba(0,0,0,0.08)] !overflow-hidden !transition-all !duration-300 hover:!shadow-[0_8px_28px_rgba(0,0,0,0.13)] hover:!-translate-y-[2px]">
+                        {/* Compare badge */}
                         <div
                           onClick={(e) => {
                             e.stopPropagation();
                             const data = treatment?.tabletdetails;
-
-                            const categorySlug =
-                              data?.subcategorydetails?.catdetails?.slug;
-
-                            const subcategorySlug =
-                              data?.subcategorydetails?.slug;
-
+                            const categorySlug = data?.subcategorydetails?.catdetails?.slug;
+                            const subcategorySlug = data?.subcategorydetails?.slug;
                             const productSlug = data?.slug;
-                            if (
-                              !categorySlug ||
-                              !subcategorySlug ||
-                              !productSlug
-                            )
-                              return;
-
-                            navigate(
-                              `/${categorySlug}/${subcategorySlug}/${productSlug}/compare`,
-                            );
+                            if (!categorySlug || !subcategorySlug || !productSlug) return;
+                            navigate(`/${categorySlug}/${subcategorySlug}/${productSlug}/compare`);
                           }}
-                          style={{
-                            position: "absolute",
-                            top: "10px",
-                            right: "10px",
-                            background: "linear-gradient(135deg, #f59e0b 0%, #d97706 100%)",
-                            borderRadius: "30px",
-                            padding: "3px 14px",
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "6px",
-                            boxShadow: "0 4px 12px rgba(245, 158, 11, 0.4)",
-                            zIndex: 10,
-                            border: "1.5px solid #ffffff",
-                            cursor: "pointer",
-                            transition: "all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
-                            transform: "scale(1)",
-                          }}
-                          onMouseEnter={(e) => {
-                            e.currentTarget.style.transform = "scale(1.12) translateY(-2px)";
-                            e.currentTarget.style.boxShadow = "0 8px 20px rgba(245, 158, 11, 0.55)";
-                          }}
-                          onMouseLeave={(e) => {
-                            e.currentTarget.style.transform = "scale(1)";
-                            e.currentTarget.style.boxShadow = "0 4px 12px rgba(245, 158, 11, 0.4)";
-                          }}
+                          className="!absolute !top-[10px] !right-[10px] !flex !items-center !gap-[6px] !z-10 !cursor-pointer !transition-all !duration-300 hover:!scale-[1.1] hover:!-translate-y-[2px]"
+                          style={{ background: "linear-gradient(135deg, #f59e0b 0%, #d97706 100%)", borderRadius: "30px", padding: "3px 14px", boxShadow: "0 4px 12px rgba(245,158,11,0.4)", border: "1.5px solid #fff" }}
                           title="Compare Package"
                         >
-                          <i
-                            className="fa-solid fa-hand-pointer"
-                            style={{
-                              fontSize: "13px",
-                              color: "#ffffff",
-                              transform: "rotate(90deg)",
-                              display: "inline-block",
-                            }}
-                          ></i>
-                          <span
-                            style={{
-                              fontSize: "11px",
-                              fontWeight: "800",
-                              color: "#ffffff",
-                              textTransform: "uppercase",
-                              letterSpacing: "0.6px",
-                            }}
-                          >
-                            Compare
-                          </span>
+                          <i className="fa-solid fa-hand-pointer" style={{ fontSize: "13px", color: "#fff", transform: "rotate(90deg)", display: "inline-block" }}></i>
+                          <span style={{ fontSize: "11px", fontWeight: "800", color: "#fff", textTransform: "uppercase", letterSpacing: "0.6px" }}>Compare</span>
                         </div>
 
-                        <div
-                          style={{
-                            width: "100%",
-                            height: "220px",
-                            borderTopLeftRadius: "16px",
-                            borderTopRightRadius: "16px",
-                            overflow: "hidden",
-                          }}
-                        >
+                        {/* Image container */}
+                        <div className="!w-full !h-[180px] !overflow-hidden !bg-white !rounded-t-[16px]">
                           <img
-                            src={getImageUrl(
-                              treatment?.tabletdetails?.files[0],
-                            )}
+                            src={getImageUrl(treatment?.tabletdetails?.files[0])}
                             alt={treatment?.tabletdetails?.name}
                             title={treatment?.tabletdetails?.name}
                             onClick={() => handleProductClick(treatment)}
-                            style={{
-                              width: "100%",
-                              height: "100%",
-                              objectFit: "contain",
-                              cursor: "pointer",
-                            }}
+                            className="!w-full !h-full !object-contain !cursor-pointer"
                           />
                         </div>
 
-                        <div
-                          className="card-body p-3"
-                          style={{ display: "flex", flexDirection: "column" }}
-                        >
-                          <div className="d-flex justify-content-between align-items-center">
-                            <h3 className="titlee text-dark mb-0 text-capitalize">
+                        {/* Card Body */}
+                        <div className="!flex !flex-col !flex-1 !p-3">
+                          <div className="!flex !items-start !justify-between !gap-2 !mb-1">
+                            <h3 className="!m-0 !text-[14px] !font-semibold !text-[#1a1a1a] !capitalize !leading-snug">
                               {treatment?.tabletdetails.name?.length > 20
-                                ? treatment?.tabletdetails.name.slice(0, 20) +
-                                "..."
+                                ? treatment?.tabletdetails.name.slice(0, 20) + "..."
                                 : treatment?.tabletdetails.name}
                             </h3>
 
-                            <div
-                              className="d-flex align-items-center justify-content-end"
-                              style={{ minWidth: "80px", fontSize: "12px" }}
-                            >
-                              <i className="fa fa-star text-warning me-1"></i>
-                              <span className="me-1">
-                                {treatment?.tabletdetails?.averageRating?.toFixed(
-                                  1,
-                                ) > 0
-                                  ? treatment?.tabletdetails.averageRating?.toFixed(
-                                    1,
-                                  )
+                            <div className="!flex !items-center !shrink-0 !gap-[3px] !text-[11px]">
+                              <i className="fa fa-star !text-[#ffc107]"></i>
+                              <span className="!text-[#444]">
+                                {treatment?.tabletdetails?.averageRating?.toFixed(1) > 0
+                                  ? treatment?.tabletdetails.averageRating?.toFixed(1)
                                   : 0}
                               </span>
-
-                              <i
-                                className="fa fa-users me-1"
-                                style={{ color: PRIMARY_COLOR }}
-                              ></i>
-                              <span>
-                                (
-                                {treatment?.tabletdetails?.ratingCount > 0
-                                  ? `${treatment?.tabletdetails.ratingCount}+`
-                                  : 0}
-                                )
+                              <i className="fa fa-users !ml-1" style={{ color: PRIMARY_COLOR }}></i>
+                              <span className="!text-[#666]">
+                                ({treatment?.tabletdetails?.ratingCount > 0 ? `${treatment?.tabletdetails.ratingCount}+` : 0})
                               </span>
                             </div>
                           </div>
 
-                          <div
-                            style={{ flexGrow: 1, cursor: "pointer" }}
-                            onClick={() => handleProductClick(treatment)}
-                          >
+                          <div className="!flex !flex-col !cursor-pointer" onClick={() => handleProductClick(treatment)}>
                             <p
-                              className="tablet-desc"
+                              className="!m-0 !mb-2 !text-[11px] !text-[#666] !leading-normal [&_*]:!text-[11px] [&_*]:!text-[#666] [&_*]:!leading-normal"
                               dangerouslySetInnerHTML={{
                                 __html:
-                                  treatment?.tabletdetails?.description
-                                    ?.length > 100
-                                    ? treatment?.tabletdetails?.description?.slice(
-                                      0,
-                                      100,
-                                    ) + "..."
+                                  treatment?.tabletdetails?.description?.length > 100
+                                    ? treatment?.tabletdetails?.description?.slice(0, 100) + "..."
                                     : treatment?.tabletdetails?.description,
                               }}
                             ></p>
 
                             {treatment?.tabletdetails?.duration && (
-                              <div className="report-timee d-flex align-items-center gap-2">
-                                <i
-                                  className="fa-regular fa-clock"
-                                  style={{ color: PRIMARY_COLOR }}
-                                ></i>
-                                <span>Duration : </span>
-                                <strong>
-                                  {treatment?.tabletdetails?.duration}
-                                </strong>
+                              <div className="!flex !items-center !gap-2 !text-[11px] !text-[#555] !mb-[2px]">
+                                <i className="fa-regular fa-clock" style={{ color: PRIMARY_COLOR }}></i>
+                                <span>Duration:</span>
+                                <strong>{treatment?.tabletdetails?.duration}</strong>
                               </div>
                             )}
                             {treatment?.tabletdetails?.shiftType && (
-                              <div className="report-timee d-flex align-items-center gap-2">
-                                <i
-                                  className="fa-regular fa-calendar-days"
-                                  style={{ color: PRIMARY_COLOR }}
-                                ></i>
-                                <span>Shift : </span>
-                                <strong>
-                                  {treatment?.tabletdetails?.shiftType?.replace(
-                                    /_/g,
-                                    " ",
-                                  )}
-                                </strong>
+                              <div className="!flex !items-center !gap-2 !text-[11px] !text-[#555] !mb-[2px]">
+                                <i className="fa-regular fa-calendar-days" style={{ color: PRIMARY_COLOR }}></i>
+                                <span>Shift:</span>
+                                <strong>{treatment?.tabletdetails?.shiftType?.replace(/_/g, " ")}</strong>
                               </div>
                             )}
                             {treatment?.tabletdetails?.nursecareType && (
-                              <div className="report-timee d-flex align-items-center gap-2">
-                                <i
-                                  className="fa-solid fa-tag"
-                                  style={{ color: PRIMARY_COLOR }}
-                                ></i>
-                                <span>Type : </span>
-                                <strong>
-                                  {treatment?.tabletdetails?.nursecareType?.replace(
-                                    /_/g,
-                                    " ",
-                                  )}
-                                </strong>
+                              <div className="!flex !items-center !gap-2 !text-[11px] !text-[#555] !mb-[2px]">
+                                <i className="fa-solid fa-tag" style={{ color: PRIMARY_COLOR }}></i>
+                                <span>Type:</span>
+                                <strong>{treatment?.tabletdetails?.nursecareType?.replace(/_/g, " ")}</strong>
                               </div>
                             )}
 
-                            <div
-                              style={{
-                                backgroundColor: PRIMARY_SECTION_BG,
-                                padding: "10px",
-                                borderRadius: "8px",
-                                border: "1px solid rgba(128, 89, 202, 0.15)",
-                              }}
-                            >
-                              <div
-                                style={{
-                                  display: "flex",
-                                  flexDirection: "column",
-                                }}
-                              >
-                                <div
-                                  style={{
-                                    fontSize: "11px",
-                                    color: "#000",
-                                    marginBottom: "4px",
-                                    fontWeight: "500",
-                                  }}
-                                >
-                                  Starting From
+                            {/* Price details */}
+                            <div className="!rounded-[8px] !p-[8px] !mt-[4px] !border !border-[rgba(128,89,202,0.15)]" style={{ backgroundColor: PRIMARY_SECTION_BG }}>
+                              <div className="!text-[10px] !text-[#444] !font-medium !mb-[3px]">Starting From</div>
+                              {treatment?.discountprice ? (
+                                <div className="!flex !items-center !flex-wrap !gap-1">
+                                  <span className="!font-bold !text-[15px] !text-[#1a1a1a]">₹{treatment.discountprice}</span>
+                                  <span className="!line-through !text-[#999] !text-[12px]">₹{treatment.price}</span>
+                                  <span className="!text-red-500 !text-[11px] !font-semibold">
+                                    {Math.round(((treatment.price - treatment.discountprice) / treatment.price) * 100)}% OFF
+                                  </span>
                                 </div>
-                                {treatment?.discountprice ? (
-                                  <div>
-                                    <span
-                                      style={{
-                                        fontWeight: "bold",
-                                        marginRight: "8px",
-                                        fontSize: "16px",
-                                      }}
-                                    >
-                                      ₹{treatment.discountprice}
-                                    </span>
-
-                                    <span
-                                      style={{
-                                        textDecoration: "line-through",
-                                        color: "#999",
-                                        marginRight: "8px",
-                                      }}
-                                    >
-                                      ₹{treatment.price}
-                                    </span>
-
-                                    <span
-                                      style={{ color: "red", fontSize: "12px" }}
-                                    >
-                                      {Math.round(
-                                        ((treatment.price -
-                                          treatment.discountprice) /
-                                          treatment.price) *
-                                        100,
-                                      )}
-                                      % OFF
-                                    </span>
-                                  </div>
-                                ) : (
-                                  <span>₹{treatment?.price || 0}</span>
-                                )}
-                              </div>
+                              ) : (
+                                <span className="!font-bold !text-[15px] !text-[#1a1a1a]">₹{treatment?.price || 0}</span>
+                              )}
                             </div>
                           </div>
+
                           <VendorActions
-                            bookingType={
-                              treatment?.vendordetails?.bookingType ||
-                              service?.categoryType ||
-                              "cart"
-                            }
+                            bookingType={treatment?.vendordetails?.bookingType || service?.categoryType || "cart"}
                             med={treatment?.tabletdetails || treatment}
                             vendor={treatment?.vendordetails || {}}
                             price={parseFloat(treatment?.price) || 0}
                             calculatedDiscountPrice={parseFloat(treatment?.discountprice || treatment?.discountPrice) || null}
-                            // stock={treatment?.stock || (treatment?.tabletdetails || treatment).stock || (treatment?.vendordetails || {}).stock || 999}
                             service={treatment?.tabletdetails?.subcategorydetails?.catdetails?.fixedType || "nursingcare"}
                             handleRentalBookinProcess={handleRentalBookinProcess}
                             handleNavigateToBooking={handleBooking}
@@ -797,145 +605,54 @@ const NursingCare = ({
                             handleOpenConsultationModal={handleConsultationClick}
                             handleOpenAppointmentModal={handleAppointmentClick}
                             handleOpenRideModal=""
-                            className="w-100"
-                            containerStyle={{
-                              display: "flex",
-                              width: "100%",
-                            }}
+                            containerStyle={{ display: "flex", width: "100%", marginTop: "8px" }}
                           />
+
+                          {/* Vendor Footer Details */}
                           {vendor && (
                             <div
-                              style={{
-                                marginTop: "12px",
-                                borderTop: "1px solid #0000002e",
-                                cursor: "pointer",
+                              className="!mt-3 !pt-2 !border-t !border-[#e0e0e0] !cursor-pointer"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                const vendorId = vendor?.slug || vendor?.vendorId || vendor?._id || vendor?.bussinessdetails?.slug || vendor?.bussinessdetails?.vendorId || vendor?.bussinessdetails?._id;
+                                if (vendorId) {
+                                  sessionStorage.setItem("vendorId", vendorId);
+                                  const name = vendor?.bussinessdetails?.name || vendor?.name || "Vendor Store";
+                                  const vendorSlug = name.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "");
+                                  navigate(`/vendor-profile/${vendorSlug}`);
+                                } else {
+                                  toast.error("Vendor information not available");
+                                }
                               }}
                             >
-                              <div
-                                className="d-flex align-items-center gap-3 footers"
-                                style={{ padding: "10px 0 0 0" }}
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  const vendorId =
-                                    vendor?.slug ||
-                                    vendor?.vendorId ||
-                                    vendor?._id ||
-                                    vendor?.bussinessdetails?.slug ||
-                                    vendor?.bussinessdetails?.vendorId ||
-                                    vendor?.bussinessdetails?._id;
-                                  if (vendorId) {
-                                    sessionStorage.setItem(
-                                      "vendorId",
-                                      vendorId,
-                                    );
-                                    const name =
-                                      vendor?.bussinessdetails?.name ||
-                                      vendor?.name ||
-                                      "Vendor Store";
-                                    const vendorSlug = name
-                                      .toLowerCase()
-                                      .replace(/\s+/g, "-")
-                                      .replace(/[^a-z0-9-]/g, "");
-                                    navigate(`/vendor-profile/${vendorSlug}`);
-                                  } else {
-                                    toast.error(
-                                      "Vendor information not available",
-                                    );
-                                  }
-                                }}
-                              >
-                                <div
-                                  style={{
-                                    width: "56px",
-                                    height: "56px",
-                                    borderRadius: "8px",
-                                    overflow: "hidden",
-                                    background: "#fff",
-                                  }}
-                                >
+                              <div className="!flex !items-center !gap-2">
+                                <div className="!w-[40px] !h-[40px] !rounded-[6px] !overflow-hidden !bg-white !shrink-0">
                                   <img
-                                    src={getImageUrl(
-                                      vendor?.bussiness_image[0]?.url,
-                                    )}
+                                    src={getImageUrl(vendor?.bussiness_image[0]?.url)}
                                     alt={vendor.name}
-                                    style={{
-                                      width: "100%",
-                                      height: "100%",
-                                      objectFit: "contain",
-                                    }}
+                                    className="!w-full !h-full !object-contain"
                                   />
                                 </div>
 
-                                <div className="flex-grow-1">
-                                  <h6
-                                    className="mb-1"
-                                    style={{
-                                      fontSize: "12px",
-                                      fontWeight: "600 !important"
-                                    }}
-                                  >
-                                    {vendor.name}
-                                  </h6>
-                                  {treatment?.averageRating > 0 && treatment?.ratingCount > 0 && (
-                                    <div
-                                      style={{
-                                        display: "flex",
-                                        alignItems: "center",
-                                        gap: "4px",
-                                        fontSize: "10px",
-                                        color: "#666",
-                                        marginTop: "2px",
-                                        marginBottom: "4px",
-                                      }}
-                                    >
-                                      <i
-                                        className="fas fa-star"
-                                        style={{
-                                          color: "#ffc107",
-                                          fontSize: "9px"
-                                        }}
-                                      ></i>
-                                      <span style={{ fontWeight: "500" }}>
-                                        {treatment?.averageRating.toFixed(1)}
-                                      </span>
-                                      <span style={{ color: "#999" }}>
-                                        ({treatment?.ratingCount}+)
-                                      </span>
-                                    </div>
-                                  )}
-                                  <div className="d-flex align-items-center gap-2 text-dark">
-                                    <i
-                                      className="fa-solid fa-location-dot"
-                                      style={{
-                                        fontSize: "13px",
-                                        color: "#8059ca",
-                                      }}
-                                    ></i>
-                                    <span>
-                                      {vendor.address.length > 22
-                                        ? vendor.address.slice(0, 22) + "..."
-                                        : vendor.address}
-                                    </span>
+                                <div className="!grow !min-w-0">
+                                  <div className="!flex !items-center !justify-between !gap-2 !mb-[2px]">
+                                    <h6 className="!m-0 !text-[12px] !font-semibold !truncate">{vendor.name}</h6>
+                                    {treatment?.averageRating > 0 && treatment?.ratingCount > 0 && (
+                                      <div className="!flex !items-center !gap-[3px] !text-[10px] !text-[#666] !shrink-0">
+                                        <i className="fas fa-star !text-[#ffc107] !text-[9px]"></i>
+                                        <span className="!font-medium">{treatment?.averageRating.toFixed(1)}</span>
+                                        <span className="!text-[#999]">({treatment?.ratingCount}+)</span>
+                                      </div>
+                                    )}
+                                  </div>
+                                  <div className="!flex !items-center !gap-1 !text-[#6b7280] !text-[11px] !overflow-hidden">
+                                    <i className="fa-solid fa-location-dot !text-[11px] !text-[#8059ca]"></i>
+                                    <span className="!truncate">{vendor.address}</span>
                                   </div>
                                   {treatment?.distanceInKm && (
-                                    <div
-                                      className="d-flex align-items-center gap-1 text-muted"
-                                      style={{ marginTop: "2px" }}
-                                    >
-                                      <i
-                                        className="isax isax-route-square"
-                                        style={{
-                                          fontSize: "11px",
-                                          color: "#8059ca",
-                                        }}
-                                      ></i>
-
-                                      <span style={{ fontSize: "11px" }}>
-                                        {parseFloat(
-                                          treatment.distanceInKm,
-                                        ).toFixed(1)}{" "}
-                                        km away
-                                      </span>
+                                    <div className="!flex !items-center !gap-1 !text-[#6b7280] !text-[11px]">
+                                      <i className="fas fa-map-marker-alt !text-[10px] !text-[#8059ca]"></i>
+                                      <span className="!truncate">{parseFloat(treatment.distanceInKm).toFixed(1)} km away</span>
                                     </div>
                                   )}
                                 </div>
@@ -950,7 +667,7 @@ const NursingCare = ({
               </Slider>
             </div>
           </div>
-        </section>
+        </div>
       )}
 
       {middleBanners?.length > 0 && (
@@ -1006,7 +723,7 @@ const NursingCare = ({
 
       {/* How It Works Section */}
       <section
-        className="section py-3"
+        className="!py-10"
         style={{
           backgroundColor: "#E8E4F5",
           backgroundImage: "url('/assets/Medicompares%20Background.png')",
@@ -1015,413 +732,130 @@ const NursingCare = ({
           backgroundRepeat: "no-repeat",
         }}
       >
-        <div className="container">
-          <div className="row mb-3">
-            <div className="col-12 text-center">
-              <h2
-                className="mb-3"
-                style={{
-                  fontSize: "36px",
-                  fontWeight: "600",
-                  background: `linear-gradient(90deg, ${PRIMARY_COLOR} 0%, ${PRIMARY_DARK} 100%)`,
-                  WebkitBackgroundClip: "text",
-                  backgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                }}
-              >
-                How It Works
-              </h2>
-              <p
-                className="mb-0"
-                style={{
-                  fontSize: "16px",
-                  color: "#666",
-                  maxWidth: "700px",
-                  margin: "0 auto",
-                }}
-              >
-                Get guidance and assistance for your nursing care requirements.
-                Explore the section to know more.
-              </p>
-            </div>
+        <div className="!max-w-7xl !mx-auto !px-4">
+          <div className="!text-center !mb-8">
+            <h2 className="!m-0 !text-[36px] !font-semibold !bg-gradient-to-r !from-[#8059ca] !to-[#6d48b8] !bg-clip-text !text-transparent !tracking-tight">
+              How It Works
+            </h2>
+            <p className="!text-[#666] !text-[15px] !max-w-[700px] !mx-auto !mt-2">
+              Get guidance and assistance for your nursing care requirements.
+              Explore the section to know more.
+            </p>
           </div>
 
-          <div
-            className="row align-items-center justify-content-between"
-            style={{ padding: "30px 0" }}
-          >
+          <div className="!flex !flex-col md:!flex-row !items-center !justify-between !gap-6 !mt-6">
+
             {/* Step 1 */}
-            <div className="col-lg-2 col-md-3 col-sm-6 mb-4 mb-lg-0">
-              <div className="text-center position-relative">
+            <div className="!flex-1 !w-full !text-center">
+              <div className="!flex !flex-col !items-center">
                 <div
-                  style={{
-                    width: "100px",
-                    height: "100px",
-                    margin: "0 auto 20px",
-                    borderRadius: "50%",
-                    backgroundColor: PRIMARY_COLOR,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    position: "relative",
-                    boxShadow: "0 6px 20px rgba(128, 89, 202, 0.3)",
-                    border: "4px solid rgba(128, 89, 202, 0.2)",
-                    transition: "all 0.3s ease",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform =
-                      "translateY(-6px) scale(1.05)";
-                    e.currentTarget.style.boxShadow =
-                      "0 10px 30px rgba(128, 89, 202, 0.4)";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = "translateY(0) scale(1)";
-                    e.currentTarget.style.boxShadow =
-                      "0 6px 20px rgba(128, 89, 202, 0.3)";
-                  }}
+                  style={{ boxShadow: "0 6px 20px rgba(128, 89, 202, 0.3)" }}
+                  className="!w-[90px] !h-[90px] !rounded-full !bg-[#8059ca] !flex !items-center !justify-center !relative !border-[4px] !border-[rgba(128,89,202,0.2)] !transition-all !duration-300 hover:!-translate-y-1 hover:!shadow-[0_10px_30px_rgba(128,89,202,0.4)]"
                 >
-                  <i
-                    className="fa fa-calendar-check"
-                    style={{
-                      fontSize: "40px",
-                      color: "#ffffff",
-                    }}
-                  ></i>
+                  <i className="fa fa-calendar-check !text-white !text-[36px]"></i>
                   <div
-                    style={{
-                      position: "absolute",
-                      top: "-5px",
-                      right: "-5px",
-                      width: "32px",
-                      height: "32px",
-                      borderRadius: "50%",
-                      backgroundColor: PRIMARY_DARK,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      color: "#ffffff",
-                      fontSize: "14px",
-                      fontWeight: "700",
-                      border: "2.5px solid #ffffff",
-                      boxShadow: "0 2px 8px rgba(128, 89, 202, 0.4)",
-                    }}
+                    style={{ boxShadow: "0 2px 8px rgba(128, 89, 202, 0.4)" }}
+                    className="!absolute !top-[-4px] !right-[-4px] !w-[28px] !h-[28px] !rounded-full !bg-[#6d48b8] !flex !items-center !justify-center !text-white !text-[12px] !font-bold !border-2 !border-white"
                   >
                     1
                   </div>
                 </div>
-                <h5
-                  style={{
-                    fontSize: "16px",
-                    fontWeight: "700",
-                    color: PRIMARY_COLOR,
-                    marginBottom: "8px",
-                  }}
-                >
+                <h5 className="!mt-4 !mb-2 !text-[16px] !font-bold !text-[#8059ca]">
                   Book Nursing Care Service
                 </h5>
-                <p
-                  style={{
-                    fontSize: "13px",
-                    color: "#666",
-                    marginBottom: 0,
-                    lineHeight: "1.6",
-                  }}
-                >
+                <p className="!m-0 !text-[13px] !text-[#666] !leading-relaxed">
                   Fill up the booking form to place your request
                 </p>
               </div>
             </div>
 
             {/* Arrow 1 */}
-            <div
-              className="col-lg-1 d-none d-lg-flex justify-content-center align-items-center"
-              style={{ position: "relative", height: "100px" }}
-            >
-              <i
-                className="fa fa-arrow-right"
-                style={{
-                  fontSize: "28px",
-                  color: PRIMARY_COLOR,
-                  opacity: 0.3,
-                }}
-              ></i>
+            <div className="!hidden md:!flex !items-center !justify-center">
+              <i className="fa fa-arrow-right !text-[24px] !text-[#8059ca] !opacity-30"></i>
             </div>
 
             {/* Step 2 */}
-            <div className="col-lg-2 col-md-3 col-sm-6 mb-4 mb-lg-0">
-              <div className="text-center position-relative">
+            <div className="!flex-1 !w-full !text-center">
+              <div className="!flex !flex-col !items-center">
                 <div
-                  style={{
-                    width: "100px",
-                    height: "100px",
-                    margin: "0 auto 20px",
-                    borderRadius: "50%",
-                    backgroundColor: PRIMARY_COLOR,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    position: "relative",
-                    boxShadow: "0 6px 20px rgba(128, 89, 202, 0.3)",
-                    border: "4px solid rgba(128, 89, 202, 0.2)",
-                    transition: "all 0.3s ease",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform =
-                      "translateY(-6px) scale(1.05)";
-                    e.currentTarget.style.boxShadow =
-                      "0 10px 30px rgba(128, 89, 202, 0.4)";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = "translateY(0) scale(1)";
-                    e.currentTarget.style.boxShadow =
-                      "0 6px 20px rgba(128, 89, 202, 0.3)";
-                  }}
+                  style={{ boxShadow: "0 6px 20px rgba(128, 89, 202, 0.3)" }}
+                  className="!w-[90px] !h-[90px] !rounded-full !bg-[#8059ca] !flex !items-center !justify-center !relative !border-[4px] !border-[rgba(128,89,202,0.2)] !transition-all !duration-300 hover:!-translate-y-1 hover:!shadow-[0_10px_30px_rgba(128,89,202,0.4)]"
                 >
-                  <i
-                    className="fa fa-phone-alt"
-                    style={{
-                      fontSize: "40px",
-                      color: "#ffffff",
-                    }}
-                  ></i>
+                  <i className="fa fa-phone-alt !text-white !text-[36px]"></i>
                   <div
-                    style={{
-                      position: "absolute",
-                      top: "-5px",
-                      right: "-5px",
-                      width: "32px",
-                      height: "32px",
-                      borderRadius: "50%",
-                      backgroundColor: PRIMARY_DARK,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      color: "#ffffff",
-                      fontSize: "14px",
-                      fontWeight: "700",
-                      border: "2.5px solid #ffffff",
-                      boxShadow: "0 2px 8px rgba(128, 89, 202, 0.4)",
-                    }}
+                    style={{ boxShadow: "0 2px 8px rgba(128, 89, 202, 0.4)" }}
+                    className="!absolute !top-[-4px] !right-[-4px] !w-[28px] !h-[28px] !rounded-full !bg-[#6d48b8] !flex !items-center !justify-center !text-white !text-[12px] !font-bold !border-2 !border-white"
                   >
                     2
                   </div>
                 </div>
-                <h5
-                  style={{
-                    fontSize: "16px",
-                    fontWeight: "700",
-                    color: PRIMARY_COLOR,
-                    marginBottom: "8px",
-                  }}
-                >
+                <h5 className="!mt-4 !mb-2 !text-[16px] !font-bold !text-[#8059ca]">
                   MediCompares Nursing Expert
                 </h5>
-                <p
-                  style={{
-                    fontSize: "13px",
-                    color: "#666",
-                    marginBottom: 0,
-                    lineHeight: "1.6",
-                  }}
-                >
+                <p className="!m-0 !text-[13px] !text-[#666] !leading-relaxed">
                   You will receive a confirmation call
                 </p>
               </div>
             </div>
 
             {/* Arrow 2 */}
-            <div
-              className="col-lg-1 d-none d-lg-flex justify-content-center align-items-center"
-              style={{ position: "relative", height: "100px" }}
-            >
-              <i
-                className="fa fa-arrow-right"
-                style={{
-                  fontSize: "28px",
-                  color: PRIMARY_COLOR,
-                  opacity: 0.3,
-                }}
-              ></i>
+            <div className="!hidden md:!flex !items-center !justify-center">
+              <i className="fa fa-arrow-right !text-[24px] !text-[#8059ca] !opacity-30"></i>
             </div>
 
             {/* Step 3 */}
-            <div className="col-lg-2 col-md-3 col-sm-6 mb-4 mb-lg-0">
-              <div className="text-center position-relative">
+            <div className="!flex-1 !w-full !text-center">
+              <div className="!flex !flex-col !items-center">
                 <div
-                  style={{
-                    width: "100px",
-                    height: "100px",
-                    margin: "0 auto 20px",
-                    borderRadius: "50%",
-                    backgroundColor: PRIMARY_COLOR,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    position: "relative",
-                    boxShadow: "0 6px 20px rgba(128, 89, 202, 0.3)",
-                    border: "4px solid rgba(128, 89, 202, 0.2)",
-                    transition: "all 0.3s ease",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform =
-                      "translateY(-6px) scale(1.05)";
-                    e.currentTarget.style.boxShadow =
-                      "0 10px 30px rgba(128, 89, 202, 0.4)";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = "translateY(0) scale(1)";
-                    e.currentTarget.style.boxShadow =
-                      "0 6px 20px rgba(128, 89, 202, 0.3)";
-                  }}
+                  style={{ boxShadow: "0 6px 20px rgba(128, 89, 202, 0.3)" }}
+                  className="!w-[90px] !h-[90px] !rounded-full !bg-[#8059ca] !flex !items-center !justify-center !relative !border-[4px] !border-[rgba(128,89,202,0.2)] !transition-all !duration-300 hover:!-translate-y-1 hover:!shadow-[0_10px_30px_rgba(128,89,202,0.4)]"
                 >
-                  <i
-                    className="fa fa-heartbeat"
-                    style={{
-                      fontSize: "40px",
-                      color: "#ffffff",
-                    }}
-                  ></i>
+                  <i className="fa fa-heartbeat !text-white !text-[36px]"></i>
                   <div
-                    style={{
-                      position: "absolute",
-                      top: "-5px",
-                      right: "-5px",
-                      width: "32px",
-                      height: "32px",
-                      borderRadius: "50%",
-                      backgroundColor: PRIMARY_DARK,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      color: "#ffffff",
-                      fontSize: "14px",
-                      fontWeight: "700",
-                      border: "2.5px solid #ffffff",
-                      boxShadow: "0 2px 8px rgba(128, 89, 202, 0.4)",
-                    }}
+                    style={{ boxShadow: "0 2px 8px rgba(128, 89, 202, 0.4)" }}
+                    className="!absolute !top-[-4px] !right-[-4px] !w-[28px] !h-[28px] !rounded-full !bg-[#6d48b8] !flex !items-center !justify-center !text-white !text-[12px] !font-bold !border-2 !border-white"
                   >
                     3
                   </div>
                 </div>
-                <h5
-                  style={{
-                    fontSize: "16px",
-                    fontWeight: "700",
-                    color: PRIMARY_COLOR,
-                    marginBottom: "8px",
-                  }}
-                >
+                <h5 className="!mt-4 !mb-2 !text-[16px] !font-bold !text-[#8059ca]">
                   Nursing Professional Arrives
                 </h5>
-                <p
-                  style={{
-                    fontSize: "13px",
-                    color: "#666",
-                    marginBottom: 0,
-                    lineHeight: "1.6",
-                  }}
-                >
+                <p className="!m-0 !text-[13px] !text-[#666] !leading-relaxed">
                   Receive professional nursing care at your home
                 </p>
               </div>
             </div>
 
             {/* Arrow 3 */}
-            <div
-              className="col-lg-1 d-none d-lg-flex justify-content-center align-items-center"
-              style={{ position: "relative", height: "100px" }}
-            >
-              <i
-                className="fa fa-arrow-right"
-                style={{
-                  fontSize: "28px",
-                  color: PRIMARY_COLOR,
-                  opacity: 0.3,
-                }}
-              ></i>
+            <div className="!hidden md:!flex !items-center !justify-center">
+              <i className="fa fa-arrow-right !text-[24px] !text-[#8059ca] !opacity-30"></i>
             </div>
 
             {/* Step 4 */}
-            <div className="col-lg-2 col-md-3 col-sm-6">
-              <div className="text-center position-relative">
+            <div className="!flex-1 !w-full !text-center">
+              <div className="!flex !flex-col !items-center">
                 <div
-                  style={{
-                    width: "100px",
-                    height: "100px",
-                    margin: "0 auto 20px",
-                    borderRadius: "50%",
-                    backgroundColor: PRIMARY_COLOR,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    position: "relative",
-                    boxShadow: "0 6px 20px rgba(128, 89, 202, 0.3)",
-                    border: "4px solid rgba(128, 89, 202, 0.2)",
-                    transition: "all 0.3s ease",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform =
-                      "translateY(-6px) scale(1.05)";
-                    e.currentTarget.style.boxShadow =
-                      "0 10px 30px rgba(128, 89, 202, 0.4)";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = "translateY(0) scale(1)";
-                    e.currentTarget.style.boxShadow =
-                      "0 6px 20px rgba(128, 89, 202, 0.3)";
-                  }}
+                  style={{ boxShadow: "0 6px 20px rgba(128, 89, 202, 0.3)" }}
+                  className="!w-[90px] !h-[90px] !rounded-full !bg-[#8059ca] !flex !items-center !justify-center !relative !border-[4px] !border-[rgba(128,89,202,0.2)] !transition-all !duration-300 hover:!-translate-y-1 hover:!shadow-[0_10px_30px_rgba(128,89,202,0.4)]"
                 >
-                  <i
-                    className="fa fa-star"
-                    style={{
-                      fontSize: "40px",
-                      color: "#ffffff",
-                    }}
-                  ></i>
+                  <i className="fa fa-star !text-white !text-[36px]"></i>
                   <div
-                    style={{
-                      position: "absolute",
-                      top: "-5px",
-                      right: "-5px",
-                      width: "32px",
-                      height: "32px",
-                      borderRadius: "50%",
-                      backgroundColor: PRIMARY_DARK,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      color: "#ffffff",
-                      fontSize: "14px",
-                      fontWeight: "700",
-                      border: "2.5px solid #ffffff",
-                      boxShadow: "0 2px 8px rgba(128, 89, 202, 0.4)",
-                    }}
+                    style={{ boxShadow: "0 2px 8px rgba(128, 89, 202, 0.4)" }}
+                    className="!absolute !top-[-4px] !right-[-4px] !w-[28px] !h-[28px] !rounded-full !bg-[#6d48b8] !flex !items-center !justify-center !text-white !text-[12px] !font-bold !border-2 !border-white"
                   >
                     4
                   </div>
                 </div>
-                <h5
-                  style={{
-                    fontSize: "16px",
-                    fontWeight: "700",
-                    color: PRIMARY_COLOR,
-                    marginBottom: "8px",
-                  }}
-                >
+                <h5 className="!mt-4 !mb-2 !text-[16px] !font-bold !text-[#8059ca]">
                   Quality Care Delivered
                 </h5>
-                <p
-                  style={{
-                    fontSize: "13px",
-                    color: "#666",
-                    marginBottom: 0,
-                    lineHeight: "1.6",
-                  }}
-                >
+                <p className="!m-0 !text-[13px] !text-[#666] !leading-relaxed">
                   Share your feedback with MediCompares
                 </p>
               </div>
             </div>
+
           </div>
         </div>
       </section>
@@ -1429,61 +863,26 @@ const NursingCare = ({
       {/* Other Healthcare Services Section */}
       {nursingOfferProducts && nursingOfferProducts.length > 0 && (
         <section
-          className="section py-5"
+          className="!py-12"
           style={{ backgroundColor: PRIMARY_SECTION_BG }}
         >
-          <div className="container">
-            <div className="row mb-5">
-              <div className="col-12 text-center">
-                <h2
-                  className="mb-2"
-                  style={{ fontSize: "32px", fontWeight: "600", color: "#1a1a1a" }}
-                >
-                  Other Services We Offer
-                </h2>
-                <p
-                  className="mt-2"
-                  style={{
-                    fontSize: "16px",
-                    color: "#666",
-                    maxWidth: "800px",
-                    margin: "0 auto",
-                  }}
-                >
-                  Choose from our wide variety of services. Get Assurance for
-                  quality round the clock care.
-                </p>
-              </div>
+          <div className="!max-w-7xl !mx-auto !px-4">
+            <div className="!text-center !mb-10">
+              <h2 className="!m-0 !text-[32px] !font-semibold !text-[#1a1a1a]">
+                Other Services We Offer
+              </h2>
+              <p className="!text-[#666] !text-[15px] !max-w-[800px] !mx-auto !mt-2">
+                Choose from our wide variety of services. Get Assurance for
+                quality round the clock care.
+              </p>
             </div>
 
-            <div className="row g-4">
+            <div className="!grid !grid-cols-1 sm:!grid-cols-2 md:!grid-cols-3 lg:!grid-cols-4 !gap-6">
               {nursingOfferProducts?.slice(0, 8).map((ele, ind) => {
                 return (
-                  <div className="col-lg-3 col-md-4 col-sm-6" key={ind}>
+                  <div key={ind} className="!w-full">
                     <div
-                      className="card border-0"
-                      style={{
-                        height: "220px",
-                        borderRadius: "16px",
-                        overflow: "hidden",
-                        position: "relative",
-                        boxShadow: "0 4px 20px rgba(128, 89, 202, 0.06)",
-                        transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-                        cursor: "pointer",
-                        border: "1px solid rgba(128, 89, 202, 0.08)",
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.transform = "translateY(-6px)";
-                        e.currentTarget.style.boxShadow =
-                          "0 12px 30px rgba(128, 89, 202, 0.25)";
-                        e.currentTarget.style.borderColor = PRIMARY_COLOR;
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.transform = "translateY(0)";
-                        e.currentTarget.style.boxShadow =
-                          "0 4px 20px rgba(128, 89, 202, 0.06)";
-                        e.currentTarget.style.borderColor = "rgba(128, 89, 202, 0.08)";
-                      }}
+                      className="!relative !h-[220px] !rounded-[16px] !overflow-hidden !cursor-pointer !border !border-[rgba(128,89,202,0.08)] !shadow-[0_4px_20px_rgba(128,89,202,0.06)] !transition-all !duration-300 hover:!-translate-y-1 hover:!shadow-[0_12px_30px_rgba(128,89,202,0.25)] hover:!border-[#8059ca]"
                       onClick={() => handleProductClick(ele)}
                     >
                       {/* Full Background Image */}
@@ -1494,54 +893,17 @@ const NursingCare = ({
                         }
                         alt={ele?.tabletdetails?.name}
                         title={ele?.tabletdetails?.name}
-                        style={{
-                          width: "100%",
-                          height: "100%",
-                          objectFit: "cover",
-                          position: "absolute",
-                          top: 0,
-                          left: 0,
-                        }}
+                        className="!absolute !inset-0 !w-full !h-full !object-cover !z-0"
                       />
 
                       {/* Gradient Overlay for Text Readability */}
-                      <div
-                        style={{
-                          position: "absolute",
-                          bottom: 0,
-                          left: 0,
-                          width: "100%",
-                          height: "60%",
-                          background: "linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.4) 60%, transparent 100%)",
-                          zIndex: 1,
-                        }}
-                      />
+                      <div className="!absolute !bottom-0 !left-0 !w-full !h-[60%] !bg-gradient-to-t !from-[rgba(0,0,0,0.85)] !via-[rgba(0,0,0,0.4)] !to-transparent !z-[1]" />
 
                       {/* Title Text Overlaid */}
-                      <div
-                        style={{
-                          position: "absolute",
-                          bottom: 0,
-                          left: 0,
-                          width: "100%",
-                          padding: "16px",
-                          zIndex: 2,
-                          display: "flex",
-                          alignItems: "flex-end",
-                          justifyContent: "center",
-                          textAlign: "center",
-                        }}
-                      >
+                      <div className="!absolute !bottom-0 !left-0 !w-full !p-4 !z-[2] !flex !items-end !justify-center !text-center">
                         <h5
-                          style={{
-                            fontSize: "15px",
-                            fontWeight: "600",
-                            color: "#ffffff",
-                            marginBottom: 0,
-                            textTransform: "capitalize",
-                            lineHeight: "1.4",
-                            textShadow: "0 2px 4px rgba(0,0,0,0.6)",
-                          }}
+                          className="!m-0 !text-[15px] !font-semibold !text-white !capitalize !leading-normal"
+                          style={{ textShadow: "0 2px 4px rgba(0,0,0,0.6)" }}
                         >
                           {ele.tabletdetails?.name
                             ? ele.tabletdetails.name.length > 30
@@ -1561,7 +923,7 @@ const NursingCare = ({
 
       {/* Feedback/Testimonials Section */}
       <section
-        className="section py-4"
+        className="!py-12"
         style={{
           backgroundColor: "#E8E4F5",
           backgroundImage: "url('/assets/Medicompares%20Background.png')",
@@ -1570,38 +932,18 @@ const NursingCare = ({
           backgroundRepeat: "no-repeat",
         }}
       >
-        <div className="container">
-          <div className="row mb-5">
-            <div className="col-12 text-center">
-              <h2
-                className="mb-3"
-                style={{
-                  fontSize: "36px",
-                  fontWeight: "700",
-                  background: `linear-gradient(90deg, ${PRIMARY_COLOR} 0%, ${PRIMARY_DARK} 100%)`,
-                  WebkitBackgroundClip: "text",
-                  backgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                }}
-              >
-                What Our Customers Say
-              </h2>
-              <p
-                className="mb-0"
-                style={{
-                  fontSize: "16px",
-                  color: "#666",
-                  maxWidth: "700px",
-                  margin: "0 auto",
-                }}
-              >
-                Read testimonials from families who have experienced our
-                professional nursing care services
-              </p>
-            </div>
+        <div className="!max-w-7xl !mx-auto !px-4">
+          <div className="!text-center !mb-10">
+            <h2 className="!m-0 !text-[36px] !font-semibold !bg-gradient-to-r !from-[#8059ca] !to-[#6d48b8] !bg-clip-text !text-transparent !tracking-tight">
+              What Our Customers Say
+            </h2>
+            <p className="!text-[#666] !text-[15px] !max-w-[700px] !mx-auto !mt-2">
+              Read testimonials from families who have experienced our
+              professional nursing care services
+            </p>
           </div>
 
-          <div className="row g-4 justify-content-center">
+          <div className="!grid !grid-cols-1 md:!grid-cols-2 lg:!grid-cols-3 !gap-6">
             {[
               {
                 initials: "RK",
@@ -1625,122 +967,41 @@ const NursingCare = ({
                 feedback: "Outstanding patient care service! The nursing staff was professional, punctual, and very caring. They made the recovery process smooth and comfortable. Thank you MediCompares!"
               }
             ].map((testimonial, index) => (
-              <div key={index} className="col-lg-4 col-md-6 col-sm-12">
+              <div key={index} className="!w-full !flex">
                 <div
-                  className="card border-0 h-100"
-                  style={{
-                    borderRadius: "12px",
-                    backgroundColor: "#ffffff",
-                    boxShadow: "0 6px 16px rgba(128, 89, 202, 0.06)",
-                    padding: "20px 24px",
-                    transition: "all 0.3s ease",
-                    position: "relative",
-                    overflow: "hidden",
-                    border: "1px solid rgba(128, 89, 202, 0.1)",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = "translateY(-6px)";
-                    e.currentTarget.style.boxShadow =
-                      "0 12px 24px rgba(128, 89, 202, 0.12)";
-                    e.currentTarget.style.borderColor = PRIMARY_COLOR;
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = "translateY(0)";
-                    e.currentTarget.style.boxShadow =
-                      "0 6px 16px rgba(128, 89, 202, 0.06)";
-                    e.currentTarget.style.borderColor = "rgba(128, 89, 202, 0.1)";
-                  }}
+                  className="!flex !flex-col !w-full !p-6 !bg-white !rounded-[16px] !shadow-[0_6px_16px_rgba(128,89,202,0.06)] !border !border-[rgba(128,89,202,0.1)] !transition-all !duration-300 hover:!-translate-y-1 hover:!shadow-[0_12px_24px_rgba(128,89,202,0.12)] hover:!border-[#8059ca]"
                 >
-                  {/* Quote Icon */}
-                  <div
-                    style={{
-                      position: "absolute",
-                      top: "16px",
-                      right: "16px",
-                      width: "36px",
-                      height: "36px",
-                      borderRadius: "50%",
-                      backgroundColor: PRIMARY_SECTION_BG,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      opacity: 0.7,
-                    }}
-                  >
-                    <i
-                      className="fa fa-quote-right"
-                      style={{ fontSize: "16px", color: PRIMARY_COLOR }}
-                    ></i>
-                  </div>
+                  {/* Top content wrapper */}
+                  <div className="!flex !justify-between !items-start !mb-4">
+                    {/* Rating Stars */}
+                    <div className="!flex !gap-[3px]">
+                      {Array.from({ length: testimonial.stars }).map((_, starIdx) => (
+                        <i
+                          key={starIdx}
+                          className="fa fa-star !text-[#8059ca] !text-[13px]"
+                        ></i>
+                      ))}
+                    </div>
 
-                  {/* Rating Stars */}
-                  <div style={{ marginBottom: "12px" }}>
-                    {Array.from({ length: testimonial.stars }).map((_, starIdx) => (
-                      <i
-                        key={starIdx}
-                        className="fa fa-star"
-                        style={{
-                          fontSize: "14px",
-                          color: PRIMARY_COLOR,
-                          marginRight: "3px",
-                        }}
-                      ></i>
-                    ))}
+                    {/* Quote Icon */}
+                    <div className="!w-8 !h-8 !rounded-full !bg-[#f8f4ff] !flex !items-center !justify-center !opacity-80">
+                      <i className="fa fa-quote-right !text-[#8059ca] !text-[14px]"></i>
+                    </div>
                   </div>
 
                   {/* Feedback Text */}
-                  <p
-                    style={{
-                      fontSize: "14px",
-                      color: "#555",
-                      lineHeight: "1.6",
-                      marginBottom: "16px",
-                      fontStyle: "italic",
-                    }}
-                  >
+                  <p className="!text-[14px] !text-[#555] !leading-relaxed !italic !mb-6 !flex-grow">
                     "{testimonial.feedback}"
                   </p>
 
                   {/* Patient Info */}
-                  <div className="d-flex align-items-center mt-auto">
-                    <div
-                      style={{
-                        width: "44px",
-                        height: "44px",
-                        borderRadius: "50%",
-                        backgroundColor: PRIMARY_COLOR,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        marginRight: "12px",
-                        fontSize: "16px",
-                        color: "#ffffff",
-                        fontWeight: "700",
-                        flexShrink: 0,
-                      }}
-                    >
+                  <div className="!flex !items-center !gap-3 !mt-auto">
+                    <div className="!w-11 !h-11 !rounded-full !bg-[#8059ca] !flex !items-center !justify-center !text-white !text-[15px] !font-bold !shrink-0">
                       {testimonial.initials}
                     </div>
                     <div>
-                      <h6
-                        style={{
-                          fontSize: "14px",
-                          fontWeight: "600",
-                          color: "#000",
-                          marginBottom: "2px",
-                        }}
-                      >
-                        {testimonial.name}
-                      </h6>
-                      <p
-                        style={{
-                          fontSize: "12px",
-                          color: "#666",
-                          marginBottom: 0,
-                        }}
-                      >
-                        {testimonial.role}
-                      </p>
+                      <h6 className="!m-0 !text-[14px] !font-semibold !text-black !mb-[2px]">{testimonial.name}</h6>
+                      <p className="!m-0 !text-[12px] !text-[#666]">{testimonial.role}</p>
                     </div>
                   </div>
                 </div>
@@ -1749,40 +1010,20 @@ const NursingCare = ({
           </div>
 
           {/* Statistics Row */}
-          <div
-            className="row mt-5 pt-4"
-            style={{ borderTop: "2px solid rgba(128, 89, 202, 0.2)" }}
-          >
+          <div className="!grid !grid-cols-2 md:!grid-cols-4 !gap-6 !mt-10 !pt-8 !border-t-2 !border-[rgba(128,89,202,0.2)]">
             {[
               { value: "500+", label: "Happy Patients" },
               { value: "4.8/5", label: "Average Rating" },
               { value: "200+", label: "Certified Nurses" },
               { value: "24/7", label: "Support Available" }
             ].map((stat, idx) => (
-              <div key={idx} className="col-lg-3 col-md-6 mb-4 mb-lg-0">
-                <div className="text-center">
-                  <div
-                    style={{
-                      fontSize: "36px",
-                      fontWeight: "600",
-                      color: PRIMARY_COLOR,
-                      marginBottom: "6px",
-                      letterSpacing: "-0.02em",
-                    }}
-                  >
-                    {stat.value}
-                  </div>
-                  <p
-                    style={{
-                      fontSize: "14px",
-                      fontWeight: "500",
-                      color: "#5c626a",
-                      marginBottom: 0,
-                    }}
-                  >
-                    {stat.label}
-                  </p>
+              <div key={idx} className="!text-center">
+                <div className="!text-[36px] !font-bold !text-[#8059ca] !mb-1 !tracking-tight">
+                  {stat.value}
                 </div>
+                <p className="!m-0 !text-[14px] !font-semibold !text-[#5c626a]">
+                  {stat.label}
+                </p>
               </div>
             ))}
           </div>

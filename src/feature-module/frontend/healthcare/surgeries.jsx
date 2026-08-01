@@ -859,18 +859,15 @@ const surgeries = ({
     <>
       <SEOHelmet page="surgeries" />
       <div
-        className="main-wrapper home-sixteen home-ten overflow-hidden font-poppins"
-        style={{
-          fontFamily: "Poppins, sans-serif",
-        }}
+        className="!w-full !relative !min-h-screen !text-[16px] !overflow-hidden !font-poppins"
       >
         <section
           className="px-3 py-5 bg-[#E8E4F5] bg-[url('/assets/Medicompares%20Background.png')] bg-cover bg-center bg-no-repeat"
         >
-          <div className="container-fluid">
-            <div className="text-center mb-3">
+          <div className="container-fluid !px-4 md:!px-6 !mx-auto">
+            <div className="!text-center !mb-10">
               <h2
-                className="text-[28px] font-bold inline-block bg-gradient-to-br from-[#8059ca] to-[#6d48b8] bg-clip-text text-transparent"
+                className="!text-[28px] !font-semibold inline-block bg-gradient-to-br from-[#8059ca] to-[#6d48b8] bg-clip-text text-transparent"
               >
                 Meet Our Best Surgeons
               </h2>
@@ -899,16 +896,14 @@ const surgeries = ({
               </select>
             </div>
           </div> */}
-            <div
-              className="doctors-slider-container px-2 w-full"
-            >
+            <div className="!px-2 !w-full">
               <Slider {...settings}>
                 {topdoctors?.slice(0, 14)?.map((doctor) => (
                   <div
                     key={doctor.id}
-                    className="custom-surgeons-slide slider-card-wrapper"
+                    className="!px-2 md:!px-[15px] !w-full !block !box-border"
                   >
-                    <div className="surgeriesCard">
+                    <div className="!bg-white !rounded-[12px] !overflow-visible !border !border-solid !border-[#e8e9f3] !shadow-[0_4px_12px_rgba(0,0,0,0.08)] !h-full !transition-all !duration-300 !ease-[cubic-bezier(0.4,0,0.2,1)] !relative hover:!-translate-y-1 hover:!shadow-[0_8px_24px_rgba(0,0,0,0.12)] hover:!border-[#d9dbf0]">
                       <div className="text-center">
                         <img
                           src={
@@ -917,27 +912,28 @@ const surgeries = ({
                               : "/assets/default.png"
                           }
                           alt={doctor.name}
+                          className="!w-[85px] !h-[85px] !object-cover !rounded-full !mx-auto !mt-5 !mb-0 !block !border-3 !border-solid !border-white !shadow-[0_4px_12px_rgba(0,0,0,0.1)] !bg-[#f9fafb]"
                         />
                       </div>
-                      <div className="surgeriesCard-body">
-                        <h6 title={doctor.name}>
+                      <div className="!p-[16px_18px_18px] !text-center">
+                        <h6 title={doctor.name} className="!font-semibold !mb-[4px] !text-[16px] !text-[#1a1a1a] !leading-[1.3]">
                           {doctor.name.length > 22
                             ? doctor.name.substring(0, 22) + "..."
                             : doctor.name}
                         </h6>
-                        <span className="doctor-specialty">
+                        <span className="!text-[#8059ca] !font-medium !text-[13px] !mb-[12px] !block">
                           {doctor.position.length > 26
                             ? doctor.position.substring(0, 26) + "..."
                             : doctor.position}
                         </span>
 
-                        <div className="meta-group">
-                          <div className="meta">
+                        <div className="!bg-transparent !rounded-[10px] !p-[10px_12px] !mb-[12px] !text-left">
+                          <div className="!text-[12px] !text-[#64748b] !mb-[6px] !flex !items-center !gap-[8px] !leading-[1.4] last:!mb-0">
                             <i
-                              className="fa fa-user-md text-[#8059ca]"
+                              className="fa fa-user-md text-[#8059ca] !text-[11px] !w-[16px] !h-[16px] !flex !items-center !justify-center !shrink-0"
                             ></i>
-                            <span className="meta-text">
-                              <span className="meta-text">
+                            <span className="!flex-1 !overflow-hidden !text-ellipsis !whitespace-nowrap">
+                              <span className="!flex-1 !overflow-hidden !text-ellipsis !whitespace-nowrap">
                                 {doctor.experience}
                               </span>
                               <span
@@ -948,30 +944,22 @@ const surgeries = ({
                             </span>
                           </div>
                           {doctor.ratings && (
-                            <div className="meta">
+                            <div className="!text-[12px] !text-[#64748b] !mb-[6px] !flex !items-center !gap-[8px] !leading-[1.4] last:!mb-0">
                               <i
-                                className="fa fa-star text-[#fbbf24]"
+                                className="fa fa-star text-[#fbbf24] !text-[11px] !w-[16px] !h-[16px] !flex !items-center !justify-center !shrink-0"
                               ></i>
-                              <span className="meta-text">
-                                <span className="meta-text">
+                              <span className="!flex-1 !overflow-hidden !text-ellipsis !whitespace-nowrap">
+                                <span className="!flex-1 !overflow-hidden !text-ellipsis !whitespace-nowrap">
                                   {doctor.ratings}/5{" "}
                                 </span>
-                                {/* <span className="meta-text">(100+ reviews)</span> */}
                               </span>
                             </div>
                           )}
-                          {/* <div className="meta">
-                          <i
-                            className="fa fa-hospital"
-                            style={{ color: "#8059ca" }}
-                          ></i>
-                          <span className="meta-text">Apollo Hospital</span>
-                        </div> */}
-                          <div className="meta" title={doctor.address}>
+                          <div className="!text-[12px] !text-[#64748b] !mb-[6px] !flex !items-center !gap-[8px] !leading-[1.4] last:!mb-0" title={doctor.address}>
                             <i
-                              className="fa-solid fa-location-dot text-[#8059ca]"
+                              className="fa-solid fa-location-dot text-[#8059ca] !text-[11px] !w-[16px] !h-[16px] !flex !items-center !justify-center !shrink-0"
                             ></i>
-                            <span className="meta-text">
+                            <span className="!flex-1 !overflow-hidden !text-ellipsis !whitespace-nowrap">
                               {doctor.address.length > 30
                                 ? doctor.address.substring(0, 30) + "..."
                                 : doctor.address}
@@ -979,16 +967,16 @@ const surgeries = ({
                           </div>
                         </div>
 
-                        <div className="d-flex gap-2">
+                        <div className="!flex !gap-2">
                           <a
-                            className="btn-call no-underline text-white"
+                            className="!flex !items-center !justify-center !gap-[6px] !py-[6px] !px-1 !text-[10px] !font-semibold !rounded-[8px] !border-none !cursor-pointer !transition-all !duration-300 !flex-1 !tracking-[0.3px] !bg-[#8059ca] !text-white hover:!-translate-y-[2px] hover:!shadow-[0_6px_16px_rgba(125,46,255,0.25)] hover:!bg-gradient-to-br hover:!from-[#8059ca] hover:!to-[#6a1de8] no-underline"
                             href="tel:+919010357778"
                           >
                             <i className="fa fa-phone"></i>
                             Call
                           </a>
                           <button
-                            className="btn-enquiry"
+                            className="!flex !items-center !justify-center !gap-[6px] !py-[6px] !px-1 !text-[10px] !font-semibold !rounded-[8px] !border-[1.5px] !border-solid !border-[#8059ca] !bg-white !text-[#8059ca] !cursor-pointer !transition-all !duration-300 !flex-1 !tracking-[0.3px] hover:!-translate-y-[2px] hover:!shadow-[0_6px_16px_rgba(125,46,255,0.25)] hover:!bg-[#8059ca] hover:!text-white hover:!border-[#8059ca]"
                             onClick={() => handleDoctorConsultationClick(doctor)}
                           >
                             Get An Enquiry
@@ -1009,37 +997,37 @@ const surgeries = ({
         </section>
         {/* Short banners */}
         {middleBanners?.length > 0 && (
-          <section className="section welcome-section my-4 px-2">
-            <div className="container-fluid mb-4">
-              <div className="text-center mb-5">
+          <section className="!my-4 !px-2">
+            <div className="container-fluid !px-4 md:!px-6 !mb-4">
+              <div className="!text-center !mb-5">
                 <h2
                   className="text-[28px] font-bold text-[#1a1a1a]"
                 >
-                  <i className="fas fa-bolt text-warning me-2"></i>
+                  <i className="fas fa-bolt !text-warning !mr-2"></i>
                   Offers & Promotions
                 </h2>
               </div>
               {middleBanners.length > 1 ? (
                 <Slider {...settings1}>
                   {middleBanners.map((image, index) => (
-                    <div key={index} className="col-lg-4 col-md-6 d-flex">
+                    <div key={index} className="!w-full md:!w-1/2 lg:!w-1/3 !flex">
                       <img
                         src={image.src}
                         alt={image.alt}
                         loading="lazy"
-                        className="px-1 rounded-[10px]"
+                        className="!px-1 !rounded-[10px] !w-full"
                       />
                     </div>
                   ))}
                 </Slider>
               ) : (
-                <div className="col-lg-12 d-flex">
+                <div className="!w-full !flex">
                   <img
                     src={middleBanners[0]?.src}
                     alt={middleBanners[0]?.alt}
                     title={middleBanners[0]?.alt}
                     loading="lazy"
-                    className="px-1 rounded-[10px]"
+                    className="!px-1 !rounded-[10px] !w-full"
                   />
                 </div>
               )}
@@ -1048,7 +1036,7 @@ const surgeries = ({
         )}
         {vendorList && vendorList.length > 0 && (
           <section className="px-3 py-4 bg-[#EBF1F6]">
-            <div className="container-fluid">
+            <div className="container-fluid !px-4 md:!px-6 !mx-auto">
               <div className="text-center mb-4">
                 <h2
                   className="text-[28px] font-bold text-[#1a1a1a]"
@@ -1362,186 +1350,128 @@ const surgeries = ({
             </div>
           </section>
         )}
-        <section>
-          <div className="container-fluid py-4">
-            <div className="text-center mb-5">
-
-              <h2 className="text-[28px] font-bold">
-                <i
-                  className="fa fa-bolt me-2 text-[#8059ca]"
-                />
-                <span
-                  className="bg-gradient-to-br from-[#8059ca] to-[#6d48b8] bg-clip-text text-transparent"
-                >
-                  One-Stop Solution for Everything You Need
-                </span>
+        <section className="!py-12 md:!py-6">
+          <div className="container-fluid !px-4 md:!px-6 !py-4 !mx-auto">
+            <div className="!text-center !mb-6">
+              <h2 className="!text-[22px] !font-medium !text-gray-900">
+                <i className="fa fa-bolt !mr-2 !text-[#8059ca]" />
+                One-Stop Solution for Everything You Need
               </h2>
-
             </div>
-            <div className="flow-row">
-              <div className="feature-item">
-                <div className="icon-box bg-custom-orange">
-                  <i className="fa fa-user-md" />
+            <div className="!grid !grid-cols-2 md:!grid-cols-5 !gap-8 !pt-10 !pb-6">
+              {[
+                {
+                  step: "01",
+                  icon: "fa fa-user-md",
+                  title: "Expert Surgeons",
+                  desc: "15+ Years of Experience, board-certified",
+                  gradient: "from-orange-500 to-amber-400",
+                  shadow: "hover:!shadow-[0_12px_24px_rgba(249,115,22,0.18)]",
+                  staggerClass: "md:!translate-y-2",
+                },
+                {
+                  step: "02",
+                  icon: "fas fa-hospital",
+                  title: "Accredited Hospitals",
+                  desc: "JCI & NABH recognized clinics",
+                  gradient: "from-red-500 to-rose-400",
+                  shadow: "hover:!shadow-[0_12px_24px_rgba(239,68,68,0.18)]",
+                  staggerClass: "md:!-translate-y-2",
+                },
+                {
+                  step: "03",
+                  icon: "fa fa-headphones",
+                  title: "24/7 Support",
+                  desc: "Care assistance at your service",
+                  gradient: "from-blue-500 to-cyan-400",
+                  shadow: "hover:!shadow-[0_12px_24px_rgba(59,130,246,0.18)]",
+                  staggerClass: "md:!translate-y-2",
+                },
+                {
+                  step: "04",
+                  icon: "fa fa-shield",
+                  title: "Insurance & Loan",
+                  desc: "Hassle-free finance assistance",
+                  gradient: "from-pink-500 to-fuchsia-400",
+                  shadow: "hover:!shadow-[0_12px_24px_rgba(236,72,153,0.18)]",
+                  staggerClass: "md:!-translate-y-2",
+                },
+                {
+                  step: "05",
+                  icon: "fa fa-medkit",
+                  title: "Post-Surgery Care",
+                  desc: "Complete support to full recovery",
+                  gradient: "from-amber-500 to-yellow-400",
+                  shadow: "hover:!shadow-[0_12px_24px_rgba(245,158,11,0.18)]",
+                  staggerClass: "md:!translate-y-2",
+                },
+              ].map((item, idx) => (
+                <div
+                  key={idx}
+                  className={`!relative !flex-1 !flex !flex-col !items-center !text-center !p-4 !pt-8 !rounded-[20px] !bg-white !border !border-solid !border-gray-100 hover:!border-transparent !transition-all !duration-300 ${item.shadow} hover:!-translate-y-3 !group ${item.staggerClass}`}
+                >
+                  {/* Floating Icon Badge */}
+                  <div className={`!absolute !-top-6 !w-12 !h-12 !rounded-full !flex !items-center !justify-center !bg-gradient-to-br ${item.gradient} !text-white !shadow-lg !transition-transform !duration-300 group-hover:!scale-110`}>
+                    <i className={`${item.icon} !text-[16px]`} />
+                  </div>
+
+                  {/* Subtle Background Step Number */}
+                  <span className="!absolute !bottom-2 !right-3 !text-[24px] !font-bold !text-gray-100 !font-mono !select-none">
+                    {item.step}
+                  </span>
+
+                  <h6 className="!text-[13px] !font-medium !text-gray-800 !mb-1 !leading-snug">
+                    {item.title}
+                  </h6>
+                  <p className="!text-[11px] !font-normal !text-gray-400 !m-0 !leading-relaxed">
+                    {item.desc}
+                  </p>
                 </div>
-                <div className="feature-title">
-                  Expert Surgeons with 15+ Years of Experience
-                </div>
-                <div className="feature-desc">
-                  Highly qualified, board-certified surgeons delivering safe
-                  outcomes.
-                </div>
-              </div>
-              <div className="mini-connector">
-                <span className="mini-dot dot-purple" />
-                <span className="mini-dash" />
-                <span className="mini-dot dot-cyan" />
-              </div>
-              <div className="feature-item">
-                <div className="icon-box bg-custom-red">
-                  <i className="fas fa-hospital" />
-                </div>
-                <div className="feature-title">
-                  Top JCI &amp; NABH-Accredited Hospitals
-                </div>
-                <div className="feature-desc">
-                  Internationally recognized hospitals for quality care.
-                </div>
-              </div>
-              <div className="mini-connector">
-                <span className="mini-dot dot-cyan" />
-                <span className="mini-dash" />
-                <span className="mini-dot dot-purple" />
-              </div>
-              <div className="feature-item">
-                <div className="icon-box bg-custom-blue">
-                  <i className="fa fa-headphones" />
-                </div>
-                <div className="feature-title">
-                  24×7 Personal Care
-                  <br />
-                  Assistance
-                </div>
-                <div className="feature-desc">
-                  Dedicated support available any time you need it.
-                </div>
-              </div>
-              <div className="mini-connector">
-                <span className="mini-dot dot-purple" />
-                <span className="mini-dash" />
-                <span className="mini-dot dot-cyan" />
-              </div>
-              <div className="feature-item">
-                <div className="icon-box bg-custom-pink">
-                  <i className="fa fa-shield" />
-                </div>
-                <div className="feature-title">
-                  Easy Insurance Claim &amp; Medical Loan Support
-                </div>
-                <div className="feature-desc">
-                  Hassle-free insurance and financing assistance.
-                </div>
-              </div>
-              <div className="mini-connector">
-                <span className="mini-dot dot-cyan" />
-                <span className="mini-dash" />
-                <span className="mini-dot dot-purple" />
-              </div>
-              <div className="feature-item">
-                <div className="icon-box bg-custom-yellow">
-                  <i className="fa fa-medkit" />
-                </div>
-                <div className="feature-title">
-                  Comprehensive Post- Surgery Care
-                </div>
-                <div className="feature-desc">
-                  Complete care from consultation to recovery.
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </section>
 
         <section
-          className="pt-[20px] pb-0 px-0 bg-[#E8E4F5] bg-[url('/assets/Medicompares%20Background.png')] bg-cover bg-center bg-no-repeat relative overflow-hidden"
+          className="!pt-5 !pb-0 !px-0 !bg-[#E8E4F5] bg-[url('/assets/Medicompares%20Background.png')] !bg-cover !bg-center !bg-no-repeat !relative !overflow-hidden"
         >
           <style>
             {`
-      @keyframes pulse {
-        0%, 100% {
-          transform: scale(1);
-          opacity: 1;
-        }
-        50% {
-          transform: scale(1.1);
-          opacity: 0.9;
-        }
-      }
-
-      @keyframes bounce {
-        0%, 100% {
-          transform: translateY(0);
-        }
-        50% {
-          transform: translateY(-8px);
-        }
-      }
-
-      /* ============================
-         RESPONSIVE (MOBILE/TABLET) 
-      ============================ */
-      @media (max-width: 991px) {
-        .how-works-container {
-          flex-direction: column !important;
-          min-height: auto !important;
-          gap: 40px !important;
-          padding: 20px 10px !important;
-        }
-        .how-works-feature {
-          position: static !important;
-          transform: none !important;
-          max-width: 320px !important;
-          width: 100% !important;
-          text-align: center !important;
-        }
-        .how-works-feature.left {
-          text-align: center !important;
-        }
-        .how-works-feature.right {
-          text-align: center !important;
-        }
-        .how-works-feature .card-works {
-          align-items: center !important;
-        }
-        .how-works-center-img {
-          margin-top: 20px !important;
-          order: -1 !important;
-        }
-      }
-
-      @media (max-width: 480px) {
-        .how-works-center-img {
-          width: 150px !important;
-          height: 150px !important;
-        }
-        .how-works-feature {
-          max-width: 240px !important;
-        }
-      }
-    `}
+              @keyframes pulse {
+                0%, 100% { transform: scale(1); opacity: 1; }
+                50% { transform: scale(1.1); opacity: 0.9; }
+              }
+              @keyframes bounce {
+                0%, 100% { transform: translateY(0); }
+                50% { transform: translateY(-8px); }
+              }
+              @media (max-width: 991px) {
+                .how-works-feature-item {
+                  position: relative !important;
+                  top: auto !important;
+                  left: auto !important;
+                  right: auto !important;
+                  bottom: auto !important;
+                  transform: none !important;
+                  max-width: 320px !important;
+                  width: 100% !important;
+                  margin: 0 auto !important;
+                }
+              }
+            `}
           </style>
-
-          <div className="container relative z-[1]">
+          <div className="container !px-4 md:!px-6 !mx-auto relative z-[1]">
             <h2
-              className="text-[28px] font-bold inline-block w-full text-center bg-gradient-to-br from-[#8059ca] to-[#6d48b8] bg-clip-text text-transparent"
+              className="!text-[28px] !font-medium !inline-block !w-full !text-center !bg-gradient-to-br !from-[#8059ca] !to-[#6d48b8] !bg-clip-text !text-transparent"
             >
               How MediCompares Works
             </h2>
 
             <div
-              className="how-works-container relative flex justify-center items-center min-h-[600px] py-[40px] px-[20px]"
+              className="!relative !flex !justify-center !items-center !min-h-[600px] !py-10 !px-5 max-lg:!flex-col max-lg:!min-h-0 max-lg:!gap-10 max-lg:!py-5 max-lg:!px-2.5"
             >
               <div
-                className="how-works-center-img relative w-[280px] h-[280px] rounded-[50%] overflow-hidden border-[8px] border-solid border-white shadow-[0_6px_20px_rgba(128,89,202,0.2)] z-10 bg-[#f8f4ff] mt-[190px]"
+                className="!relative !w-[280px] !h-[280px] !rounded-full !overflow-hidden !border-8 !border-solid !border-white !shadow-[0_6px_20px_rgba(128,89,202,0.2)] !z-10 !bg-[#f8f4ff] lg:!mt-[190px] max-lg:!mt-5 max-lg:!order-first max-sm:!w-[150px] max-sm:!h-[150px]"
               >
                 <img
                   src="https://images.unsplash.com/photo-1551601651-2a8555f1a136?w=500&h=500&fit=crop&q=80"
@@ -1591,7 +1521,7 @@ const surgeries = ({
               ].map((feature) => (
                 <div
                   key={feature.id}
-                  className="how-works-feature"
+                  className="how-works-feature-item lg:!absolute max-lg:!relative max-lg:!transform-none max-lg:!max-w-[320px] max-lg:!w-full max-lg:!text-center !z-5 lg:!max-w-[200px]"
                   style={{
                     position: "absolute",
                     ...feature.position,
@@ -1600,6 +1530,7 @@ const surgeries = ({
                   }}
                 >
                   <svg
+                    className="max-lg:!hidden"
                     style={{
                       position: "absolute",
                       width: "100px",
@@ -1664,41 +1595,41 @@ const surgeries = ({
 
                   {/* FEATURE BOX */}
                   <div
-                    className={`bg-white rounded-[12px] p-[16px] shadow-[0_4px_12px_rgba(128,89,202,0.1)] border border-solid border-[rgba(128,89,202,0.12)] text-center ${feature.id === 1 ? "mt-[20px]" : "mt-0"}`}
+                    className={`!bg-white !rounded-[12px] !p-4 !shadow-[0_4px_12px_rgba(128,89,202,0.1)] !border !border-solid !border-[rgba(128,89,202,0.12)] !text-center ${feature.id === 1 ? "!mt-5" : "!mt-0"}`}
                   >
                     <p
-                      className="text-[16px] font-semibold text-[#1a1a1a] mb-[8px]"
+                      className="!text-[15px] !font-medium !text-[#1a1a1a] !mb-2"
                     >
                       {feature.title}
                     </p>
 
                     {feature.subtitle && (
                       <p
-                        className="text-[13px] text-[#64748b] leading-[1.4] font-normal"
+                        className="!text-[12.5px] !text-[#64748b] !leading-[1.4] !font-normal"
                       >
                         {feature.subtitle}
                       </p>
                     )}
 
                     {/* ICON */}
-                    <div className="mt-[10px]">
+                    <div className="!mt-2.5">
                       <div
-                        className="w-[50px] h-[50px] rounded-[50%] flex items-center justify-center bg-gradient-to-br from-[#8059ca] to-[#6d48b8]"
+                        className="!w-10 !h-10 !rounded-full !flex !items-center !justify-center !bg-gradient-to-br !from-[#8059ca] !to-[#6d48b8] !mx-auto"
                         style={{
                           animation: "pulse 2s infinite",
                         }}
                       >
                         <i
                           className={`${feature.id === 1
-                              ? "fas fa-list-check"
-                              : feature.id === 3
-                                ? "fas fa-balance-scale"
-                                : feature.id === 4
-                                  ? "fas fa-calendar-check"
-                                  : feature.id === 5
-                                    ? "fas fa-file-medical"
-                                    : "fas fa-search"
-                            } text-[20px] text-white`}
+                            ? "fas fa-list-check"
+                            : feature.id === 3
+                              ? "fas fa-balance-scale"
+                              : feature.id === 4
+                                ? "fas fa-calendar-check"
+                                : feature.id === 5
+                                  ? "fas fa-file-medical"
+                                  : "fas fa-search"
+                            } !text-[16px] !text-white`}
                           style={{
                             animation: "bounce 1.5s infinite",
                           }}
@@ -1713,314 +1644,286 @@ const surgeries = ({
         </section>
 
         <section className="py-4">
-          <div className="container ">
-            <div className="row align-items-center g-4">
-              <div className="col-lg-5">
-                <div className="ssa-wrapper-bg">
-                  <div className="ssa-form-box">
+          <div className="container !px-4 md:!px-6 !mx-auto">
+            <div className="!flex !flex-col lg:!flex-row !items-stretch !gap-8">
+              <div className="!w-full lg:!w-5/12">
+                <div className="!bg-gradient-to-br !from-[#6a11cb] !to-[#2575fc] !p-[30px] !rounded-[16px] max-md:!mb-[30px] !h-full !flex !flex-col !justify-center">
+                  <div className="!bg-white !rounded-[12px] !overflow-hidden">
                     <h3
                       className="mt-2 text-center text-dark font-semibold text-[20px]"
                     >
                       Smart Surgery Assistance
                     </h3>
-                    <form className="p-3" onSubmit={(e) => handleSubmitLead(e)}>
-                      <div className="row mb-2">
-                        <div className="col-md-12">
-                          <label className="mb-1">
+                    <form className="!p-4 !space-y-3" onSubmit={(e) => handleSubmitLead(e)}>
+                      {/* Row 1: Full Name & Email */}
+                      <div className="!grid !grid-cols-2 !gap-3">
+                        <div>
+                          <label className="!mb-1 !block">
                             <small className="text-dark">Full Name</small>
                           </label>
-                          <div className="ssa-input-wrap">
-                            <input
-                              type="text"
-                              className="ssa-input-field"
-                              placeholder="Enter your full name"
-                              name="name"
-                              required
-                              value={form.name}
-                              onChange={(e) => handleChange(e)}
-                            />
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="row mb-2">
-                        <div className="col-md-6">
-                          <label className="mb-1">
-                            <small className="text-dark">Age</small>
-                          </label>
-                          <div className="ssa-input-wrap">
-                            <input
-                              type="number"
-                              className="ssa-input-field"
-                              placeholder="Age"
-                              name="age"
-                              required
-                              value={form.age || ""}
-                              onChange={(e) => handleChange(e)}
-                            />
-                          </div>
-                        </div>
-
-                        <div className="col-md-6">
-                          <label className="mb-1">
-                            <small className="text-dark">Gender</small>
-                          </label>
-                          <div className="ssa-input-wrap">
-                            <select
-                              className="ssa-input-field"
-                              required
-                              name="gender"
-                              value={form.gender || ""}
-                              onChange={(e) => handleChange(e)}
-                            >
-                              <option value="">Select Gender</option>
-                              <option value="Male">Male</option>
-                              <option value="Female">Female</option>
-                              <option value="Other">Other</option>
-                            </select>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="row mb-2">
-                        <div className="col-md-6">
-                          <label className="mb-1">
-                            <small className="text-dark">Phone Number</small>
-                          </label>
-                          <div className="ssa-input-wrap">
-                            <input
-                              type="tel"
-                              className="ssa-input-field"
-                              placeholder="Phone Number"
-                              maxLength={10}
-                              minLength={10}
-                              required
-                              name="phone"
-                              value={form.phone}
-                              onChange={(e) => handleChange(e)}
-                            />
-                          </div>
-                        </div>
-
-                        <div className="col-md-6">
-                          <label className="mb-1">
-                            <small className="text-dark">Relation</small>
-                          </label>
-                          <div className="ssa-input-wrap">
-                            <input
-                              type="text"
-                              className="ssa-input-field"
-                              placeholder="Relation"
-                              name="relation"
-                              required
-                              value={form.relation || ""}
-                              onChange={(e) => handleChange(e)}
-                            />
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="row mb-2">
-                        <div className="col-md-12">
-                          <label className="mb-1">
-                            <small className="text-dark">
-                              Email Address (Optional)
-                            </small>
-                          </label>
-                          <div className="ssa-input-wrap">
-                            <input
-                              type="email"
-                              className="ssa-input-field"
-                              placeholder="Email Address (Optional)"
-                              name="email"
-                              value={form.email || ""}
-                              onChange={(e) => handleChange(e)}
-                            />
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="row mb-2">
-                        <div className="col-md-6">
-                          <label className="mb-1">
-                            <small className="text-dark">Surgery Type</small>
-                          </label>
-                          <div className="ssa-input-wrap">
-                            <select
-                              className="ssa-input-field"
-                              required
-                              name="surgeryType"
-                              value={form.surgeryType || ""}
-                              onChange={(e) => handleChange(e)}
-                            >
-                              <option value="">Select Surgery Type</option>
-                              <option value="General Surgery">
-                                General Surgery
-                              </option>
-                              <option value="Cardiac Surgery">
-                                Cardiac Surgery
-                              </option>
-                              <option value="Orthopedic Surgery">
-                                Orthopedic Surgery
-                              </option>
-                              <option value="Neuro Surgery">Neuro Surgery</option>
-                              <option value="ENT Surgery">ENT Surgery</option>
-                              <option value="Other">Other</option>
-                            </select>
-                          </div>
-                        </div>
-
-                        <div className="col-md-6">
-                          <label className="mb-1">
-                            <small className="text-dark">City / Location</small>
-                          </label>
-                          <div className="ssa-input-wrap">
-                            <input
-                              type="text"
-                              className="ssa-input-field"
-                              placeholder="City / Location"
-                              name="city"
-                              required
-                              value={form.city || ""}
-                              onChange={(e) => handleChange(e)}
-                            />
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="row">
-                        <div className="col-md-12">
-                          <label className="mb-1">
-                            <small className="text-dark">
-                              Condition / Problem Description
-                            </small>
-                          </label>
-                          <div className="ssa-input-wrap">
-                            <textarea
-                              className="ssa-input-field"
-                              placeholder="Condition / Problem Description"
-                              name="condition"
-                              required
-                              value={form.condition || ""}
-                              onChange={(e) => handleChange(e)}
-                            ></textarea>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="row mb-3">
-                        <div className="col-md-12 d-flex align-items-center">
                           <input
-                            type="checkbox"
-                            name="agree"
+                            type="text"
+                            className="!w-full !h-[38px] !p-[8px_10px] !border !border-solid !border-[#dcdcdc] !rounded-[8px] !text-[13px] !bg-white focus:!outline-none focus:!border-[#6a11cb]"
+                            placeholder="Full name"
+                            name="name"
                             required
-                            checked={form.agree || false}
+                            value={form.name}
                             onChange={(e) => handleChange(e)}
                           />
-                          <label className="ms-1">
-                            <small className="text-dark">
-                              Agree to Be Contacted
-                            </small>
+                        </div>
+                        <div>
+                          <label className="!mb-1 !block">
+                            <small className="text-dark">Email Address (Optional)</small>
                           </label>
+                          <input
+                            type="email"
+                            className="!w-full !h-[38px] !p-[8px_10px] !border !border-solid !border-[#dcdcdc] !rounded-[8px] !text-[13px] !bg-white focus:!outline-none focus:!border-[#6a11cb]"
+                            placeholder="Email (Optional)"
+                            name="email"
+                            value={form.email || ""}
+                            onChange={(e) => handleChange(e)}
+                          />
                         </div>
                       </div>
 
-                      <button className="w-100 ssa-submit-btn">Submit</button>
+                      {/* Row 2: Age & Gender */}
+                      <div className="!grid !grid-cols-2 !gap-3">
+                        <div>
+                          <label className="!mb-1 !block">
+                            <small className="text-dark">Age</small>
+                          </label>
+                          <input
+                            type="number"
+                            className="!w-full !h-[38px] !p-[8px_10px] !border !border-solid !border-[#dcdcdc] !rounded-[8px] !text-[13px] !bg-white focus:!outline-none focus:!border-[#6a11cb]"
+                            placeholder="Age"
+                            name="age"
+                            required
+                            value={form.age || ""}
+                            onChange={(e) => handleChange(e)}
+                          />
+                        </div>
+                        <div>
+                          <label className="!mb-1 !block">
+                            <small className="text-dark">Gender</small>
+                          </label>
+                          <select
+                            className="!w-full !h-[38px] !p-[8px_10px] !border !border-solid !border-[#dcdcdc] !rounded-[8px] !text-[13px] !bg-white focus:!outline-none focus:!border-[#6a11cb]"
+                            required
+                            name="gender"
+                            value={form.gender || ""}
+                            onChange={(e) => handleChange(e)}
+                          >
+                            <option value="">Select Gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                            <option value="Other">Other</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      {/* Row 3: Phone & Relation */}
+                      <div className="!grid !grid-cols-2 !gap-3">
+                        <div>
+                          <label className="!mb-1 !block">
+                            <small className="text-dark">Phone Number</small>
+                          </label>
+                          <input
+                            type="tel"
+                            className="!w-full !h-[38px] !p-[8px_10px] !border !border-solid !border-[#dcdcdc] !rounded-[8px] !text-[13px] !bg-white focus:!outline-none focus:!border-[#6a11cb]"
+                            placeholder="Phone number"
+                            maxLength={10}
+                            minLength={10}
+                            required
+                            name="phone"
+                            value={form.phone}
+                            onChange={(e) => handleChange(e)}
+                          />
+                        </div>
+                        <div>
+                          <label className="!mb-1 !block">
+                            <small className="text-dark">Relation</small>
+                          </label>
+                          <input
+                            type="text"
+                            className="!w-full !h-[38px] !p-[8px_10px] !border !border-solid !border-[#dcdcdc] !rounded-[8px] !text-[13px] !bg-white focus:!outline-none focus:!border-[#6a11cb]"
+                            placeholder="Relation"
+                            name="relation"
+                            required
+                            value={form.relation || ""}
+                            onChange={(e) => handleChange(e)}
+                          />
+                        </div>
+                      </div>
+
+                      {/* Row 4: Surgery Type & Location */}
+                      <div className="!grid !grid-cols-2 !gap-3">
+                        <div>
+                          <label className="!mb-1 !block">
+                            <small className="text-dark">Surgery Type</small>
+                          </label>
+                          <select
+                            className="!w-full !h-[38px] !p-[8px_10px] !border !border-solid !border-[#dcdcdc] !rounded-[8px] !text-[13px] !bg-white focus:!outline-none focus:!border-[#6a11cb]"
+                            required
+                            name="surgeryType"
+                            value={form.surgeryType || ""}
+                            onChange={(e) => handleChange(e)}
+                          >
+                            <option value="">Select Surgery</option>
+                            <option value="General Surgery">General Surgery</option>
+                            <option value="Cardiac Surgery">Cardiac Surgery</option>
+                            <option value="Orthopedic Surgery">Orthopedic Surgery</option>
+                            <option value="Neuro Surgery">Neuro Surgery</option>
+                            <option value="ENT Surgery">ENT Surgery</option>
+                            <option value="Other">Other</option>
+                          </select>
+                        </div>
+                        <div>
+                          <label className="!block !mb-1">
+                            <small className="text-dark">City / Location</small>
+                          </label>
+                          <input
+                            type="text"
+                            className="!w-full !h-[38px] !p-[8px_10px] !border !border-solid !border-[#dcdcdc] !rounded-[8px] !text-[13px] !bg-white focus:!outline-none focus:!border-[#6a11cb]"
+                            placeholder="City / Location"
+                            name="city"
+                            required
+                            value={form.city || ""}
+                            onChange={(e) => handleChange(e)}
+                          />
+                        </div>
+                      </div>
+
+                      {/* Row 5: Description */}
+                      <div>
+                        <label className="!mb-1 !block">
+                          <small className="text-dark">Condition Description</small>
+                        </label>
+                        <textarea
+                          className="!w-full !min-h-[60px] !p-[8px_10px] !border !border-solid !border-[#dcdcdc] !rounded-[8px] !text-[13px] !bg-white focus:!outline-none focus:!border-[#6a11cb] !h-auto"
+                          placeholder="Briefly describe the symptoms or condition"
+                          name="condition"
+                          required
+                          value={form.condition || ""}
+                          onChange={(e) => handleChange(e)}
+                        />
+                      </div>
+
+                      {/* Row 6: Consent */}
+                      <div className="!flex !items-center !gap-1.5">
+                        <input
+                          type="checkbox"
+                          name="agree"
+                          required
+                          id="callback-agree"
+                          checked={form.agree || false}
+                          onChange={(e) => handleChange(e)}
+                          className="!w-4 !h-4 !accent-[#6a11cb]"
+                        />
+                        <label htmlFor="callback-agree" className="!cursor-pointer">
+                          <small className="text-dark">Agree to Be Contacted</small>
+                        </label>
+                      </div>
+
+                      <button className="!w-full !bg-gradient-to-r !from-[#6a11cb] !to-[#2575fc] !text-white !rounded-[8px] !p-[10px] !font-semibold !border-none !cursor-pointer">
+                        Submit
+                      </button>
                     </form>
                   </div>
                 </div>
               </div>
-              <div className="col-lg-7">
-                <div className="section-wrapper-surgery">
+              <div className="!w-full lg:!w-7/12">
+                <div className="!bg-[#faf7ff] !rounded-[18px] !p-[34px] max-sm:!p-[24px] !max-w-[800px] !mx-auto !border !border-solid !border-[#8059ca]/10">
                   <h2
-                    className="text-[28px] font-semibold text-[#1a1a1a] mb-[16px]"
+                    className="!text-[28px] !font-medium !text-[#1a1a1a] !mb-[16px]"
                   >
                     Smart Care for Every Surgery
                   </h2>
                   <p
-                    className="text-[15px] font-normal text-[#64748b] mb-[32px]"
+                    className="!text-[15px] !font-normal !text-[#64748b] !mb-[32px]"
                   >
                     Consult with expert surgeons for 1000+ surgical treatments
                     across India.
                   </p>
 
-                  <div className="feature-itemss">
-                    <div className="icon-wraps green">
+                  <div className="!flex !gap-[16px] !relative !mb-[36px] !group">
+                    <div className="!w-[46px] !h-[46px] !rounded-[12px] !flex !items-center !justify-center !text-white !text-[18px] !relative !shrink-0 !bg-gradient-to-br !from-[#15AF4E] !to-[#0B6C27]">
                       <i className="fas fa-headset" />
+                      <div className="!absolute !top-[46px] !left-1/2 !-translate-x-1/2 !h-[50px] !border-l-2 !border-dotted !border-[#7A5CFF]" />
                     </div>
-                    <div className="featuree-content">
-                      <h6>Free Consultation</h6>
-                      <p>
+                    <div className="!flex-1">
+                      <h6 className="!font-medium !mb-[4px] !text-[15px] !text-gray-900">Free Consultation</h6>
+                      <p className="!text-[13px] !text-[#6b6b6b] !m-0 !leading-relaxed">
                         Share your details and get a call from a care coordinator.
                       </p>
                     </div>
                   </div>
 
-                  <div className="feature-itemss">
-                    <div className="icon-wraps blue">
+                  <div className="!flex !gap-[16px] !relative !mb-[36px] !group">
+                    <div className="!w-[46px] !h-[46px] !rounded-[12px] !flex !items-center !justify-center !text-white !text-[18px] !relative !shrink-0 !bg-gradient-to-br !from-[#0B4675] !to-[#125184]">
                       <i className="fas fa-users" />
+                      <div className="!absolute !top-[46px] !left-1/2 !-translate-x-1/2 !h-[50px] !border-l-2 !border-dotted !border-[#7A5CFF]" />
                     </div>
-                    <div className="featuree-content">
-                      <h6>Expert Guidance</h6>
-                      <p>
+                    <div className="!flex-1">
+                      <h6 className="!font-medium !mb-[4px] !text-[15px] !text-gray-900">Expert Guidance</h6>
+                      <p className="!text-[13px] !text-[#6b6b6b] !m-0 !leading-relaxed">
                         Our team understands your symptoms and recommends the
                         right treatment.
                       </p>
                     </div>
                   </div>
 
-                  <div className="feature-itemss">
-                    <div className="icon-wraps yellow">
+                  <div className="!flex !gap-[16px] !relative !mb-[36px] !group">
+                    <div className="!w-[46px] !h-[46px] !rounded-[12px] !flex !items-center !justify-center !text-white !text-[18px] !relative !shrink-0 !bg-gradient-to-br !from-[#FBBF24] !to-[#FFC107]">
                       <i className="fas fa-clock" />
+                      <div className="!absolute !top-[46px] !left-1/2 !-translate-x-1/2 !h-[50px] !border-l-2 !border-dotted !border-[#7A5CFF]" />
                     </div>
-                    <div className="featuree-content">
-                      <h6>Quick Scheduling</h6>
-                      <p>
+                    <div className="!flex-1">
+                      <h6 className="!font-medium !mb-[4px] !text-[15px] !text-gray-900">Quick Scheduling</h6>
+                      <p className="!text-[13px] !text-[#6b6b6b] !m-0 !leading-relaxed">
                         Consultations and surgeries scheduled at the earliest
                         convenience.
                       </p>
                     </div>
                   </div>
 
-                  <div className="feature-itemss last">
-                    <div className="icon-wraps orange">
+                  <div className="!flex !gap-[16px] !relative !mb-[36px] !group">
+                    <div className="!w-[46px] !h-[46px] !rounded-[12px] !flex !items-center !justify-center !text-white !text-[18px] !relative !shrink-0 !bg-gradient-to-br !from-[#ED640E] !to-[#DA7F18]">
                       <i className="fas fa-shield-alt" />
                     </div>
-                    <div className="featuree-content">
-                      <h6>Post-Consultation Care Alignment</h6>
-                      <p>
+                    <div className="!flex-1">
+                      <h6 className="!font-medium !mb-[4px] !text-[15px] !text-gray-900">Post-Consultation Care Alignment</h6>
+                      <p className="!text-[13px] !text-[#6b6b6b] !m-0 !leading-relaxed">
                         After consultation, clinical requirements and next steps
                         are aligned.
                       </p>
                     </div>
                   </div>
 
-                  <div className="row stats-row g-3">
+                  <div className="!grid !grid-cols-3 !gap-4 !mt-8">
                     {[
                       { icon: "fa fa-users", value: "3M+", label: "Happy Patients" },
                       { icon: "fa fa-hospital", value: "150+", label: "Clinics" },
                       { icon: "fa fa-map-marker-alt", value: "30+", label: "Cities" }
                     ].map((stat, idx) => (
-                      <div key={idx} className="col-md-4">
-                        <div
-                          className="stat-card text-center p-3 bg-white rounded-[12px] shadow-[0_4px_12px_rgba(0,0,0,0.05)] border border-solid border-[#e2e8f0]"
-                        >
-                          <div className="mb-2">
-                            <i
-                              className={`${stat.icon} fa-2x text-[#8059ca]`}
-                            />
-                          </div>
-                          <h5
-                            className="text-[#8059ca] font-semibold text-[22px] mb-[4px]"
-                          >
-                            {stat.value}
-                          </h5>
-                          <span
-                            className="text-[13px] font-medium text-[#5c626a]"
-                          >
-                            {stat.label}
-                          </span>
+                      <div
+                        key={idx}
+                        className="!bg-white !rounded-[12px] !p-[16px_10px] !text-center !shadow-[0_4px_12px_rgba(0,0,0,0.08)] !border !border-solid !border-[#e2e8f0]"
+                      >
+                        <div className="!mb-2">
+                          <i
+                            className={`${stat.icon} fa-2x !text-[#8059ca]`}
+                          />
                         </div>
+                        <h5
+                          className="!font-bold !text-[#8059ca] !text-[24px] !m-0 !mb-[4px]"
+                        >
+                          {stat.value}
+                        </h5>
+                        <span
+                          className="!text-[13px] !font-medium !text-[#64748b]"
+                        >
+                          {stat.label}
+                        </span>
                       </div>
                     ))}
                   </div>
@@ -2029,6 +1932,8 @@ const surgeries = ({
             </div>
           </div>
         </section>
+
+
         {typeof document !== "undefined" &&
           showModal &&
           createPortal(

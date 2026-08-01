@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   axiosUserInstance,
@@ -11,6 +11,8 @@ import { useResponsive } from "../../../hooks/useResponsive";
 import DOMPurify from "dompurify";
 import { FaRegShareSquare, FaHeart, FaExchangeAlt, FaStar } from "react-icons/fa";
 import { IoIosHeartEmpty } from "react-icons/io";
+import { Tabs } from "../../../components/ui";
+import Pagination from "../../../components/ui/Pagination.jsx";
 
 const getSlugs = (data) => {
   let sub =
@@ -59,6 +61,16 @@ const Favourites = ({ HomeNavigate, BackButton }) => {
   const [favourites, setFavourites] = useState([]);
   const [services, setServices] = useState([]);
   const [selectedService, setSelectedService] = useState("All");
+
+  const favTabs = useMemo(() => {
+    return [
+      { name: "All", fixedType: "All" },
+      ...services.map((service) => ({
+        name: service.charAt(0).toUpperCase() + service.slice(1),
+        fixedType: service,
+      })),
+    ];
+  }, [services]);
   const [hoveredSideEffectsId, setHoveredSideEffectsId] = useState(null);
   const [hoveredPrecautionsId, setHoveredPrecautionsId] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
@@ -357,363 +369,291 @@ const Favourites = ({ HomeNavigate, BackButton }) => {
   };
 
   return (
-    <div className="doc-review">
-      <div className="content doctor-content">
-        <div className="container">
-          <div className="row">
-            <div className="col-12 px-3 px-md-4">
-              {/* Header - aligned with MedicineBookings header pattern */}
-              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-2 mb-2 border-b border-slate-100 mt-2">
-                <div className="flex items-center gap-3.5">
-                  {HomeNavigate && <HomeNavigate />}
-                  <div className="w-11 h-11 rounded-xl bg-purple-50 text-[#8059ca] flex items-center justify-center text-[20px] shrink-0 border border-purple-100/50 shadow-sm">
-                    <i className="fa-solid fa-heart" />
-                  </div>
+    <div className="w-full px-4 md:px-6 py-4">
+      {/* Header - aligned with MedicineBookings header pattern */}
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-2 mb-2 border-b border-slate-100 mt-2">
+        <div className="flex items-center gap-3.5">
+          {HomeNavigate && <HomeNavigate />}
+          <div className="w-11 h-11 rounded-xl bg-purple-50 text-[#8059ca] flex items-center justify-center text-[20px] shrink-0 border border-purple-100/50 shadow-sm">
+            <i className="fa-solid fa-heart" />
+          </div>
 
-
-                  {/* <div className="flex flex-col gap-1">
-                    <div className="m-0 text-[#0f172a] text-[18px] md:text-[20px] tracking-tight leading-none" style={{ fontWeight: 500 }}>
-                      My Favourites
-                    </div>
-                    <p className="text-slate-500 text-[12px] m-0 font-medium leading-none">
-                      View and manage all your favourite items
-                    </p>
-                  </div> */}
-
-
-
-                  <div className="flex flex-col gap-1">
-                    <div className="m-0 text-[#0f172a] font-medium text-[16px] md:text-[16px] tracking-tight leading-none" >
-                      My Favourites
-                    </div>
-                    <div className="text-slate-500 text-[12px] m-0 font-medium leading-none">
-                      View and manage all your favourite items
-                    </div>
-                  </div>
-
-                </div>
-
-                <div className="flex items-center gap-3 w-full sm:w-auto">
-                  <div className="relative w-full sm:w-[260px] shrink-0">
-                    <input
-                      type="text"
-                      placeholder="Search favourites..."
-                      value={searchTerm}
-                      onChange={(e) => setSearchTerm(e.target.value)}
-                      className="h-[38px] rounded-lg border border-slate-200 pl-9 pr-3 text-[13px] w-full outline-none bg-slate-50 hover:bg-white hover:border-[#8059ca] focus:bg-white focus:border-[#8059ca] transition-all duration-200"
-                    />
-                    <span className="absolute left-[12px] top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none text-[13px]">
-                      <i className="fa-solid fa-search" />
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Service filter pills */}
-              <div className="flex flex-wrap gap-2 border-t border-b border-slate-200 py-2.5 mb-2.5">
-                <button
-                  key="all-services"
-                  onClick={() => setSelectedService("All")}
-                  className={`inline-block !rounded-md text-[14px] font-medium px-4 py-2 cursor-pointer transition-all duration-300 capitalize border ${selectedService === "All"
-                    ? "bg-[#8059ca] text-white border-[#8059ca]"
-                    : "bg-white text-slate-700 border-slate-200 hover:bg-slate-50 hover:border-[#8059ca]"
-                    }`}
-                >
-                  All
-                </button>
-                {services.map((service) => (
-                  <button
-                    key={service}
-                    onClick={() => setSelectedService(service)}
-                    className={`inline-block !rounded-md text-[14px] font-medium px-4 py-2 cursor-pointer transition-all duration-300 capitalize border ${selectedService === service
-                      ? "bg-[#8059ca] text-white border-[#8059ca]"
-                      : "bg-white text-slate-700 border-slate-200 hover:bg-slate-50 hover:border-[#8059ca]"
-                      }`}
-                  >
-                    {service.charAt(0).toUpperCase() + service.slice(1)}
-                  </button>
-                ))}
-              </div>
-
-              <div className="row">
-                {filteredFavourites.length === 0 ? (
-                  <div className="col-12">
-                    <div className="flex flex-col items-center justify-center text-center py-[60px] px-5">
-                      <div className="w-[200px] h-[200px] mb-[30px] flex items-center justify-center bg-slate-50 rounded-full">
-                        <svg
-                          width="120"
-                          height="120"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                          className="opacity-60"
-                        >
-                          <path
-                            d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
-                            stroke="#dc3545"
-                            strokeWidth="1.5"
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            fill="none"
-                          />
-                        </svg>
-                      </div>
-                      <h4 className="text-[24px] font-semibold text-slate-800 mb-2.5">
-                        {searchTerm ? "No Results Found" : "No Favourites Yet"}
-                      </h4>
-                      <p className="text-[16px] text-slate-500 mb-0 max-w-[400px]">
-                        {searchTerm
-                          ? "Try adjusting your search term to find what you're looking for"
-                          : "Start adding items to your favourites to see them here"}
-                      </p>
-                    </div>
-                  </div>
-                ) : (
-                  currentFavourites.map((item) => {
-                    const serviceType = item?.category?.[0]?.fixedType || "medicine";
-                    const DiscountType = item?.discountType;
-                    const Discount = item?.discountprice;
-                    const CurrentPrice = item?.variant?.[0]?.price || item?.price;
-                    let FinalAmount;
-                    if (DiscountType === "percentage") {
-                      FinalAmount = CurrentPrice - ((Discount / 100) * CurrentPrice);
-                    } else if (DiscountType === "price") {
-                      FinalAmount = Discount;
-                    } else {
-                      FinalAmount = item?.variant?.[0]?.discountprice || item?.discountprice || CurrentPrice;
-                    }
-                    const hasDiscount = FinalAmount < CurrentPrice && FinalAmount > 0;
-                    const discountPercent = hasDiscount
-                      ? (DiscountType === "percentage" ? Math.round(Discount) : Math.round(((CurrentPrice - FinalAmount) / CurrentPrice) * 100))
-                      : 0;
-
-                    return (
-                      <div
-                        className="col-md-4 col-lg-4 col-xl-3 d-flex mb-4"
-                        key={item._id || item.id}
-                      >
-                        <div
-                          className="modern-product-card product-card-vertical h-full w-full flex flex-col cursor-pointer border border-slate-200 shadow-[0_4px_10px_rgba(0,0,0,0.05)] rounded-[10px] bg-white transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.8,0.25,1)] relative"
-                          onClick={() => handleProductClick(item)}
-                        >
-                          {/* Image Container */}
-                          <div className="product-image-container-vertical relative overflow-hidden bg-slate-50 rounded-t-[10px] h-[168px] flex items-center justify-center">
-                            <img
-                              alt={item.name}
-                              title={item.name}
-                              loading="lazy"
-                              src={
-                                item.variant &&
-                                  item.variant.length > 0 &&
-                                  item.variant[0].files &&
-                                  item.variant[0].files.length > 0
-                                  ? getImageUrl(item.variant[0].files[0])
-                                  : item.files && item.files.length > 0
-                                    ? getImageUrl(item.files[0])
-                                    : item.imageUrl && item.imageUrl.length > 0
-                                      ? getImageUrl(item.imageUrl[0])
-                                      : "/medicine.jpg"
-                              }
-                              onError={(e) => {
-                                e.target.src = "/medicine.jpg";
-                              }}
-                              className="max-h-[90%] max-w-[90%] object-contain"
-                            />
-
-                            {/* Rating Overlay */}
-                            <div className="absolute top-2.5 left-2.5 bg-white px-2 py-0.5 rounded-full text-[11px] font-semibold flex items-center gap-1 shadow-[0_2px_5px_rgba(0,0,0,0.1)] border border-slate-200 z-10">
-                              <FaStar className="text-warning text-[10px]" />
-                              <span>{item?.averageRating?.toFixed(1) || "0"}</span>
-                              <span className="text-slate-400 font-normal text-[10px]">
-                                ({item?.ratingCount > 0 ? `${item.ratingCount}` : "0"})
-                              </span>
-                            </div>
-
-                            {/* Compare Overlay Button */}
-                            <div
-                              data-tooltip-id="global-tooltip"
-                              className="compare-btn-highlight group absolute top-2.5 right-2.5 bg-[#8059ca] text-white border-[1.5px] border-[#8059ca] rounded-full w-8 h-[26px] flex items-center justify-start pl-[9px] cursor-pointer z-10 shadow-[0_2px_8px_rgba(128,89,202,0.4)] transition-all duration-300 overflow-hidden whitespace-nowrap hover:w-[90px] hover:bg-[#6a45b3] hover:border-[#6a45b3]"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                const { category, subcategory, slug } = getSlugs(item);
-                                if (slug) {
-                                  navigate(
-                                    `/${category || serviceType}/${subcategory}/${slug}/compare`,
-                                  );
-                                }
-                              }}
-                            >
-                              <FaExchangeAlt className="text-[11px] text-inherit shrink-0" />
-                              <span className="compare-text-label ml-1.5 text-[11px] font-semibold text-white transition-opacity duration-200 group-hover:opacity-100">
-                                Compare
-                              </span>
-                            </div>
-                          </div>
-
-                          {/* Card Body */}
-                          <div className="product-card-body flex-1 px-2.5 py-2 flex flex-col gap-0.5">
-                            <div className="flex items-start justify-between w-full gap-2">
-                              <div className="flex flex-col gap-0.5 flex-1 min-w-0">
-                                <div
-                                  className="product-title text-capitalize text-[13px] font-medium leading-[1.3] m-0 text-slate-900 tracking-[-0.01em] whitespace-nowrap overflow-hidden text-ellipsis block"
-                                  title={item.name || ""}
-                                >
-                                  {item.name}
-                                </div>
-                                {/* Price Display */}
-                                {CurrentPrice && (
-                                  <div className="flex items-center flex-wrap font-['Poppins'] mt-0.5 gap-1.5">
-                                    <span className="flex items-center gap-[3px]">
-                                      <span className="text-[11px] font-semibold text-slate-500">
-                                        MRP
-                                      </span>
-                                      <strong className="text-slate-900 text-[13px] font-bold">
-                                        ₹{typeof FinalAmount === "number" ? FinalAmount.toFixed(2) : FinalAmount}
-                                      </strong>
-                                    </span>
-                                    {hasDiscount && (
-                                      <>
-                                        <span className="text-[11px] text-slate-400 line-through">
-                                          ₹{typeof CurrentPrice === "number" ? CurrentPrice.toFixed(2) : CurrentPrice}
-                                        </span>
-                                        <span className="text-[10px] font-semibold text-green-600">
-                                          {discountPercent}% OFF
-                                        </span>
-                                      </>
-                                    )}
-                                  </div>
-                                )}
-                              </div>
-
-                              <div
-                                className="flex items-center gap-1 ml-2 shrink-0 mt-0.5"
-                                onClick={(e) => e.stopPropagation()}
-                              >
-                                <div
-                                  className="action-icon-btn cursor-pointer p-1"
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    handleToggleFavourite(item._id, true);
-                                  }}
-                                >
-                                  <FaHeart size={16} color="#ef4444" />
-                                </div>
-                                <div
-                                  className="action-icon-btn cursor-pointer p-1"
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    handleShare(item);
-                                  }}
-                                >
-                                  <FaRegShareSquare size={15} color="#9ca3af" />
-                                </div>
-                              </div>
-                            </div>
-
-                            <div className="flex items-center justify-between gap-1 min-w-0">
-                              {(item?.brands?.name || item?.brand?.name || item?.manufacture?.name) && (
-                                <span
-                                  className="text-[10.5px] text-[#8059ca] overflow-hidden text-ellipsis whitespace-nowrap tracking-[0.02em] bg-[#f5f3ff] px-2 py-0.5 rounded-md border border-[#7d2eff]/10 inline-block max-w-full"
-                                  title={item?.brands?.name || item?.brand?.name || item?.manufacture?.name}
-                                >
-                                  By {item?.brands?.name || item?.brand?.name || item?.manufacture?.name}
-                                </span>
-                              )}
-                            </div>
-
-                            {/* Product Details Grid */}
-                            <div className="product-details-grid flex flex-col gap-0.5 mt-1">
-                              {(() => {
-                                const specs = [
-                                  { label: "Composition", value: item?.compositions?.name || item?.compositionDetails?.name },
-                                  { label: "Form", value: item?.form },
-                                  { label: "Storage", value: item?.strength },
-                                  { label: "Packing", value: item?.packagingDetails },
-                                  { label: "Sample", value: item?.smapletype },
-                                  { label: "Model", value: item?.model },
-                                  { label: "Condition", value: item?.condition },
-                                  { label: "Time", value: item?.duration },
-                                  { label: "Complexity", value: item?.complexity },
-                                  { label: "Procedure", value: item?.procedureType },
-                                  { label: "Treatment", value: item?.treatmenttype },
-                                  { label: "Recovery", value: item?.recoveryTime },
-                                  { label: "Shift", value: item?.shiftType?.replace(/_/g, " ") },
-                                  { label: "Type", value: item?.nursecareType || item?.ambulancetype },
-                                  { label: "Gender", value: item?.gender },
-                                  { label: "Body", value: item?.bodypart },
-                                  { label: "Contrast", value: item?.iscontrast },
-                                  { label: "Fasting", value: item?.isFasting ? (typeof item.isFasting === "string" ? item.isFasting : "Yes") : null },
-                                  { label: "Param", value: item?.parameterss?.length > 0 ? `${item.parameterss.length} Tests` : null }
-                                ].filter(spec => spec.value !== null && spec.value !== undefined && String(spec.value).trim() !== "");
-
-                                return specs.slice(0, 2).map((spec, specIdx) => (
-                                  <DetailRow key={specIdx} label={spec.label} value={spec.value} />
-                                ));
-                              })()}
-                            </div>
-
-                            {/* View Details Button */}
-                            <button
-                              onClick={(e) => handleProductClick(item, e)}
-                              className="block w-full text-center py-[5px] px-4 bg-[#8059ca] text-white !rounded-md border-none text-[12px] font-medium transition-all duration-300 cursor-pointer mt-auto hover:bg-[#6b1fe6] hover:-translate-y-px hover:shadow-[0_4px_12px_rgba(125,46,255,0.3)]"
-                            >
-                              View Details
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })
-                )}
-              </div>
-
-              {totalPages > 1 && (
-                <div className="pagination dashboard-pagination mt-4">
-                  <ul className="d-flex justify-content-center">
-                    <li>
-                      <button
-                        className="page-link"
-                        onClick={() =>
-                          handlePageChange(Math.max(currentPage - 1, 1))
-                        }
-                        disabled={currentPage === 1}
-                      >
-                        <i className="fa-solid fa-chevron-left" />
-                      </button>
-                    </li>
-
-                    {Array.from({ length: totalPages }, (_, i) => (
-                      <li key={i}>
-                        <button
-                          className={`page-link ${currentPage === i + 1 ? "active" : ""
-                            }`}
-                          onClick={() => handlePageChange(i + 1)}
-                        >
-                          {i + 1}
-                        </button>
-                      </li>
-                    ))}
-
-                    <li>
-                      <button
-                        className="page-link"
-                        onClick={() =>
-                          handlePageChange(
-                            Math.min(currentPage + 1, totalPages),
-                          )
-                        }
-                        disabled={currentPage === totalPages}
-                      >
-                        <i className="fa-solid fa-chevron-right" />
-                      </button>
-                    </li>
-                  </ul>
-                </div>
-              )}
+          <div className="flex flex-col gap-1">
+            <div className="m-0 text-[#0f172a] font-medium text-[16px] md:text-[16px] tracking-tight leading-none" >
+              My Favourites
+            </div>
+            <div className="text-slate-500 text-[12px] m-0 font-medium leading-none">
+              View and manage all your favourite items
             </div>
           </div>
         </div>
+
+        <div className="flex items-center gap-3 w-full sm:w-auto">
+          <div className="relative w-full sm:w-[260px] shrink-0">
+            <input
+              type="text"
+              placeholder="Search favourites..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="h-[38px] rounded-lg border border-slate-200 pl-9 pr-3 text-[13px] w-full outline-none bg-slate-50 hover:bg-white hover:border-[#8059ca] focus:bg-white focus:border-[#8059ca] transition-all duration-200"
+            />
+            <span className="absolute left-[12px] top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none text-[13px]">
+              <i className="fa-solid fa-search" />
+            </span>
+          </div>
+        </div>
       </div>
+
+      {/* Service filter tabs */}
+      <div className="border-b border-slate-200 pb-1.5 mb-4">
+        <Tabs
+          tabs={favTabs}
+          activeTab={selectedService}
+          onChange={setSelectedService}
+        />
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
+        {filteredFavourites.length === 0 ? (
+          <div className="col-span-full">
+            <div className="flex flex-col items-center justify-center text-center py-[60px] px-5">
+              <div className="w-[200px] h-[200px] mb-[30px] flex items-center justify-center bg-slate-50 rounded-full">
+                <svg
+                  width="120"
+                  height="120"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="opacity-60"
+                >
+                  <path
+                    d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+                    stroke="#dc3545"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    fill="none"
+                  />
+                </svg>
+              </div>
+              <h4 className="text-[24px] font-semibold text-slate-800 mb-2.5">
+                {searchTerm ? "No Results Found" : "No Favourites Yet"}
+              </h4>
+              <p className="text-[16px] text-slate-500 mb-0 max-w-[400px]">
+                {searchTerm
+                  ? "Try adjusting your search term to find what you're looking for"
+                  : "Start adding items to your favourites to see them here"}
+              </p>
+            </div>
+          </div>
+        ) : (
+          currentFavourites.map((item) => {
+            const serviceType = item?.category?.[0]?.fixedType || "medicine";
+            const DiscountType = item?.discountType;
+            const Discount = item?.discountprice;
+            const CurrentPrice = item?.variant?.[0]?.price || item?.price;
+            let FinalAmount;
+            if (DiscountType === "percentage") {
+              FinalAmount = CurrentPrice - ((Discount / 100) * CurrentPrice);
+            } else if (DiscountType === "price") {
+              FinalAmount = Discount;
+            } else {
+              FinalAmount = item?.variant?.[0]?.discountprice || item?.discountprice || CurrentPrice;
+            }
+            const hasDiscount = FinalAmount < CurrentPrice && FinalAmount > 0;
+            const discountPercent = hasDiscount
+              ? (DiscountType === "percentage" ? Math.round(Discount) : Math.round(((CurrentPrice - FinalAmount) / CurrentPrice) * 100))
+              : 0;
+
+            return (
+              <div
+                className="flex"
+                key={item._id || item.id}
+              >
+                <div
+                  className="modern-product-card product-card-vertical h-full w-full flex flex-col cursor-pointer border border-slate-200 shadow-[0_4px_10px_rgba(0,0,0,0.05)] rounded-[10px] bg-white transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.8,0.25,1)] relative"
+                  onClick={() => handleProductClick(item)}
+                >
+                  {/* Image Container */}
+                  <div className="product-image-container-vertical relative overflow-hidden bg-slate-50 rounded-t-[10px] h-[168px] flex items-center justify-center">
+                    <img
+                      alt={item.name}
+                      title={item.name}
+                      loading="lazy"
+                      src={
+                        item.variant &&
+                          item.variant.length > 0 &&
+                          item.variant[0].files &&
+                          item.variant[0].files.length > 0
+                          ? getImageUrl(item.variant[0].files[0])
+                          : item.files && item.files.length > 0
+                            ? getImageUrl(item.files[0])
+                            : item.imageUrl && item.imageUrl.length > 0
+                              ? getImageUrl(item.imageUrl[0])
+                              : "/medicine.jpg"
+                      }
+                      onError={(e) => {
+                        e.target.src = "/medicine.jpg";
+                      }}
+                      className="max-h-[90%] max-w-[90%] object-contain"
+                    />
+
+                    {/* Rating Overlay */}
+                    <div className="absolute top-2.5 left-2.5 bg-white px-2 py-0.5 rounded-full text-[11px] font-semibold flex items-center gap-1 shadow-[0_2px_5px_rgba(0,0,0,0.1)] border border-slate-200 z-10">
+                      <FaStar className="text-warning text-[10px]" />
+                      <span>{item?.averageRating?.toFixed(1) || "0"}</span>
+                      <span className="text-slate-400 font-normal text-[10px]">
+                        ({item?.ratingCount > 0 ? `${item.ratingCount}` : "0"})
+                      </span>
+                    </div>
+
+                    {/* Compare Overlay Button */}
+                    <div
+                      data-tooltip-id="global-tooltip"
+                      className="compare-btn-highlight group absolute top-2.5 right-2.5 bg-[#8059ca] text-white border-[1.5px] border-[#8059ca] rounded-full w-8 h-[26px] flex items-center justify-start pl-[9px] cursor-pointer z-10 shadow-[0_2px_8px_rgba(128,89,202,0.4)] transition-all duration-300 overflow-hidden whitespace-nowrap hover:w-[90px] hover:bg-[#6a45b3] hover:border-[#6a45b3]"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        const { category, subcategory, slug } = getSlugs(item);
+                        if (slug) {
+                          navigate(
+                            `/${category || serviceType}/${subcategory}/${slug}/compare`,
+                          );
+                        }
+                      }}
+                    >
+                      <FaExchangeAlt className="text-[11px] text-inherit shrink-0" />
+                      <span className="compare-text-label ml-1.5 text-[11px] font-semibold text-white transition-opacity duration-200 group-hover:opacity-100">
+                        Compare
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Card Body */}
+                  <div className="product-card-body flex-1 px-2.5 py-2 flex flex-col gap-0.5">
+                    <div className="flex items-start justify-between w-full gap-2">
+                      <div className="flex flex-col gap-0.5 flex-1 min-w-0">
+                        <div
+                          className="product-title text-capitalize text-[13px] font-medium leading-[1.3] m-0 text-slate-900 tracking-[-0.01em] whitespace-nowrap overflow-hidden text-ellipsis block"
+                          title={item.name || ""}
+                        >
+                          {item.name}
+                        </div>
+                        {/* Price Display */}
+                        {CurrentPrice && (
+                          <div className="flex items-center flex-wrap font-['Poppins'] mt-0.5 gap-1.5">
+                            <span className="flex items-center gap-[3px]">
+                              <span className="text-[11px] font-semibold text-slate-500">
+                                MRP
+                              </span>
+                              <strong className="text-slate-900 text-[13px] font-bold">
+                                ₹{typeof FinalAmount === "number" ? FinalAmount.toFixed(2) : FinalAmount}
+                              </strong>
+                            </span>
+                            {hasDiscount && (
+                              <>
+                                <span className="text-[11px] text-slate-400 line-through">
+                                  ₹{typeof CurrentPrice === "number" ? CurrentPrice.toFixed(2) : CurrentPrice}
+                                </span>
+                                <span className="text-[10px] font-semibold text-green-600">
+                                  {discountPercent}% OFF
+                                </span>
+                              </>
+                            )}
+                          </div>
+                        )}
+                      </div>
+
+                      <div
+                        className="flex items-center gap-1 ml-2 shrink-0 mt-0.5"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <div
+                          className="action-icon-btn cursor-pointer p-1"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleToggleFavourite(item._id, true);
+                          }}
+                        >
+                          <FaHeart size={16} color="#ef4444" />
+                        </div>
+                        <div
+                          className="action-icon-btn cursor-pointer p-1"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleShare(item);
+                          }}
+                        >
+                          <FaRegShareSquare size={15} color="#9ca3af" />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center justify-between gap-1 min-w-0">
+                      {(item?.brands?.name || item?.brand?.name || item?.manufacture?.name) && (
+                        <span
+                          className="text-[10.5px] text-[#8059ca] overflow-hidden text-ellipsis whitespace-nowrap tracking-[0.02em] bg-[#f5f3ff] px-2 py-0.5 rounded-md border border-[#7d2eff]/10 inline-block max-w-full"
+                          title={item?.brands?.name || item?.brand?.name || item?.manufacture?.name}
+                        >
+                          By {item?.brands?.name || item?.brand?.name || item?.manufacture?.name}
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Product Details Grid */}
+                    <div className="product-details-grid flex flex-col gap-0.5 mt-1">
+                      {(() => {
+                        const specs = [
+                          { label: "Composition", value: item?.compositions?.name || item?.compositionDetails?.name },
+                          { label: "Form", value: item?.form },
+                          { label: "Storage", value: item?.strength },
+                          { label: "Packing", value: item?.packagingDetails },
+                          { label: "Sample", value: item?.smapletype },
+                          { label: "Model", value: item?.model },
+                          { label: "Condition", value: item?.condition },
+                          { label: "Time", value: item?.duration },
+                          { label: "Complexity", value: item?.complexity },
+                          { label: "Procedure", value: item?.procedureType },
+                          { label: "Treatment", value: item?.treatmenttype },
+                          { label: "Recovery", value: item?.recoveryTime },
+                          { label: "Shift", value: item?.shiftType?.replace(/_/g, " ") },
+                          { label: "Type", value: item?.nursecareType || item?.ambulancetype },
+                          { label: "Gender", value: item?.gender },
+                          { label: "Body", value: item?.bodypart },
+                          { label: "Contrast", value: item?.iscontrast },
+                          { label: "Fasting", value: item?.isFasting ? (typeof item.isFasting === "string" ? item.isFasting : "Yes") : null },
+                          { label: "Param", value: item?.parameterss?.length > 0 ? `${item.parameterss.length} Tests` : null }
+                        ].filter(spec => spec.value !== null && spec.value !== undefined && String(spec.value).trim() !== "");
+
+                        return specs.slice(0, 2).map((spec, specIdx) => (
+                          <DetailRow key={specIdx} label={spec.label} value={spec.value} />
+                        ));
+                      })()}
+                    </div>
+
+                    {/* View Details Button */}
+                    <button
+                      onClick={(e) => handleProductClick(item, e)}
+                      className="block w-full text-center py-[4px] px-4 bg-[#8059ca] text-white !rounded-md border-none !text-[12px] !font-medium transition-all duration-300 cursor-pointer mt-auto hover:bg-[#6b1fe6] hover:-translate-y-px hover:shadow-[0_4px_12px_rgba(125,46,255,0.3)]"
+                    >
+                      View Details
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })
+        )}
+      </div>
+
+      {totalPages > 1 && (
+        <div className="mt-6 flex justify-center">
+          <Pagination
+            page={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+          />
+        </div>
+      )}
     </div>
   );
 };

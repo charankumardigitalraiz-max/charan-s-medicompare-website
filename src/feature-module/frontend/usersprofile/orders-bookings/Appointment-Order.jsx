@@ -8,6 +8,7 @@ import VendorCalendarSlotPicker from "../../../../components/VendorCalendarSlotP
 import { getImageUrl } from "../../../../utils/index";
 import { useResponsive } from "../../../../hooks/useResponsive";
 import { toast } from "react-hot-toast";
+import Pagination from "../../../../components/ui/Pagination.jsx";
 import OrderFeedbackOffcanvas from "../AppointmentFeedbackModal";
 import AppointmentOrderCard from "./components/AppointmentOrderCard";
 import { useNavigate } from "react-router";
@@ -778,136 +779,56 @@ const AppoitmentsOrders = ({ HomeNavigate, ServiceTabs }) => {
     return (
       <div
         key={key}
-        style={{
-          display: "flex",
-          gap: "14px",
-          padding: "14px",
-          background: "#fff",
-          border: "1px solid #f1eaff",
-          borderRadius: "14px",
-          alignItems: "flex-start",
-          boxShadow: "0 8px 20px rgba(109, 40, 217, 0.05)",
-        }}
+        className="flex gap-[14px] p-[14px] bg-white border border-[#f1eaff] rounded-[14px] items-start shadow-[0_8px_20px_rgba(109,40,217,0.05)]"
       >
         <div
-          style={{
-            width: 72,
-            height: 72,
-            borderRadius: "12px",
-            border: "1px solid #efe7ff",
-            background: "#faf7ff",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            flexShrink: 0,
-            overflow: "hidden",
-          }}
+          className="w-[72px] h-[72px] rounded-[12px] border border-[#efe7ff] bg-[#faf7ff] flex items-center justify-center shrink-0 overflow-hidden"
         >
           <img
             src={resolveOrderItemImage(orderItem)}
             alt="product"
-            style={{
-              width: "100%",
-              height: "100%",
-              objectFit: "contain",
-            }}
+            className="w-full h-full object-contain"
           />
         </div>
-        <div style={{ flex: 1, minWidth: 0 }}>
+        <div className="flex-1 min-w-0">
           <div
-            style={{
-              display: "flex",
-              alignItems: "flex-start",
-              justifyContent: "space-between",
-              gap: "8px",
-              marginBottom: "4px",
-            }}
+            className="flex items-start justify-between gap-2 mb-1"
           >
             <p
-              style={{
-                margin: 0,
-                fontWeight: 700,
-                fontSize: "13.5px",
-                color: "#1e1b4b",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                whiteSpace: "nowrap",
-                flex: 1,
-                textTransform: "capitalize",
-              }}
+              className="m-0 !font-bold !text-[13.5px] !text-[#1e1b4b] truncate flex-1 capitalize"
             >
               {name.length > 30 ? name.slice(0, 30) + "…" : name}
             </p>
-            {/* {status && (
-              <span
-                style={{
-                  fontSize: "10px",
-                  fontWeight: 700,
-                  padding: "2px 7px",
-                  borderRadius: "5px",
-                  background: statusStyle.bg,
-                  color: statusStyle.color,
-                  flexShrink: 0,
-                  textTransform: "capitalize",
-                }}
-              >
-                {status}
-              </span>
-            )} */}
           </div>
           <p
-            style={{
-              margin: "0 0 4px",
-              fontSize: "11.5px",
-              color: "#7c3aed",
-              fontWeight: 600,
-              textTransform: "capitalize",
-            }}
+            className="m-0 mb-1 !text-[11.5px] !text-[#7c3aed] !font-semibold capitalize"
           >
             <i
-              className="fas fa-hospital"
-              style={{ marginRight: "5px", fontSize: "10px" }}
+              className="fas fa-hospital !mr-1 !text-[10px]"
             />
             {vendorName}
           </p>
           <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "12px",
-              flexWrap: "wrap",
-            }}
+            className="flex items-center gap-3 flex-wrap"
           >
-            <span style={{ fontSize: "11.5px", color: "#64748b" }}>
+            <span className="text-[11.5px] text-slate-500">
               Qty:{" "}
-              <strong style={{ color: "#334155" }}>
+              <strong className="text-slate-700">
                 {orderItem?.quantity}
               </strong>
             </span>
             <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "5px",
-              }}
+              className="flex items-center gap-1"
             >
               {hasDiscount && (
                 <span
-                  style={{
-                    fontSize: "11px",
-                    color: "#94a3b8",
-                    textDecoration: "line-through",
-                  }}
+                  className="text-[11px] text-slate-400 line-through"
                 >
                   ₹{originalPrice}
                 </span>
               )}
               <span
-                style={{
-                  fontSize: "13px",
-                  fontWeight: 700,
-                  color: "#16a34a",
-                }}
+                className="text-[13px] font-bold text-green-600"
               >
                 ₹
                 {effectivePrice.toFixed
@@ -916,14 +837,7 @@ const AppoitmentsOrders = ({ HomeNavigate, ServiceTabs }) => {
               </span>
               {hasDiscount && (
                 <span
-                  style={{
-                    fontSize: "10px",
-                    fontWeight: 700,
-                    color: "#ef4444",
-                    background: "#fee2e2",
-                    padding: "1px 5px",
-                    borderRadius: "4px",
-                  }}
+                  className="text-[10px] font-bold text-red-500 bg-red-100 px-1 py-0.5 rounded"
                 >
                   {discountPct}% off
                 </span>
@@ -931,22 +845,14 @@ const AppoitmentsOrders = ({ HomeNavigate, ServiceTabs }) => {
             </div>
           </div>
         </div>
-        <div style={{ textAlign: "right", alignSelf: "flex-end", flexShrink: 0 }}>
+        <div className="text-right self-end shrink-0">
           <div
-            style={{
-              fontSize: "11px",
-              color: "#94a3b8",
-              marginBottom: "2px",
-            }}
+            className="text-[11px] text-slate-400 mb-0.5"
           >
             Total
           </div>
           <div
-            style={{
-              fontWeight: 800,
-              fontSize: "14.5px",
-              color: "#7c3aed",
-            }}
+            className="font-extrabold text-[14.5px] text-[#7c3aed]"
           >
             ₹{itemTotal}
           </div>
@@ -979,7 +885,7 @@ const AppoitmentsOrders = ({ HomeNavigate, ServiceTabs }) => {
 
   return (
     <div className="w-full">
-      <div className="col-lg-12">
+      <div className="w-full">
         {/* Header */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pb-2 mb-2 border-b border-slate-100 mt-2">
           <div className="flex items-center gap-3.5">
@@ -1054,13 +960,10 @@ const AppoitmentsOrders = ({ HomeNavigate, ServiceTabs }) => {
             {isMobile ? (
               <select
                 value={selectedTab}
-                className="form-select"
+                className="w-full h-[38px] rounded-lg border border-slate-200 px-3 text-[13px] outline-none bg-slate-50 focus:bg-white focus:border-[#8059ca] transition-all duration-200"
                 onChange={(e) => {
                   setSelectedTab(e.target.value);
                   setCurrentPage(1);
-                }}
-                style={{
-                  border: "1px solid #ddd",
                 }}
               >
                 {[
@@ -1077,17 +980,7 @@ const AppoitmentsOrders = ({ HomeNavigate, ServiceTabs }) => {
                 })}
               </select>
             ) : (
-              /* Desktop:  */
-              <ul
-                className="nav nav-tabs nav-tabs-solid"
-                style={{
-                  flex: 1,
-                  display: "flex",
-                  marginBottom: 0,
-                  overflow: "visible",
-                  minWidth: 0,
-                }}
-              >
+              <ul className="flex border-b border-slate-200 w-full mb-0 overflow-visible min-w-0 gap-2 list-none p-0">
                 {[
                   {
                     id: "upcoming",
@@ -1115,15 +1008,10 @@ const AppoitmentsOrders = ({ HomeNavigate, ServiceTabs }) => {
                   return (
                     <li className="nav-item" key={tab.id}>
                       <button
-                        className={`nav-link ${isActive ? "active" : ""}`}
+                        className={`py-2.5 px-4 text-[13px] font-semibold !border-b-2 -mb-[1px] transition-all duration-200 flex items-center gap-1.5 ${isActive ? "!border-[#8059ca] !text-[#8059ca]" : "border-transparent text-slate-500 hover:text-slate-700"}`}
                         onClick={() => {
                           setSelectedTab(tab.id);
                           setCurrentPage(1);
-                        }}
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          gap: "6px",
                         }}
                       >
                         <i className={`fa-solid ${tab.icon}`}></i>
@@ -1139,16 +1027,16 @@ const AppoitmentsOrders = ({ HomeNavigate, ServiceTabs }) => {
 
         <div className="w-full py-4">
           {loading ? (
-            <div className="text-center py-5">
-              <div className="spinner-border text-primary" role="status">
-                <span className="visually-hidden">Loading...</span>
+            <div className="text-center py-10 flex justify-center items-center">
+              <div className="animate-spin inline-block w-8 h-8 border-4 border-[#8059ca] border-t-transparent rounded-full" role="status">
+                <span className="sr-only">Loading...</span>
               </div>
             </div>
           ) : currentOrders.length > 0 ? (
-            <div className="row">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {currentOrders.map((order, index) => {
                 return (
-                  <div key={index} className="col-md-6 col-12 mb-4">
+                  <div key={index} className="w-full">
                     <AppointmentOrderCard
                       order={order}
                       onView={handleView}
@@ -1204,9 +1092,19 @@ const AppoitmentsOrders = ({ HomeNavigate, ServiceTabs }) => {
                 </span>
                 <div className="flex flex-wrap items-center gap-2 mt-1">
                   <span
-                    className={`status-badge ${getOrderStatusMeta(selectedOrder.orderStatus).badgeClass}`}
+                    className={`inline-flex items-center justify-center text-[10px] leading-[1.35] py-0.5 px-2 rounded-full font-semibold border ${{
+                        delivered: "bg-emerald-50 text-emerald-700 border-emerald-200",
+                        confirmed: "bg-blue-50 text-blue-700 border-blue-200",
+                        cancelled: "bg-red-50 text-red-700 border-red-200",
+                        failed: "bg-red-50 text-red-700 border-red-200",
+                        "sample-collected": "bg-purple-50 text-purple-700 border-purple-200",
+                        "sample-not-collected": "bg-amber-50 text-amber-700 border-amber-200",
+                        processing: "bg-orange-50 text-orange-700 border-orange-200",
+                        "in-progress": "bg-orange-50 text-orange-700 border-orange-200"
+                      }[getOrderStatusMeta(selectedOrder?.orderStatus)?.badgeClass] || "bg-orange-50 text-orange-700 border-orange-200"
+                      }`}
                   >
-                    {getOrderStatusMeta(selectedOrder.orderStatus).label || "N/A"}
+                    {getOrderStatusMeta(selectedOrder?.orderStatus)?.label || "N/A"}
                   </span>
 
                   <span className="text-[11px] text-slate-500">
@@ -1298,41 +1196,34 @@ const AppoitmentsOrders = ({ HomeNavigate, ServiceTabs }) => {
                     const patientRelationship = group?.patientDetails?.relationship || "";
 
                     return (
-                      <div key={group._id || groupIndex} style={{
-                        background: "#faf9fe", border: "1px solid #f1eff9",
-                        borderRadius: "12px", padding: "12px", marginBottom: "12px",
-                      }}>
-                        <div className="d-flex justify-content-between align-items-center mb-2 flex-wrap gap-2">
-                          <div className="d-flex align-items-center gap-2">
-                            <div style={{
-                              width: "28px", height: "28px", borderRadius: "50%",
-                              background: "#efe7ff", color: "#8059ca", display: "flex",
-                              alignItems: "center", justifyContent: "center", fontWeight: 700, fontSize: "12px"
-                            }}>
+                      <div key={group._id || groupIndex} className="bg-[#faf9fe] border border-[#f1eff9] rounded-xl p-3 mb-3">
+                        <div className="flex justify-between items-center mb-2 flex-wrap gap-2">
+                          <div className="flex items-center gap-2">
+                            <div className="w-7 h-7 rounded-full bg-[#efe7ff] text-[#8059ca] flex items-center justify-center font-bold text-xs">
                               {(patientName || "P").charAt(0).toUpperCase()}
                             </div>
                             <div>
-                              <span style={{ fontSize: "13px", fontWeight: 600, color: "#333", textTransform: "capitalize" }}>{patientName}</span>
+                              <span className="text-xs font-semibold text-slate-700 capitalize">{patientName}</span>
                               {patientRelationship && (
-                                <span style={{ fontSize: "10px", color: "#8059ca", background: "#f5f3ff", padding: "1px 6px", borderRadius: "10px", marginLeft: "6px", fontWeight: 500, textTransform: "capitalize" }}>
+                                <span className="!text-[10px] !text-[#8059ca] bg-[#f5f3ff] px-1.5 py-0.5 rounded-full ml-1.5 !font-medium capitalize">
                                   {patientRelationship}
                                 </span>
                               )}
                             </div>
                           </div>
                           {group.totalTests != null && (
-                            <span style={{ fontSize: "11px", fontWeight: 600, color: "#8059ca", background: "#f5f3ff", padding: "2px 8px", borderRadius: "6px" }}>
+                            <span className="text-[11px] font-semibold text-[#8059ca] bg-[#f5f3ff] px-2 py-0.5 rounded-md">
                               {group.totalTests} {group.totalTests === 1 ? "Test" : "Tests"}
                             </span>
                           )}
                         </div>
-                        <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+                        <div className="flex flex-col gap-2">
                           {groupItems.length > 0 ? (
                             groupItems.map((orderItem, itemIndex) =>
                               renderOrderItemCard(orderItem, `${groupIndex}-${itemIndex}`)
                             )
                           ) : (
-                            <div style={{ fontSize: "12px", color: "#999", padding: "8px", textAlign: "center" }}>
+                            <div className="text-xs text-slate-400 py-2 text-center">
                               No products found for this member.
                             </div>
                           )}
@@ -1345,40 +1236,13 @@ const AppoitmentsOrders = ({ HomeNavigate, ServiceTabs }) => {
 
 
               {selectedOrder?.items?.length > 0 && (
-                <div style={{ marginBottom: "20px" }}>
+                <div className="mb-5">
                   {selectedOrder.items.map((group, groupIndex) => {
                     return (
-                      <div key={group._id || groupIndex} style={{
-                        background: "#faf9fe", border: "1px solid #f1eff9",
-                        borderRadius: "12px", padding: "12px", marginBottom: "12px",
-                      }}>
-                        {/* <div className="d-flex justify-content-between align-items-center mb-2 flex-wrap gap-2">
-                                <div className="d-flex align-items-center gap-2">
-                                  <div style={{
-                                    width: "28px", height: "28px", borderRadius: "50%",
-                                    background: "#efe7ff", color: "#8059ca", display: "flex",
-                                    alignItems: "center", justifyContent: "center", fontWeight: 700, fontSize: "12px"
-                                  }}>
-                                    {(patientName || "P").charAt(0).toUpperCase()}
-                                  </div>
-                                  <div>
-                                    <span style={{ fontSize: "13px", fontWeight: 600, color: "#333" }}>{patientName}</span>
-                                    {patientRelationship && (
-                                      <span style={{ fontSize: "10px", color: "#8059ca", background: "#f5f3ff", padding: "1px 6px", borderRadius: "10px", marginLeft: "6px", fontWeight: 500 }}>
-                                        {patientRelationship}
-                                      </span>
-                                    )}
-                                  </div>
-                                </div>
-                                {group.totalTests != null && (
-                                  <span style={{ fontSize: "11px", fontWeight: 600, color: "#8059ca", background: "#f5f3ff", padding: "2px 8px", borderRadius: "6px" }}>
-                                    {group.totalTests} {group.totalTests === 1 ? "Test" : "Tests"}
-                                  </span>
-                                )}
-                              </div> */}
-                        <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+                      <div key={group._id || groupIndex} className="bg-[#faf9fe] border border-[#f1eff9] rounded-xl p-3 mb-3">
+                        <div className="flex flex-col gap-2">
                           {group && (
-                            renderOrderItemCard(group, `${groupIndex}`)  // ✅
+                            renderOrderItemCard(group, `${groupIndex}`)
                           )}
                         </div>
                       </div>
@@ -1388,13 +1252,13 @@ const AppoitmentsOrders = ({ HomeNavigate, ServiceTabs }) => {
               )}
 
               {/* DOCTOR DETAILS */}
-              <div style={{ marginBottom: "20px" }}>
-                <div style={{ fontSize: "10px", fontWeight: 700, color: "#8059ca", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "10px" }}>
+              <div className="mb-5">
+                <div className="text-[10px] font-bold text-[#8059ca] uppercase tracking-wider mb-2.5">
                   Referral Details
                 </div>
-                <div style={{ background: "#faf9fe", borderRadius: "12px", padding: "12px", border: "1px solid #f1eff9" }}>
-                  <div style={{ fontSize: "10px", color: "#aaa", marginBottom: "2px" }}>Doctor Name</div>
-                  <div style={{ fontSize: "13px", fontWeight: 600, color: "#333", textTransform: "capitalize" }}>
+                <div className="bg-[#faf9fe] rounded-xl p-3 border border-[#f1eff9]">
+                  <div className="text-[10px] text-slate-400 mb-0.5">Doctor Name</div>
+                  <div className="text-xs font-semibold text-slate-700 capitalize">
                     {selectedOrder?.doctorName && selectedOrder?.doctorId ? selectedOrder.doctorName : "Self Referral"}
                   </div>
                 </div>
@@ -1402,11 +1266,11 @@ const AppoitmentsOrders = ({ HomeNavigate, ServiceTabs }) => {
 
               {/* APPOINTMENT SCHEDULE */}
               {selectedOrder?.selectedDate && selectedOrder?.selectedTimeSlot && (
-                <div style={{ marginBottom: "20px" }}>
-                  <div style={{ fontSize: "10px", fontWeight: 700, color: "#8059ca", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "10px" }}>
+                <div className="mb-5">
+                  <div className="text-[10px] font-bold text-[#8059ca] uppercase tracking-wider mb-2.5">
                     Appointment Schedule
                   </div>
-                  <div className="row g-2">
+                  <div className="grid grid-cols-2 gap-2">
                     {[
                       {
                         label: "Selected Date",
@@ -1423,10 +1287,10 @@ const AppoitmentsOrders = ({ HomeNavigate, ServiceTabs }) => {
                       },
                       { label: "Selected Slot", value: selectedOrder.selectedTimeSlot },
                     ].map(({ label, value }) => (
-                      <div className="col-6" key={label}>
-                        <div style={{ background: "#faf9fe", borderRadius: "8px", padding: "8px 12px", border: "1px solid #f1eff9" }}>
-                          <div style={{ fontSize: "10px", color: "#aaa", marginBottom: "2px" }}>{label}</div>
-                          <div style={{ fontSize: "12px", fontWeight: 600, color: "#333", textTransform: "capitalize" }}>{value}</div>
+                      <div className="w-full" key={label}>
+                        <div className="bg-[#faf9fe] rounded-lg p-2 px-3 border border-[#f1eff9]">
+                          <div className="text-[10px] text-slate-400 mb-0.5">{label}</div>
+                          <div className="text-xs font-semibold text-slate-700 capitalize">{value}</div>
                         </div>
                       </div>
                     ))}
@@ -1436,7 +1300,7 @@ const AppoitmentsOrders = ({ HomeNavigate, ServiceTabs }) => {
 
               {/* BILL SUMMARY */}
               <div>
-                <div style={{ fontSize: "10px", fontWeight: 700, color: "#8059ca", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "10px" }}>
+                <div className="text-[10px] font-bold text-[#8059ca] uppercase tracking-wider mb-2.5">
                   Bill Summary
                 </div>
                 {(() => {
@@ -1460,283 +1324,113 @@ const AppoitmentsOrders = ({ HomeNavigate, ServiceTabs }) => {
                   const valWithCouponAndWithWallet = Number(bs.withCouponAndWithWallet ?? (valWithCouponAndWithoutWallet - wallet));
 
                   return (
-                    <div style={{ background: "#faf9fe", borderRadius: "12px", padding: "14px 16px", border: "1px solid #f1eff9" }}>
+                    <div className="bg-[#faf9fe] rounded-xl p-3 border border-[#f1eff9]">
                       {rows.map(({ label, value }) => (
-                        <div key={label} className="d-flex justify-content-between align-items-center" style={{ marginBottom: "9px", fontSize: "13px" }}>
-                          <span style={{ color: "#666" }}>{label}</span>
-                          <span style={{ fontWeight: 500 }}>₹{Number(value).toFixed(2)}</span>
+                        <div key={label} className="flex justify-between items-center mb-2.5 text-xs">
+                          <span className="text-slate-500">{label}</span>
+                          <span className="font-medium text-slate-700">₹{Number(value).toFixed(2)}</span>
                         </div>
                       ))}
                       {coupon > 0 && (
-                        <div className="d-flex justify-content-between align-items-center" style={{ marginBottom: "9px", fontSize: "13px", color: "#28a745" }}>
+                        <div className="flex justify-between items-center mb-2.5 text-xs text-green-600">
                           <span>Coupon Discount</span>
-                          <span style={{ fontWeight: 600 }}>-₹{coupon.toFixed(2)}</span>
+                          <span className="font-semibold">-₹{coupon.toFixed(2)}</span>
                         </div>
                       )}
                       {wallet > 0 && (
-                        <div className="d-flex justify-content-between align-items-center" style={{ marginBottom: "9px", fontSize: "13px", color: "#28a745" }}>
+                        <div className="flex justify-between items-center mb-2.5 text-xs text-green-600">
                           <span>Wallet Deduction</span>
-                          <span style={{ fontWeight: 600 }}>-₹{wallet.toFixed(2)}</span>
+                          <span className="font-semibold">-₹{wallet.toFixed(2)}</span>
                         </div>
                       )}
-                      <div className="d-flex justify-content-between align-items-center" style={{ borderTop: "1.5px dashed #e0daf5", paddingTop: "12px", marginTop: "6px", fontSize: "15px", fontWeight: 700 }}>
-                        <span style={{ color: "#333" }}>{wallet > 0 ? "Total Value" : "Total Amount"}</span>
-                        <span style={{ color: wallet > 0 ? "#333" : "#7c4dc4", fontSize: "16px" }}>₹{total.toFixed(2)}</span>
+                      <div className="flex justify-between items-center border-t border-dashed border-[#e0daf5] pt-3 mt-1.5 text-[15px] font-bold">
+                        <span className="text-slate-800">{wallet > 0 ? "Total Value" : "Total Amount"}</span>
+                        <span className={`text-[16px] ${wallet > 0 ? "text-slate-800" : "text-[#7c4dc4]"}`}>₹{total.toFixed(2)}</span>
                       </div>
-                      {/* 
-                            {wallet > 0 && remainingPayable > 0 && !isCOD && (
-                              <div className="d-flex justify-content-between align-items-center" style={{ marginTop: "8px", fontSize: "15px", fontWeight: 800, color: "#7c4dc4" }}>
-                                <span>{isCOD ? "Payable via Cash" : "Payable via Online"}</span>
-                                <span style={{ fontSize: "17px" }}>₹{remainingPayable.toFixed(2)}</span>
-                              </div>
-                            )} */}
-
-                      {/* Detailed Breakdown for Clarification */}
-                      {/* <div style={{ borderTop: "1px solid #e2e8f0", paddingTop: "10px", marginTop: "12px" }}>
-                              <div style={{ fontSize: "10.5px", fontWeight: 700, color: "#64748b", marginBottom: "8px", textTransform: "uppercase", letterSpacing: "0.5px" }}>Billing Breakdown (Clarification)</div>
-                              <div style={{ display: "flex", flexDirection: "column", gap: "6px", background: "#f1f5f9", padding: "10px", borderRadius: "8px", border: "1px solid #e2e8f0" }}>
-                                <div style={{ display: "flex", justifyContent: "space-between", fontSize: "11.5px", color: "#475569" }}>
-                                  <span>Without Coupon & Without Wallet</span>
-                                  <span style={{ fontWeight: 600 }}>₹{valWithoutCouponAndWithoutWallet.toFixed(2)}</span>
-                                </div>
-                                <div style={{ display: "flex", justifyContent: "space-between", fontSize: "11.5px", color: "#475569" }}>
-                                  <span>With Coupon & Without Wallet</span>
-                                  <span style={{ fontWeight: 600 }}>₹{valWithCouponAndWithoutWallet.toFixed(2)}</span>
-                                </div>
-                                <div style={{ display: "flex", justifyContent: "space-between", fontSize: "11.5px", color: "#475569" }}>
-                                  <span>Without Coupon & With Wallet</span>
-                                  <span style={{ fontWeight: 600 }}>₹{valWithoutCouponAndWithWallet.toFixed(2)}</span>
-                                </div>
-                                <div style={{ display: "flex", justifyContent: "space-between", fontSize: "11.5px", color: "#475569" }}>
-                                  <span>With Coupon & With Wallet (Amount to Pay)</span>
-                                  <span style={{ fontWeight: 700, color: "#7c4dc4" }}>₹{valWithCouponAndWithWallet.toFixed(2)}</span>
-                                </div>
-                              </div>
-                            </div> */}
                     </div>
                   );
                 })()}
               </div>
-
-              {/* </div>
-              </div> */}
             </div>
           </BaseModal>
         )}
 
         {/* Vendor Modal */}
-        {showVendorModal && selectedVendorOrder && (
-          <div
-            className="modal fade show d-block"
-            tabIndex="-1"
-            role="dialog"
-            style={{
-              position: "fixed",
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              backgroundColor: "rgba(0, 0, 0, 0.5)",
-              zIndex: 999999999,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              animation: "fadeIn 0.3s ease-in-out",
-            }}
-          >
-            <div
-              className="modal-dialog modal-dialog-centered"
-              role="document"
-              style={{
-                width: "100%",
-                maxWidth: "400px",
-                margin: "1.75rem",
-              }}
-            >
+        < BaseModal
+          show={showVendorModal && !!selectedVendorOrder}
+          onClose={() => {
+            setShowVendorModal(false);
+            setSelectedVendorOrder(null);
+          }}
+          title="Order Vendors"
+          size="sm"
+        >
+          <div className="flex flex-col gap-3">
+            {getOrderVendors(selectedVendorOrder).map((vendor) => (
               <div
-                className="modal-content"
-                style={{
-                  borderRadius: "16px",
-                  border: "none",
-                  boxShadow: "0 10px 30px rgba(0,0,0,0.2)",
-                }}
+                key={vendor.vendorId || vendor.name}
+                className="p-3 border border-slate-100 rounded-xl bg-purple-50/30 shadow-sm"
               >
-                {/* HEADER */}
-                <div
-                  className="modal-header d-flex justify-content-between align-items-center"
-                  style={{
-                    padding: "20px 24px 16px",
-                    borderBottom: "1px solid #f0f0f0",
-                  }}
-                >
-                  <h5
-                    className="modal-title"
-                    style={{
-                      fontWeight: 600,
-                      fontSize: "18px",
-                      color: "#333",
-                      margin: 0,
+                <div className="flex items-center gap-3 mb-3">
+                  <img
+                    src={vendor.imageUrl}
+                    alt={vendor.name}
+                    className="w-12 h-12 rounded-full object-cover shrink-0 border-2 border-[#8059ca]"
+                    onError={(e) => {
+                      e.currentTarget.src = "/assets/default.png";
                     }}
-                  >
-                    Order Vendors
-                  </h5>
-                  <button
-                    type="button"
-                    style={{
-                      border: "none",
-                      background: "none",
-                      fontSize: "24px",
-                      lineHeight: 1,
-                      color: "#999",
-                      cursor: "pointer",
-                      padding: 0,
-                    }}
-                    onClick={() => {
-                      setShowVendorModal(false);
-                      setSelectedVendorOrder(null);
-                    }}
-                  >
-                    &times;
-                  </button>
-                </div>
-
-                {/* BODY */}
-                <div
-                  className="modal-body"
-                  style={{
-                    maxHeight: "450px",
-                    overflowY: "auto",
-                    padding: "24px",
-                  }}
-                >
-                  <div className="d-flex flex-column gap-3">
-                    {getOrderVendors(selectedVendorOrder).map((vendor) => (
-                      <div
-                        key={vendor.vendorId || vendor.name}
-                        className="p-3"
-                        style={{
-                          border: "1px solid #f0f0f0",
-                          borderRadius: "12px",
-                          backgroundColor: "#fcfaff",
-                          boxShadow: "0 2px 8px rgba(0,0,0,0.03)",
-                        }}
-                      >
-                        <div className="d-flex align-items-center gap-3 mb-3">
-                          <img
-                            src={vendor.imageUrl}
-                            alt={vendor.name}
-                            style={{
-                              width: "48px",
-                              height: "48px",
-                              borderRadius: "50%",
-                              objectFit: "cover",
-                              flexShrink: 0,
-                              border: "2px solid #8059ca",
-                            }}
-                            onError={(e) => {
-                              e.currentTarget.src = "/assets/default.png";
-                            }}
-                          />
-                          <div className="d-flex flex-column">
-                            <span
-                              style={{
-                                fontSize: "15px",
-                                color: "#333",
-                                fontWeight: 600,
-                              }}
-                            >
-                              {vendor.name}
-                            </span>
-                            <span
-                              style={{ fontSize: "11px", color: "#888" }}
-                            >
-                              ID: {vendor.vendorId || "N/A"}
-                            </span>
-                          </div>
-                        </div>
-
-                        <div
-                          className="pt-2"
-                          style={{ borderTop: "1px dashed #eaeaea" }}
-                        >
-                          {vendor.phone && (
-                            <div
-                              className="d-flex align-items-center gap-2 mb-2"
-                              style={{ fontSize: "12px", color: "#555" }}
-                            >
-                              <i
-                                className="fa-solid fa-phone"
-                                style={{ color: "#8059ca", width: "16px" }}
-                              />
-                              <span>{vendor.phone}</span>
-                            </div>
-                          )}
-                          {vendor.email && (
-                            <div
-                              className="d-flex align-items-center gap-2 mb-2"
-                              style={{ fontSize: "12px", color: "#555" }}
-                            >
-                              <i
-                                className="fa-solid fa-envelope"
-                                style={{ color: "#8059ca", width: "16px" }}
-                              />
-                              <span style={{ wordBreak: "break-all" }}>
-                                {vendor.email}
-                              </span>
-                            </div>
-                          )}
-                          {vendor.address && (
-                            <div
-                              className="d-flex align-items-start gap-2 mb-2"
-                              style={{ fontSize: "12px", color: "#555" }}
-                            >
-                              <i
-                                className="fa-solid fa-location-dot"
-                                style={{
-                                  color: "#8059ca",
-                                  width: "16px",
-                                  marginTop: "3px",
-                                }}
-                              />
-                              <span>{vendor.address}</span>
-                            </div>
-                          )}
-                          {(vendor.location?.coordinates?.length === 2 ||
-                            vendor.address) && (
-                              <div className="mt-3">
-                                <a
-                                  href={
-                                    vendor.location?.coordinates?.length === 2
-                                      ? `https://www.google.com/maps/search/?api=1&query=${vendor.location.coordinates[1]},${vendor.location.coordinates[0]}`
-                                      : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(vendor.address)}`
-                                  }
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="btn btn-outline-primary w-100 d-flex align-items-center justify-content-center gap-2"
-                                  style={{
-                                    fontSize: "12px",
-                                    padding: "6px 12px",
-                                    borderRadius: "8px",
-                                    borderColor: "#8059ca",
-                                    color: "#8059ca",
-                                    fontWeight: "600",
-                                    backgroundColor: "transparent",
-                                  }}
-                                >
-                                  <i className="fa-solid fa-map-location-dot"></i>
-                                  Show Maps
-                                </a>
-                              </div>
-                            )}
-                        </div>
-                      </div>
-                    ))}
+                  />
+                  <div className="flex flex-col">
+                    <span className="text-[15px] text-slate-800 font-semibold">
+                      {vendor.name}
+                    </span>
+                    <span className="text-[11px] text-slate-400">
+                      ID: {vendor.vendorId || "N/A"}
+                    </span>
                   </div>
                 </div>
+
+                <div className="pt-2 border-t border-dashed border-slate-200">
+                  {vendor.phone && (
+                    <div className="flex items-center gap-2 mb-2 text-xs text-slate-600">
+                      <i className="fa-solid fa-phone text-[#8059ca] w-4" />
+                      <span>{vendor.phone}</span>
+                    </div>
+                  )}
+                  {vendor.email && (
+                    <div className="flex items-center gap-2 mb-2 text-xs text-slate-600">
+                      <i className="fa-solid fa-envelope text-[#8059ca] w-4" />
+                      <span className="break-all">{vendor.email}</span>
+                    </div>
+                  )}
+                  {vendor.address && (
+                    <div className="flex items-start gap-2 mb-2 text-xs text-slate-600">
+                      <i className="fa-solid fa-location-dot text-[#8059ca] w-4 mt-0.5" />
+                      <span>{vendor.address}</span>
+                    </div>
+                  )}
+                  {(vendor.location?.coordinates?.length === 2 || vendor.address) && (
+                    <div className="mt-3">
+                      <a
+                        href={
+                          vendor.location?.coordinates?.length === 2
+                            ? `https://www.google.com/maps/search/?api=1&query=${vendor.location.coordinates[1]},${vendor.location.coordinates[0]}`
+                            : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(vendor.address)}`
+                        }
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-full flex items-center justify-center gap-2 text-xs font-semibold text-[#8059ca] border border-[#8059ca] rounded-lg py-1.5 hover:bg-purple-50 transition-colors"
+                      >
+                        <i className="fa-solid fa-map-location-dot"></i>
+                        Show Maps
+                      </a>
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
+            ))}
           </div>
-        )}
+        </BaseModal>
 
         {/* Review Modal */}
         <OrderFeedbackOffcanvas
@@ -1764,495 +1458,284 @@ const AppoitmentsOrders = ({ HomeNavigate, ServiceTabs }) => {
         />
 
         {/* Reschedule Modal */}
-        {showRescheduleModal && (
-          <div
-            className="modal fade show"
-            style={{
-              display: "block",
-              position: "fixed",
-              inset: 0,
-              background: "rgba(0,0,0,0.85)",
-              zIndex: 99999999999,
-            }}
-          >
-            <div className="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
-              <div className="modal-content border-0 rounded-4">
-                <div className="modal-header border-0 pb-0">
-                  <div>
-                    <h5 className="fw-bold mb-1">Reschedule Appointment</h5>
-                    <p
-                      className="text-muted mb-0"
-                      style={{ fontSize: "13px" }}
-                    >
-                      Order #{rescheduleOrder?.orderId}
-                    </p>
-                  </div>
-                  <button
-                    type="button"
-                    className="btn-close"
-                    onClick={() => setShowRescheduleModal(false)}
-                    disabled={isRescheduling}
-                  />
-                </div>
-                <div className="modal-body pt-3">
-                  <div
-                    className="mb-3 p-3 rounded-3"
-                    style={{
-                      background: "#f8f5ff",
-                      border: "1px solid #e9ddff",
-                    }}
-                  >
-                    <div
-                      style={{
-                        fontSize: "12px",
-                        color: "#8059ca",
-                        fontWeight: 600,
-                        textTransform: "uppercase",
-                        letterSpacing: "0.4px",
-                      }}
-                    >
-                      Current Appointment
-                    </div>
-                    <div
-                      style={{
-                        fontSize: "15px",
-                        fontWeight: 600,
-                        color: "#333",
-                        marginTop: "4px",
-                      }}
-                    >
-                      {formatOrderAppointmentLabel(rescheduleOrder)}
-                    </div>
-                  </div>
-
-                  <div style={{ position: "relative", minHeight: "330px" }}>
-                    <VendorCalendarSlotPicker
-                      key={`reschedule-${rescheduleOrder?._id}-${rescheduleModalKey}-${rescheduleCalendarMonth}-${rescheduleCalendarYear}`}
-                      layout="column"
-                      selectedDate={rescheduleDate}
-                      selectedTimeSlot={rescheduleTimeSlot}
-                      calendarDays={rescheduleCalendarDays}
-                      calendarMonth={rescheduleCalendarMonth}
-                      calendarYear={rescheduleCalendarYear}
-                      isLoading={rescheduleTimingsLoading}
-                      onMonthChange={handleRescheduleMonthChange}
-                      confirmLabel="Confirm Reschedule"
-                      onSelectSlot={(date, time) => {
-                        setRescheduleDate(date);
-                        setRescheduleTimeSlot(time);
-                        handleRescheduleConfirm(date, time);
-                      }}
-                    />
-                    {isRescheduling && (
-                      <div
-                        className="position-absolute top-0 start-0 end-0 bottom-0 d-flex align-items-center justify-content-center"
-                        style={{
-                          background: "rgba(255,255,255,0.75)",
-                          zIndex: 30,
-                          borderRadius: "12px",
-                        }}
-                      >
-                        <div
-                          className="spinner-border text-primary"
-                          role="status"
-                        >
-                          <span className="visually-hidden">
-                            Rescheduling...
-                          </span>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
+        <BaseModal
+          show={showRescheduleModal}
+          onClose={() => setShowRescheduleModal(false)}
+          title="Reschedule Appointment"
+          size="lg"
+        >
+          <div className="-mt-3 mb-4 text-xs text-slate-500">
+            Order #{rescheduleOrder?.orderId}
+          </div>
+          <div className="mb-4 p-4 rounded-xl bg-purple-50/50 border border-purple-100">
+            <div className="text-[11px] text-[#8059ca] font-semibold uppercase tracking-wider">
+              Current Appointment
+            </div>
+            <div className="text-[15px] font-semibold text-slate-700 mt-1">
+              {formatOrderAppointmentLabel(rescheduleOrder)}
             </div>
           </div>
-        )}
+
+          <div className="relative min-h-[330px]">
+            <VendorCalendarSlotPicker
+              key={`reschedule-${rescheduleOrder?._id}-${rescheduleModalKey}-${rescheduleCalendarMonth}-${rescheduleCalendarYear}`}
+              layout="column"
+              selectedDate={rescheduleDate}
+              selectedTimeSlot={rescheduleTimeSlot}
+              calendarDays={rescheduleCalendarDays}
+              calendarMonth={rescheduleCalendarMonth}
+              calendarYear={rescheduleCalendarYear}
+              isLoading={rescheduleTimingsLoading}
+              onMonthChange={handleRescheduleMonthChange}
+              confirmLabel="Confirm Reschedule"
+              onSelectSlot={(date, time) => {
+                setRescheduleDate(date);
+                setRescheduleTimeSlot(time);
+                handleRescheduleConfirm(date, time);
+              }}
+            />
+            {isRescheduling && (
+              <div className="absolute inset-0 bg-white/70 flex items-center justify-center z-30 rounded-xl">
+                <div className="animate-spin inline-block w-8 h-8 border-4 border-[#8059ca] border-t-transparent rounded-full" role="status">
+                  <span className="sr-only">Rescheduling...</span>
+                </div>
+              </div>
+            )}
+          </div>
+        </BaseModal>
 
         {/* Report Issue Modal */}
-        {showReportModal && (
-          <div
-            className="modal fade show"
-            style={{
-              display: "block",
-              position: "fixed",
-              inset: 0,
-              background: "rgba(0,0,0,0.85)",
-              zIndex: 99999999999,
-            }}
-          >
-            <div className="modal-dialog modal-dialog-centered modal-md">
-              <div className="modal-content border-0 rounded-4">
-                <div className="modal-body p-4 bg-white rounded-4">
-                  {/* Header */}
-                  <div className="d-flex justify-content-between mb-3">
-                    <div>
-                      <div className="d-flex align-items-center gap-2">
-                        <i className="fas fa-exclamation-circle text-danger fs-5"></i>
-                        <h5 className="fw-bold mb-0">Report an Issue</h5>
-                      </div>
-                      <p
-                        className="text-muted mb-0"
-                        style={{ fontSize: "13px" }}
+        <BaseModal
+          show={showReportModal}
+          onClose={() => setShowReportModal(false)}
+          title={
+            <div className="flex items-center gap-2 text-red-600">
+              <i className="fas fa-exclamation-circle text-lg"></i>
+              <span className="font-bold text-slate-800">Report an Issue</span>
+            </div>
+          }
+          size="md"
+        >
+          <div className="-mt-3 mb-4 text-xs text-slate-500">
+            Order Id {selectedReportOrder?.orderId}
+          </div>
+
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* Product */}
+              <div className="w-full md:col-span-2">
+                <label className="block text-sm font-medium text-slate-700 mb-1.5">Product *</label>
+                {(() => {
+                  const isSameItem = (a, b) => {
+                    if (!a || !b) return false;
+                    if (a.patientId !== b.patientId) return false;
+                    const aId = a.productId || a.packageId;
+                    const bId = b.productId || b.packageId;
+                    return aId === bId;
+                  };
+
+                  const selectedNames = (Array.isArray(formData.product) ? formData.product : [])
+                    .map(p => `${p.orderName} (${p.patientName})`);
+
+                  return (
+                    <div ref={productDropdownRef} className="relative">
+                      <div
+                        onClick={() => setIsProductDropdownOpen(!isProductDropdownOpen)}
+                        className="w-full flex items-center justify-between min-h-[40px] px-3 py-2 text-sm border border-slate-300 rounded-lg bg-white cursor-pointer select-none"
                       >
-                        Order Id {selectedReportOrder?.orderId}
-                      </p>
-                    </div>
-                    <button
-                      className="btn-close"
-                      onClick={() => setShowReportModal(false)}
-                    ></button>
-                  </div>
+                        <span className={`truncate max-w-[90%] ${selectedNames.length > 0 ? "text-slate-800" : "text-slate-400"}`}>
+                          {selectedNames.length > 0
+                            ? selectedNames.join(", ")
+                            : "Select Products"}
+                        </span>
+                        <i className={`fas fa-chevron-${isProductDropdownOpen ? "up" : "down"} text-slate-400 text-xs`}></i>
+                      </div>
 
-                  {/* Form */}
-                  <form onSubmit={handleSubmit}>
-                    <div className="row g-3">
-                      {/* Product */}
-                      <div className="col-md-6 col-12">
-                        <label className="form-label" style={{ fontSize: "14px", fontWeight: "500", color: "#333", marginBottom: "6px" }}>Product *</label>
-                        {(() => {
-                          const isSameItem = (a, b) => {
-                            if (!a || !b) return false;
-                            if (a.patientId !== b.patientId) return false;
-                            const aId = a.productId || a.packageId;
-                            const bId = b.productId || b.packageId;
-                            return aId === bId;
-                          };
-
-                          const selectedNames = (Array.isArray(formData.product) ? formData.product : [])
-                            .map(p => `${p.orderName} (${p.patientName})`);
-
-                          return (
-                            <div ref={productDropdownRef} style={{ position: "relative" }}>
+                      {isProductDropdownOpen && (
+                        <div className="absolute top-[100%] left-0 right-0 mt-1 bg-white border border-slate-200 rounded-lg shadow-lg z-50 max-h-[200px] overflow-y-auto py-1">
+                          {reportDropdownList.map((prod, idx) => {
+                            const isChecked = (Array.isArray(formData.product) ? formData.product : []).some(p => isSameItem(p, prod));
+                            const displayName = `${prod.orderName} (${prod.patientName})`;
+                            const uniqueKey = prod._id || `${prod.productId || prod.packageId}-${prod.patientId || ''}-${idx}`;
+                            return (
                               <div
-                                onClick={() => setIsProductDropdownOpen(!isProductDropdownOpen)}
-                                style={{
-                                  borderRadius: "8px",
-                                  border: "1px solid #e0e0e0",
-                                  fontSize: "14px",
-                                  padding: "10px 12px",
-                                  background: "#fff",
-                                  cursor: "pointer",
-                                  display: "flex",
-                                  justifyContent: "space-between",
-                                  alignItems: "center",
-                                  minHeight: "40px"
+                                key={uniqueKey}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  const currentProductList = Array.isArray(formData.product) ? formData.product : [];
+                                  const nextVal = isChecked
+                                    ? currentProductList.filter(p => !isSameItem(p, prod))
+                                    : [...currentProductList, prod];
+                                  setFormData(prev => ({ ...prev, product: nextVal }));
                                 }}
+                                className="flex items-center gap-2.5 px-4 py-2 hover:bg-slate-50 cursor-pointer transition-colors"
                               >
-                                <span style={{ color: selectedNames.length > 0 ? "#333" : "#999", textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap", maxWidth: "90%" }}>
-                                  {selectedNames.length > 0
-                                    ? selectedNames.join(", ")
-                                    : "Select Products"}
-                                </span>
-                                <i className={`fas fa-chevron-${isProductDropdownOpen ? "up" : "down"}`} style={{ fontSize: "12px", color: "#666" }}></i>
+                                <input
+                                  type="checkbox"
+                                  checked={isChecked}
+                                  onChange={() => { }}
+                                  className="w-4 h-4 text-[#8059ca] border-slate-300 rounded focus:ring-[#8059ca] cursor-pointer"
+                                />
+                                <span className="text-sm text-slate-700">{displayName}</span>
                               </div>
-
-                              {isProductDropdownOpen && (
-                                <div
-                                  style={{
-                                    position: "absolute",
-                                    top: "100%",
-                                    left: 0,
-                                    right: 0,
-                                    background: "#fff",
-                                    border: "1px solid #e0e0e0",
-                                    borderRadius: "8px",
-                                    boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
-                                    zIndex: 1000,
-                                    maxHeight: "200px",
-                                    overflowY: "auto",
-                                    marginTop: "4px",
-                                    padding: "8px 0"
-                                  }}
-                                >
-                                  {reportDropdownList.map((prod, idx) => {
-                                    const isChecked = (Array.isArray(formData.product) ? formData.product : []).some(p => isSameItem(p, prod));
-                                    const displayName = `${prod.orderName} (${prod.patientName})`;
-                                    const uniqueKey = prod._id || `${prod.productId || prod.packageId}-${prod.patientId || ''}-${idx}`;
-                                    return (
-                                      <div
-                                        key={uniqueKey}
-                                        onClick={(e) => {
-                                          e.stopPropagation();
-                                          const currentProductList = Array.isArray(formData.product) ? formData.product : [];
-                                          const nextVal = isChecked
-                                            ? currentProductList.filter(p => !isSameItem(p, prod))
-                                            : [...currentProductList, prod];
-                                          setFormData(prev => ({ ...prev, product: nextVal }));
-                                        }}
-                                        style={{
-                                          padding: "8px 15px",
-                                          display: "flex",
-                                          alignItems: "center",
-                                          gap: "10px",
-                                          cursor: "pointer",
-                                          transition: "background 0.2s"
-                                        }}
-                                        onMouseEnter={(e) => e.currentTarget.style.background = "#f5f5f5"}
-                                        onMouseLeave={(e) => e.currentTarget.style.background = "transparent"}
-                                      >
-                                        <input
-                                          type="checkbox"
-                                          checked={isChecked}
-                                          onChange={() => { }}
-                                          style={{ cursor: "pointer" }}
-                                        />
-                                        <span style={{ fontSize: "14px", color: "#333" }}>{displayName}</span>
-                                      </div>
-                                    );
-                                  })}
-                                </div>
-                              )}
-                            </div>
-                          );
-                        })()}
-                      </div>
-
-                      {/* Category */}
-                      <div className="col-md-6 col-12">
-                        <label className="form-label" style={{ fontSize: "14px", fontWeight: "500", color: "#333", marginBottom: "6px" }}>Category *</label>
-                        <select
-                          name="category"
-                          className="form-control form-select"
-                          required
-                          value={formData.category || ""}
-                          onChange={onFormChange}
-                          style={{
-                            borderRadius: "8px",
-                            border: "1px solid #e0e0e0",
-                            fontSize: "14px",
-                            padding: "8px 12px",
-                          }}
-                        >
-                          <option value="">Select Category</option>
-                          <option value="service_delayed">
-                            Provider delayed / Did not arrive
-                          </option>
-                          <option value="results_delayed">
-                            Reports / Results delayed
-                          </option>
-                          <option value="partner_behavior">
-                            Provider behavior / Quality issue
-                          </option>
-                          <option value="billing_payment">
-                            Billing, Payment or Refund Issue
-                          </option>
-                          <option value="rescheduling_issue">
-                            Rescheduling issue
-                          </option>
-                          <option value="cancellation_refund">
-                            Cancellation & Refund query
-                          </option>
-                          <option value="other">Other</option>
-                        </select>
-                      </div>
-
-                      {/* Subject */}
-                      <div className="col-12">
-                        <input
-                          type="text"
-                          name="subject"
-                          className="form-control"
-                          placeholder="Subject"
-                          required
-                          value={formData.subject || ""}
-                          onChange={onFormChange}
-                          style={{
-                            borderRadius: "8px",
-                            border: "1px solid #e0e0e0",
-                            fontSize: "14px",
-                            padding: "8px 12px",
-                          }}
-                        />
-                      </div>
-
-                      {/* Description */}
-                      <div className="col-12">
-                        <textarea
-                          name="description"
-                          className="form-control"
-                          rows="4"
-                          placeholder="Describe your issue..."
-                          required
-                          value={formData.description || ""}
-                          onChange={onFormChange}
-                          style={{
-                            borderRadius: "8px",
-                            border: "1px solid #e0e0e0",
-                            fontSize: "14px",
-                            padding: "8px 12px",
-                            resize: "vertical",
-                          }}
-                        ></textarea>
-                      </div>
-
-                      {/* Priority */}
-                      {/* <div className="col-md-6 col-12">
-                            <select
-                              name="priority"
-                              className="form-control form-select"
-                              required
-                              value={formData.priority || ""}
-                              onChange={onFormChange}
-                              style={{
-                                borderRadius: "8px",
-                                border: "1px solid #e0e0e0",
-                                fontSize: "14px",
-                                padding: "8px 12px",
-                              }}
-                            >
-                              <option value="">Select Priority</option>
-                              <option value="low">Low</option>
-                              <option value="medium">Medium</option>
-                              <option value="high">High</option>
-                            </select>
-                          </div> */}
-
-                      <div className="col-md-6 col-12">
-                        <input
-                          type="file"
-                          name="attachments"
-                          className="form-control"
-                          accept="image/*"
-                          multiple
-                          onChange={(e) => {
-                            const files = Array.from(e.target.files);
-                            const validFiles = [];
-                            const maxSizeBytes = 5 * 1024 * 1024; // 5MB limit
-
-                            files.forEach((file) => {
-                              if (file.size > maxSizeBytes) {
-                                toast.error(
-                                  `${file.name} is too large. Max file size is 5MB.`,
-                                );
-                              } else {
-                                validFiles.push(file);
-                              }
-                            });
-
-                            setFormData((prev) => ({
-                              ...prev,
-                              attachments: [
-                                ...(prev.attachments || []),
-                                ...validFiles,
-                              ],
-                            }));
-
-                            // Reset value so user can upload the same file again if removed
-                            e.target.value = "";
-                          }}
-                          style={{
-                            borderRadius: "8px",
-                            border: "1px solid #e0e0e0",
-                            fontSize: "14px",
-                            padding: "11px 12px",
-                          }}
-                        />
-                        <div
-                          className="text-muted mt-1"
-                          style={{ fontSize: "11px" }}
-                        >
-                          Max file size: 5MB. Multiple files allowed.
+                            );
+                          })}
                         </div>
-                      </div>
-
-                      {formData.attachments &&
-                        formData.attachments.length > 0 && (
-                          <div className="col-12 mt-2">
-                            <label
-                              className="form-label d-block mb-1"
-                              style={{
-                                fontSize: "12px",
-                                fontWeight: "600",
-                                color: "#666",
-                              }}
-                            >
-                              Selected Attachments (
-                              {formData.attachments.length})
-                            </label>
-                            <div className="d-flex flex-wrap gap-2">
-                              {formData.attachments.map(
-                                (attachment, index) => {
-                                  const objectUrl =
-                                    URL.createObjectURL(attachment);
-                                  return (
-                                    <div
-                                      key={index}
-                                      className="position-relative"
-                                      style={{
-                                        width: "65px",
-                                        height: "65px",
-                                        borderRadius: "8px",
-                                        overflow: "hidden",
-                                        border: "1px solid #e0e0e0",
-                                        boxShadow:
-                                          "0 2px 4px rgba(0,0,0,0.05)",
-                                      }}
-                                    >
-                                      <img
-                                        src={objectUrl}
-                                        alt="attachment"
-                                        style={{
-                                          width: "100%",
-                                          height: "100%",
-                                          objectFit: "cover",
-                                        }}
-                                      />
-                                      <button
-                                        type="button"
-                                        className="btn btn-danger d-flex align-items-center justify-content-center position-absolute"
-                                        onClick={() =>
-                                          setFormData((prev) => ({
-                                            ...prev,
-                                            attachments:
-                                              prev.attachments.filter(
-                                                (_, i) => i !== index,
-                                              ),
-                                          }))
-                                        }
-                                        style={{
-                                          top: "2px",
-                                          right: "2px",
-                                          width: "18px",
-                                          height: "18px",
-                                          borderRadius: "50%",
-                                          padding: 0,
-                                          fontSize: "10px",
-                                          lineHeight: 1,
-                                          backgroundColor: "#dc3545",
-                                          border: "none",
-                                          boxShadow:
-                                            "0 1px 3px rgba(0,0,0,0.2)",
-                                        }}
-                                      >
-                                        <i className="fas fa-times"></i>
-                                      </button>
-                                    </div>
-                                  );
-                                },
-                              )}
-                            </div>
-                          </div>
-                        )}
+                      )}
                     </div>
+                  );
+                })()}
+              </div>
 
-                    {/* Submit */}
-                    <div className="text-center mt-4">
-                      <button
-                        type="submit"
-                        className="btn btn-primary w-100 py-2"
-                        disabled={isSubmitting}
-                        style={{ fontWeight: 600, borderRadius: "8px" }}
-                      >
-                        {isSubmitting ? "Submitting..." : "Submit Issue"}
-                      </button>
-                    </div>
-                  </form>
+              {/* Category */}
+              <div className="w-full md:col-span-2">
+                <label className="block text-sm font-medium text-slate-700 mb-1.5">Category *</label>
+                <select
+                  name="category"
+                  required
+                  value={formData.category || ""}
+                  onChange={onFormChange}
+                  className="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8059ca] focus:border-transparent bg-white"
+                >
+                  <option value="">Select Category</option>
+                  <option value="service_delayed">
+                    Provider delayed / Did not arrive
+                  </option>
+                  <option value="results_delayed">
+                    Reports / Results delayed
+                  </option>
+                  <option value="partner_behavior">
+                    Provider behavior / Quality issue
+                  </option>
+                  <option value="billing_payment">
+                    Billing, Payment or Refund Issue
+                  </option>
+                  <option value="rescheduling_issue">
+                    Rescheduling issue
+                  </option>
+                  <option value="cancellation_refund">
+                    Cancellation & Refund query
+                  </option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+
+              {/* Subject */}
+              <div className="w-full md:col-span-2">
+                <label className="block text-sm font-medium text-slate-700 mb-1.5">Subject *</label>
+                <input
+                  type="text"
+                  name="subject"
+                  placeholder="Subject"
+                  required
+                  value={formData.subject || ""}
+                  onChange={onFormChange}
+                  className="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8059ca] focus:border-transparent bg-white"
+                />
+              </div>
+
+              {/* Description */}
+              <div className="w-full md:col-span-2">
+                <label className="block text-sm font-medium text-slate-700 mb-1.5">Description *</label>
+                <textarea
+                  name="description"
+                  rows="4"
+                  placeholder="Describe your issue..."
+                  required
+                  value={formData.description || ""}
+                  onChange={onFormChange}
+                  className="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8059ca] focus:border-transparent bg-white resize-vertical"
+                ></textarea>
+              </div>
+
+              {/* Attachments */}
+              <div className="w-full md:col-span-2">
+                <label className="block text-sm font-medium text-slate-700 mb-1.5">Attachments</label>
+                <input
+                  type="file"
+                  name="attachments"
+                  accept="image/*"
+                  multiple
+                  onChange={(e) => {
+                    const files = Array.from(e.target.files);
+                    const validFiles = [];
+                    const maxSizeBytes = 5 * 1024 * 1024;
+
+                    files.forEach((file) => {
+                      if (file.size > maxSizeBytes) {
+                        toast.error(`${file.name} is too large. Max file size is 5MB.`);
+                      } else {
+                        validFiles.push(file);
+                      }
+                    });
+
+                    setFormData((prev) => ({
+                      ...prev,
+                      attachments: [
+                        ...(prev.attachments || []),
+                        ...validFiles,
+                      ],
+                    }));
+
+                    e.target.value = "";
+                  }}
+                  className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8059ca] focus:border-transparent bg-white file:mr-4 file:py-1.5 file:px-4 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-slate-100 file:text-slate-700 hover:file:bg-slate-200 file:cursor-pointer"
+                />
+                <div className="text-slate-400 mt-1 text-[11px]">
+                  Max file size: 5MB. Multiple files allowed.
                 </div>
               </div>
+
+              {formData.attachments && formData.attachments.length > 0 && (
+                <div className="w-full md:col-span-2 mt-2">
+                  <label className="block mb-1 text-xs font-semibold text-slate-500">
+                    Selected Attachments ({formData.attachments.length})
+                  </label>
+                  <div className="flex flex-wrap gap-2">
+                    {formData.attachments.map((attachment, index) => {
+                      const objectUrl = URL.createObjectURL(attachment);
+                      return (
+                        <div
+                          key={index}
+                          className="relative w-[65px] h-[65px] rounded-lg overflow-hidden border border-slate-200 shadow-sm"
+                        >
+                          <img
+                            src={objectUrl}
+                            alt="attachment"
+                            className="w-full h-full object-cover"
+                          />
+                          <button
+                            type="button"
+                            className="absolute top-1 right-1 w-[18px] h-[18px] bg-red-600 hover:bg-red-700 text-white rounded-full flex items-center justify-center border-none shadow-sm cursor-pointer"
+                            onClick={() =>
+                              setFormData((prev) => ({
+                                ...prev,
+                                attachments: prev.attachments.filter((_, i) => i !== index),
+                              }))
+                            }
+                          >
+                            <i className="fas fa-times text-[9px]"></i>
+                          </button>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
             </div>
-          </div>
-        )}
+
+            {/* Submit */}
+            <div className="pt-3">
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full py-2.5 bg-[#8059ca] hover:bg-[#6a4ab0] text-white font-bold rounded-lg transition-colors cursor-pointer disabled:opacity-50"
+              >
+                {isSubmitting ? "Submitting..." : "Submit Issue"}
+              </button>
+            </div>
+          </form>
+        </BaseModal>
 
         <div style={{ position: "absolute", left: "-9999px", top: 0 }}>
           {(invoiceOrder || selectedOrder) && (
@@ -2270,67 +1753,7 @@ const AppoitmentsOrders = ({ HomeNavigate, ServiceTabs }) => {
           )}
         </div>
 
-        {totalPages > 1 && (
-          <div className="pagination dashboard-pagination mt-0">
-            <ul className="d-flex justify-content-center align-items-center gap-1">
-              <li>
-                <button
-                  className="page-link"
-                  onClick={() =>
-                    handlePageChange(Math.max(currentPage - 1, 1))
-                  }
-                  disabled={currentPage === 1}
-                >
-                  <i className="fa-solid fa-chevron-left" />
-                </button>
-              </li>
-
-              {Array.from({ length: totalPages }, (_, i) => {
-                const page = i + 1;
-
-                if (
-                  page === 1 ||
-                  page === totalPages ||
-                  (page >= currentPage - 1 && page <= currentPage + 1)
-                ) {
-                  return (
-                    <li key={page}>
-                      <button
-                        className={`page-link ${currentPage === page ? "active" : ""
-                          }`}
-                        onClick={() => handlePageChange(page)}
-                      >
-                        {page}
-                      </button>
-                    </li>
-                  );
-                }
-
-                if (page === currentPage - 2 || page === currentPage + 2) {
-                  return (
-                    <li key={`dots-${page}`}>
-                      <span className="page-link disabled">…</span>
-                    </li>
-                  );
-                }
-
-                return null;
-              })}
-
-              <li>
-                <button
-                  className="page-link"
-                  onClick={() =>
-                    handlePageChange(Math.min(currentPage + 1, totalPages))
-                  }
-                  disabled={currentPage === totalPages}
-                >
-                  <i className="fa-solid fa-chevron-right" />
-                </button>
-              </li>
-            </ul>
-          </div>
-        )}
+        <Pagination page={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
       </div>
     </div>
   );

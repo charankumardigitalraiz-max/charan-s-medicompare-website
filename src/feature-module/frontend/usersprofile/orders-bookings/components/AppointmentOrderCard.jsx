@@ -108,7 +108,7 @@ const AppointmentOrderCard = ({
         </div>
 
         {/* ── BODY: Image + Details ── */}
-        <div className="flex align-items-start gap-3 flex-sm-nowrap flex-wrap">
+        <div className="flex items-start gap-3 flex-wrap sm:flex-nowrap">
           {/* Product image */}
           <div
             onClick={() => onView(order)}
@@ -143,8 +143,8 @@ const AppointmentOrderCard = ({
                 "Not Available"}
             </div>
 
-            <div className="row mt-2">
-              <div className="col-4">
+            <div className="grid grid-cols-3 gap-2 mt-2">
+              <div className="w-full">
                 <div className="text-[12px] text-[#777]">
                   Payment Status:
                 </div>
@@ -160,7 +160,7 @@ const AppointmentOrderCard = ({
                     : "N/A"}
                 </div>
               </div>
-              <div className="col-4">
+              <div className="w-full">
                 <div className="text-[12px] text-[#777]">
                   Payment Method:
                 </div>
@@ -170,7 +170,7 @@ const AppointmentOrderCard = ({
                     : "N/A"}
                 </div>
               </div>
-              <div className="col-4">
+              <div className="w-full">
                 <div className="text-[12px] text-[#777]">
                   Appointment Status:
                 </div>
@@ -186,7 +186,7 @@ const AppointmentOrderCard = ({
       </div>
 
       {/* ── FOOTER: Amount + Action Buttons ── */}
-      <div className="col-12 flex flex-wrap items-center justify-between gap-2 mt-2">
+      <div className="w-full flex flex-wrap items-center justify-between gap-2 mt-2">
         <div>
           <span className="text-[12px] text-[#777] mr-1.5">
             Amount:

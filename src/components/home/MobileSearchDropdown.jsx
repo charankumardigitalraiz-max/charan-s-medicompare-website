@@ -427,6 +427,7 @@ const MobileSearchDropdown = ({
         }
       `}</style>
       <div
+        className="lg:!hidden"
         style={{
           position: "fixed",
           top: 0,

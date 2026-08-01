@@ -1,4 +1,4 @@
-﻿import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { createPortal } from "react-dom";
 import {
   Link,
@@ -39,6 +39,18 @@ const Home2Header = () => {
   const [showSearch, setShowSearch] = useState(false);
   const [showMobileSearchDropdown, setShowMobileSearchDropdown] =
     useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const checkIsDesktop = () => {
+        setIsDesktop(window.innerWidth >= 1024);
+      };
+      checkIsDesktop();
+      window.addEventListener("resize", checkIsDesktop);
+      return () => window.removeEventListener("resize", checkIsDesktop);
+    }
+  }, []);
 
   const { profile: profiles, refetchProfile } = useProfile();
   const [showDropdown, setShowDropdown] = useState(false);
@@ -657,23 +669,8 @@ const Home2Header = () => {
     <>
       {/* Mobile Header */}
       <header
-        className="mobile-header lg:hidden"
-        style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          right: 0,
-          width: "100%",
-          padding: "11px 15px",
-          display: isLocationUpdating ? "none" : "flex",
-          flexDirection: "flex flex-wrap",
-          flexWrap: "nowrap",
-          alignItems: "center",
-          justifyContent: "space-between",
-          background: "#ffffff",
-          borderBottom: "1px solid #f1f1f1",
-          zIndex: 9999,
-        }}
+        className={`mobile-header lg:!hidden !fixed !top-0 !left-0 !right-0 !w-full !px-[15px] !py-[11px] !flex-nowrap !items-center !justify-between !bg-white !border-b !border-[#f1f1f1] !z-[9999] ${isLocationUpdating ? "!hidden" : "!flex"
+          }`}
       >
         <div
           style={{
@@ -682,7 +679,6 @@ const Home2Header = () => {
             gap: "6px",
             minWidth: 0,
             flex: 1,
-            flexDirection: "flex flex-wrap",
             flexWrap: "nowrap",
           }}
         >
@@ -713,15 +709,15 @@ const Home2Header = () => {
             ) : (
               <div className="flex flex-col leading-tight min-w-0">
                 <div className="flex items-center gap-[2px] min-w-0">
-                  <small className="font-bold text-[10px] text-gray-800 truncate block max-w-[65px]">
+                  <small className="font-bold text-[10px] text-gray-800 truncate block max-w-[120px]">
                     {(() => {
                       const loc = getLocationDisplayName();
-                      return loc.length > 10 ? `${loc.slice(0, 10)}...` : loc;
+                      return loc.length > 18 ? `${loc.slice(0, 18)}...` : loc;
                     })()}
                   </small>
                   <i className="fa-solid fa-chevron-down text-gray-600 text-[7px] shrink-0 mt-[1px]"></i>
                 </div>
-                <small className="text-[8px] text-gray-500 font-medium leading-none block truncate max-w-[65px]">
+                <small className="text-[8px] text-gray-500 font-medium leading-none block truncate max-w-[120px]">
                   {currentLocation?.pincode || selectedPincode || "No Pincode"}
                 </small>
               </div>
@@ -735,7 +731,6 @@ const Home2Header = () => {
             alignItems: "center",
             gap: "8px",
             flexShrink: 0,
-            flexDirection: "flex flex-wrap",
             flexWrap: "nowrap",
           }}
         >
@@ -913,7 +908,7 @@ const Home2Header = () => {
 
         return !isSearchExcluded && (
           <section
-            className="mobile-header lg:hidden fixed left-0 right-0 px-[15px] py-[14px] bg-white border-b border-solid border-[#f1f1f1] z-[998]"
+            className="mobile-search lg:!hidden fixed left-0 right-0 px-[15px] py-[14px] bg-white border-b border-solid border-[#f1f1f1] z-[998]"
             style={{
               top: `${mobileHeaderHeight}px`,
             }}
@@ -949,17 +944,8 @@ const Home2Header = () => {
 
       {/* Desktop Header */}
       <header
-        className="header header-custom header-fixed inner-header hidden lg:block"
-        style={{
-          borderBottom: "none",
-          zIndex: "999999999",
-          position: "fixed",
-          top: 0,
-          left: 0,
-          right: 0,
-          width: "100%",
-          display: isLocationUpdating ? "none" : "block",
-        }}
+        className={`header header-custom header-fixed inner-header !hidden lg:!block !fixed !top-0 !left-0 !right-0 !w-full !border-b-0 !z-[999999999] ${isLocationUpdating ? "!hidden" : "!block"
+          }`}
       >
         <div
           className="w-full px-4 "
@@ -978,7 +964,7 @@ const Home2Header = () => {
               </Link>
 
               <span
-                className="flex items-center text-dark font-semibold hidden lg:block location-selector"
+                className="flex items-center text-slate-800 font-semibold hidden lg:flex location-selector"
                 title={currentLocation?.name || "Select Location"}
                 style={{
                   marginLeft: "-10px",
@@ -1183,36 +1169,21 @@ const Home2Header = () => {
             </div>
 
             {/* cart, profile */}
-            <ul className="nav header-navbar-rht">
-              <li className="nav-item dropdown noti-nav view-cart-header me-2 pe-0">
+            <ul className="flex items-center list-none m-0 p-0 gap-3">
+              <li className="relative">
                 <Link
                   to="#"
                   onClick={(e) => {
                     e.preventDefault();
                     setShowCartChoiceModal(true);
                   }}
-                  className="dropdown-toggle nav-link p-0 position-relative"
-                  style={{ cursor: "pointer" }}
-                  title={`${cartCount} product${cartCount !== 1 ? "s" : ""
-                    } in cart`}
+                  className="w-9 h-9 flex items-center justify-center !rounded-full bg-gray-50 !border !border-gray-200 text-gray-600 hover:bg-gray-100 hover:text-[#8059ca] hover:border-[#8059ca] transition-all relative cursor-pointer"
+                  title={`${cartCount} product${cartCount !== 1 ? "s" : ""} in cart`}
                 >
-                  <i
-                    className="isax isax-shopping-cart "
-                    style={{ fontSize: "20px" }}
-                  />
+                  <i className="isax isax-shopping-cart text-[18px]" />
                   {cartCount > 0 && (
                     <span
-                      className="cart-badge"
-                      style={{
-                        minWidth: cartCount > 9 ? "20px" : "18px",
-                        height: cartCount > 9 ? "20px" : "18px",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        fontSize: cartCount > 99 ? "9px" : "11px",
-                        fontWeight: "700",
-                        padding: cartCount > 99 ? "0 4px" : "0",
-                      }}
+                      className={`flex items-center justify-center font-bold text-white rounded-full bg-red-500 absolute -top-1 -right-1 min-w-[16px] h-4 text-[9px] px-1`}
                     >
                       {cartCount > 99 ? "99+" : cartCount}
                     </span>
@@ -1220,38 +1191,15 @@ const Home2Header = () => {
                 </Link>
               </li>
               {isLoggedIn && (
-                <li className="nav-item dropdown noti-nav view-cart-header me-2 pe-0">
+                <li className="relative">
                   <Link
                     to="/notifications"
-                    className="dropdown-toggle nav-link p-0 position-relative"
-                    style={{ cursor: "pointer" }}
+                    className="w-9 h-9 flex items-center justify-center !rounded-full bg-gray-50 !border !border-gray-200 text-gray-600 hover:bg-gray-100 hover:text-[#8059ca] hover:border-[#8059ca] transition-all relative cursor-pointer"
                     title="Notifications"
                   >
-                    <i
-                      className="fas fa-bell"
-                      style={{
-                        fontSize: "18px",
-                        color: "#000"
-                      }}
-                    ></i>
+                    <i className="fas fa-bell text-[16px]"></i>
                     {unreadCount > 0 && (
-                      <span
-                        style={{
-                          position: "absolute",
-                          top: "-4px",
-                          right: "-4px",
-                          background: "#8059ca",
-                          color: "#fff",
-                          borderRadius: "50%",
-                          width: "16px",
-                          height: "16px",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          fontSize: "10px",
-                          fontWeight: "bold",
-                        }}
-                      >
+                      <span className="absolute -top-1 -right-1 bg-[#8059ca] text-white rounded-full min-w-[16px] h-4 flex items-center justify-center text-[9px] font-bold px-1">
                         {unreadCount > 99 ? "99+" : unreadCount}
                       </span>
                     )}
@@ -1261,37 +1209,13 @@ const Home2Header = () => {
 
               {!isLoggedIn ? (
                 <>
-                  <ul className="nav header-navbar-rht">
-                    {/* <li>
-                      <a
-                        href="https://vendor.medicompares.digitalraiz.co.in/register"
-                        target="_blank"
-                      >
-                        <button
-                          className="btn btn-md btn-primary-gradient d-inline-flex items-center rounded-pill"
-                          to=""
-                          style={{
-                            fontSize: "13px",
-                            borderRadius: "47px",
-                            border: "none",
-                          }}
-                        >
-                          <i className="fas fa-handshake me-1" />
-                          Partner with Us
-                        </button>
-                      </a>
-                    </li> */}
+                  <ul className="flex items-center list-none m-0 p-0">
                     <li>
                       <Link
-                        className="btn btn-md btn-primary-gradient d-inline-flex items-center rounded-pill"
+                        className="bg-[linear-gradient(135deg,#8059ca_0%,#822BD4_100%)] hover:opacity-90 text-white font-semibold text-[13px] px-4 py-2 rounded-full inline-flex items-center border-none shadow-sm transition-all"
                         to="/login"
-                        style={{
-                          fontSize: "13px",
-                          borderRadius: "47px",
-                          border: "none",
-                        }}
                       >
-                        <i className="isax isax-lock-1 me-1" />
+                        <i className="isax isax-lock-1 mr-1" />
                         Login/Sign Up
                       </Link>
                     </li>
@@ -1299,132 +1223,66 @@ const Home2Header = () => {
                 </>
               ) : (
                 <>
-                  <li className="nav-item dropdown has-arrow logged-item">
+                  <li className="relative">
                     <div
                       ref={profileButtonRef}
-                      className="nav-link ps-0"
-                      style={{ cursor: "pointer" }}
+                      className="w-9 h-9 flex items-center justify-center !rounded-full !border !border-gray-200 overflow-hidden cursor-pointer"
                       onClick={() => setShowDropdown(!showDropdown)}
                     >
-                      <span className="user-img">
-                        {profiles?.files && profiles.files.length > 0 ? (
-                          <img
-                            className="!rounded-full"
-                            src={getImageUrl(profiles.files[0])}
-                            loading="lazy"
-                            alt={profiles?.first_name}
-                            title={profiles?.first_name}
-                            style={{
-                              width: "36px",
-                              height: "36px",
-                              objectFit: "cover",
-                            }}
-                          />
-                        ) : (
-                          <div
-                            className="!rounded-full flex items-center justify-center"
-                            style={{
-                              width: "36px",
-                              height: "36px",
-                              backgroundColor: "#8059ca",
-                              border: "1px solid #C6A4FF",
-                              color: "white",
-                              fontSize: "26px",
-                            }}
-                          >
-                            {profiles?.first_name?.charAt(0)}
-                          </div>
-                        )}
-                      </span>
+                      {profiles?.files && profiles.files.length > 0 ? (
+                        <img
+                          className="w-full h-full object-cover"
+                          src={getImageUrl(profiles.files[0])}
+                          loading="lazy"
+                          alt={profiles?.first_name}
+                          title={profiles?.first_name}
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-[#8059ca] text-white flex items-center justify-center text-[15px] font-semibold uppercase">
+                          {profiles?.first_name?.charAt(0)}
+                        </div>
+                      )}
                     </div>
                     {showDropdown && (
                       <div
                         ref={dropdownRef}
-                        className="dropdown-menu dropdown-menu-end show mt-2 p-0"
-                        style={{
-                          width: "260px",
-                          borderRadius: "12px",
-                          border: "1px solid #eee",
-                          boxShadow: "0 8px 24px rgba(0,0,0,0.08)",
-                          overflow: "hidden",
-                        }}
+                        className="absolute right-0 mt-2 p-0 w-[260px] rounded-[12px] border border-[#eee] bg-white shadow-[0_8px_24px_rgba(0,0,0,0.08)] overflow-hidden z-50"
                       >
                         {/* Header */}
-                        <div
-                          className="flex items-center gap-1 px-3 py-2"
-                          style={{ background: "#F8F9FA" }}
-                        >
+                        <div className="flex items-center gap-2 px-3 py-2 bg-[#F8F9FA]">
                           {profiles?.files && profiles.files.length > 0 ? (
                             <img
                               src={getImageUrl(profiles.files[0])}
                               alt={profiles?.first_name}
                               loading="lazy"
-                              style={{
-                                width: "44px",
-                                height: "44px",
-                                borderRadius: "50%",
-                                objectFit: "cover",
-                                border: "2px solid #E6E6FF",
-                              }}
+                              className="w-11 h-11 rounded-full object-cover border-2 border-[#E6E6FF]"
                             />
                           ) : (
-                            <div
-                              className="flex items-center justify-center"
-                              style={{
-                                width: "44px",
-                                height: "44px",
-                                borderRadius: "50%",
-                                background: "#6F42C1",
-                                color: "#fff",
-                                fontSize: "20px",
-                                fontWeight: 600,
-                                textTransform: "uppercase",
-                              }}
-                            >
+                            <div className="flex items-center justify-center w-11 h-11 rounded-full bg-[#6F42C1] text-white text-[20px] font-semibold uppercase">
                               {profiles?.first_name?.charAt(0)}
                             </div>
                           )}
-                          <div style={{ minWidth: 0 }}>
-                            <div
-                              style={{
-                                fontSize: "13px",
-                                fontWeight: 600,
-                                color: "#222",
-                                textTransform: "capitalize",
-                                whiteSpace: "nowrap",
-                                overflow: "hidden",
-                                textOverflow: "ellipsis",
-                              }}
-                            >
+                          <div className="min-w-0">
+                            <div className="text-[13px] font-semibold text-[#222] capitalize whitespace-nowrap overflow-hidden text-ellipsis">
                               {profiles?.first_name}
                             </div>
-                            <div
-                              style={{
-                                fontSize: "11px",
-                                color: "#888",
-                                whiteSpace: "nowrap",
-                                overflow: "hidden",
-                                textOverflow: "ellipsis",
-                              }}
-                            >
+                            <div className="text-[11px] text-[#888] whitespace-nowrap overflow-hidden text-ellipsis">
                               {profiles?.email}
                             </div>
                           </div>
                         </div>
-                        <div style={{ borderTop: "1px solid #eee" }} />
+                        <div className="border-t border-[#eee]" />
                         {/* Items */}
                         <Link
                           to="/my-orders"
-                          className="dropdown-item flex items-center gap-2 px-3 py-2"
-                          style={{ fontSize: "12px", color: "#555" }}
+                          className="flex items-center gap-2 px-3 py-2 text-[12px] text-[#555] hover:bg-gray-100 w-full text-left no-underline"
                         >
                           <i className="fas fa-user-circle"></i>
                           My Account
                         </Link>
                         <button
-                          className="dropdown-item flex items-center gap-2 px-3 py-2 text-red-500"
+                          className="flex items-center gap-2 px-3 py-2 !text-[12px] !text-red-500 hover:bg-gray-100 w-full text-left border-none bg-transparent cursor-pointer"
                           onClick={confirmLogout}
-                          style={{ fontSize: "12px" }}
                         >
                           <i className="fas fa-sign-out-alt"></i>
                           Logout
@@ -1448,156 +1306,66 @@ const Home2Header = () => {
       />
 
       {/* Mobile Search  */}
-      <MobileSearchDropdown
-        isOpen={showMobileSearchDropdown}
-        onClose={() => setShowMobileSearchDropdown(false)}
-        placeholderTexts={placeholderTexts}
-        placeholderIndex={placeholderIndex}
-      />
+      {!isDesktop && (
+        <MobileSearchDropdown
+          isOpen={showMobileSearchDropdown}
+          onClose={() => setShowMobileSearchDropdown(false)}
+          placeholderTexts={placeholderTexts}
+          placeholderIndex={placeholderIndex}
+        />
+      )}
 
       {/* Cart Choice Modal */}
       {showCartChoiceModal && typeof document !== "undefined" && createPortal(
         <div
-          className="modal fade show"
-          style={{
-            display: "block",
-            backgroundColor: "rgba(15, 23, 42, 0.6)",
-            position: "fixed",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            zIndex: 999999,
-            backdropFilter: "blur(4px)",
-          }}
+          className="fixed inset-0 bg-[#0f172a]/60 flex items-center justify-center p-4 z-[999999] backdrop-blur-[4px]"
           onClick={() => setShowCartChoiceModal(false)}
         >
           <div
-            className="modal-dialog modal-dialog-centered"
-            style={{ maxWidth: "580px" }}
+            className="w-full max-w-[580px]"
             onClick={(e) => e.stopPropagation()}
           >
-            <div
-              className="modal-content border-0"
-              style={{
-                borderRadius: "20px",
-                overflow: "hidden",
-                boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
-                background: "#ffffff",
-              }}
-            >
-              <div
-                className="modal-header border-0 pb-0"
-                style={{ padding: "24px 24px 12px 24px", display: "flex", justifyContent: "space-between", alignItems: "center" }}
-              >
-                <h5
-                  className="modal-title"
-                  style={{
-                    fontSize: "19px",
-                    fontWeight: "500",
-                    color: "#0f172a",
-                    letterSpacing: "-0.3px",
-                  }}
-                >
+            <div className="bg-white rounded-[20px] overflow-hidden shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] border-0 w-full">
+              <div className="border-0 pb-0 p-[24px_24px_12px_24px] flex justify-between items-center">
+                <h5 className="text-[19px] font-semibold text-[#0f172a] tracking-[-0.3px] m-0">
                   Select Cart Type
                 </h5>
                 <button
                   type="button"
-                  className="btn-close shadow-none"
+                  className="btn-close shadow-none cursor-pointer"
                   onClick={() => setShowCartChoiceModal(false)}
-                  style={{ cursor: "pointer" }}
                 ></button>
               </div>
 
-              <div className="modal-body" style={{ padding: "12px 24px 24px 24px" }}>
-                <p style={{ fontSize: "14px", color: "#64748b", marginBottom: "20px" }}>
+              <div className="p-[12px_24px_24px_24px]">
+                <p className="text-[14px] text-[#64748b] mb-5">
                   Please choose which cart you would like to view.
                 </p>
 
-                <div
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
-                    gap: "16px",
-                  }}
-                >
-
-
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   {/* Medicine Card */}
                   <div
                     onClick={() => {
                       setShowCartChoiceModal(false);
                       navigate("/cart?carttype=medicines");
                     }}
-                    style={{
-                      border: "1.5px solid #f1f5f9",
-                      borderRadius: "16px",
-                      padding: "20px",
-                      textAlign: "center",
-                      cursor: "pointer",
-                      backgroundColor: "#f5f9ff",
-                      transition: "all 0.2s cubic-bezier(0.4, 0, 0.2, 1)",
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      gap: "12px",
-                      boxShadow: "0 2px 4px rgba(0,0,0,0.02)",
-                      position: "relative",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = "translateY(-4px)";
-                      e.currentTarget.style.borderColor = "#3b82f6";
-                      e.currentTarget.style.boxShadow = "0 10px 15px -3px rgba(59, 130, 246, 0.15)";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = "translateY(0)";
-                      e.currentTarget.style.borderColor = "#f1f5f9";
-                      e.currentTarget.style.boxShadow = "0 2px 4px rgba(0,0,0,0.02)";
-                    }}
+                    className="group/card border-[1.5px] border-[#f1f5f9] rounded-[16px] p-5 text-center cursor-pointer bg-[#f5f9ff] transition-all duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] flex flex-col items-center gap-3 shadow-[0_2px_4px_rgba(0,0,0,0.02)] hover:-translate-y-1 hover:border-[#3b82f6] hover:shadow-[0_10px_15px_-3px_rgba(59,130,246,0.15)] relative"
                   >
-                    <div
-                      style={{
-                        width: "56px",
-                        height: "56px",
-                        borderRadius: "12px",
-                        backgroundColor: "#eff6ff",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                      }}
-                    >
-                      <i className="fa-solid fa-prescription-bottle-medical" style={{ fontSize: "24px", color: "#3b82f6" }}></i>
+                    <div className="w-14 h-14 rounded-xl bg-[#eff6ff] flex items-center justify-center transition-colors group-hover/card:bg-[#3b82f6]/10">
+                      <i className="fa-solid fa-prescription-bottle-medical text-2xl text-[#3b82f6]"></i>
                     </div>
                     <div>
-                      <h6 style={{ fontSize: "15px", fontWeight: "700", color: "#0f172a", marginBottom: "4px" }}>
+                      <h6 className="text-[15px] font-bold text-[#0f172a] mb-1">
                         Pharmacy
                       </h6>
-                      <span style={{ fontSize: "11px", color: "#64748b", lineHeight: "1.4", display: "block" }}>
+                      <span className="text-[11px] text-[#64748b] leading-[1.4] block">
                         Prescriptions & Medicines
                       </span>
                     </div>
-                    <span
-                      style={{
-                        position: "absolute",
-                        top: "12px",
-                        right: "12px",
-                        fontSize: "11px",
-                        fontWeight: "600",
-                        fontFamily: "'Outfit', 'Inter', sans-serif",
-                        letterSpacing: "0.3px",
-                        color: "#3b82f6",
-                        background: "#eff6ff",
-                        padding: "2px 10px",
-                        borderRadius: "20px",
-                        border: "1px solid #bfdbfe",
-                        boxShadow: "0 2px 5px rgba(59, 130, 246, 0.08)",
-                      }}
-                    >
+                    <span className="absolute top-3 right-3 text-[11px] font-semibold tracking-[0.3px] text-[#3b82f6] bg-[#eff6ff] py-0.5 px-2.5 rounded-full border border-[#bfdbfe] shadow-[0_2px_5px_rgba(59,130,246,0.08)] font-sans">
                       {ServiceCartCount?.medicine || 0} Items
                     </span>
                   </div>
-
-
 
                   {/* Lab Test Card */}
                   <div
@@ -1605,75 +1373,23 @@ const Home2Header = () => {
                       setShowCartChoiceModal(false);
                       navigate("/labtest-checkout?carttype=labtests");
                     }}
-                    style={{
-                      border: "1.5px solid #f1f5f9",
-                      borderRadius: "16px",
-                      padding: "20px",
-                      textAlign: "center",
-                      cursor: "pointer",
-                      backgroundColor: "#fcfaff",
-                      transition: "all 0.2s cubic-bezier(0.4, 0, 0.2, 1)",
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      gap: "12px",
-                      boxShadow: "0 2px 4px rgba(0,0,0,0.02)",
-                      position: "relative",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = "translateY(-4px)";
-                      e.currentTarget.style.borderColor = "#8059ca";
-                      e.currentTarget.style.boxShadow = "0 10px 15px -3px rgba(128, 89, 202, 0.15)";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = "translateY(0)";
-                      e.currentTarget.style.borderColor = "#f1f5f9";
-                      e.currentTarget.style.boxShadow = "0 2px 4px rgba(0,0,0,0.02)";
-                    }}
+                    className="group/card border-[1.5px] border-[#f1f5f9] rounded-[16px] p-5 text-center cursor-pointer bg-[#fcfaff] transition-all duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] flex flex-col items-center gap-3 shadow-[0_2px_4px_rgba(0,0,0,0.02)] hover:-translate-y-1 hover:border-[#8059ca] hover:shadow-[0_10px_15px_-3px_rgba(128,89,202,0.15)] relative"
                   >
-                    <div
-                      style={{
-                        width: "56px",
-                        height: "56px",
-                        borderRadius: "12px",
-                        backgroundColor: "#f3eefc",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                      }}
-                    >
-                      <i className="fa-solid fa-microscope" style={{ fontSize: "24px", color: "#8059ca" }}></i>
+                    <div className="w-14 h-14 rounded-xl bg-[#f3eefc] flex items-center justify-center transition-colors group-hover/card:bg-[#8059ca]/10">
+                      <i className="fa-solid fa-microscope text-2xl text-[#8059ca]"></i>
                     </div>
                     <div>
-                      <h6 style={{ fontSize: "15px", fontWeight: "700", color: "#0f172a", marginBottom: "4px" }}>
+                      <h6 className="text-[15px] font-bold text-[#0f172a] mb-1">
                         Lab Tests
                       </h6>
-                      <span style={{ fontSize: "11px", color: "#64748b", lineHeight: "1.4", display: "block" }}>
+                      <span className="text-[11px] text-[#64748b] leading-[1.4] block">
                         Bookings & health packages
                       </span>
                     </div>
-                    <span
-                      style={{
-                        position: "absolute",
-                        top: "12px",
-                        right: "12px",
-                        fontSize: "11px",
-                        fontWeight: "600",
-                        fontFamily: "'Outfit', 'Inter', sans-serif",
-                        letterSpacing: "0.3px",
-                        color: "#8059ca",
-                        background: "#f3eefc",
-                        padding: "2px 10px",
-                        borderRadius: "20px",
-                        border: "1px solid #ddd6fe",
-                        boxShadow: "0 2px 5px rgba(128, 89, 202, 0.08)",
-                      }}
-                    >
+                    <span className="absolute top-3 right-3 text-[11px] font-semibold tracking-[0.3px] text-[#8059ca] bg-[#f3eefc] py-0.5 px-2.5 rounded-full border border-[#ddd6fe] shadow-[0_2px_5px_rgba(128,89,202,0.08)] font-sans">
                       {ServiceCartCount?.labtests || 0} Items
                     </span>
                   </div>
-
-
 
                   {/* Medical Equipment Card */}
                   <div
@@ -1681,75 +1397,23 @@ const Home2Header = () => {
                       setShowCartChoiceModal(false);
                       navigate("/cart?carttype=medicalequipment");
                     }}
-                    style={{
-                      border: "1.5px solid #f1f5f9",
-                      borderRadius: "16px",
-                      padding: "20px",
-                      textAlign: "center",
-                      cursor: "pointer",
-                      backgroundColor: "#fffaf8",
-                      transition: "all 0.2s cubic-bezier(0.4, 0, 0.2, 1)",
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      gap: "12px",
-                      boxShadow: "0 2px 4px rgba(0,0,0,0.02)",
-                      position: "relative",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = "translateY(-4px)";
-                      e.currentTarget.style.borderColor = "#f97316";
-                      e.currentTarget.style.boxShadow = "0 10px 15px -3px rgba(249, 115, 22, 0.15)";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = "translateY(0)";
-                      e.currentTarget.style.borderColor = "#f1f5f9";
-                      e.currentTarget.style.boxShadow = "0 2px 4px rgba(0,0,0,0.02)";
-                    }}
+                    className="group/card border-[1.5px] border-[#f1f5f9] rounded-[16px] p-5 text-center cursor-pointer bg-[#fffaf8] transition-all duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] flex flex-col items-center gap-3 shadow-[0_2px_4px_rgba(0,0,0,0.02)] hover:-translate-y-1 hover:border-[#f97316] hover:shadow-[0_10px_15px_-3px_rgba(249,115,22,0.15)] relative"
                   >
-                    <div
-                      style={{
-                        width: "56px",
-                        height: "56px",
-                        borderRadius: "12px",
-                        backgroundColor: "#ffebd5",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                      }}
-                    >
-                      <i className="fas fa-wheelchair" style={{ fontSize: "24px", color: "#f97316" }}></i>
+                    <div className="w-14 h-14 rounded-xl bg-[#ffebd5] flex items-center justify-center transition-colors group-hover/card:bg-[#f97316]/10">
+                      <i className="fas fa-wheelchair text-2xl text-[#f97316]"></i>
                     </div>
                     <div>
-                      <h6 style={{ fontSize: "15px", fontWeight: "700", color: "#0f172a", marginBottom: "4px" }}>
+                      <h6 className="text-[15px] font-bold text-[#0f172a] mb-1">
                         Medical Equipment
                       </h6>
-                      <span style={{ fontSize: "11px", color: "#64748b", lineHeight: "1.4", display: "block" }}>
+                      <span className="text-[11px] text-[#64748b] leading-[1.4] block">
                         Rentals & sales products
                       </span>
                     </div>
-                    <span
-                      style={{
-                        position: "absolute",
-                        top: "12px",
-                        right: "12px",
-                        fontSize: "11px",
-                        fontWeight: "600",
-                        fontFamily: "'Outfit', 'Inter', sans-serif",
-                        letterSpacing: "0.3px",
-                        color: "#f97316",
-                        background: "#ffebd5",
-                        padding: "2px 10px",
-                        borderRadius: "20px",
-                        border: "1px solid #fed7aa",
-                        boxShadow: "0 2px 5px rgba(249, 115, 22, 0.08)",
-                      }}
-                    >
+                    <span className="absolute top-3 right-3 text-[11px] font-semibold tracking-[0.3px] text-[#f97316] bg-[#ffebd5] py-0.5 px-2.5 rounded-full border border-[#fed7aa] shadow-[0_2px_5px_rgba(249,115,22,0.08)] font-sans">
                       {ServiceCartCount?.medicalequipment || 0} Items
                     </span>
                   </div>
-
-
                 </div>
               </div>
             </div>

@@ -722,8 +722,8 @@ const LocationOffcanvas = ({
           overflow-y: auto !important;
           overflow-x: hidden !important;
           border: 1px solid #e2e8f0 !important;
-          border-radius: 6px !important;
-          box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1) !important;
+          border-radius: 10px !important;
+          box-shadow: 0 8px 24px rgba(0,0,0,0.12) !important;
         }
         @media (max-width: 768px) {
           .pac-container {
@@ -743,69 +743,142 @@ const LocationOffcanvas = ({
           display: flex !important;
           align-items: center !important;
         }
-        .pac-item:hover {
-          background-color: #f8fafc !important;
-        }
-        .pac-item-query {
-          font-weight: 500 !important;
-          color: #0f172a !important;
-        }
-        .pac-icon {
-          margin-right: 6px !important;
-        }
+        .pac-item:hover { background-color: #f8fafc !important; }
+        .pac-item-query { font-weight: 500 !important; color: #0f172a !important; }
+        .pac-icon { margin-right: 6px !important; }
+        .loc-search-input::placeholder { color: #94a3b8; font-size: 13px; }
+        .loc-search-input:focus { outline: none; border-color: #8059ca !important; }
       `}</style>
 
+      {/* Overlay */}
       <div
-        className={`location-offcanvas-overlay fixed inset-0 bg-black/80 z-[999999999] flex items-center ${position === "right" ? "justify-end" : "justify-start"}`}
+        className="location-offcanvas-overlay"
+        style={{
+          position: "fixed", inset: 0,
+          background: "rgba(0,0,0,0.55)",
+          backdropFilter: "blur(2px)",
+          zIndex: 999999999,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: position === "right" ? "flex-end" : "flex-start",
+        }}
         onClick={handleOverlayClick}
       >
+        {/* Panel */}
         <div
-          className="location-offcanvas-content w-full max-w-[450px] h-full bg-white shadow-[-2px_0_10px_rgba(0,0,0,0.1)] overflow-hidden flex flex-col"
+          className="location-offcanvas-content"
           onClick={(e) => e.stopPropagation()}
+          style={{
+            width: "100%",
+            maxWidth: "420px",
+            height: "100%",
+            display: "flex",
+            flexDirection: "column",
+            background: "#f8f7fc",
+            boxShadow: "-4px 0 32px rgba(0,0,0,0.18)",
+            overflow: "hidden",
+          }}
         >
-          {/* Header */}
+          {/* ── HEADER ── */}
           <div
-            className="p-[15px_20px] border-b border-b-[#eee] flex items-center justify-between bg-[#f8f9fa]"
+            style={{
+              background: "linear-gradient(135deg, #8059ca 0%, #a07de0 100%)",
+              padding: "18px 20px 16px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              flexShrink: 0,
+            }}
           >
-            <h6 className="mb-0">Select Your Location</h6>
+            <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+              <div
+                style={{
+                  width: "34px", height: "34px",
+                  borderRadius: "10px",
+                  background: "rgba(255,255,255,0.18)",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                }}
+              >
+                <i className="fas fa-map-marker-alt" style={{ color: "#fff", fontSize: "14px" }} />
+              </div>
+              <div>
+                <div style={{ color: "#fff", fontWeight: 700, fontSize: "15px", lineHeight: 1.2 }}>
+                  Select Location
+                </div>
+                <div style={{ color: "rgba(255,255,255,0.7)", fontSize: "11px", marginTop: "2px" }}>
+                  Choose your delivery address
+                </div>
+              </div>
+            </div>
             <button
               onClick={onClose}
-              className="bg-none border-none text-[18px] cursor-pointer text-[#6c757d]"
+              style={{
+                width: "32px", height: "32px",
+                borderRadius: "8px",
+                border: "1.5px solid rgba(255,255,255,0.3)",
+                background: "rgba(255,255,255,0.15)",
+                color: "#fff",
+                display: "flex", alignItems: "center", justifyContent: "center",
+                cursor: "pointer",
+                fontSize: "13px",
+                transition: "all 0.15s",
+              }}
+              onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.28)"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.15)"; }}
             >
-              <i className="fas fa-times"></i>
+              <i className="fas fa-times" />
             </button>
           </div>
 
-          {/* Search Section */}
-          <div className="p-[15px_20px] border-b border-b-[#eee]">
-            <div className="flex w-full items-stretch">
-              <div className="flex-1">
+          {/* ── SEARCH SECTION ── */}
+          <div
+            style={{
+              padding: "14px 16px",
+              background: "#fff",
+              borderBottom: "1px solid #ede9f8",
+              flexShrink: 0,
+            }}
+          >
+            {/* Search bar */}
+            <div
+              style={{
+                display: "flex",
+                borderRadius: "10px",
+                overflow: "hidden",
+                border: "1.5px solid #e0d8f8",
+                background: "#fff",
+              }}
+            >
+              <div style={{ flex: 1, display: "flex", alignItems: "center", paddingLeft: "10px", gap: "8px" }}>
+                <i className="fas fa-search" style={{ color: "#c4a8f0", fontSize: "12px", flexShrink: 0 }} />
                 {isLoaded ? (
                   <Autocomplete
-                    onLoad={(autocomplete) =>
-                      (autocompleteRef.current = autocomplete)
-                    }
+                    onLoad={(autocomplete) => (autocompleteRef.current = autocomplete)}
                     onPlaceChanged={() => {
                       const place = autocompleteRef.current?.getPlace();
                       if (place) handlePlaceSelect(place);
                     }}
                     options={{
                       componentRestrictions: { country: "in" },
-                      fields: [
-                        "formatted_address",
-                        "geometry",
-                        "name",
-                        "place_id",
-                        "address_components",
-                      ],
+                      fields: ["formatted_address", "geometry", "name", "place_id", "address_components"],
                     }}
                   >
                     <input
                       type="text"
-                      placeholder="Search for area, street name..."
+                      placeholder="Search area, street name..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      className="w-full p-[8px_12px] border border-r-0 border-slate-200 rounded-l-lg rounded-r-none text-sm bg-white outline-none focus:border-[#8059ca] transition-all duration-150 h-full"
+                      className="loc-search-input"
+                      style={{
+                        width: "100%",
+                        border: "none",
+                        outline: "none",
+                        fontSize: "13px",
+                        color: "#1e293b",
+                        background: "transparent",
+                        padding: "10px 0",
+                        fontFamily: "inherit",
+                      }}
                     />
                   </Autocomplete>
                 ) : (
@@ -813,219 +886,426 @@ const LocationOffcanvas = ({
                     type="text"
                     placeholder="Loading places..."
                     disabled
-                    className="w-full p-[8px_12px] border border-r-0 border-slate-200 rounded-l-lg rounded-r-none text-sm bg-slate-50 text-slate-400 cursor-not-allowed outline-none h-full"
+                    style={{
+                      width: "100%", border: "none", outline: "none",
+                      fontSize: "13px", color: "#94a3b8",
+                      background: "transparent", padding: "10px 0",
+                    }}
                   />
                 )}
               </div>
-
               <button
                 type="button"
                 onClick={handleLocateButtonClick}
-                className="flex items-center justify-center gap-1.5 p-[8px_16px] border-none rounded-r-lg rounded-l-none bg-[#8059ca] hover:bg-[#6a45b3] text-white text-sm font-semibold cursor-pointer transition-all duration-200 shrink-0"
                 title="Use current GPS location"
+                style={{
+                  display: "flex", alignItems: "center", gap: "6px",
+                  padding: "0 14px",
+                  background: "linear-gradient(135deg, #8059ca 0%, #9d72e8 100%)",
+                  border: "none",
+                  color: "#fff",
+                  fontSize: "12px",
+                  fontWeight: 600,
+                  cursor: "pointer",
+                  flexShrink: 0,
+                  transition: "all 0.2s",
+                  minWidth: "80px",
+                  justifyContent: "center",
+                }}
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="15"
-                  height="15"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                >
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
                   <g transform="translate(-8921 -11863)">
-                    <rect
-                      width="24"
-                      height="24"
-                      transform="translate(8921 11863)"
-                      fill="none"
-                    />
+                    <rect width="24" height="24" transform="translate(8921 11863)" fill="none" />
                     <g transform="translate(8923 11865)">
                       <path d="M10,6.363A3.636,3.636,0,1,0,13.635,10,3.647,3.647,0,0,0,10,6.363Zm8.09,2.727a8.119,8.119,0,0,0-7.181-7.181V0H9.09V1.909A7.954,7.954,0,0,0,1.909,9.09H0v1.818H1.909A8.119,8.119,0,0,0,9.09,18.089V20h1.818V18.089a8.119,8.119,0,0,0,7.181-7.181H20V9.09ZM10,16.362A6.363,6.363,0,1,1,16.362,10,6.324,6.324,0,0,1,10,16.362Z" />
                     </g>
                   </g>
-                </svg>{" "}
+                </svg>
                 Locate
               </button>
             </div>
 
-            <div className="mt-2.5">
-              <p className="text-[12px] text-[#6c757d] m-0">
-                Current Location:{" "}
-                <small className="text-dark font-medium">{currentAddress}</small>
-              </p>
+            {/* Current location chip */}
+            <div
+              style={{
+                marginTop: "10px",
+                display: "flex",
+                alignItems: "flex-start",
+                gap: "7px",
+                padding: "8px 10px",
+                background: "#f5f0ff",
+                borderRadius: "8px",
+                border: "1px solid #ede5ff",
+              }}
+            >
+              <div
+                style={{
+                  width: "22px", height: "22px", borderRadius: "6px",
+                  background: "#8059ca",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  flexShrink: 0, marginTop: "1px",
+                }}
+              >
+                <i className="fas fa-location-arrow" style={{ color: "#fff", fontSize: "9px" }} />
+              </div>
+              <div>
+                <div style={{ fontSize: "10px", color: "#8059ca", fontWeight: 600, marginBottom: "1px" }}>
+                  Current GPS Location
+                </div>
+                <div style={{ fontSize: "12px", color: "#475569", fontWeight: 500, lineHeight: 1.4 }}>
+                  {currentAddress}
+                </div>
+              </div>
             </div>
           </div>
 
+          {/* ── SAVED ADDRESSES LABEL ── */}
           <div
-            className="border-b border-b-[#eee] p-[10px_20px] bg-[#f8f9fa]"
+            style={{
+              padding: "12px 16px 10px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              flexShrink: 0,
+            }}
           >
-            <p className="mb-0 font-bold">
-              Saved Addresses ({savedAddresses.length})
-            </p>
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+              <i className="fas fa-bookmark" style={{ color: "#8059ca", fontSize: "12px" }} />
+              <span style={{ fontSize: "13px", fontWeight: 700, color: "#1e293b" }}>Saved Addresses</span>
+              <span
+                style={{
+                  fontSize: "11px", fontWeight: 700,
+                  color: "#8059ca",
+                  background: "#f0e8ff",
+                  border: "1.5px solid #d4b8f8",
+                  borderRadius: "999px",
+                  padding: "1px 8px",
+                }}
+              >
+                {savedAddresses.length}
+              </span>
+            </div>
           </div>
 
-          <div className="flex-1 overflow-auto p-0">
+          {/* ── ADDRESS LIST ── */}
+          <div style={{ flex: 1, overflowY: "auto", padding: "0" }}>
             {isLoading ? (
-              <div
-                className="flex justify-center items-center h-[200px]"
-              >
-                <div className="spinner-border text-[#8059ca]" role="status">
-                  <span className="visually-hidden">Loading...</span>
-                </div>
+              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", height: "200px", gap: "12px" }}>
+                <div
+                  style={{
+                    width: "36px", height: "36px",
+                    border: "3px solid #f0e8ff",
+                    borderTop: "3px solid #8059ca",
+                    borderRadius: "50%",
+                    animation: "spin 0.8s linear infinite",
+                  }}
+                />
+                <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+                <span style={{ fontSize: "13px", color: "#94a3b8" }}>Loading addresses...</span>
               </div>
             ) : savedAddresses.length === 0 ? (
-              <div className="text-center p-[40px_20px]">
-                <i
-                  className="fas fa-map-marker-alt text-slate-300 text-[2rem] mb-2"
-                ></i>
-                <p className="text-slate-500 mb-4 text-sm">No saved addresses yet</p>
+              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "48px 24px", gap: "12px" }}>
+                <div
+                  style={{
+                    width: "64px", height: "64px", borderRadius: "18px",
+                    background: "#f5f0ff",
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    marginBottom: "4px",
+                  }}
+                >
+                  <i className="fas fa-map-marker-alt" style={{ fontSize: "24px", color: "#c4a8f0" }} />
+                </div>
+                <div style={{ textAlign: "center" }}>
+                  <div style={{ fontSize: "15px", fontWeight: 700, color: "#1e293b", marginBottom: "4px" }}>No Saved Addresses</div>
+                  <div style={{ fontSize: "13px", color: "#94a3b8" }}>Add an address to get started</div>
+                </div>
                 <button
-                  className="px-4 py-2 bg-[#8059ca] hover:bg-[#6a45b3] text-white text-sm font-semibold rounded-lg shadow-sm shadow-[#8059ca]/20 hover:shadow-md transition-all duration-200 cursor-pointer border-none"
                   onClick={() => {
                     const token = localStorage.getItem("medicomparestoken");
                     if (!token) navigate("/login");
                     else setShowLocationModal(true);
                   }}
+                  style={{
+                    marginTop: "8px",
+                    padding: "10px 24px",
+                    background: "linear-gradient(135deg, #8059ca 0%, #9d72e8 100%)",
+                    color: "#fff",
+                    fontSize: "13px",
+                    fontWeight: 600,
+                    border: "none",
+                    borderRadius: "10px",
+                    cursor: "pointer",
+                    display: "flex", alignItems: "center", gap: "7px",
+                    boxShadow: "0 4px 14px rgba(128,89,202,0.35)",
+                  }}
                 >
-                  <i className="fas fa-plus mr-2"></i>Add Address
+                  <i className="fas fa-plus" style={{ fontSize: "11px" }} />
+                  Add Address
                 </button>
               </div>
             ) : (
-              <div className="p-2.5">
-                {(showAllAddresses
-                  ? savedAddresses
-                  : savedAddresses.slice(0, 3)
-                ).map((address) => {
+              <div style={{ padding: "12px" }}>
+                {(showAllAddresses ? savedAddresses : savedAddresses.slice(0, 3)).map((address) => {
                   const hasLocation = hasLocationData(address);
                   const isSelected = selectedAddressId === address._id;
 
                   return (
                     <div
                       key={address._id}
-                      className={`p-3.5 border border-solid rounded-lg mb-2.5 transition-all duration-200 shadow-[0_2px_8px_rgba(0,0,0,0.03)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.05)] ${isSelected ? "border-2 border-[#8059ca] bg-[#fdfaff]" : "border-slate-200 bg-white"
-                        } ${hasLocation ? "cursor-pointer" : "cursor-default"}`}
-                      onClick={() =>
-                        hasLocation && handleAddressSelect(address._id, true)
-                      }
+                      onClick={() => hasLocation && handleAddressSelect(address._id, true)}
+                      style={{
+                        position: "relative",
+                        borderRadius: "12px",
+                        marginBottom: "12px",
+                        overflow: "hidden",
+                        cursor: hasLocation ? "pointer" : "default",
+                        border: "1.5px solid",
+                        borderColor: isSelected ? "#8059ca" : "#e2e8f0",
+                        background: "#fff",
+                        boxShadow: isSelected
+                          ? "0 4px 20px rgba(128,89,202,0.12)"
+                          : "0 2px 10px rgba(15,23,42,0.04)",
+                        transition: "all 0.25s cubic-bezier(0.4, 0, 0.2, 1)",
+                      }}
+                      onMouseEnter={(e) => {
+                        if (!isSelected) {
+                          e.currentTarget.style.borderColor = "#c4a8f0";
+                          e.currentTarget.style.boxShadow = "0 6px 16px rgba(128,89,202,0.08)";
+                        }
+                      }}
+                      onMouseLeave={(e) => {
+                        if (!isSelected) {
+                          e.currentTarget.style.borderColor = "#e2e8f0";
+                          e.currentTarget.style.boxShadow = "0 2px 10px rgba(15,23,42,0.04)";
+                        }
+                      }}
                     >
-                      <div className="flex justify-between items-start">
-                        <div className="flex-1">
-                          <div className="flex items-center mb-1">
-                            {hasLocation && (
-                              <input
-                                type="radio"
-                                name="selectedAddress"
-                                value={address._id}
-                                checked={isSelected}
-                                onChange={() =>
-                                  handleAddressSelect(address._id, true)
-                                }
-                                onClick={(e) => e.stopPropagation()}
-                                className="mr-2.5 cursor-pointer w-[18px] h-[18px]"
-                              />
-                            )}
-                            <i
-                              className={`fas fa-${getAddressTypeIcon(
-                                address.addressType
-                              )} text-[#8059ca] mr-2`}
+
+                      {/* Header */}
+                      <div
+                        style={{
+                          padding: "10px 14px",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "space-between",
+                          background: isSelected ? "#faf9fe" : "#fff",
+                          borderBottom: "1px solid #f1f5f9",
+                        }}
+                      >
+                        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                          {hasLocation && (
+                            <input
+                              type="radio"
+                              name="selectedAddress"
+                              value={address._id}
+                              checked={isSelected}
+                              onChange={() => handleAddressSelect(address._id, true)}
+                              onClick={(e) => e.stopPropagation()}
+                              className="accent-[#8059ca]"
+                              style={{ width: "14px", height: "14px", cursor: "pointer", flexShrink: 0 }}
                             />
-                            <span className="font-bold text-capitalize text-sm text-slate-800">
-                              {address.addressType}
-                            </span>
-                            {hasLocation ? (
-                              <span
-                                className="text-[10px] bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded-full font-bold ml-2 flex items-center gap-1"
-                              >
-                                <i className="fas fa-map-marker-alt"></i>
-                                Located
-                              </span>
-                            ) : (
-                              <span
-                                className="text-[10px] bg-amber-50 text-amber-700 px-2 py-0.5 rounded-full font-bold ml-2 flex items-center gap-1"
-                              >
-                                <i className="fas fa-exclamation-triangle"></i>
-                                No Location
-                              </span>
-                            )}
+                          )}
+                          {/* Icon badge */}
+                          <div
+                            style={{
+                              width: "28px",
+                              height: "28px",
+                              borderRadius: "6px",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              background: isSelected ? "#8059ca" : "#f1f5f9",
+                              flexShrink: 0,
+                            }}
+                          >
+                            <i
+                              className={`fas fa-${getAddressTypeIcon(address.addressType)}`}
+                              style={{ fontSize: "11px", color: isSelected ? "#fff" : "#64748b" }}
+                            />
                           </div>
-                          <p
-                            className="mb-1 text-[13px] text-slate-700 font-medium"
+                          <span
+                            style={{
+                              fontSize: "13px",
+                              fontWeight: 600,
+                              color: isSelected ? "#8059ca" : "#334155",
+                              textTransform: "capitalize",
+                            }}
                           >
-                            {formatAddress(address)}
+                            {address.addressType}
+                          </span>
+                          {/* Location badge */}
+                          {hasLocation ? (
+                            <span
+                              style={{
+                                fontSize: "10px",
+                                fontWeight: 500,
+                                color: "#16a34a",
+                                background: "#f0fdf4",
+                                borderRadius: "6px",
+                                padding: "2px 6px",
+                                display: "flex",
+                                alignItems: "center",
+                                gap: "4px",
+                              }}
+                            >
+                              <i className="fas fa-check-circle" style={{ fontSize: "8px" }} />
+                              Located
+                            </span>
+                          ) : (
+                            <span
+                              style={{
+                                fontSize: "10px",
+                                fontWeight: 500,
+                                color: "#ea580c",
+                                background: "#fff7ed",
+                                borderRadius: "6px",
+                                padding: "2px 6px",
+                                display: "flex",
+                                alignItems: "center",
+                                gap: "4px",
+                              }}
+                            >
+                              <i className="fas fa-exclamation-circle" style={{ fontSize: "8px" }} />
+                              No Location
+                            </span>
+                          )}
+                        </div>
+
+                        {/* Action buttons */}
+                        <div style={{ display: "flex", gap: "6px", flexShrink: 0 }}>
+                          <button
+                            onClick={(e) => { e.stopPropagation(); handleEditAddress(address); }}
+                            title="Edit"
+                            style={{
+                              width: "26px",
+                              height: "26px",
+                              borderRadius: "6px",
+                              border: "1px solid #e2e8f0",
+                              background: "#fff",
+                              color: "#64748b",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              cursor: "pointer",
+                              transition: "all 0.15s",
+                            }}
+                            onMouseEnter={(e) => {
+                              e.currentTarget.style.background = "#f5f3ff";
+                              e.currentTarget.style.color = "#8059ca";
+                              e.currentTarget.style.borderColor = "#c4a8f0";
+                            }}
+                            onMouseLeave={(e) => {
+                              e.currentTarget.style.background = "#fff";
+                              e.currentTarget.style.color = "#64748b";
+                              e.currentTarget.style.borderColor = "#e2e8f0";
+                            }}
+                          >
+                            <i className="fas fa-pen" style={{ fontSize: "10px" }} />
+                          </button>
+                          <button
+                            onClick={(e) => { e.stopPropagation(); handleDeleteAddress(address._id); }}
+                            title="Delete"
+                            style={{
+                              width: "26px",
+                              height: "26px",
+                              borderRadius: "6px",
+                              border: "1px solid #e2e8f0",
+                              background: "#fff",
+                              color: "#64748b",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                              cursor: "pointer",
+                              transition: "all 0.15s",
+                            }}
+                            onMouseEnter={(e) => {
+                              e.currentTarget.style.background = "#fef2f2";
+                              e.currentTarget.style.color = "#ef4444";
+                              e.currentTarget.style.borderColor = "#fca5a5";
+                            }}
+                            onMouseLeave={(e) => {
+                              e.currentTarget.style.background = "#fff";
+                              e.currentTarget.style.color = "#64748b";
+                              e.currentTarget.style.borderColor = "#e2e8f0";
+                            }}
+                          >
+                            <i className="fas fa-trash" style={{ fontSize: "10px" }} />
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* Body */}
+                      <div style={{ padding: "10px 14px", background: isSelected ? "#faf9fe" : "#fff" }}>
+                        <p style={{ margin: 0, fontSize: "13px", color: "#475569", fontWeight: 500, lineHeight: 1.5 }}>
+                          {formatAddress(address)}
+                        </p>
+                        {address.description && (
+                          <p style={{ margin: "4px 0 0", fontSize: "11px", color: "#64748b" }}>
+                            {address.description}
                           </p>
-                          {address.description && (
-                            <p
-                              className="mb-1 text-[12px] text-slate-500"
-                            >
-                              {address.description}
-                            </p>
-                          )}
-                          {hasLocation && address.location.address && (
-                            <p
-                              className="mb-0 text-[11px] text-slate-500"
-                            >
-                              <i className="fas fa-map-pin mr-1"></i>
-                              {address.location.address}
-                            </p>
-                          )}
-                          {!hasLocation && (
-                            <p
-                              className="mb-0 text-[11px] text-amber-600"
-                            >
-                              <i className="fas fa-exclamation-triangle mr-1"></i>
-                              Location not set - Click edit to add location
-                            </p>
-                          )}
-                        </div>
-                        <div className="flex gap-1.5 ml-2">
-                          <button
-                            className="p-1.5 border border-slate-200 hover:border-purple-300 rounded-md text-slate-500 hover:text-[#8059ca] bg-white transition-all cursor-pointer flex items-center justify-center"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleEditAddress(address);
-                            }}
-                            title="Edit address"
-                          >
-                            <i className="fas fa-edit text-xs"></i>
-                          </button>
-                          <button
-                            className="p-1.5 border border-slate-200 hover:border-red-300 rounded-md text-slate-500 hover:text-red-500 bg-white transition-all cursor-pointer flex items-center justify-center"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleDeleteAddress(address._id);
-                            }}
-                            title="Delete address"
-                          >
-                            <i className="fas fa-trash text-xs"></i>
-                          </button>
-                        </div>
+                        )}
+                        {hasLocation && address.location?.address && (
+                          <p style={{ margin: "6px 0 0", fontSize: "11px", color: "#64748b", display: "flex", alignItems: "center", gap: "4px" }}>
+                            <i className="fas fa-map-pin" style={{ fontSize: "9px", color: "#8059ca" }} />
+                            {address.location.address}
+                          </p>
+                        )}
+                        {!hasLocation && (
+                          <p style={{ margin: "6px 0 0", fontSize: "11px", color: "#ea580c", display: "flex", alignItems: "center", gap: "4px" }}>
+                            <i className="fas fa-exclamation-triangle" style={{ fontSize: "9px" }} />
+                            Location not set — click edit to add
+                          </p>
+                        )}
                       </div>
                     </div>
                   );
                 })}
 
                 {savedAddresses.length > 3 && (
-                  <div className="text-center mt-2 mb-2">
-                    <span
-                      className="cursor-pointer text-[14px] font-[500]"
+                  <div style={{ textAlign: "center", margin: "4px 0 12px" }}>
+                    <button
                       onClick={() => setShowAllAddresses(!showAllAddresses)}
+                      style={{
+                        fontSize: "12px",
+                        fontWeight: 600,
+                        color: "#8059ca",
+                        background: "#f5f0ff",
+                        border: "1.5px solid #ddd0f8",
+                        borderRadius: "8px",
+                        padding: "5px 16px",
+                        cursor: "pointer",
+                        transition: "all 0.15s",
+                      }}
                     >
-                      {showAllAddresses ? (
-                        <>View Less</>
-                      ) : (
-                        <>View More ({savedAddresses.length - 3} more)</>
-                      )}
-                    </span>
+                      {showAllAddresses ? "↑ View Less" : `↓ View ${savedAddresses.length - 3} More`}
+                    </button>
                   </div>
                 )}
 
-                <div className="text-center mt-4 mb-3">
-                  <button
-                    className="px-4 py-2 bg-[#8059ca] hover:bg-[#6a45b3] text-white text-sm font-semibold rounded-lg shadow-sm shadow-[#8059ca]/20 hover:shadow-md transition-all duration-200 cursor-pointer border-none"
-                    onClick={() => setShowLocationModal(true)}
-                  >
-                    Add New Address
-                  </button>
-                </div>
+                <button
+                  onClick={() => setShowLocationModal(true)}
+                  style={{
+                    width: "100%",
+                    padding: "11px",
+                    background: "linear-gradient(135deg, #8059ca 0%, #9d72e8 100%)",
+                    color: "#fff",
+                    fontSize: "13px",
+                    fontWeight: 600,
+                    border: "none",
+                    borderRadius: "12px",
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: "7px",
+                    boxShadow: "0 4px 14px rgba(128,89,202,0.35)",
+                    marginTop: "4px",
+                    transition: "all 0.2s",
+                  }}
+                >
+                  <i className="fas fa-plus" style={{ fontSize: "11px" }} />
+                  Add New Address
+                </button>
               </div>
             )}
           </div>

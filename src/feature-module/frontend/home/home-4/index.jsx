@@ -850,7 +850,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                   className="mb-[25px] text-center"
                   data-aos="fade-up"
                 >
-                  <h1 className="m-0 !mb-[10px] !text-[clamp(17px,4vw,45px)] font-semibold text-[#343434]">
+                  <h1 className="m-0 !mb-[10px] !text-[clamp(17px,4vw,45px)] !font-semibold text-[#343434]">
                     Compare &amp; Choose{" "}
                     <span className="text-[#8059ca]">
                       {homeLiteMode ? (
@@ -1233,23 +1233,15 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
           </section>
 
           {categories && categories.length > 0 && (
-            <section
-              className="specialities-section-one overflow-hidden"
-            >
-              <div className="container">
-                <div
-                  className="row d-none d-lg-block mt-0"
-                >
-                  <div className="col-md-12">
-                    <div className="section-header-one section-header-slider text-center">
-                      <h2
-                        className="mb-[12px] !text-[23px] !font-semibold"
-                      >
+            <section className="bg-white p-5 lg:p-[20px_20px_0_20px] max-lg:p-0 overflow-hidden">
+              <div className="container mx-auto px-4">
+                <div className="hidden lg:block mt-0">
+                  <div className="w-full">
+                    <div className="mb-5 text-center">
+                      <h2 className="text-[23px] font-semibold text-[#1a1a1a] mb-3">
                         Explore Multiple Categories Compare
                       </h2>
-                      <p
-                        className="text-[13px] max-w-[700px] mx-auto mb-[20px] leading-[1.6]"
-                      >
+                      <p className="text-[13px] max-w-[700px] mx-auto mb-5 leading-[1.6] text-gray-600">
                         Browse a wide range of medicines across various categories.
                         Compare prices, read detailed information, and find the best
                         options for your health needs.
@@ -1258,14 +1250,14 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                   </div>
                 </div>
 
-                <div className="row row-cols-7 row-cols-xxl-7 row-cols-xl-6 row-cols-lg-6 rows-cols-md-6 justify-content-center mt-3">
+                <div className="flex flex-wrap justify-center mt-3 ">
                   {categories.map((item, categoryIndex) => (
-                    <div className="col-6 d-flex col-lg-2 col-sm-6" key={item._id}>
+                    <div className="w-1/2 sm:w-1/2 md:w-1/6 lg:w-1/6 xl:w-1/6 2xl:w-[14.285%] px-2 mb-4 flex" key={item._id}>
                       <div
-                        className="serv-wrap medi-bg flex-fill cursor-pointer"
+                        className="group flex-1 cursor-pointer bg-white !border !border-[#eef1f6] !shadow-[0_8px_30px_rgb(0,0,0,0.03)] hover:!shadow-[0_20px_40px_rgba(128,89,202,0.12)] !rounded-2xl w-full text-center p-5 hover:!border-[#8059ca]/40 hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-center items-center"
                         onClick={() => handleCategoryClick(item)}
                       >
-                        <span>
+                        <span className="w-[72px] h-[72px] rounded-full mx-auto mb-3 flex items-center justify-center bg-gradient-to-br from-[#f8f4ff] to-[#f3ebff] border border-[#f3effc] transition-all duration-300 group-hover:scale-105">
                           <img
                             src={
                               item?.files
@@ -1274,13 +1266,13 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                             }
                             alt={item.name}
                             title={item.name}
-                            className="h-[50px]"
+                            className="h-[46px] w-[46px] object-contain transition-transform duration-[700ms] ease-in-out group-hover:[transform:rotateY(360deg)]"
                             loading={categoryIndex < 8 ? "eager" : "lazy"}
                             fetchPriority={categoryIndex < 4 ? "high" : "auto"}
                             decoding="async"
                           />
                         </span>
-                        <h4>{item.name}</h4>
+                        <h4 className="!font-semibold !text-[13.5px] !text-slate-700 group-hover:!text-[#8059ca] transition-colors duration-200 mb-0">{item.name}</h4>
                       </div>
                     </div>
                   ))}
@@ -1447,7 +1439,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
           </section>
 
           <section
-            className={`py-3 home-bg-pattern-section`}
+            className="py-12"
             style={{
               backgroundColor: "#E8E4F5",
               backgroundImage: homeLiteMode
@@ -1458,9 +1450,8 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
               backgroundRepeat: "no-repeat",
             }}
           >
-
-            <div className="container">
-              <div className="text-center mb-5 aos" data-aos="fade-up">
+            <div className="container mx-auto px-4">
+              <div className="text-center mb-10 aos" data-aos="fade-up">
                 <h2
                   className="!text-[28px] !font-semibold mb-[12px] inline-block w-full bg-gradient-to-br from-[#8059ca] to-[#6d48b8] bg-clip-text text-transparent text-[#8059ca]"
                 >
@@ -1473,65 +1464,59 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                   medical specialties. Compare prices, read patient reviews, and
                   find the best surgeons and hospitals near you.
                 </p>
-                <div
-                  className="row g-3 justify-content-center mb-4 max-w-[800px] mx-auto"
-                >
-                  <div className="col-md-4 col-sm-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-4 max-w-[800px] mx-auto">
+                  <div
+                    className="group p-[16px] bg-white rounded-[12px] shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-center cursor-pointer transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:scale-[1.02]"
+                  >
                     <div
-                      className="group p-[16px] bg-white rounded-[12px] shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-center cursor-pointer transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:scale-[1.02]"
+                      className="w-[50px] h-[50px] mx-auto mb-[12px] bg-gradient-to-br from-[#8059ca] to-[#6d48b8] rounded-[12px] flex items-center justify-center text-[24px] text-white relative transition-all duration-300 group-hover:scale-110 group-hover:rotate-6"
                     >
-                      <div
-                        className="w-[50px] h-[50px] mx-auto mb-[12px] bg-gradient-to-br from-[#8059ca] to-[#6d48b8] rounded-[12px] flex items-center justify-center text-[24px] text-white relative transition-all duration-300 group-hover:scale-110 group-hover:rotate-6"
-                      >
-                        <i className="fas fa-search-dollar transition-all duration-300 group-hover:scale-110"></i>
-                      </div>
-                      <h5
-                        className="!text-[16px] !font-semibold text-[#1f2937] mb-[6px]"
-                      >
-                        Compare Prices
-                      </h5>
-                      <p className="text-[13px] text-[#6b7280] m-0">
-                        Compare costs across multiple hospitals
-                      </p>
+                      <i className="fas fa-search-dollar transition-all duration-300 group-hover:scale-110"></i>
                     </div>
+                    <h5
+                      className="!text-[16px] !font-semibold text-[#1f2937] mb-[6px]"
+                    >
+                      Compare Prices
+                    </h5>
+                    <p className="text-[13px] text-[#6b7280] m-0">
+                      Compare costs across multiple hospitals
+                    </p>
                   </div>
-                  <div className="col-md-4 col-sm-6">
+
+                  <div
+                    className="group p-[16px] bg-white rounded-[12px] shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-center cursor-pointer transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:scale-[1.02]"
+                  >
                     <div
-                      className="group p-[16px] bg-white rounded-[12px] shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-center cursor-pointer transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:scale-[1.02]"
+                      className="w-[50px] h-[50px] mx-auto mb-[12px] bg-gradient-to-br from-[#8059ca] to-[#6d48b8] rounded-[12px] flex items-center justify-center text-[24px] text-white relative transition-all duration-300 group-hover:scale-110 group-hover:rotate-6"
                     >
-                      <div
-                        className="w-[50px] h-[50px] mx-auto mb-[12px] bg-gradient-to-br from-[#8059ca] to-[#6d48b8] rounded-[12px] flex items-center justify-center text-[24px] text-white relative transition-all duration-300 group-hover:scale-110 group-hover:rotate-6"
-                      >
-                        <i className="fas fa-user-md transition-all duration-300 group-hover:scale-110"></i>
-                      </div>
-                      <h5
-                        className="!text-[16px] !font-semibold text-[#1f2937] mb-[6px]"
-                      >
-                        Expert Surgeons
-                      </h5>
-                      <p className="text-[13px] text-[#6b7280] m-0">
-                        Find experienced and qualified surgeons
-                      </p>
+                      <i className="fas fa-user-md transition-all duration-300 group-hover:scale-110"></i>
                     </div>
+                    <h5
+                      className="!text-[16px] !font-semibold text-[#1f2937] mb-[6px]"
+                    >
+                      Expert Surgeons
+                    </h5>
+                    <p className="text-[13px] text-[#6b7280] m-0">
+                      Find experienced and qualified surgeons
+                    </p>
                   </div>
-                  <div className="col-md-4 col-sm-6">
+
+                  <div
+                    className="group p-[16px] bg-white rounded-[12px] shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-center cursor-pointer transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:scale-[1.02]"
+                  >
                     <div
-                      className="group p-[16px] bg-white rounded-[12px] shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-center cursor-pointer transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:scale-[1.02]"
+                      className="w-[50px] h-[50px] mx-auto mb-[12px] bg-gradient-to-br from-[#8059ca] to-[#6d48b8] rounded-[12px] flex items-center justify-center text-[24px] text-white relative transition-all duration-300 group-hover:scale-110 group-hover:rotate-6"
                     >
-                      <div
-                        className="w-[50px] h-[50px] mx-auto mb-[12px] bg-gradient-to-br from-[#8059ca] to-[#6d48b8] rounded-[12px] flex items-center justify-center text-[24px] text-white relative transition-all duration-300 group-hover:scale-110 group-hover:rotate-6"
-                      >
-                        <i className="fas fa-shield-alt transition-all duration-300 group-hover:scale-110"></i>
-                      </div>
-                      <h5
-                        className="!text-[16px] !font-semibold text-[#1f2937] mb-[6px]"
-                      >
-                        Safe & Reliable
-                      </h5>
-                      <p className="text-[13px] text-[#6b7280] m-0">
-                        Trusted hospitals with proven track records
-                      </p>
+                      <i className="fas fa-shield-alt transition-all duration-300 group-hover:scale-110"></i>
                     </div>
+                    <h5
+                      className="!text-[16px] !font-semibold text-[#1f2937] mb-[6px]"
+                    >
+                      Safe & Reliable
+                    </h5>
+                    <p className="text-[13px] text-[#6b7280] m-0">
+                      Trusted hospitals with proven track records
+                    </p>
                   </div>
                 </div>
               </div>
@@ -1539,7 +1524,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
           </section>
 
           <section
-            className="py-4"
+            className="py-12"
             style={{
               background:
                 "linear-gradient(135deg, #f8f9fa 0%, #ffffff 50%, #f0f4ff 100%)",
@@ -1547,12 +1532,11 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
               overflow: "hidden",
             }}
           >
-
-            <div className="quick-access-bg-shape quick-access-bg-shape-1"></div>
-            <div className="quick-access-bg-shape quick-access-bg-shape-2"></div>
-            <div className="container relative z-10">
-              <div className="row align-items-center g-4">
-                <div className="col-lg-5 col-md-12 aos" data-aos="fade-right">
+            <div className="absolute top-[-20%] left-[-10%] w-[300px] h-[300px] rounded-full bg-[#8059ca]/5 blur-[80px] pointer-events-none"></div>
+            <div className="absolute bottom-[-20%] right-[-10%] w-[350px] h-[350px] rounded-full bg-[#3b82f6]/5 blur-[100px] pointer-events-none"></div>
+            <div className="container mx-auto px-4 relative z-10">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <div className="lg:col-span-5 w-full aos" data-aos="fade-right">
                   <div className="relative">
                     <div
                       className="inline-block py-[8px] px-[20px] bg-gradient-to-br from-[#8059ca]/20 to-[#6d48b8]/20 rounded-[50px] mb-[10px] text-[14px] font-semibold text-[#8059ca]"
@@ -1573,14 +1557,14 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                       </span>
                     </h2>
                     <p
-                      className="text-[#4b5563] text-[14px] font-normal leading-[1.7]"
+                      className="text-[#4b5563] text-[14px] font-normal leading-[1.7] mb-6"
                     >
                       Get instant access to Dental, lab tests, and emergency
                       ambulance services. Compare prices, book appointments, and
                       find the best healthcare providers near you all in one place.
                     </p>
 
-                    <div>
+                    <div className="mb-6">
                       {[
                         {
                           icon: "fas fa-check-circle",
@@ -1683,8 +1667,8 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                   </div>
                 </div>
 
-                <div className="col-lg-7 col-md-12">
-                  <div className="row g-1">
+                <div className="lg:col-span-7 w-full">
+                  <div className="flex flex-col gap-3">
                     {[
                       {
                         id: 1,
@@ -1731,7 +1715,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                         link: "/ambulanceservice",
                       },
                     ].map((item, index) => (
-                      <div key={item.id} className="col-md-12">
+                      <div key={item.id} className="w-full">
                         <div
                           className={`quick-access-card group aos p-[12px] rounded-[14px] bg-white border-2 border-solid border-transparent transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] shadow-[0_3px_15px_rgba(0,0,0,0.08)] relative overflow-hidden cursor-pointer hover:-translate-y-[8px] hover:scale-[1.02] ${item.gradient.includes("#8059ca")
                             ? "hover:shadow-[0_12px_40px_rgba(125,46,255,0.25)] hover:border-[#8059ca]"
@@ -1801,120 +1785,84 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
             </div>
           </section>
 
-          <section className="work-section">
-            <div className="container">
-              <div className="row">
+          <section className="py-12 bg-white">
+            <div className="container mx-auto px-4">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                 <div
-                  className="col-lg-4 col-md-12 work-img-info aos"
+                  className="lg:col-span-4 w-full flex justify-center aos"
                   data-aos="fade-up"
                 >
-                  <div className="work-img">
+                  <div className="max-w-[360px] lg:max-w-full">
                     <img
                       src="/assets/img/work-img.png"
-                      className="img-fluid"
+                      className="max-w-full h-auto rounded-2xl shadow-lg object-cover"
                       alt="doctor-image"
                       loading="lazy"
                     />
                   </div>
                 </div>
-                <div className="col-lg-8 col-md-12 work-details">
-                  <div className="section-header-one aos" data-aos="fade-up">
+                <div className="lg:col-span-8 w-full">
+                  <div className="mb-6 aos" data-aos="fade-up">
                     <div
-                      className="mb-2 inline-block py-[8px] px-[20px] bg-gradient-to-br from-[#ea580c]/20 to-[#f97316]/20 rounded-[50px] text-[14px] font-semibold text-[#ea580c]"
+                      className="mb-3 inline-block py-[8px] px-[20px] bg-gradient-to-br from-[#ea580c]/20 to-[#f97316]/20 rounded-[50px] text-[14px] font-semibold text-[#ea580c]"
                     >
                       <i
                         className="fas fa-info-circle mr-[8px]"
                       ></i>
                       How it Works
                     </div>
-                    <br />
                     <h2
-                      className="!text-[28px] !font-semibold mb-[12px]"
+                      className="!text-[28px] !font-semibold mb-[12px] text-gray-800"
                     >
                       4 easy steps to get your solution
                     </h2>
                   </div>
-                  <div className="row g-4">
-                    <div className="col-lg-6 col-md-6 aos" data-aos="fade-up">
-                      <div className="work-info">
-                        <div className="work-icon">
-                          <span>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {[
+                      {
+                        title: "Search Medicines",
+                        description: "Search for medicines by name, category, or health condition.",
+                        icon: "/assets/img/icons/searchubg.png",
+                        alt: "search-doctor-icon"
+                      },
+                      {
+                        title: "Check Medicine Details",
+                        description: "View detailed information about the medicine including brand, composition, and alternatives.",
+                        icon: "/assets/img/icons/first-aid-kit.png",
+                        alt: "doctor-profile-icon"
+                      },
+                      {
+                        title: "Compare Prices",
+                        description: "Compare prices from multiple pharmacies and choose the best deal.",
+                        icon: "/assets/img/icons/price-comparison.png",
+                        alt: "calendar-icon"
+                      },
+                      {
+                        title: "Get Your Solution",
+                        description: "Select the pharmacy, place your order, and get your medicines at the best price.",
+                        icon: "/assets/img/icons/doctor-consultation.png",
+                        alt: "solution-icon"
+                      }
+                    ].map((step, idx) => (
+                      <div className="aos h-full" data-aos="fade-up" key={idx}>
+                        <div className="flex items-start gap-4 p-5 bg-white rounded-md shadow-[0_4px_12px_rgba(0,0,0,0.08)] border border-gray-100 hover:shadow-lg transition-all h-full">
+                          <div className="w-12 h-12 rounded-xl bg-orange-50 flex items-center justify-center shrink-0">
                             <img
-                              src="/assets/img/icons/searchubg.png"
-                              alt="search-doctor-icon"
+                              src={step.icon}
+                              alt={step.alt}
                               loading="lazy"
+                              className="w-6 h-6 object-contain"
                             />
-                          </span>
-                        </div>
-                        <div className="work-content">
-                          <h5>Search Medicines</h5>
-                          <p className="text-[14px]">
-                            Search for medicines by name, category, or health
-                            condition.
-                          </p>
+                          </div>
+                          <div className="flex-1">
+                            <h5 className="text-base font-semibold text-gray-800 mb-1">{step.title}</h5>
+                            <p className="text-[13px] text-gray-500 leading-relaxed m-0">
+                              {step.description}
+                            </p>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <div className="col-lg-6 col-md-6 aos" data-aos="fade-up">
-                      <div className="work-info">
-                        <div className="work-icon">
-                          <span>
-                            <img
-                              src="/assets/img/icons/first-aid-kit.png"
-                              alt="doctor-profile-icon"
-                              loading="lazy"
-                            />
-                          </span>
-                        </div>
-                        <div className="work-content">
-                          <h5>Check Medicine Details</h5>
-                          <p className="text-[14px]">
-                            View detailed information about the medicine including
-                            brand, composition, and alternatives.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-lg-6 col-md-6 aos" data-aos="fade-up">
-                      <div className="work-info">
-                        <div className="work-icon">
-                          <span>
-                            <img
-                              src="/assets/img/icons/price-comparison.png"
-                              alt="calendar-icon"
-                              loading="lazy"
-                            />
-                          </span>
-                        </div>
-                        <div className="work-content">
-                          <h5>Compare Prices</h5>
-                          <p className="text-[14px]">
-                            Compare prices from multiple pharmacies and choose the
-                            best deal.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="col-lg-6 col-md-6 aos" data-aos="fade-up">
-                      <div className="work-info">
-                        <div className="work-icon">
-                          <span>
-                            <img
-                              src="/assets/img/icons/doctor-consultation.png"
-                              alt="solution-icon"
-                              loading="lazy"
-                            />
-                          </span>
-                        </div>
-                        <div className="work-content">
-                          <h5>Get Your Solution</h5>
-                          <p className="text-[14px]">
-                            Select the pharmacy, place your order, and get your
-                            medicines at the best price.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
+                    ))}
                   </div>
                 </div>
               </div>
@@ -1922,38 +1870,32 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
           </section>
 
           <section
-            className="features-section"
+            className="py-12"
             style={{
-              padding: "50px 0",
               background:
                 "linear-gradient(135deg, #f8f9fa 0%, #ffffff 50%, #f8f9fa 100%)",
               position: "relative",
               overflow: "hidden",
             }}
           >
-
-            <div className="gradient-bg-shape gradient-bg-shape-1"></div>
-            <div className="gradient-bg-shape gradient-bg-shape-2"></div>
-            <div className="container" style={{ position: "relative", zIndex: 2 }}>
-              <div className="row">
-                <div className="col-md-12 aos" data-aos="fade-up">
-                  <div className="section-header-one section-header-slider text-center">
-                    <h2
-                      className="!text-[24px] !font-semibold mb-[8px]"
-                    >
-                      Key Features & Benefits
-                    </h2>
-                    <p
-                      className="!text-[#6b7280] !text-[13px] !max-w-[500px] !mx-auto !mt-[6px] !mb-0 !font-normal"
-                    >
-                      Compare prices from 500+ pharmacies, get 100% genuine
-                      medicines, find cheaper alternatives, set price alerts, enjoy
-                      fast delivery, and receive expert support 24/7.
-                    </p>
-                  </div>
-                </div>
+            <div className="absolute top-[-20%] left-[-10%] w-[300px] h-[300px] rounded-full bg-[#8059ca]/5 blur-[80px] pointer-events-none"></div>
+            <div className="absolute bottom-[-20%] right-[-10%] w-[300px] h-[300px] rounded-full bg-[#059669]/5 blur-[80px] pointer-events-none"></div>
+            <div className="container mx-auto px-4 relative z-10">
+              <div className="text-center mb-10 aos" data-aos="fade-up">
+                <h2
+                  className="!text-[24px] !font-semibold mb-[8px]"
+                >
+                  Key Features & Benefits
+                </h2>
+                <p
+                  className="!text-[#6b7280] !text-[13px] !max-w-[500px] !mx-auto !mt-[6px] !mb-0 !font-normal"
+                >
+                  Compare prices from 500+ pharmacies, get 100% genuine
+                  medicines, find cheaper alternatives, set price alerts, enjoy
+                  fast delivery, and receive expert support 24/7.
+                </p>
               </div>
-              <div className="row g-3 mt-1">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-1">
                 {[
                   {
                     id: 1,
@@ -2016,41 +1958,40 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                     delay: "0.5s"
                   }
                 ].map((feature) => (
-                  <div className="col-lg-4 col-md-6" key={feature.id}>
+                  <div
+                    className={`group p-[24px] rounded-[12px] bg-white border-2 border-solid border-transparent transition-all duration-400 ease-[cubic-bezier(0.4,0,0.2,1)] shadow-[0_4px_20px_rgba(0,0,0,0.06)] relative overflow-hidden h-full hover:-translate-y-[8px] ${feature.hoverShadow}`}
+                    key={feature.id}
+                    data-aos="fade-up"
+                    data-aos-delay={feature.id * 100}
+                    style={{
+                      animationDelay: feature.delay,
+                    }}
+                  >
                     <div
-                      className={`feature-card group feature-card-animated aos p-[24px] rounded-[12px] bg-white border-2 border-solid border-transparent transition-all duration-400 ease-[cubic-bezier(0.4,0,0.2,1)] shadow-[0_4px_20px_rgba(0,0,0,0.06)] relative overflow-hidden h-full hover:-translate-y-[8px] ${feature.hoverShadow}`}
-                      data-aos="fade-up"
-                      data-aos-delay={feature.id * 100}
+                      className="absolute top-0 left-0 right-0 h-[4px] scale-x-0 origin-left transition-transform duration-400 ease group-hover:scale-x-100"
                       style={{
-                        animationDelay: feature.delay,
+                        background: feature.topBarGradient,
                       }}
+                    />
+                    <div
+                      className="mb-[12px] relative inline-block"
                     >
                       <div
-                        className="absolute top-0 left-0 right-0 h-[4px] scale-x-0 origin-left transition-transform duration-400 ease group-hover:scale-x-100"
-                        style={{
-                          background: feature.topBarGradient,
-                        }}
-                      />
-                      <div
-                        className="feature-icon-wrapper mb-[12px] relative inline-block"
+                        className={`w-[48px] h-[48px] mx-auto bg-gradient-to-br ${feature.iconGradient} rounded-[12px] flex items-center justify-center text-[18px] text-white relative z-10 shadow-[0_4px_12px_rgba(0,0,0,0.1)] group-hover:animate-[iconBounce_0.6s_ease-in-out]`}
                       >
-                        <div
-                          className={`feature-icon w-[48px] h-[48px] mx-auto bg-gradient-to-br ${feature.iconGradient} rounded-[12px] flex items-center justify-center text-[18px] text-white relative z-10 shadow-[0_4px_12px_rgba(0,0,0,0.1)] group-hover:animate-[iconBounce_0.6s_ease-in-out]`}
-                        >
-                          <i className={feature.icon}></i>
-                        </div>
+                        <i className={feature.icon}></i>
                       </div>
-                      <h4
-                        className="!text-[16px] !font-semibold mb-[6px] text-[#1f2937] leading-[1.3]"
-                      >
-                        {feature.title}
-                      </h4>
-                      <p
-                        className="text-[#6b7280] text-[12px] leading-[1.6] m-0"
-                      >
-                        {feature.description}
-                      </p>
                     </div>
+                    <h4
+                      className="!text-[16px] !font-semibold mb-[6px] text-[#1f2937] leading-[1.3]"
+                    >
+                      {feature.title}
+                    </h4>
+                    <p
+                      className="text-[#6b7280] text-[12px] leading-[1.6] m-0"
+                    >
+                      {feature.description}
+                    </p>
                   </div>
                 ))}
               </div>
@@ -2058,11 +1999,11 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
           </section>
 
           <section
-            className="price-showcase-section !py-[40px] !bg-[linear-gradient(135deg,#8059ca_0%,#822BD4_100%)] !text-white"
+            className="py-12 bg-[linear-gradient(135deg,#8059ca_0%,#822BD4_100%)] text-white relative"
           >
-            <div className="container">
-              <div className="row align-items-center">
-                <div className="col-lg-6 mb-4 mb-lg-0">
+            <div className="container mx-auto px-4">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <div className="w-full">
                   <div className="showcase-content aos" data-aos="fade-right">
                     <h2
                       className="!text-[32px] !font-semibold !mb-[16px] !text-white"
@@ -2076,7 +2017,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                       deals. Our users save an average of 25-40% on their medicine
                       bills every month.
                     </p>
-                    <div className="savings-stats d-flex gap-4 mb-4">
+                    <div className="flex gap-6 mb-6 mt-4">
                       <div>
                         <h3
                           className="!text-[32px] !font-semibold !m-0 !text-[#04BD6C]"
@@ -2104,16 +2045,16 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                     </div>
                     <Link
                       to="/medicine/all"
-                      className="btn btn-light btn-lg !py-[12px] !px-[30px] !rounded-[50px] !font-medium !text-[15px] !no-underline !inline-block !transition-all !duration-300"
+                      className="bg-white text-[#8059ca] hover:bg-gray-50 py-3 px-8 rounded-full font-medium text-[15px] no-underline inline-block transition-all shadow-md"
                     >
                       Start Comparing Now{" "}
                       <i className="fas fa-arrow-right ms-2"></i>
                     </Link>
                   </div>
                 </div>
-                <div className="col-lg-6">
+                <div className="w-full">
                   <div
-                    className="price-comparison-card aos !bg-white !rounded-[16px] !p-[24px] !border !border-solid !border-[#e9ecef]"
+                    className="bg-white rounded-[16px] p-6 border border-gray-100 shadow-lg max-w-[480px] mx-auto lg:mx-0"
                     data-aos="fade-left"
                   >
                     <h4
@@ -2122,9 +2063,9 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                       Example: Paracetamol 500mg
                     </h4>
                     <div
-                      className="price-comparison-item mb-3 !p-[12px] !bg-[#f8f9fa] !rounded-[8px] !border !border-solid !border-[#e9ecef]"
+                      className="mb-3 p-3 bg-[#f8f9fa] rounded-lg border border-[#e9ecef]"
                     >
-                      <div className="d-flex justify-content-between align-items-center">
+                      <div className="flex justify-between items-center">
                         <div>
                           <h6
                             className="!m-0 !text-[#495057] !text-[14px] !font-medium"
@@ -2147,9 +2088,9 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                       </div>
                     </div>
                     <div
-                      className="price-comparison-item mb-3 !p-[12px] !bg-[linear-gradient(135deg,#04BD6C_0%,#05a85c_100%)] !rounded-[8px] !border !border-solid !border-[#04BD6C] relative"
+                      className="mb-3 p-3 bg-[linear-gradient(135deg,#04BD6C_0%,#05a85c_100%)] rounded-lg border border-[#04BD6C] relative"
                     >
-                      <div className="d-flex justify-content-between align-items-center">
+                      <div className="flex justify-between items-center">
                         <div>
                           <h6
                             className="!m-0 !text-white !text-[14px] !font-medium"
@@ -2177,9 +2118,9 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                       </div>
                     </div>
                     <div
-                      className="price-comparison-item mb-3 !p-[12px] !bg-[#f8f9fa] !rounded-[8px] !border !border-solid !border-[#e9ecef]"
+                      className="mb-3 p-3 bg-[#f8f9fa] rounded-lg border border-[#e9ecef]"
                     >
-                      <div className="d-flex justify-content-between align-items-center">
+                      <div className="flex justify-between items-center">
                         <div>
                           <h6
                             className="!m-0 !text-[#495057] !text-[14px] !font-medium"
@@ -2202,7 +2143,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                       </div>
                     </div>
                     <div
-                      className="total-savings mt-3 text-center !p-[16px] !bg-[linear-gradient(135deg,#f8f9fa_0%,#ffffff_100%)] !rounded-[12px]"
+                      className="mt-4 text-center p-4 bg-gradient-to-br from-[#f8f9fa] to-white rounded-xl border border-gray-100"
                     >
                       <p className="m-0 !text-[#6c757d] !text-[13px]">
                         You Save
@@ -2221,11 +2162,11 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
 
           {testimonials && testimonials.length > 0 && (
             <section
-              className="home-deferred-section py-5 bg-[#f8f9fa]"
+              className="py-12 bg-[#f8f9fa]"
             >
-              <div className="container">
+              <div className="container mx-auto px-4">
                 <div
-                  className="section-header sec-header-one text-center aos"
+                  className="text-center mb-10 aos"
                   data-aos="fade-up"
                 >
                   <div
@@ -2234,7 +2175,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                     <i className="fas fa-bolt mr-[8px]"></i>
                     Reviews
                   </div>
-                  <h2>What Our Users Say</h2>
+                  <h2 className="!text-[28px] !font-semibold mb-2">What Our Users Say</h2>
                   <p
                     className="text-[#6b7280] text-[14px] max-w-[600px] mx-auto mt-[8px] mb-0 font-normal"
                   >
@@ -2245,11 +2186,11 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                   </p>
                 </div>
 
-                <div className="row g-4 aos" data-aos="fade-up">
+                <div className="mt-8 aos" data-aos="fade-up">
                   {homeLiteMode ? (
-                    <div className="row g-3">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                       {testimonials.slice(0, 3).map((review) => (
-                        <div key={review._id} className="col-lg-4 col-md-6">
+                        <div key={review._id}>
                           {renderTestimonialCard(review)}
                         </div>
                       ))}
@@ -2257,7 +2198,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                   ) : (
                     <Slider {...bestDoctorsSlider}>
                       {testimonials.map((review) => (
-                        <div key={review._id} className="col-lg-4 col-md-6 px-1">
+                        <div key={review._id} className="px-1">
                           {renderTestimonialCard(review)}
                         </div>
                       ))}
@@ -2269,87 +2210,80 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
           )}
 
           {faqss && faqss.length > 0 && (
-            <section className="faq-section mt-4 home-deferred-section">
-              <div className="container">
-                <div className="row">
-                  <div className="col-md-12 ">
-                    <div
-                      className="section-header-one text-center"
-                      data-aos="fade-up"
-                    >
-                      <div
-                        className="mb-2 inline-block py-[8px] px-[20px] bg-gradient-to-br from-[#8059ca]/20 to-[#6d48b8]/20 rounded-[50px] text-[14px] font-semibold text-[#8059ca]"
-                      >
-                        <i
-                          className="fas fa-question-circle mr-[8px] text-[#8059ca]"
-                        ></i>
-                        Get Your Answer
-                      </div>
-                      <h2
-                        className="!text-[28px] !font-semibold mb-[12px]"
-                      >
-                        Frequently Asked Questions
-                      </h2>
-                      <p
-                        className="text-[#6b7280] text-[14px] max-w-[600px] mx-auto mt-[8px] mb-0 font-normal"
-                      >
-                        Find the best medicine prices, ensure authenticity with
-                        verified products, explore cost-effective alternatives, get
-                        price alerts, enjoy quick delivery, and access expert
-                        assistance anytime.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div className="row align-items-center">
+            <section className="py-12 bg-white">
+              <div className="container mx-auto px-4">
+                <div
+                  className="text-center mb-10 aos"
+                  data-aos="fade-up"
+                >
                   <div
-                    className="col-lg-6 col-md-12 aos d-none d-lg-block"
+                    className="mb-2 inline-block py-[8px] px-[20px] bg-gradient-to-br from-[#8059ca]/20 to-[#6d48b8]/20 rounded-[50px] text-[14px] font-semibold text-[#8059ca]"
+                  >
+                    <i
+                      className="fas fa-question-circle mr-[8px] text-[#8059ca]"
+                    ></i>
+                    Get Your Answer
+                  </div>
+                  <h2
+                    className="!text-[28px] !font-semibold mb-[12px]"
+                  >
+                    Frequently Asked Questions
+                  </h2>
+                  <p
+                    className="text-[#6b7280] text-[14px] max-w-[600px] mx-auto mt-[8px] mb-0 font-normal"
+                  >
+                    Find the best medicine prices, ensure authenticity with
+                    verified products, explore cost-effective alternatives, get
+                    price alerts, enjoy quick delivery, and access expert
+                    assistance anytime.
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                  <div
+                    className="hidden lg:block w-full aos"
                     data-aos="fade-up"
                   >
-                    <div className="faq-img">
+                    <div className="max-w-[480px] mx-auto">
                       <img
                         src="/assets/Medicomapres FAQ (2).png"
-                        className="img-fluid"
-                        alt="img"
+                        className="max-w-full h-auto object-contain"
+                        alt="faq illustration"
                         loading="lazy"
                         decoding="async"
                       />
                     </div>
                   </div>
-                  <div className="col-lg-6 col-md-12">
-                    <div className="faq-info aos" data-aos="fade-up">
-                      <div className="accordion" id="faq-details">
+                  <div className="w-full">
+                    <div className="aos" data-aos="fade-up">
+                      <div className="flex flex-col gap-3">
                         {faqss.map((faq, index) => {
                           const isOpen = openIndex === index;
 
                           return (
-                            <div className="accordion-item" key={index}>
-                              <h2 className="accordion-header">
+                            <div className={`bg-white rounded-sm border transition-all duration-300 mb-3 overflow-hidden ${isOpen ? 'border-[#8059ca] shadow-[0_4px_20px_rgba(128,89,202,0.12)]' : 'border-gray-200 shadow-sm hover:shadow-md'}`} key={index}>
+                              <h2 className="m-0">
                                 <button
                                   type="button"
                                   onClick={() => toggleAccordion(index)}
                                   aria-expanded={isOpen}
-                                  className={`accordion-button faq-toggle-btn flex items-center justify-between w-full gap-3 ${!isOpen ? "collapsed" : ""
-                                    }`}
+                                  className="flex items-center justify-between w-full p-5 font-semibold text-left border-none bg-white hover:bg-gray-50/50 transition-colors cursor-pointer gap-4"
                                 >
-                                  <span className="flex-1 text-left">
+                                  <span className={`flex-1 text-[15px] font-semibold tracking-tight transition-colors duration-200 ${isOpen ? 'text-[#8059ca]' : 'text-gray-800'}`}>
                                     {faq.question}
                                   </span>
                                   <i
-                                    className={`fas ${isOpen ? "fa-minus text-white bg-[#8059ca]" : "fa-plus text-[#8059ca] bg-white"} shrink-0 text-[12px] w-[25px] h-[25px] rounded-[4px] inline-flex items-center justify-center`}
+                                    className={`fa-solid fa-chevron-down text-gray-400 text-[14px] transition-transform duration-300 ${isOpen ? 'rotate-180 text-[#8059ca]' : ''} shrink-0`}
                                     aria-hidden="true"
                                   />
                                 </button>
                               </h2>
 
                               <div
-                                className={`accordion-collapse collapse ${isOpen ? "show" : ""
-                                  }`}
+                                className={`transition-all duration-300 ease-in-out overflow-hidden ${isOpen ? 'max-h-[500px] opacity-100 border-t border-gray-100' : 'max-h-0 opacity-0 pointer-events-none'}`}
                               >
-                                <div className="accordion-body">
-                                  <div className="accordion-content">
-                                    <p>{faq.answer}</p>
-                                  </div>
+                                <div className="p-5 bg-[#faf9fc]/40 text-[14px] text-gray-500 leading-relaxed">
+                                  <p className="m-0">{faq.answer}</p>
                                 </div>
                               </div>
                             </div>
@@ -2365,7 +2299,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
 
           {blogss && blogss.length > 0 && (
             <section
-              className="py-4 mb-2 home-deferred-section home-bg-pattern-section"
+              className="py-12 relative overflow-hidden"
               style={{
                 backgroundColor: "#E8E4F5",
                 backgroundImage: homeLiteMode
@@ -2376,40 +2310,35 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                 backgroundRepeat: "no-repeat",
               }}
             >
-              <div className="container">
+              <div className="container mx-auto px-4">
                 <div
-                  className="d-flex align-items-center justify-content-center flex-wrap gap-3 mb-3 aos"
+                  className="text-center mb-10 aos"
                   data-aos="fade-up"
                 >
                   <div
-                    className="section-header-one text-center"
-                    data-aos="fade-up"
+                    className="mb-2 inline-block py-[8px] px-[20px] bg-gradient-to-br from-[#8059ca]/20 to-[#6d48b8]/20 rounded-[50px] text-[14px] font-semibold text-[#8059ca]"
                   >
-                    <div
-                      className="mb-2 inline-block py-[8px] px-[20px] bg-gradient-to-br from-[#8059ca]/20 to-[#6d48b8]/20 rounded-[50px] text-[14px] font-semibold text-[#8059ca]"
-                    >
-                      <i
-                        className="fas fa-bolt mr-[8px] text-[#8059ca]"
-                      ></i>
-                      Our Blogs
-                    </div>
-                    <h2
-                      className="text-[36px] !font-semibold mb-[12px] inline-block w-full bg-gradient-to-br from-[#8059ca] to-[#6d48b8] bg-clip-text text-transparent text-[#8059ca]"
-                    >
-                      Insights and Tips on Medicines
-                    </h2>
-                    <p
-                      className="text-[#6b7280] text-[14px] max-w-[600px] mx-auto mt-[8px] mb-0 font-normal"
-                    >
-                      Stay informed with our latest blog posts on medicine pricing,
-                      authentic products, cost-effective alternatives, and health
-                      tips. Learn how to save on medicines while ensuring quality
-                      and safety.
-                    </p>
+                    <i
+                      className="fas fa-bolt mr-[8px] text-[#8059ca]"
+                    ></i>
+                    Our Blogs
                   </div>
+                  <h2
+                    className="text-[36px] !font-semibold mb-[12px] inline-block w-full bg-gradient-to-br from-[#8059ca] to-[#6d48b8] bg-clip-text text-transparent text-[#8059ca]"
+                  >
+                    Insights and Tips on Medicines
+                  </h2>
+                  <p
+                    className="text-[#6b7280] text-[14px] max-w-[600px] mx-auto mt-[8px] mb-0 font-normal"
+                  >
+                    Stay informed with our latest blog posts on medicine pricing,
+                    authentic products, cost-effective alternatives, and health
+                    tips. Learn how to save on medicines while ensuring quality
+                    and safety.
+                  </p>
                 </div>
                 {homeLiteMode ? (
-                  <div className="row g-3">
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {blogss.slice(0, 3).map((blog, index) => {
                       const BLOG_DESC_LIMIT = 120;
                       const plainDescription = (blog.description || "")
@@ -2422,7 +2351,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                         : plainDescription;
 
                       return (
-                        <div className="col-lg-4 col-md-6" key={index}>
+                        <div key={index}>
                           <div
                             onClick={() => getByBlogDetails(blog)}
                             className="bg-white rounded-[16px] overflow-hidden shadow-[0_2px_8px_rgba(128,89,202,0.08)] border border-solid border-[#8059ca]/10 h-full flex flex-col cursor-pointer"
@@ -2468,7 +2397,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                         : plainDescription;
 
                       return (
-                        <div className="col-lg-4 col-md-6 px-2" key={index}>
+                        <div className="px-2" key={index}>
                           <div
                             onClick={() => getByBlogDetails(blog)}
                             className="bg-white rounded-[16px] overflow-hidden shadow-[0_2px_12px_rgba(128,89,202,0.1)] border border-solid border-[#8059ca]/10 transition-all duration-300 ease h-full flex flex-col cursor-pointer hover:shadow-[0_8px_24px_rgba(128,89,202,0.15)]"
@@ -2536,7 +2465,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                                       e.stopPropagation();
                                       getByBlogDetails(blog);
                                     }}
-                                    className="mt-[8px] p-0 border-none bg-none text-[#8059ca] text-[13px] font-semibold cursor-pointer"
+                                    className="mt-[8px] p-0 border-none bg-none !text-[#8059ca] !text-[13px] !font-semibold cursor-pointer"
                                   >
                                     Read more
                                   </button>
@@ -2553,78 +2482,78 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
             </section>
           )}
 
-          <section className="app-section app-sec-twelve pharmacy-app-sec home-deferred-section">
-            <div className="container">
-              <div className="app-twelve border-0">
-                <div className="app-bg">
-                  <div className="row align-items-center">
-                    <div
-                      className="col-lg-6 col-md-12 aos aos-init aos-animate"
-                      data-aos="fade-up"
-                    >
-                      <div className="mobile-img">
-                        <img
-                          src="/assets/mobileapp.png"
-                          className="img-fluid"
-                          alt="mobileapp"
-                          title="mobileapp"
-                          loading="lazy"
-                          decoding="async"
-                        />
-                      </div>
+          <section className="py-12 bg-white">
+            <div className="container mx-auto px-4">
+              <div className="bg-gradient-to-br from-[#3b1c73] via-[#4d2594] to-[#6a35c2] rounded-2xl p-8 relative overflow-hidden shadow-xl">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                  <div
+                    className="w-full flex justify-center aos"
+                    data-aos="fade-up"
+                  >
+                    <div className="max-w-[320px] lg:max-w-full">
+                      <img
+                        src="/assets/mobileapp.png"
+                        className="max-w-full h-auto object-contain animate-[float_4s_ease-in-out_infinite]"
+                        alt="mobileapp"
+                        title="mobileapp"
+                        loading="lazy"
+                        decoding="async"
+                      />
                     </div>
-                    <div className="col-lg-6 col-md-12">
-                      <div className="app-content">
-                        <div
-                          className="app-header aos aos-init aos-animate"
-                          data-aos="fade-up"
+                  </div>
+                  <div className="w-full">
+                    <div className="app-content">
+                      <div
+                        className="app-header aos"
+                        data-aos="fade-up"
+                      >
+                        <h5 className="text-[16px] font-bold !text-[#ffb74d] mb-2">Download Our App Now.</h5>
+                        <h2 className="!text-[32px] !font-bold !text-white leading-tight">
+                          MediCompares India's #1 Medicine Price Comparison
+                        </h2>
+                      </div>
+                      <div
+                        className="app-scan my-6 flex items-center gap-4 aos"
+                        data-aos="fade-up"
+                      >
+                        <p className="m-0 !text-white/80 text-[14px]">Scan the QR code to get the app now</p>
+                        <img src="/assets/qurcode.png" alt="scan-image" className="w-[80px] h-[80px] border border-white/20 rounded-lg p-1 bg-white shadow-sm" />
+                      </div>
+                      <div className="flex flex-col sm:flex-row gap-3 mt-6">
+                        <a
+                          href="https://www.apple.com/app-store/"
+                          target="_blank"
+                          rel="noopener noreferrer"
                         >
-                          <h5>Download Our App Now.</h5>
-                          <h2 className="!text-[38px]">
-                            MediCompares India's #1 Medicine Price Comparision
-                          </h2>
-                        </div>
-                        <div
-                          className="app-scan aos aos-init aos-animate"
-                          data-aos="fade-up"
+                          <img
+                            src="/assets/img/icons/app-store-icon.svg"
+                            alt="app-store"
+                            title="app-store"
+                            className="h-10"
+                          />
+                        </a>
+                        <a
+                          href="https://play.google.com/store/games"
+                          target="blank"
+                          rel="noopener noreferrer"
                         >
-                          <p>Scan the QR code to get the app now</p>
-                          <img src="/assets/qurcode.png" alt="scan-image" />
-                        </div>
-                        <div className="app-store-links gap-2 d-flex flex-column flex-md-row ">
-                          <a
-                            href="https://www.apple.com/app-store/"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            <img
-                              src="/assets/img/icons/app-store-icon.svg"
-                              alt="app-store"
-                              title="app-store"
-                            />
-                          </a>
-                          <a
-                            href="https://play.google.com/store/games"
-                            target="blank"
-                            rel="noopener noreferrer"
-                          >
-                            <img
-                              src="/assets/img/icons/playstore.svg"
-                              alt="play-store"
-                              title="play-store"
-                            />
-                          </a>
-                        </div>
+                          <img
+                            src="/assets/img/icons/playstore.svg"
+                            alt="play-store"
+                            title="play-store"
+                            className="h-10"
+                          />
+                        </a>
                       </div>
                     </div>
                   </div>
-                  <div className="app-bgs">
-                    <img
-                      src="assets/img/bg/app-bg-01.png"
-                      alt="image"
-                      style={{ height: "360px" }}
-                    />
-                  </div>
+                </div>
+                <div className="absolute right-0 bottom-0 opacity-10 pointer-events-none hidden lg:block">
+                  <img
+                    src="assets/img/bg/app-bg-01.png"
+                    alt="image"
+                    style={{ height: "360px" }}
+                  />
                 </div>
               </div>
             </div>

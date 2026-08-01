@@ -1013,7 +1013,7 @@ const AlternateProducts = ({
               return (
                 <div
                   key={product._id || product?.tablet?._id || index}
-                  className="w-[250px] border border-slate-200/80 !rounded-md overflow-visible bg-white shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:-translate-y-1 hover:shadow-[0_12px_24px_rgba(128,89,202,0.12)] cursor-pointer flex flex-col h-full relative transition-all duration-300"
+                  className="w-[250px] !border !border-slate-200/80 !rounded-md overflow-visible bg-white !shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:-translate-y-1 hover:!shadow-[0_12px_24px_rgba(128,89,202,0.12)] cursor-pointer flex flex-col h-full relative transition-all duration-300"
                 >
                   {product?.tablet?.medicineType && (
                     <div

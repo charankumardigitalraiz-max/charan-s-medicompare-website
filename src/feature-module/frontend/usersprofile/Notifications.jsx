@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { axiosUserInstance } from "../../../Apiservice";
 import toast from "react-hot-toast";
+import { Table, Pagination } from "../../../components/ui";
 
 const Notifications = ({ HomeNavigate, BackButton }) => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -97,185 +98,106 @@ const Notifications = ({ HomeNavigate, BackButton }) => {
       toast.error("Error deleting notification:", error);
     }
   };
+  const headers = [
+    {
+      key: "createdAt",
+      label: "Date",
+      render: (value) => new Date(value).toLocaleDateString('en-GB', {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric'
+      }),
+      className: "whitespace-nowrap"
+    },
+    {
+      key: "title",
+      label: "Title",
+      render: (value, row) => (
+        <span className={!row.read ? "font-semibold text-slate-900" : "font-medium text-slate-700"}>
+          {value}
+        </span>
+      )
+    },
+    {
+      key: "message",
+      label: "Message",
+      className: "max-w-[280px] break-words"
+    },
+    {
+      key: "read",
+      label: "Status",
+      render: (value) => (
+        <span
+          className={`inline-flex items-center gap-1.5 px-2 py-[3px] rounded-full text-[11px] font-semibold border ${!value
+              ? "bg-amber-50 text-amber-500 border-amber-200"
+              : "bg-emerald-50 text-emerald-500 border-emerald-200"
+            }`}
+        >
+          <i className="fa-solid fa-circle text-[6px]" />
+          {!value ? "Unread" : "Read"}
+        </span>
+      )
+    },
+    {
+      key: "_id",
+      label: "Actions",
+      className: "text-center",
+      render: (value) => (
+        <button
+          onClick={() => deleteNotification(value)}
+          className="!w-8 !h-8 !rounded-full !bg-slate-100 !inline-flex !items-center !justify-center !cursor-pointer hover:!bg-red-50 hover:!text-red-500 !transition-colors !duration-150 !border-0"
+          title="Delete Notification"
+        >
+          <i className="fa-solid fa-trash text-[12px] text-red-400" />
+        </button>
+      )
+    }
+  ];
 
   return (
-    <div className="w-full">
-      <div className="content doctor-content">
-        <div className="container">
-          <div className="row">
-            {BackButton && (
-              <div className="col-12 mb-3">
-                <BackButton />
-              </div>
-            )}
-            <div className="col-lg-12">
+    <div className="w-full px-4 md:px-6 py-4">
+      {BackButton && (
+        <div className="mb-3">
+          <BackButton />
+        </div>
+      )}
 
-              {/* Header */}
-              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pb-2 mb-2 border-b border-slate-100 mt-2">
-                <div className="flex items-center gap-3.5">
-                  {HomeNavigate && <HomeNavigate />}
-                  <div className="w-11 h-11 rounded-xl bg-purple-50 text-[#8059ca] flex items-center justify-center text-[20px] shrink-0 border border-purple-100/50 shadow-sm">
-                    <i className="fa-solid fa-bell" />
-                  </div>
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pb-2 mb-4 border-b border-slate-100 mt-2">
+        <div className="flex items-center gap-3.5">
+          {HomeNavigate && <HomeNavigate />}
+          <div className="w-11 h-11 rounded-xl bg-purple-50 text-[#8059ca] flex items-center justify-center text-[20px] shrink-0 border border-purple-100/50 shadow-sm">
+            <i className="fa-solid fa-bell" />
+          </div>
 
-
-                  {/* <div className="flex flex-col gap-1">
-                    <div className="m-0 text-[#0f172a] text-[18px] md:text-[20px] tracking-tight leading-none" style={{ fontWeight: 600 }}>
-                      Notifications
-                    </div>
-                    <p className="text-slate-500 text-[12px] m-0 font-medium leading-none">
-                      View and manage all your notifications
-                    </p>
-                  </div> */}
-
-
-
-                  <div className="flex flex-col gap-1">
-                    <div className="m-0 text-[#0f172a] font-medium text-[16px] md:text-[16px] tracking-tight leading-none" >
-                      Notifications
-                    </div>
-                    <div className="text-slate-500 text-[12px] m-0 font-medium leading-none">
-                      View and manage all your notifications
-                    </div>
-                  </div>
-
-
-
-
-                </div>
-              </div>
-
-              {/* Table */}
-              <div className="profile-table-wrapper">
-                <div className="table-responsive">
-                  <table className="profile-table">
-                    <thead>
-                      <tr>
-                        <th>Date</th>
-                        <th>Title</th>
-                        <th>Message</th>
-                        <th>Status</th>
-                        <th className="text-center">Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {currentNotifications.length === 0 ? (
-                        <tr>
-                          <td colSpan="5" className="text-center py-8 text-slate-400 text-[13px]">
-                            No notifications found
-                          </td>
-                        </tr>
-                      ) : (
-                        currentNotifications.map((nt) => {
-                          const isUnread = !nt.read;
-                          const status = nt.read ? "Read" : "Unread";
-                          const formattedDate = new Date(nt.createdAt).toLocaleDateString('en-GB', {
-                            day: '2-digit',
-                            month: 'short',
-                            year: 'numeric'
-                          });
-
-                          return (
-                            <tr key={nt._id} className="hover:bg-[#faf9fe] transition-colors duration-150">
-                              <td className="whitespace-nowrap">
-                                {formattedDate}
-                              </td>
-                              <td className={isUnread ? "font-semibold" : "font-medium"}>
-                                {nt.title}
-                              </td>
-                              <td className="max-w-[280px]">
-                                {nt.message}
-                              </td>
-                              <td>
-                                <span
-                                  className={`inline-flex items-center gap-1.5 px-2 py-[3px] rounded-full text-[11px] font-semibold border ${isUnread
-                                    ? "bg-amber-50 text-amber-500 border-amber-200"
-                                    : "bg-emerald-50 text-emerald-500 border-emerald-200"
-                                    }`}
-                                >
-                                  <i className="fa-solid fa-circle text-[6px]" />
-                                  {status}
-                                </span>
-                              </td>
-                              <td className="text-center">
-                                <button
-                                  onClick={() => deleteNotification(nt._id)}
-                                  className="!w-8 !h-8 !rounded-full !bg-slate-100 !inline-flex !items-center !justify-center !cursor-pointer hover:!bg-red-50 hover:!text-red-500 !transition-colors !duration-150 !border-0"
-                                  title="Delete Notification"
-                                >
-                                  <i className="fa-solid fa-trash text-[12px] text-red-400" />
-                                </button>
-                              </td>
-                            </tr>
-                          );
-                        })
-                      )}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-
-              {/* Pagination */}
-              {filteredNotifications.length > notificationsPerPage && (
-                <div className="flex justify-center mt-4">
-                  <ul className="flex items-center gap-1 list-none m-0 p-0">
-                    <li>
-                      <button
-                        className="w-9 h-9 flex items-center justify-center rounded-lg border border-[#ececf6] text-[#666] text-[13px] disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[#faf9fe]"
-                        onClick={() => handlePageChange(currentPage - 1)}
-                        disabled={currentPage === 1}
-                      >
-                        <i className="fa-solid fa-chevron-left" />
-                      </button>
-                    </li>
-
-                    {Array.from({ length: totalPages }, (_, i) => {
-                      const page = i + 1;
-                      if (
-                        page === 1 ||
-                        page === totalPages ||
-                        (page >= currentPage - 1 && page <= currentPage + 1)
-                      ) {
-                        return (
-                          <li key={page}>
-                            <button
-                              className={`w-9 h-9 flex items-center justify-center rounded-lg text-[13px] font-medium ${currentPage === page
-                                ? "bg-[#8059ca] text-white"
-                                : "border border-[#ececf6] text-[#666] hover:bg-[#faf9fe]"
-                                }`}
-                              onClick={() => handlePageChange(page)}
-                            >
-                              {page}
-                            </button>
-                          </li>
-                        );
-                      }
-                      if (page === currentPage - 2 || page === currentPage + 2) {
-                        return (
-                          <li key={`dots-${page}`}>
-                            <span className="w-9 h-9 flex items-center justify-center text-[#999] text-[13px]">…</span>
-                          </li>
-                        );
-                      }
-                      return null;
-                    })}
-
-                    <li>
-                      <button
-                        className="w-9 h-9 flex items-center justify-center rounded-lg border border-[#ececf6] text-[#666] text-[13px] disabled:opacity-40 disabled:cursor-not-allowed hover:bg-[#faf9fe]"
-                        onClick={() => handlePageChange(currentPage + 1)}
-                        disabled={currentPage === totalPages}
-                      >
-                        <i className="fa-solid fa-chevron-right" />
-                      </button>
-                    </li>
-                  </ul>
-                </div>
-              )}
+          <div className="flex flex-col gap-1">
+            <div className="m-0 text-[#0f172a] font-medium text-[16px] md:text-[16px] tracking-tight leading-none" >
+              Notifications
+            </div>
+            <div className="text-slate-500 text-[12px] m-0 font-medium leading-none">
+              View and manage all your notifications
             </div>
           </div>
         </div>
       </div>
+
+      {/* Reusable Table Component */}
+      <Table
+        headers={headers}
+        data={currentNotifications}
+        emptyMessage="No notifications found"
+      />
+
+      {/* Pagination */}
+      {filteredNotifications.length > notificationsPerPage && (
+        <div className="mt-6 flex justify-center">
+          <Pagination
+            page={currentPage}
+            totalPages={totalPages}
+            onPageChange={handlePageChange}
+          />
+        </div>
+      )}
     </div>
   );
 };

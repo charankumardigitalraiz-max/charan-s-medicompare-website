@@ -445,14 +445,14 @@ const ProfileSideBar = () => {
                   handleLogout(e);
                   if (onItemClick) onItemClick();
                 }}
-                className="flex items-center py-2 px-6 no-underline text-[#ff4757] cursor-pointer transition-all duration-300 bg-transparent"
+                className="flex items-center py-2 px-6 no-underline !text-[#ff4757] cursor-pointer transition-all duration-300 bg-transparent"
                 style={{ borderLeft: "3px solid transparent" }}
               >
                 <i
                   className="isax isax-logout mr-3 !text-[#ff4757]"
                   style={{ fontSize: "18px", width: "22px" }}
                 />
-                <span className="text-[14px] font-semibold">Logout</span>
+                <span className="!text-[14px] !font-semibold">Logout</span>
               </a>
             </li>
           </ul>

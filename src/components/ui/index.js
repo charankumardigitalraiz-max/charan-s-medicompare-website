@@ -20,3 +20,5 @@ export { default as VendorActions } from "./VendorActions";
 export { default as CompareOverlayButton } from "./CompareOverlayButton";
 export { default as Table } from "./Table";
 export { default as Tabs } from "./Tabs";
+export { default as SectionHeader } from "./SectionHeader";
+export { default as BackButton } from "./BackButton";

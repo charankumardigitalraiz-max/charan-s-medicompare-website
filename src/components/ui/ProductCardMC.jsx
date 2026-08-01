@@ -1,10 +1,11 @@
-﻿import React, { useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 // import { UseMediaQuery } from "../../hooks/UseMediaQuery";
 import ProductImage from "./ProductImage.jsx";
 import PriceDisplay from "./PriceDisplay.jsx";
 import { getImageUrl } from "../../utils/index";
 import { CartQuantityControls } from "./index";
+import CompareOverlayButton from "./CompareOverlayButton.jsx";
 
 const getSlugs = (data) => {
   let sub =
@@ -24,25 +25,10 @@ const getSlugs = (data) => {
     slug: data?.slug,
   };
 };
+
 /**
  * Reusable Product Card Component
  * Displays product information in a card format with image, details, pricing, and cart controls
- *
- * @param {Object} props
- * @param {Object} props.item - Product item object with tabletdetails and vendordetails
- * @param {Object} props.variant - Selected variant object (optional)
- * @param {string} props.imgUrl - Base URL for product images
- * @param {Function} props.onProductClick - Callback when product is clicked
- * @param {Function} props.onCompareClick - Callback when compare icon is clicked (optional)
- * @param {Function} props.onVendorClick - Callback when vendor is clicked (optional)
- * @param {string} props.deliveryText - Delivery information text (optional, default: "Get By 4pm, Today")
- * @param {number} props.maxStock - Maximum stock available (optional, default: 999)
- * @param {string} props.className - Additional CSS classes (optional)
- * @param {Object} props.style - Inline styles (optional)
- * @param {number} props.titleMaxLength - Maximum length for product title (optional, default: 30)
- * @param {number} props.vendorNameMaxLength - Maximum length for vendor name (optional, default: 30)
- * @param {boolean} props.showCompare - Show compare icon (optional, default: true)
- * @param {boolean} props.showDeliveryInfo - Show delivery information (optional, default: true)
  */
 const ProductCardMC = ({
   item,
@@ -60,9 +46,14 @@ const ProductCardMC = ({
   showCompare = true,
   showDeliveryInfo = true,
   isMobile,
+  imageLoading = "lazy",
+  fetchPriority = "auto",
+  disableTooltips = false,
+  currentService
 }) => {
   const navigate = useNavigate();
   const location = useLocation();
+
   const selectedVariant =
     variant ||
     (Array.isArray(item?.variants) ? item.variants[0] : item?.variants) ||
@@ -156,20 +147,48 @@ const ProductCardMC = ({
   }
 
   const variantFiles =
-    selectedVariant?.files || item?.tabletdetails?.files || item?.files || [];
+    (selectedVariant?.files?.length > 0 ? selectedVariant.files : null) ||
+    (item?.tabletdetails?.files?.length > 0 ? item.tabletdetails.files : null) ||
+    (item?.files?.length > 0 ? item.files : null) ||
+    item?.tabletvariants?.[0]?.files ||
+    [];
   const variantImageUrl =
-    selectedVariant?.imageUrl ||
-    item?.tabletdetails?.imageUrl ||
-    item?.imageUrl ||
+    (selectedVariant?.imageUrl?.length > 0 ? selectedVariant.imageUrl : null) ||
+    (item?.tabletdetails?.imageUrl?.length > 0 ? item.tabletdetails.imageUrl : null) ||
+    (item?.imageUrl?.length > 0 ? item.imageUrl : null) ||
+    item?.tabletvariants?.[0]?.files ||
     [];
   const allImageFiles =
     variantFiles.length > 0 ? variantFiles : variantImageUrl;
-  const productImage = getImageUrl(allImageFiles[0]) || "/assets/default.png";
+  const productImageRaw = getImageUrl(allImageFiles[0]);
+  const productImage = (
+    !productImageRaw ||
+    productImageRaw === "" ||
+    productImageRaw === "null" ||
+    productImageRaw === "undefined" ||
+    productImageRaw.includes("default.png") ||
+    productImageRaw.includes("placeholder")
+  ) ? "/medicine.jpg" : productImageRaw;
+
+  const [displayImage, setDisplayImage] = useState("/medicine.jpg");
+
+  useEffect(() => {
+    if (productImage && productImage !== "/medicine.jpg") {
+      const img = new Image();
+      img.onload = () => setDisplayImage(productImage);
+      img.onerror = () => setDisplayImage("/medicine.jpg");
+      img.src = productImage;
+    } else {
+      setDisplayImage("/medicine.jpg");
+    }
+  }, [productImage]);
+
   // Extract vendor details
   const price = item?.price || item?.tabletvariants?.[0]?.price || 0;
   const averageRating = item.averageRating || item?.tablet?.averageRating || 0;
   const totalRatings = item.totalRatings || item?.tablet?.ratingCount || 0;
   const vendorName = item?.vendordetails?.name || item?.vendorName || "";
+
   const vendorImageUrl =
     item?.vendordetails?.bussiness_image?.[0]?.url ||
     item?.vendordetails?.bussiness_image?.url ||
@@ -182,6 +201,7 @@ const ProductCardMC = ({
 
   // Extract distance from vendor details
   const distanceInKm = item?.vendordetails?.distanceInKm || item?.distanceInKm;
+
   // Truncate text helpers
   const truncateText = (text, maxLength) => {
     if (!text || typeof text !== "string") return "";
@@ -189,12 +209,8 @@ const ProductCardMC = ({
       ? text.substring(0, maxLength) + "..."
       : text;
   };
+
   const handleImageClick = () => {
-    if (onProductClick) {
-      onProductClick(item);
-    }
-  };
-  const handleVariantClick = () => {
     if (onProductClick) {
       onProductClick(item);
     }
@@ -210,7 +226,7 @@ const ProductCardMC = ({
     const { category, subcategory, slug } = getSlugs(tablet);
     if (slug) {
       const searchParams = location.search || "";
-      navigate(`/${category || "medicine"}/${subcategory || "tablets"}/${slug}/compare${searchParams}`);
+      navigate(`/${category || currentService || "medicine"}/${subcategory || "tablets"}/${slug}/compare${searchParams}`);
     }
   };
 
@@ -227,6 +243,8 @@ const ProductCardMC = ({
   const compositionTooltipRef = useRef(null);
 
   useEffect(() => {
+    if (disableTooltips) return undefined;
+
     // Compare Icon Tooltip
     if (showCompare && compareIconRef.current && window.bootstrap) {
       const tooltipElement = compareIconRef.current;
@@ -269,228 +287,63 @@ const ProductCardMC = ({
         compositionTooltipRef.current = null;
       }
     };
-  }, [showCompare, composition]);
+  }, [showCompare, composition, disableTooltips]);
 
   const stock = selectedVariant?.stock || item?.stock || 0;
   const isPrescriptionRequired =
     item?.tabletdetails?.isPrescriptionRequired ||
     item?.isPrescriptionRequired ||
     false;
-  const formatCurrency = (value) => Number(value || 0).toFixed(2);
+  const formatCurrency = (value) => Number(value || 0).toFixed(0);
+
+  const BookNowButtons = [
+    "labtests",
+    "lab-tests",
+    "diagnostics",
+    "homecare",
+    "home-care",
+    "nursingcare",
+    "clinics-and-rehabs",
+    "dentalservice",
+    "dental-care",
+    "medicaltreatment",
+    "treatments",
+    "surgeries",
+    "ambulanceservice",
+    "Ambulance"
+  ];
 
   return (
     <div
-      className={`tablet-card ${className}`}
+      className={`group !bg-white !border !border-[#f1f5f9] !rounded-[20px] !p-2.5 !shadow-[0_8px_20px_rgba(0,0,0,0.03)] hover:!shadow-[0_20px_40px_rgba(0,0,0,0.08)] hover:!-translate-y-2 !transition-all !duration-300 !h-full !w-full !flex !flex-col !relative !overflow-hidden !cursor-pointer ${className}`}
       style={style}
       onClick={handleImageClick}
     >
       <img
-        className="tablet-card-img"
-        src={productImage}
+        className="!w-full !h-[100px] !object-contain !mb-1 !p-1 !bg-[#fdfdfd] !rounded-lg"
+        src={displayImage}
         alt={productName}
         title={productName}
-        loading="lazy"
-        onError={(e) => {
-          e.target.src = "/medicine.jpg";
-        }}
+        loading={imageLoading}
+        fetchPriority={fetchPriority}
+        decoding="async"
       />
 
-      {/* Price and Rating Display */}
-      <div
-        style={{
-          position: "absolute",
-          top: "10px",
-          left: "10px",
-          background: "#ffffff",
-          padding: "2px 8px",
-          borderRadius: "20px",
-          fontSize: "11px",
-          fontWeight: "600",
-          display: "flex",
-          alignItems: "center",
-          gap: "4px",
-          boxShadow: "0 2px 5px rgba(0,0,0,0.1)",
-          border: "1px solid #e0e0e0",
-          zIndex: 10,
-        }}
-      >
-        <i
-          className="fas fa-star text-warning"
-          style={{ fontSize: "10px" }}
-        ></i>
-        <span>{averageRating.toFixed(1)}</span>
-        <span
-          style={{
-            color: "#9ca3af",
-            fontWeight: "400",
-            fontSize: "9px",
-          }}
-        >
-          ({totalRatings > 0 ? `${totalRatings}+` : "0+"})
-        </span>
-      </div>
-
-      {/* {price > 0 && (
-  <div className="flex justify-end fw-semibold mt-2 pr-2">
-    <PriceDisplay 
-      price={price} 
-      size="sm" 
-      className="mb-0"
-      currencyText=""
-      currency="₹"
-    />
-  </div>
-)} */}
-      {/* Compare Icon */}
       {showCompare && (
-        <>
-          <style>{`
-            @keyframes comparePulse {
-              0% {
-                box-shadow: 0 0 0 0 rgba(128, 89, 202, 0.6);
-              }
-              70% {
-                box-shadow: 0 0 0 6px rgba(128, 89, 202, 0);
-              }
-              100% {
-                box-shadow: 0 0 0 0 rgba(128, 89, 202, 0);
-              }
-            }
-            @keyframes compareAutoExpand {
-              0%, 10%, 40%, 100% {
-                width: 32px;
-              }
-              15%, 35% {
-                width: 90px;
-              }
-            }
-            @keyframes textFadeInOut {
-              0%, 12%, 38%, 100% {
-                opacity: 0;
-              }
-              15%, 35% {
-                opacity: 1;
-              }
-            }
-            .compare-btn-highlight {
-              animation: comparePulse 2s infinite, compareAutoExpand 8s infinite ease-in-out;
-            }
-            .compare-text-label {
-              animation: textFadeInOut 8s infinite ease-in-out;
-            }
-            .compare-btn-highlight:hover {
-              animation: comparePulse 2s infinite !important;
-            }
-            .compare-btn-highlight:hover .compare-text-label {
-              animation: none !important;
-              opacity: 1 !important;
-            }
-          `}</style>
-          <button
-            ref={compareIconRef}
-            onClick={handleCompareIconClick}
-            data-tooltip-id="global-tooltip"
-            data-tooltip-content="Compare"
-            className="compare-btn-highlight focus:outline-none"
-            style={{
-              position: "absolute",
-              top: "10px",
-              right: "10px",
-              background: "#8059ca",
-              color: "#ffffff",
-              border: "1.5px solid #8059ca",
-              borderRadius: "20px",
-              width: "32px",
-              height: "26px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "flex-start",
-              paddingLeft: "9px",
-              cursor: "pointer",
-              zIndex: 10,
-              boxShadow: "0 2px 8px rgba(128, 89, 202, 0.4)",
-              transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-              overflow: "hidden",
-              whiteSpace: "nowrap",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.width = "90px";
-              e.currentTarget.style.backgroundColor = "#6a45b3";
-              e.currentTarget.style.borderColor = "#6a45b3";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.width = "32px";
-              e.currentTarget.style.backgroundColor = "#8059ca";
-              e.currentTarget.style.borderColor = "#8059ca";
-            }}
-          >
-            <i
-              className="fa-solid fa-right-left shrink-0"
-              style={{ fontSize: "11px", color: "inherit" }}
-            ></i>
-            <span
-              className="compare-text-label"
-              style={{
-                marginLeft: "6px",
-                fontSize: "11px",
-                fontWeight: "600",
-                color: "#ffffff",
-                opacity: 0,
-                transition: "opacity 0.2s ease-in-out",
-              }}
-            >
-              Compare
-            </span>
-          </button>
-        </>
+        <CompareOverlayButton
+          tablet={item?.tabletdetails || item?.tablet || item}
+          serviceType={currentService}
+          onClick={handleCompareIconClick}
+        />
       )}
 
-      {discount > 0 && (
-        <div
-          className="position-absolute"
-          style={{
-            top: "30%",
-            left: "8px",
-            background: "linear-gradient(135deg, #ef4444 0%, #dc2626 100%)",
-            color: "white",
-            padding: "2px 8px",
-            borderRadius: "6px",
-            fontSize: "10px",
-            fontWeight: "600",
-            boxShadow: "0 2px 4px rgba(0,0,0,0.2)",
-            zIndex: 1,
-          }}
-        >
-          {itemDiscountType === "percentage" && itemDiscountprice ? `${itemDiscountprice}% OFF` : `${discount}% OFF`}
-        </div>
-      )}
-
-      {stock > 0 && stock <= 10 && (
-        <div
-          className="position-absolute"
-          style={{
-            top: "8px",
-            left: "8px",
-            background: "#fbbf24",
-            color: "#78350f",
-            padding: "4px 8px",
-            borderRadius: "6px",
-            fontSize: "10px",
-            fontWeight: "600",
-            zIndex: 1,
-          }}
-        >
-          Low Stock
-        </div>
-      )}
-
-      <div className="tablet-card-content">
-        <p className="tablet-card-title capitalize">
+      <div className="!flex !flex-col">
+        <p className="!text-[11px] sm:!text-xs !font-semibold !text-slate-800 !mb-2 !leading-tight !line-clamp-2 !overflow-hidden !min-h-[2.4em] capitalize" style={{ display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical" }}>
           {truncateText(productName, titleMaxLength)}
         </p>
 
         <div
-          className="flex flex-wrap gap-1"
+          className="flex flex-wrap gap-1 mt-1"
           style={{ fontSize: "10px", color: "#6b7280" }}
         >
           <span className="flex items-center gap-1">
@@ -550,66 +403,53 @@ const ProductCardMC = ({
           </span>
         )}
 
-        {/* {variantName && (
-          <p className="tablet-card-sub" onClick={handleVariantClick}>
-            {variantName}
-          </p>
-        )} */}
-
         {isMobile && effectivePrice > 0 && (
-          <div className="flex flex-row items-end price-details-wrapper">
-            <span className="tablet-card-price-amount">₹{formatCurrency(effectivePrice)}</span>
+          <div className="!flex !flex-row !items-end !flex-wrap !mt-auto">
+            <span className="!font-bold !text-sm !text-[#1a1a1a] !leading-none">₹{formatCurrency(effectivePrice)}</span>
             {itemDiscountprice &&
               itemDiscountprice > 0 &&
               itemDiscountprice !== itemPrice &&
               discount > 0 && (
-                <span className="tablet-card-old-price">₹{formatCurrency(itemPrice)}</span>
+                <span className="!text-[10px] !text-slate-400 !line-through !ml-1.5">₹{formatCurrency(itemPrice)}</span>
               )}
           </div>
         )}
       </div>
-      <div className="tablet-card-vendor-area">
+      <div className="!flex !flex-col !gap-[2px] !pt-2 !mt-auto">
         <div
-          className="tablet-card-footer flex flex-col gap-1"
+          className="!flex !items-center !justify-between !border-t-0 transition-all duration-200 pt-1 sm:pt-0 flex-col gap-1"
           onClick={handleVendorClick}
           style={{
             cursor:
               onVendorClick && item?.vendordetails ? "pointer" : "default",
           }}
         >
-          <div className="flex items-center justify-between w-full vendor-price-summary gap-2">
+          <div className="flex items-center justify-between w-full flex-row gap-2">
             {vendorName ? (
               <div className="flex items-center gap-2">
-                <div className="vendor-img-wrapper">
+                <div className="!w-[32px] !h-[32px] sm:!w-[45px] sm:!h-[45px] !rounded-[6px] sm:!rounded-[8px] !overflow-hidden !bg-[#f8fafc] !border !border-solid !border-[#f1f5f9] !shrink-0 !flex !items-center !justify-center">
                   {vendorImage ? (
-                    <img src={vendorImage} alt={vendorName} />
+                    <img src={vendorImage} alt={vendorName} className="!w-full !h-full !object-contain !p-[3px]" />
                   ) : (
-                    <div className="vendor-avatar-placeholder">
-                      {vendorName.charAt(0)} /assets/img/logo.png
+                    <div className="!w-full !h-full !bg-gradient-to-br !from-[#8059ca] !to-[#8059ca] !text-white !flex !items-center !justify-center !font-bold !text-[12px]">
+                      {vendorName.charAt(0)}
                     </div>
                   )}
                 </div>
-                <div className="vendor-info flex flex-col items-start">
-                  {/* <span className="vendor-label">Sold by</span> */}
-                  <p className="tablet-card-footer-title m-0">
+                <div className="flex flex-col items-start !gap-0">
+                  <p className="!text-[10.4px] sm:!text-[11.5px] !font-semibold !text-[#1a1a1a] !m-0">
                     {truncateText(vendorName, vendorNameMaxLength)}
                   </p>
-                  {distanceInKm && (
-                    <p className="tablet-card-distance m-0 text-primary" style={{ fontSize: "10px", color: "#6b7280" }}>
-                      <i className="fas fa-map-marker-alt text-primary" style={{ fontSize: "8px", marginRight: "4px" }}></i>
-                      {distanceInKm.toFixed(1)} km
-                    </p>
-                  )}
                   {!isMobile && effectivePrice > 0 && (
-                    <div className="flex flex-row items-center justify-center gap-1 price-details-wrapper">
-                      <span className="tablet-card-price-amount">
+                    <div className="!flex !flex-row !items-center !justify-start !gap-1.5 !shrink-0">
+                      <span className="!font-bold !text-[13px] sm:!text-[14px] !text-[#1a1a1a] !leading-[1.2]">
                         ₹{formatCurrency(effectivePrice)}
                       </span>
                       {itemDiscountprice &&
                         itemDiscountprice > 0 &&
                         itemDiscountprice !== itemPrice &&
                         discount > 0 && (
-                          <span className="tablet-card-old-price">
+                          <span className="!text-[10px] sm:!text-[12px] !text-[#94a3b8] !line-through">
                             ₹{formatCurrency(itemPrice)}
                           </span>
                         )}
@@ -619,34 +459,23 @@ const ProductCardMC = ({
               </div>
             ) : (
               <div className="flex items-center gap-2">
-                <div className="vendor-img-wrapper">
-                  <img src="/assets/img/logo.png" alt="medicompare" />
-
-                  {/* <div className="vendor-avatar-placeholder">
-                    Medicompares
-                  </div> */}
+                <div className="!w-[32px] !h-[32px] sm:!w-[45px] sm:!h-[45px] !rounded-[6px] sm:!rounded-[8px] !overflow-hidden !bg-[#f8fafc] !border !border-solid !border-[#f1f5f9] !shrink-0 !flex !items-center !justify-center">
+                  <img src="/assets/img/logo.png" alt="medicompare" className="!w-full !h-full !object-contain !p-[3px]" />
                 </div>
-                <div className="vendor-info flex flex-col items-start">
-                  {/* <span className="vendor-label">Sold by</span> */}
-                  <p className="tablet-card-footer-title m-0">
+                <div className="flex flex-col items-start !gap-0">
+                  <p className="!text-[10.4px] sm:!text-[11.5px] !font-semibold !text-[#1a1a1a] !m-0">
                     {truncateText("MediCompares", vendorNameMaxLength)}
                   </p>
-                  {distanceInKm && (
-                    <p className="tablet-card-distance m-0" style={{ fontSize: "10px", color: "#6b7280" }}>
-                      <i className="fas fa-map-marker-alt" style={{ fontSize: "8px", marginRight: "4px" }}></i>
-                      {distanceInKm.toFixed(1)} km away
-                    </p>
-                  )}
                   {!isMobile && effectivePrice > 0 && (
-                    <div className="flex flex-row items-center justify-center price-details-wrapper">
-                      <span className="tablet-card-price-amount">
+                    <div className="!flex !flex-row !items-center !justify-start !gap-1.5 !shrink-0">
+                      <span className="!font-bold !text-[13px] sm:!text-[14px] !text-[#1a1a1a] !leading-[1.2]">
                         ₹{formatCurrency(effectivePrice)}
                       </span>
                       {itemDiscountprice &&
                         itemDiscountprice > 0 &&
                         itemDiscountprice !== itemPrice &&
                         discount > 0 && (
-                          <span className="tablet-card-old-price">
+                          <span className="!text-[10px] sm:!text-[12px] !text-[#94a3b8] !line-through">
                             ₹{formatCurrency(itemPrice)}
                           </span>
                         )}
@@ -656,7 +485,6 @@ const ProductCardMC = ({
               </div>
             )}
           </div>
-
           <button
             onClick={(e) => {
               e.stopPropagation();
@@ -664,21 +492,16 @@ const ProductCardMC = ({
             }}
             className="w-full flex items-center justify-center gap-2 py-0.5 px-2 !rounded-md !text-[13px] !font-semibold text-white bg-[#8059ca] shadow-sm shadow-[#8059ca]/20 hover:shadow-md transition-all duration-300 cursor-pointer border-none"
           >
-            Order Now
+            {BookNowButtons.includes(currentService?.toLowerCase()) ? 'Book Now' : 'Order Now'}
             <i
               className="fas fa-shopping-basket"
               style={{ fontSize: "10px" }}
             ></i>
           </button>
-
-          {/* <CartQuantityControls
-            bookingType="cart"
-
-          /> */}
         </div>
       </div>
     </div>
   );
 };
-export default ProductCardMC;
 
+export default ProductCardMC;

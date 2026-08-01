@@ -191,6 +191,13 @@ const ProductDescriptionTabs = ({
   const hasSideEffects = !!(tablet?.sideeffects || tablet?.parameterss?.length > 0);
   const hasPrecautions = !!tablet?.precaution;
 
+  const tabs = [
+    { id: "productInfo", label: tabNamesByType[productType]?.[0] || "Product Information", has: hasProductInfo },
+    { id: "directionss", label: tabNamesByType[productType]?.[1] || "Directions of Use", has: hasDirections },
+    { id: "sideEffectss", label: tabNamesByType[productType]?.[2] || "Side Effects", has: hasSideEffects },
+    { id: "precuations", label: tabNamesByType[productType]?.[3] || "Precautions", has: hasPrecautions },
+  ];
+
   return (
     <>
       <style>
@@ -254,433 +261,249 @@ const ProductDescriptionTabs = ({
 
                 `}
       </style>
-      <div className="card shadow-sm rounded-3">
+      <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mb-4">
+        {/* Toggle Bar */}
         <div
-          className="card-body pt-0"
-          style={{
-            backgroundColor: isTabContentOpen ? "" : "rgba(0,0,0,0.04)",
-          }}
+          className={`flex items-center justify-between px-5 py-4 border-b border-gray-200 cursor-pointer ${isTabContentOpen ? "bg-white" : "bg-black/[0.02]"}`}
+          onClick={() => setIsTabContentOpen(!isTabContentOpen)}
         >
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              padding: "15px 0",
-              borderBottom: "1px solid #e0e0e0",
-              cursor: "pointer",
-            }}
-            onClick={() => setIsTabContentOpen(!isTabContentOpen)}
-          >
-            <h5
-              className="mb-0"
-              style={{ fontWeight: "600", fontSize: "18px" }}
-            >
-              Product Description
-            </h5>
-            <i
-              className={`fas fa-chevron-${isTabContentOpen ? "up" : "down"}`}
-              style={{ fontSize: "14px", color: "#666" }}
-            ></i>
+          <h5 className="m-0 font-semibold text-lg text-gray-800">Product Description</h5>
+          <i
+            className={`fas fa-chevron-${isTabContentOpen ? "up" : "down"} text-sm text-gray-500`}
+          ></i>
+        </div>
+
+        <div className={`px-5 pb-5 ${isTabContentOpen ? "" : "bg-black/[0.02]"}`}>
+          {/* Navigation Tabs - Emulating the .user-tabs .nav-tabs design */}
+          <div className="bg-white p-1 border border-gray-200 rounded-md flex flex-col md:flex-row mt-4 mb-4 gap-1">
+            {tabs.map((tab) => (
+              <button
+                key={tab.id}
+                disabled={!tab.has}
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (!tab.has) return;
+                  setActiveTab(tab.id);
+                  setShowMoreProductInfo(false);
+                  setShowMoreDirections(false);
+                  setShowMoreSideEffects(false);
+                  setShowMorePrecautions(false);
+                }}
+                className={`flex-1 text-center whitespace-nowrap !text-[13px] !font-bold py-2.5 px-3 !border-b-2 md:border-l-0 md:border-b-2 transition-all duration-200 ${activeTab === tab.id
+                  ? "!border-[#8059ca] !text-[#8059ca] bg-purple-50/30"
+                  : tab.has
+                    ? "!border-transparent !text-[#012047] hover:text-[#8059ca] hover:bg-gray-50/50"
+                    : "!border-transparent !text-gray-300 cursor-not-allowed"
+                  }`}
+              >
+                <div className="flex items-center justify-center gap-1.5">
+                  <span>{tab.label}</span>
+                  {!tab.has && (
+                    <i className="fas fa-lock text-[11px] opacity-60"></i>
+                  )}
+                </div>
+              </button>
+            ))}
           </div>
 
-          <nav className="user-tabs mb-3">
-            <ul className="nav nav-tabs nav-tabs-bottom nav-justified">
-              <li className="nav-item">
-                <Link
-                  className={`nav-link ${activeTab === "productInfo" ? "active" : ""} ${!hasProductInfo ? "disabled" : ""}`}
-                  style={{ cursor: !hasProductInfo ? "not-allowed" : "pointer" }}
-                  to="#productInfo"
-                  data-bs-toggle="tab"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    if (!hasProductInfo) return;
-                    setActiveTab("productInfo");
-                    setShowMoreProductInfo(false);
-                    setShowMoreDirections(false);
-                    setShowMoreSideEffects(false);
-                    setShowMorePrecautions(false);
-                  }}
-                >
-                  {tabNamesByType[
-                    product?.tablet?.subcategorys?.category?.fixedType
-                  ]?.[0] || "Product Information"}
-                  {!hasProductInfo && (
-                    <i className="fas fa-lock ms-2" style={{ fontSize: "12px", opacity: "0.6" }}></i>
-                  )}
-                </Link>
-              </li>
-
-              <li className="nav-item">
-                <Link
-                  className={`nav-link ${activeTab === "directionss" ? "active" : ""} ${!hasDirections ? "disabled" : ""}`}
-                  style={{ cursor: !hasDirections ? "not-allowed" : "pointer" }}
-                  to="#directionss"
-                  data-bs-toggle="tab"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    if (!hasDirections) return;
-                    setActiveTab("directionss");
-                    setShowMoreProductInfo(false);
-                    setShowMoreDirections(false);
-                    setShowMoreSideEffects(false);
-                    setShowMorePrecautions(false);
-                  }}
-                >
-                  {tabNamesByType[
-                    product?.tablet?.subcategorys?.category?.fixedType
-                  ]?.[1] || "Directions of Use"}
-                  {!hasDirections && (
-                    <i className="fas fa-lock ms-2" style={{ fontSize: "12px", opacity: "0.6" }}></i>
-                  )}
-                </Link>
-              </li>
-
-              <li className="nav-item">
-                <Link
-                  className={`nav-link ${activeTab === "sideEffectss" ? "active" : ""} ${!hasSideEffects ? "disabled" : ""}`}
-                  style={{ cursor: !hasSideEffects ? "not-allowed" : "pointer" }}
-                  to="#sideEffectss"
-                  data-bs-toggle="tab"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    if (!hasSideEffects) return;
-                    setActiveTab("sideEffectss");
-                    setShowMoreProductInfo(false);
-                    setShowMoreDirections(false);
-                    setShowMoreSideEffects(false);
-                    setShowMorePrecautions(false);
-                  }}
-                >
-                  {tabNamesByType[
-                    product?.tablet?.subcategorys?.category?.fixedType
-                  ]?.[2] || "Side Effects"}
-                  {!hasSideEffects && (
-                    <i className="fas fa-lock ms-2" style={{ fontSize: "12px", opacity: "0.6" }}></i>
-                  )}
-                </Link>
-              </li>
-
-              <li className="nav-item">
-                <Link
-                  className={`nav-link ${activeTab === "precuations" ? "active" : ""} ${!hasPrecautions ? "disabled" : ""}`}
-                  style={{ cursor: !hasPrecautions ? "not-allowed" : "pointer" }}
-                  to="#precuations"
-                  data-bs-toggle="tab"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    if (!hasPrecautions) return;
-                    setActiveTab("precuations");
-                    setShowMoreProductInfo(false);
-                    setShowMoreDirections(false);
-                    setShowMoreSideEffects(false);
-                    setShowMorePrecautions(false);
-                  }}
-                >
-                  {tabNamesByType[
-                    product?.tablet?.subcategorys?.category?.fixedType
-                  ]?.[3] || "Precautions"}
-                  {!hasPrecautions && (
-                    <i className="fas fa-lock ms-2" style={{ fontSize: "12px", opacity: "0.6" }}></i>
-                  )}
-                </Link>
-              </li>
-            </ul>
-          </nav>
+          {/* Tab Content */}
           {isTabContentOpen && (
-            <>
-              <div className="tab-content pt-0 pd-tab-scroll">
-                <div
-                  role="tabpanel"
-                  id="productInfo"
-                  className={`tab-pane fade ${activeTab === "productInfo" ? "show active" : ""}`}
-                >
-                  <div className="row">
-                    <div className="col-md-12">
-                      <div>
-                        {(() => {
-                          const productContent = tablet?.description || "";
-                          const isEmptyContent =
-                            !productContent ||
-                            productContent === "<p><br></p>" ||
-                            productContent.trim() === "";
-
-                          const sanitizedContent = sanitizeHTML(productContent);
-
-                          return (
-                            <>
-                              <div className="product-description">
-                                <div
-                                  dangerouslySetInnerHTML={{
-                                    __html: showMoreProductInfo
-                                      ? !isEmptyContent
-                                        ? sanitizedContent
-                                        : "No Data."
-                                      : !isEmptyContent
-                                        ? getFirstNWords(sanitizedContent, 50)
-                                        : "No Data.",
-                                  }}
-                                />
-                              </div>
-
-                              {productContent &&
-                                hasMoreThanNWords(sanitizedContent, 50) && (
-                                  <div className="pd-read-more-wrapper">
-                                    <span
-                                      className="pd-read-more"
-                                      onClick={() => {
-                                        const wasExpanded = showMoreProductInfo;
-                                        setShowMoreProductInfo(
-                                          !showMoreProductInfo,
-                                        );
-                                        if (!wasExpanded) {
-                                          scrollToElement("productInfo");
-                                        }
-                                      }}
-                                    >
-                                      {showMoreProductInfo
-                                        ? "View Less"
-                                        : "View More"}
-                                    </span>
-                                  </div>
-                                )}
-                            </>
-                          );
-                        })()}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div
-                  role="tabpanel"
-                  id="directionss"
-                  className={`tab-pane fade ${activeTab === "directionss" ? "show active" : ""}`}
-                >
-                  <div className="col-md-12">
-                    <div>
-                      {(() => {
-                        const directionsContent =
-                          tablet?.directionofuse ||
-                          tablet?.preparationInstructions ||
-                          "";
-
-                        const sanitizedContent = sanitizeHTML(directionsContent);
-                        const finalContent =
-                          sanitizedContent || getDefaultMessage(1);
-
-                        return (
-                          <>
-                            <div className="product-description">
-                              <div
-                                dangerouslySetInnerHTML={{
-                                  __html: showMoreDirections
-                                    ? finalContent
-                                    : getFirstNWords(finalContent, 50),
-                                }}
-                              />
-                            </div>
-
-                            {directionsContent &&
-                              hasMoreThanNWords(sanitizedContent, 50) && (
-                                <div className="pd-read-more-wrapper">
-                                  <span
-                                    className="pd-read-more"
-                                    onClick={() => {
-                                      const wasExpanded = showMoreDirections;
-                                      setShowMoreDirections(
-                                        !showMoreDirections,
-                                      );
-                                      if (!wasExpanded) {
-                                        scrollToElement("directionss");
-                                      }
-                                    }}
-                                  >
-                                    {showMoreDirections
-                                      ? "View Less"
-                                      : "View More"}
-                                  </span>
-                                </div>
-                              )}
-                          </>
-                        );
-                      })()}
-                    </div>
-                  </div>
-                </div>
-
-                <div
-                  role="tabpanel"
-                  id="sideEffectss"
-                  className={`tab-pane fade ${activeTab === "sideEffectss" ? "show active" : ""}`}
-                >
-                  <div className="col-md-12">
-                    <div>
-                      {!isLabTestNormalRange && (
+            <div className="tab-content pt-0">
+              {/* Product Info */}
+              {activeTab === "productInfo" && (
+                <div>
+                  {(() => {
+                    const productContent = tablet?.description || "";
+                    const isEmptyContent =
+                      !productContent ||
+                      productContent === "<p><br></p>" ||
+                      productContent.trim() === "";
+                    const sanitizedContent = sanitizeHTML(productContent);
+                    return (
+                      <>
                         <div className="product-description">
                           <div
                             dangerouslySetInnerHTML={{
-                              __html: showMoreSideEffects
-                                ? sanitizeHTML(tablet?.sideeffects || getDefaultMessage(2))
-                                : getFirstNWords(
-                                  sanitizeHTML(tablet?.sideeffects || getDefaultMessage(2)),
-                                  50,
-                                ),
+                              __html: showMoreProductInfo
+                                ? !isEmptyContent ? sanitizedContent : "No Data."
+                                : !isEmptyContent ? getFirstNWords(sanitizedContent, 50) : "No Data.",
                             }}
                           />
                         </div>
-                      )}
-
-                      {tablet?.sideeffects &&
-                        hasMoreThanNWords(sanitizeHTML(tablet?.sideeffects || ""), 50) && (
-                          <div className="pd-read-more-wrapper">
+                        {productContent && hasMoreThanNWords(sanitizedContent, 50) && (
+                          <div className="mt-3">
                             <span
-                              className="pd-read-more"
+                              className="text-xs font-semibold text-[#8059ca] hover:underline cursor-pointer"
                               onClick={() => {
-                                const wasExpanded = showMoreSideEffects;
-                                setShowMoreSideEffects(!showMoreSideEffects);
-                                if (!wasExpanded) {
-                                  scrollToElement("sideEffectss");
-                                }
+                                const wasExpanded = showMoreProductInfo;
+                                setShowMoreProductInfo(!showMoreProductInfo);
+                                if (!wasExpanded) scrollToElement("productInfo");
                               }}
                             >
-                              {showMoreSideEffects ? "View Less" : "View More"}
+                              {showMoreProductInfo ? "View Less" : "View More"}
                             </span>
                           </div>
                         )}
-                      {tablet?.parameterss?.length > 0 && (
-                        <div
-                          className="pd-params-section"
-                          data-aos="fade-up"
-                          data-aos-delay="150"
-                        >
+                      </>
+                    );
+                  })()}
+                </div>
+              )}
+
+              {/* Directions */}
+              {activeTab === "directionss" && (
+                <div>
+                  {(() => {
+                    const directionsContent =
+                      tablet?.directionofuse || tablet?.preparationInstructions || "";
+                    const sanitizedContent = sanitizeHTML(directionsContent);
+                    const finalContent = sanitizedContent || getDefaultMessage(1);
+                    return (
+                      <>
+                        <div className="product-description">
                           <div
-                            className="pd-params-header"
-                            onClick={() => setIsParamsOpen(!isParamsOpen)}
-                          >
-                            <div className="pd-params-title">
-                              <span>Test Parameters</span>
-                              <span className="pd-params-badge">
-                                {tablet.parameterss.length}
-                              </span>
-                            </div>
-                            <div className="pd-params-toggle">
-                              <i
-                                className={`fas fa-chevron-${isParamsOpen ? "up" : "down"
-                                  }`}
-                              ></i>
-                            </div>
+                            dangerouslySetInnerHTML={{
+                              __html: showMoreDirections ? finalContent : getFirstNWords(finalContent, 50),
+                            }}
+                          />
+                        </div>
+                        {directionsContent && hasMoreThanNWords(sanitizedContent, 50) && (
+                          <div className="mt-3">
+                            <span
+                              className="text-xs font-semibold text-[#8059ca] hover:underline cursor-pointer"
+                              onClick={() => {
+                                const wasExpanded = showMoreDirections;
+                                setShowMoreDirections(!showMoreDirections);
+                                if (!wasExpanded) scrollToElement("directionss");
+                              }}
+                            >
+                              {showMoreDirections ? "View Less" : "View More"}
+                            </span>
                           </div>
-                          {isParamsOpen && (
-                            <>
-                              <div className="pd-params-content">
-                                <div className="pd-params-tags">
-                                  {tablet.parameterss.map((param, idx) => (
-                                    <span key={idx} className="pd-param-tag">
-                                      {param.name}
-                                    </span>
-                                  ))}
-                                </div>
-                              </div>
+                        )}
+                      </>
+                    );
+                  })()}
+                </div>
+              )}
 
-                              <div className="pd-params-table-wrapper table-responsive">
-                                <table className="table table-bordered table-striped table-hover align-middle">
-                                  <thead className="table-light">
-                                    <tr>
-                                      <th>S.No</th>
-                                      <th>Parameter</th>
-                                      <th>Male</th>
-                                      <th>Female</th>
-                                      <th>Child</th>
-                                    </tr>
-                                  </thead>
-                                  <tbody>
-                                    {tablet.parameterss.map((param, idx) => (
-                                      <tr key={idx}>
-                                        <td>{idx + 1}</td>
-
-                                        <td>{param.name}</td>
-
-                                        <td>
-                                          {param.AdultMaleRange
-                                            ? `${param.AdultMaleRange} ${param.units
-                                              ? `(${param.units})`
-                                              : ""
-                                            }`
-                                            : "-"}
-                                        </td>
-
-                                        <td>
-                                          {param.AdultFemaleRange
-                                            ? `${param.AdultFemaleRange} ${param.units
-                                              ? `(${param.units})`
-                                              : ""
-                                            }`
-                                            : "-"}
-                                        </td>
-
-                                        <td>
-                                          {param.childnormalRange
-                                            ? `${param.childnormalRange} ${param.units
-                                              ? `(${param.units})`
-                                              : ""
-                                            }`
-                                            : "-"}
-                                        </td>
-                                      </tr>
-                                    ))}
-                                  </tbody>
-                                </table>
-                              </div>
-                            </>
-                          )}
+              {/* Side Effects */}
+              {activeTab === "sideEffectss" && (
+                <div>
+                  {!isLabTestNormalRange && (
+                    <div className="product-description">
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html: showMoreSideEffects
+                            ? sanitizeHTML(tablet?.sideeffects || getDefaultMessage(2))
+                            : getFirstNWords(sanitizeHTML(tablet?.sideeffects || getDefaultMessage(2)), 50),
+                        }}
+                      />
+                    </div>
+                  )}
+                  {tablet?.sideeffects && hasMoreThanNWords(sanitizeHTML(tablet?.sideeffects || ""), 50) && (
+                    <div className="mt-3 mb-4">
+                      <span
+                        className="text-xs font-semibold text-[#8059ca] hover:underline cursor-pointer"
+                        onClick={() => {
+                          const wasExpanded = showMoreSideEffects;
+                          setShowMoreSideEffects(!showMoreSideEffects);
+                          if (!wasExpanded) scrollToElement("sideEffectss");
+                        }}
+                      >
+                        {showMoreSideEffects ? "View Less" : "View More"}
+                      </span>
+                    </div>
+                  )}
+                  {tablet?.parameterss?.length > 0 && (
+                    <div className="bg-white border border-gray-200 rounded-lg overflow-hidden mt-4">
+                      <div
+                        className="flex justify-between items-center px-4 py-3 bg-gray-50 border-b border-gray-200 cursor-pointer"
+                        onClick={() => setIsParamsOpen(!isParamsOpen)}
+                      >
+                        <div className="flex items-center gap-2.5 font-semibold text-sm text-gray-800">
+                          <span>Test Parameters</span>
+                          <span className="bg-[#8059ca] text-white px-2 py-0.5 rounded-full text-xs font-bold">
+                            {tablet.parameterss.length}
+                          </span>
+                        </div>
+                        <i className={`fas fa-chevron-${isParamsOpen ? "up" : "down"} text-xs text-gray-400`}></i>
+                      </div>
+                      {isParamsOpen && (
+                        <div className="p-4">
+                          <div className="flex flex-wrap gap-2 mb-3">
+                            {tablet.parameterss.map((param, idx) => (
+                              <span key={idx} className="bg-purple-50 text-[#8059ca] px-3 py-1 rounded-md text-xs font-medium border border-purple-100">
+                                {param.name}
+                              </span>
+                            ))}
+                          </div>
+                          <div className="overflow-x-auto w-full">
+                            <table className="w-full text-xs border-collapse">
+                              <thead>
+                                <tr className="bg-gray-50 border-b border-gray-200 text-gray-600 font-semibold">
+                                  <th className="text-left px-3 py-2">S.No</th>
+                                  <th className="text-left px-3 py-2">Parameter</th>
+                                  <th className="text-left px-3 py-2">Male</th>
+                                  <th className="text-left px-3 py-2">Female</th>
+                                  <th className="text-left px-3 py-2">Child</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {tablet.parameterss.map((param, idx) => (
+                                  <tr key={idx} className={idx % 2 === 0 ? "bg-white" : "bg-gray-50/50"}>
+                                    <td className="px-3 py-2 border-b border-gray-100 text-gray-500">{idx + 1}</td>
+                                    <td className="px-3 py-2 border-b border-gray-100 font-medium text-gray-800">{param.name}</td>
+                                    <td className="px-3 py-2 border-b border-gray-100 text-gray-600">
+                                      {param.AdultMaleRange ? `${param.AdultMaleRange} ${param.units ? `(${param.units})` : ""}` : "-"}
+                                    </td>
+                                    <td className="px-3 py-2 border-b border-gray-100 text-gray-600">
+                                      {param.AdultFemaleRange ? `${param.AdultFemaleRange} ${param.units ? `(${param.units})` : ""}` : "-"}
+                                    </td>
+                                    <td className="px-3 py-2 border-b border-gray-100 text-gray-600">
+                                      {param.childnormalRange ? `${param.childnormalRange} ${param.units ? `(${param.units})` : ""}` : "-"}
+                                    </td>
+                                  </tr>
+                                ))}
+                              </tbody>
+                            </table>
+                          </div>
                         </div>
                       )}
                     </div>
-                  </div>
+                  )}
                 </div>
+              )}
 
-                <div
-                  role="tabpanel"
-                  id="precuations"
-                  className={`tab-pane fade ${activeTab === "precuations" ? "show active" : ""}`}
-                >
-                  <div className="row">
-                    <div className="col-md-12">
-                      <div className="product-description">
-                        <div
-                          dangerouslySetInnerHTML={{
-                            __html: showMorePrecautions
-                              ? sanitizeHTML(tablet?.precaution || getDefaultMessage(3))
-                              : getFirstNWords(
-                                sanitizeHTML(tablet?.precaution || getDefaultMessage(3)),
-                                50,
-                              ),
-                          }}
-                        />
-                      </div>
-                      {tablet?.precaution &&
-                        hasMoreThanNWords(sanitizeHTML(tablet?.precaution || ""), 50) && (
-                          <div className="pd-read-more-wrapper">
-                            <span
-                              className="pd-read-more"
-                              onClick={() => {
-                                const wasExpanded = showMorePrecautions;
-                                setShowMorePrecautions(!showMorePrecautions);
-                                if (!wasExpanded) {
-                                  scrollToElement("precuations");
-                                }
-                              }}
-                            >
-                              {showMorePrecautions ? "View Less" : "View More"}
-                            </span>
-                          </div>
-                        )}
-                    </div>
+              {/* Precautions */}
+              {activeTab === "precuations" && (
+                <div>
+                  <div className="product-description">
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: showMorePrecautions
+                          ? sanitizeHTML(tablet?.precaution || getDefaultMessage(3))
+                          : getFirstNWords(sanitizeHTML(tablet?.precaution || getDefaultMessage(3)), 50),
+                      }}
+                    />
                   </div>
+                  {tablet?.precaution && hasMoreThanNWords(sanitizeHTML(tablet?.precaution || ""), 50) && (
+                    <div className="mt-3">
+                      <span
+                        className="text-xs font-semibold text-[#8059ca] hover:underline cursor-pointer"
+                        onClick={() => {
+                          const wasExpanded = showMorePrecautions;
+                          setShowMorePrecautions(!showMorePrecautions);
+                          if (!wasExpanded) scrollToElement("precuations");
+                        }}
+                      >
+                        {showMorePrecautions ? "View Less" : "View More"}
+                      </span>
+                    </div>
+                  )}
                 </div>
-              </div>
-            </>
+              )}
+            </div>
           )}
         </div>
       </div>

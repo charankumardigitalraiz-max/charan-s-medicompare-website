@@ -6,6 +6,7 @@ import { getImageUrl } from "../../../../utils/index";
 import { useResponsive } from "../../../../hooks/useResponsive";
 import toast from "react-hot-toast";
 import BaseModal from "../../../../components/ui/BaseModal";
+import Pagination from "../../../../components/ui/Pagination.jsx";
 
 // Styles migrated to Tailwind CSS
 
@@ -155,9 +156,9 @@ const AmbulanceBooking = ({ HomeNavigate, BackButton }) => {
 
   return (
     <div className="w-full">
-      <div className="col-lg-12">
+      <div className="w-full">
         {BackButton && (
-          <div className="col-12 mb-3">
+          <div className="w-full mb-3">
             <BackButton />
           </div>
         )}
@@ -196,38 +197,15 @@ const AmbulanceBooking = ({ HomeNavigate, BackButton }) => {
         </div>
 
         {/* Status Tabs */}
-        <div className="mb-3 position-relative mt-4">
+        <div className="mb-3 relative mt-4">
           <div className="flex justify-between items-center gap-2 flex-nowrap">
             {isMobile ? (
               <select
                 value={activeTab}
-                className="form-select border border-[#ddd]"
+                className="w-full h-[38px] rounded-lg border border-slate-200 px-3 text-[13px] outline-none bg-slate-50 focus:bg-white focus:border-[#8059ca] transition-all duration-200"
                 onChange={(e) => handleTabChange(e.target.value)}
               >
                 {STATUS_TABS.map((tab) => {
-                  const tabCount =
-                    tab.id === "all"
-                      ? leadslist.length
-                      : leadslist.filter((lead) => {
-                        const s = lead.status?.toLowerCase() || "";
-                        switch (tab.id) {
-                          case "upcoming":
-                            return (
-                              s === "upcoming" ||
-                              s === "pending" ||
-                              s === "accepted" ||
-                              s === "confirmed"
-                            );
-                          case "completed":
-                            return s === "completed";
-                          case "cancelled":
-                            return s === "cancelled" || s === "rejected";
-                          case "failed":
-                            return s === "failed";
-                          default:
-                            return false;
-                        }
-                      }).length;
                   return (
                     <option key={tab.id} value={tab.id}>
                       {tab.label}
@@ -236,37 +214,14 @@ const AmbulanceBooking = ({ HomeNavigate, BackButton }) => {
                 })}
               </select>
             ) : (
-              <ul className="nav nav-tabs nav-tabs-solid flex-1 flex mb-0 overflow-visible min-w-0">
+              <ul className="flex border-b border-slate-200 w-full mb-0 overflow-visible min-w-0 gap-2 list-none p-0">
                 {STATUS_TABS.map((tab) => {
                   const isActive = activeTab === tab.id;
-                  const tabCount =
-                    tab.id === "all"
-                      ? leadslist.length
-                      : leadslist.filter((lead) => {
-                        const s = lead.status?.toLowerCase() || "";
-                        switch (tab.id) {
-                          case "upcoming":
-                            return (
-                              s === "upcoming" ||
-                              s === "pending" ||
-                              s === "accepted" ||
-                              s === "confirmed"
-                            );
-                          case "completed":
-                            return s === "completed";
-                          case "cancelled":
-                            return s === "cancelled" || s === "rejected";
-                          case "failed":
-                            return s === "failed";
-                          default:
-                            return false;
-                        }
-                      }).length;
 
                   return (
                     <li className="nav-item" key={tab.id}>
                       <button
-                        className={`nav-link ${isActive ? "active" : ""} flex items-center gap-1.5`}
+                        className={`py-2.5 px-4 text-[13px] font-semibold !border-b-2 -mb-[1px] transition-all duration-200 flex items-center gap-1.5 ${isActive ? "!border-[#8059ca] !text-[#8059ca]" : "border-transparent text-slate-500 hover:text-slate-700"}`}
                         onClick={() => handleTabChange(tab.id)}
                       >
                         <i className={`fas ${tab.icon}`}></i>
@@ -282,13 +237,13 @@ const AmbulanceBooking = ({ HomeNavigate, BackButton }) => {
 
         <div className="w-full py-4">
           {loading ? (
-            <div className="text-center py-5">
-              <div className="spinner-border text-primary" role="status">
-                <span className="visually-hidden">Loading...</span>
+            <div className="text-center py-10 flex justify-center items-center">
+              <div className="animate-spin inline-block w-8 h-8 border-4 border-[#8059ca] border-t-transparent rounded-full" role="status">
+                <span className="sr-only">Loading...</span>
               </div>
             </div>
           ) : filteredOrders.length > 0 ? (
-            <div className="row">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {filteredOrders.map((lead) => {
                 const orderStatus = lead.status?.toLowerCase() || "";
                 const isDelivered = orderStatus === "completed" || orderStatus === "delivered";
@@ -296,13 +251,13 @@ const AmbulanceBooking = ({ HomeNavigate, BackButton }) => {
                 const isPaid = lead.paymentStatus === "paid";
 
                 return (
-                  <div key={lead._id} className="col-md-6 col-12 mb-3">
-                    <div className="bg-white border border-[#e2e8f0] rounded-[9px] shadow-[0_2px_10px_rgba(15,23,42,0.03)] p-4 h-100 flex flex-col justify-between hover:shadow-[0_8px_24px_rgba(128,89,202,0.1)] hover:border-[#c0a6f3] transition-all duration-300">
+                  <div key={lead._id} className="w-full">
+                    <div className="bg-white border border-[#e2e8f0] rounded-[9px] shadow-[0_2px_10px_rgba(15,23,42,0.03)] p-4 h-full flex flex-col justify-between hover:shadow-[0_8px_24px_rgba(128,89,202,0.1)] hover:border-[#c0a6f3] transition-all duration-300">
                       {/* Top Header Row */}
                       <div>
                         <div className="flex justify-between items-center mb-2 pb-2 border-b border-[#f1f5f9]">
                           <div>
-                            <div className="d-flex align-items-center gap-2">
+                            <div className="flex items-center gap-2">
                               <span className="text-[13px] font-semibold text-[#0f172a]">
                                 #{lead.bookingId}
                               </span>
@@ -315,7 +270,7 @@ const AmbulanceBooking = ({ HomeNavigate, BackButton }) => {
                               </span>
                             </div>
                             <div className="text-[11px] text-[#64748b] mt-0.5">
-                              <i className="fas fa-calendar-alt me-1 text-[#8059ca]"></i>
+                              <i className="fas fa-calendar-alt mr-1 text-[#8059ca]"></i>
                               {new Date(lead.createdAt).toLocaleDateString("en-US", { day: "2-digit", month: "short", year: "numeric" })}
                             </div>
                           </div>
@@ -347,20 +302,20 @@ const AmbulanceBooking = ({ HomeNavigate, BackButton }) => {
                             <i className="fas fa-ambulance"></i>
                           </div>
                           <div className="flex-1 min-w-0">
-                            <div className="text-[13px] font-semibold text-[#1e293b] capitalize text-truncate">
+                            <div className="text-[13px] font-semibold text-[#1e293b] capitalize truncate">
                               {lead.productdetails?.tabletdetails?.name ||
                                 lead.productdetails?.variantcurrentDetails?.productname ||
                                 lead.productdetails?.packagedetails?.name ||
                                 "Ambulance Service"}
                             </div>
-                            <div className="d-flex align-items-center gap-2 mt-1 text-[11px]">
+                            <div className="flex items-center gap-2 mt-1 text-[11px]">
                               <span className="text-[#64748b]">
-                                <i className="fas fa-truck-medical me-1 text-[#8059ca]"></i>
+                                <i className="fas fa-truck-medical mr-1 text-[#8059ca]"></i>
                                 {lead.emergencyType ? (lead.emergencyType.toLowerCase() === "nonemergency" ? "Non-Emergency" : lead.emergencyType) : "Standard"}
                               </span>
                               <span className="text-[#cbd5e1]">•</span>
                               <span className={`text-[11px] ${isPaid ? "text-[#16a34a]" : "text-[#dc2626]"} font-semibold capitalize`}>
-                                <i className={`fas ${isPaid ? "fa-check-circle" : "fa-clock"} me-1`}></i>
+                                <i className={`fas ${isPaid ? "fa-check-circle" : "fa-clock"} mr-1`}></i>
                                 {lead.paymentStatus || "unpaid"}
                               </span>
                             </div>
@@ -375,7 +330,7 @@ const AmbulanceBooking = ({ HomeNavigate, BackButton }) => {
                             <div className="flex-grow min-w-0 text-[12px] flex justify-between items-center">
                               <span
                                 title={lead.pickupLocation?.address || "N/A"}
-                                className="text-[#334155] font-medium whitespace-nowrap overflow-hidden text-ellipsis"
+                                className="text-[#334155] font-medium block truncate max-w-[140px] xs:max-w-[200px] sm:max-w-[160px] md:max-w-[180px] lg:max-w-[240px]"
                               >
                                 <strong className="text-[#64748b] font-semibold mr-1">From:</strong>
                                 {lead.pickupLocation?.address || "N/A"}
@@ -387,7 +342,7 @@ const AmbulanceBooking = ({ HomeNavigate, BackButton }) => {
                                   rel="noopener noreferrer"
                                   className="text-[11px] text-[#16a34a] no-underline font-semibold shrink-0 ml-1.5"
                                 >
-                                  <i className="fas fa-map-marked-alt me-1"></i> Maps
+                                  <i className="fas fa-map-marked-alt mr-1"></i> Maps
                                 </a>
                               )}
                             </div>
@@ -399,7 +354,7 @@ const AmbulanceBooking = ({ HomeNavigate, BackButton }) => {
                             <div className="flex-grow min-w-0 text-[12px] flex justify-between items-center">
                               <span
                                 title={lead.dropoffLocation?.address || "N/A"}
-                                className="text-[#334155] font-medium whitespace-nowrap overflow-hidden text-ellipsis"
+                                className="text-[#334155] font-medium block truncate max-w-[140px] xs:max-w-[200px] sm:max-w-[160px] md:max-w-[180px] lg:max-w-[240px]"
                               >
                                 <strong className="text-[#64748b] font-semibold mr-1">To:</strong>
                                 {lead.dropoffLocation?.address || "N/A"}
@@ -411,7 +366,7 @@ const AmbulanceBooking = ({ HomeNavigate, BackButton }) => {
                                   rel="noopener noreferrer"
                                   className="text-[11px] text-[#dc2626] no-underline font-semibold shrink-0 ml-1.5"
                                 >
-                                  <i className="fas fa-map-marked-alt me-1"></i> Maps
+                                  <i className="fas fa-map-marked-alt mr-1"></i> Maps
                                 </a>
                               )}
                             </div>
@@ -421,7 +376,7 @@ const AmbulanceBooking = ({ HomeNavigate, BackButton }) => {
                         {/* Vendor info snippet */}
                         {lead.vendordetails && (lead.vendordetails.firstName || lead.vendordetails.email || lead.vendordetails.mobile) && (
                           <div className="bg-[#f8fafc] border border-[#f1f5f9] rounded-lg p-[6px_10px] mb-2.5 flex justify-between items-center text-[11px]">
-                            <div className="d-flex align-items-center gap-1">
+                            <div className="flex items-center gap-1">
                               <span className="text-[#64748b] font-semibold">Vendor:</span>
                               <span className="text-[#0f172a] font-semibold">
                                 {lead.vendordetails.firstName || ""} {lead.vendordetails.lastName || ""}
@@ -435,7 +390,6 @@ const AmbulanceBooking = ({ HomeNavigate, BackButton }) => {
                       <div className="flex gap-2 pt-2.5 border-t border-[#f1f5f9]">
                         <button
                           className="inline-flex items-center justify-center gap-1.5 !rounded-md !text-[11px] !font-medium p-[4px_8px] min-w-fit whitespace-nowrap leading-tight bg-[#8059ca] text-white border border-[#8059ca] transition-all duration-200 no-underline shadow-none hover:bg-[#6f42c1] hover:border-[#6f42c1] focus:bg-[#6f42c1] focus:border-[#6f42c1]"
-                          // style={{ borderRadius: '12px', boxShadow: '0 2px 8px rgba(128,89,202,0.2)' }}
                           onClick={() => setSelectedLead(lead)}
                         >
                           <i className="fas fa-eye text-[11px]" /> View Details
@@ -444,7 +398,6 @@ const AmbulanceBooking = ({ HomeNavigate, BackButton }) => {
                         {isUpcoming(lead) && (
                           <button
                             className="inline-flex items-center justify-center gap-1.5 !rounded-md !text-[11px] !font-medium p-[4px_8px] min-w-fit whitespace-nowrap leading-tight bg-red-500 text-white border border-red-500 transition-all duration-200 no-underline shadow-none hover:bg-red-600 hover:border-red-600 focus:bg-red-600 focus:border-red-600"
-                            // style={{ borderRadius: '12px', border: '1px solid #f87171', color: '#ef4444' }}
                             onClick={() => setConfirmCancelId(lead._id)}
                           >
                             <i className="fas fa-times text-[11px]" /> Cancel
@@ -457,11 +410,11 @@ const AmbulanceBooking = ({ HomeNavigate, BackButton }) => {
               })}
             </div>
           ) : (
-            <div className="text-center py-5">
-              <div className="empty-state">
-                <i className="fa-solid fa-truck-medical fa-3x text-muted mb-3"></i>
-                <h5 className="text-muted">No ambulance bookings found</h5>
-                <p className="text-muted">{getEmptyMessage()}</p>
+            <div className="text-center py-10">
+              <div className="flex flex-col items-center justify-center">
+                <i className="fa-solid fa-truck-medical text-[48px] text-slate-300 mb-3"></i>
+                <h5 className="text-slate-400 font-semibold text-[15px]">No ambulance bookings found</h5>
+                <p className="text-slate-400 text-[13px]">{getEmptyMessage()}</p>
               </div>
             </div>
           )}
@@ -474,37 +427,9 @@ const AmbulanceBooking = ({ HomeNavigate, BackButton }) => {
             onClose={onClose}
             title={`Booking #${selectedLead.bookingId || (selectedLead._id ? selectedLead._id.substring(selectedLead._id.length - 8) : "")}`}
             size="md"
-            // className={isAddingFamilyMember ? "max-w-[500px]" : "max-w-[420px]"}
             bodyClassName="!p-2"
             headerClassName="border-b-0 pb-0"
           >
-
-            {/* Modal Header */}
-            {/* <div className="amb-detail-modal-header flex items-center justify-between p-3 border-b border-slate-100">
-              <div>
-                <h4 className="m-0 text-[16px] font-semibold text-[#0f172a]">
-                  Booking #{selectedLead.bookingId || (selectedLead._id ? selectedLead._id.substring(selectedLead._id.length - 8) : "")}
-                </h4>
-                <span className="text-[12px] text-[#8059ca] font-medium block mt-0.5">
-                  Ambulance Service Details
-                </span>
-              </div>
-              <div className="flex items-center gap-2.5">
-                <span className={`status-badge text-capitalize text-[11px] p-[4px_10px] rounded-full font-medium ${getStatusBadgeClass(selectedLead.status) === "delivered" ? "bg-[#d7f5e8] text-[#00a86b]" :
-                  getStatusBadgeClass(selectedLead.status) === "cancelled" ? "bg-[#ffe0e0] text-[#dc3545]" :
-                    getStatusBadgeClass(selectedLead.status) === "failed" ? "bg-[#fff3cd] text-[#856404]" :
-                      "bg-[#ffe9d6] text-[#ff7a00]"}`}>
-                  {selectedLead.status || "N/A"}
-                </span>
-                <button
-                  type="button"
-                  onClick={() => setSelectedLead(null)}
-                  className="border-none bg-slate-100 w-7 h-7 rounded-full text-slate-500 flex items-center justify-center text-[14px] cursor-pointer hover:bg-slate-200 transition-colors"
-                >
-                  <i className="fas fa-times"></i>
-                </button>
-              </div>
-            </div> */}
 
             {/* Modal Body */}
             <div className="p-2 overflow-y-auto">
@@ -525,7 +450,7 @@ const AmbulanceBooking = ({ HomeNavigate, BackButton }) => {
                   </div>
                   {selectedLead.bookingDateTime && (
                     <div className="text-[12px] text-[#8059ca] mt-1">
-                      <i className="fas fa-calendar-alt me-1"></i>
+                      <i className="fas fa-calendar-alt mr-1"></i>
                       {new Date(selectedLead.bookingDateTime).toLocaleString("en-US", { day: "2-digit", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" })}
                     </div>
                   )}
@@ -628,7 +553,7 @@ const AmbulanceBooking = ({ HomeNavigate, BackButton }) => {
                       </div>
                       {selectedLead.vendordetails.email && (
                         <div className="text-[12px] text-slate-500 mt-0.5">
-                          <i className="fas fa-envelope me-1 text-[10px]"></i>
+                          <i className="fas fa-envelope mr-1 text-[10px]"></i>
                           {selectedLead.vendordetails.email}
                         </div>
                       )}
@@ -672,29 +597,29 @@ const AmbulanceBooking = ({ HomeNavigate, BackButton }) => {
                   <i className="fas fa-triangle-exclamation"></i>
                 </div>
 
-                <h4 className="m-0 mb-2 text-[20px] font-semibold text-[#0f172a]">
+                <h4 className="m-0 mb-2 !text-[20px] !font-semibold text-[#0f172a]">
                   Cancel Ambulance Booking?
                 </h4>
 
-                <p className="text-[14px] text-slate-500 m-0 leading-relaxed">
+                <p className="!text-[14px] text-slate-500 m-0 leading-relaxed">
                   Are you sure you want to cancel this booking? This request will be sent to the vendor immediately.
                 </p>
               </div>
 
               <div className="flex gap-2 justify-center mt-6">
                 <button
-                  className="w-1/2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-xl py-2.5 text-[14px] border-none transition-colors cursor-pointer"
+                  className="w-1/2 bg-slate-100 hover:bg-slate-200 text-slate-700 !font-semibold !rounded-xl py-2.5 text-[14px] border-none transition-colors cursor-pointer"
                   onClick={() => setConfirmCancelId(null)}
                 >
                   No, Keep Booking
                 </button>
                 <button
-                  className="w-1/2 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-xl py-2.5 text-[14px] border-none transition-colors cursor-pointer disabled:opacity-50"
+                  className="w-1/2 bg-red-600 hover:bg-red-700 text-white !font-semibold !rounded-xl py-2.5 text-[14px] border-none transition-colors cursor-pointer disabled:opacity-50"
                   disabled={cancellingId === confirmCancelId}
                   onClick={() => handleCancelBooking(confirmCancelId)}
                 >
                   {cancellingId === confirmCancelId ? (
-                    <span className="spinner-border spinner-border-sm" />
+                    <div className="animate-spin inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full" />
                   ) : (
                     "Yes, Cancel Now"
                   )}
@@ -705,69 +630,7 @@ const AmbulanceBooking = ({ HomeNavigate, BackButton }) => {
           document.body
         )}
 
-        {totalPages > 0 && (
-          <div className="pagination dashboard-pagination mt-0">
-            <ul className="d-flex justify-content-center align-items-center gap-1">
-              <li>
-                <button
-                  className="page-link"
-                  onClick={() =>
-                    handlePageChange(Math.max(currentPage - 1, 1))
-                  }
-                  disabled={currentPage === 1}
-                >
-                  <i className="fa-solid fa-chevron-left" />
-                </button>
-              </li>
-
-              {Array.from({ length: totalPages }, (_, i) => {
-                const page = i + 1;
-                if (
-                  page === 1 ||
-                  page === totalPages ||
-                  (page >= currentPage - 1 && page <= currentPage + 1)
-                ) {
-                  return (
-                    <li key={page}>
-                      <button
-                        className={`page-link ${currentPage === page ? "active" : ""
-                          }`}
-                        onClick={() => handlePageChange(page)}
-                      >
-                        {page}
-                      </button>
-                    </li>
-                  );
-                }
-                if (
-                  page === currentPage - 2 ||
-                  page === currentPage + 2
-                ) {
-                  return (
-                    <li key={`dots-${page}`}>
-                      <span className="page-link disabled">…</span>
-                    </li>
-                  );
-                }
-                return null;
-              })}
-
-              <li>
-                <button
-                  className="page-link"
-                  onClick={() =>
-                    handlePageChange(
-                      Math.min(currentPage + 1, totalPages),
-                    )
-                  }
-                  disabled={currentPage === totalPages}
-                >
-                  <i className="fa-solid fa-chevron-right" />
-                </button>
-              </li>
-            </ul>
-          </div>
-        )}
+        <Pagination page={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
       </div>
     </div>
   );

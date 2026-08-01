@@ -380,13 +380,9 @@ const ServiceCards = ({ serviceType, liteMode = false }) => {
       className={isMobile && !liteMode ? "px-2" : isMobile ? "" : "w-full md:w-1/3 sm:w-1/2 px-2.5 mb-4"}
     >
       <div
-        className={`description-item tooltip-container${liteMode ? " service-card-lite" : ""}`}
+        className={`group relative flex justify-between items-center cursor-pointer mb-2.5 py-2.5 pr-4 pl-2.5 rounded-[14px] shadow-[0px_4px_14px_0px_rgba(226,237,255,0.25)] transition-all duration-500 bg-[rgba(159,100,255,0.16)] ${!liteMode ? "hover:-translate-y-2.5" : ""
+          }`}
         style={{
-          background: PRIMARY_CARD_BG,
-          display: "flex",
-          justifyContent: "space-between",
-          cursor: "pointer",
-          position: "relative",
           zIndex: !liteMode && hoveredIndex === idx ? 12 : "auto",
         }}
         onMouseEnter={() => !liteMode && setHoveredIndex(idx)}
@@ -397,37 +393,32 @@ const ServiceCards = ({ serviceType, liteMode = false }) => {
             : null
         }
       >
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <span>
+        <div className="flex items-center">
+          <span className="w-[60px] h-[60px] border border-[#eef1f6] rounded-[10px] mr-2 shrink-0 flex items-center justify-center bg-white shadow-sm">
             <i
               className={card.icon}
               style={{ fontSize: "32px", color: PRIMARY_COLOR }}
             ></i>
           </span>
-          <h4>
-            <a style={{ fontSize: "14px" }}>{card.title}</a>
+          <h4 className="mb-0 text-sm md:text-base font-semibold text-gray-900">
+            <a className="no-underline text-gray-900">{card.title}</a>
           </h4>
         </div>
         <i
           className={
             hoveredIndex === idx
-              ? `fa-solid fa-${isMobile ? "arrow-up" : "chevron-up"} mr-4`
-              : `fa-solid fa-${isMobile ? "arrow-down" : "chevron-down"} mr-4`
+              ? `fa-solid fa-${isMobile ? "arrow-up" : "chevron-up"} ml-2`
+              : `fa-solid fa-${isMobile ? "arrow-down" : "chevron-down"} ml-2`
           }
         ></i>
 
         <div
-          className="tooltip-content"
-          style={
-            isMobile && !liteMode
-              ? {
-                opacity: hoveredIndex === idx ? 1 : 0,
-                visibility: hoveredIndex === idx ? "visible" : "hidden",
-              }
-              : undefined
-          }
+          className={`absolute bottom-[calc(100%+15px)] left-1/2 -translate-x-1/2 bg-white text-[#333] py-3 px-4 rounded-xl shadow-[0_8px_24px_rgba(0,0,0,0.15)] min-w-[280px] max-w-[350px] pointer-events-none transition-all duration-300 ease-out z-[1000] border border-black/8 after:content-[''] after:absolute after:top-full after:left-1/2 after:-translate-x-1/2 after:border-8 after:border-transparent after:border-t-white after:drop-shadow-[0_2px_4px_rgba(0,0,0,0.1)] ${hoveredIndex === idx
+              ? "opacity-100 visible translate-y-0"
+              : "opacity-0 invisible translate-y-2.5"
+            }`}
         >
-          <div className="tooltip-text">{card.content}</div>
+          <div className="text-sm leading-normal">{card.content}</div>
         </div>
       </div>
     </div>

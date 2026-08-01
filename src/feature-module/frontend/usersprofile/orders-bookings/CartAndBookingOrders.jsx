@@ -7,6 +7,7 @@ import VendorCalendarSlotPicker from "../../../../components/VendorCalendarSlotP
 import { getImageUrl } from "../../../../utils/index";
 import { useResponsive } from "../../../../hooks/useResponsive";
 import { toast } from "react-hot-toast";
+import Pagination from "../../../../components/ui/Pagination.jsx";
 import OrderFeedbackOffcanvas from "../OrdersReviewModal";
 import CartOrderCard from "./components/CartOrderCard";
 import { useNavigate } from "react-router";
@@ -835,7 +836,7 @@ const MedicineBookings = ({ HomeNavigate, ServiceTabs }) => {
       />
 
       {/* Tabs Section */}
-      <div className="mb-3 position-relative">
+      <div className="mb-3 relative">
         <div
           style={{
             display: "flex",
@@ -849,13 +850,10 @@ const MedicineBookings = ({ HomeNavigate, ServiceTabs }) => {
           {isMobile ? (
             <select
               value={selectedTab}
-              className="form-select"
+              className="w-full h-[38px] rounded-lg border border-slate-200 px-3 text-[13px] outline-none bg-slate-50 focus:bg-white focus:border-[#8059ca] transition-all duration-200"
               onChange={(e) => {
                 setSelectedTab(e.target.value);
                 setCurrentPage(1);
-              }}
-              style={{
-                border: "1px solid #ddd",
               }}
             >
               {[
@@ -864,43 +862,16 @@ const MedicineBookings = ({ HomeNavigate, ServiceTabs }) => {
                 { id: "cancelled", label: "Cancelled" },
                 { id: "failed", label: "Failed" },
               ].map((tab) => {
-                const tabCount =
-                  tab.id === "all"
-                    ? orders.length
-                    : orders.filter((order) => {
-                      const orderStatus = order.orderStatus?.toLowerCase() || "";
-                      switch (tab.id) {
-                        case "delivered":
-                          return orderStatus === "completed" || orderStatus === "delivered";
-                        case "pending":
-                          return orderStatus === "pending" || orderStatus === "new";
-                        case "cancelled":
-                          return orderStatus === "cancelled" || orderStatus === "canceled";
-                        case "failed":
-                          return orderStatus === "failed";
-                        default:
-                          return false;
-                      }
-                    }).length;
                 return (
                   <option key={tab.id} value={tab.id}>
-                    {tab.label} {tabCount > 0 && `(${tabCount})`}
+                    {tab.label}
                   </option>
                 );
               })}
             </select>
           ) : (
             /* Desktop */
-            <ul
-              className="nav nav-tabs nav-tabs-solid"
-              style={{
-                flex: 1,
-                display: "flex",
-                marginBottom: 0,
-                overflow: "visible",
-                minWidth: 0,
-              }}
-            >
+            <ul className="flex border-b border-slate-100 w-full mb-0 overflow-visible min-w-0 gap-2 list-none p-0">
               {[
                 { id: "pending", label: "In Progress", icon: "fa-list" },
                 { id: "delivered", label: "Delivered", icon: "fa-truck" },
@@ -908,57 +879,18 @@ const MedicineBookings = ({ HomeNavigate, ServiceTabs }) => {
                 { id: "failed", label: "Failed", icon: "fa-exclamation-circle" },
               ].map((tab) => {
                 const isActive = selectedTab === tab.id;
-                const tabCount =
-                  tab.id === "all"
-                    ? orders.length
-                    : orders.filter((order) => {
-                      const orderStatus = order.orderStatus?.toLowerCase() || "";
-                      switch (tab.id) {
-                        case "delivered":
-                          return orderStatus === "completed" || orderStatus === "delivered";
-                        case "pending":
-                          return orderStatus === "pending" || orderStatus === "new";
-                        case "cancelled":
-                          return orderStatus === "cancelled" || orderStatus === "canceled";
-                        case "failed":
-                          return orderStatus === "failed";
-                        default:
-                          return false;
-                      }
-                    }).length;
 
                 return (
                   <li className="nav-item" key={tab.id}>
                     <button
-                      className={`nav-link ${isActive ? "active" : ""}`}
+                      className={`py-2.5 px-4 text-[13px] font-semibold !border-b-2 transition-all duration-200 flex items-center gap-1.5 ${isActive ? "!border-[#8059ca] !text-[#8059ca]" : "border-transparent text-slate-500 hover:text-slate-700"}`}
                       onClick={() => {
                         setSelectedTab(tab.id);
                         setCurrentPage(1);
                       }}
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "6px",
-                      }}
                     >
                       <i className={`fa-solid ${tab.icon}`}></i>
                       {tab.label}
-                      {tabCount > 0 && (
-                        <span
-                          style={{
-                            background: isActive ? "rgba(255,255,255,0.3)" : "#e8e0f5",
-                            color: isActive ? "#fff" : "#8059ca",
-                            borderRadius: "10px",
-                            padding: "1px 7px",
-                            fontSize: "11px",
-                            fontWeight: "600",
-                            minWidth: "20px",
-                            textAlign: "center",
-                          }}
-                        >
-                          {tabCount}
-                        </span>
-                      )}
                     </button>
                   </li>
                 );
@@ -970,18 +902,18 @@ const MedicineBookings = ({ HomeNavigate, ServiceTabs }) => {
 
       <div className="w-full py-4">
         {loading ? (
-          <div className="text-center py-5">
-            <div className="spinner-border text-primary" role="status">
-              <span className="visually-hidden">Loading...</span>
+          <div className="text-center py-10 flex justify-center items-center">
+            <div className="animate-spin inline-block w-8 h-8 border-4 border-[#8059ca] border-t-transparent rounded-full" role="status">
+              <span className="sr-only">Loading...</span>
             </div>
           </div>
         ) : currentOrders.length > 0 ? (
-          <div className="row">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {currentOrders.map((order, index) => {
               const statusMeta = getOrderStatusMeta(order.orderStatus);
 
               return (
-                <div key={index} className="col-md-6 col-12 mb-3">
+                <div key={index} className="w-full">
                   <CartOrderCard
                     order={order}
                     onView={handleView}
@@ -1141,14 +1073,14 @@ const MedicineBookings = ({ HomeNavigate, ServiceTabs }) => {
               <div style={{ fontSize: "10px", fontWeight: 700, color: "#8059ca", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "10px" }}>
                 Order Info
               </div>
-              <div className="row g-2" style={{ marginBottom: "14px" }}>
+              <div className="grid grid-cols-2 gap-2" style={{ marginBottom: "14px" }}>
                 {[
                   { label: "Order Status", value: selectedOrder?.orderStatus ? selectedOrder.orderStatus.charAt(0).toUpperCase() + selectedOrder.orderStatus.slice(1) : "N/A" },
                   { label: "Payment Status", value: selectedOrder?.paymentStatus ? selectedOrder.paymentStatus.charAt(0).toUpperCase() + selectedOrder.paymentStatus.slice(1) : "N/A", color: selectedOrder?.paymentStatus === "paid" ? "#28a745" : "#e0a000" },
                   { label: "Payment Method", value: selectedOrder?.paymentmethod ? selectedOrder.paymentmethod.charAt(0).toUpperCase() + selectedOrder.paymentmethod.slice(1) : "N/A" },
                   // { label: "Order Type", value: selectedOrder?.orderType ? selectedOrder.orderType.charAt(0).toUpperCase() + selectedOrder.orderType.slice(1) : "N/A" },
                 ].map(({ label, value, color }) => (
-                  <div className="col-6" key={label}>
+                  <div className="w-full" key={label}>
                     <div style={{ background: "#faf9fe", borderRadius: "8px", padding: "8px 12px" }}>
                       <div style={{ fontSize: "10px", color: "#aaa", marginBottom: "2px" }}>{label}</div>
                       <div style={{ fontSize: "12px", fontWeight: 600, color: color || "#333", textTransform: "capitalize" }}>{value}</div>
@@ -1630,9 +1562,9 @@ const MedicineBookings = ({ HomeNavigate, ServiceTabs }) => {
 
                 {/* Form */}
                 <form onSubmit={handleSubmit}>
-                  <div className="row g-3">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                     {/* Product */}
-                    <div className="col-md-6 col-12">
+                    <div className="w-full">
                       <label className="form-label" style={{ fontSize: "14px", fontWeight: "500", color: "#333", marginBottom: "6px" }}>Product *</label>
                       {(() => {
                         const selectedNames = (Array.isArray(formData.product) ? formData.product : []).map(prod => `${prod.orderName} (${prod.patientName})`);
@@ -1724,7 +1656,7 @@ const MedicineBookings = ({ HomeNavigate, ServiceTabs }) => {
                     </div>
 
                     {/* Category */}
-                    <div className="col-md-6 col-12">
+                    <div className="w-full">
                       <label className="form-label" style={{ fontSize: "14px", fontWeight: "500", color: "#333", marginBottom: "6px" }}>Product *</label>
                       <select
                         name="category"
@@ -1763,7 +1695,7 @@ const MedicineBookings = ({ HomeNavigate, ServiceTabs }) => {
                     </div>
 
                     {/* Subject */}
-                    <div className="col-12">
+                    <div className="w-full md:col-span-2">
                       <input
                         type="text"
                         name="subject"
@@ -1782,7 +1714,7 @@ const MedicineBookings = ({ HomeNavigate, ServiceTabs }) => {
                     </div>
 
                     {/* Description */}
-                    <div className="col-12">
+                    <div className="w-full md:col-span-2">
                       <textarea
                         name="description"
                         className="form-control"
@@ -1823,7 +1755,7 @@ const MedicineBookings = ({ HomeNavigate, ServiceTabs }) => {
                             </select>
                           </div> */}
 
-                    <div className="col-md-6 col-12">
+                    <div className="w-full">
                       <input
                         type="file"
                         name="attachments"
@@ -1864,17 +1796,17 @@ const MedicineBookings = ({ HomeNavigate, ServiceTabs }) => {
                     </div>
 
                     {formData.attachments && formData.attachments.length > 0 && (
-                      <div className="col-12 mt-2">
-                        <label className="form-label d-block mb-1" style={{ fontSize: "12px", fontWeight: "600", color: "#666" }}>
+                      <div className="w-full mt-2">
+                        <label className="block mb-1" style={{ fontSize: "12px", fontWeight: "600", color: "#666" }}>
                           Selected Attachments ({formData.attachments.length})
                         </label>
-                        <div className="d-flex flex-wrap gap-2">
+                        <div className="flex flex-wrap gap-2">
                           {formData.attachments.map((attachment, index) => {
                             const objectUrl = URL.createObjectURL(attachment);
                             return (
                               <div
                                 key={index}
-                                className="position-relative"
+                                className="relative"
                                 style={{
                                   width: "65px",
                                   height: "65px",
@@ -2065,67 +1997,7 @@ const MedicineBookings = ({ HomeNavigate, ServiceTabs }) => {
         )}
       </div>
 
-      {totalPages > 1 && (
-        <div className="pagination dashboard-pagination mt-0">
-          <ul className="d-flex justify-content-center align-items-center gap-1">
-            <li>
-              <button
-                className="page-link"
-                onClick={() =>
-                  handlePageChange(Math.max(currentPage - 1, 1))
-                }
-                disabled={currentPage === 1}
-              >
-                <i className="fa-solid fa-chevron-left" />
-              </button>
-            </li>
-
-            {Array.from({ length: totalPages }, (_, i) => {
-              const page = i + 1;
-
-              if (
-                page === 1 ||
-                page === totalPages ||
-                (page >= currentPage - 1 && page <= currentPage + 1)
-              ) {
-                return (
-                  <li key={page}>
-                    <button
-                      className={`page-link ${currentPage === page ? "active" : ""
-                        }`}
-                      onClick={() => handlePageChange(page)}
-                    >
-                      {page}
-                    </button>
-                  </li>
-                );
-              }
-
-              if (page === currentPage - 2 || page === currentPage + 2) {
-                return (
-                  <li key={`dots-${page}`}>
-                    <span className="page-link disabled">…</span>
-                  </li>
-                );
-              }
-
-              return null;
-            })}
-
-            <li>
-              <button
-                className="page-link"
-                onClick={() =>
-                  handlePageChange(Math.min(currentPage + 1, totalPages))
-                }
-                disabled={currentPage === totalPages}
-              >
-                <i className="fa-solid fa-chevron-right" />
-              </button>
-            </li>
-          </ul>
-        </div>
-      )}
+      <Pagination page={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
     </div>
   );
 };

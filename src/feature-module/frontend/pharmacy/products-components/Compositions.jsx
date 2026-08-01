@@ -15,6 +15,7 @@ import PageLoader from "../../../../components/ui/PageLoader.jsx";
 import doctors from "/assets/doctors.png";
 import { useLocation as useLocationContext } from "../../../../context/LocationContext";
 import { Offcanvas } from "../../../../components/ui/Offcanvas";
+import Pagination from "../../../../components/ui/Pagination.jsx";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 
@@ -77,7 +78,7 @@ const Compositions = () => {
           }
         }
         params.append("page", currentPage);
-        params.append("limit", 20);
+        params.append("limit", 15);
 
         const apiUrl = `compositions/${id}?${params.toString()}`;
 
@@ -140,7 +141,7 @@ const Compositions = () => {
         }
       }
       params.append("page", 1);
-      params.append("limit", 20);
+      params.append("limit", 15);
 
       const response = await axiosCommonInstance.get(
         `compositions/${id}?${params.toString()}`
@@ -293,7 +294,7 @@ const Compositions = () => {
           }
         }
         params.append('page', currentPage);
-        params.append('limit', 20);
+        params.append('limit', 15);
 
         const apiUrl = `compositions/${id}?${params.toString()}`;
         const response = await axiosCommonInstance.get(apiUrl);
@@ -327,7 +328,7 @@ const Compositions = () => {
       }
 
       params.append('page', currentPage);
-      params.append('limit', 20);
+      params.append('limit', 15);
 
       if (selectedBrands.length > 0) {
         params.append('brand', selectedBrands.join(','));
@@ -465,8 +466,8 @@ const Compositions = () => {
     <>
       {initialDataLoading ? (
         <div className="text-center py-4">
-          <div className="spinner-border spinner-border-sm" role="status">
-            <span className="visually-hidden">Loading...</span>
+          <div className="animate-spin inline-block w-4 h-4 border-2 border-[#8059ca] border-t-transparent rounded-full" role="status">
+            <span className="sr-only">Loading...</span>
           </div>
         </div>
       ) : (
@@ -474,7 +475,7 @@ const Compositions = () => {
           <div className="p-4 rounded-lg border border-slate-200 bg-white relative">
             {filterLoading && (
               <div className="absolute top-2.5 right-2.5 z-10">
-                <i className="fas fa-spinner fa-spin text-xs text-blue-500"></i>
+                <i className="fas fa-spinner fa-spin text-xs text-[#8059ca]"></i>
               </div>
             )}
             <div className="flex justify-between items-center">
@@ -490,7 +491,7 @@ const Compositions = () => {
                   setSelectedBrands([]);
                   setSelectedRatings([]);
                 }}
-                className="text-xs border-none bg-transparent text-blue-500 cursor-pointer hover:underline"
+                className="text-xs border-none bg-transparent text-[#8059ca] cursor-pointer hover:underline"
               >
                 Clear
               </button>
@@ -547,18 +548,18 @@ const Compositions = () => {
           </div>
           <hr className="border-slate-200 my-4" />
 
-          <label className="form-label text-base font-bold text-slate-800">
+          <label className="block text-base font-bold text-slate-800 mb-2">
             Ratings
           </label>
 
-          <ul className="list-unstyled overflow-x-hidden overflow-y-auto max-h-[180px] scrollbar-thin [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-slate-100 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-thumb]:bg-slate-300 [&::-webkit-scrollbar-thumb]:rounded-full">
+          <ul className="list-none p-0 m-0 overflow-x-hidden overflow-y-auto max-h-[180px] scrollbar-thin [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-slate-100 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-thumb]:bg-slate-300 [&::-webkit-scrollbar-thumb]:rounded-full">
             {ratingOptions.length === 0 ? (
               <li className="py-2 text-slate-400 text-xs">No ratings available</li>
             ) : (
               ratingOptions.map((rating) => (
                 <li key={rating.value} className="py-2">
                   <div
-                    className="flex align-items-center w-full cursor-pointer"
+                    className="flex items-center w-full cursor-pointer"
                     onClick={() => {
                       const checkbox = document.getElementById(
                         `rating-${rating.value}`,
@@ -569,18 +570,18 @@ const Compositions = () => {
                       handleRatingToggle(rating.value);
                     }}
                   >
-                    <div className="flex align-items-center flex-grow-1">
+                    <div className="flex items-center gap-2 flex-1">
                       <input
                         type="checkbox"
                         id={`rating-${rating.value}`}
-                        className="form-check-input me-2 cursor-pointer"
+                        className="w-4 h-4 rounded border-gray-300 text-[#8059ca] focus:ring-[#8059ca] mr-2 cursor-pointer"
                         checked={selectedRatings.includes(rating.value)}
                         onChange={() => handleRatingToggle(rating.value)}
                         onClick={(e) => e.stopPropagation()}
                       />
-                      <span className="text-xs font-medium text-slate-800">
+                      <span className="text-xs font-medium text-slate-800 flex items-center">
                         {Array.from({ length: rating.value }, (_, index) => (
-                          <i key={index} className="fas fa-star text-warning me-1"></i>
+                          <i key={index} className="fas fa-star text-amber-400 mr-1"></i>
                         ))}
                       </span>
                     </div>
@@ -590,21 +591,21 @@ const Compositions = () => {
             )}
           </ul>
           <hr className="border-slate-200 my-4" />
-          <label className="form-label text-base font-bold text-slate-800">
+          <label className="block text-base font-bold text-slate-800 mb-2">
             Brands
           </label>
 
           {brandsLoading && (
             <div className="text-center py-2">
-              <div className="spinner-border spinner-border-sm" role="status">
-                <span className="visually-hidden">Loading...</span>
+              <div className="animate-spin inline-block w-4 h-4 border-2 border-[#8059ca] border-t-transparent rounded-full" role="status">
+                <span className="sr-only">Loading...</span>
               </div>
             </div>
           )}
 
           <ul
             ref={brandsListRef}
-            className="list-unstyled overflow-x-hidden overflow-y-auto max-h-[240px] scrollbar-thin [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-slate-100 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-thumb]:bg-slate-300 [&::-webkit-scrollbar-thumb]:rounded-full"
+            className="list-none p-0 m-0 overflow-x-hidden overflow-y-auto max-h-[240px] scrollbar-thin [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-slate-100 [&::-webkit-scrollbar-track]:rounded-full [&::-webkit-scrollbar-thumb]:bg-slate-300 [&::-webkit-scrollbar-thumb]:rounded-full"
           >
             {brands.length === 0 ? (
               <li className="py-2 text-slate-400 text-xs">No brands available</li>
@@ -612,7 +613,7 @@ const Compositions = () => {
               brands.map((brand, index) => (
                 <li key={brand._id || index} className="py-2">
                   <div
-                    className="flex align-items-center w-full cursor-pointer"
+                    className="flex items-center w-full cursor-pointer"
                     onClick={() => {
                       const checkbox = document.getElementById(
                         `brand-${brand._id}`,
@@ -623,16 +624,16 @@ const Compositions = () => {
                       handleBrandToggle(brand._id);
                     }}
                   >
-                    <div className="flex align-items-center flex-grow-1 text-truncate">
+                    <div className="flex items-center gap-2 flex-1 min-w-0">
                       <input
                         type="checkbox"
                         id={`brand-${brand._id}`}
-                        className="form-check-input me-2 cursor-pointer"
+                        className="w-4 h-4 rounded border-gray-300 text-[#8059ca] focus:ring-[#8059ca] mr-2 cursor-pointer"
                         checked={selectedBrands.includes(brand._id)}
                         onChange={() => handleBrandToggle(brand._id)}
                         onClick={(e) => e.stopPropagation()}
                       />
-                      <span className="text-truncate text-xs font-medium text-slate-800">
+                      <span className="truncate text-xs font-medium text-slate-800">
                         {brand.name}
                         {brand.productCount !== undefined && (
                           <span className="text-[10px] text-slate-500 ml-1">
@@ -656,7 +657,7 @@ const Compositions = () => {
                   loadMoreBrands();
                 }}
                 disabled={brandLoading}
-                className="!text-xs !font-bold !text-[#8059ca] !border !border-[#8059ca]/30 !bg-purple-50/50 !py-1.5 !px-3 !rounded-lg hover:bg-[#8059ca] hover:text-white transition-all duration-200"
+                className="!text-xs !font-bold !text-[#8059ca] !border !border-[#8059ca]/30 !bg-purple-50/50 !py-1.5 !px-3 !rounded-lg hover:bg-[#8059ca] hover:text-white transition-all duration-200 cursor-pointer"
               >
                 {brandLoading ? "Loading..." : "View More"}
               </button>
@@ -694,7 +695,7 @@ const Compositions = () => {
         <div className="absolute inset-0 z-[1] after:content-[''] after:absolute after:inset-0 after:bg-white/30">
           <img className="w-full h-full object-cover" src="/assets/Medicompares Background.png" />
         </div>
-        <div className="relative z-[2] px-[15px] py-0 sm:pt-[27px] sm:pr-[16px] sm:pb-0 sm:pl-[13px] container-fluid">
+        <div className="relative z-[2] px-4 py-0 sm:pt-[27px] container mx-auto">
           <div className="mb-3">
             <button
               onClick={() => navigate(-1)}
@@ -705,11 +706,11 @@ const Compositions = () => {
             </button>
           </div>
 
-          <div className="row align-items-center">
-            <div className="col-lg-8">
+          <div className="flex flex-wrap items-center">
+            <div className="w-full lg:w-8/12">
               <div
                 style={{ position: "relative" }}
-                className="d-none d-lg-block"
+                className="hidden lg:block"
               >
                 <img
                   src={doctors}
@@ -722,12 +723,12 @@ const Compositions = () => {
                 />
               </div>
               <h2
-                className="breadcrumbb-title text-dark text-center d-none d-lg-block relative left-[150px] !text-[30px] font-[700] text-[#0a2540]"
+                className="breadcrumbb-title text-dark text-center hidden lg:block relative left-[150px] !text-[30px] font-[700] text-[#0a2540]"
               >
                 Trusted Excellence <br /> in Healthcare
               </h2>
             </div>
-            <div className="col-lg-4">
+            <div className="w-full lg:w-4/12">
               <div className="bg-white rounded-[14px] p-[18px_20px] flex items-center gap-[15px] shadow-[0_12px_30px_rgba(128,89,202,0.1)] border border-purple-100/50 max-w-[360px] ml-auto lg:ml-auto lg:mt-0 mt-5 mx-auto">
                 <div className="w-[60px] h-[60px] rounded-[10px] bg-purple-50 flex items-center justify-center shrink-0">
                   <i className="fas fa-flask text-[#8059ca] text-[24px]"></i>
@@ -773,7 +774,7 @@ const Compositions = () => {
 
       {!searchLoading && searchQuery && displayProducts.length === 0 && (
         <section className="mx-2 py-5 bg-white">
-          <div className="container-fluid text-center">
+          <div className="container mx-auto px-4 text-center">
             <p className="text-slate-400 text-sm">
               No products found for "{searchQuery}"
             </p>
@@ -781,11 +782,11 @@ const Compositions = () => {
         </section>
       )}
 
-      <div className="container-fluid bg-slate-50 py-4">
-        <div className="d-flex align-items-center justify-content-between d-lg-none mb-3 mobile-filter-buttons-container">
+      <div className="w-full px-3 md:px-6 bg-white py-4">
+        <div className="flex items-center justify-between lg:hidden mb-3">
           <button
             type="button"
-            className="btn btn-sm btn-primary d-flex align-items-center gap-1"
+            className="h-[32px] inline-flex items-center justify-center gap-1 bg-[#8059ca] text-white text-xs font-semibold px-3 py-1.5 rounded-lg cursor-pointer"
             onClick={() => setShowFilterCanvas(true)}
           >
             <i className="fas fa-filter"></i>
@@ -794,7 +795,7 @@ const Compositions = () => {
 
           <button
             type="button"
-            className="btn btn-sm btn-outline-secondary d-flex align-items-center gap-1"
+            className="h-[32px] inline-flex items-center justify-center gap-1 border border-slate-300 text-slate-600 bg-white text-xs font-semibold px-3 py-1.5 rounded-lg cursor-pointer"
             onClick={() => {
               setSelectedBrands([]);
               setSearchParams(new URLSearchParams());
@@ -805,33 +806,32 @@ const Compositions = () => {
           </button>
         </div>
 
-        <div className="row">
-          <div className="col-lg-3 mb-4 d-none d-lg-block">
-            <div className="card shadow-sm p-3">
+        <div className="flex flex-wrap gap-0">
+          <div className="w-full lg:w-[300px] shrink-0 mb-4 hidden lg:block pr-4">
+            <div className="bg-white rounded-lg border border-slate-100 shadow-[0_4px_20px_rgba(0,0,0,0.08)] p-4">
               {FilterContent()}
             </div>
           </div>
 
-          <div className="col-lg-9">
+          <div className="flex-1 min-w-0">
             {/* Selected Filters Display */}
             {selectedBrands.length > 0 && (
-              <div className="mb-3 d-flex flex-wrap align-items-center gap-2">
-                <span className="text-muted me-2">Filters:</span>
+              <div className="mb-3 flex flex-wrap items-center gap-2">
+                <span className="text-slate-500 text-xs mr-2">Filters:</span>
                 {selectedBrands.map((brandId) => {
                   const brand = brands.find(b => b._id === brandId);
                   return (
-                    <span key={brandId} className="badge bg-light text-dark d-flex align-items-center gap-1">
+                    <span key={brandId} className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-slate-100 text-slate-800 text-xs font-medium">
                       {brand?.name || brandId}
-                      <button
-                        className="btn-close btn-close-sm"
+                      <i
+                        className="fas fa-times text-slate-400 hover:text-slate-600 cursor-pointer ml-1 text-[10px]"
                         onClick={() => handleBrandToggle(brandId)}
-                        style={{ fontSize: "10px" }}
                       />
                     </span>
                   );
                 })}
                 <button
-                  className="btn btn-sm btn-outline-secondary"
+                  className="h-[28px] inline-flex items-center justify-center border border-slate-300 text-slate-600 bg-white text-xs font-semibold px-2.5 py-1 rounded cursor-pointer"
                   onClick={() => {
                     setSelectedBrands([]);
                     setSearchParams(new URLSearchParams());
@@ -847,15 +847,15 @@ const Compositions = () => {
                 <p className="mt-2.5 text-slate-400 text-sm">{filterLoading ? 'Filtering...' : 'Searching...'}</p>
               </div>
             ) : displayProducts && displayProducts.length > 0 ? (
-              <section className="m-0 md:m-2 rounded-lg">
-                <div className="row">
+              <section className="w-full">
+                <div className="flex flex-wrap -mx-2">
                   {displayProducts.map((item, index) => {
                     const normalizedItem = normalizeItem(item);
                     const variants = normalizedItem.variants;
                     return (
                       <div
                         key={index}
-                        className="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-6 mb-3"
+                        className="w-1/2 md:w-1/3 lg:w-1/5 px-2 mb-4"
                       >
                         <ProductCard
                           item={normalizedItem}
@@ -873,70 +873,16 @@ const Compositions = () => {
 
                 {/* Pagination */}
                 {displayPagination && totalPages > 1 && (
-                  <div className="pagination dashboard-pagination mt-0">
-                    <ul className="d-flex justify-content-center align-items-center gap-1">
-                      <li>
-                        <button
-                          className="page-link"
-                          onClick={() =>
-                            handlePageChange(Math.max(currentPage - 1, 1))
-                          }
-                          disabled={currentPage === 1}
-                        >
-                          <i className="fa-solid fa-chevron-left" />
-                        </button>
-                      </li>
-
-                      {Array.from({ length: totalPages }, (_, i) => {
-                        const page = i + 1;
-
-                        if (
-                          page === 1 ||
-                          page === totalPages ||
-                          (page >= currentPage - 1 && page <= currentPage + 1)
-                        ) {
-                          return (
-                            <li key={page}>
-                              <button
-                                className={`page-link ${currentPage === page ? "active" : ""
-                                  }`}
-                                onClick={() => handlePageChange(page)}
-                              >
-                                {page}
-                              </button>
-                            </li>
-                          );
-                        }
-
-                        if (page === currentPage - 2 || page === currentPage + 2) {
-                          return (
-                            <li key={`dots-${page}`}>
-                              <span className="page-link disabled">…</span>
-                            </li>
-                          );
-                        }
-
-                        return null;
-                      })}
-
-                      <li>
-                        <button
-                          className="page-link"
-                          onClick={() =>
-                            handlePageChange(Math.min(currentPage + 1, totalPages))
-                          }
-                          disabled={currentPage === totalPages}
-                        >
-                          <i className="fa-solid fa-chevron-right" />
-                        </button>
-                      </li>
-                    </ul>
-                  </div>
+                  <Pagination
+                    page={currentPage}
+                    totalPages={totalPages}
+                    onPageChange={handlePageChange}
+                  />
                 )}
               </section>
             ) : (
-              <div className="row">
-                <div className="col-12">
+              <div className="flex flex-wrap">
+                <div className="w-full">
                   <div className="text-center py-5">
                     <div className="mb-4">
                       <i
@@ -951,7 +897,7 @@ const Compositions = () => {
                     </p>
                     <div className="flex justify-center gap-3">
                       <button
-                        className="btn btn-outline-secondary rounded-[25px] py-2 px-6 text-sm"
+                        className="h-[38px] inline-flex items-center justify-center border border-slate-300 text-slate-600 bg-white text-xs font-semibold px-6 py-2 rounded-full cursor-pointer hover:bg-slate-50 transition-all"
                         onClick={() => window.location.reload()}
                       >
                         <i className="fas fa-redo me-2"></i>
@@ -970,7 +916,7 @@ const Compositions = () => {
         show={showFilterCanvas}
         onHide={() => setShowFilterCanvas(false)}
         placement="start"
-        className="w-75 w-md-50"
+        className="w-[280px] max-w-[80vw]"
         style={{ zIndex: "999999" }}
       >
         <Offcanvas.Header closeButton>

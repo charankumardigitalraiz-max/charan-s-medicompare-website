@@ -18,6 +18,7 @@ import CartQuantityControls from "../../../components/ui/CartQuantityControls.js
 import VendorActions from "../../../components/ui/VendorActions.jsx";
 import LeadModal from "./products-components/LeadModal.jsx";
 import Pagination from "../../../components/ui/Pagination.jsx";
+import BackButton from "../../../components/ui/BackButton.jsx";
 import RentModal from "./products-components/RentModal.jsx";
 import ConsultationModal from "./products-components/ConsultationModal.jsx";
 import "./productdescription.css";
@@ -1110,26 +1111,16 @@ const MedicineComparePage = () => {
       <div className="main-wrapper">
         <Home2Header />
         <div
-          className="content medicine-compare"
-          style={{
-            paddingTop: "100px",
-            paddingBottom: "40px",
-            background: "linear-gradient(to bottom, #f8f9fa 0%, #ffffff 100%)",
-            minHeight: "80vh",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
+          className="content medicine-compare pt-[100px] pb-10 bg-gradient-to-b from-[#f8f9fa] to-white min-h-[80vh] flex items-center justify-center"
         >
           <div className="text-center">
             <div
-              className="spinner-border text-primary"
+              className="spinner-border text-primary w-12 h-12"
               role="status"
-              style={{ width: "3rem", height: "3rem" }}
             >
               <span className="visually-hidden">Loading...</span>
             </div>
-            <p className="mt-3" style={{ color: "#6c757d", fontSize: "16px" }}>
+            <p className="mt-3 text-[#6c757d] text-base">
               Loading product details...
             </p>
           </div>
@@ -1187,82 +1178,42 @@ const MedicineComparePage = () => {
       <CategoryProvider />
 
       <div
-        className=""
-        style={{
-          // paddingTop: "100px",
-          paddingBottom: "40px",
-          background: "linear-gradient(to bottom, #f8f9fa 0%, #ffffff 100%)",
-        }}
+        className="pb-10 bg-gradient-to-b from-[#f8f9fa] to-white"
       >
+        <div className="container-fluid pt-2 px-4 pb-1">
+          <BackButton />
+        </div>
         <div
-          className="container-fluid"
-          style={{ marginTop: !isMobile && "10px" }}
+          className={`container-fluid ${!isMobile ? "mt-[10px]" : ""}`}
         >
-          <div className="row g-4">
-            <div className="col-12 col-lg-8 col-xl-9">
+          <div className="grid grid-cols-12 gap-4">
+            <div className="col-span-12 lg:col-span-8 xl:col-span-9">
               {product?.tablet?.subcategorys?.category && (
                 <div
-                  className="card shadow-sm mb-4"
-                  style={{
-                    border: "none",
-                    borderRadius: "14px",
-                    overflow: "hidden",
-                    background: "#fff",
-                    boxShadow: "0 8px 24px rgba(0,0,0,0.06)",
-                  }}
+                  className="card shadow-sm mb-4 border-none rounded-[14px] overflow-hidden bg-white shadow-[0_8px_24px_rgba(0,0,0,0.06)]"
                 >
                   <div
-                    style={{
-                      padding: "20px 22px",
-                      display: "flex",
-                      alignItems: "flex-start",
-                      justifyContent: "space-between",
-                      gap: "20px",
-                      flexWrap: "wrap",
-                    }}
+                    className="p-[20px_22px] flex items-start justify-between gap-5 flex-wrap"
                   >
                     <div
-                      style={{
-                        display: "flex",
-                        alignItems: "flex-start",
-                        gap: "16px",
-                      }}
+                      className="flex items-start gap-4"
                     >
                       <div
-                        style={{
-                          width: "40px",
-                          height: "40px",
-                          background: "#efe9ff",
-                          borderRadius: "50%",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          flexShrink: 0,
-                        }}
+                        className="w-10 h-10 bg-[#efe9ff] rounded-full flex items-center justify-center shrink-0"
                       >
                         <i
-                          className="fas fa-location"
-                          style={{ color: "#8059ca", fontSize: "18px" }}
+                          className="fas fa-location text-[#8059ca] text-[18px]"
                         ></i>
                       </div>
 
                       <div>
                         <h6
-                          style={{
-                            fontSize: "15px",
-                            fontWeight: 600,
-                            marginBottom: "4px",
-                            color: "#212529",
-                          }}
+                          className="text-[15px] font-semibold mb-1 text-[#212529]"
                         >
                           Check Availability
                         </h6>
                         <p
-                          style={{
-                            fontSize: "13px",
-                            color: "#6c757d",
-                            margin: 0,
-                          }}
+                          className="text-[13px] text-[#6c757d] m-0"
                         >
                           Check availability in your area by entering your
                           pincode.
@@ -1271,17 +1222,11 @@ const MedicineComparePage = () => {
                     </div>
 
                     <div
-                      style={{
-                        display: "flex",
-                        gap: "10px",
-                        minWidth: "280px",
-                        flex: "1 1 280px",
-                        maxWidth: "400px",
-                      }}
+                      className="flex min-w-[280px] flex-1 max-w-[400px]"
                     >
                       <input
                         type="text"
-                        className="form-control"
+                        className="form-control h-10 text-[14px] !rounded-l-md border border-gray-300 px-3 focus:outline-none focus:ring-1 focus:ring-[#8059ca] focus:border-[#8059ca]"
                         placeholder="Enter Pin code"
                         value={pincode}
                         onChange={(e) => {
@@ -1297,29 +1242,13 @@ const MedicineComparePage = () => {
                             handlePincodeCheck(e);
                           }
                         }}
-                        style={{
-                          height: "40px",
-                          fontSize: "14px",
-                          borderRadius: "8px",
-                        }}
                         maxLength={6}
                       />
 
                       <button
-                        className="btn"
+                        className="btn bg-[#8059ca] text-white py-2 px-[18px] !rounded-r-md text-[14px] !font-medium border-none whitespace-nowrap transition-colors duration-200"
                         onClick={handlePincodeCheck}
                         disabled={loadingVendors}
-                        style={{
-                          background: "#8059ca",
-                          color: "#fff",
-                          padding: "8px 18px",
-                          borderRadius: "8px",
-                          fontSize: "14px",
-                          fontWeight: 500,
-                          border: "none",
-                          whiteSpace: "nowrap",
-                          transition: "background 0.2s",
-                        }}
                       >
                         Check
                       </button>
@@ -1327,19 +1256,14 @@ const MedicineComparePage = () => {
                   </div>
 
                   <hr
-                    style={{
-                      margin: "0 22px",
-                      borderTop: "1px solid #e9ecef",
-                    }}
+                    className="mx-[22px] border-t border-[#e9ecef]"
                   />
 
                   <div
-                    style={{
-                      padding: "0 22px 20px 22px",
-                    }}
+                    className="pt-0 px-[22px] pb-5"
                   >
-                    <div className="row align-items-center g-3">
-                      <div className="col-lg-1 col-md-2 col-3">
+                    <div className="flex flex-wrap items-center gap-y-3">
+                      <div className="w-1/4 md:w-[16.666%] lg:w-[8.333%] shrink-0">
                         <img
                           src={
                             imagePath
@@ -1349,86 +1273,58 @@ const MedicineComparePage = () => {
                           alt="image"
                           loading="lazy"
                           title={productName}
-                          style={{
-                            borderRadius: "6px",
-                            textTransform: "capitalize",
-                            height: "80px",
-                            width: "80px",
-                            objectFit: "cover",
-                            border: "1px solid #eee",
-                          }}
+                          className="rounded-[6px] capitalize h-20 w-20 object-cover border border-[#eee]"
                         />
                       </div>
 
-                      <div className="col-lg-4 col-md-5 col-9">
+                      <div className="w-3/4 md:w-[41.666%] lg:w-[33.333%] px-2">
                         <div
-                          style={{
-                            fontSize: "12px",
-                            color: "#6c757d",
-                          }}
+                          className="text-[12px] text-[#6c757d]"
                         >
                           Name
                         </div>
                         <div
-                          style={{
-                            fontSize: "14px",
-                            fontWeight: 500,
-                            marginTop: "4px",
-                            color: "#212529",
-                          }}
+                          className="text-[14px] font-medium mt-1 text-[#212529]"
                         >
                           {productName}
                         </div>
                       </div>
                       {categoryFixedType === "medicine" && (
-                        <div className="col-lg-2 col-md-3 col-6">
-                          <div style={{ fontSize: "12px", color: "#6c757d" }}>
+                        <div className="w-1/2 md:w-1/4 lg:w-[16.666%] px-2">
+                          <div className="text-[12px] text-[#6c757d]">
                             Storage
                           </div>
                           <div
-                            style={{
-                              fontSize: "14px",
-                              fontWeight: 500,
-                              marginTop: "4px",
-                            }}
+                            className="text-[14px] font-medium mt-1"
                           >
                             {storage}
                           </div>
                         </div>
                       )}
                       {categoryFixedType === "medicine" && (
-                        <div className="col-lg-2 col-md-2 col-6">
-                          <div style={{ fontSize: "12px", color: "#6c757d" }}>
+                        <div className="w-1/2 md:w-[16.666%] lg:w-[16.666%] px-2">
+                          <div className="text-[12px] text-[#6c757d]">
                             Form
                           </div>
                           <div
-                            style={{
-                              fontSize: "14px",
-                              fontWeight: 500,
-                              marginTop: "4px",
-                            }}
+                            className="text-[14px] font-medium mt-1"
                           >
                             {genericName || "Tablet"}
                           </div>
                         </div>
                       )}
                       {variants?.length > 0 && (
-                        <div className="col-lg-3 col-md-4 col-12">
-                          <div style={{ fontSize: "12px", color: "#6c757d" }}>
+                        <div className="w-full md:w-1/3 lg:w-1/4 px-2">
+                          <div className="text-[12px] text-[#6c757d]">
                             Select Variant
                           </div>
                           <select
-                            className="form-select mt-1"
+                            className="mt-1 w-full px-3 py-2 border border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-1 focus:ring-[#8059ca] focus:border-[#8059ca] text-[14px] h-[38px] rounded-[8px]"
                             value={selectedVariantId || ""}
                             onChange={(e) =>
                               handleVariantChange(e.target.value)
                             }
                             disabled={loading}
-                            style={{
-                              fontSize: "14px",
-                              height: "38px",
-                              borderRadius: "8px",
-                            }}
                           >
                             {variants.map((variant) => (
                               <option key={variant._id} value={variant._id}>
@@ -1444,40 +1340,21 @@ const MedicineComparePage = () => {
               )}
 
               <div
-                className="card shadow-sm"
-                style={{
-                  border: "none",
-                  borderRadius: "16px",
-                  overflow: "hidden",
-                  background: "#fff",
-                }}
+                className="card shadow-sm border-none rounded-[16px] overflow-hidden bg-white"
               >
-                <div style={{ padding: "20px", position: "relative" }}>
+                <div className="p-5 relative">
                   {loadingVendors && (
                     <div
-                      style={{
-                        position: "absolute",
-                        top: 0,
-                        left: 0,
-                        right: 0,
-                        bottom: 0,
-                        background: "rgba(255, 255, 255, 0.9)",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        zIndex: 10,
-                        borderRadius: "16px",
-                      }}
+                      className="absolute inset-0 bg-white/90 flex items-center justify-center z-10 rounded-[16px]"
                     >
                       <div className="text-center">
                         <div
-                          className="spinner-border text-primary"
+                          className="spinner-border text-primary w-12 h-12"
                           role="status"
-                          style={{ width: "3rem", height: "3rem" }}
                         >
                           <span className="visually-hidden">Loading...</span>
                         </div>
-                        <p className="mt-3" style={{ color: "#6c757d" }}>
+                        <p className="mt-3 text-[#6c757d]">
                           Loading...
                         </p>
                       </div>
@@ -1486,48 +1363,34 @@ const MedicineComparePage = () => {
                   {loading ? (
                     <div className="text-center py-5">
                       <div
-                        className="spinner-border text-primary"
+                        className="spinner-border text-primary w-12 h-12"
                         role="status"
-                        style={{ width: "3rem", height: "3rem" }}
                       >
                         <span className="visually-hidden">Loading...</span>
                       </div>
-                      <p className="mt-3" style={{ color: "#6c757d" }}>
+                      <p className="mt-3 text-[#6c757d]">
                         Loading pharmacy prices...
                       </p>
                     </div>
                   ) : !headerPincode && !checkedPincode ? (
                     <div className="text-center py-5">
                       <i
-                        className="fas fa-map-marker-alt"
-                        style={{
-                          fontSize: "64px",
-                          color: "#dee2e6",
-                          marginBottom: "16px",
-                        }}
+                        className="fas fa-map-marker-alt text-[64px] text-[#dee2e6] mb-4"
                       ></i>
                       <p
-                        style={{
-                          color: "#6c757d",
-                          fontSize: "16px",
-                          margin: 0,
-                        }}
+                        className="text-[#6c757d] text-base m-0"
                       >
                         Please enter a pincode to see available pharmacies
                       </p>
                       <p
-                        style={{
-                          color: "#adb5bd",
-                          fontSize: "14px",
-                          marginTop: "8px",
-                        }}
+                        className="text-[#adb5bd] text-[14px] mt-2"
                       >
                         Enter your location to find pharmacies that deliver to
                         your area
                       </p>
                     </div>
                   ) : vendorsToDisplay.length > 0 ? (
-                    <div className="row g-3">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       {vendorsToDisplay.map((pharmacy, index) => {
                         const vendorName =
                           pharmacy?.bussinessdetails?.name || "Pharmacy";
@@ -1653,53 +1516,17 @@ const MedicineComparePage = () => {
                         return (
                           <div
                             key={pharmacy._id || index}
-                            className="col-12 col-sm-6"
+                            className="w-full"
                           >
                             <div
-                              className="card vendor-compact-card mb-0"
-                              style={{
-                                borderRadius: "12px",
-                                background: "#fff",
-                                padding: "16px",
-                                transition: "all 0.3s ease",
-                                boxShadow: "0 2px 8px rgba(0, 0, 0, 0.08)",
-                                height: "100%",
-                                position: "relative",
-                                border: "1px solid #e0e0e0",
-                              }}
-                              onMouseEnter={(e) => {
-                                e.currentTarget.style.transform =
-                                  "translateY(-3px)";
-                                e.currentTarget.style.boxShadow =
-                                  "0 4px 15px rgba(0, 0, 0, 0.12)";
-                              }}
-                              onMouseLeave={(e) => {
-                                e.currentTarget.style.transform =
-                                  "translateY(0)";
-                                e.currentTarget.style.boxShadow =
-                                  "0 2px 8px rgba(0, 0, 0, 0.08)";
-                              }}
+                              className="card vendor-compact-card mb-0 rounded-[12px] bg-white p-4 transition-all duration-300 ease-in-out shadow-[0_2px_8px_rgba(0,0,0,0.08)] hover:-translate-y-[3px] hover:shadow-[0_4px_15px_rgba(0,0,0,0.12)] h-full relative border border-[#e0e0e0]"
                             >
                               <div
-                                className="d-flex flex-column"
-                                style={{ gap: "12px" }}
+                                className="flex flex-col gap-3"
                               >
-                                <div className="d-flex align-items-center gap-2">
+                                <div className="flex items-center gap-2">
                                   <div
-                                    style={{
-                                      width: "70px",
-                                      height: "70px",
-                                      borderRadius: "10px",
-                                      overflow: "hidden",
-                                      background: "#f8f9fa",
-                                      display: "flex",
-                                      alignItems: "center",
-                                      justifyContent: "center",
-                                      flexShrink: 0,
-                                      border: "2px solid #e0e0e0",
-                                      boxShadow:
-                                        "0 2px 6px rgba(0, 0, 0, 0.08)",
-                                    }}
+                                    className="w-[70px] h-[70px] rounded-[10px] overflow-hidden bg-[#f8f9fa] flex items-center justify-center shrink-0 border-2 border-[#e0e0e0] shadow-[0_2px_6px_rgba(0,0,0,0.08)]"
                                   >
                                     {vendorImageUrl ? (
                                       <img
@@ -1709,30 +1536,14 @@ const MedicineComparePage = () => {
                                           handlePartnerClick(pharmacy)
                                         }
                                         loading="lazy"
-                                        style={{
-                                          width: "100%",
-                                          height: "100%",
-                                          objectFit: "contain",
-                                          cursor: "pointer",
-                                        }}
+                                        className="w-full h-full object-contain cursor-pointer"
                                         onError={(e) => {
                                           e.target.src = "/medicine.jpg";
                                         }}
                                       />
                                     ) : (
                                       <div
-                                        style={{
-                                          width: "100%",
-                                          height: "100%",
-                                          background:
-                                            "linear-gradient(135deg, #8059ca 0%, #6a1fd9 100%)",
-                                          color: "#fff",
-                                          display: "flex",
-                                          alignItems: "center",
-                                          justifyContent: "center",
-                                          fontWeight: "bold",
-                                          fontSize: "18px",
-                                        }}
+                                        className="w-full h-full bg-gradient-to-br from-[#8059ca] to-[#6a1fd9] text-white flex items-center justify-center font-bold text-[18px]"
                                       >
                                         {vendorName
                                           .substring(0, 2)
@@ -1740,22 +1551,9 @@ const MedicineComparePage = () => {
                                       </div>
                                     )}
                                   </div>
-                                  <div style={{ flex: 1, minWidth: 0 }}>
+                                  <div className="flex-1 min-w-0">
                                     <h6
-                                      style={{
-                                        fontSize: "15px",
-                                        fontWeight: "600",
-                                        color: "#212529",
-                                        marginBottom: "4px",
-                                        lineHeight: "1.3",
-                                        wordBreak: "break-word",
-                                        overflow: "hidden",
-                                        cursor: "pointer",
-                                        textOverflow: "ellipsis",
-                                        display: "-webkit-box",
-                                        WebkitLineClamp: 1,
-                                        WebkitBoxOrient: "vertical",
-                                      }}
+                                      className="text-[15px] font-semibold text-[#212529] mb-1 leading-[1.3] break-words overflow-hidden cursor-pointer line-clamp-1"
                                       onClick={() =>
                                         handlePartnerClick(pharmacy)
                                       }
@@ -1764,41 +1562,24 @@ const MedicineComparePage = () => {
                                     </h6>
                                     {pharmacy.averageRating > 0 && pharmacy.ratingCount > 0 && (
                                       <div
-                                        style={{
-                                          display: "flex",
-                                          alignItems: "center",
-                                          gap: "4px",
-                                          fontSize: "11px",
-                                          color: "#666",
-                                          marginTop: "4px",
-                                          marginBottom: "8px",
-                                        }}
+                                        className="flex items-center gap-1 text-[11px] text-[#666] mt-1 mb-2"
                                       >
                                         <i
-                                          className="fas fa-star"
-                                          style={{
-                                            color: "#ffc107",
-                                            fontSize: "10px"
-                                          }}
+                                          className="fas fa-star text-[#ffc107] text-[10px]"
                                         ></i>
-                                        <span style={{ fontWeight: "500" }}>
+                                        <span className="font-medium">
                                           {pharmacy.averageRating.toFixed(1)}
                                         </span>
-                                        <span style={{ color: "#999" }}>
+                                        <span className="text-[#999]">
                                           ({pharmacy.ratingCount}+)
                                         </span>
                                       </div>
                                     )}
                                     <p
-                                      style={{
-                                        fontSize: "13px",
-                                        color: "#6c757d",
-                                        margin: 0,
-                                      }}
+                                      className="text-[13px] text-[#6c757d] m-0"
                                     >
                                       <i
-                                        className="fas fa-map-marker-alt me-1"
-                                        style={{ color: "#8059ca" }}
+                                        className="fas fa-map-marker-alt mr-1 text-[#8059ca]"
                                       ></i>
                                       {pharmacy?.bussinessdetails?.address
                                         ? pharmacy.bussinessdetails.address
@@ -1812,22 +1593,13 @@ const MedicineComparePage = () => {
                                     </p>
                                     {distanceInKm && (
                                       <div
-                                        style={{
-                                          display: "flex",
-                                          alignItems: "center",
-                                          gap: "4px",
-                                        }}
+                                        className="flex items-center gap-1"
                                       >
                                         <i
-                                          className="fas fa-map-marker-alt"
-                                          style={{ fontSize: "10px" }}
+                                          className="fas fa-map-marker-alt text-[10px]"
                                         ></i>
                                         <span
-                                          style={{
-                                            fontSize: "10px",
-                                            fontWeight: "600",
-                                            fontFamily: '"Poppins", sans-serif',
-                                          }}
+                                          className="text-[10px] font-semibold font-['Poppins']"
                                         >
                                           {distanceInKm.toFixed(1)} km away
                                         </span>
@@ -1847,16 +1619,10 @@ const MedicineComparePage = () => {
                                         ].includes(categoryFixedType) &&
                                           estimatedDelivery && (
                                             <p
-                                              style={{
-                                                fontSize: "12px",
-                                                color: "#8059ca",
-                                                margin: "4px 0 0 0",
-                                                fontWeight: "600",
-                                              }}
+                                              className="text-[12px] text-[#8059ca] mt-1 font-semibold"
                                             >
                                               <i
-                                                className="fas fa-truck me-1"
-                                                style={{ fontSize: "10px" }}
+                                                className="fas fa-truck mr-1 text-[10px]"
                                               ></i>
                                               {estimatedDelivery}
                                             </p>
@@ -1868,24 +1634,14 @@ const MedicineComparePage = () => {
                                   </div>
                                 </div>
 
-                                <div className="d-flex flex-column gap-3 mt-2">
+                                <div className="flex flex-col gap-3 mt-2">
                                   <div>
                                     <div>
                                       <div
-                                        style={{
-                                          display: "flex",
-                                          alignItems: "center",
-                                          gap: "8px",
-                                          flexWrap: "wrap",
-                                        }}
+                                        className="flex items-center gap-2 flex-wrap"
                                       >
                                         <div
-                                          style={{
-                                            fontSize: "18px",
-                                            fontWeight: "600",
-                                            color: "#212529",
-                                            lineHeight: 1.2,
-                                          }}
+                                          className="text-[18px] font-semibold text-[#212529] leading-[1.2]"
                                         >
                                           ₹{price.toFixed(2)}
                                         </div>
@@ -1893,21 +1649,13 @@ const MedicineComparePage = () => {
                                         {hasDiscount && discount > 0 && (
                                           <>
                                             <div
-                                              style={{
-                                                fontSize: "14px",
-                                                color: "#6c757d",
-                                                textDecoration: "line-through",
-                                              }}
+                                              className="text-[14px] text-[#6c757d] line-through"
                                             >
                                               ₹{originalPrice.toFixed(2)}
                                             </div>
 
                                             <span
-                                              style={{
-                                                fontSize: "12px",
-                                                fontWeight: "bold",
-                                              }}
-                                              className="text-success"
+                                              className="text-[12px] font-bold text-green-600"
                                             >
                                               {itemDiscountType === "percentage" && itemDiscountprice ? `${itemDiscountprice}% off` : `${discount}% off`}
                                             </span>
@@ -1915,24 +1663,11 @@ const MedicineComparePage = () => {
                                         )}
                                       </div>
                                       <div
-                                        style={{
-                                          display: "flex",
-                                          flexWrap: "wrap",
-                                          gap: "8px",
-                                          marginTop: "6px",
-                                        }}
+                                        className="flex flex-wrap gap-2 mt-1.5"
                                       >
                                         {fullVendor?.serviceCharges && (
                                           <div
-                                            style={{
-                                              fontSize: "11px",
-                                              fontWeight: "600",
-                                              color: "#495057",
-                                              backgroundColor: "#f8f9fa",
-                                              padding: "2px 6px",
-                                              borderRadius: "4px",
-                                              whiteSpace: "nowrap",
-                                            }}
+                                            className="text-[11px] font-semibold text-[#495057] bg-[#f8f9fa] py-0.5 px-1.5 rounded whitespace-nowrap"
                                           >
                                             Service Fee: ₹
                                             {fullVendor.serviceCharges}
@@ -1940,15 +1675,7 @@ const MedicineComparePage = () => {
                                         )}
                                         {fullVendor?.fixedDeposit && (
                                           <div
-                                            style={{
-                                              fontSize: "11px",
-                                              fontWeight: "600",
-                                              color: "#495057",
-                                              backgroundColor: "#f8f9fa",
-                                              padding: "2px 6px",
-                                              borderRadius: "4px",
-                                              whiteSpace: "nowrap",
-                                            }}
+                                            className="text-[11px] font-semibold text-[#495057] bg-[#f8f9fa] py-0.5 px-1.5 rounded whitespace-nowrap"
                                           >
                                             Security Deposit: ₹
                                             {fullVendor.fixedDeposit}
@@ -1956,12 +1683,7 @@ const MedicineComparePage = () => {
                                         )}
                                         {fullVendor?.returnCharge && (
                                           <div
-                                            style={{
-                                              fontSize: "11px",
-                                              fontWeight: "600",
-                                              fontFamily: '"Poppins", sans-serif',
-                                              whiteSpace: "nowrap",
-                                            }}
+                                            className="text-[11px] font-semibold font-['Poppins'] whitespace-nowrap"
                                           >
                                             Return Charge: ₹
                                             {fullVendor.returnCharge}
@@ -1969,17 +1691,9 @@ const MedicineComparePage = () => {
                                         )}
                                         {fullVendor?.perDayRent && (
                                           <div
-                                            style={{
-                                              fontSize: "11px",
-                                              fontWeight: "600",
-                                              backgroundColor: "#f8f9fa",
-                                              padding: "2px 6px",
-                                              borderRadius: "4px",
-                                              whiteSpace: "nowrap",
-                                              color: "#8059ca",
-                                            }}
+                                            className="text-[11px] font-semibold bg-[#f8f9fa] py-0.5 px-1.5 rounded whitespace-nowrap text-[#8059ca]"
                                           >
-                                            <i className="fas fa-calendar-day" style={{ marginRight: "2px", fontSize: "8px" }}></i>
+                                            <i className="fas fa-calendar-day mr-0.5 text-[8px]"></i>
                                             Per Day Rent: ₹{Number(fullVendor?.perDayRent || 0).toFixed(2)}
                                           </div>
                                         )}
@@ -1987,25 +1701,12 @@ const MedicineComparePage = () => {
 
                                       {selectedVariant?.pricePerUnit && (
                                         <div
-                                          style={{
-                                            fontSize: "12px",
-                                            color: "#495057",
-                                            marginTop: "4px",
-                                          }}
+                                          className="text-[12px] text-[#495057] mt-1"
                                         >
                                           {selectedVariant.pricePerUnit}
                                         </div>
                                       )}
                                     </div>
-                                    {/* <div
-                                      style={{
-                                        fontSize: "12px",
-                                        color: "#000",
-                                        marginTop: "2px",
-                                      }}
-                                    >
-                                      {variants1}
-                                    </div> */}
                                     {/* {!isInStockForDisplay && (
                                       <div
                                         style={{
@@ -2080,54 +1781,54 @@ const MedicineComparePage = () => {
             </div>
 
             {/* Sidebar */}
-            <div className="col-12 col-lg-4 col-xl-3">
+            <div className="col-span-12 lg:col-span-4 xl:col-span-3">
               <StickyBox offsetTop={120} offsetBottom={20}>
                 <div>
                   {(!rightSideTop || rightSideTop.length === 0) &&
                     (!rightSideBottom || rightSideBottom.length === 0) && (
-                      <div className="why-compare-card mb-3">
-                        <div className="why-header">
-                          <h5>Why Compare?</h5>
+                      <div className="bg-white rounded-[14px] overflow-hidden max-w-[420px] sm:max-w-full shadow-[0_8px_24px_rgba(0,0,0,0.06)] mb-3">
+                        <div className="bg-[#eef6ff] p-3.5 text-center">
+                          <h5 className="text-base font-semibold m-0">Why Compare?</h5>
                         </div>
-                        <div className="why-body">
-                          <div className="why-item">
-                            <div className="why-icon">
-                              <i className="fa-solid fa-shield-halved" />
+                        <div className="p-[18px]">
+                          <div className="flex gap-3.5 items-start mb-4">
+                            <div className="w-10 h-10 bg-[#f3efff] rounded-[10px] flex items-center justify-center shrink-0">
+                              <i className="fa-solid fa-shield-halved text-[18px] text-[#8059ca]" />
                             </div>
                             <div>
-                              <h6>Verified Pharmacies</h6>
-                              <p>
+                              <h6 className="text-[14px] font-semibold mb-0.5">Verified Pharmacies</h6>
+                              <p className="text-[13px] text-[#6c757d] m-0">
                                 All listed pharmacies are verified and licensed
                               </p>
                             </div>
                           </div>
-                          <div className="why-item">
-                            <div className="why-icon">
-                              <i className="fa-solid fa-tags" />
+                          <div className="flex gap-3.5 items-start mb-4">
+                            <div className="w-10 h-10 bg-[#f3efff] rounded-[10px] flex items-center justify-center shrink-0">
+                              <i className="fa-solid fa-tags text-[18px] text-[#8059ca]" />
                             </div>
                             <div>
-                              <h6>Best Price Guarantee</h6>
-                              <p>Save up to 30% by comparing prices</p>
+                              <h6 className="text-[14px] font-semibold mb-0.5">Best Price Guarantee</h6>
+                              <p className="text-[13px] text-[#6c757d] m-0">Save up to 30% by comparing prices</p>
                             </div>
                           </div>
-                          <div className="why-item">
-                            <div className="why-icon">
-                              <i className="fa-solid fa-bolt" />
+                          <div className="flex gap-3.5 items-start mb-4">
+                            <div className="w-10 h-10 bg-[#f3efff] rounded-[10px] flex items-center justify-center shrink-0">
+                              <i className="fa-solid fa-bolt text-[18px] text-[#8059ca]" />
                             </div>
                             <div>
-                              <h6>Quick Comparison</h6>
-                              <p>
+                              <h6 className="text-[14px] font-semibold mb-0.5">Quick Comparison</h6>
+                              <p className="text-[13px] text-[#6c757d] m-0">
                                 Compare prices from multiple sources instantly
                               </p>
                             </div>
                           </div>
-                          <div className="why-item">
-                            <div className="why-icon">
-                              <i className="fa-solid fa-box" />
+                          <div className="flex gap-3.5 items-start last:mb-0">
+                            <div className="w-10 h-10 bg-[#f3efff] rounded-[10px] flex items-center justify-center shrink-0">
+                              <i className="fa-solid fa-box text-[18px] text-[#8059ca]" />
                             </div>
                             <div>
-                              <h6>Reliable Delivery</h6>
-                              <p>Fast and secure delivery to your doorstep</p>
+                              <h6 className="text-[14px] font-semibold mb-0.5">Reliable Delivery</h6>
+                              <p className="text-[13px] text-[#6c757d] m-0">Fast and secure delivery to your doorstep</p>
                             </div>
                           </div>
                         </div>
@@ -2138,8 +1839,7 @@ const MedicineComparePage = () => {
                     <div className="d-lg-block d-none">
                       {/* Right Side Top Banners */}
                       <div
-                        className="text-center"
-                        style={{ marginBottom: "16px" }}
+                        className="text-center mb-4"
                       >
                         <Slider
                           {...{
@@ -2171,17 +1871,10 @@ const MedicineComparePage = () => {
                                       "Banner"
                                     }
                                     loading="lazy"
-                                    className="img-fluid rounded"
-                                    style={{
-                                      width: "100%",
-                                      height: "165px",
-                                      objectFit: "cover",
-                                      marginBottom:
-                                        index < rightSideTop.length - 1
-                                          ? "16px"
-                                          : "0",
-                                      bannerSliderSettings,
-                                    }}
+                                    className={`img-fluid rounded w-full h-[165px] object-cover ${index < rightSideTop.length - 1
+                                      ? "mb-4"
+                                      : "mb-0"
+                                      }`}
                                   />
                                 </div>
                               );
@@ -2191,12 +1884,7 @@ const MedicineComparePage = () => {
                               <img
                                 src="/assets/img/surgeriesShort.png"
                                 alt="Default Banner"
-                                className="img-fluid rounded"
-                                style={{
-                                  width: "100%",
-                                  height: "165px",
-                                  objectFit: "cover",
-                                }}
+                                className="img-fluid rounded w-full h-[165px] object-cover"
                               />
                             </div>
                           )}
@@ -2234,14 +1922,10 @@ const MedicineComparePage = () => {
                                       "Banner"
                                     }
                                     loading="lazy"
-                                    className="img-fluid rounded"
-                                    style={{
-                                      marginBottom:
-                                        index < rightSideBottom.length - 1
-                                          ? "16px"
-                                          : "0",
-                                      bannerSliderSettings,
-                                    }}
+                                    className={`img-fluid rounded w-full h-[165px] object-cover ${index < rightSideBottom.length - 1
+                                      ? "mb-4"
+                                      : "mb-0"
+                                      }`}
                                   />
                                 </div>
                               );
@@ -2251,7 +1935,7 @@ const MedicineComparePage = () => {
                               <img
                                 src="/assets/img/longSugery.png"
                                 alt="Default Banner"
-                                className="img-fluid rounded"
+                                className="img-fluid rounded w-full h-[165px] object-cover"
                               />
                             </div>
                           )}

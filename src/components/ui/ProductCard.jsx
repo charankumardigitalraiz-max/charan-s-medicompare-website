@@ -1,10 +1,11 @@
-﻿import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 // import { UseMediaQuery } from "../../hooks/UseMediaQuery";
 import ProductImage from "./ProductImage.jsx";
 import PriceDisplay from "./PriceDisplay.jsx";
 import { getImageUrl } from "../../utils/index";
 import { CartQuantityControls } from "./index";
+import CompareOverlayButton from "./CompareOverlayButton.jsx";
 
 const getSlugs = (data) => {
   let sub =
@@ -342,12 +343,12 @@ const ProductCard = ({
 
   return (
     <div
-      className={`tablet-card ${className}`}
+      className={`group !bg-white !border !border-[#f1f5f9] !rounded-[20px] !p-2.5 !shadow-[0_8px_20px_rgba(0,0,0,0.03)] hover:!shadow-[0_20px_40px_rgba(0,0,0,0.08)] hover:!-translate-y-2 !transition-all !duration-300 !h-full !w-full !flex !flex-col !relative !overflow-hidden !cursor-pointer ${className}`}
       style={style}
       onClick={handleImageClick}
     >
       <img
-        className="tablet-card-img"
+        className="!w-full !h-[100px] !object-contain !mb-1 !p-1 !bg-[#fdfdfd] !rounded-lg"
         src={displayImage}
         alt={productName}
         title={productName}
@@ -403,105 +404,11 @@ const ProductCard = ({
   </div>
 )} */}
       {showCompare && (
-        <>
-          <style>{`
-            .compare-flip-container {
-              position: absolute;
-              top: 10px;
-              right: 10px;
-              width: 26px;
-              height: 26px;
-              perspective: 1000px;
-              cursor: pointer;
-              z-index: 11;
-              transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-            }
-            .compare-flip-inner {
-              position: relative;
-              width: 100%;
-              height: 100%;
-              text-align: center;
-              transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-              transform-style: preserve-3d;
-            }
-            @keyframes compareContainerAutoWidth {
-              0%, 15%, 85%, 100% {
-                width: 26px;
-              }
-              30%, 70% {
-                width: 70px;
-              }
-            }
-            @keyframes compareAutoFlip {
-              0%, 15%, 85%, 100% {
-                transform: rotateY(0deg);
-              }
-              30%, 70% {
-                transform: rotateY(180deg);
-              }
-            }
-            .compare-flip-container-auto {
-              animation: compareContainerAutoWidth 8s infinite ease-in-out;
-            }
-            .compare-flip-inner-auto {
-              animation: compareAutoFlip 8s infinite ease-in-out;
-            }
-            .compare-flip-container:hover {
-              width: 70px !important;
-              animation: none !important;
-            }
-            .compare-flip-container:hover .compare-flip-inner {
-              transform: rotateY(180deg) !important;
-              animation: none !important;
-            }
-            .compare-face-front, .compare-face-back {
-              position: absolute;
-              width: 100%;
-              height: 100%;
-              backface-visibility: hidden;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              box-shadow: 0 2px 8px rgba(128, 89, 202, 0.35);
-              border-radius: 13px;
-            }
-            .compare-face-front {
-              background: #8059ca;
-              color: #ffffff;
-              border: 1.5px solid #8059ca;
-            }
-            .compare-face-back {
-              background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
-              color: #ffffff;
-              border: none;
-              transform: rotateY(180deg);
-              font-size: 7.5px;
-              font-weight: 700;
-              text-transform: uppercase;
-              letter-spacing: 0.3px;
-              white-space: nowrap;
-              padding: 0 4px;
-            }
-          `}</style>
-          <button
-            ref={compareIconRef}
-            onClick={handleCompareIconClick}
-            data-tooltip-id="global-tooltip"
-            data-tooltip-content="Compare"
-            className="compare-flip-container compare-flip-container-auto focus:outline-none border-none bg-transparent p-0"
-          >
-            <div className="compare-flip-inner compare-flip-inner-auto">
-              <div className="compare-face-front">
-                <i className="fa-solid fa-right-left" style={{ fontSize: "10px", color: "inherit" }}></i>
-              </div>
-              <div className="compare-face-back">
-                <i className="fa-solid fa-hand-point-right"
-                  style={{ fontSize: "13px", marginRight: "2px", color: "#fff" }}></i>
-                Compare
-              </div>
-            </div>
-          </button>
-        </>
+        <CompareOverlayButton
+          tablet={item?.tabletdetails || item?.tablet || item}
+          serviceType={currentService}
+          onClick={handleCompareIconClick}
+        />
       )}
 
       {/* {discount > 0 && (
@@ -543,13 +450,13 @@ const ProductCard = ({
         </div>
       )} */}
 
-      <div className="tablet-card-content">
-        <p className="tablet-card-title capitalize">
+      <div className="!flex !flex-col">
+        <p className="!text-[11px] sm:!text-xs !font-semibold !text-slate-800 !mb-2 !leading-tight !line-clamp-2 !overflow-hidden !min-h-[2.4em] capitalize" style={{ display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical" }}>
           {truncateText(productName, titleMaxLength)}
         </p>
 
         <div
-          className="flex flex-wrap gap-1"
+          className="flex flex-wrap gap-1 mt-1"
           style={{ fontSize: "10px", color: "#6b7280" }}
         >
           <span className="flex items-center gap-1">
@@ -616,59 +523,59 @@ const ProductCard = ({
         )} */}
 
         {isMobile && effectivePrice > 0 && (
-          <div className="flex flex-row items-end price-details-wrapper">
-            <span className="tablet-card-price-amount">₹{formatCurrency(effectivePrice)}</span>
+          <div className="!flex !flex-row !items-end !flex-wrap !mt-auto">
+            <span className="!font-bold !text-sm !text-[#1a1a1a] !leading-none">₹{formatCurrency(effectivePrice)}</span>
             {itemDiscountprice &&
               itemDiscountprice > 0 &&
               itemDiscountprice !== itemPrice &&
               discount > 0 && (
-                <span className="tablet-card-old-price">₹{formatCurrency(itemPrice)}</span>
+                <span className="!text-[10px] !text-slate-400 !line-through !ml-1.5">₹{formatCurrency(itemPrice)}</span>
               )}
           </div>
         )}
       </div>
-      <div className="tablet-card-vendor-area">
+      <div className="!flex !flex-col !gap-[2px] !pt-2 !mt-auto">
         <div
-          className="tablet-card-footer flex flex-col gap-1"
+          className="!flex !items-center !justify-between !border-t-0 transition-all duration-200 pt-1 sm:pt-0 flex-col gap-1"
           onClick={handleVendorClick}
           style={{
             cursor:
               onVendorClick && item?.vendordetails ? "pointer" : "default",
           }}
         >
-          <div className="flex items-center justify-between w-full vendor-price-summary gap-2">
+          <div className="flex items-center justify-between w-full flex-row gap-2">
             {vendorName ? (
               <div className="flex items-center gap-2">
-                <div className="vendor-img-wrapper">
+                <div className="!w-[32px] !h-[32px] sm:!w-[45px] sm:!h-[45px] !rounded-[6px] sm:!rounded-[8px] !overflow-hidden !bg-[#f8fafc] !border !border-solid !border-[#f1f5f9] !shrink-0 !flex !items-center !justify-center">
                   {vendorImage ? (
-                    <img src={vendorImage} alt={vendorName} />
+                    <img src={vendorImage} alt={vendorName} className="!w-full !h-full !object-contain !p-[3px]" />
                   ) : (
-                    <div className="vendor-avatar-placeholder">
+                    <div className="!w-full !h-full !bg-gradient-to-br !from-[#8059ca] !to-[#8059ca] !text-white !flex !items-center !justify-center !font-bold !text-[12px]">
                       {vendorName.charAt(0)} /assets/img/logo.png
                     </div>
                   )}
                 </div>
-                <div className="vendor-info flex flex-col items-start">
+                <div className="flex flex-col items-start !gap-0">
                   {/* <span className="vendor-label">Sold by</span> */}
-                  <p className="tablet-card-footer-title m-0">
+                  <p className="!text-[10.4px] sm:!text-[11.5px] !font-semibold !text-[#1a1a1a] !m-0">
                     {truncateText(vendorName, vendorNameMaxLength)}
                   </p>
-                  {distanceInKm && (
-                    <p className="tablet-card-distance m-0 text-primary" style={{ fontSize: "10px", color: "#6b7280" }}>
+                  {/* {distanceInKm && (
+                    <p className="!text-[10px] !text-[#6b7280] m-0 text-primary" style={{ fontSize: "10px", color: "#6b7280" }}>
                       <i className="fas fa-map-marker-alt text-primary" style={{ fontSize: "8px", marginRight: "4px" }}></i>
                       {distanceInKm.toFixed(1)} km
                     </p>
-                  )}
+                  )} */}
                   {!isMobile && effectivePrice > 0 && (
-                    <div className="flex flex-row items-center justify-center gap-1 price-details-wrapper">
-                      <span className="tablet-card-price-amount">
+                    <div className="!flex !flex-row !items-center !justify-start !gap-1.5 !shrink-0">
+                      <span className="!font-bold !text-[13px] sm:!text-[14px] !text-[#1a1a1a] !leading-[1.2]">
                         ₹{formatCurrency(effectivePrice)}
                       </span>
                       {itemDiscountprice &&
                         itemDiscountprice > 0 &&
                         itemDiscountprice !== itemPrice &&
                         discount > 0 && (
-                          <span className="tablet-card-old-price">
+                          <span className="!text-[10px] sm:!text-[12px] !text-[#94a3b8] !line-through">
                             ₹{formatCurrency(itemPrice)}
                           </span>
                         )}
@@ -678,34 +585,34 @@ const ProductCard = ({
               </div>
             ) : (
               <div className="flex items-center gap-2">
-                <div className="vendor-img-wrapper">
-                  <img src="/assets/img/logo.png" alt="medicompare" />
+                <div className="!w-[32px] !h-[32px] sm:!w-[45px] sm:!h-[45px] !rounded-[6px] sm:!rounded-[8px] !overflow-hidden !bg-[#f8fafc] !border !border-solid !border-[#f1f5f9] !shrink-0 !flex !items-center !justify-center">
+                  <img src="/assets/img/logo.png" alt="medicompare" className="!w-full !h-full !object-contain !p-[3px]" />
 
                   {/* <div className="vendor-avatar-placeholder">
                     Medicompares
                   </div> */}
                 </div>
-                <div className="vendor-info flex flex-col items-start">
+                <div className="flex flex-col items-start !gap-0">
                   {/* <span className="vendor-label">Sold by</span> */}
-                  <p className="tablet-card-footer-title m-0">
+                  <p className="!text-[10.4px] sm:!text-[11.5px] !font-semibold !text-[#1a1a1a] !m-0">
                     {truncateText("MediCompares", vendorNameMaxLength)}
                   </p>
-                  {distanceInKm && (
-                    <p className="tablet-card-distance m-0" style={{ fontSize: "10px", color: "#6b7280" }}>
+                  {/* {distanceInKm && (
+                    <p className="!text-[10px] !text-[#6b7280] m-0" style={{ fontSize: "10px", color: "#6b7280" }}>
                       <i className="fas fa-map-marker-alt" style={{ fontSize: "8px", marginRight: "4px" }}></i>
                       {distanceInKm.toFixed(1)} km away
                     </p>
-                  )}
+                  )} */}
                   {!isMobile && effectivePrice > 0 && (
-                    <div className="flex flex-row items-center justify-center price-details-wrapper">
-                      <span className="tablet-card-price-amount">
+                    <div className="!flex !flex-row !items-center !justify-start !gap-1.5 !shrink-0">
+                      <span className="!font-bold !text-[13px] sm:!text-[14px] !text-[#1a1a1a] !leading-[1.2]">
                         ₹{formatCurrency(effectivePrice)}
                       </span>
                       {itemDiscountprice &&
                         itemDiscountprice > 0 &&
                         itemDiscountprice !== itemPrice &&
                         discount > 0 && (
-                          <span className="tablet-card-old-price">
+                          <span className="!text-[10px] sm:!text-[12px] !text-[#94a3b8] !line-through">
                             ₹{formatCurrency(itemPrice)}
                           </span>
                         )}
@@ -715,7 +622,6 @@ const ProductCard = ({
               </div>
             )}
           </div>
-
           <button
             onClick={(e) => {
               e.stopPropagation();

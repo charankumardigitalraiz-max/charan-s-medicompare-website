@@ -163,16 +163,7 @@ const MedicineSection = ({
 
   return (
     <section
-      className="my-2 px-2 px-md-3 home-medicine-section"
-      style={{
-        background: "rgba(128, 89, 202, 0.06)",
-        borderRadius: "24px",
-        boxShadow: "0 12px 32px -4px rgba(128, 89, 202, 0.08)",
-        padding: "16px 0 20px 0",
-        position: "relative",
-        overflow: "hidden",
-        margin: "12px 15px",
-      }}
+      className="home-medicine-section bg-[rgba(128,89,202,0.06)] rounded-[24px] shadow-[0_12px_32px_-4px_rgba(128,89,202,0.08)] py-4 pb-5 relative overflow-hidden my-3 mx-[15px] px-2 md:px-3"
     >
       {decorativeElements?.map((element, index) => (
         <div key={index} className={element.className} style={element.style}>
@@ -180,20 +171,16 @@ const MedicineSection = ({
         </div>
       ))}
 
-      <div style={{ position: "relative", zIndex: 1 }}>
-        <div className="d-flex align-items-center justify-content-between mb-3 px-1">
+      <div className="relative z-10">
+        <div className="flex items-center justify-between mb-3 px-1">
           <div
+            className="inline-block py-1 px-2.5 rounded-full text-[14px] font-semibold"
             style={{
-              display: "inline-block",
-              padding: "4px 10px",
-              background: `${iconColor}20`,
-              borderRadius: "50px",
-              fontSize: "14px",
-              fontWeight: "600",
+              backgroundColor: `${iconColor}20`,
               color: iconColor,
             }}
           >
-            <i className={icon} style={{ marginRight: "8px" }} />
+            <i className={`${icon} mr-2`} />
             {title}
           </div>
 
@@ -202,23 +189,16 @@ const MedicineSection = ({
             onClick={() => {
               localStorage.setItem("fixedType", "medicine");
             }}
-            className="top-vendor-badge"
+            className={`top-vendor-badge flex items-center justify-center font-semibold transition-all duration-300 ${isMobile ? "p-2 rounded-full w-8 h-8" : "py-1 px-2.5 rounded-full w-auto h-auto text-sm"
+              }`}
             style={{
-              padding: isMobile ? "8px" : "4px 10px",
               color: iconColor,
               borderColor: iconColor,
-              fontWeight: "600",
-              background: `${iconColor}15`,
-              borderRadius: isMobile ? "50%" : "50px",
-              width: isMobile ? "32px" : "auto",
-              height: isMobile ? "32px" : "auto",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
+              backgroundColor: `${iconColor}15`,
             }}
           >
             {!isMobile && "View All"}
-            <i className={`isax isax-arrow-right-1 ${!isMobile ? "ms-1" : ""}`} />
+            <i className={`isax isax-arrow-right-1 ${!isMobile ? "ml-1" : ""}`} />
           </Link>
         </div>
 

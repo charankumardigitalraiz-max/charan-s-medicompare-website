@@ -395,11 +395,9 @@ const AmbulanceBookingModal = ({
           }
         `}</style>
         <form onSubmit={handleSearch}>
-          <div className="row g-3 mb-[20px]">
-            <div className="col-12 col-md-5 relative">
-              <div
-                className="absolute left-[12px] top-1/2 -translate-y-1/2 text-[#666] text-[18px] z-[1]"
-              >
+          <div className="flex flex-col md:flex-row gap-3 mb-5">
+            <div className="flex-1 relative">
+              <div className="absolute left-[12px] top-1/2 -translate-y-1/2 text-[#666] text-[18px] z-[1]">
                 <i className="fas fa-map-marker-alt"></i>
               </div>
               {isLoaded ? (
@@ -413,12 +411,7 @@ const AmbulanceBookingModal = ({
                   }}
                   options={{
                     componentRestrictions: { country: "in" },
-                    fields: [
-                      "formatted_address",
-                      "geometry",
-                      "name",
-                      "place_id",
-                    ],
+                    fields: ["formatted_address", "geometry", "name", "place_id"],
                   }}
                 >
                   <input
@@ -457,10 +450,8 @@ const AmbulanceBookingModal = ({
               )}
             </div>
 
-            <div className="col-12 col-md-5 relative">
-              <div
-                className="absolute left-[12px] top-1/2 -translate-y-1/2 text-[#666] text-[18px] z-[1]"
-              >
+            <div className="flex-1 relative">
+              <div className="absolute left-[12px] top-1/2 -translate-y-1/2 text-[#666] text-[18px] z-[1]">
                 <i className="fas fa-map-marker-alt"></i>
               </div>
               {isLoaded ? (
@@ -474,12 +465,7 @@ const AmbulanceBookingModal = ({
                   }}
                   options={{
                     componentRestrictions: { country: "in" },
-                    fields: [
-                      "formatted_address",
-                      "geometry",
-                      "name",
-                      "place_id",
-                    ],
+                    fields: ["formatted_address", "geometry", "name", "place_id"],
                   }}
                 >
                   <input
@@ -518,11 +504,11 @@ const AmbulanceBookingModal = ({
               )}
             </div>
 
-            <div className="col-12 col-md-2">
+            <div className="md:w-[140px] shrink-0">
               <button
                 type="submit"
                 disabled={isSearching || !isLoaded}
-                className={`w-full p-[10px] text-white border-none !rounded-[8px] text-[13px] font-semibold flex items-center justify-center gap-[8px] ${isSearching ? "bg-[#9ca3af] cursor-not-allowed" : "bg-[#8059ca] cursor-pointer"}`}
+                className={`w-full h-full min-h-[42px] p-[10px] text-white border-none !rounded-[8px] text-[13px] font-semibold flex items-center justify-center gap-[8px] ${isSearching ? "bg-[#9ca3af] cursor-not-allowed" : "bg-[#8059ca] cursor-pointer"}`}
               >
                 <i className="fas fa-search"></i> Search
               </button>
@@ -556,16 +542,12 @@ const AmbulanceBookingModal = ({
           )}
 
         {isSearching ? (
-          <div style={{ textAlign: "center", padding: "60px 0" }}>
-            <div className="spinner-border text-primary" role="status">
-              <span className="visually-hidden">Loading...</span>
-            </div>
-            <p style={{ marginTop: "16px", color: "#555" }}>
-              Searching for ambulances...
-            </p>
+          <div className="text-center py-[60px]">
+            <div className="inline-block w-10 h-10 border-4 border-[#8059ca] border-t-transparent rounded-full animate-spin" role="status"></div>
+            <p className="mt-4 text-[#555]">Searching for ambulances...</p>
           </div>
         ) : ambulanceData.length > 0 ? (
-          <div className="row g-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {ambulanceData.map((vendorItem, index) => {
               const vendor = vendorItem?.businessdetails || {};
               const price = vendorItem?.price || 0;
@@ -583,10 +565,7 @@ const AmbulanceBookingModal = ({
                 discountPrice > 0 ? discountPrice : price;
 
               return (
-                <div
-                  key={vendorItem._id || index}
-                  className="col-12 col-md-6 col-lg-4"
-                >
+                <div key={vendorItem._id || index}>
                   <div
                     className="bg-white border border-solid border-[#e5e7eb] rounded-[12px] p-[10px] shadow-[0_1px_3px_rgba(0,0,0,0.1)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.12)] transition-all duration-200 ease h-full cursor-pointer"
                   >

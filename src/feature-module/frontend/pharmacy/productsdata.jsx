@@ -2011,7 +2011,7 @@ const ProductsData = () => {
                 <div className="flex items-center justify-between flex-wrap gap-3 w-full">
                   {!isDesktopSidebarOpen && (
                     <button
-                      className="flex items-center gap-2 p-[4px_8px] bg-[#8059ca] text-white border-none rounded-lg text-[14px] font-[500] cursor-pointer transition-all duration-200 shrink-0 hover:bg-[#6b25e6] hover:-translate-y-px hover:shadow-[0_4px_8px_rgba(125,46,255,0.3)]"
+                      className="flex items-center gap-2 p-[4px_8px] !bg-[#8059ca] text-white border-none !rounded-lg !text-[14px] !font-[500] cursor-pointer transition-all duration-200 shrink-0 hover:bg-[#6b25e6] hover:-translate-y-px hover:shadow-[0_4px_8px_rgba(125,46,255,0.3)]"
                       onClick={() => setIsDesktopSidebarOpen(true)}
                     >
                       <i className="fas fa-filter"></i>
@@ -2073,7 +2073,7 @@ const ProductsData = () => {
                 </div>
               </div>
               <div
-                className={`${isTablet ? "hidden" : "flex"} justify-start items-center gap-5 mb-2.5`}
+                className="hidden lg:flex justify-start items-center gap-5 mb-2.5"
               >
                 <div
                   className="text-sm font-semibold text-gray-900"
@@ -2092,7 +2092,7 @@ const ProductsData = () => {
                   onChange={(e) => setSortOption(e.target.value)}
                 // onChange={(e) => handleSortOptionChange(e.target.value)}
                 />
- 
+
                 {searchTerm && searchTerm.trim() && (
                   <div
                     className="flex items-center gap-2 px-3 py-1 bg-slate-50 border border-slate-100 rounded-md text-xs text-gray-700 font-medium shrink-0"

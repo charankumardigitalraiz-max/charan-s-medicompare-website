@@ -177,7 +177,7 @@ const CollapsibleVendorList = ({
           e.stopPropagation();
           setIsOpen(!isOpen);
         }}
-        className="flex items-center justify-between py-2 px-3 bg-purple-50/40 hover:bg-purple-50 border border-purple-100 rounded-sm cursor-pointer select-none transition-all duration-200"
+        className="flex items-center justify-between py-2 px-3 !bg-purple-50/40 hover:!bg-purple-50 !border !border-purple-100 !rounded-sm cursor-pointer select-none transition-all duration-200"
       >
         <span className="text-xs font-bold text-[#8059ca]">
           {vendorCount} {vendorCount === 1 ? "Vendor" : "Vendors"} Available
@@ -190,7 +190,7 @@ const CollapsibleVendorList = ({
       {/* Expanded Vendor List + action button */}
       {isOpen && (
         <div
-          className="absolute bottom-[calc(100%+6px)] left-0 right-0 bg-white border border-slate-200 rounded-lg shadow-lg z-[99] p-1.5 flex flex-col gap-1.5 mb-1.5"
+          className="absolute bottom-[calc(100%+6px)] left-0 right-0 bg-white !border !border-slate-200 !rounded-sm !shadow-lg z-[99] p-1.5 flex flex-col gap-1.5 mb-1.5"
           onClick={(e) => e.stopPropagation()}
         >
           <div className="max-h-[220px] overflow-y-auto flex flex-col gap-1">
@@ -1013,7 +1013,7 @@ const RelatedProducts = ({
               return (
                 <div
                   key={product._id || product?.tablet?._id || index}
-                  className="w-[250px] border border-slate-200/80 !rounded-md overflow-visible bg-white shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:-translate-y-1 hover:shadow-[0_12px_24px_rgba(128,89,202,0.12)] cursor-pointer flex flex-col h-full relative transition-all duration-300"
+                  className="w-[250px] !border !border-slate-200/80 !rounded-md overflow-visible bg-white !shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:-translate-y-1 hover:!shadow-[0_12px_24px_rgba(128,89,202,0.12)] cursor-pointer flex flex-col h-full relative transition-all duration-300"
                 >
                   {product?.tablet?.medicineType && (
                     <div

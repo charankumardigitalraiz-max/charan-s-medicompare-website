@@ -90,42 +90,24 @@ const ProductsSection = ({
   return (
     <div>
       {/* Products Section Header */}
-      <div className="flex items-center justify-between mt-2 mb-4 p-4 bg-white rounded-2xl shadow-sm border border-slate-100 lg:hidden">
-        <div className="flex items-center justify-between flex-wrap gap-2 w-full">
-          <div className="flex items-center gap-2">
-            {/* Mobile Filter Button */}
-            {onOpenFilterDrawer && (
-              <button
-                type="button"
-                className="flex items-center gap-2 px-3.5 py-2 bg-[#8059ca] text-white border-0 !rounded-lg text-xs font-semibold cursor-pointer hover:bg-[#6d3fc7] transition-all"
-                onClick={onOpenFilterDrawer}
-              >
-                <i className="fas fa-filter text-[10px]"></i>
-                <span>Filter</span>
-                {filteredProducts.length > 0 && (
-                  <span className="bg-white/20 px-1.5 py-0.5 rounded text-[10px] font-bold">{filteredProducts.length}</span>
-                )}
-              </button>
+      <div className="flex items-center gap-3 mt-2 mb-4 p-3 bg-white rounded-2xl shadow-sm border border-slate-100 lg:hidden">
+        {onOpenFilterDrawer && (
+          <button
+            type="button"
+            className="flex items-center gap-2 px-3.5 py-2 bg-[#8059ca] text-white border-0 !rounded-lg text-xs font-semibold cursor-pointer hover:bg-[#6d3fc7] transition-all shrink-0"
+            onClick={onOpenFilterDrawer}
+          >
+            <i className="fas fa-filter text-[10px]"></i>
+            <span>Filter</span>
+            {filteredProducts.length > 0 && (
+              <span className="bg-white/20 px-1.5 py-0.5 rounded text-[10px] font-bold">{filteredProducts.length}</span>
             )}
-            {/* Sort Select - Mobile */}
-            <div className="block lg:hidden">
-              <SortSelect
-                value={sortBy}
-                onChange={handleSortChange}
-              />
-            </div>
-          </div>
-        </div>
-        <div className="flex items-center gap-3">
-          {/* Sort Select - Desktop */}
-          <div className="hidden lg:block">
-            <SortSelect
-              value={sortBy}
-              onChange={handleSortChange}
-            />
-          </div>
-          <ViewToggleButtons isFull={isFull} onToggle={setIsFull} />
-        </div>
+          </button>
+        )}
+        <SortSelect
+          value={sortBy}
+          onChange={handleSortChange}
+        />
       </div>
 
       {/* Products Grid */}

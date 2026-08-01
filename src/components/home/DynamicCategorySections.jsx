@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Slider from "react-slick";
-import { ProductCard } from "../ui";
+import { ProductCard, SectionHeader } from "../ui";
 import { useResponsive } from "../../hooks";
 import HomeProductScrollCarousel from "./HomeProductScrollCarousel";
 
@@ -193,76 +193,63 @@ const DynamicCategorySections = ({
           key={section._id}
         >
 
-          <div className="flex items-center justify-between flex-wrap gap-3 mb-3">
-            <div
-              style={{
-                padding: "4px 10px",
-                background:
-                  "linear-gradient(135deg, rgba(125, 46, 255, 0.1), rgba(59, 130, 246, 0.1))",
-                borderRadius: "50px",
-                fontSize: "14px",
-                fontWeight: "600",
-                color: "#8059ca",
-              }}
-            >
-              <i className="fas fa-bolt mr-1"></i>
-              {title}
-            </div>
-
-            <Link
-              to={`/${currentService || serviceId?.slug || "medicine"}/all`}
-              className="top-vendor-badge"
-              style={{
-                padding: isMobile ? "8px" : "8px 20px",
-                borderRadius: isMobile ? "50%" : "50px",
-                width: isMobile ? "36px" : "auto",
-                height: isMobile ? "36px" : "auto",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                fontWeight: "600",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = "#8059ca";
-                e.currentTarget.style.color = "#ffffff";
-              }}
-            >
-              {isMobile ? "" : "View All"}
-              <i className={isMobile ? "fas fa-arrow-right" : "fas fa-arrow-right ml-1"}></i>
-            </Link>
-          </div>
-
-
+          <SectionHeader
+            title={title}
+            icon="fas fa-bolt"
+            viewAllLink={`/${currentService || serviceId?.slug || "medicine"}/all`}
+            viewAllText="View All"
+            className="!mb-4"
+          />
 
           <div className={extraSmallScreen ? "px-2" : ""}>
             {useSlider ? (
-              <Slider {...dynamicSettings}>
-                {products.map((item, i) => {
-                  const normalizedItem = normalizeItem(item);
-                  const variant = Array.isArray(normalizedItem?.variants)
-                    ? normalizedItem.variants[0]
-                    : normalizedItem?.variants;
+              <>
+                <style>{`
+                  .dynamic-equal-slider .slick-track {
+                    display: flex !important;
+                    align-items: stretch !important;
+                  }
+                  .dynamic-equal-slider .slick-slide {
+                    height: auto !important;
+                    display: flex !important;
+                    flex-direction: column !important;
+                  }
+                  .dynamic-equal-slider .slick-slide > div {
+                    height: 100% !important;
+                    display: flex !important;
+                    flex-direction: column !important;
+                    flex: 1 !important;
+                  }
+                `}</style>
+                <Slider {...dynamicSettings} className="dynamic-equal-slider">
+                  {products.map((item, i) => {
+                    const normalizedItem = normalizeItem(item);
+                    const variant = Array.isArray(normalizedItem?.variants)
+                      ? normalizedItem.variants[0]
+                      : normalizedItem?.variants;
 
-                  return (
-                    <div key={i} className="px-2">
-                      <ProductCard
-                        item={normalizedItem}
-                        variant={variant}
-                        imgUrl={imgUrl}
-                        onProductClick={onProductClick}
-                        onCompareClick={onCompareClick}
-                        onVendorClick={onVendorClick}
-                        maxStock={variant?.stock || 999}
-                        isMobile={isMobile}
-                        currentService={currentService}
-                        disableTooltips={liteMode}
-                      />
-                    </div>
-                  );
-                })}
-              </Slider>
+                    return (
+                      <div key={i} className="px-2 h-full flex">
+                        <ProductCard
+                          item={normalizedItem}
+                          variant={variant}
+                          imgUrl={imgUrl}
+                          onProductClick={onProductClick}
+                          onCompareClick={onCompareClick}
+                          onVendorClick={onVendorClick}
+                          maxStock={variant?.stock || 999}
+                          isMobile={isMobile}
+                          currentService={currentService}
+                          disableTooltips={liteMode}
+                          className="!h-full"
+                        />
+                      </div>
+                    );
+                  })}
+                </Slider>
+              </>
             ) : (
-              <div className="flex flex-wrap -mx-3">
+              <div className="flex flex-wrap -mx-3 items-stretch">
                 {products.map((item, i) => {
                   const normalizedItem = normalizeItem(item);
                   const variant = Array.isArray(normalizedItem?.variants)
@@ -272,7 +259,7 @@ const DynamicCategorySections = ({
                   return (
                     <div
                       key={i}
-                      className="w-1/2 md:w-[33.333%] lg:w-[25%] xl:w-[16.666%] px-3 mb-6"
+                      className="w-1/2 md:w-[33.333%] lg:w-[25%] xl:w-[16.666%] px-3 mb-6 flex"
                     >
                       <ProductCard
                         item={normalizedItem}

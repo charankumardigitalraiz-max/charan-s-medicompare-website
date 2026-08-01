@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import toast from "react-hot-toast";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -13,7 +14,7 @@ import Slider from "react-slick";
 import { useNavigate, useParams } from "react-router-dom";
 import { axiosCommonInstance, axiosUserInstance } from "../../../Apiservice";
 import { getImageUrl } from "../../../utils/index";
-import { CartQuantityControls, VendorActions } from "../../../components/ui";
+import { CartQuantityControls, VendorActions, BaseModal } from "../../../components/ui";
 import LeadModal from "../pharmacy/products-components/LeadModal.jsx";
 import RentModal from "../pharmacy/products-components/RentModal.jsx";
 import ConsultationModal from "../pharmacy/products-components/ConsultationModal.jsx";
@@ -457,19 +458,19 @@ const TrendingProducts = ({
       {(activeTab === "newProducts"
         ? newProducts?.length > 0
         : trendingProducts?.length > 0) && (
-          <div className="container-fluid py-3">
-            <div className="row align-items-center mb-2">
-              <div className="col-12 col-md-4 text-center text-md-start">
-                <h3 className="top-vendor-badge">
-                  <i className="fas fa-bolt"></i>Our Trending Products
-                </h3>
-              </div>
+          <div className="!py-4 !mx-2 !px-2">
+            <div className="!flex !items-center !justify-between !flex-wrap !gap-4 !mb-4 !px-2">
+              <h3 className="!m-0 !text-[20px] !font-semibold !text-[#1a1a1a] !flex !items-center !gap-2">
+                <i className="fas fa-bolt !text-warning"></i>Our Trending Products
+              </h3>
 
-              <div className="col-12 col-md-8">
-                <ul className="nav nav-tabs justify-content-end">
-                  <li className="nav-item">
+              <div className="!flex !items-center">
+                <ul className="!flex !list-none !p-0 !m-0 !border-b !border-[#e5e7eb] !gap-1">
+                  <li className="!m-0">
                     <button
-                      className={`nav-link ${activeTab === "newProducts" ? "active" : ""
+                      className={`!px-4 !py-2 !text-[13px] !font-semibold !transition-all !border-none !bg-transparent ${activeTab === "newProducts"
+                        ? "!text-primary !border-b-2 !border-primary"
+                        : "!text-[#6b7280] hover:!text-primary"
                         }`}
                       onClick={() => setActiveTab("newProducts")}
                     >
@@ -477,9 +478,11 @@ const TrendingProducts = ({
                     </button>
                   </li>
 
-                  <li className="nav-item">
+                  <li className="!nav-item">
                     <button
-                      className={`nav-link ${activeTab === "trendingProducts" ? "active" : ""
+                      className={`!px-4 !py-2 !text-[13px] !font-semibold !transition-all !border-none !bg-transparent ${activeTab === "trendingProducts"
+                        ? "!text-primary !border-b-2 !border-primary"
+                        : "!text-[#6b7280] hover:!text-primary"
                         }`}
                       onClick={() => setActiveTab("trendingProducts")}
                     >
@@ -490,7 +493,7 @@ const TrendingProducts = ({
               </div>
             </div>
 
-            <div className="meq-swiper-wrapper" style={{ position: "relative" }}>
+            <div className="meq-swiper-wrapper !relative [&_.swiper-wrapper]:!items-stretch [&_.swiper-slide]:!h-auto">
               {hasEnoughTrending && (
                 <button
                   className="meq-arrow-btn trending-prev"
@@ -511,32 +514,19 @@ const TrendingProducts = ({
                   return (
                     <SwiperSlide
                       key={index}
-                      className="p-2"
-                      style={{ display: "flex", alignSelf: "stretch" }}
+                      className="!p-2 !flex !self-stretch"
                     >
                       <div
-                        className="cardss shadow-sm product-card-hover"
-                        style={{
-                          cursor: "pointer",
-                          display: "flex",
-                          flexDirection: "column",
-                          width: "100%",
-                          background: "#fff"
-                        }}
+                        className="!flex !flex-col !h-full !w-full !rounded-[16px] !bg-white !shadow-[0_4px_20px_rgba(0,0,0,0.08)] !overflow-hidden !transition-all !duration-300 hover:!shadow-[0_8px_28px_rgba(0,0,0,0.13)] hover:!-translate-y-[2px] !cursor-pointer"
                         onClick={() => handleProductClick(item)}
                       >
-                        <div className="position-relative">
+                        <div className="!relative !w-full !h-[180px] !bg-white !rounded-t-[16px] !overflow-hidden">
                           <img
                             src={
                               getImageUrl(item?.tabletdetails?.files?.[0]) || "/assets/img/default-product.png"
                             }
                             alt={item?.tabletdetails?.name || "Product"}
-                            className="product-img p-0"
-                            style={{
-                              cursor: "pointer",
-                              borderRadius: "0px",
-                              objectFit: "contain",
-                            }}
+                            className="!w-full !h-full !object-contain"
                             onError={(e) => {
                               e.currentTarget.src = "/assets/img/default-product.png";
                             }}
@@ -555,18 +545,7 @@ const TrendingProducts = ({
                             }}
                             data-tooltip-id="global-tooltip"
                             data-tooltip-content="Quick View"
-                            style={{
-                              position: "absolute",
-                              top: "8px",
-                              left: "8px",
-                              padding: "6px 8px",
-                              borderRadius: "50px",
-                              boxShadow: "0 0 6px rgba(0,0,0,0.15)",
-                              fontSize: "13px",
-                              cursor: "pointer",
-                              backgroundColor: "#8059ca",
-                              color: "#fff",
-                            }}
+                            className="!absolute !top-2 !left-2 !p-[6px_10px] !rounded-full !shadow-[0_2px_8px_rgba(0,0,0,0.15)] !text-[13px] !cursor-pointer !bg-[#8059ca] !text-white !transition-all hover:!scale-110 !z-10"
                           >
                             <i className="fas fa-eye"></i>
                           </div>
@@ -575,88 +554,26 @@ const TrendingProducts = ({
                           <div
                             onClick={(e) => {
                               e.stopPropagation();
-
                               const data = item?.tabletdetails || item;
-
-                              const categorySlug =
-                                data?.subcatdetails?.catdetails?.slug;
-
+                              const categorySlug = data?.subcatdetails?.catdetails?.slug;
                               const subcategorySlug = data?.subcatdetails?.slug;
-
                               const tabletSlug = data?.slug;
-                              if (
-                                !categorySlug ||
-                                !subcategorySlug ||
-                                !tabletSlug
-                              )
-                                return;
-
-                              navigate(
-                                `/${categorySlug}/${subcategorySlug}/${tabletSlug}/compare`,
-                              );
+                              if (!categorySlug || !subcategorySlug || !tabletSlug) return;
+                              navigate(`/${categorySlug}/${subcategorySlug}/${tabletSlug}/compare`);
                             }}
-                            style={{
-                              position: "absolute",
-                              top: "10px",
-                              right: "10px",
-                              background: "linear-gradient(135deg, #f59e0b 0%, #d97706 100%)",
-                              borderRadius: "30px",
-                              padding: "3px 14px",
-                              display: "flex",
-                              alignItems: "center",
-                              gap: "6px",
-                              boxShadow: "0 4px 12px rgba(245, 158, 11, 0.4)",
-                              zIndex: 10,
-                              border: "1.5px solid #ffffff",
-                              cursor: "pointer",
-                              transition: "all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
-                              transform: "scale(1)",
-                            }}
-                            onMouseEnter={(e) => {
-                              e.currentTarget.style.transform = "scale(1.12) translateY(-2px)";
-                              e.currentTarget.style.boxShadow = "0 8px 20px rgba(245, 158, 11, 0.55)";
-                            }}
-                            onMouseLeave={(e) => {
-                              e.currentTarget.style.transform = "scale(1)";
-                              e.currentTarget.style.boxShadow = "0 4px 12px rgba(245, 158, 11, 0.4)";
-                            }}
+                            className="!absolute !top-[10px] !right-[10px] !flex !items-center !gap-[6px] !z-10 !cursor-pointer !transition-all !duration-300 hover:!scale-[1.1] hover:!-translate-y-[2px]"
+                            style={{ background: "linear-gradient(135deg, #f59e0b 0%, #d97706 100%)", borderRadius: "30px", padding: "3px 14px", boxShadow: "0 4px 12px rgba(245,158,11,0.4)", border: "1.5px solid #fff" }}
                             title="Compare Package"
                           >
-                            <i
-                              className="fa-solid fa-hand-pointer"
-                              style={{
-                                fontSize: "13px",
-                                color: "#ffffff",
-                                transform: "rotate(90deg)",
-                                display: "inline-block",
-                              }}
-                            ></i>
-                            <span
-                              style={{
-                                fontSize: "11px",
-                                fontWeight: "800",
-                                color: "#ffffff",
-                                textTransform: "uppercase",
-                                letterSpacing: "0.6px",
-                              }}
-                            >
-                              Compare
-                            </span>
+                            <i className="fa-solid fa-hand-pointer" style={{ fontSize: "13px", color: "#fff", transform: "rotate(90deg)", display: "inline-block" }}></i>
+                            <span style={{ fontSize: "11px", fontWeight: "800", color: "#fff", textTransform: "uppercase", letterSpacing: "0.6px" }}>Compare</span>
                           </div>
                         </div>
 
-                        <div className="cardss-body p-3">
+                        <div className="!flex !flex-col !flex-1 !p-3">
+                          {/* Vendor info header */}
                           <div
-                            style={{
-                              display: "flex",
-                              alignItems: "center",
-                              gap: 10,
-                              marginBottom: 12,
-                              paddingBottom: 12,
-                              borderBottom: "1px solid rgba(125, 46, 255, 0.1)",
-                              cursor: "pointer",
-                              transition: "all 0.2s ease",
-                            }}
+                            className="!flex !items-center !gap-2 !mb-3 !pb-2 !border-b !border-[rgba(125,46,255,0.1)] !transition-all !duration-200 hover:!opacity-80 hover:!translate-x-[2px]"
                             onClick={(e) => {
                               e.stopPropagation();
                               const vendorId =
@@ -679,14 +596,6 @@ const TrendingProducts = ({
                                 toast.error("Vendor information not available");
                               }
                             }}
-                            onMouseEnter={(e) => {
-                              e.currentTarget.style.opacity = "0.8";
-                              e.currentTarget.style.transform = "translateX(4px)";
-                            }}
-                            onMouseLeave={(e) => {
-                              e.currentTarget.style.opacity = "1";
-                              e.currentTarget.style.transform = "translateX(0)";
-                            }}
                           >
                             <img
                               alt="Vendor"
@@ -695,30 +604,14 @@ const TrendingProducts = ({
                                   item.vendordetails?.bussiness_image[0]?.url || "",
                                 ) || "/assets/img/default-product.png"
                               }
-                              style={{
-                                width: 36,
-                                height: 36,
-                                borderRadius: 8,
-                                objectFit: "cover",
-                                border: "2px solid rgba(125, 46, 255, 0.2)",
-                              }}
+                              className="!w-9 !h-9 !rounded-lg !object-cover !border-2 !border-[rgba(125,46,255,0.2)] !shrink-0"
                               onError={(e) => {
                                 e.currentTarget.src = "/assets/img/default-product.png";
                               }}
                             />
 
-                            <div style={{ flex: "1 1 0%", minWidth: 0 }}>
-                              <div
-                                style={{
-                                  fontSize: 12,
-                                  fontWeight: 600,
-                                  color: "rgb(26, 26, 26)",
-                                  marginBottom: 2,
-                                  whiteSpace: "nowrap",
-                                  overflow: "hidden",
-                                  textOverflow: "ellipsis",
-                                }}
-                              >
+                            <div className="!grow !min-w-0">
+                              <div className="!text-[12px] !font-bold !text-[#1a1a1a] !truncate !mb-[2px]">
                                 {item.vendordetails?.name || "Vendor"}
                               </div>
                               {(() => {
@@ -727,282 +620,131 @@ const TrendingProducts = ({
                                 if (!rating || !count || rating === 0 || count === 0) return null;
 
                                 return (
-                                  <div
-                                    style={{
-                                      display: "flex",
-                                      alignItems: "center",
-                                      gap: "4px",
-                                      fontSize: "10px",
-                                      color: "#666",
-                                      marginTop: "2px",
-                                      marginBottom: "4px",
-                                    }}
-                                  >
-                                    <i className="fas fa-star" style={{ color: "#ffc107", fontSize: "9px" }}></i>
-                                    <span style={{ fontWeight: "500" }}>{rating.toFixed(1)}</span>
-                                    <span style={{ color: "#999" }}>({count}+)</span>
+                                  <div className="!flex !items-center !gap-[3px] !text-[10px] !text-[#666] !mb-[2px]">
+                                    <i className="fas fa-star !text-[#ffc107] !text-[9px]"></i>
+                                    <span className="!font-medium">{rating.toFixed(1)}</span>
+                                    <span className="!text-[#999]">({count}+)</span>
                                   </div>
                                 );
                               })()}
 
-                              <div
-                                style={{
-                                  fontSize: 10,
-                                  color: "rgb(107, 114, 128)",
-                                  display: "flex",
-                                  alignItems: "center",
-                                  gap: 4,
-                                }}
-                              >
-                                <i
-                                  className="fas fa-map-marker-alt"
-                                  style={{ fontSize: 9 }}
-                                />
-                                <span
-                                  style={{
-                                    whiteSpace: "nowrap",
-                                    overflow: "hidden",
-                                    textOverflow: "ellipsis",
-                                  }}
-                                >
-                                  {(item.vendordetails?.address || "").substring(
-                                    0,
-                                    45,
-                                  ) +
-                                    (item.vendordetails?.address?.length > 45
-                                      ? "..."
-                                      : "")}
+                              <div className="!text-[10px] !text-[#6b7280] !flex !items-center !gap-1 !overflow-hidden">
+                                <i className="fas fa-map-marker-alt !text-[9px]" />
+                                <span className="!truncate">
+                                  {item.vendordetails?.address || ""}
                                 </span>
                               </div>
                               {item?.distanceInKm && (
-                                <div
-                                  className="d-flex align-items-center gap-1 text-muted"
-                                  style={{ marginTop: "4px" }}
-                                >
-                                  <i
-                                    className="isax isax-route-square"
-                                    style={{
-                                      fontSize: "11px",
-                                      color: "#8059ca",
-                                    }}
-                                  ></i>
-
-                                  <span style={{ fontSize: "11px" }}>
-                                    {parseFloat(item.distanceInKm).toFixed(1)} km
-                                    away
-                                  </span>
+                                <div className="!flex !items-center !gap-1">
+                                  <i className="isax isax-route-square !text-[11px] !text-primary"></i>
+                                  <span>{parseFloat(item.distanceInKm).toFixed(1)} km away</span>
                                 </div>
                               )}
                             </div>
                           </div>
 
-                          <div className="d-flex justify-content-between align-items-center">
+                          <div className="!flex !items-start !justify-between !gap-2">
                             <h3
-                              className="titlee text-dark mb-0"
+                              className="!m-0 !text-[14px] !font-semibold !text-[#1a1a1a] !capitalize !leading-snug !cursor-pointer !min-h-[2.8em] !line-clamp-2"
                               onClick={(e) => {
                                 e.stopPropagation();
                                 handleProductClick(item);
                               }}
                             >
-                              {item?.tabletdetails?.name?.length > 20
-                                ? item?.tabletdetails?.name.slice(0, 20) + "..."
-                                : item?.tabletdetails?.name || "Unknown Product"}
+                              {item?.tabletdetails?.name || "Unknown Product"}
                             </h3>
 
-                            <div
-                              className="d-flex align-items-center justify-content-end"
-                              style={{ minWidth: "80px", fontSize: "12px" }}
-                            >
-                              <i className="fa fa-star text-warning me-1"></i>
-                              <span className="me-1">
+                            <div className="!flex !items-center !shrink-0 !gap-[3px] !text-[11px]">
+                              <i className="fa fa-star !text-[#ffc107]"></i>
+                              <span className="!text-[#444]">
                                 {item?.tabletdetails?.averageRating.toFixed(1) > 0
                                   ? item?.tabletdetails.averageRating.toFixed(1)
                                   : 0}
                               </span>
-
-                              <i className="fa fa-users me-1 text-primary"></i>
-                              <span>
-                                (
-                                {item?.tabletdetails?.ratingCount > 0
-                                  ? `${item?.tabletdetails.ratingCount}+`
-                                  : 0}
-                                )
+                              <i className="fa fa-users !ml-1 !text-primary"></i>
+                              <span className="!text-[#666]">
+                                ({item?.tabletdetails?.ratingCount > 0 ? `${item?.tabletdetails.ratingCount}+` : 0})
                               </span>
                             </div>
                           </div>
 
-                          <small
-                            style={{
-                              fontSize: "13px",
-                              color: "#666",
-                              lineHeight: "1.5",
-                              display: "block",
+                          <p
+                            className="!m-0 !mt-2 !text-[11px] !text-[#666] !leading-normal !line-clamp-2 !min-h-[2.8em] [&_*]:!text-[11px] [&_*]:!text-[#666] [&_*]:!leading-normal"
+                            dangerouslySetInnerHTML={{
+                              __html: formatDescription(item?.tabletdetails?.description, 100)
                             }}
-                            className="mt-2"
-                          >
-                            {formatDescription(
-                              item?.tabletdetails?.description,
-                              100,
-                            )}
-                          </small>
+                          ></p>
+
                           {item?.tabletdetails?.model && (
-                            <div className="report-timee mb-0 d-flex align-items-center gap-2">
-                              <i className="fas fa-microchip text-primary"></i>
-                              <span>Modal : </span>
-                              <span
-                                style={{ fontWeight: "600", fontSize: "13px" }}
-                              >
-                                {item?.tabletdetails?.model}
-                              </span>
+                            <div className="!flex !items-center !gap-2 !text-[11px] !text-[#555] !mt-[6px]">
+                              <i className="fas fa-microchip !text-primary"></i>
+                              <span>Model:</span>
+                              <strong>{item?.tabletdetails?.model}</strong>
                             </div>
                           )}
                           {item?.tabletdetails?.condition && (
-                            <div className="report-timee mb-0 d-flex align-items-center gap-2">
-                              <i className="fas fa-circle-check text-primary"></i>
-                              <span>Condition : </span>
-                              <span
-                                style={{ fontWeight: "600", fontSize: "13px" }}
-                              >
-                                {item?.tabletdetails?.condition}
-                              </span>
+                            <div className="!flex !items-center !gap-2 !text-[11px] !text-[#555] !mt-[2px]">
+                              <i className="fas fa-circle-check !text-primary"></i>
+                              <span>Condition:</span>
+                              <strong>{item?.tabletdetails?.condition}</strong>
                             </div>
                           )}
                           {item?.tabletdetails?.machineType && (
-                            <div className="report-timee mb-0 d-flex align-items-center gap-2">
-                              <i className="fas fa-toolbox text-primary"></i>
-                              <span>Machine Type : </span>
-                              <span
-                                style={{ fontWeight: "600", fontSize: "13px" }}
-                              >
-                                {item?.tabletdetails?.machineType}
-                              </span>
+                            <div className="!flex !items-center !gap-2 !text-[11px] !text-[#555] !mt-[2px]">
+                              <i className="fas fa-toolbox !text-primary"></i>
+                              <span>Machine Type:</span>
+                              <strong>{item?.tabletdetails?.machineType}</strong>
                             </div>
                           )}
 
-                          <div
-                            style={{
-                              backgroundColor: "#f8f9fa",
-                              padding: "10px",
-                              borderRadius: "8px",
-                              border: "1px solid #e0e0e0",
-                            }}
-                            className="my-2"
-                          >
-                            <div
-                              style={{
-                                display: "flex",
-                                flexDirection: "column",
-                                gap: "4px",
-                              }}
-                            >
-                              <div
-                                style={{
-                                  fontSize: "18px",
-                                  fontWeight: "700",
-                                  color: "#000",
-                                  display: "flex",
-                                  alignItems: "center",
-                                  gap: "8px",
-                                  flexWrap: "wrap",
-                                }}
-                              >
-                                {(() => {
-                                  const price = parseFloat(item.price) || 0;
-                                  const discountprice =
-                                    parseFloat(
-                                      item.discountprice || item.discountPrice,
-                                    ) || null;
+                          {/* Price Details */}
+                          <div className="!rounded-[8px] !p-[8px] !mt-auto !border !border-[rgba(128,89,202,0.15)] !bg-primary-bg">
+                            <div className="!flex !flex-wrap !items-center !gap-2">
+                              {(() => {
+                                const price = parseFloat(item.price) || 0;
+                                const discountprice = parseFloat(item.discountprice || item.discountPrice) || null;
+                                const effectivePrice = discountprice && discountprice > 0 ? discountprice : price;
 
-                                  const effectivePrice =
-                                    discountprice && discountprice > 0
-                                      ? discountprice
-                                      : price;
-
-                                  let discount = 0;
-                                  if (
-                                    discountprice &&
-                                    discountprice > 0 &&
-                                    discountprice !== price
-                                  ) {
-                                    if (discountprice > price) {
-                                      discount = Math.round(
-                                        ((discountprice - price) /
-                                          discountprice) *
-                                        100,
-                                      );
-                                    } else {
-                                      discount = Math.round(
-                                        ((price - discountprice) / price) * 100,
-                                      );
-                                    }
+                                let discount = 0;
+                                if (discountprice && discountprice > 0 && discountprice !== price) {
+                                  if (discountprice > price) {
+                                    discount = Math.round(((discountprice - price) / discountprice) * 100);
+                                  } else {
+                                    discount = Math.round(((price - discountprice) / price) * 100);
                                   }
+                                }
 
-                                  return discountprice &&
-                                    discountprice > 0 &&
-                                    discountprice !== price ? (
-                                    <>
-                                      <span
-                                        style={{
-                                          fontSize: "18px",
-                                          fontWeight: "600",
-                                          color: "#000",
-                                        }}
-                                      >
-                                        ₹{effectivePrice.toFixed(2)}
-                                      </span>
-
-                                      <span
-                                        className="text-muted text-decoration-line-through"
-                                        style={{ fontSize: "14px" }}
-                                      >
-                                        ₹{price.toFixed(2)}
-                                      </span>
-
-                                      {discount > 0 && (
-                                        <span
-                                          className="badge bg-success"
-                                          style={{ fontSize: "11px" }}
-                                        >
-                                          {discount}% OFF
-                                        </span>
-                                      )}
-                                      {Number(item?.perDayRent || 0) > 0 && (
-                                        <div
-                                          style={{
-                                            display: "flex",
-                                            alignItems: "center",
-                                            gap: "4px",
-                                            fontSize: "12px",
-                                            color: "#8059ca",
-                                          }}
-                                        >
-                                          <i className="fas fa-calendar-day"></i>
-                                          <span style={{ fontWeight: "500" }}>
-                                            Per Day Rent:
-                                          </span>
-                                          <span style={{ fontWeight: "700" }}>
-                                            ₹{item.perDayRent}
-                                          </span>
-                                        </div>
-                                      )}
-                                    </>
-                                  ) : (
-                                    <span
-                                      style={{
-                                        fontSize: "18px",
-                                        fontWeight: "600",
-                                        color: "#000",
-                                      }}
-                                    >
-                                      ₹{effectivePrice}
-                                    </span>
-                                  );
-                                })()}
-                              </div>
+                                return discountprice && discountprice > 0 && discountprice !== price ? (
+                                  <>
+                                    <span className="!font-bold !text-[16px] !text-[#1a1a1a]">₹{effectivePrice.toFixed(2)}</span>
+                                    <span className="!line-through !text-[#999] !text-[13px]">₹{price.toFixed(2)}</span>
+                                    {discount > 0 && (
+                                      <span className="!bg-green-500 !text-white !text-[10px] !px-1.5 !py-[2px] !rounded !font-semibold">{discount}% OFF</span>
+                                    )}
+                                  </>
+                                ) : (
+                                  <span className="!font-bold !text-[16px] !text-[#1a1a1a]">₹{effectivePrice}</span>
+                                );
+                              })()}
                             </div>
+
+                            {Number(item?.perDayRent || 0) > 0 && (
+                              <>
+                                {/* Delivery Badge */}
+                                <div className="!flex !items-center !gap-[6px] !text-[11px] !text-primary !mt-[4px] !font-medium">
+                                  <i className="fas fa-truck-fast"></i>
+                                  <span>Free Delivery Available</span>
+                                </div>
+                                <div className="!flex !items-center !gap-[6px] !text-[11px] !text-[#8059ca] !mt-[4px] !font-medium">
+                                  <i className="fas fa-calendar-day"></i>
+                                  <span>Per Day Rent:</span>
+                                  <strong>₹{item.perDayRent}</strong>
+                                </div>
+                              </>
+                            )}
                           </div>
 
-                          <div className="d-flex gap-2 w-100" style={{ marginTop: 'auto' }}>
+                          <div className="!flex !gap-2 !w-full !mt-3">
                             <VendorActions
                               bookingType={
                                 item.vendors?.bookingType ||
@@ -1016,7 +758,6 @@ const TrendingProducts = ({
                               price={parseFloat(item.perDayRent) || 0}
                               rentPerDay={item?.perDayRent}
                               calculatedDiscountPrice={parseFloat(item.discountprice || item.discountPrice) || null}
-                              // stock={item.stock || (item.tabletdetails || item).stock || (item.vendordetails || item.vendors || {}).stock || 999}
                               service={item?.tabletdetails?.subcatdetails?.catdetails?.fixedType}
                               handleRentalBookinProcess={handleRentalBookinProcess}
                               handleNavigateToBooking={handleBooking}
@@ -1024,7 +765,6 @@ const TrendingProducts = ({
                               handleOpenConsultationModal={handleConsultationClick}
                               handleOpenAppointmentModal={handleAppointmentClick}
                               handleOpenRideModal=""
-                              className="w-100"
                               containerStyle={{
                                 display: "flex",
                                 flexDirection: "row",
@@ -1057,48 +797,36 @@ const TrendingProducts = ({
 
       {middleBanners?.length > 0 && (
         <section
-          className="section welcome-section px-3 mt-3 "
-          style={{ backgroundColor: "#ffffff", minHeight: "280px" }}
+          className="!py-6"
+          style={{ backgroundColor: "#ffffff" }}
         >
-          <div className="container-fluid">
-            <div className="text-center mb-3">
-              <h2
-                className="mb-3"
-                style={{
-                  fontSize: "28px",
-                  fontWeight: "700",
-                  color: "#1a1a1a",
-                }}
-              >
-                <i className="fas fa-bolt text-warning me-2"></i>Offers &
-                Promotions
+          <div className="!max-w-7xl !mx-auto !px-4">
+            <div className="!text-center !mb-6">
+              <h2 className="!m-0 !text-[28px] !font-semibold !text-[#1a1a1a] !flex !items-center !justify-center !gap-2">
+                <i className="fas fa-bolt !text-warning"></i>Offers & Promotions
               </h2>
             </div>
             {middleBanners.length > 1 ? (
               <Slider {...settings}>
                 {middleBanners.map((image, index) => (
-                  <div key={index} className="col-lg-4 col-md-6 d-flex">
+                  <div key={index} className="!px-2">
                     <img
                       src={image.src}
                       alt={image.alt}
                       loading="lazy"
-                      className="px-1"
-                      style={{
-                        borderRadius: "10px",
-                      }}
+                      className="!w-full !rounded-[12px]"
                     />
                   </div>
                 ))}
               </Slider>
             ) : (
-              <div className="col-lg-12 d-flex">
+              <div className="!w-full">
                 <img
                   src={middleBanners[0]?.src}
                   alt={middleBanners[0]?.alt}
                   title={middleBanners[0]?.alt}
                   loading="lazy"
-                  className="px-1"
-                  style={{ borderRadius: "10px" }}
+                  className="!w-full !rounded-[12px]"
                 />
               </div>
             )}
@@ -1107,20 +835,22 @@ const TrendingProducts = ({
       )}
 
       {/* {topCategories && topCategories.length > 0 && topCategoriesProducts && topCategoriesProducts.length > 0 && ( */}
-      <div className="container-fluid">
-        <div className="row align-items-center mb-2">
-          <div className="col-12 col-md-4 text-center text-md-start">
-            <h3 className="top-vendor-badge">
-              <i className="fas fa-bolt"></i>Featured Products
+      <div className="!py-4 !mx-2 !px-2">
+        <div className="!flex !items-center !justify-between !flex-wrap !gap-4 !mb-4 !px-2">
+          <div className="!flex !items-center !gap-2">
+            <h3 className="!m-0 !text-[20px] !font-semibold !text-[#1a1a1a]">
+              <i className="fas fa-bolt !text-warning !mr-2"></i>Featured Products
             </h3>
           </div>
 
-          <div className="col-12 col-md-8">
-            <ul className="nav nav-tabs justify-content-end">
+          <div className="!flex !items-center">
+            <ul className="!flex !list-none !p-0 !m-0 !border-b !border-[#e5e7eb] !gap-1">
               {topCategories.slice(0, 3).map((category, index) => (
-                <li className="nav-item" key={index}>
+                <li className="!m-0" key={index}>
                   <button
-                    className={`nav-link ${activeTab1 === category.name ? "active" : ""
+                    className={`!px-4 !py-2 !text-[13px] !font-semibold !transition-all !duration-300 ${activeTab1 === category.name
+                      ? "!text-primary !border-b-2 !border-primary"
+                      : "!text-[#6b7280] hover:!text-primary"
                       }`}
                     onClick={() => handleTabClick(category)}
                   >
@@ -1132,7 +862,7 @@ const TrendingProducts = ({
           </div>
         </div>
 
-        <div className="meq-swiper-wrapper" style={{ position: "relative" }}>
+        <div className="meq-swiper-wrapper !relative [&_.swiper-wrapper]:!items-stretch [&_.swiper-slide]:!h-auto">
           {hasEnoughFeatured && (
             <button
               className="meq-arrow-btn featured-prev"
@@ -1150,32 +880,19 @@ const TrendingProducts = ({
               return (
                 <SwiperSlide
                   key={index}
-                  className="p-2"
-                  style={{ display: "flex", alignSelf: "stretch", }}
+                  className="!p-2 !flex !self-stretch"
                 >
                   <div
-                    className="cardss shadow-sm product-card-hover"
-                    style={{
-                      cursor: "pointer",
-                      display: "flex",
-                      flexDirection: "column",
-                      width: "100%",
-                      background: "#fff"
-                    }}
+                    className="!flex !flex-col !h-full !w-full !rounded-[16px] !bg-white !shadow-[0_4px_20px_rgba(0,0,0,0.08)] !overflow-hidden !transition-all !duration-300 hover:!shadow-[0_8px_28px_rgba(0,0,0,0.13)] hover:!-translate-y-[2px] !cursor-pointer"
                     onClick={() => handleProductClick(item)}
                   >
-                    <div className="position-relative">
+                    <div className="!relative !w-full !h-[180px] !bg-white !rounded-t-[16px] !overflow-hidden">
                       <img
                         src={
                           getImageUrl(item?.tabletdetails?.files?.[0]) || "/assets/img/default-product.png"
                         }
                         alt={item?.tabletdetails?.name || "Product"}
-                        className="product-img p-0"
-                        style={{
-                          cursor: "pointer",
-                          borderRadius: "0px",
-                          objectFit: "contain",
-                        }}
+                        className="!w-full !h-full !object-contain"
                         onError={(e) => {
                           e.currentTarget.src = "/assets/img/default-product.png";
                         }}
@@ -1190,18 +907,7 @@ const TrendingProducts = ({
                         }}
                         data-tooltip-id="global-tooltip"
                         data-tooltip-content="Quick View"
-                        style={{
-                          position: "absolute",
-                          top: "8px",
-                          left: "8px",
-                          padding: "6px 8px",
-                          borderRadius: "50px",
-                          boxShadow: "0 0 6px rgba(0,0,0,0.15)",
-                          fontSize: "13px",
-                          cursor: "pointer",
-                          backgroundColor: "#8059ca",
-                          color: "#fff",
-                        }}
+                        className="!absolute !top-2 !left-2 !p-[6px_10px] !rounded-full !shadow-[0_2px_8px_rgba(0,0,0,0.15)] !text-[13px] !cursor-pointer !bg-primary !text-white !transition-all hover:!scale-110 !z-10"
                       >
                         <i className="fas fa-eye"></i>
                       </div>
@@ -1210,88 +916,26 @@ const TrendingProducts = ({
                       <div
                         onClick={(e) => {
                           e.stopPropagation();
-
                           const data = item?.tabletdetails || item;
-
-                          const categorySlug =
-                            data?.subcatdetails?.catdetails?.slug;
-
+                          const categorySlug = data?.subcatdetails?.catdetails?.slug;
                           const subcategorySlug = data?.subcatdetails?.slug;
-
                           const tabletSlug = data?.slug;
-                          if (
-                            !categorySlug ||
-                            !subcategorySlug ||
-                            !tabletSlug
-                          )
-                            return;
-
-                          navigate(
-                            `/${categorySlug}/${subcategorySlug}/${tabletSlug}/compare`,
-                          );
+                          if (!categorySlug || !subcategorySlug || !tabletSlug) return;
+                          navigate(`/${categorySlug}/${subcategorySlug}/${tabletSlug}/compare`);
                         }}
-                        style={{
-                          position: "absolute",
-                          top: "10px",
-                          right: "10px",
-                          background: "linear-gradient(135deg, #f59e0b 0%, #d97706 100%)",
-                          borderRadius: "30px",
-                          padding: "3px 14px",
-                          display: "flex",
-                          alignItems: "center",
-                          gap: "6px",
-                          boxShadow: "0 4px 12px rgba(245, 158, 11, 0.4)",
-                          zIndex: 10,
-                          border: "1.5px solid #ffffff",
-                          cursor: "pointer",
-                          transition: "all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
-                          transform: "scale(1)",
-                        }}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.transform = "scale(1.12) translateY(-2px)";
-                          e.currentTarget.style.boxShadow = "0 8px 20px rgba(245, 158, 11, 0.55)";
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.transform = "scale(1)";
-                          e.currentTarget.style.boxShadow = "0 4px 12px rgba(245, 158, 11, 0.4)";
-                        }}
+                        className="!absolute !top-[10px] !right-[10px] !flex !items-center !gap-[6px] !z-10 !cursor-pointer !transition-all !duration-300 hover:!scale-[1.1] hover:!-translate-y-[2px]"
+                        style={{ background: "linear-gradient(135deg, #f59e0b 0%, #d97706 100%)", borderRadius: "30px", padding: "3px 14px", boxShadow: "0 4px 12px rgba(245,158,11,0.4)", border: "1.5px solid #fff" }}
                         title="Compare Package"
                       >
-                        <i
-                          className="fa-solid fa-hand-pointer"
-                          style={{
-                            fontSize: "13px",
-                            color: "#ffffff",
-                            transform: "rotate(90deg)",
-                            display: "inline-block",
-                          }}
-                        ></i>
-                        <span
-                          style={{
-                            fontSize: "11px",
-                            fontWeight: "800",
-                            color: "#ffffff",
-                            textTransform: "uppercase",
-                            letterSpacing: "0.6px",
-                          }}
-                        >
-                          Compare
-                        </span>
+                        <i className="fa-solid fa-hand-pointer" style={{ fontSize: "13px", color: "#fff", transform: "rotate(90deg)", display: "inline-block" }}></i>
+                        <span style={{ fontSize: "11px", fontWeight: "800", color: "#fff", textTransform: "uppercase", letterSpacing: "0.6px" }}>Compare</span>
                       </div>
                     </div>
 
-                    <div className="cardss-body p-3">
+                    <div className="!flex !flex-col !flex-1 !p-3">
+                      {/* Vendor info header */}
                       <div
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          gap: 10,
-                          marginBottom: 12,
-                          paddingBottom: 12,
-                          borderBottom: "1px solid rgba(125, 46, 255, 0.1)",
-                          cursor: "pointer",
-                          transition: "all 0.2s ease",
-                        }}
+                        className="!flex !items-center !gap-2 !mb-3 !pb-2 !border-b !border-[rgba(125,46,255,0.1)] !transition-all !duration-200 hover:!opacity-80 hover:!translate-x-[2px]"
                         onClick={(e) => {
                           e.stopPropagation();
                           const vendorId =
@@ -1314,14 +958,6 @@ const TrendingProducts = ({
                             toast.error("Vendor information not available");
                           }
                         }}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.opacity = "0.8";
-                          e.currentTarget.style.transform = "translateX(4px)";
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.opacity = "1";
-                          e.currentTarget.style.transform = "translateX(0)";
-                        }}
                       >
                         <img
                           alt="Vendor"
@@ -1331,312 +967,134 @@ const TrendingProducts = ({
                               "",
                             ) || "/assets/img/default-product.png"
                           }
-                          style={{
-                            width: 36,
-                            height: 36,
-                            borderRadius: 8,
-                            objectFit: "contain",
-                            border: "2px solid rgba(125, 46, 255, 0.2)",
-                          }}
+                          className="!w-9 !h-9 !rounded-lg !object-cover !border-2 !border-[rgba(125,46,255,0.2)] !shrink-0"
                           onError={(e) => {
                             e.currentTarget.src = "/assets/img/default-product.png";
                           }}
                         />
 
-                        <div style={{ flex: "1 1 0%", minWidth: 0 }}>
-                          <div
-                            style={{
-                              fontSize: 12,
-                              fontWeight: 600,
-                              color: "rgb(26, 26, 26)",
-                              marginBottom: 2,
-                              whiteSpace: "nowrap",
-                              overflow: "hidden",
-                              textOverflow: "ellipsis",
-                            }}
-                          >
+                        <div className="!grow !min-w-0">
+                          <div className="!text-[12px] !font-bold !text-[#1a1a1a] !truncate !mb-[2px]">
                             {item.vendordetails.name}
                           </div>
                           {item?.averageRating && item?.ratingCount && (
-                            <div
-                              style={{
-                                display: "flex",
-                                alignItems: "center",
-                                gap: "4px",
-                                fontSize: "10px",
-                                color: "#666",
-                                marginTop: "2px",
-                                marginBottom: "4px",
-                              }}
-                            >
-                              <i
-                                className="fas fa-star"
-                                style={{
-                                  color: "#ffc107",
-                                  fontSize: "9px",
-                                }}
-                              ></i>
-                              <span style={{ fontWeight: "500" }}>
+                            <div className="!flex !items-center !gap-[3px] !text-[10px] !text-[#666] !mb-[2px]">
+                              <i className="fas fa-star !text-[#ffc107] !text-[9px]"></i>
+                              <span className="!font-medium">
                                 {item?.averageRating.toFixed(1)}
                               </span>
-                              <span style={{ color: "#999" }}>
+                              <span className="!text-[#999]">
                                 ({item?.ratingCount}+)
                               </span>
                             </div>
                           )}
 
-                          <div
-                            style={{
-                              fontSize: 10,
-                              color: "rgb(107, 114, 128)",
-                              display: "flex",
-                              alignItems: "center",
-                              gap: 4,
-                            }}
-                          >
-                            <i
-                              className="fas fa-map-marker-alt"
-                              style={{ fontSize: 9 }}
-                            />
-                            <span
-                              style={{
-                                whiteSpace: "nowrap",
-                                overflow: "hidden",
-                                textOverflow: "ellipsis",
-                              }}
-                            >
-                              {(item.vendordetails?.address || "").substring(
-                                0,
-                                45,
-                              ) +
-                                (item.vendordetails?.address?.length > 45
-                                  ? "..."
-                                  : "")}
+                          <div className="!text-[10px] !text-[#6b7280] !flex !items-center !gap-1 !overflow-hidden">
+                            <i className="fas fa-map-marker-alt !text-[9px]" />
+                            <span className="!truncate">
+                              {item.vendordetails?.address || ""}
                             </span>
                           </div>
                           {item?.distanceInKm && (
-                            <div
-                              className="d-flex align-items-center gap-1 text-muted"
-                              style={{ marginTop: "4px" }}
-                            >
-                              <i
-                                className="isax isax-route-square"
-                                style={{
-                                  fontSize: "11px",
-                                  color: "#8059ca",
-                                }}
-                              ></i>
-
-                              <span style={{ fontSize: "11px" }}>
-                                {parseFloat(item.distanceInKm).toFixed(1)} km
-                                away
+                            <div className="!flex !items-center !gap-1 !text-[#6b7280] !text-[10px] !mt-[2px]">
+                              <i className="isax isax-route-square !text-[11px] !text-primary"></i>
+                              <span>
+                                {parseFloat(item.distanceInKm).toFixed(1)} km away
                               </span>
                             </div>
                           )}
                         </div>
                       </div>
 
-                      <div className="d-flex justify-content-between align-items-center">
-                        <h3 className="titlee text-dark mb-0">
-                          {item?.tabletdetails.name?.length > 20
-                            ? item?.tabletdetails.name.slice(0, 20) + "..."
-                            : item?.tabletdetails.name}
+                      <div className="!flex !items-start !justify-between !gap-2">
+                        <h3 className="!m-0 !text-[14px] !font-semibold !text-[#1a1a1a] !capitalize !leading-snug !min-h-[2.8em] !line-clamp-2">
+                          {item?.tabletdetails?.name || "Unknown Product"}
                         </h3>
 
-                        <div
-                          className="d-flex align-items-center justify-content-end"
-                          style={{ minWidth: "80px", fontSize: "12px" }}
-                        >
-                          <i className="fa fa-star text-warning me-1"></i>
-                          <span className="me-1">
+                        <div className="!flex !items-center !shrink-0 !gap-[3px] !text-[11px]">
+                          <i className="fa fa-star !text-[#ffc107]"></i>
+                          <span className="!text-[#444]">
                             {item?.tabletdetails?.averageRating.toFixed(1) > 0
                               ? item?.tabletdetails.averageRating.toFixed(1)
                               : 0}
                           </span>
-
-                          <i className="fa fa-users me-1 text-primary"></i>
-                          <span>
-                            (
-                            {item?.tabletdetails?.ratingCount > 0
-                              ? `${item?.tabletdetails.ratingCount}+`
-                              : 0}
-                            )
+                          <i className="fa fa-users !ml-1 !text-primary"></i>
+                          <span className="!text-[#666]">
+                            ({item?.tabletdetails?.ratingCount > 0 ? `${item?.tabletdetails.ratingCount}+` : 0})
                           </span>
                         </div>
                       </div>
 
-                      <small
-                        style={{
-                          fontSize: "13px",
-                          color: "#666",
-                          lineHeight: "1.5",
-                          display: "block",
+                      <p
+                        className="!m-0 !mt-2 !text-[11px] !text-[#666] !leading-normal !line-clamp-2 !min-h-[2.8em] [&_*]:!text-[11px] [&_*]:!text-[#666] [&_*]:!leading-normal"
+                        dangerouslySetInnerHTML={{
+                          __html: formatDescription(item.tabletdetails?.description, 100)
                         }}
-                        className="mt-2"
-                      >
-                        {formatDescription(
-                          item.tabletdetails?.description,
-                          100,
-                        )}
-                      </small>
+                      ></p>
+
                       {item?.tabletdetails?.model && (
-                        <div className="report-timee mb-0 d-flex align-items-center gap-2">
-                          <i className="fas fa-microchip text-primary"></i>
-                          <span>Modal : </span>
-                          <span
-                            style={{ fontWeight: "600", fontSize: "13px" }}
-                          >
-                            {item?.tabletdetails?.model}
-                          </span>
+                        <div className="!flex !items-center !gap-2 !text-[11px] !text-[#555] !mt-[6px]">
+                          <i className="fas fa-microchip !text-primary"></i>
+                          <span>Model:</span>
+                          <strong>{item?.tabletdetails?.model}</strong>
                         </div>
                       )}
                       {item?.tabletdetails?.condition && (
-                        <div className="report-timee mb-0 d-flex align-items-center gap-2">
-                          <i className="fas fa-circle-check text-primary"></i>
-                          <span>Condition : </span>
-                          <span
-                            style={{ fontWeight: "600", fontSize: "13px" }}
-                          >
-                            {item?.tabletdetails?.condition}
-                          </span>
+                        <div className="!flex !items-center !gap-2 !text-[11px] !text-[#555] !mt-[2px]">
+                          <i className="fas fa-circle-check !text-primary"></i>
+                          <span>Condition:</span>
+                          <strong>{item?.tabletdetails?.condition}</strong>
                         </div>
                       )}
                       {item?.tabletdetails?.machineType && (
-                        <div className="report-timee mb-0 d-flex align-items-center gap-2">
-                          <i className="fas fa-toolbox text-primary"></i>
-                          <span>Machine Type : </span>
-                          <span
-                            style={{ fontWeight: "600", fontSize: "13px" }}
-                          >
-                            {item?.tabletdetails?.machineType}
-                          </span>
+                        <div className="!flex !items-center !gap-2 !text-[11px] !text-[#555] !mt-[2px]">
+                          <i className="fas fa-toolbox !text-primary"></i>
+                          <span>Machine Type:</span>
+                          <strong>{item?.tabletdetails?.machineType}</strong>
                         </div>
                       )}
 
-                      <div
-                        style={{
-                          backgroundColor: "#f8f9fa",
-                          padding: "10px",
-                          borderRadius: "8px",
-                          border: "1px solid #e0e0e0",
-                        }}
-                        className="my-2"
-                      >
-                        <div
-                          style={{
-                            display: "flex",
-                            flexDirection: "column",
-                            gap: "4px",
-                          }}
-                        >
-                          <div
-                            style={{
-                              fontSize: "18px",
-                              fontWeight: "700",
-                              color: "#000",
-                              display: "flex",
-                              alignItems: "center",
-                              gap: "8px",
-                              flexWrap: "wrap",
-                            }}
-                          >
-                            {(() => {
-                              const price = parseFloat(item.price) || 0;
-                              const discountprice =
-                                parseFloat(
-                                  item.discountprice || item.discountPrice,
-                                ) || null;
+                      {/* Price details */}
+                      <div className="!rounded-[8px] !p-[8px] !mt-auto !border !border-[rgba(128,89,202,0.15)] !bg-primary-bg">
+                        <div className="!flex !flex-wrap !items-center !gap-2">
+                          {(() => {
+                            const price = parseFloat(item.price) || 0;
+                            const discountprice = parseFloat(item.discountprice || item.discountPrice) || null;
+                            const effectivePrice = discountprice && discountprice > 0 ? discountprice : price;
 
-                              const effectivePrice =
-                                discountprice && discountprice > 0
-                                  ? discountprice
-                                  : price;
-
-                              let discount = 0;
-                              if (
-                                discountprice &&
-                                discountprice > 0 &&
-                                discountprice !== price
-                              ) {
-                                if (discountprice > price) {
-                                  discount = Math.round(
-                                    ((discountprice - price) /
-                                      discountprice) *
-                                    100,
-                                  );
-                                } else {
-                                  discount = Math.round(
-                                    ((price - discountprice) / price) * 100,
-                                  );
-                                }
+                            let discount = 0;
+                            if (discountprice && discountprice > 0 && discountprice !== price) {
+                              if (discountprice > price) {
+                                discount = Math.round(((discountprice - price) / discountprice) * 100);
+                              } else {
+                                discount = Math.round(((price - discountprice) / price) * 100);
                               }
+                            }
 
-                              return discountprice &&
-                                discountprice > 0 &&
-                                discountprice !== price ? (
-                                <>
-                                  <span
-                                    style={{
-                                      fontSize: "16px",
-                                      fontWeight: "600",
-                                      color: "#000",
-                                    }}
-                                  >
-                                    ₹{effectivePrice.toFixed(2)}
-                                  </span>
-
-                                  <span
-                                    className="text-muted text-decoration-line-through"
-                                    style={{ fontSize: "14px" }}
-                                  >
-                                    ₹{price.toFixed(2)}
-                                  </span>
-
-                                  {discount > 0 && (
-                                    <span
-                                      className="badge bg-success"
-                                      style={{ fontSize: "11px" }}
-                                    >
-                                      {discount}% OFF
-                                    </span>
-                                  )}
-                                  {item?.perDayRent && (
-                                    <div
-                                      style={{
-                                        display: "flex",
-                                        alignItems: "center",
-                                        gap: "4px",
-                                        fontSize: "12px",
-                                        color: "#8059ca",
-                                      }}
-                                    >
-                                      <i className="fas fa-calendar-day"></i>
-                                      <span style={{ fontWeight: "500" }}>
-                                        Per Day Rent:
-                                      </span>
-                                      <span style={{ fontWeight: "700" }}>
-                                        ₹{item.perDayRent}
-                                      </span>
-                                    </div>
-                                  )}
-                                </>
-                              ) : (
-                                <span
-                                  style={{
-                                    fontSize: "18px",
-                                    fontWeight: "600",
-                                    color: "#000",
-                                  }}
-                                >
-                                  ₹{effectivePrice}
-                                </span>
-                              );
-                            })()}
-                          </div>
+                            return discountprice && discountprice > 0 && discountprice !== price ? (
+                              <>
+                                <span className="!font-bold !text-[16px] !text-[#1a1a1a]">₹{effectivePrice.toFixed(2)}</span>
+                                <span className="!line-through !text-[#999] !text-[13px]">₹{price.toFixed(2)}</span>
+                                {discount > 0 && (
+                                  <span className="!bg-green-500 !text-white !text-[10px] !px-1.5 !py-[2px] !rounded !font-semibold">{discount}% OFF</span>
+                                )}
+                              </>
+                            ) : (
+                              <span className="!font-bold !text-[16px] !text-[#1a1a1a]">₹{effectivePrice}</span>
+                            );
+                          })()}
                         </div>
+
+                        {item?.perDayRent && (
+                          <div className="!flex !items-center !gap-[6px] !text-[11px] !text-primary !mt-[4px] !font-medium">
+                            <i className="fas fa-calendar-day"></i>
+                            <span>Per Day Rent:</span>
+                            <strong>₹{item.perDayRent}</strong>
+                          </div>
+                        )}
                       </div>
 
-                      <div className="d-flex gap-2 w-100" style={{ marginTop: "auto" }}>
+                      <div className="!flex !gap-2 !w-full !mt-3">
                         <VendorActions
                           bookingType={
                             item.vendors?.bookingType ||
@@ -1650,7 +1108,6 @@ const TrendingProducts = ({
                           price={parseFloat(item.price) || 0}
                           rentPerDay={item?.perDayRent}
                           calculatedDiscountPrice={parseFloat(item.discountprice || item.discountPrice) || null}
-                          // stock={item.stock || (item.tabletdetails || item).stock || (item.vendordetails || item.vendors || {}).stock || 999}
                           service={item?.tabletdetails?.subcatdetails?.catdetails?.fixedType}
                           handleRentalBookinProcess={handleRentalBookinProcess}
                           handleNavigateToBooking={handleBooking}
@@ -1658,7 +1115,6 @@ const TrendingProducts = ({
                           handleOpenConsultationModal={handleConsultationClick}
                           handleOpenAppointmentModal={handleAppointmentClick}
                           handleOpenRideModal=""
-                          className="w-100"
                           containerStyle={{
                             display: "flex",
                             flexDirection: "row",
@@ -1690,16 +1146,16 @@ const TrendingProducts = ({
       {/* )} */}
 
       <section
+        className="!py-8 !px-4"
         style={{
-          padding: "20px 0",
           backgroundImage: "url('/assets/Medicompares%20Background.png')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
         }}
       >
-        <div className="container-fluid">
-          <div className="row">
+        <div className="!max-w-7xl !mx-auto">
+          <div className="!grid !grid-cols-1 md:!grid-cols-2 lg:!grid-cols-4 !gap-6 !divide-y md:!divide-y-0 lg:!divide-x !divide-gray-200">
             {[
               {
                 icon: "fas fa-truck-fast",
@@ -1724,60 +1180,19 @@ const TrendingProducts = ({
             ].map((service, index) => (
               <div
                 key={index}
-                className="col-lg-3 col-md-6 col-sm-12"
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  padding: "20px",
-                  borderRight: index < 3 ? "1px solid #e5e7eb" : "none",
-                }}
+                className="!flex !items-center !gap-4 !py-4 lg:!py-0 lg:!px-6 first:!pt-0 lg:first:!pl-0"
               >
-                <div
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "20px",
-                    width: "100%",
-                  }}
-                >
-                  <div
-                    style={{
-                      width: "60px",
-                      height: "60px",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      flexShrink: 0,
-                    }}
-                  >
-                    <i
-                      className={service.icon}
-                      style={{ fontSize: "32px", color: "#8059ca" }}
-                    ></i>
-                  </div>
+                <div className="!w-12 !h-12 !rounded-full !bg-[#f3effd] !flex !items-center !justify-center !shrink-0">
+                  <i className={`${service.icon} !text-primary !text-[20px]`}></i>
+                </div>
 
-                  <div style={{ flex: 1 }}>
-                    <h3
-                      style={{
-                        fontSize: "16px",
-                        fontWeight: "600",
-                        color: "#1a1a1a",
-                        margin: "0 0 5px 0",
-                      }}
-                    >
-                      {service.title}
-                    </h3>
-                    <p
-                      style={{
-                        fontSize: "14px",
-                        color: "#6b7280",
-                        margin: 0,
-                        lineHeight: "1.5",
-                      }}
-                    >
-                      {service.subtitle}
-                    </p>
-                  </div>
+                <div className="!flex-1">
+                  <h3 className="!m-0 !mb-1 !text-[15px] !font-semibold !text-[#1a1a1a]">
+                    {service.title}
+                  </h3>
+                  <p className="!m-0 !text-[12px] !text-[#6b7280] !leading-relaxed">
+                    {service.subtitle}
+                  </p>
                 </div>
               </div>
             ))}
@@ -1786,418 +1201,208 @@ const TrendingProducts = ({
       </section>
 
       {/* quick view */}
-      {showModal && selectedProduct && (
-        <div
-          className="modal fade show"
-          style={{
-            display: "block",
-            backgroundColor: "rgba(0,0,0,0.5)",
-            position: "fixed",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            zIndex: "999999999",
-            backdropFilter: "blur(2px)",
-            overflowY: "auto",
-          }}
+      {showModal && selectedProduct && createPortal(
+        <BaseModal
+          show={showModal}
+          onClose={toggleModal}
+          closeButton={false}
+          size="xl"
+          className="!max-w-4xl !rounded-2xl !overflow-hidden"
+          bodyClassName="!p-0"
         >
-          <div className="modal-dialog modal-dialog-centered modal-lg">
-            <div
-              className="modal-content shadow-lg"
-              style={{
-                borderRadius: "12px",
-                border: "none",
-                overflow: "hidden",
-              }}
-            >
-              <div className="modal-body p-0">
-                <div className="row g-0">
-                  <div
-                    className="col-lg-6 d-flex align-items-center justify-content-center d-lg-block d-none"
-                    style={{ height: "350px" }}
+          <div className="!grid !grid-cols-1 md:!grid-cols-2">
+            {/* Product Image Column */}
+            <div className="!hidden md:!flex !items-center !justify-center !bg-gray-50 !p-6 !min-h-[350px]">
+              <img
+                src={getImageUrl(selectedProduct.tabletdetails?.files?.[0]) || "/assets/img/default-product.png"}
+                alt={selectedProduct.tabletdetails?.name || "Product"}
+                className="!max-h-[320px] !object-contain !rounded-lg"
+                onError={(e) => {
+                  e.currentTarget.src = "/assets/img/default-product.png";
+                }}
+              />
+            </div>
+
+            {/* Product Details Column */}
+            <div className="!p-6 !flex !flex-col !justify-between !bg-white">
+              <div>
+                <div className="!flex !items-center !justify-between !gap-4 !mb-4">
+                  <h5 className="!m-0 !text-[18px] !font-semibold !text-[#1a1a1a]">
+                    {(selectedProduct.tabletdetails?.name || "").substring(0, 30) +
+                      (selectedProduct.tabletdetails?.name?.length > 30 ? "..." : "")}
+                  </h5>
+
+                  <button
+                    type="button"
+                    className="!w-7 !h-7 !rounded-full !bg-gray-100 hover:!bg-gray-200 !flex !items-center !justify-center !text-[#666] !transition-colors !cursor-pointer !border-none"
+                    onClick={toggleModal}
                   >
+                    <i className="fas fa-times !text-[12px]"></i>
+                  </button>
+                </div>
+
+                <div className="!flex !items-center !gap-3 !flex-wrap !pb-3 !mb-3 !border-b !border-gray-200">
+                  {(() => {
+                    const price = parseFloat(selectedProduct.price) || 0;
+                    const discountprice = parseFloat(selectedProduct.discountprice || selectedProduct.discountPrice) || null;
+                    const effectivePrice = discountprice && discountprice > 0 ? discountprice : price;
+
+                    let discount = 0;
+                    if (discountprice && discountprice > 0 && discountprice !== price) {
+                      if (discountprice > price) {
+                        discount = Math.round(((discountprice - price) / discountprice) * 100);
+                      } else {
+                        discount = Math.round(((price - discountprice) / price) * 100);
+                      }
+                    }
+
+                    return discountprice &&
+                      discountprice > 0 &&
+                      discountprice !== price ? (
+                      <>
+                        <span className="!text-[20px] !font-bold !text-primary">
+                          ₹{effectivePrice.toFixed(2)}
+                        </span>
+                        <span className="!line-through !text-gray-400 !text-[15px]">
+                          ₹{price.toFixed(2)}
+                        </span>
+                        {discount > 0 && (
+                          <span className="!bg-green-500 !text-white !text-[11px] !px-1.5 !py-[2px] !rounded !font-semibold">
+                            {discount}% OFF
+                          </span>
+                        )}
+                      </>
+                    ) : (
+                      <span className="!text-[20px] !font-bold !text-primary">
+                        ₹{effectivePrice.toFixed(2)}
+                      </span>
+                    );
+                  })()}
+                </div>
+
+                <div className="!mb-4">
+                  <p
+                    className="!m-0 !text-[13px] !text-gray-600 !leading-relaxed"
+                    dangerouslySetInnerHTML={{
+                      __html:
+                        (selectedProduct.tabletdetails?.description || "").substring(0, 200) +
+                        (selectedProduct.tabletdetails?.description?.length > 200 ? "..." : ""),
+                    }}
+                  />
+                </div>
+
+                {/* Vendor Details Box */}
+                <div className="!rounded-[12px] !p-4 !border !border-gray-200 !bg-gray-50 !mb-4">
+                  <div className="!flex !items-center !gap-3 !mb-3">
                     <img
-                      src={getImageUrl(selectedProduct.tabletdetails?.files?.[0]) || "/assets/img/default-product.png"}
-                      alt={selectedProduct.tabletdetails?.name || "Product"}
-                      className="rounded"
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        objectFit: "contain",
-                      }}
+                      alt="Vendor"
+                      src={
+                        getImageUrl(
+                          selectedProduct.vendordetails?.bussiness_image?.[0]?.url ||
+                          selectedProduct.vendors?.bussiness_image?.[0]?.url ||
+                          "",
+                        ) || "/assets/img/default-product.png"
+                      }
+                      className="!w-10 !h-10 !rounded-lg !object-cover !border-2 !border-[rgba(125,46,255,0.2)] !shrink-0"
                       onError={(e) => {
                         e.currentTarget.src = "/assets/img/default-product.png";
                       }}
                     />
+                    <div className="!min-w-0 !flex-1">
+                      <div className="!text-[14px] !font-bold !text-[#1a1a1a] !truncate">
+                        {selectedProduct.vendordetails?.name || selectedProduct.vendors?.name || "Vendor"}
+                      </div>
+                      <div className="!text-[12px] !text-gray-500 !flex !items-center !gap-1">
+                        <i className="fas fa-map-marker-alt !text-[10px]" />
+                        <span className="!truncate">
+                          {(selectedProduct.vendordetails?.address || selectedProduct.vendors?.address || "").substring(0, 50) +
+                            ((selectedProduct.vendordetails?.address || selectedProduct.vendors?.address || "")?.length > 50 ? "..." : "")}
+                        </span>
+                      </div>
+                    </div>
                   </div>
 
-                  <div className="col-lg-6 bg-white p-3 d-flex flex-column">
-                    <div>
-                      <div className="d-flex justify-content-between align-items-center mb-3">
-                        <h5 style={{ fontSize: "18px", margin: 0 }}>
-                          {(
-                            selectedProduct.tabletdetails?.name || ""
-                          ).substring(0, 30) +
-                            (selectedProduct.tabletdetails?.name?.length > 30
-                              ? "..."
-                              : "")}
-                        </h5>
+                  {(selectedProduct.vendordetails?.phone || selectedProduct.vendors?.phone) && (
+                    <div className="!text-[12px] !text-gray-600 !flex !items-center !gap-2 !mb-2">
+                      <i className="fas fa-phone !text-[10px]" />
+                      <span>{selectedProduct.vendordetails?.phone || selectedProduct.vendors?.phone}</span>
+                    </div>
+                  )}
 
-                        <button
-                          type="button"
-                          className="btn-close bg-light"
-                          onClick={toggleModal}
-                          style={{
-                            borderRadius: "50%",
-                            width: "25px",
-                            height: "25px",
-                            fontSize: "12px",
-                          }}
-                        ></button>
-                      </div>
-                      <div
-                        className="mb-2 pb-2 border-bottom d-flex align-items-center gap-2 flex-wrap"
-                        style={{ borderColor: "#e5e7eb" }}
-                      >
-                        {(() => {
-                          const price = parseFloat(selectedProduct.price) || 0;
-                          const discountprice =
-                            parseFloat(
-                              selectedProduct.discountprice ||
-                              selectedProduct.discountPrice,
-                            ) || null;
-                          const effectivePrice =
-                            discountprice && discountprice > 0
-                              ? discountprice
-                              : price;
+                  <div className="!flex !items-center !gap-4 !pt-3 !mt-3 !border-t !border-gray-200 !text-[11px] !text-gray-500">
+                    <div className="!flex !items-center !gap-1">
+                      <i className="fas fa-star !text-[#ffc107] !text-[10px]" />
+                      <span>
+                        User Rating: {selectedProduct.tabletdetails?.averageRating > 0 ? selectedProduct.tabletdetails.averageRating.toFixed(1) : "0.0"}
+                      </span>
+                    </div>
+                    <div className="!flex !items-center !gap-1">
+                      <i className="fa fa-users !text-primary !text-[10px]" />
+                      <span>
+                        Reviews: {selectedProduct.tabletdetails?.ratingCount > 0 ? `${selectedProduct.tabletdetails.ratingCount}+` : "0"}
+                      </span>
+                    </div>
+                  </div>
 
-                          let discount = 0;
-                          if (
-                            discountprice &&
-                            discountprice > 0 &&
-                            discountprice !== price
-                          ) {
-                            if (discountprice > price) {
-                              discount = Math.round(
-                                ((discountprice - price) / discountprice) * 100,
-                              );
-                            } else {
-                              discount = Math.round(
-                                ((price - discountprice) / price) * 100,
-                              );
-                            }
-                          }
-
-                          return discountprice &&
-                            discountprice > 0 &&
-                            discountprice !== price ? (
-                            <>
-                              <span
-                                style={{
-                                  fontSize: "20px",
-                                  fontWeight: 700,
-                                  color: "#007bff",
-                                }}
-                              >
-                                ₹{effectivePrice.toFixed(2)}
-                              </span>
-                              <span
-                                className="text-muted text-decoration-line-through"
-                                style={{ fontSize: "16px" }}
-                              >
-                                ₹{price.toFixed(2)}
-                              </span>
-                              {discount > 0 && (
-                                <span
-                                  className="badge bg-success"
-                                  style={{ fontSize: "12px" }}
-                                >
-                                  {discount}% OFF
-                                </span>
-                              )}
-                            </>
-                          ) : (
-                            <span
-                              style={{
-                                fontSize: "20px",
-                                fontWeight: 700,
-                                color: "#007bff",
-                              }}
-                            >
-                              ₹{effectivePrice.toFixed(2)}
-                            </span>
-                          );
-                        })()}
-                      </div>
-
-                      <div className="mb-1">
-                        <p
-                          dangerouslySetInnerHTML={{
-                            __html:
-                              (
-                                selectedProduct.tabletdetails?.description || ""
-                              ).substring(0, 200) +
-                              (selectedProduct.tabletdetails?.description
-                                ?.length > 200
-                                ? "..."
-                                : ""),
-                          }}
-                        />
-                      </div>
-
-                      <div className="mb-3">
-                        <div
-                          style={{
-                            backgroundColor: "#f8f9fa",
-                            padding: "6px",
-                            borderRadius: "8px",
-                            border: "1px solid #e0e0e0",
-                          }}
-                        >
-                          <div
-                            style={{
-                              display: "flex",
-                              alignItems: "center",
-                              gap: "12px",
-                              marginBottom: "8px",
-                            }}
-                          >
-                            <img
-                              alt="Vendor"
-                              src={
-                                getImageUrl(
-                                  selectedProduct.vendordetails
-                                    ?.bussiness_image?.[0]?.url ||
-                                  selectedProduct.vendors?.bussiness_image?.[0]
-                                    ?.url ||
-                                  "",
-                                ) || "/assets/img/default-product.png"
-                              }
-                              style={{
-                                width: 40,
-                                height: 40,
-                                borderRadius: 8,
-                                border: "2px solid rgba(125, 46, 255, 0.2)",
-                                objectFit: "contain",
-                              }}
-                              onError={(e) => {
-                                e.currentTarget.src = "/assets/img/default-product.png";
-                              }}
-                            />
-                            <div style={{ flex: 1 }}>
-                              <div
-                                style={{
-                                  fontSize: "14px",
-                                  fontWeight: 600,
-                                  color: "#1a1a1a",
-                                  marginBottom: "2px",
-                                }}
-                              >
-                                {selectedProduct.vendordetails?.name ||
-                                  selectedProduct.vendors?.name ||
-                                  "Vendor"}
-                              </div>
-                              <div
-                                style={{
-                                  fontSize: "12px",
-                                  color: "#6b7280",
-                                  display: "flex",
-                                  alignItems: "center",
-                                  gap: "4px",
-                                }}
-                              >
-                                <i
-                                  className="fas fa-map-marker-alt"
-                                  style={{ fontSize: "10px" }}
-                                />
-                                <span>
-                                  {(
-                                    selectedProduct.vendordetails?.address ||
-                                    selectedProduct.vendors?.address ||
-                                    ""
-                                  ).substring(0, 50) +
-                                    ((
-                                      selectedProduct.vendordetails?.address ||
-                                      selectedProduct.vendors?.address ||
-                                      ""
-                                    )?.length > 50
-                                      ? "..."
-                                      : "")}
-                                </span>
-                              </div>
-                            </div>
-                          </div>
-                          {selectedProduct.vendordetails?.phone ||
-                            selectedProduct.vendors?.phone ? (
-                            <div
-                              style={{
-                                fontSize: "12px",
-                                color: "#6b7280",
-                                marginBottom: "4px",
-                              }}
-                            >
-                              <i
-                                className="fas fa-phone me-2"
-                                style={{ fontSize: "10px" }}
-                              />
-                              {selectedProduct.vendordetails?.phone ||
-                                selectedProduct.vendors?.phone}
-                            </div>
-                          ) : null}
-                          <div
-                            style={{
-                              display: "flex",
-                              alignItems: "center",
-                              gap: "12px",
-                              marginTop: "8px",
-                              paddingTop: "8px",
-                              borderTop: "1px solid #e0e0e0",
-                            }}
-                          >
-                            <div
-                              style={{
-                                display: "flex",
-                                alignItems: "center",
-                                gap: "4px",
-                                fontSize: "12px",
-                                color: "#6b7280",
-                              }}
-                            >
-                              <i
-                                className="fas fa-star text-warning"
-                                style={{ fontSize: "10px" }}
-                              />
-                              <span>
-                                User Rating:{" "}
-                                {selectedProduct.tabletdetails?.averageRating >
-                                  0
-                                  ? selectedProduct.tabletdetails.averageRating.toFixed(
-                                    1,
-                                  )
-                                  : "0.0"}
-                              </span>
-                            </div>
-                            <div
-                              style={{
-                                display: "flex",
-                                alignItems: "center",
-                                gap: "4px",
-                                fontSize: "12px",
-                                color: "#6b7280",
-                              }}
-                            >
-                              <i
-                                className="fa fa-users text-primary"
-                                style={{ fontSize: "10px" }}
-                              />
-                              <span>
-                                Reviews:{" "}
-                                {selectedProduct.tabletdetails?.ratingCount > 0
-                                  ? `${selectedProduct.tabletdetails.ratingCount}+`
-                                  : "0"}
-                              </span>
-                            </div>
-                          </div>
-                          <div
-                            style={{
-                              display: "flex",
-                              alignItems: "center",
-                              gap: "12px",
-                              marginTop: "4px",
-                              fontSize: "12px",
-                              color: "#6b7280",
-                            }}
-                          >
-                            <div
-                              style={{
-                                display: "flex",
-                                alignItems: "center",
-                                gap: "4px",
-                              }}
-                            >
-                              <i
-                                className="fas fa-store text-info"
-                                style={{ fontSize: "10px" }}
-                              />
-                              <span>
-                                Vendor Rating:{" "}
-                                {selectedProduct.vendordetails?.averageRating > 0
-                                  ? selectedProduct.vendordetails.averageRating.toFixed(1)
-                                  : selectedProduct.vendors?.averageRating > 0
-                                    ? selectedProduct.vendors.averageRating.toFixed(1)
-                                    : "0.0"}
-                              </span>
-                            </div>
-                            <div
-                              style={{
-                                display: "flex",
-                                alignItems: "center",
-                                gap: "4px",
-                              }}
-                            >
-                              <i
-                                className="fa fa-shopping-bag text-success"
-                                style={{ fontSize: "10px" }}
-                              />
-                              <span>
-                                Orders:{" "}
-                                {selectedProduct.vendordetails?.ratingCount > 0
-                                  ? `${selectedProduct.vendordetails.ratingCount}+`
-                                  : selectedProduct.vendors?.ratingCount > 0
-                                    ? `${selectedProduct.vendors.ratingCount}+`
-                                    : "0"}
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* BUTTONS */}
-                      <div className="d-flex gap-3 flex-wrap mb-3">
-                        <VendorActions
-                          bookingType={
-                            selectedProduct.vendors?.bookingType ||
-                            selectedProduct.vendordetails?.bookingType ||
-                            selectedProduct.vendordetails?.bookingtype ||
-                            selectedProduct.bookingType ||
-                            "cart"
-                          }
-                          med={selectedProduct.tabletdetails || selectedProduct}
-                          vendor={selectedProduct.vendordetails || selectedProduct.vendors || {}}
-                          price={parseFloat(selectedProduct.price) || 0}
-                          calculatedDiscountPrice={parseFloat(selectedProduct.discountprice || selectedProduct.discountPrice) || null}
-                          stock={selectedProduct.stock || (selectedProduct.tabletdetails || selectedProduct).stock || (selectedProduct.vendordetails || selectedProduct.vendors || {}).stock || 999}
-                          service={service}
-                          handleRentalBookinProcess={handleRentalBookinProcess}
-                          handleNavigateToBooking={handleBooking}
-                          handleAddLead={handleAddLead}
-                          handleOpenConsultationModal={handleConsultationClick}
-                          handleOpenAppointmentModal={handleAppointmentClick}
-                          handleOpenRideModal=""
-                          className="w-100"
-                          containerStyle={{
-                            display: "flex",
-                            flexDirection: "row",
-                            width: "100%",
-                            gap: "8px",
-                            alignItems: "center",
-                          }}
-                          buttonStyle={{
-                            flex: 1,
-                          }}
-                          rentAndCartButtonStyles={{
-                            flex: 1,
-                          }}
-                        />
-                      </div>
+                  <div className="!flex !items-center !gap-4 !mt-1.5 !text-[11px] !text-gray-500">
+                    <div className="!flex !items-center !gap-1">
+                      <i className="fas fa-store !text-blue-500 !text-[10px]" />
+                      <span>
+                        Vendor Rating: {selectedProduct.vendordetails?.averageRating > 0 ? selectedProduct.vendordetails.averageRating.toFixed(1) : selectedProduct.vendors?.averageRating > 0 ? selectedProduct.vendors.averageRating.toFixed(1) : "0.0"}
+                      </span>
+                    </div>
+                    <div className="!flex !items-center !gap-1">
+                      <i className="fa fa-shopping-bag !text-green-500 !text-[10px]" />
+                      <span>
+                        Orders: {selectedProduct.vendordetails?.ratingCount > 0 ? `${selectedProduct.vendordetails.ratingCount}+` : selectedProduct.vendors?.ratingCount > 0 ? `${selectedProduct.vendors.ratingCount}+` : "0"}
+                      </span>
                     </div>
                   </div>
                 </div>
               </div>
+
+              {/* Actions Button */}
+              <div className="!flex !gap-3 !w-full">
+                <VendorActions
+                  bookingType={
+                    selectedProduct.vendors?.bookingType ||
+                    selectedProduct.vendordetails?.bookingType ||
+                    selectedProduct.vendordetails?.bookingtype ||
+                    selectedProduct.bookingType ||
+                    "cart"
+                  }
+                  med={selectedProduct.tabletdetails || selectedProduct}
+                  vendor={selectedProduct.vendordetails || selectedProduct.vendors || {}}
+                  price={parseFloat(selectedProduct.price) || 0}
+                  rentPerDay={selectedProduct?.perDayRent}
+                  calculatedDiscountPrice={parseFloat(selectedProduct.discountprice || selectedProduct.discountPrice) || null}
+                  stock={selectedProduct.stock || (selectedProduct.tabletdetails || selectedProduct).stock || (selectedProduct.vendordetails || selectedProduct.vendors || {}).stock || 999}
+                  service={selectedProduct?.tabletdetails?.subcatdetails?.catdetails?.fixedType || service}
+                  handleRentalBookinProcess={handleRentalBookinProcess}
+                  handleNavigateToBooking={handleBooking}
+                  handleAddLead={handleAddLead}
+                  handleOpenConsultationModal={handleConsultationClick}
+                  handleOpenAppointmentModal={handleAppointmentClick}
+                  handleOpenRideModal=""
+                  containerStyle={{
+                    display: "flex",
+                    flexDirection: "row",
+                    width: "100%",
+                    gap: "8px",
+                    alignItems: "center",
+                  }}
+                  buttonStyle={{
+                    flex: 1,
+                  }}
+                  rentAndCartButtonStyles={{
+                    flex: 1,
+                  }}
+                />
+              </div>
             </div>
           </div>
-        </div>
+        </BaseModal>,
+        document.body
       )}
 
       {/* Lead Modal */}

@@ -11,6 +11,7 @@ import toast from "react-hot-toast";
 import autoTable from "jspdf-autotable";
 import { useNavigate } from "react-router";
 import BaseModal from "../../../../components/ui/BaseModal";
+import Pagination from "../../../../components/ui/Pagination.jsx";
 // import { fetchCategoryList } from "../../../../Apiservice";
 
 // Styles migrated to Tailwind CSS
@@ -630,7 +631,7 @@ const RentalBooking = ({ HomeNavigate, ServiceTabs }) => {
 
   return (
     <div className="w-full">
-      <div className="col-lg-12">
+      <div className="w-full">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pb-2 mb-2 border-b border-slate-100 mt-2">
           <div className="flex items-center gap-3.5">
             {HomeNavigate && <HomeNavigate />}
@@ -732,7 +733,7 @@ const RentalBooking = ({ HomeNavigate, ServiceTabs }) => {
           ))}
         </div>
 
-        <div className="mb-3 position-relative">
+        <div className="mb-3 relative">
           <div
             style={{
               display: "flex",
@@ -745,13 +746,10 @@ const RentalBooking = ({ HomeNavigate, ServiceTabs }) => {
             {isMobile ? (
               <select
                 value={selectedTab}
-                className="form-select"
+                className="w-full h-[38px] rounded-lg border border-slate-200 px-3 text-[13px] outline-none bg-slate-50 focus:bg-white focus:border-[#8059ca] transition-all duration-200"
                 onChange={(e) => {
                   setSelectedTab(e.target.value);
                   setCurrentPage(1);
-                }}
-                style={{
-                  border: "1px solid #ddd",
                 }}
               >
                 {[
@@ -760,48 +758,16 @@ const RentalBooking = ({ HomeNavigate, ServiceTabs }) => {
                   { id: "cancelled", label: "Cancelled" },
                   { id: "failed", label: "Failed" },
                 ].map((tab) => {
-                  const tabCount =
-                    tab.id === "all"
-                      ? orders.length
-                      : orders.filter((order) => {
-                        const orderStatus =
-                          order.orderStatus?.toLowerCase() || "";
-                        switch (tab.id) {
-                          case "completed":
-                            return (
-                              orderStatus === "completed" ||
-                              orderStatus === "delivered"
-                            );
-                          case "cancelled":
-                            return (
-                              orderStatus === "cancelled" ||
-                              orderStatus === "canceled"
-                            );
-                          case "failed":
-                            return orderStatus === "failed";
-                          default:
-                            return false;
-                        }
-                      }).length;
                   return (
                     <option key={tab.id} value={tab.id}>
-                      {tab.label} {tabCount > 0 && `(${tabCount})`}
+                      {tab.label}
                     </option>
                   );
                 })}
               </select>
             ) : (
               /* Desktop:  */
-              <ul
-                className="nav nav-tabs nav-tabs-solid"
-                style={{
-                  flex: 1,
-                  display: "flex",
-                  marginBottom: 0,
-                  overflow: "visible",
-                  minWidth: 0,
-                }}
-              >
+              <ul className="flex border-b border-slate-100 w-full mb-0 overflow-visible min-w-0 gap-2 list-none p-0">
                 {[
                   { id: "all", label: "All Orders", icon: "fa-list" },
                   {
@@ -821,34 +787,11 @@ const RentalBooking = ({ HomeNavigate, ServiceTabs }) => {
                   },
                 ].map((tab) => {
                   const isActive = selectedTab === tab.id;
-                  const tabCount =
-                    tab.id === "all"
-                      ? orders.length
-                      : orders.filter((order) => {
-                        const orderStatus =
-                          order.orderStatus?.toLowerCase() || "";
-                        switch (tab.id) {
-                          case "completed":
-                            return (
-                              orderStatus === "completed" ||
-                              orderStatus === "delivered"
-                            );
-                          case "cancelled":
-                            return (
-                              orderStatus === "cancelled" ||
-                              orderStatus === "canceled"
-                            );
-                          case "failed":
-                            return orderStatus === "failed";
-                          default:
-                            return false;
-                        }
-                      }).length;
 
                   return (
                     <li className="nav-item" key={tab.id}>
                       <button
-                        className={`nav-link ${isActive ? "active" : ""} flex items-center gap-1.5`}
+                        className={`py-2.5 px-4 text-[13px] font-semibold !border-b-2 transition-all duration-200 flex items-center gap-1.5 ${isActive ? "!border-[#8059ca] !text-[#8059ca]" : "border-transparent text-slate-500 hover:text-slate-700"}`}
                         onClick={() => {
                           setSelectedTab(tab.id);
                           setCurrentPage(1);
@@ -856,11 +799,6 @@ const RentalBooking = ({ HomeNavigate, ServiceTabs }) => {
                       >
                         <i className={`fa-solid ${tab.icon}`}></i>
                         {tab.label}
-                        {/* {tabCount > 0 && (
-                              <span className="badge bg-white text-primary ms-1">
-                                {tabCount}
-                              </span>
-                            )} */}
                       </button>
                     </li>
                   );
@@ -872,13 +810,13 @@ const RentalBooking = ({ HomeNavigate, ServiceTabs }) => {
 
         <div className="w-full py-4">
           {loading ? (
-            <div className="text-center py-5">
-              <div className="spinner-border text-primary" role="status">
-                <span className="visually-hidden">Loading...</span>
+            <div className="text-center py-10 flex justify-center items-center">
+              <div className="animate-spin inline-block w-8 h-8 border-4 border-[#8059ca] border-t-transparent rounded-full" role="status">
+                <span className="sr-only">Loading...</span>
               </div>
             </div>
           ) : currentOrders.length > 0 ? (
-            <div className="row">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {currentOrders.map((order, index) => {
                 const orderStatus = order.orderStatus?.toLowerCase() || "";
                 const isProcessing =
@@ -889,7 +827,7 @@ const RentalBooking = ({ HomeNavigate, ServiceTabs }) => {
                   orderStatus === "cancelled" || orderStatus === "canceled";
 
                 return (
-                  <div key={index} className="col-md-6 col-12 mb-3">
+                  <div key={index} className="w-full">
                     <div className="bg-white border-[1.5px] border-[#f0f0f0] rounded-[14px] shadow-[0_2px_8px_rgba(0,0,0,0.03)] p-3 h-100 flex flex-col justify-between hover:shadow-[0_6px_18px_rgba(128,89,202,0.12)] transition-shadow duration-300">
                       {/* HEADER */}
                       <div>
@@ -930,9 +868,9 @@ const RentalBooking = ({ HomeNavigate, ServiceTabs }) => {
                         </div>
 
                         {/* CARD BODY */}
-                        <div className="row align-items-start">
+                        <div className="flex items-start gap-4 flex-wrap sm:flex-nowrap">
                           {/* IMAGE COLUMN */}
-                          <div className="col-sm-3 col-12 mb-3 mb-sm-0">
+                          <div className="w-full sm:w-1/4 mb-3 sm:mb-0">
                             <div onClick={() => handleView(order)} className="relative cursor-pointer w-[72px] h-[72px] border border-[#eee] rounded-[10px] overflow-hidden bg-[#fafafa]">
                               <img
                                 src={resolveOrderImage(order)}
@@ -949,7 +887,7 @@ const RentalBooking = ({ HomeNavigate, ServiceTabs }) => {
                           </div>
 
                           {/* PRODUCT INFO */}
-                          <div className="col-sm-9 col-12">
+                          <div className="w-full sm:w-3/4">
                             <div
                               className="mb-2 text-capitalize cursor-pointer font-semibold text-[14px] text-[#222]"
                               onClick={() => handleView(order)}
@@ -966,15 +904,15 @@ const RentalBooking = ({ HomeNavigate, ServiceTabs }) => {
                               }
                             </div>
 
-                            <div className="row g-2" style={{ textTransform: "capitalize" }}>
+                            <div className="grid grid-cols-2 gap-2 mt-2" style={{ textTransform: "capitalize" }}>
                               {order?.rentalPlan && (
-                                <div className="col-6">
+                                <div className="w-full">
                                   <div style={{ fontSize: "11px", color: "#aaa" }}>Rental Plan</div>
                                   <div style={{ fontSize: "12px", fontWeight: "600", color: "#444" }}>{order.rentalPlan}</div>
                                 </div>
                               )}
                               {order?.fixedDeposit > 0 && (
-                                <div className="col-6">
+                                <div className="w-full">
                                   <div style={{ fontSize: "11px", color: "#aaa" }}>Security Deposit</div>
                                   <div style={{ fontSize: "12px", fontWeight: "600", color: "#444" }}>₹{order.fixedDeposit.toFixed(2)}</div>
                                 </div>
@@ -997,15 +935,15 @@ const RentalBooking = ({ HomeNavigate, ServiceTabs }) => {
 
                       {/* AMOUNT & ACTIONS */}
                       <div className="flex flex-col mt-3 pt-2 border-t border-[#f8f8f8]">
-                        <div className="row align-items-center w-100 g-2 m-0">
-                          <div className="col-sm-4 col-12 p-0">
+                        <div className="flex items-center justify-between w-full flex-wrap gap-2">
+                          <div className="w-full sm:w-auto">
                             <span style={{ fontSize: "11px", color: "#aaa" }}>Total Paid</span>
                             <span className="text-[16px] font-bold text-[#7c4dc4] block">
                               ₹{order.total?.toFixed(2) || "0.00"}
                             </span>
                           </div>
 
-                          <div className="col-sm-8 col-12 p-0 flex gap-2 justify-start justify-sm-end flex-wrap">
+                          <div className="w-full sm:w-auto flex gap-2 justify-start sm:justify-end flex-wrap">
                             <button
                               className="inline-flex items-center justify-center gap-1.5 rounded-lg text-[11px] font-medium p-[4px_8px] min-w-fit whitespace-nowrap leading-tight bg-[#8059ca] text-white border border-[#8059ca] transition-all duration-200 no-underline shadow-none hover:bg-[#6f42c1] hover:border-[#6f42c1] focus:bg-[#6f42c1] focus:border-[#6f42c1]"
                               onClick={() => handleView(order)}
@@ -1243,14 +1181,14 @@ const RentalBooking = ({ HomeNavigate, ServiceTabs }) => {
                 <div style={{ fontSize: "10px", fontWeight: 700, color: "#8059ca", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "10px" }}>
                   Rental Period
                 </div>
-                <div className="row g-2" style={{ marginBottom: "14px" }}>
+                <div className="grid grid-cols-2 gap-2" style={{ marginBottom: "14px" }}>
                   {[
                     { label: "Start Date", value: selectedOrder?.startDate ? new Date(selectedOrder.startDate).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" }) : "N/A" },
                     { label: "End Date", value: selectedOrder?.endDate ? new Date(selectedOrder.endDate).toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" }) : "N/A" },
                     { label: "Plan", value: selectedOrder?.rentalPlan ? selectedOrder.rentalPlan.charAt(0).toUpperCase() + selectedOrder.rentalPlan.slice(1) : "N/A" },
                     { label: "Installments", value: selectedOrder?.numberOfInstallments ?? "N/A" },
                   ].map(({ label, value }) => (
-                    <div className="col-6" key={label}>
+                    <div className="w-full" key={label}>
                       <div style={{ background: "#faf9fe", borderRadius: "8px", padding: "8px 12px" }}>
                         <div style={{ fontSize: "10px", color: "#aaa", marginBottom: "2px" }}>{label}</div>
                         <div style={{ fontSize: "12px", fontWeight: 600, color: "#333", textTransform: "capitalize" }}>{value}</div>
@@ -1265,14 +1203,14 @@ const RentalBooking = ({ HomeNavigate, ServiceTabs }) => {
                 <div style={{ fontSize: "10px", fontWeight: 700, color: "#8059ca", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "10px" }}>
                   Order Info
                 </div>
-                <div className="row g-2" style={{ marginBottom: "14px" }}>
+                <div className="grid grid-cols-2 gap-2" style={{ marginBottom: "14px" }}>
                   {[
                     { label: "Order Status", value: selectedOrder?.orderStatus ? selectedOrder.orderStatus.charAt(0).toUpperCase() + selectedOrder.orderStatus.slice(1) : "N/A" },
                     { label: "Payment Status", value: selectedOrder?.paymentStatus ? selectedOrder.paymentStatus.charAt(0).toUpperCase() + selectedOrder.paymentStatus.slice(1) : "N/A", color: selectedOrder?.paymentStatus === "paid" ? "#28a745" : "#e0a000" },
                     { label: "Payment Method", value: selectedOrder?.paymentmethod ? selectedOrder.paymentmethod.charAt(0).toUpperCase() + selectedOrder.paymentmethod.slice(1) : "N/A" },
                     { label: "Payment Type", value: selectedOrder?.paymentType || "N/A" },
                   ].map(({ label, value, color }) => (
-                    <div className="col-6" key={label}>
+                    <div className="w-full" key={label}>
                       <div style={{ background: "#faf9fe", borderRadius: "8px", padding: "8px 12px" }}>
                         <div style={{ fontSize: "10px", color: "#aaa", marginBottom: "2px" }}>{label}</div>
                         <div style={{ fontSize: "12px", fontWeight: 600, color: color || "#333", textTransform: "capitalize" }}>{value}</div>
@@ -1556,67 +1494,7 @@ const RentalBooking = ({ HomeNavigate, ServiceTabs }) => {
           )}
         </div>
 
-        {totalPages > 1 && (
-          <div className="pagination dashboard-pagination mt-0">
-            <ul className="d-flex justify-content-center align-items-center gap-1">
-              <li>
-                <button
-                  className="page-link"
-                  onClick={() =>
-                    handlePageChange(Math.max(currentPage - 1, 1))
-                  }
-                  disabled={currentPage === 1}
-                >
-                  <i className="fa-solid fa-chevron-left" />
-                </button>
-              </li>
-
-              {Array.from({ length: totalPages }, (_, i) => {
-                const page = i + 1;
-
-                if (
-                  page === 1 ||
-                  page === totalPages ||
-                  (page >= currentPage - 1 && page <= currentPage + 1)
-                ) {
-                  return (
-                    <li key={page}>
-                      <button
-                        className={`page-link ${currentPage === page ? "active" : ""
-                          }`}
-                        onClick={() => handlePageChange(page)}
-                      >
-                        {page}
-                      </button>
-                    </li>
-                  );
-                }
-
-                if (page === currentPage - 2 || page === currentPage + 2) {
-                  return (
-                    <li key={`dots-${page}`}>
-                      <span className="page-link disabled">…</span>
-                    </li>
-                  );
-                }
-
-                return null;
-              })}
-
-              <li>
-                <button
-                  className="page-link"
-                  onClick={() =>
-                    handlePageChange(Math.min(currentPage + 1, totalPages))
-                  }
-                  disabled={currentPage === totalPages}
-                >
-                  <i className="fa-solid fa-chevron-right" />
-                </button>
-              </li>
-            </ul>
-          </div>
-        )}
+        <Pagination page={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
 
         {/* Installments  */}
         {showInstallmentsModal && (
@@ -1762,8 +1640,8 @@ const RentalBooking = ({ HomeNavigate, ServiceTabs }) => {
                   </div>
 
                   <form onSubmit={handleSubmit}>
-                    <div className="row g-3">
-                      <div className="col-md-6 col-12">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                      <div className="w-full">
                         <label className="form-label" style={{ fontSize: "14px", fontWeight: "500", color: "#333", marginBottom: "6px" }}>Product *</label>
                         {(() => {
                           const isSameItem = (a, b) => {
@@ -1863,7 +1741,7 @@ const RentalBooking = ({ HomeNavigate, ServiceTabs }) => {
                       </div>
 
                       {/* Category */}
-                      <div className="col-md-6 col-12">
+                      <div className="w-full">
                         <label className="form-label" style={{ fontSize: "14px", fontWeight: "500", color: "#333", marginBottom: "6px" }}>Issue Type *</label>
                         <select
                           name="category"
@@ -1905,7 +1783,7 @@ const RentalBooking = ({ HomeNavigate, ServiceTabs }) => {
                       </div>
 
                       {/* Subject */}
-                      <div className="col-12">
+                      <div className="w-full md:col-span-2">
                         <input
                           type="text"
                           name="subject"
@@ -1924,7 +1802,7 @@ const RentalBooking = ({ HomeNavigate, ServiceTabs }) => {
                       </div>
 
                       {/* Description */}
-                      <div className="col-12">
+                      <div className="w-full md:col-span-2">
                         <textarea
                           name="description"
                           className="form-control"
@@ -1945,27 +1823,27 @@ const RentalBooking = ({ HomeNavigate, ServiceTabs }) => {
 
                       {/* Priority */}
                       {/* <div className="col-md-6 col-12">
-                            <select
-                              name="priority"
-                              className="form-control form-select"
-                              required
-                              value={formData.priority || ""}
-                              onChange={onFormChange}
-                              style={{
-                                borderRadius: "8px",
-                                border: "1px solid #e0e0e0",
-                                fontSize: "14px",
-                                padding: "8px 12px",
-                              }}
-                            >
-                              <option value="">Select Priority</option>
-                              <option value="low">Low</option>
-                              <option value="medium">Medium</option>
-                              <option value="high">High</option>
-                            </select>
-                          </div> */}
+                              <select
+                                name="priority"
+                                className="form-control form-select"
+                                required
+                                value={formData.priority || ""}
+                                onChange={onFormChange}
+                                style={{
+                                  borderRadius: "8px",
+                                  border: "1px solid #e0e0e0",
+                                  fontSize: "14px",
+                                  padding: "8px 12px",
+                                }}
+                              >
+                                <option value="">Select Priority</option>
+                                <option value="low">Low</option>
+                                <option value="medium">Medium</option>
+                                <option value="high">High</option>
+                              </select>
+                            </div> */}
 
-                      <div className="col-md-6 col-12">
+                      <div className="w-full">
                         <input
                           type="file"
                           name="attachments"
@@ -2006,17 +1884,17 @@ const RentalBooking = ({ HomeNavigate, ServiceTabs }) => {
                       </div>
 
                       {formData.attachments && formData.attachments.length > 0 && (
-                        <div className="col-12 mt-2">
-                          <label className="form-label d-block mb-1" style={{ fontSize: "12px", fontWeight: "600", color: "#666" }}>
+                        <div className="w-full mt-2">
+                          <label className="block mb-1" style={{ fontSize: "12px", fontWeight: "600", color: "#666" }}>
                             Selected Attachments ({formData.attachments.length})
                           </label>
-                          <div className="d-flex flex-wrap gap-2">
+                          <div className="flex flex-wrap gap-2">
                             {formData.attachments.map((attachment, index) => {
                               const objectUrl = URL.createObjectURL(attachment);
                               return (
                                 <div
                                   key={index}
-                                  className="position-relative"
+                                  className="relative"
                                   style={{
                                     width: "65px",
                                     height: "65px",

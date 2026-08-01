@@ -13,6 +13,7 @@ import Footer from "../../../../components/home/Footer-f.jsx";
 import CategoryProvider from "../../../../components/CategoryProvider.jsx";
 import PageLoader from "../../../../components/ui/PageLoader.jsx";
 import { Offcanvas } from "../../../../components/ui/Offcanvas";
+import Pagination from "../../../../components/ui/Pagination.jsx";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 import breadcrumbBg from "/assets/Medicompares Background.png";
@@ -1133,65 +1134,11 @@ const Manufactures = () => {
 
                 {/* Pagination - only show for manufacture data, not search results */}
                 {displayPagination && totalPages > 1 && (
-                  <div className="pagination dashboard-pagination mt-0">
-                    <ul className="d-flex justify-content-center align-items-center gap-1">
-                      <li>
-                        <button
-                          className="page-link"
-                          onClick={() =>
-                            handlePageChange(Math.max(currentPage - 1, 1))
-                          }
-                          disabled={currentPage === 1}
-                        >
-                          <i className="fa-solid fa-chevron-left" />
-                        </button>
-                      </li>
-
-                      {Array.from({ length: totalPages }, (_, i) => {
-                        const page = i + 1;
-
-                        if (
-                          page === 1 ||
-                          page === totalPages ||
-                          (page >= currentPage - 1 && page <= currentPage + 1)
-                        ) {
-                          return (
-                            <li key={page}>
-                              <button
-                                className={`page-link ${currentPage === page ? "active" : ""
-                                  }`}
-                                onClick={() => handlePageChange(page)}
-                              >
-                                {page}
-                              </button>
-                            </li>
-                          );
-                        }
-
-                        if (page === currentPage - 2 || page === currentPage + 2) {
-                          return (
-                            <li key={`dots-${page}`}>
-                              <span className="page-link disabled">…</span>
-                            </li>
-                          );
-                        }
-
-                        return null;
-                      })}
-
-                      <li>
-                        <button
-                          className="page-link"
-                          onClick={() =>
-                            handlePageChange(Math.min(currentPage + 1, totalPages))
-                          }
-                          disabled={currentPage === totalPages}
-                        >
-                          <i className="fa-solid fa-chevron-right" />
-                        </button>
-                      </li>
-                    </ul>
-                  </div>
+                  <Pagination
+                    page={currentPage}
+                    totalPages={totalPages}
+                    onPageChange={handlePageChange}
+                  />
                 )}
               </section>
             ) : (

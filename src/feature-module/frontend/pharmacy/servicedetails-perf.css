@@ -156,25 +156,6 @@ html.service-details-lite .service-details-page .service-partner-card {
     padding-bottom: 4px;
 }
 
-.service-category-card-lite {
-    contain: layout style paint;
-    width: 100%;
-}
-
-html.home-lite .service-details-page .service-category-card-lite,
-html.service-details-lite .service-details-page .service-category-card-lite {
-    transition: none !important;
-}
-
-html.home-lite .service-details-page .serv-wrap.medi-bg:hover,
-html.service-details-lite .service-details-page .serv-wrap.medi-bg:hover {
-    transform: none !important;
-}
-
-html.home-lite .service-details-page .serv-wrap:hover span img,
-html.service-details-lite .service-details-page .serv-wrap:hover span img {
-    transform: none !important;
-}
 
 .service-cards-section .service-cards-stack .description-item {
     margin-bottom: 0;

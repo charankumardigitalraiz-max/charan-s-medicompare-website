@@ -27,7 +27,7 @@ import {
 } from "./utils/shareUtils.js";
 import CategoryProvider from "../../../components/CategoryProvider.jsx";
 import { Offcanvas } from "../../../components/ui/Offcanvas";
-import { PriceDisplay, ProductImage, CompareOverlayButton } from "../../../components/ui";
+import { PriceDisplay, ProductImage, CompareOverlayButton, Pagination } from "../../../components/ui";
 import { getDisplayPrice } from "./utils/productUtils.js";
 import { FaRegShareSquare, FaHeart, FaExchangeAlt, FaStar } from "react-icons/fa";
 import { IoIosHeartEmpty } from "react-icons/io";
@@ -597,28 +597,28 @@ const VendorProfile = () => {
     <>
       {initialDataLoading ? (
         <div className="text-center py-4">
-          <div className="spinner-border spinner-border-sm" role="status">
-            <span className="visually-hidden">Loading...</span>
+          <div className="animate-spin inline-block w-4 h-4 border-2 border-solid border-current border-r-transparent rounded-full align-text-bottom" role="status">
+            <span className="sr-only">Loading...</span>
           </div>
         </div>
       ) : (
         <>
           <label
-            className="form-label text-[16px] font-[600]"
+            className="block mb-2 text-[16px] font-[600]"
           >
             Categories
           </label>
 
           <ul
-            className="list-unstyled mt-2 max-h-[300px] overflow-x-hidden overflow-y-auto scrollbar-none"
+            className="list-none p-0 m-0 mt-2 max-h-[300px] overflow-x-hidden overflow-y-auto scrollbar-none"
           >
             {categories.length === 0 ? (
-              <li className="py-2 text-muted">No categories available</li>
+              <li className="py-2 text-[#6b7280]">No categories available</li>
             ) : (
               categories.slice(0, categoriesToShow).map((cat, index) => (
                 <li key={cat._id || index} className="py-2">
                   <div
-                    className="d-flex align-items-center w-100 cursor-pointer"
+                    className="flex items-center w-full cursor-pointer"
                     onClick={() => {
                       if (activeCategory.id === cat._id) {
                         setActiveCategory({ id: null, slug: null });
@@ -627,7 +627,7 @@ const VendorProfile = () => {
                       }
                     }}
                   >
-                    <div className="d-flex align-items-center flex-grow-1 text-truncate">
+                    <div className="flex items-center grow truncate">
                       <img
                         src={
                           cat?.files?.[0]
@@ -639,19 +639,19 @@ const VendorProfile = () => {
                         className="w-6 h-6 object-contain mr-[10px] rounded-[4px] font-[500]"
                       />
                       <span
-                        className="text-truncate text-[13px] font-[500] text-black"
+                        className="truncate text-[13px] font-[500] text-black"
                       >
                         {cat.name}
                       </span>
                     </div>
 
-                    <div className="flex-shrink-0 ms-3">
+                    <div className="shrink-0 ml-3">
                       {loadingCategories && activeCategory.id === cat._id ? (
                         <div
-                          className="spinner-border spinner-border-sm"
+                          className="animate-spin inline-block w-4 h-4 border-2 border-solid border-current border-r-transparent rounded-full align-text-bottom"
                           role="status"
                         >
-                          <span className="visually-hidden">Loading...</span>
+                          <span className="sr-only">Loading...</span>
                         </div>
                       ) : (
                         <i
@@ -665,12 +665,12 @@ const VendorProfile = () => {
                   </div>
 
                   {activeCategory.id === cat._id && (
-                    <ul className="list-unstyled ps-4 mt-2">
+                    <ul className="list-none p-0 m-0 pl-4 mt-2">
                       {subcategories?.length > 0 ? (
                         subcategories?.map((sub) => (
                           <li
                             key={sub._id || sub.slug}
-                            className="py-1 text-muted cursor-pointer"
+                            className="py-1 text-[#6b7280] cursor-pointer"
                           >
                             <label
                               className="flex items-center !gap-[10px] !text-[14px] !font-[500] !text-[#374151] !cursor-pointer"
@@ -680,7 +680,7 @@ const VendorProfile = () => {
                                 checked={selectedSubcategories.includes(
                                   sub.slug,
                                 )}
-                                className="me-2"
+                                className="mr-2 rounded border-gray-300 text-[#8059ca] focus:ring-[#8059ca]"
                                 onChange={() =>
                                   handleSubcategoryToggle(sub.slug)
                                 }
@@ -691,7 +691,7 @@ const VendorProfile = () => {
                         ))
                       ) : (
                         <li
-                          className="py-1 text-muted text-[12px]"
+                          className="py-1 text-[#6b7280] text-[12px]"
                         >
                           No subcategories found
                         </li>
@@ -705,7 +705,7 @@ const VendorProfile = () => {
           {categories.length > categoriesToShow && (
             <div className="text-center mt-2">
               <span
-                className="!text-primary  !cursor-pointer !text-[12px] underline"
+                className="text-[#8059ca] cursor-pointer text-[12px] underline hover:text-[#6d28d9] transition-colors"
                 onClick={() =>
                   setCategoriesToShow(
                     categoriesToShow === 6 ? categories.length : 6,
@@ -727,22 +727,22 @@ const VendorProfile = () => {
               <span>₹100</span>
             </div>
           </div> */}
-          <hr />
+          <hr className="border-gray-200 my-4" />
           <label
-            className="form-label text-[16px] font-[600]"
+            className="block mb-2 text-[16px] font-[600]"
           >
             Brands
           </label>
           <ul
-            className="list-unstyled mt-2 max-h-[300px] overflow-x-hidden overflow-y-auto scrollbar-none"
+            className="list-none p-0 m-0 mt-2 max-h-[300px] overflow-x-hidden overflow-y-auto scrollbar-none"
           >
             {Brands.length === 0 ? (
-              <li className="py-2 text-muted">No brands available</li>
+              <li className="py-2 text-[#6b7280]">No brands available</li>
             ) : (
               Brands.slice(0, brandsToShow).map((brand, index) => (
                 <li key={brand._id || brand.slug || index} className="py-2">
                   <div
-                    className="d-flex align-items-center w-100 cursor-pointer"
+                    className="flex items-center w-full cursor-pointer"
                     onClick={() => {
                       const checkbox = document.getElementById(
                         `brand-${brand.slug}`,
@@ -753,17 +753,17 @@ const VendorProfile = () => {
                       handleBrandToggle(brand.slug);
                     }}
                   >
-                    <div className="d-flex align-items-center flex-grow-1 text-truncate">
+                    <div className="flex items-center gap-1 grow truncate">
                       <input
                         type="checkbox"
                         id={`brand-${brand.slug}`}
-                        className="form-check-input me-2 cursor-pointer"
+                        className="mr-2 rounded border-gray-300 text-[#8059ca] focus:ring-[#8059ca] cursor-pointer"
                         checked={selectedBrands.includes(brand.slug)}
                         onChange={() => handleBrandToggle(brand.slug)}
                         onClick={(e) => e.stopPropagation()}
                       />
                       <span
-                        className="text-truncate text-[13px] font-[500] text-black cursor-pointer"
+                        className="truncate !text-[13px] !font-[500] text-black cursor-pointer"
                       >
                         {brand.name}
                       </span>
@@ -776,7 +776,7 @@ const VendorProfile = () => {
           {Brands.length > brandsToShow && (
             <div className="text-center mt-2">
               <span
-                className="text-primary cursor-pointer text-[12px] underline"
+                className="text-[#8059ca] cursor-pointer text-[12px] underline hover:text-[#6d28d9] transition-colors"
                 onClick={() =>
                   setBrandsToShow(brandsToShow === 6 ? Brands.length : 6)
                 }
@@ -785,7 +785,7 @@ const VendorProfile = () => {
               </span>
             </div>
           )}
-          <hr />
+          <hr className="border-gray-200 my-4" />
         </>
       )}
     </>
@@ -823,45 +823,23 @@ const VendorProfile = () => {
           <img className="w-full h-full object-cover" src={breadcrumbBg} />
         </div>
         <div className="relative z-[2] px-[15px] py-0 sm:pt-[27px] sm:pr-[16px] sm:pb-0 sm:pl-[13px]">
-          <div className="row align-items-center">
-            <div className="col-lg-8">
-              {/* <nav aria-label="breadcrumb d-none d-lg-block">
-                <ol className="breadcrumb d-flex align-items-center mb-0">
-                  <li className="breadcrumb-item">
-                    <Link to="/" className="text-decoration-none">
-                      <i className="fa fa-home me-1" />
-                      Home
-                    </Link>
-                  </li>
-                  <li
-                    className="breadcrumb-item active text-primary"
-                    aria-current="page"
-                  >
-                    Vendor
-                  </li>
-                </ol>
-              </nav> */}
+          <div className="flex flex-wrap items-center">
+            <div className="w-full lg:w-2/3">
               <div
-                style={{ position: "relative" }}
-                className="d-none d-lg-block"
+                className="relative hidden lg:block"
               >
                 <img
                   src={doctors}
-                  style={{
-                    height: "150px",
-                    position: "absolute",
-                    top: "0px",
-                    left: "0",
-                  }}
+                  className="h-[150px] absolute top-0 left-0"
                 />
               </div>
               <h2
-                className="breadcrumbb-title text-dark text-center d-none d-lg-block relative left-[150px] !text-[30px] font-[700] text-[#0a2540]"
+                className="hidden lg:block relative lg:left-[150px] !text-[30px] font-[700] text-[#0a2540] text-center"
               >
                 Trusted Excellence <br /> in Healthcare
               </h2>
             </div>
-            <div className="col-lg-4">
+            <div className="w-full lg:w-1/3 shrink-0">
               <div className="bg-white rounded-[14px] p-[18px_20px] flex items-center gap-[15px] shadow-[0_12px_30px_rgba(0,0,0,0.12)] max-w-[360px] ml-auto lg:ml-auto lg:mt-0 mt-5 mx-auto">
                 <div className="w-[70px] h-[70px] rounded-[10px] bg-[#f0f7ff] flex items-center justify-center shrink-0">
                   <img
@@ -901,11 +879,11 @@ const VendorProfile = () => {
         </div>
       </div>
 
-      <div className="container-fluid px-5 mt-4">
-        <div className="d-flex align-items-center justify-content-between d-lg-none mb-3 mobile-filter-buttons-container">
+      <div className="w-full px-5 mt-4">
+        <div className="flex items-center justify-between lg:hidden mb-3 mobile-filter-buttons-container">
           <button
             type="button"
-            className="btn btn-sm btn-primary d-flex align-items-center gap-1"
+            className="inline-flex items-center gap-1 !text-xs !font-semibold px-2.5 py-1.5 !rounded bg-[#8059ca] text-white hover:bg-[#6d28d9] transition-colors"
             onClick={() => setShowFilterCanvas(true)}
           >
             <i className="fas fa-filter"></i>
@@ -914,34 +892,34 @@ const VendorProfile = () => {
 
           <button
             type="button"
-            className="btn btn-sm btn-primary d-flex align-items-center gap-1"
+            className="inline-flex items-center gap-1 !text-xs !font-semibold px-2.5 py-1.5 !rounded bg-[#8059ca] text-white hover:bg-[#6d28d9] transition-colors"
           >
             <i className="fas fa-redo"></i>
             <span>Clear</span>
           </button>
         </div>
 
-        <div className="row">
-          <div className="col-lg-3 mb-4 d-none d-lg-block sticky top-[100px] self-start z-10">
-            <div className="card shadow-sm p-3">
+        <div className="grid grid-cols-12 gap-6">
+          <div className="col-span-12 lg:col-span-3 mb-4 hidden lg:block sticky top-[100px] self-start z-10">
+            <div className="card shadow-sm p-3 border-none rounded-[14px]">
               {FilterContent()}
             </div>
           </div>
 
-          <div className="col-lg-9">
+          <div className="col-span-12 lg:col-span-9">
             {/* Selected Filters Display */}
             {(selectedSubcategories.length > 0 ||
               selectedBrands.length > 0) && (
-                <div className="mb-3 d-flex flex-wrap align-items-center gap-2">
+                <div className="mb-3 flex flex-wrap items-center gap-2">
                   {selectedSubcategories.map((slug, index) => (
                     <div
                       key={index}
-                      className="d-flex align-items-center bg-[#b284fe38] rounded-[16px] p-[4px_10px] text-[12px] text-black cursor-pointer whitespace-nowrap"
+                      className="flex items-center bg-[#b284fe38] rounded-[16px] p-[4px_10px] text-[12px] text-black cursor-pointer whitespace-nowrap"
                     >
                       {subcategories.find((sub) => sub.slug === slug)?.name ||
                         slug}
                       <button
-                        className="btn btn-link p-0 ms-1 text-secondary text-[10px] leading-[1]"
+                        className="bg-transparent border-none p-0 ml-1 text-gray-500 text-[10px] leading-[1] hover:text-gray-900 cursor-pointer"
                         onClick={() => handleSubcategoryToggle(slug)}
                       >
                         ×
@@ -951,11 +929,11 @@ const VendorProfile = () => {
                   {selectedBrands.map((slug, index) => (
                     <div
                       key={index}
-                      className="d-flex align-items-center bg-[#f8f9fa] rounded-[16px] p-[4px_10px] text-[12px] cursor-pointer whitespace-nowrap"
+                      className="flex items-center bg-[#f8f9fa] rounded-[16px] p-[4px_10px] text-[12px] cursor-pointer whitespace-nowrap"
                     >
                       {Brands.find((brand) => brand.slug === slug)?.name || slug}
                       <button
-                        className="btn btn-link p-0 ms-1 text-secondary text-[10px] leading-[1]"
+                        className="bg-transparent border-none p-0 ml-1 text-gray-500 text-[10px] leading-[1] hover:text-gray-900 cursor-pointer"
                         onClick={() => handleBrandToggle(slug)}
                       >
                         ×
@@ -963,7 +941,7 @@ const VendorProfile = () => {
                     </div>
                   ))}
                   <button
-                    className="btn btn-sm btn-outline-secondary text-[12px] p-[4px_10px]"
+                    className="inline-block text-xs font-semibold border border-gray-300 text-gray-700 px-2.5 py-1 rounded hover:bg-gray-50 transition-colors cursor-pointer"
                     onClick={() => {
                       setSelectedSubcategories([]);
                       setSelectedBrands([]);
@@ -982,13 +960,13 @@ const VendorProfile = () => {
 
             {productsLoading ? (
               <div className="text-center py-5">
-                <div className="spinner-border" role="status">
-                  <span className="visually-hidden">Loading products...</span>
+                <div className="animate-spin inline-block w-8 h-8 border-4 border-solid border-current border-r-transparent rounded-full" role="status">
+                  <span className="sr-only">Loading products...</span>
                 </div>
                 <p className="mt-3 mb-0">Loading products...</p>
               </div>
             ) : (
-              <div className="row g-3 align-items-stretch">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 items-stretch">
                 {currentProducts?.length > 0 ? (
                   (() => {
                     // Group products by category name
@@ -1010,9 +988,9 @@ const VendorProfile = () => {
                     return Object.entries(grouped).map(([categoryName, productsList]) => (
                       <Fragment key={categoryName}>
                         {/* Section Header */}
-                        <div className="col-12 mt-4 mb-2">
+                        <div className="col-span-full mt-4 mb-2">
                           <h3
-                            className="category-section-title text-[18px] font-[700] text-[#0f172a] border-l-4 border-l-[#b284fe] pl-[12px] mb-[15px] tracking-[-0.01em]"
+                            className="!text-[18px] !font-[700] !text-[#0f172a] !border-l-4 !border-l-[#b284fe] !pl-[12px] !mb-[15px] tracking-[-0.01em]"
                           >
                             {categoryName}
                           </h3>
@@ -1049,10 +1027,10 @@ const VendorProfile = () => {
                           return (
                             <div
                               key={tablet._id || `product-${index}`}
-                              className="col-xxl-3 col-md-4 d-flex mb-3 mb-md-4"
+                              className="flex h-full"
                             >
                               <div
-                                className="modern-product-card product-card-vertical h-100 w-100 flex flex-col cursor-pointer h-full min-h-0 border border-[#dee2e6] shadow-[0_4px_10px_rgba(0,0,0,0.05)] rounded-[10px] bg-white transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.8,0.25,1)]"
+                                className="modern-product-card flex flex-col cursor-pointer w-full min-h-0 border border-[#dee2e6] shadow-[0_4px_10px_rgba(0,0,0,0.05)] rounded-[10px] bg-white transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.8,0.25,1)] hover:-translate-y-1 hover:shadow-[0_8px_20px_rgba(0,0,0,0.1)]"
                                 onClick={() => handleProductClick(products)}
                               // style={{
                               //   display: "flex",
@@ -1080,7 +1058,7 @@ const VendorProfile = () => {
                                     className="absolute top-[10px] left-[10px] bg-white px-2 py-0.5 rounded-[20px] text-[11px] font-[600] flex items-center gap-1 shadow-[0_2px_5px_rgba(0,0,0,0.1)] border border-[#e0e0e0] z-10"
                                   >
                                     <FaStar
-                                      className="text-warning text-[10px]"
+                                      className="text-[#ffc107] text-[10px]"
                                     />
                                     <span>{tablet?.averageRating?.toFixed(1) || "0"}</span>
                                     <span
@@ -1099,9 +1077,9 @@ const VendorProfile = () => {
 
                                 {/* Card Body */}
                                 <div
-                                  className="product-card-body flex-grow flex flex-col gap-0.5 p-[8px_10px]"
+                                  className="flex-grow flex flex-col gap-0.5 p-[8px_10px]"
                                 >
-                                  <div className="d-flex align-items-start justify-content-between w-full gap-2">
+                                  <div className="flex items-start justify-between w-full gap-2">
                                     <div className="flex flex-col gap-0.5 flex-1 min-w-0">
                                       <div
                                         className="product-title text-capitalize text-[13px] font-[500] leading-[1.3] m-0 text-[#0f172a] tracking-[-0.01em] whitespace-nowrap overflow-hidden text-ellipsis block"
@@ -1112,7 +1090,7 @@ const VendorProfile = () => {
                                     </div>
 
                                     <div
-                                      className="d-flex align-items-center gap-1 ms-2 shrink-0 mt-[2px]"
+                                      className="flex items-center gap-1 ml-2 shrink-0 mt-[2px]"
                                       onClick={(e) => e.stopPropagation()}
                                     >
                                       <div
@@ -1140,7 +1118,7 @@ const VendorProfile = () => {
                                     </div>
                                   </div>
 
-                                  <div className="d-flex align-items-center justify-content-between gap-1 min-w-0">
+                                  <div className="flex items-center justify-between gap-1 min-w-0">
                                     {(tablet?.brands?.name || tablet?.brand?.name || tablet?.manufacture?.name) && (
                                       <span
                                         className="text-[10.5px] text-[#8059ca] overflow-hidden text-ellipsis whitespace-nowrap tracking-[0.02em] bg-[#f5f3ff] px-2 py-0.5 rounded-[6px] border border-[rgba(125,46,255,0.1)] inline-block max-w-full"
@@ -1185,17 +1163,17 @@ const VendorProfile = () => {
                                   {/* Equipments Section */}
                                   {tablet?.equipmentType?.length > 0 && (
                                     <div className="mt-2 pt-2 border-t border-dashed border-t-[#eaeaea]">
-                                      <div className="mb-1 d-flex align-items-center text-[11px] text-[#6b7280]">
+                                      <div className="mb-1 flex items-center text-[11px] text-[#6b7280]">
                                         <span className="text-[11px] font-[600] uppercase tracking-[0.02em]">Equipments:</span>
                                       </div>
-                                      <div className="d-flex flex-wrap gap-1">
+                                      <div className="flex flex-wrap gap-1">
                                         {tablet.equipmentType.slice(0, 3).map((item, index) => (
-                                          <span key={index} className="badge bg-light text-dark border px-2 py-1 text-[9px] rounded-[4px]">
+                                          <span key={index} className="bg-gray-100 text-gray-700 border border-gray-200 px-2 py-0.5 text-[9px] rounded-[4px]">
                                             {item}
                                           </span>
                                         ))}
                                         {tablet.equipmentType.length > 3 && (
-                                          <span className="badge bg-light text-secondary border px-2 py-1 text-[9px] rounded-[4px]">
+                                          <span className="bg-gray-100 text-gray-500 border border-gray-200 px-2 py-0.5 text-[9px] rounded-[4px]">
                                             +{tablet.equipmentType.length - 3} More
                                           </span>
                                         )}
@@ -1221,63 +1199,13 @@ const VendorProfile = () => {
         </div>
 
         {/* Pagination */}
-        {totalItems > itemsPerPage && (
-          <div className="pagination dashboard-pagination mb-4">
-            <ul className="d-flex justify-content-center">
-              <li>
-                <button
-                  className="page-link"
-                  onClick={() => handlePageChange(Math.max(currentPage - 1, 1))}
-                  disabled={currentPage === 1}
-                >
-                  <i className="fa-solid fa-chevron-left" />
-                </button>
-              </li>
-              {Array.from({ length: totalPages }, (_, i) => {
-                const page = i + 1;
-
-                if (
-                  page === 1 ||
-                  page === totalPages ||
-                  (page >= currentPage - 1 && page <= currentPage + 1)
-                ) {
-                  return (
-                    <li key={page}>
-                      <button
-                        className={`page-link ${currentPage === page ? "active" : ""
-                          }`}
-                        onClick={() => handlePageChange(page)}
-                      >
-                        {page}
-                      </button>
-                    </li>
-                  );
-                } else if (
-                  page === currentPage - 2 ||
-                  page === currentPage + 2
-                ) {
-                  return (
-                    <li key={`dots-${page}`}>
-                      <span className="page-link cursor-default">
-                        ...
-                      </span>
-                    </li>
-                  );
-                }
-                return null;
-              })}
-              <li>
-                <button
-                  className="page-link"
-                  onClick={() =>
-                    handlePageChange(Math.min(currentPage + 1, totalPages))
-                  }
-                  disabled={currentPage === totalPages}
-                >
-                  <i className="fa-solid fa-chevron-right" />
-                </button>
-              </li>
-            </ul>
+        {totalPages > 1 && (
+          <div className="mt-6 mb-4">
+            <Pagination
+              page={currentPage}
+              totalPages={totalPages}
+              onPageChange={handlePageChange}
+            />
           </div>
         )}
       </div>
@@ -1286,7 +1214,7 @@ const VendorProfile = () => {
         show={showFilterCanvas}
         onHide={() => setShowFilterCanvas(false)}
         placement="start"
-        className="w-75 w-md-50 z-[999999]"
+        className="!w-3/4 md:!w-1/2 z-[999999]"
       >
         <Offcanvas.Header closeButton>
           <Offcanvas.Title>Filters</Offcanvas.Title>

@@ -159,45 +159,25 @@ const Home2Footer = ({ categories: propCategories }) => {
   return (
     <>
       {!location.pathname.startsWith("/cart") && (
-        <footer
-          className="footer"
-          style={{
-            backgroundColor: "#331962",
-            color: "#fff",
-          }}
-        >
-          <div className="footer-top" style={{ padding: "40px 0 10px" }}>
-            <div className="container-fluid px-2 px-md-5">
-              <div className="row g-4">
+        <footer className="bg-[#331962] text-white">
+          <div className="pt-10 pb-[10px]">
+            <div className="w-full px-2 md:px-20">
+              <div className="flex flex-wrap -mx-4 gap-y-4">
                 {/* About  */}
-                <div className="col-lg-4 col-md-6 mb-4 mb-lg-0">
-                  <div className="footer-widget">
-                    <div className="footer-logo mb-3">
+                <div className="w-full lg:w-1/3 px-4 mb-4 lg:mb-0">
+                  <div>
+                    <div className="mb-3">
                       <img
                         src="/assets/logo-white.png"
                         alt="Medi Compares Logo"
                         loading="lazy"
-                        style={{ height: "50px" }}
+                        className="!h-[60px] w-auto object-contain"
                       />
                     </div>
-                    <h5
-                      style={{
-                        fontWeight: "600",
-                        marginBottom: "4px",
-                        color: "#fff",
-                        fontSize: "18px",
-                      }}
-                    >
+                    <h5 className="font-semibold mb-[4px] !text-white !text-[18px]">
                       Your Trusted Medicine Comparison Platform
                     </h5>
-                    <p
-                      style={{
-                        color: "white",
-                        fontSize: "14px",
-                        lineHeight: "1.8",
-                        marginBottom: "20px",
-                      }}
-                    >
+                    <p className="!text-white !text-[14px] leading-[1.8] mb-5">
                       Compare medicine prices across multiple pharmacies
                       instantly. Find the best deals, genuine medicines, and
                       affordable alternatives. Save money on your healthcare
@@ -205,46 +185,22 @@ const Home2Footer = ({ categories: propCategories }) => {
                     </p>
 
                     {/* Key Features */}
-                    <div className="d-flex flex-column gap-2">
-                      <div className="d-flex align-items-center">
-                        <i
-                          className="fas fa-check-circle me-2"
-                          style={{ color: "#04BD6C", fontSize: "16px" }}
-                        ></i>
-                        <span
-                          style={{
-                            color: "rgba(255,255,255,0.9)",
-                            fontSize: "13px",
-                          }}
-                        >
+                    <div className="flex flex-col gap-2">
+                      <div className="flex items-center">
+                        <i className="fas fa-check-circle mr-2 text-[#04BD6C] text-[16px]"></i>
+                        <span className="!text-white/90 !text-[13px]">
                           Compare prices from 500+ pharmacies
                         </span>
                       </div>
-                      <div className="d-flex align-items-center">
-                        <i
-                          className="fas fa-check-circle me-2"
-                          style={{ color: "#04BD6C", fontSize: "16px" }}
-                        ></i>
-                        <span
-                          style={{
-                            color: "rgba(255,255,255,0.9)",
-                            fontSize: "13px",
-                          }}
-                        >
+                      <div className="flex items-center">
+                        <i className="fas fa-check-circle mr-2 text-[#04BD6C] text-[16px]"></i>
+                        <span className="!text-white/90 !text-[13px]">
                           100% genuine & verified medicines
                         </span>
                       </div>
-                      <div className="d-flex align-items-center">
-                        <i
-                          className="fas fa-check-circle me-2"
-                          style={{ color: "#04BD6C", fontSize: "16px" }}
-                        ></i>
-                        <span
-                          style={{
-                            color: "rgba(255,255,255,0.9)",
-                            fontSize: "13px",
-                          }}
-                        >
+                      <div className="flex items-center">
+                        <i className="fas fa-check-circle mr-2 text-[#04BD6C] text-[16px]"></i>
+                        <span className="!text-white/90 !text-[13px]">
                           Find cheaper alternatives instantly
                         </span>
                       </div>
@@ -252,42 +208,14 @@ const Home2Footer = ({ categories: propCategories }) => {
 
                     {/* Social Icons */}
                     <div className="social-icon mt-4">
-                      <ul
-                        style={{
-                          listStyle: "none",
-                          padding: 0,
-                          display: "flex",
-                          gap: "12px",
-                          margin: 0,
-                        }}
-                      >
+                      <ul className="list-none p-0 flex gap-[12px] m-0">
                         {socialLinks.facebook && (
                           <li>
                             <a
                               href={socialLinks.facebook}
                               target="_blank"
                               rel="noopener noreferrer"
-                              style={{
-                                width: "36px",
-                                height: "36px",
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                background: "rgba(255,255,255,0.1)",
-                                borderRadius: "50%",
-                                color: "#fff",
-                                textDecoration: "none",
-                                transition: "all 0.3s",
-                              }}
-                              onMouseEnter={(e) => {
-                                e.target.style.background = "#1877F2";
-                                e.target.style.transform = "translateY(-3px)";
-                              }}
-                              onMouseLeave={(e) => {
-                                e.target.style.background =
-                                  "rgba(255,255,255,0.1)";
-                                e.target.style.transform = "translateY(0)";
-                              }}
+                              className="!w-[36px] !h-[36px] !flex !items-center !justify-center bg-white/10 !rounded-full text-white no-underline transition-all duration-300 hover:bg-[#1877F2] hover:-translate-y-[3px]"
                             >
                               <i className="fab fa-facebook-f" />
                             </a>
@@ -299,27 +227,7 @@ const Home2Footer = ({ categories: propCategories }) => {
                               href={socialLinks.twitter}
                               target="_blank"
                               rel="noopener noreferrer"
-                              style={{
-                                width: "36px",
-                                height: "36px",
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                background: "rgba(255,255,255,0.1)",
-                                borderRadius: "50%",
-                                color: "#fff",
-                                textDecoration: "none",
-                                transition: "all 0.3s",
-                              }}
-                              onMouseEnter={(e) => {
-                                e.target.style.background = "#1DA1F2";
-                                e.target.style.transform = "translateY(-3px)";
-                              }}
-                              onMouseLeave={(e) => {
-                                e.target.style.background =
-                                  "rgba(255,255,255,0.1)";
-                                e.target.style.transform = "translateY(0)";
-                              }}
+                              className="!w-[36px] !h-[36px] !flex !items-center !justify-center bg-white/10 !rounded-full text-white no-underline transition-all duration-300 hover:bg-[#1DA1F2] hover:-translate-y-[3px]"
                             >
                               <i className="fab fa-twitter" />
                             </a>
@@ -331,28 +239,7 @@ const Home2Footer = ({ categories: propCategories }) => {
                               href={socialLinks.instagram}
                               target="_blank"
                               rel="noopener noreferrer"
-                              style={{
-                                width: "36px",
-                                height: "36px",
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                background: "rgba(255,255,255,0.1)",
-                                borderRadius: "50%",
-                                color: "#fff",
-                                textDecoration: "none",
-                                transition: "all 0.3s",
-                              }}
-                              onMouseEnter={(e) => {
-                                e.target.style.background =
-                                  "linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%)";
-                                e.target.style.transform = "translateY(-3px)";
-                              }}
-                              onMouseLeave={(e) => {
-                                e.target.style.background =
-                                  "rgba(255,255,255,0.1)";
-                                e.target.style.transform = "translateY(0)";
-                              }}
+                              className="!w-[36px] !h-[36px] !flex !items-center !justify-center bg-white/10 !rounded-full text-white no-underline transition-all duration-300 hover:bg-[linear-gradient(45deg,#f09433_0%,#e6683c_25%,#dc2743_50%,#cc2366_75%,#bc1888_100%)] hover:-translate-y-[3px]"
                             >
                               <i className="fab fa-instagram" />
                             </a>
@@ -364,27 +251,7 @@ const Home2Footer = ({ categories: propCategories }) => {
                               href={socialLinks.linkedin}
                               target="_blank"
                               rel="noopener noreferrer"
-                              style={{
-                                width: "36px",
-                                height: "36px",
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                background: "rgba(255,255,255,0.1)",
-                                borderRadius: "50%",
-                                color: "#fff",
-                                textDecoration: "none",
-                                transition: "all 0.3s",
-                              }}
-                              onMouseEnter={(e) => {
-                                e.target.style.background = "#0A66C2";
-                                e.target.style.transform = "translateY(-3px)";
-                              }}
-                              onMouseLeave={(e) => {
-                                e.target.style.background =
-                                  "rgba(255,255,255,0.1)";
-                                e.target.style.transform = "translateY(0)";
-                              }}
+                              className="!w-[36px] !h-[36px] !flex !items-center !justify-center bg-white/10 !rounded-full text-white no-underline transition-all duration-300 hover:bg-[#0A66C2] hover:-translate-y-[3px]"
                             >
                               <i className="fab fa-linkedin-in" />
                             </a>
@@ -396,27 +263,7 @@ const Home2Footer = ({ categories: propCategories }) => {
                               href={socialLinks.youtube}
                               target="_blank"
                               rel="noopener noreferrer"
-                              style={{
-                                width: "36px",
-                                height: "36px",
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                                background: "rgba(255,255,255,0.1)",
-                                borderRadius: "50%",
-                                color: "#fff",
-                                textDecoration: "none",
-                                transition: "all 0.3s",
-                              }}
-                              onMouseEnter={(e) => {
-                                e.target.style.background = "#FF0000";
-                                e.target.style.transform = "translateY(-3px)";
-                              }}
-                              onMouseLeave={(e) => {
-                                e.target.style.background =
-                                  "rgba(255,255,255,0.1)";
-                                e.target.style.transform = "translateY(0)";
-                              }}
+                              className="!w-[36px] !h-[36px] !flex !items-center !justify-center bg-white/10 !rounded-full text-white no-underline transition-all duration-300 hover:bg-[#FF0000] hover:-translate-y-[3px]"
                             >
                               <i className="fab fa-youtube" />
                             </a>
@@ -428,36 +275,19 @@ const Home2Footer = ({ categories: propCategories }) => {
                 </div>
 
                 {/* Quick Links  */}
-                <div className="col-lg-2 col-md-6 mb-4 mb-lg-0">
-                  <div className="footer-widget">
-                    <h5
-                      className="footer-title"
-                      style={{
-                        fontWeight: "600",
-                        marginBottom: "20px",
-                        color: "#fff",
-                        fontSize: "16px",
-                      }}
-                    >
+                <div className="w-full md:w-1/2 lg:w-1/6 px-4 mb-4 lg:mb-0">
+                  <div>
+                    <h5 className="font-semibold !mb-5 !text-white !text-[16px]">
                       Quick Links
                     </h5>
-                    <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+                    <ul className="list-none p-0 m-0">
                       {(categories.length > 0 ? categories : fetchedCategories).map((category) => (
-                        <li key={category._id} style={{ marginBottom: "12px" }}>
+                        <li key={category._id} className="mb-3">
                           <Link
                             to={`/${category.slug}`}
-                            style={{
-                              color: "white",
-                              textDecoration: "none",
-                              fontSize: "14px",
-                              transition: "all 0.3s",
-                              display: "inline-block",
-                            }}
+                            className="!text-white no-underline !text-[14px] transition-all duration-300 inline-block hover:text-gray-300"
                           >
-                            <i
-                              className="fas fa-chevron-right me-2"
-                              style={{ fontSize: "10px" }}
-                            ></i>
+                            <i className="fas fa-chevron-right mr-2 text-[10px]"></i>
                             {category.name}
                           </Link>
                         </li>
@@ -467,147 +297,60 @@ const Home2Footer = ({ categories: propCategories }) => {
                 </div>
 
                 {/* Support  */}
-                <div className="col-lg-3 col-md-6 mb-4 mb-lg-0">
-                  <div className="footer-widget">
-                    <h5
-                      className="footer-title"
-                      style={{
-                        fontWeight: "600",
-                        marginBottom: "20px",
-                        color: "#fff",
-                        fontSize: "16px",
-                      }}
-                    >
+                <div className="w-full md:w-1/2 lg:w-1/4 px-4 mb-4 lg:mb-0">
+                  <div>
+                    <h5 className="font-semibold !mb-5 !text-white !text-[16px]">
                       Support & Information
                     </h5>
-                    <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
-                      {/* <li style={{ marginBottom: "12px" }}>
+                    <ul className="list-none p-0 m-0">
+                      <li className="mb-3">
                         <Link
-                          style={{
-                            color: "white",
-                            textDecoration: "none",
-                            fontSize: "14px",
-                            transition: "all 0.3s",
-                            display: "inline-block",
-                          }}
-                        >
-                          <i
-                            className="fas fa-chevron-right me-2"
-                            style={{ fontSize: "10px" }}
-                          ></i>
-                          About Us
-                        </Link>
-                      </li>
-                      <li style={{ marginBottom: "12px" }}>
-                        <Link
-                          style={{
-                            color: "white",
-                            textDecoration: "none",
-                            fontSize: "14px",
-                            transition: "all 0.3s",
-                            display: "inline-block",
-                          }}
-                        >
-                          <i
-                            className="fas fa-chevron-right me-2"
-                            style={{ fontSize: "10px" }}
-                          ></i>
-                          How It Works
-                        </Link>
-                      </li> */}
-                      <li style={{ marginBottom: "12px" }}>
-                        <Link
-                          style={{
-                            color: "white",
-                            textDecoration: "none",
-                            fontSize: "14px",
-                            transition: "all 0.3s",
-                            display: "inline-block",
-                          }}
+                          className="!text-white no-underline !text-[14px] transition-all duration-300 inline-block hover:text-gray-300"
                           to="/contact-us"
                         >
-                          <i
-                            className="fas fa-chevron-right me-2"
-                            style={{ fontSize: "10px" }}
-                          ></i>
+                          <i className="fas fa-chevron-right mr-2 text-[10px]"></i>
                           Contact Us
                         </Link>
                       </li>
 
                       {pages.length > 0 ? (
                         pages.map((p) => (
-                          <li key={p._id} style={{ marginBottom: "12px" }}>
+                          <li key={p._id} className="mb-3">
                             <Link
                               to={`/policies/${p.slug}`}
-                              style={{
-                                color: "white",
-                                textDecoration: "none",
-                                fontSize: "14px",
-                                transition: "all 0.3s",
-                                display: "inline-block",
-                              }}
+                              className="!text-white no-underline !text-[14px] transition-all duration-300 inline-block hover:text-gray-300"
                             >
-                              <i
-                                className="fas fa-chevron-right me-2"
-                                style={{ fontSize: "10px" }}
-                              ></i>
+                              <i className="fas fa-chevron-right mr-2 text-[10px]"></i>
                               {p.title}
                             </Link>
                           </li>
                         ))
                       ) : (
                         <>
-                          <li style={{ marginBottom: "12px" }}>
+                          <li className="mb-3">
                             <Link
                               to="/policies/terms-and-conditions"
-                              style={{
-                                color: "white",
-                                textDecoration: "none",
-                                fontSize: "14px",
-                                transition: "all 0.3s",
-                                display: "inline-block",
-                              }}
+                              className="!text-white no-underline !text-[14px] transition-all duration-300 inline-block hover:text-gray-300"
                             >
-                              <i
-                                className="fas fa-chevron-right me-2"
-                                style={{ fontSize: "10px" }}
-                              ></i>
+                              <i className="fas fa-chevron-right mr-2 text-[10px]"></i>
                               Terms & Conditions
                             </Link>
                           </li>
-                          <li style={{ marginBottom: "12px" }}>
+                          <li className="mb-3">
                             <Link
                               to="/policies/privacy-policy"
-                              style={{
-                                color: "white",
-                                textDecoration: "none",
-                                fontSize: "14px",
-                                transition: "all 0.3s",
-                                display: "inline-block",
-                              }}
+                              className="!text-white no-underline !text-[14px] transition-all duration-300 inline-block hover:text-gray-300"
                             >
-                              <i
-                                className="fas fa-chevron-right me-2"
-                                style={{ fontSize: "10px" }}
-                              ></i>
+                              <i className="fas fa-chevron-right mr-2 text-[10px]"></i>
                               Privacy Policy
                             </Link>
                           </li>
-                          <li style={{ marginBottom: "12px" }}>
+                          <li className="mb-3">
                             <Link
                               to="/policies/refund-policy"
-                              style={{
-                                color: "white",
-                                textDecoration: "none",
-                                fontSize: "14px",
-                                transition: "all 0.3s",
-                                display: "inline-block",
-                              }}
+                              className="!text-white no-underline !text-[14px] transition-all duration-300 inline-block hover:text-gray-300"
                             >
-                              <i
-                                className="fas fa-chevron-right me-2"
-                                style={{ fontSize: "10px" }}
-                              ></i>
+                              <i className="fas fa-chevron-right mr-2 text-[10px]"></i>
                               Refund Policy
                             </Link>
                           </li>
@@ -618,213 +361,99 @@ const Home2Footer = ({ categories: propCategories }) => {
                 </div>
 
                 {/* Newsletter & Contact Section */}
-                <div className="col-lg-3 col-md-6">
-                  <div className="footer-widget">
-                    <h5
-                      className="footer-title"
-                      style={{
-                        fontWeight: "600",
-                        marginBottom: "20px",
-                        color: "#fff",
-                        fontSize: "16px",
-                      }}
-                    >
+                <div className="w-full lg:w-1/4 px-4">
+                  <div>
+                    <h5 className="font-semibold !mb-5 !text-white !text-[16px]">
                       Contact Info
                     </h5>
-                    <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
-                      <li style={{ marginBottom: "12px" }}>
+                    <ul className="list-none p-0 m-0">
+                      <li className="mb-3">
                         <a
                           href="tel:+919010357778"
-                          className="d-block"
-                          style={{
-                            color: "white",
-                            fontSize: "13px",
-                            textDecoration: "none",
-                            marginBottom: "2px",
-                            transition: "all 0.3s",
-                          }}
+                          className="block !text-white !text-[13px] no-underline mb-0.5 transition-all duration-300 hover:text-gray-300"
                         >
-                          <i
-                            className="fas fa-phone me-2"
-                            style={{ fontSize: "10px" }}
-                          ></i>
+                          <i className="fas fa-phone mr-2 text-[10px]"></i>
                           +91 9010 357 778
                         </a>
                       </li>
-                      <li style={{ marginBottom: "12px" }}>
+                      <li className="mb-3">
                         <a
                           href="tel:+919010347778"
-                          className="d-block"
-                          style={{
-                            color: "white",
-                            fontSize: "13px",
-                            textDecoration: "none",
-                            marginBottom: "2px",
-                            transition: "all 0.3s",
-                          }}
+                          className="block !text-white !text-[13px] no-underline mb-0.5 transition-all duration-300 hover:text-gray-300"
                         >
-                          <i
-                            className="fas fa-phone me-2"
-                            style={{ fontSize: "10px" }}
-                          ></i>
+                          <i className="fas fa-phone mr-2 text-[10px]"></i>
                           +91 9010 347 778
                         </a>
                       </li>
-                      <li style={{ marginBottom: "12px" }}>
+                      <li className="mb-3">
                         <a
                           href="mailto:info@medicompares.com"
-                          className="d-block"
-                          style={{
-                            color: "white",
-                            fontSize: "13px",
-                            textDecoration: "none",
-                            marginBottom: "2px",
-                            transition: "all 0.3s",
-                          }}
+                          className="block !text-white !text-[13px] no-underline mb-0.5 transition-all duration-300 hover:text-gray-300"
                         >
-                          <i
-                            className="fas fa-envelope me-2"
-                            style={{ fontSize: "10px" }}
-                          ></i>
+                          <i className="fas fa-envelope mr-2 text-[10px]"></i>
                           info@medicompares.com
                         </a>
                       </li>
-                      <li style={{ marginBottom: "12px" }}>
+                      <li className="mb-3">
                         <a
                           href="https://www.google.com/maps?q=2nd+Floor,+H.No.+10-5-2/7/92,+Banjara+Hills+Rd+No.+1,+Hyderabad,+Telangana+500004"
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="d-block"
-                          style={{
-                            color: "white",
-                            fontSize: "13px",
-                            textDecoration: "none",
-                            marginBottom: "2px",
-                            transition: "all 0.3s",
-                          }}
+                          className="block !text-white !text-[13px] no-underline mb-0.5 transition-all duration-300 hover:text-gray-300"
                         >
-                          <small
-                            style={{
-                              fontSize: 13,
-                              lineHeight: 1.6,
-                            }}
-                          >
-                            <i className="me-2 fas fa-map-marker-alt"></i>
+                          <span className="!text-[13px] leading-[1.6]">
+                            <i className="mr-2 fas fa-map-marker-alt"></i>
                             2nd Floor, H.No. 10-5-2/7/92, G-3,
                             <br />
                             Banjara Hills Rd No. 1, Opp. Banjara Function Hall,
                             <br />
                             Hyderabad, Telangana – 500004
-                          </small>
+                          </span>
                         </a>
                       </li>
                     </ul>
 
-                    <div className="d-flex align-items-center gap-2 my-3">
+                    <div className="flex items-center gap-2 my-3">
                       <a
                         href="https://vendor.medicompares.com/register"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="d-inline-flex align-items-center"
-                        style={{
-                          background:
-                            "linear-gradient(135deg, #8059ca 0%, #822BD4 100%)",
-                          color: "#fff",
-                          padding: "10px 10px",
-                          borderRadius: "25px",
-                          textDecoration: "none",
-                          fontSize: "12px",
-                          fontWeight: "600",
-                          transition: "all 0.3s",
-                          border: "none",
-                          gap: "8px",
-                          whiteSpace: "nowrap",
-                        }}
+                        className="inline-flex items-center bg-[linear-gradient(135deg,#8059ca_0%,#822BD4_100%)] !text-white py-2 px-2.5 rounded-[25px] no-underline !text-[12px] font-semibold transition-all duration-300 border-none gap-2 whitespace-nowrap hover:opacity-90"
                       >
-                        <i
-                          className="fas fa-handshake"
-                          style={{ fontSize: "14px" }}
-                        />
+                        <i className="fas fa-handshake !text-[14px]" />
                         Partner with Us
                       </a>
 
                       <Link
                         to="/partners"
-                        className="d-inline-flex align-items-center"
-                        style={{
-                          background:
-                            "linear-gradient(135deg, #8059ca 0%, #822BD4 100%)",
-                          color: "#fff",
-                          padding: "10px 10px",
-                          borderRadius: "25px",
-                          textDecoration: "none",
-                          fontSize: "12px",
-                          fontWeight: "600",
-                          transition: "all 0.3s",
-                          border: "none",
-                          gap: "8px",
-                          whiteSpace: "nowrap",
-                        }}
+                        className="inline-flex items-center bg-[linear-gradient(135deg,#8059ca_0%,#822BD4_100%)] !text-white py-2 px-2.5 rounded-[25px] no-underline !text-[12px] font-semibold transition-all duration-300 border-none gap-2 whitespace-nowrap hover:opacity-90"
                       >
-                        <i
-                          className="fas fa-users"
-                          style={{ fontSize: "14px" }}
-                        />
+                        <i className="fas fa-users !text-[14px]" />
                         Explore Partners
                       </Link>
                     </div>
 
-                    <h5
-                      className="footer-title"
-                      style={{
-                        fontWeight: "600",
-                        color: "#fff",
-                        fontSize: "16px",
-                      }}
-                    >
+                    <h5 className="font-semibold !text-white !text-[16px]">
                       Stay Updated
                     </h5>
-                    <p
-                      style={{
-                        color: "white",
-                        fontSize: "13px",
-                      }}
-                    >
+                    <p className="!text-white !text-[13px]">
                       Subscribe to get health tips, medicine price alerts, and
                       exclusive deals delivered to your inbox.
                     </p>
 
                     <form onSubmit={handleSubscribe} className="mb-4">
-                      <div className="input-group">
+                      <div className="flex">
                         <input
                           type="email"
-                          className="form-control footer-email"
+                          className="flex-1 bg-white/10 border border-white/20 !text-white rounded-l-[8px] !text-[12px] py-2 px-4 focus:outline-none focus:ring-1 focus:ring-[#822BD4]"
                           placeholder="Enter your email"
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
                           required
-                          style={{
-                            background: "rgba(255,255,255,0.1)",
-                            border: "1px solid rgba(255,255,255,0.2)",
-                            color: "#fff",
-                            borderRadius: "8px 0 0 8px",
-                            fontSize: "12px",
-                            padding: "8px 15px",
-                          }}
                         />
                         <button
-                          className="btn"
+                          className="bg-[linear-gradient(135deg,#8059ca_0%,#822BD4_100%)] border-none !rounded-r-[8px] !text-white !font-semibold py-2 px-5 transition-all duration-300 hover:opacity-90"
                           type="submit"
-                          style={{
-                            background:
-                              "linear-gradient(135deg, #8059ca 0%, #822BD4 100%)",
-                            border: "none",
-                            borderRadius: "0 8px 8px 0",
-                            color: "#fff",
-                            fontWeight: "600",
-                            padding: "10px 20px",
-                            transition: "all 0.3s",
-                          }}
                         >
                           Subscribe
                         </button>
@@ -837,30 +466,17 @@ const Home2Footer = ({ categories: propCategories }) => {
           </div>
 
           {/* Footer Bottom */}
-          <div
-            className="footer-bottom"
-            style={{
-              background: "rgba(0,0,0,0.3)",
-              borderTop: "1px solid rgba(255,255,255,0.1)",
-              padding: "25px 0",
-            }}
-          >
-            <div className="container-fluid px-2 px-md-5">
-              <div className="row align-items-center">
-                <div className="col-md-6 mb-3 mb-md-0">
-                  <p
-                    style={{
-                      margin: 0,
-                      fontSize: "13px",
-                      color: "white",
-                    }}
-                  >
+          <div className="bg-black/30 border-t border-white/10 py-6">
+            <div className="w-full px-2 md:px-20">
+              <div className="flex flex-wrap items-center">
+                <div className="w-full md:w-1/2 mb-3 md:mb-0">
+                  <p className="m-0 !text-[13px] !text-white">
                     © {new Date().getFullYear()} ORU HEALTHCARE PVT LTD. All rights reserved..
                   </p>
                 </div>
-                <div className="col-md-6 text-md-end">
-                  <div className="copyright-menu">
-                    <ul className="payment-method d-flex justify-content-end gap-2 p-0">
+                <div className="w-full md:w-1/2 text-left md:text-right">
+                  <div>
+                    <ul className="flex justify-start md:justify-end gap-2 p-0 list-none m-0">
                       <li>
                         <img src="/assets/img/icons/card-01.svg" alt="Img" />
                       </li>
@@ -888,40 +504,42 @@ const Home2Footer = ({ categories: propCategories }) => {
         </footer>
       )}
       {/* Mobile Footer */}
-      <footer className="mobile-footer d-md-none">
-        <div style={{ padding: "3px" }}>
-          <div className="row text-center">
-            <div className="col-3 footer-item">
+      <footer className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50 md:!hidden">
+        <div className="p-[3px]">
+          <div className="flex text-center">
+            <div className="w-1/4 flex flex-col items-center justify-center text-[11px] text-gray-600 hover:text-[#822BD4] py-1">
               <Link to="/">
-                <img src="/assets/home.png" alt="home" loading="lazy" />
+                <img src="/assets/home.png" alt="home" loading="lazy" className="mx-auto mb-1 h-6 w-6 object-contain" />
               </Link>
               <div>Home</div>
             </div>
 
-            <div className="col-3 footer-item">
+            <div className="w-1/4 flex flex-col items-center justify-center text-[11px] text-gray-600 hover:text-[#822BD4] py-1">
               <Link to="/mobile-categories">
                 <img
                   src="/assets/bullets.png"
                   alt="Categories"
                   loading="lazy"
+                  className="mx-auto mb-1 h-6 w-6 object-contain"
                 />
               </Link>
               <div>Categories</div>
             </div>
 
-            <div className="col-3 footer-item">
-              <div onClick={handleProfileClick} style={{ cursor: "pointer" }}>
-                <img src="/assets/user.png" alt="Profile" loading="lazy" />
+            <div className="w-1/4 flex flex-col items-center justify-center text-[11px] text-gray-600 hover:text-[#822BD4] py-1">
+              <div onClick={handleProfileClick} className="cursor-pointer">
+                <img src="/assets/user.png" alt="Profile" loading="lazy" className="mx-auto mb-1 h-6 w-6 object-contain" />
               </div>
               <div>Profile</div>
             </div>
 
-            <div className="col-3 footer-item">
+            <div className="w-1/4 flex flex-col items-center justify-center text-[11px] text-gray-600 hover:text-[#822BD4] py-1">
               <Link to="/cart">
                 <img
                   src="/assets/shopping-cart.png"
                   alt="Cart"
                   loading="lazy"
+                  className="mx-auto mb-1 h-6 w-6 object-contain"
                 />
               </Link>
               <div>Cart</div>

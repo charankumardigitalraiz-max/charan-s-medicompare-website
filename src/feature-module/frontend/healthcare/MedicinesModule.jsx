@@ -6,6 +6,7 @@ import { getImageUrl } from "../../../utils/index";
 import CompareModal from "../../../components/CompareModal";
 import SEOHelmet from "../../../components/SEOHelmet";
 import { useResponsive } from "../../../hooks";
+import DynamicCategorySections from "../../../components/home/DynamicCategorySections";
 
 const MedicinesModule = ({
   imgUrl,
@@ -229,179 +230,29 @@ const MedicinesModule = ({
         </section>
       )}
 
-      {/* Trending Now */}
-      {popularProducts && popularProducts.length > 0 && (
-        <section
-          className="container-fluid px-3 py-[16px] pb-[24px] my-[12px] bg-[rgba(128,89,202,0.06)] border border-solid border-[rgba(128,89,202,0.12)] rounded-[24px] shadow-[0_12px_32px_-4px_rgba(128,89,202,0.08)] relative overflow-hidden"
-        >
-          <div className="d-flex align-items-center justify-content-between flex-wrap result-wrap gap-3 mb-3">
-            <div
-              className="inline-block p-[4px_10px] bg-gradient-to-r from-[rgba(125,46,255,0.1)] to-[rgba(59,130,246,0.1)] rounded-[50px] text-[14px] font-semibold text-[#8059ca]"
-            >
-              <i className="fas fa-bolt mr-[8px]"></i>
-              Trending Now
-            </div>
-
-            <div className="d-flex align-items-center flex-wrap gap-3">
-              <Link
-                to={`/${currentService}/all`}
-                className={`top-vendor-badge flex items-center justify-center font-semibold hover:bg-[#8059ca] hover:text-white ${isMobile ? "p-[8px] rounded-full w-[36px] h-[36px]" : "p-[8px_20px] rounded-[50px] w-auto h-auto"}`}
-              >
-                {isMobile ? (<i className="fas fa-arrow-right"></i>) : (<><i className="fas fa-arrow-right"></i> View All</>)}
-              </Link>
-            </div>
-          </div>
-          <div
-            className={`doctor-slider-one owl-theme pb-3 aos ${extraSmallScreen ? "px-3" : ""
-              }`}
-          >
-            <Slider {...supersaving}>
-              {popularProducts.map((item, index) => {
-                const DiscusedPrice = item?.tablet?.price;
-                const firstVendor =
-                  item.vendordetails ||
-                  (item.vendors && item.vendors[0] ? item.vendors[0] : null) ||
-                  (item.vendor ? item.vendor : null);
-                const normalizedItem = {
-                  ...item,
-                  tabletdetails: item.tabletdetails || item.tablet || item,
-                  vendordetails: firstVendor
-                    ? {
-                      ...firstVendor,
-                      vendorId:
-                        firstVendor.vendorId ||
-                        firstVendor._id ||
-                        firstVendor.id,
-                      name:
-                        firstVendor.name ||
-                        firstVendor.vendorName ||
-                        firstVendor?.bussinessdetails?.name ||
-                        "",
-                      price:
-                        firstVendor.price ||
-                        firstVendor.matchedVariantPrice ||
-                        firstVendor.matchedPrice ||
-                        firstVendor.mrp ||
-                        firstVendor.sellingPrice ||
-                        DiscusedPrice ||
-                        0,
-                    }
-                    : null,
-                  variants:
-                    item.variants ||
-                    item.tablet?.variant ||
-                    item.tabletdetails?.variant ||
-                    [],
-                };
-                const variant = Array.isArray(normalizedItem?.variants)
-                  ? normalizedItem.variants[0]
-                  : normalizedItem?.variants;
-                return (
-                  <div key={index} className="slider-card-wrapper">
-                    <ProductCard
-                      item={normalizedItem}
-                      variant={variant}
-                      imgUrl={imgUrl}
-                      onProductClick={handleProductClick}
-                      onCompareClick={handleCompareClick}
-                      onVendorClick={handleVendorClick}
-                      maxStock={variant?.stock || 999}
-                      isMobile={isMobile}
-                    />
-                  </div>
-                );
-              })}
-            </Slider>
-          </div>
-        </section>
-      )}
-
-      {/* Popular Products */}
-      {trendingProducts && trendingProducts.length > 0 && (
-        <section
-          className="container-fluid px-3 py-[16px] pb-[24px] my-[12px] bg-[rgba(128,89,202,0.06)] border border-solid border-[rgba(128,89,202,0.12)] rounded-[24px] shadow-[0_12px_32px_-4px_rgba(128,89,202,0.08)] relative overflow-hidden"
-        >
-          <div className="d-flex align-items-center justify-content-between flex-wrap result-wrap gap-3 mb-3">
-            <div
-              className="inline-block p-[4px_10px] bg-gradient-to-r from-[rgba(125,46,255,0.1)] to-[rgba(59,130,246,0.1)] rounded-[50px] text-[14px] font-semibold text-[#8059ca]"
-            >
-              <i className="fas fa-bolt mr-[8px]"></i>
-              Popular Products
-            </div>
-
-            <div className="d-flex align-items-center flex-wrap gap-3">
-              <Link
-                to={`/${currentService}/all`}
-                className={`top-vendor-badge flex items-center justify-center font-semibold hover:bg-[#8059ca] hover:text-white ${isMobile ? "p-[8px] rounded-full w-[36px] h-[36px]" : "p-[8px_20px] rounded-[50px] w-auto h-auto"}`}
-              >
-                {isMobile ? (<i className="fas fa-arrow-right"></i>) : (<><i className="fas fa-arrow-right"></i> View All</>)}
-              </Link>
-            </div>
-          </div>
-          <div
-            className={`doctor-slider-one owl-theme pb-3 aos ${extraSmallScreen ? "px-3" : ""
-              }`}
-          >
-            <Slider {...supersaving}>
-              {trendingProducts.map((item, index) => {
-                const DiscusedPrice = item?.tablet?.price;
-                const firstVendor =
-                  item.vendordetails ||
-                  (item.vendors && item.vendors[0] ? item.vendors[0] : null) ||
-                  (item.vendor ? item.vendor : null);
-                const normalizedItem = {
-                  ...item,
-                  tabletdetails: item.tabletdetails || item.tablet || item,
-                  vendordetails: firstVendor
-                    ? {
-                      ...firstVendor,
-                      vendorId:
-                        firstVendor.vendorId ||
-                        firstVendor._id ||
-                        firstVendor.id,
-                      name:
-                        firstVendor.name ||
-                        firstVendor.vendorName ||
-                        firstVendor?.bussinessdetails?.name ||
-                        "",
-                      price:
-                        firstVendor.price ||
-                        firstVendor.matchedVariantPrice ||
-                        firstVendor.matchedPrice ||
-                        firstVendor.mrp ||
-                        firstVendor.sellingPrice ||
-                        DiscusedPrice ||
-                        0,
-                    }
-                    : null,
-                  variants:
-                    item.variants ||
-                    item.tablet?.variant ||
-                    item.tabletdetails?.variant ||
-                    [],
-                };
-                const variant = Array.isArray(normalizedItem?.variants)
-                  ? normalizedItem.variants[0]
-                  : normalizedItem?.variants;
-                return (
-                  <div key={index} className="slider-card-wrapper">
-                    <ProductCard
-                      item={normalizedItem}
-                      variant={variant}
-                      imgUrl={imgUrl}
-                      onProductClick={handleProductClick}
-                      onCompareClick={handleCompareClick}
-                      onVendorClick={handleVendorClick}
-                      maxStock={variant?.stock || 999}
-                      isMobile={isMobile}
-                    />
-                  </div>
-                );
-              })}
-            </Slider>
-          </div>
-        </section>
-      )}
+      {/* Dynamic Products Sections */}
+      <DynamicCategorySections
+        sections={[
+          popularProducts && popularProducts.length > 0 && {
+            _id: "trending-now",
+            title: "Trending Now",
+            products: popularProducts,
+            serviceId: { slug: currentService },
+          },
+          trendingProducts && trendingProducts.length > 0 && {
+            _id: "popular-products",
+            title: "Popular Products",
+            products: trendingProducts,
+            serviceId: { slug: currentService },
+          },
+        ].filter(Boolean)}
+        onProductClick={handleProductClick}
+        onCompareClick={handleCompareClick}
+        onVendorClick={handleVendorClick}
+        imgUrl={imgUrl}
+        currentService={currentService}
+        sliderSettings={supersaving}
+      />
     </>
   );
 };

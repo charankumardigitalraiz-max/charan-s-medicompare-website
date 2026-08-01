@@ -436,7 +436,7 @@ const AmbulanceCheckOut = () => {
       >
         {/* LEFT COLUMN: Main Card */}
         <div
-          className="card shadow-sm"
+        className="bg-white rounded-[12px] shadow-[0_2px_8px_rgba(0,0,0,0.07)]"
           style={{
             width: isMobile || isTablet ? "100%" : "67%",
             borderRadius: "12px",
@@ -472,10 +472,10 @@ const AmbulanceCheckOut = () => {
             </Link>
           </div>
 
-          <div className="row g-3">
+          <div className="flex flex-col gap-3">
             {/* Vendor Details Banner */}
             {rideData?.vendordetails && (
-              <div className="col-12">
+              <div>
                 <div
                   style={{
                     borderRadius: "16px",
@@ -527,7 +527,7 @@ const AmbulanceCheckOut = () => {
             )}
 
             {/* Service & Route Card */}
-            <div className="col-12">
+            <div>
               <div
                 style={{
                   border: "1px solid #e9ecef",
@@ -537,8 +537,8 @@ const AmbulanceCheckOut = () => {
                 }}
               >
                 {/* Service Name & Type */}
-                <div className="d-flex justify-content-between align-items-center mb-3 pb-3" style={{ borderBottom: "1px dashed #e9ecef" }}>
-                  <div className="d-flex align-items-center gap-3">
+                <div className="flex justify-between items-center mb-3 pb-3" style={{ borderBottom: "1px dashed #e9ecef" }}>
+                  <div className="flex items-center gap-3">
                     <div
                       style={{
                         width: "48px",
@@ -568,8 +568,8 @@ const AmbulanceCheckOut = () => {
                       <h5 style={{ margin: 0, fontSize: "16px", fontWeight: "700", color: "#212529", textTransform: "capitalize" }}>
                         {rideData.tabletdetails?.name || "Ambulance Service"}
                       </h5>
-                      <span className="badge mt-1" style={{ background: "#f8f9fa", color: "#495057", fontWeight: "600", fontSize: "11px", padding: "4px 10px", border: "1px solid #dee2e6" }}>
-                        <i className="fas fa-ambulance me-1" style={{ color: "#8059ca" }}></i>
+                      <span className="inline-flex items-center mt-1 px-[10px] py-[4px] rounded text-[11px] font-semibold" style={{ background: "#f8f9fa", color: "#495057", border: "1px solid #dee2e6" }}>
+                        <i className="fas fa-ambulance mr-1" style={{ color: "#8059ca" }}></i>
                         {rideData.tabletdetails?.ambulancetype || "Standard Emergency"}
                       </span>
                     </div>
@@ -578,7 +578,7 @@ const AmbulanceCheckOut = () => {
 
                 {/* Pickup & Drop Timeline Box */}
                 <div style={{ background: "#f8f9fa", borderRadius: "10px", padding: "16px", border: "1px solid #e9ecef", marginBottom: "16px" }}>
-                  <div className="d-flex justify-content-between align-items-center mb-3">
+                  <div className="flex justify-between items-center mb-3">
                     <span style={{ fontSize: "12px", fontWeight: "700", color: "#495057", textTransform: "uppercase", letterSpacing: "0.5px" }}>
                       Pickup & Drop Route
                     </span>
@@ -596,7 +596,7 @@ const AmbulanceCheckOut = () => {
                         cursor: "pointer"
                       }}
                     >
-                      <i className="fas fa-edit me-1"></i> Edit
+                      <i className="fas fa-edit mr-1"></i> Edit
                     </button>
                   </div>
 
@@ -629,9 +629,9 @@ const AmbulanceCheckOut = () => {
                     <h6 style={{ fontSize: "13px", fontWeight: "700", color: "#212529", marginBottom: "10px" }}>
                       Available On-Board Facilities
                     </h6>
-                    <div className="row g-2">
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
                       {rideData.facilitiesdetails.map((facility) => (
-                        <div key={facility._id} className="col-6 col-md-4">
+                        <div key={facility._id}>
                           <div
                             style={{
                               background: "#ffffff",
@@ -652,7 +652,7 @@ const AmbulanceCheckOut = () => {
                             ) : (
                               <i className="fas fa-medkit" style={{ color: "#8059ca", fontSize: "16px" }}></i>
                             )}
-                            <span style={{ fontSize: "12px", fontWeight: "600", color: "#495057" }} className="text-truncate">
+                            <span style={{ fontSize: "12px", fontWeight: "600", color: "#495057" }} className="truncate">
                               {facility?.name || "Facility"}
                             </span>
                           </div>
@@ -677,7 +677,7 @@ const AmbulanceCheckOut = () => {
         >
           {/* Bill Details Card */}
           <div
-            className="card shadow-sm"
+            className="bg-white rounded-[12px] shadow-[0_2px_8px_rgba(0,0,0,0.07)] p-5"
             style={{
               borderRadius: "12px",
               border: "none",
@@ -720,11 +720,11 @@ const AmbulanceCheckOut = () => {
             {emergencyType === "nonemergency" && (
               <div style={{ marginTop: "16px", paddingTop: "14px", borderTop: "1px solid #f1f5f9" }}>
                 <label style={{ fontSize: "12px", fontWeight: "700", color: "#495057", marginBottom: "6px", display: "block" }}>
-                  <i className="fas fa-calendar-alt me-1" style={{ color: "#8059ca" }}></i> Booking Date & Time
+                  <i className="fas fa-calendar-alt mr-1" style={{ color: "#8059ca" }}></i> Booking Date & Time
                 </label>
                 <input
                   type="datetime-local"
-                  className="form-control"
+                  className="w-full px-3 py-2 border border-[#ced4da] rounded-lg text-[13px] outline-none focus:ring-2 focus:ring-[#8059ca]/30"
                   value={bookingDateTime}
                   onChange={(e) => setBookingDateTime(e.target.value)}
                   min={new Date().toISOString().slice(0, 16)}
@@ -737,7 +737,7 @@ const AmbulanceCheckOut = () => {
 
           {/* Payment Method Card */}
           <div
-            className="card shadow-sm"
+            className="bg-white rounded-[12px] shadow-[0_2px_8px_rgba(0,0,0,0.07)] p-5"
             style={{
               borderRadius: "12px",
               border: "none",
@@ -830,7 +830,7 @@ const AmbulanceCheckOut = () => {
             <button
               onClick={handleConfirmBooking}
               disabled={isSubmitting}
-              className="btn w-100"
+              className="w-full py-3 px-5 text-white text-[14px] font-bold rounded-full border-none cursor-pointer transition-all"
               style={{
                 background: isSubmitting ? "#6c757d" : "#8059ca",
                 borderColor: "#8059ca",
@@ -843,7 +843,7 @@ const AmbulanceCheckOut = () => {
             >
               {isSubmitting ? (
                 <>
-                  <span className="spinner-border spinner-border-sm me-2"></span>
+                  <span className="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></span>
                   Processing...
                 </>
               ) : (

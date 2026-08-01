@@ -67,8 +67,8 @@ const HealthcareNavigation = ({ categories: propCategories, isLoading: propLoadi
       setIsMobileView(mobile);
 
       if (mobile) {
-        const mobileHeader = document.querySelector('header.d-lg-none');
-        const mobileSearch = document.querySelector('section.d-lg-none');
+        const mobileHeader = document.querySelector('header.mobile-header');
+        const mobileSearch = document.querySelector('section.mobile-search');
 
         let offset = 62;
         if (mobileHeader) {
@@ -84,7 +84,7 @@ const HealthcareNavigation = ({ categories: propCategories, isLoading: propLoadi
         setHasSearchBar(searchBarVisible);
         setTopOffset(offset);
       } else {
-        const desktopHeader = document.querySelector('header.d-none.d-lg-block');
+        const desktopHeader = document.querySelector('header.header-custom');
         if (desktopHeader) {
           setTopOffset(desktopHeader.offsetHeight);
         } else {

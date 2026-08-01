@@ -7,6 +7,7 @@ import { Autocomplete, useJsApiLoader } from "@react-google-maps/api";
 import CustomDatePicker from "../../../components/ui/CustomDatePicker";
 import Select from "react-select";
 import toast from "react-hot-toast";
+import Pagination from "../../../components/ui/Pagination.jsx";
 
 const libraries = ["places"];
 
@@ -496,9 +497,9 @@ const FamilyMembers = ({ HomeNavigate, BackButton }) => {
 
   return (
     <div className="w-full">
-      <div className="col-lg-12">
+      <div className="w-full">
         {BackButton && (
-          <div className="col-12 mb-3">
+          <div className="w-full mb-3">
             <BackButton />
           </div>
         )}
@@ -558,17 +559,17 @@ const FamilyMembers = ({ HomeNavigate, BackButton }) => {
 
         {/* Family Members List */}
         {isLoadingMembers ? (
-          <div className="text-center py-5">
-            <div className="spinner-border text-primary" role="status">
-              <span className="visually-hidden">Loading family members...</span>
+          <div className="text-center py-10 flex justify-center items-center">
+            <div className="animate-spin inline-block w-8 h-8 border-4 border-[#8059ca] border-t-transparent rounded-full" role="status">
+              <span className="sr-only">Loading family members...</span>
             </div>
           </div>
         ) : familyMembers.length > 0 ? (
           <>
-            <div className="row g-4 mb-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
               {familyMembers.map((member) => (
-                <div className="col-md-6 col-12" key={member._id}>
-                  <div className="p-3 border border-slate-100 rounded-2xl bg-white shadow-sm hover:shadow-md flex flex-col justify-between gap-4 h-full transition-all duration-200 ease-in-out">
+                <div className="w-full" key={member._id}>
+                  <div className="p-3 border border-slate-100 rounded-md bg-white shadow-sm hover:shadow-md flex flex-col justify-between gap-4 h-full transition-all duration-200 ease-in-out">
                     {/* Card Header */}
                     <div className="flex justify-between items-start gap-2">
                       <div className="flex items-center gap-3 min-w-0">
@@ -588,7 +589,7 @@ const FamilyMembers = ({ HomeNavigate, BackButton }) => {
                       <div className="flex gap-1.5 shrink-0">
                         <button
                           type="button"
-                          className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-slate-100 transition-colors"
+                          className="w-8 h-8 rounded-full border border-slate-200 flex items-center justify-center hover:bg-slate-100 transition-colors"
                           onClick={() => handleEdit(member)}
                           title="Edit"
                         >
@@ -596,7 +597,7 @@ const FamilyMembers = ({ HomeNavigate, BackButton }) => {
                         </button>
                         <button
                           type="button"
-                          className="w-8 h-8 rounded-full flex items-center justify-center hover:bg-red-50 transition-colors"
+                          className="w-8 h-8 rounded-full border border-slate-200 hover:border-red-200 flex items-center justify-center hover:bg-red-50 transition-colors"
                           onClick={() => handleDelete(member._id)}
                           title="Delete"
                         >
@@ -650,47 +651,7 @@ const FamilyMembers = ({ HomeNavigate, BackButton }) => {
               ))}
             </div>
 
-            {/* Pagination */}
-            {totalPages > 1 && (
-              <div className="pagination dashboard-pagination mt-4">
-                <ul className="flex justify-center items-center gap-1">
-                  <li>
-                    <button
-                      className="page-link"
-                      onClick={() => paginate(currentPage - 1)}
-                      disabled={currentPage === 1}
-                    >
-                      <i className="fa-solid fa-chevron-left" />
-                    </button>
-                  </li>
-
-                  {getPaginationRange().map((item, index) => (
-                    <li key={index}>
-                      {item === "..." ? (
-                        <span className="px-2 text-slate-400 text-[14px]">...</span>
-                      ) : (
-                        <button
-                          className={`page-link ${currentPage === item ? "active" : ""}`}
-                          onClick={() => paginate(item)}
-                        >
-                          {item}
-                        </button>
-                      )}
-                    </li>
-                  ))}
-
-                  <li>
-                    <button
-                      className="page-link"
-                      onClick={() => paginate(currentPage + 1)}
-                      disabled={currentPage === totalPages}
-                    >
-                      <i className="fa-solid fa-chevron-right" />
-                    </button>
-                  </li>
-                </ul>
-              </div>
-            )}
+            <Pagination page={currentPage} totalPages={totalPages} onPageChange={paginate} />
 
             {/* Per page selector */}
             <div className="flex justify-center items-center gap-3 mt-3">

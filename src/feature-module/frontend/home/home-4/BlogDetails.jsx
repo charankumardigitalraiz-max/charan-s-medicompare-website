@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Home2Header from "../../../../components/home/Header-k";
 import Home2Footer from "../../../../components/home/Footer-f";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { axiosInstance } from "../../../../Apiservice";
 import toast from "react-hot-toast";
 import { getImageUrl } from "../../../../utils";
@@ -9,6 +9,7 @@ import PageLoader from "../../../../components/ui/PageLoader.jsx";
 
 const BlogDetailsj = () => {
   const { slug } = useParams();
+  const navigate = useNavigate();
   const [blogs, setBlogs] = useState([]);
   const [bloglist, setbloglist] = useState([]);
   const [isExpanded, setIsExpanded] = useState(false);
@@ -51,131 +52,88 @@ const BlogDetailsj = () => {
 
   return (
     <>
-      <style>
-        {`
-      @media (max-width: 991.98px) {
-        .content {
-          padding: 10px 0 16px;
-        }
-
-        .blog-image img {
-          max-height: 360px;
-        }
-      }
-
-      .blog-image {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: #fafafa;
-        border-radius: 10px;
-        overflow: hidden;
-        min-height: 200px;
-      }
-
-      .blog-image img {
-        width: 100%;
-        height: auto;
-        max-height: 480px;
-        object-fit: contain;
-        object-position: center;
-      }
-    `}
-      </style>
       {loading ? (
         <PageLoader />
       ) : (
         <>
           <Home2Header />
-          <div className="breadcrumb-bar">
-            <div className="container">
-              <div className="row align-items-center inner-banner">
-                <div className="col-md-12 col-12 text-center">
-                  <nav aria-label="breadcrumb" className="page-breadcrumb mb-3">
-                    <ol className="breadcrumb align-items-center mb-2">
-                      <li className="breadcrumb-item">
-                        <Link
-                          to="/"
-                          className="text-decoration-none d-flex align-items-center gap-1"
-                        >
-                          <i className="isax isax-home-15"></i>
-                          <span>Home</span>
-                        </Link>
-                      </li>
-
-                      <li className="breadcrumb-item">
-                        <Link className="text-decoration-none">Blog</Link>
-                      </li>
-                    </ol>
-
-                    <h1 className="breadcrumb-title fw-semibold">
-                      {blogs?.title}
-                    </h1>
-                  </nav>
-                </div>
+          <div className="relative py-12 overflow-hidden bg-cover bg-center bg-no-repeat" style={{ backgroundImage: "url('/assets/Medicompares Background.png')" }}>
+            <div className="max-w-7xl mx-auto px-4">
+              <div className="relative flex items-center justify-center min-h-[48px] z-10 w-full">
+                <button
+                  onClick={() => navigate(-1)}
+                  className="absolute left-0 inline-flex items-center gap-2 px-4 py-2 bg-white/90 hover:bg-white text-gray-700 hover:text-gray-900 !font-semibold !text-sm !rounded-lg border border-gray-200 shadow-sm transition-all cursor-pointer backdrop-blur-sm"
+                >
+                  <i className="isax isax-arrow-left-2" />
+                  <span>Back</span>
+                </button>
+                <h1 className="text-2xl md:text-3xl font-semibold text-gray-900 text-center px-24">
+                  {blogs?.title}
+                </h1>
               </div>
             </div>
-            <div className="breadcrumb-bg">
+            {/* <div className="absolute inset-0 pointer-events-none">
               <img
                 src="/assets/img/bg/breadcrumb-bg-01.png"
                 alt="img"
-                className="breadcrumb-bg-01"
+                className="absolute left-0 bottom-0 max-h-full"
               />
               <img
                 src="/assets/img/bg/breadcrumb-bg-02.png"
                 alt="img"
-                className="breadcrumb-bg-02"
+                className="absolute right-0 top-0 max-h-full"
               />
               <img
                 src="/assets/img/bg/breadcrumb-icon.png"
                 alt="img"
-                className="breadcrumb-bg-03"
+                className="absolute left-10 top-1/4 animate-pulse"
               />
               <img
                 src="/assets/img/bg/breadcrumb-icon.png"
                 alt="img"
-                className="breadcrumb-bg-04"
+                className="absolute right-10 bottom-1/4 animate-pulse"
               />
-            </div>
+            </div> */}
           </div>
-          <div className="content">
-            <div className="container" style={{ transform: "none" }}>
-              <div className="row" style={{ transform: "none" }}>
-                <div className="col-lg-8 col-md-12">
-                  <div className="blog-view">
-                    <h5 className="mb-3">{blogs?.title || "Blog Title"}</h5>
-                    <div className="blog blog-single-post">
-                      <div className="blog-image">
+          <div className="py-12 bg-white">
+            <div className="max-w-7xl mx-auto px-4">
+              <div className="flex flex-wrap -mx-4">
+                <div className="w-full lg:w-2/3 px-4">
+                  <div className="space-y-6">
+                    {/* <h5 className="text-2xl font-bold text-gray-955 mb-3">{blogs?.title || "Blog Title"}</h5> */}
+                    <div className="bg-white rounded-xl border border-gray-150 overflow-hidden shadow-sm p-4 md:p-6">
+                      <div className="w-full flex items-center justify-center bg-gray-50 rounded-xl overflow-hidden min-h-[200px] mb-6">
                         <img
                           alt="blog-image"
                           src={getImageUrl(blogs?.files?.[0])}
-                          className="img-fluid"
+                          className="w-full h-auto max-h-[480px] max-lg:max-h-[360px] object-contain object-center"
                         />
                       </div>
-                      <div className="blog-info d-md-flex align-items-center justify-content-between flex-wrap">
-                        <div className="post-left">
-                          <ul>
+                      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-6 border-b border-gray-100 pb-4">
+                        <div className="flex items-center gap-4">
+                          <ul className="flex items-center gap-4 text-sm text-gray-500">
                             <li>
-                              <span className="badge badge-dark fs-14 fw-medium">
+                              <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-gray-900 text-white">
                                 {blogs?.category?.name || "Health Tips"}
                               </span>
                             </li>
-                            <li>
+                            <li className="flex items-center gap-1.5">
                               <i className="isax isax-calendar" />
-                              {new Date(blogs?.createdAt).toLocaleDateString(
-                                "en-US",
-                                {
-                                  day: "numeric",
-                                  month: "short",
-                                  year: "numeric",
-                                },
-                              ) || ""}
+                              <span>
+                                {new Date(blogs?.createdAt).toLocaleDateString(
+                                  "en-US",
+                                  {
+                                    day: "numeric",
+                                    month: "short",
+                                    year: "numeric",
+                                  },
+                                ) || ""}
+                              </span>
                             </li>
                           </ul>
                         </div>
                       </div>
-                      <div className="blog-content">
+                      <div className="prose max-w-none text-gray-750 leading-relaxed">
                         <p>
                           {countWords(blogs?.description) > 200 && !isExpanded
                             ? `${blogs?.description?.split(/\s+/).slice(0, 200).join(" ")}...`
@@ -184,16 +142,7 @@ const BlogDetailsj = () => {
                         {countWords(blogs?.description) > 200 && (
                           <button
                             onClick={toggleExpanded}
-                            style={{
-                              background: "none",
-                              border: "none",
-                              color: "#1e3a8a",
-                              cursor: "pointer",
-                              fontSize: "14px",
-                              fontWeight: "600",
-                              padding: "4px 0",
-                              textDecoration: "underline",
-                            }}
+                            className="text-blue-900 hover:text-blue-700 font-semibold text-sm underline py-1 bg-none border-none cursor-pointer"
                           >
                             {isExpanded ? "View Less" : "View More"}
                           </button>
@@ -202,31 +151,13 @@ const BlogDetailsj = () => {
                     </div>
                   </div>
                 </div>
-                <div
-                  className="col-lg-4 col-md-12 sidebar-right theiaStickySidebar"
-                  style={{
-                    position: "relative",
-                    overflow: "visible",
-                    boxSizing: "border-box",
-                    minHeight: 1,
-                  }}
-                >
-                  <div
-                    className="theiaStickySidebar"
-                    style={{
-                      paddingTop: 0,
-                      paddingBottom: 1,
-                      position: "static",
-                      transform: "none",
-                      top: 0,
-                      left: "982.556px",
-                    }}
-                  >
-                    <div className="card post-widget">
-                      <div className="card-body">
-                        <h5 className="mb-3">Latest Blogs</h5>
+                <div className="w-full lg:w-1/3 px-4 mt-8 lg:mt-0">
+                  <div className="lg:sticky lg:top-6 space-y-6">
+                    <div className="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden">
+                      <div className="p-6">
+                        <h5 className="text-lg font-bold text-gray-900 mb-4">Latest Blogs</h5>
                         <ul
-                          className="latest-posts"
+                          className="space-y-4"
                           style={{
                             maxHeight: bloglist?.length > 6 ? "300px" : "auto",
                             overflowY:
@@ -235,18 +166,18 @@ const BlogDetailsj = () => {
                           }}
                         >
                           {bloglist?.map((blog, index) => (
-                            <li key={index}>
-                              <div className="post-thumb">
+                            <li key={index} className="flex gap-4 items-center">
+                              <div className="w-20 h-20 flex-shrink-0 overflow-hidden rounded-lg bg-gray-100">
                                 <Link to={`/blog-details/${blog.slug}`}>
                                   <img
-                                    className="img-fluid"
+                                    className="w-full h-full object-cover"
                                     src={getImageUrl(blog.files?.[0])}
                                     alt={blog.title}
                                   />
                                 </Link>
                               </div>
-                              <div className="post-info">
-                                <p>
+                              <div className="flex-1 min-w-0 space-y-1">
+                                <p className="text-xs text-gray-500">
                                   {new Date(blog.createdAt).toLocaleDateString(
                                     "en-US",
                                     {
@@ -256,7 +187,7 @@ const BlogDetailsj = () => {
                                     },
                                   )}
                                 </p>
-                                <h4>
+                                <h4 className="text-sm font-semibold text-gray-900 hover:text-blue-600 line-clamp-2 transition-colors">
                                   <Link to={`/blog-details/${blog.slug}`}>
                                     {blog.title}
                                   </Link>
@@ -264,7 +195,7 @@ const BlogDetailsj = () => {
                                 <h4>
                                   <Link
                                     to={`/blog-details/${blog.slug}`}
-                                    className="badge badge-light text-dark rounded"
+                                    className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-800 hover:bg-gray-200 transition-colors mt-1"
                                   >
                                     {blog.category?.name}
                                   </Link>
@@ -275,63 +206,12 @@ const BlogDetailsj = () => {
                         </ul>
                       </div>
                     </div>
-                    <div
-                      className="resize-sensor"
-                      style={{
-                        position: "absolute",
-                        inset: 0,
-                        overflow: "hidden",
-                        zIndex: -1,
-                        visibility: "hidden",
-                      }}
-                    >
-                      <div
-                        className="resize-sensor-expand"
-                        style={{
-                          position: "absolute",
-                          left: 0,
-                          top: 0,
-                          right: 0,
-                          bottom: 0,
-                          overflow: "hidden",
-                          zIndex: -1,
-                          visibility: "hidden",
-                        }}
-                      >
-                        <div
-                          style={{
-                            position: "absolute",
-                            left: 0,
-                            top: 0,
-                            transition: "all",
-                            width: 450,
-                            height: 1138,
-                          }}
-                        />
+                    <div className="absolute inset-0 overflow-hidden -z-10 invisible pointer-events-none">
+                      <div className="absolute inset-0 overflow-hidden -z-10 invisible">
+                        <div className="absolute left-0 top-0 transition-all w-[450px] h-[1138px]" />
                       </div>
-                      <div
-                        className="resize-sensor-shrink"
-                        style={{
-                          position: "absolute",
-                          left: 0,
-                          top: 0,
-                          right: 0,
-                          bottom: 0,
-                          overflow: "hidden",
-                          zIndex: -1,
-                          visibility: "hidden",
-                        }}
-                      >
-                        <div
-                          style={{
-                            position: "absolute",
-                            left: 0,
-                            top: 0,
-                            transition: "0s",
-                            width: "200%",
-                            height: "200%",
-                          }}
-                        />
+                      <div className="absolute inset-0 overflow-hidden -z-10 invisible">
+                        <div className="absolute left-0 top-0 transition-[0s] w-[200%] h-[200%]" />
                       </div>
                     </div>
                   </div>

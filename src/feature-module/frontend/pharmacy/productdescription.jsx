@@ -2449,7 +2449,7 @@ const ProductDescription = () => {
       <div
         key={vendor._id || vendor.vendorId || index}
         onClick={() => handleVendorClick(vendor)}
-        className="p-[10px_12px] border border-[#e5e7eb] rounded-sm mb-2 bg-white transition-all duration-200 flex flex-wrap items-start gap-2 w-full last:mb-0 hover:border-[#8059ca] hover:shadow-sm cursor-pointer"
+        className="p-[10px_12px] !border !border-[#e5e7eb] !rounded-sm mb-2 bg-white transition-all duration-200 flex flex-wrap items-start gap-2 w-full last:mb-0 hover:border-[#8059ca] hover:shadow-sm cursor-pointer"
       >
         {bookingType === "rentals_addtocarts" ? (
           <div
@@ -2474,7 +2474,7 @@ const ProductDescription = () => {
                   className="flex items-center justify-between gap-1 flex-wrap"
                 >
                   <div
-                    className="text-[11px] font-semibold text-[#1a1d26] cursor-pointer overflow-hidden text-ellipsis whitespace-nowrap hover:text-[#8059ca] transition-colors duration-200 font-sans max-w-full"
+                    className="!text-[14px] !font-semibold !text-[#1a1d26] cursor-pointer overflow-hidden text-ellipsis whitespace-nowrap hover:text-[#8059ca] transition-colors duration-200 font-sans max-w-full"
                     onClick={(e) => {
                       e.stopPropagation();
                       handleVendorClick(vendor);
@@ -3042,7 +3042,7 @@ const ProductDescription = () => {
 
                           <div className="flex gap-2">
                             <div
-                              className="w-9 h-9 !rounded-full bg-slate-100/80 hover:bg-purple-50 flex items-center justify-center transition-all duration-150 shadow-[0_2px_4px_rgba(0,0,0,0.06)] border border-slate-200/60 cursor-pointer"
+                              className="w-9 h-9 !rounded-full bg-slate-100/80 hover:bg-purple-50 flex items-center justify-center transition-all duration-150 !shadow-[0_2px_4px_rgba(0,0,0,0.06)] !border border-slate-200/60 cursor-pointer"
                               onClick={() => setShowShareModal(true)}
                               data-tooltip-id="global-tooltip"
                               data-tooltip-content="Share"
@@ -3050,7 +3050,7 @@ const ProductDescription = () => {
                               <FaRegShareSquare color="#374151" size={18} />
                             </div>
                             <div
-                              className="w-9 h-9 !rounded-full bg-slate-100/80 hover:bg-red-50 flex items-center justify-center transition-all duration-150 shadow-[0_2px_4px_rgba(0,0,0,0.06)] border border-slate-200/60 cursor-pointer"
+                              className="w-9 h-9 !rounded-full !bg-slate-100/80 !hover:bg-red-50 flex items-center justify-center transition-all duration-150 !shadow-[0_2px_4px_rgba(0,0,0,0.06)] !border border-slate-200/60 cursor-pointer"
                               data-tooltip-id="global-tooltip"
                               data-tooltip-content="Wishlist"
                               onClick={() =>
@@ -3067,7 +3067,7 @@ const ProductDescription = () => {
                               )}
                             </div>
                             <div
-                              className="w-9 h-9 !rounded-full bg-slate-100/80 hover:bg-blue-50 flex items-center justify-center transition-all duration-150 shadow-[0_2px_4px_rgba(0,0,0,0.06)] border border-slate-200/60 cursor-pointer"
+                              className="w-9 h-9 !rounded-full !bg-slate-100/80 !hover:bg-blue-50 flex items-center justify-center transition-all duration-150 !shadow-[0_2px_4px_rgba(0,0,0,0.06)] !border border-slate-200/60 cursor-pointer"
                               data-tooltip-id="global-tooltip"
                               data-tooltip-content="Compare"
                               onClick={(e) => {
@@ -4372,26 +4372,10 @@ const ProductDescription = () => {
                                 <div className="flex justify-center mt-4">
                                   <a
                                     href="#related-products-section"
-                                    className="cta-button"
-                                    style={{
-                                      width: "200px",
-                                      background:
-                                        "linear-gradient(135deg, #a878f1, #8059ca, #7541a8)",
-                                      color: "white",
-                                      padding: "5px",
-                                      textAlign: "center",
-                                    }}
+                                    className="w-[200px] flex items-center rounded-md justify-center gap-1 bg-gradient-to-br from-[#a878f1] via-[#8059ca] to-[#7541a8] text-white text-[14px] font-medium py-[5px] px-3 rounded-lg hover:opacity-90 transition-opacity duration-200"
                                   >
-                                    <span
-                                      className="mx-1"
-                                      style={{ fontSize: "14px" }}
-                                    >
-                                      Smarter Substitutes
-                                    </span>
-                                    <i
-                                      className="fa-solid fa-arrow-right"
-                                      style={{ fontSize: "12px" }}
-                                    ></i>
+                                    <span className="mx-1 text-[14px]">Smarter Substitutes</span>
+                                    <i className="fa-solid fa-arrow-right text-[12px]"></i>
                                   </a>
                                 </div>
                               )}
@@ -4415,13 +4399,13 @@ const ProductDescription = () => {
                         </div>
                       </div>
 
-                      <div className="min-w-0">
-                        <div className="border border-gray-200 rounded-sm p-2">
+                      <div className="w-full">
+                        <div className="!border !border-gray-200 !rounded-sm p-4 bg-white shadow-sm">
                           {/* pincode */}
                           <div className="flex flex-wrap gap-2 items-center mb-3">
                             <div className="flex-1">
                               {isLoaded ? (
-                                <div style={{ position: "relative" }}>
+                                <div className="relative">
                                   <Autocomplete
                                     onLoad={(autocomplete) =>
                                       (autocompleteRef.current = autocomplete)
@@ -4465,15 +4449,8 @@ const ProductDescription = () => {
                                           handlePincodeCheck(e);
                                         }
                                       }}
-                                      className="form-control"
-                                      style={{
-                                        padding: "6px 12px",
-                                        paddingRight: searchQuery.trim() !== "" ? "30px" : "12px",
-                                        border: "1px solid #c9c9c9ad",
-                                        borderRadius: "6px",
-                                        fontSize: "14px",
-                                        width: "100%",
-                                      }}
+                                      className={`form-control h-[38px] w-full border border-[#c9c9c9ad] rounded-[6px] text-[14px] pl-3 focus:outline-none focus:ring-1 focus:ring-[#8059ca] focus:border-[#8059ca] ${searchQuery.trim() !== "" ? "pr-8" : "pr-3"
+                                        }`}
                                     />
                                   </Autocomplete>
                                   {searchQuery.trim() !== "" && (
@@ -4481,18 +4458,7 @@ const ProductDescription = () => {
                                       type="button"
                                       onClick={handlePincodeClear}
                                       disabled={loadingVendors}
-                                      style={{
-                                        position: "absolute",
-                                        right: "10px",
-                                        top: "50%",
-                                        transform: "translateY(-50%)",
-                                        background: "none",
-                                        border: "none",
-                                        padding: 0,
-                                        cursor: "pointer",
-                                        color: "#aaa",
-                                        zIndex: 5
-                                      }}
+                                      className="absolute right-2.5 top-1/2 -translate-y-1/2 bg-transparent border-none p-0 cursor-pointer text-[#aaa] z-[5]"
                                     >
                                       <i className="fas fa-times" />
                                     </button>
@@ -4502,14 +4468,8 @@ const ProductDescription = () => {
                                 <input
                                   type="text"
                                   placeholder="Loading maps..."
-                                  className="form-control"
+                                  className="form-control h-[38px] w-full border border-[#c9c9c9ad] rounded-[6px] text-[14px] px-3 bg-gray-50 cursor-not-allowed"
                                   disabled
-                                  style={{
-                                    padding: "6px 12px",
-                                    border: "1px solid #c9c9c9ad",
-                                    borderRadius: "6px",
-                                    fontSize: "14px",
-                                  }}
                                 />
                               )}
                             </div>
@@ -4535,7 +4495,7 @@ const ProductDescription = () => {
                           </div>
 
                           {/* vendors */}
-                          <div className="relative">
+                          <div className="relative" style={{ maxHeight: "260px", overflowY: "auto", overflowX: "hidden" }}>
                             {loadingVendors && (
                               <div className="absolute inset-0 flex items-center justify-center bg-white/80 z-10 rounded-lg">
                                 <div
@@ -4588,11 +4548,11 @@ const ProductDescription = () => {
                 </div>
 
                 {tablet?.points && tablet.points.length > 0 && (
-                  <div className="bg-white rounded-2xl shadow-sm rounded-3 mb-4 mt-4 p-3" style={{ background: "#fcfaff", border: "1px solid #f2ebfa" }}>
+                  <div className="bg-white !rounded-sm shadow-sm mb-4 mt-4 p-3" style={{ background: "#fcfaff", border: "1px solid #f2ebfa" }}>
                     <h5 className="font-bold mb-3 flex items-center gap-2" style={{ fontSize: "15px", color: "#8059ca" }}>
                       <i className="fas fa-handshake-alt"></i>Interactions
                     </h5>
-                    <div className="flex flex-wrap gap-3 drug-interactions-row">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mt-2">
                       {tablet.points?.slice().map((item, index) => {
                         const key = Object.keys(item)[0];
                         const label = key
@@ -4610,12 +4570,9 @@ const ProductDescription = () => {
                           : "Points";
                         const value = item[key];
                         return (
-                          <div key={index} className="md:w-1/3 w-full drug-interaction-col">
+                          <div key={index} className="w-full">
                             <div
-                              className="p-3 rounded bg-white border-l-[3px] border-l-[#8059ca] border border-gray-100 drug-interaction-card"
-                              style={{
-                                borderLeft: "3px solid #8059ca"
-                              }}
+                              className="p-4 !rounded-sm bg-white !border !border-gray-100  !shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:shadow-[0_4px_12px_rgba(0,0,0,0.08)] !transition-all !duration-300 h-full flex flex-col justify-between"
                             >
                               <div>
                                 <div className="font-bold text-gray-900 mb-1 capitalize" style={{ fontSize: "12px" }}>

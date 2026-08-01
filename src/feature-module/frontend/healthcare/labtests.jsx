@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { SectionHeader } from "../../../components/ui/index.js";
 import { Link, useNavigate } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Autoplay } from "swiper/modules";
@@ -454,80 +455,39 @@ const labtests = ({
       <SEOHelmet page="labtests" />
       {packages && packages.length > 0 && (
         <section
-          className="py-4 mx-2"
+          className="py-4 mx-2 bg-cover bg-center bg-no-repeat rounded-[16px]"
           style={{
             backgroundImage: "url('/assets/Medicompares%20Background.png')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
-            borderRadius: "16px",
           }}
         >
-          <div className="container-fluid">
-            <div className="d-flex align-items-center justify-content-center flex-wrap result-wrap gap-3 mb-4" style={{ position: "relative" }}>
-              <div className="mb-2 d-flex flex-column align-items-center text-center gap-1">
-                <div className="d-flex align-items-center justify-content-center gap-2 flex-wrap">
+          <div className="container-fluid px-3">
+            <div className="!flex !items-center !justify-center !flex-wrap gap-3 !mb-4 !relative">
+              <div className="!mb-2 !flex !flex-col !items-center !text-center !gap-1">
+                <div className="!flex !items-center !justify-center !gap-2 !flex-wrap">
                   <span
-                    style={{
-                      display: "inline-flex",
-                      alignItems: "center",
-                      gap: "7px",
-                      background: "linear-gradient(135deg, #6a0dad 0%, #9b59b6 100%)",
-                      color: "#fff",
-                      borderRadius: "30px",
-                      padding: "5px 16px 5px 10px",
-                      fontSize: "12px",
-                      fontWeight: "600",
-                      letterSpacing: "0.5px",
-                      textTransform: "uppercase",
-                      boxShadow: "0 2px 10px rgba(106,13,173,0.25)",
-                    }}
+                    className="!inline-flex !items-center !gap-[7px] bg-gradient-to-br from-[#6a0dad] to-[#9b59b6] !text-white !rounded-[30px] !py-[5px] !pr-[16px] !pl-[10px] !text-[12px] !font-semibold !tracking-[0.5px] !uppercase !shadow-[0_2px_10px_rgba(106,13,173,0.25)]"
                   >
-                    <i className="fas fa-bolt" style={{ fontSize: "11px" }}></i>
+                    <i className="fas fa-bolt !text-[11px]"></i>
                     Health Packages
                   </span>
                 </div>
                 <span
-                  style={{
-                    fontSize: "14px",
-                    color: "#475569",
-                    fontWeight: "500",
-                    marginTop: "6px",
-                    display: "block",
-                    letterSpacing: "0.2px",
-                    lineHeight: "1.4",
-                    maxWidth: "500px",
-                    opacity: 0.9,
-                  }}
+                  className="!text-[14px] !text-[#475569] !font-medium !mt-[6px] !block !tracking-[0.2px] !leading-[1.4] !max-w-[500px] !opacity-90"
                 >
                   Compare all health packages side-by-side to choose the best option
                 </span>
               </div>
 
               <div
-                className="d-flex align-items-center justify-content-center gap-3 mb-2"
-                style={{
-                  position: isMobile ? "static" : "absolute",
-                  right: "15px",
-                  top: "50%",
-                  transform: isMobile ? "none" : "translateY(-50%)",
-                  width: isMobile ? "100%" : "auto",
-                }}
+                className={`!flex !items-center !justify-center !gap-3 !mb-2 ${isMobile
+                  ? "!static !w-full"
+                  : "!absolute !right-[15px] !top-1/2 !-translate-y-1/2 !w-auto"
+                  }`}
               >
                 <Link
                   to="/view-all-packages"
-                  className="top-vendor-badge"
-                  style={{
-                    padding: isMobile ? "6px 18px" : "8px 20px",
-                    borderRadius: "50px",
-                    width: "auto",
-                    height: "auto",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontSize: "12px",
-                    fontWeight: "600",
-                  }}
+                  className={`inline-flex items-center justify-center !font-semibold !text-[12px] !text-[#8059ca] hover:!bg-[#8059ca] hover:!text-white transition-all duration-300 !rounded-[50px] !w-auto !h-auto bg-gradient-to-br from-[rgba(125,46,255,0.1)] to-[rgba(59,130,246,0.1)] ${isMobile ? "!py-[6px] !px-[18px]" : "!py-[8px] !px-[20px]"
+                    }`}
                   onClick={(e) => {
                     if (!isLoggedIn) {
                       e.preventDefault();
@@ -544,20 +504,13 @@ const labtests = ({
 
             {packages && packages.length > 0 && compareItems.length > 0 && (
               <div
-                className="compare-bar mb-4"
-                style={{
-                  position: "relative",
-                  width: isMobile ? "95%" : "80%",
-                  margin: "16px auto",
-                  padding: isMobile ? "12px 48px 12px 16px" : "10px 15px",
-                  backgroundColor: "#8059ca",
-                  borderRadius: "12px",
-                  boxShadow: "0 6px 20px rgba(128, 89, 202, 0.3)",
-                  zIndex: "10",
-                }}
+                className={`!relative !mx-auto !my-[16px] !bg-[#8059ca] !rounded-[12px] !shadow-[0_6px_20px_rgba(128,89,202,0.3)] !z-10 !mb-4 ${isMobile
+                  ? "!w-[95%] !py-[12px] !pr-[48px] !pl-[16px]"
+                  : "!w-[80%] !py-[10px] !px-[15px]"
+                  }`}
               >
                 <div
-                  className="compare-bar-content"
+                  className="!cursor-pointer !text-white !flex !items-center !justify-between !w-full"
                   onClick={() => {
                     if (compareItems.length < 2) {
                       toast.error("Select at least 2 packages to compare");
@@ -565,67 +518,28 @@ const labtests = ({
                       handleCompareBar();
                     }
                   }}
-                  style={{
-                    cursor: "pointer",
-                    color: "#ffffff",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    width: "100%",
-                  }}
                 >
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "10px",
-                      width: "100%",
-                    }}
-                  >
+                  <div className="!flex !items-center !gap-[10px] !w-full">
                     <span
-                      className="compare-label"
-                      style={{
-                        color: "#ffffff",
-                        fontWeight: "750",
-                        fontSize: isMobile ? "12px" : "14px",
-                        letterSpacing: "0.5px",
-                        textTransform: "uppercase",
-                      }}
+                      className={`!text-white !font-extrabold !tracking-[0.5px] !uppercase ${isMobile ? "!text-[12px]" : "!text-[14px]"
+                        }`}
                     >
                       Compare
                     </span>
-                    <div
-                      className="compare-items"
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "6px",
-                        flexWrap: "wrap",
-                      }}
-                    >
-                      <div className="d-flex flex-wrap align-items-center" style={{ gap: "4px" }}>
+                    <div className="!flex !items-center !gap-[6px] !flex-wrap">
+                      <div className="!flex !flex-wrap !items-center !gap-[4px]">
                         {compareItems.map((itemId, index) => {
                           const pkg = packages.find((p) => p._id === itemId);
                           return (
-                            <div key={index} className="compare-item" style={{ display: "inline-flex", alignItems: "center" }}>
+                            <div key={index} className="!inline-flex !items-center">
                               <span
-                                className="item-name"
-                                style={{
-                                  color: "#ffffff",
-                                  fontSize: isMobile ? "11px" : "13px",
-                                  fontWeight: "500",
-                                }}
+                                className={`!text-white !font-medium ${isMobile ? "!text-[11px]" : "!text-[13px]"
+                                  }`}
                               >
                                 {pkg?.name || `Item ${index + 1}`}
                               </span>
                               {index < compareItems.length - 1 && (
-                                <span
-                                  className="item-comma"
-                                  style={{
-                                    color: "rgba(255, 255, 255, 0.7)",
-                                    margin: "0 2px",
-                                  }}
-                                >
+                                <span className="!text-white/70 !mx-[2px]">
                                   ,
                                 </span>
                               )}
@@ -634,43 +548,18 @@ const labtests = ({
                         })}
                       </div>
                       <span
-                        className="item-count"
-                        style={{
-                          color: "#ffffff",
-                          fontWeight: "700",
-                          fontSize: "12px",
-                          background: "rgba(255, 255, 255, 0.22)",
-                          padding: "2px 8px",
-                          borderRadius: "20px",
-                          marginLeft: "6px",
-                          whiteSpace: "nowrap",
-                        }}
+                        className="!text-white !font-bold !text-[12px] !bg-white/20 !py-[2px] !px-[8px] !rounded-[20px] !ml-[6px] !whiteSpace-nowrap"
                       >
                         Total ({compareItems.length})
                       </span>
                       {!isMobile && (
-                        <div
-                          className="ms-5 d-none d-lg-block"
-                          style={{
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "5px",
-                          }}
-                        >
-                          <span
-                            style={{
-                              color: "#ffffff",
-                              fontSize: "13px",
-                              fontWeight: "500",
-                            }}
-                          >
+                        <div className="!ml-5 !hidden lg:!flex !items-center !gap-[5px]">
+                          <span className="!text-white !text-[13px] !font-medium">
                             View More
                           </span>
                           <i
-                            className="fas fa-arrow-right"
+                            className="fas fa-arrow-right !text-white !text-[12px]"
                             style={{
-                              color: "#ffffff",
-                              fontSize: "12px",
                               animation: "slideRight 1.5s ease-in-out infinite",
                             }}
                           ></i>
@@ -682,81 +571,38 @@ const labtests = ({
 
                 <button
                   onClick={clearAllCompare}
-                  className="compare-clear-btn"
-                  style={{
-                    position: "absolute",
-                    right: "12px",
-                    top: "50%",
-                    transform: "translateY(-50%)",
-                    background: "rgba(255, 255, 255, 0.2)",
-                    border: "none",
-                    color: "#ffffff",
-                    fontSize: "18px",
-                    width: "28px",
-                    height: "28px",
-                    borderRadius: "50%",
-                    cursor: "pointer",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
+                  className="!absolute !right-[12px] !top-1/2 !-translate-y-1/2 !bg-white/20 !border-none !text-white !text-[18px] !w-[28px] !h-[28px] !rounded-full !cursor-pointer !flex !items-center !justify-center"
                 >
                   ×
                 </button>
               </div>
             )}
 
-            <div className="row" style={{ position: "relative" }}>
+            <div className="!flex !flex-wrap !relative">
               {packages.length > 1 && (
                 <button
-                  className="meq-arrow-btn packages-prev"
+                  className="meq-arrow-btn packages-prev !absolute !left-[-10px] !top-1/2 !-translate-y-1/2 !z-10"
                   aria-label="Previous"
-                  style={{
-                    position: "absolute",
-                    left: "-10px",
-                    top: "50%",
-                    zIndex: 10,
-                  }}
                 >
                   <i className="fas fa-chevron-left"></i>
                 </button>
               )}
-              <div style={{ padding: "0 20px" }}>
+              <div className="!px-[20px] w-full">
                 <Swiper {...swiperSettings}>
                   {packages.map((pkg, index) => {
                     return (
                       <SwiperSlide key={pkg._id || index}>
                         <div
-                          className="px-2 pb-2 h-100"
-                          style={{ display: "flex", flexDirection: "column", cursor: "pointer" }}
+                          className="!px-2 !pb-2 !h-full !flex !flex-col !cursor-pointer"
                           onClick={() => {
                             navigate(`/lab-package/${pkg._id}`);
                           }}
                         >
                           <div
-                            className="card border-0"
-                            style={{
-                              borderRadius: "10px",
-                              backgroundColor: "#ffffff",
-                              boxShadow: "0 2px 8px rgba(0, 0, 0, 0.08)",
-                              transition: "all 0.3s ease",
-                              display: "flex",
-                              flexDirection: "column",
-                              height: "100%",
-                            }}
+                            className="!border-0 !rounded-[10px] !bg-white !shadow-[0_2px_8px_rgba(0,0,0,0.08)] transition-all duration-300 !flex !flex-col !h-full"
                           >
                             <div
-                              style={{
-                                position: "relative",
-                                width: "100%",
-                                paddingTop: "50%",
-                                overflow: "hidden",
-                                background: "#f8f9fa",
-                                borderRadius: "10px 10px 0 0",
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                              }}
+                              className="!relative !w-full !pt-[50%] !overflow-hidden !bg-[#f8f9fa] !rounded-t-[10px] !flex !items-center !justify-center"
                             >
                               <div
                                 onClick={(e) => {
@@ -764,128 +610,45 @@ const labtests = ({
                                   const isChecked = !compareItems.includes(pkg._id);
                                   handleCompareToggle(pkg, isChecked);
                                 }}
-                                className={!compareItems.includes(pkg._id) ? "pulse-compare-btn" : ""}
-                                style={{
-                                  position: "absolute",
-                                  top: "10px",
-                                  right: "10px",
-                                  background: compareItems.includes(pkg._id)
-                                    ? "linear-gradient(135deg, #10b981 0%, #059669 100%)"
-                                    : "linear-gradient(135deg, #f59e0b 0%, #d97706 100%)",
-                                  borderRadius: "30px",
-                                  padding: "3px 14px",
-                                  display: "flex",
-                                  alignItems: "center",
-                                  gap: "6px",
-                                  boxShadow: compareItems.includes(pkg._id)
-                                    ? "0 4px 12px rgba(16, 185, 129, 0.3)"
-                                    : "0 4px 12px rgba(245, 158, 11, 0.4)",
-                                  zIndex: 10,
-                                  border: "1.5px solid #ffffff",
-                                  cursor: "pointer",
-                                  transition: "all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
-                                  transform: compareItems.includes(pkg._id) ? "scale(1.05)" : "scale(1)",
-                                }}
-                                onMouseEnter={(e) => {
-                                  e.currentTarget.style.transform = "scale(1.12) translateY(-2px)";
-                                  e.currentTarget.style.boxShadow = compareItems.includes(pkg._id)
-                                    ? "0 8px 20px rgba(16, 185, 129, 0.45)"
-                                    : "0 8px 20px rgba(245, 158, 11, 0.55)";
-                                }}
-                                onMouseLeave={(e) => {
-                                  e.currentTarget.style.transform = compareItems.includes(pkg._id) ? "scale(1.05)" : "scale(1)";
-                                  e.currentTarget.style.boxShadow = compareItems.includes(pkg._id)
-                                    ? "0 4px 12px rgba(16, 185, 129, 0.3)"
-                                    : "0 4px 12px rgba(245, 158, 11, 0.4)";
-                                }}
+                                className={`!absolute !top-[10px] !right-[10px] !rounded-[30px] !py-[3px] !px-[14px] !flex !items-center !gap-[6px] !z-10 !border-[1.5px] !border-solid !border-white !cursor-pointer transition-all duration-300 ${!compareItems.includes(pkg._id) ? "pulse-compare-btn" : ""
+                                  } ${compareItems.includes(pkg._id)
+                                    ? "bg-gradient-to-br from-[#10b981] to-[#059669] !shadow-[0_4px_12px_rgba(16, 185, 129, 0.3)] !scale-[1.05]"
+                                    : "bg-gradient-to-br from-[#f59e0b] to-[#d97706] !shadow-[0_4px_12px_rgba(245, 158, 11, 0.4)] !scale-100"
+                                  }`}
                                 title="Compare Package"
                               >
                                 <i
-                                  className={compareItems.includes(pkg._id) ? "fa-solid fa-circle-check" : "fa-solid fa-hand-pointer"}
-                                  style={{
-                                    fontSize: "13px",
-                                    color: "#ffffff",
-                                    transform: !compareItems.includes(pkg._id) ? "rotate(90deg)" : "none",
-                                    display: "inline-block",
-                                  }}
+                                  className={`fa-solid ${compareItems.includes(pkg._id) ? "fa-circle-check" : "fa-hand-pointer"
+                                    } !text-[13px] !text-white !inline-block ${!compareItems.includes(pkg._id) ? "!rotate-90" : ""
+                                    }`}
                                 ></i>
                                 <span
-                                  style={{
-                                    fontSize: "11px",
-                                    fontWeight: "800",
-                                    color: "#ffffff",
-                                    textTransform: "uppercase",
-                                    letterSpacing: "0.6px",
-                                  }}
+                                  className="!text-[11px] !font-extrabold !text-white !uppercase !tracking-[0.6px]"
                                 >
                                   {compareItems.includes(pkg._id) ? "Compared" : "Compare"}
                                 </span>
                               </div>
                               {pkg?.files?.[0] ? (
                                 <img
-                                  src={
-                                    pkg?.files?.[0]
-                                      ? getImageUrl(pkg.files[0])
-                                      : "/assets/default.png"
-                                  }
+                                  src={getImageUrl(pkg.files[0])}
                                   alt={pkg.name}
                                   onError={(e) => {
                                     e.target.src = "/assets/default.png";
                                   }}
-                                  style={{
-                                    position: "absolute",
-                                    top: 0,
-                                    left: 0,
-                                    width: "100%",
-                                    height: "100%",
-                                    objectFit: "contain",
-                                  }}
+                                  className="!absolute !top-0 !left-0 !w-full !h-full !object-contain"
                                 />
                               ) : (
                                 <div
-                                  style={{
-                                    position: "absolute",
-                                    top: 0,
-                                    left: 0,
-                                    width: "100%",
-                                    height: "100%",
-                                    display: "flex",
-                                    flexDirection: "column",
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                    background:
-                                      "linear-gradient(135deg, #F8F5FE 0%, #F2EDFE 100%)",
-                                  }}
+                                  className="!absolute !top-0 !left-0 !w-full !h-full !flex !flex-col !items-center !justify-center bg-gradient-to-br from-[#F8F5FE] to-[#F2EDFE]"
                                 >
                                   <div
-                                    style={{
-                                      width: "70px",
-                                      height: "70px",
-                                      border: "2px solid #8059ca",
-                                      borderRadius: "10px",
-                                      display: "flex",
-                                      flexDirection: "column",
-                                      alignItems: "center",
-                                      justifyContent: "center",
-                                      background: "#ffffff",
-                                      padding: "12px",
-                                    }}
+                                    className="!w-[70px] !h-[70px] !border-2 !border-solid !border-[#8059ca] !rounded-[10px] !flex !flex-col !items-center !justify-center !bg-white !p-[12px]"
                                   >
                                     <i
-                                      className="isax isax-health"
-                                      style={{
-                                        fontSize: "35px",
-                                        color: "#8059ca",
-                                      }}
+                                      className="isax isax-health !text-[35px] !text-[#8059ca]"
                                     ></i>
                                     <span
-                                      style={{
-                                        fontSize: "9px",
-                                        color: "#8059ca",
-                                        fontWeight: "600",
-                                        marginTop: "6px",
-                                        letterSpacing: "0.5px",
-                                      }}
+                                      className="!text-[9px] !text-[#8059ca] !font-semibold !mt-[6px] !tracking-[0.5px]"
                                     >
                                       PACKAGE
                                     </span>
@@ -894,110 +657,49 @@ const labtests = ({
                               )}
                             </div>
                             <div
-                              className="card-body"
-                              style={{
-                                padding: "8px 10px",
-                                display: "flex",
-                                flexDirection: "column",
-                                flexGrow: 1,
-                              }}
+                              className="!p-[8px_10px] !flex !flex-col !grow"
                             >
                               <h6
-                                className="mb-1 text-dark"
-                                style={{
-                                  fontSize: "14px",
-                                  fontWeight: "600",
-                                  lineHeight: "1.2",
-                                  textTransform: "capitalize",
-                                }}
+                                className="!mb-1 !text-dark !text-[14px] !font-semibold !leading-[1.2] !capitalize"
                               >
                                 {pkg.name}
                               </h6>
                               {/* Profiles, Tests, and Parameters Details */}
                               <div
-                                className="d-flex gap-1 mb-1"
-                                style={{
-                                  flexWrap: "nowrap",
-                                  overflow: "hidden",
-                                }}
+                                className="!flex !gap-1 !mb-1 !flex-nowrap !overflow-hidden"
                               >
                                 <div
-                                  className="d-flex align-items-center gap-1 flex-shrink-0"
-                                  style={{
-                                    background: "#F8F5FE",
-                                    padding: "3px 6px",
-                                    borderRadius: "5px",
-                                    border: "1px solid rgba(125, 46, 255, 0.2)",
-                                  }}
+                                  className="!flex !items-center !gap-1 !shrink-0 !bg-[#F8F5FE] !py-[3px] !px-[6px] !rounded-[5px] !border !border-solid !border-[#8059ca]/20"
                                 >
                                   <i
-                                    className="isax isax-profile-2user"
-                                    style={{
-                                      color: "#8059ca",
-                                      fontSize: "12px",
-                                    }}
+                                    className="isax isax-profile-2user !text-[12px] !text-[#8059ca]"
                                   ></i>
                                   <span
-                                    style={{
-                                      fontSize: "10px",
-                                      color: "#333",
-                                      fontWeight: "600",
-                                      whiteSpace: "nowrap",
-                                    }}
+                                    className="!text-[10px] !text-[#333] !font-semibold !whiteSpace-nowrap"
                                   >
                                     {pkg.subcategories?.length || 0} Profiles
                                   </span>
                                 </div>
                                 <div
-                                  className="d-flex align-items-center gap-1 flex-shrink-0"
-                                  style={{
-                                    background: "#EAF3FF",
-                                    padding: "3px 6px",
-                                    borderRadius: "5px",
-                                    border: "1px solid rgba(17, 14, 253, 0.2)",
-                                  }}
+                                  className="!flex !items-center !gap-1 !shrink-0 !bg-[#EAF3FF] !py-[3px] !px-[6px] !rounded-[5px] !border !border-solid !border-[#110efd]/20"
                                 >
                                   <i
-                                    className="isax isax-test-tube"
-                                    style={{
-                                      color: "#110EFD",
-                                      fontSize: "12px",
-                                    }}
+                                    className="isax isax-test-tube !text-[12px] !text-[#110EFD]"
                                   ></i>
                                   <span
-                                    style={{
-                                      fontSize: "10px",
-                                      color: "#333",
-                                      fontWeight: "600",
-                                      whiteSpace: "nowrap",
-                                    }}
+                                    className="!text-[10px] !text-[#333] !font-semibold !whiteSpace-nowrap"
                                   >
                                     {pkg.products?.length || 0} Tests
                                   </span>
                                 </div>
                                 <div
-                                  className="d-flex align-items-center gap-1 flex-shrink-0"
-                                  style={{
-                                    background: "#F1FAF3",
-                                    padding: "3px 6px",
-                                    borderRadius: "5px",
-                                    border: "1px solid rgba(4, 189, 108, 0.2)",
-                                  }}
+                                  className="!flex !items-center !gap-1 !shrink-0 !bg-[#F1FAF3] !py-[3px] !px-[6px] !rounded-[5px] !border !border-solid !border-[#04bd6c]/20"
                                 >
                                   <i
-                                    className="isax isax-chart"
-                                    style={{
-                                      color: "#04BD6C",
-                                      fontSize: "12px",
-                                    }}
+                                    className="isax isax-chart !text-[12px] !text-[#04BD6C]"
                                   ></i>
                                   <span
-                                    style={{
-                                      fontSize: "10px",
-                                      color: "#333",
-                                      fontWeight: "600",
-                                      whiteSpace: "nowrap",
-                                    }}
+                                    className="!text-[10px] !text-[#333] !font-semibold !whiteSpace-nowrap"
                                   >
                                     {pkg.parameterss?.length || 0} Parameters
                                   </span>
@@ -1005,25 +707,20 @@ const labtests = ({
                               </div>
 
                               <div
-                                className="report-timee"
-                                style={{
-                                  fontSize: "11px",
-                                  color: "#666",
-                                  marginTop: "4px",
-                                }}
+                                className="!text-[11px] !text-[#666] !mt-[4px]"
                               >
                                 <i className="fa-regular fa-file-lines me-1" />{" "}
                                 Reports in
                                 <strong
-                                  style={{ color: "#333", marginLeft: "2px" }}
+                                  className="!text-[#333] !ml-[2px]"
                                 >
                                   {pkg?.tablets?.[0]?.reportsDuration || "N/A"}
                                 </strong>
                               </div>
 
                               {/* Pricing */}
-                              <div className="mb-1">
-                                <div className="d-flex gap-2 mb-1">
+                              <div className="!mb-1">
+                                <div className="!flex !flex-row !items-center !gap-2 !mb-1">
                                   {(() => {
                                     const itemPrice =
                                       parseFloat(pkg?.price) || 0;
@@ -1060,11 +757,7 @@ const labtests = ({
                                     return (
                                       <>
                                         <span
-                                          style={{
-                                            fontSize: "16px",
-                                            fontWeight: "700",
-                                            color: "#1a1a1a",
-                                          }}
+                                          className="!text-[16px] !font-bold !text-[#1a1a1a]"
                                         >
                                           ₹
                                           {effectivePrice.toLocaleString(
@@ -1076,29 +769,16 @@ const labtests = ({
                                           itemDiscountprice !== itemPrice && (
                                             <>
                                               <span
-                                                style={{
-                                                  color: "#999",
-                                                  textDecoration:
-                                                    "line-through",
-                                                  fontSize: "12px",
-                                                }}
+                                                className="!text-[#999] !line-through !text-[12px]"
                                               >
                                                 ₹{itemPrice}
                                               </span>
                                               {discount > 0 && (
-                                                <div className="discountts">
-                                                  <span
-                                                    style={{
-                                                      backgroundColor:
-                                                        "#F97316",
-                                                      fontSize: "12px",
-                                                      padding: "2px 6px",
-                                                      borderRadius: "4px",
-                                                    }}
-                                                  >
-                                                    {discount}% off
-                                                  </span>
-                                                </div>
+                                                <span
+                                                  className="!bg-[#F97316] !text-white !text-[12px] !py-[2px] !px-[6px] !rounded-[4px] !inline-block"
+                                                >
+                                                  {discount}% off
+                                                </span>
                                               )}
                                             </>
                                           )}
@@ -1107,7 +787,7 @@ const labtests = ({
                                   })()}
                                 </div>
                               </div>
-                              <div className="d-flex w-100 justify-content-center mb-2" style={{ marginTop: "auto", width: "100%" }}>
+                              <div className="!flex !w-full !justify-center !mb-2 !mt-auto">
 
 
                                 <VendorActions
@@ -1134,49 +814,15 @@ const labtests = ({
                                     width: "100%",
                                   }}
                                 />
-
-                                {/* <button
-                                  className="btn"
-                                  style={{
-                                    backgroundColor: "#8059ca",
-                                    color: "#ffffff",
-                                    border: "none",
-                                    borderRadius: "6px",
-                                    padding: "5px 12px",
-                                    fontSize: "11px",
-                                    fontWeight: "600",
-                                    // width: "auto",
-                                    minWidth: "100%",
-                                    marginTop: "auto",
-                                    boxShadow:
-                                      "0 2px 8px rgba(125, 46, 255, 0.25)",
-                                    transition: "all 0.3s ease",
-                                  }}
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    handleBook(pkg, "package");
-                                  }}
-                                >
-                                  Book Now
-                                </button> */}
                               </div>
 
                               {/* Vendor Details */}
                               {pkg?.vendor && (
                                 <div
-                                  style={{
-                                    marginTop: "6px",
-                                    paddingTop: "6px",
-                                    borderTop: "1px solid #0000002e",
-                                  }}
+                                  className="!mt-[6px] !pt-[6px] !border-t !border-solid !border-black/10"
                                 >
                                   <div
-                                    className="d-flex align-items-center gap-2"
-                                    style={{
-                                      padding: "6px 0 0 0",
-                                      cursor: "pointer",
-                                      transition: "all 0.2s ease",
-                                    }}
+                                    className="!flex !items-center !gap-2 !pt-[6px] !pb-0 !px-0 !cursor-pointer transition-all duration-200 hover:!opacity-80 hover:!translate-x-1"
                                     onClick={(e) => {
                                       e.stopPropagation();
                                       const vendorId =
@@ -1210,26 +856,9 @@ const labtests = ({
                                         );
                                       }
                                     }}
-                                    onMouseEnter={(e) => {
-                                      e.currentTarget.style.opacity = "0.8";
-                                      e.currentTarget.style.transform =
-                                        "translateX(4px)";
-                                    }}
-                                    onMouseLeave={(e) => {
-                                      e.currentTarget.style.opacity = "1";
-                                      e.currentTarget.style.transform =
-                                        "translateX(0)";
-                                    }}
                                   >
                                     <div
-                                      style={{
-                                        width: "36px",
-                                        height: "36px",
-                                        borderRadius: "8px",
-                                        overflow: "hidden",
-                                        flexShrink: 0,
-                                        background: "#ffffff",
-                                      }}
+                                      className="!w-[36px] !h-[36px] !rounded-[8px] !overflow-hidden !shrink-0 !bg-white"
                                     >
                                       <img
                                         src={
@@ -1243,101 +872,60 @@ const labtests = ({
                                         }
                                         alt={pkg.vendorName || "Vendor"}
                                         title={pkg.vendorName || "Vendor"}
-                                        style={{
-                                          width: "100%",
-                                          height: "100%",
-                                          objectFit: "contain",
-                                        }}
+                                        className="!w-full !h-full !object-contain"
                                         onError={(e) => {
                                           e.target.src = "/assets/default.png";
                                         }}
                                       />
                                     </div>
                                     <div
-                                      className="flex-grow-1"
-                                      style={{ minWidth: 0 }}
+                                      className="!grow !min-w-0"
                                     >
-                                      <h6
-                                        className="mb-0 text-dark"
-                                        style={{
-                                          fontSize: "11.5px",
-                                          fontWeight: "600",
-                                          margin: 0,
-                                          overflow: "hidden",
-                                          textOverflow: "ellipsis",
-                                          whiteSpace: "nowrap",
-                                        }}
-                                        title={
-                                          pkg.vendor?.businessDetails
-                                            ?.businessName ||
-                                          pkg.vendor?.name ||
-                                          "Vendor"
-                                        }
-                                      >
-                                        {pkg.vendor?.businessDetails?.name ||
-                                          pkg.vendor?.name ||
-                                          "Vendor"}
-                                      </h6>
-                                      {pkg.vendor?.averageRating > 0 && pkg.vendor?.ratingCount > 0 && (
-                                        <div
-                                          style={{
-                                            display: "flex",
-                                            alignItems: "center",
-                                            gap: "4px",
-                                            fontSize: "10px",
-                                            color: "#666",
-                                            marginTop: "2px",
-                                            marginBottom: "4px",
-                                          }}
+                                      <div className="!flex !items-center !justify-between !w-full !gap-2 !mb-[2px]">
+                                        <h6
+                                          className="!mb-0 !text-dark !text-[11.5px] !font-semibold !m-0 !overflow-hidden !text-ellipsis !whiteSpace-nowrap"
+                                          title={
+                                            pkg.vendor?.businessDetails
+                                              ?.businessName ||
+                                            pkg.vendor?.name ||
+                                            "Vendor"
+                                          }
                                         >
-                                          <i
-                                            className="fas fa-star"
-                                            style={{
-                                              color: "#ffc107",
-                                              fontSize: "9px"
-                                            }}
-                                          ></i>
-                                          {/* {pkg?.vendor?.averageRating > 0 && ( */}
-                                          <span style={{ fontWeight: "500" }}>
-                                            {pkg.vendor.averageRating.toFixed(1)}
-                                          </span>
-                                          {/* )} */}
-                                          {/* {pkg?.vendor?.ratingCount > 0 && ( */}
-                                          <span style={{ color: "#999" }}>
-                                            ({pkg.vendor.ratingCount}+)
-                                          </span>
-                                          {/* )} */}
-                                        </div>
-                                      )}
+                                          {pkg.vendor?.businessDetails?.name ||
+                                            pkg.vendor?.name ||
+                                            "Vendor"}
+                                        </h6>
+                                        {pkg.vendor?.averageRating > 0 && pkg.vendor?.ratingCount > 0 && (
+                                          <div
+                                            className="!flex !items-center !gap-[4px] !text-[10px] !text-[#666] !shrink-0"
+                                          >
+                                            <i
+                                              className="fas fa-star !text-[#ffc107] !text-[9px]"
+                                            ></i>
+                                            <span className="!font-medium">
+                                              {pkg.vendor.averageRating.toFixed(1)}
+                                            </span>
+                                            <span className="!text-[#999]">
+                                              ({pkg.vendor.ratingCount}+)
+                                            </span>
+                                          </div>
+                                        )}
+                                      </div>
 
                                       {pkg?.vendor?.businessDetails
                                         ?.address && (
                                           <div
-                                            className="d-flex align-items-center gap-2"
-                                            style={{
-                                              fontSize: "11px",
-                                              color: "#555",
-                                              overflow: "hidden",
-                                            }}
+                                            className="!flex !items-center !gap-2 !text-[11px] !text-[#555] !overflow-hidden"
                                             title={
                                               pkg?.vendor?.businessDetails
                                                 ?.address
                                             }
                                           >
                                             <i
-                                              className="isax isax-location"
-                                              style={{
-                                                fontSize: "12px",
-                                                color: "#8059ca",
-                                              }}
+                                              className="isax isax-location !text-[12px] !text-[#8059ca]"
                                             ></i>
                                             <span
-                                              className="text-dark"
-                                              style={{
-                                                overflow: "hidden",
-                                                textOverflow: "ellipsis",
-                                                whiteSpace: "nowrap",
-                                              }}
+                                              className="!text-dark !overflow-hidden !text-ellipsis !whitespace-nowrap"
                                             >
                                               {
                                                 pkg?.vendor?.businessDetails
@@ -1349,31 +937,14 @@ const labtests = ({
 
                                       {pkg?.vendor?.distanceInKm && (
                                         <div
-                                          className="d-flex align-items-center gap-2"
-                                          style={{
-                                            fontSize: "11px",
-                                            color: "#555",
-                                            overflow: "hidden",
-                                          }}
+                                          className="!flex !items-center !gap-2 !text-[11px] !text-[#555] !overflow-hidden"
                                           title={pkg?.vendor?.distanceInKm}
                                         >
                                           <i
-                                            className="isax isax-route-square"
-                                            style={{
-                                              fontSize: "12px",
-                                              color: "#8059ca",
-                                            }}
+                                            className="fas fa-map-marker-alt !text-[#8059ca] !text-[10px] !mr-[4px]"
                                           ></i>
                                           <span
-
-
-
-                                            className="text-dark"
-                                            style={{
-                                              overflow: "hidden",
-                                              textOverflow: "ellipsis",
-                                              whiteSpace: "nowrap",
-                                            }}
+                                            className="!text-dark !overflow-hidden !text-ellipsis !whiteSpace-nowrap"
                                           >
                                             {pkg?.vendor?.distanceInKm?.toFixed(1)} km away
                                           </span>
@@ -1393,14 +964,8 @@ const labtests = ({
               </div>
               {packages.length > 1 && (
                 <button
-                  className="meq-arrow-btn packages-next"
+                  className="meq-arrow-btn packages-next !absolute !right-[-10px] !top-1/2 !-translate-y-1/2 !z-10"
                   aria-label="Next"
-                  style={{
-                    position: "absolute",
-                    right: "-10px",
-                    top: "50%",
-                    zIndex: 10,
-                  }}
                 >
                   <i className="fas fa-chevron-right"></i>
                 </button>
@@ -1481,66 +1046,30 @@ const labtests = ({
 
       {cheaplabtests && cheaplabtests.length > 0 && (
         <div
-          className="content doctor-content py-4 mx-4"
+          className="content doctor-content !py-4 !mx-4 !bg-cover !bg-center !bg-no-repeat !rounded-[16px]"
           style={{
             backgroundImage: "url('/assets/Medicompares%20Background.png')",
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
-            borderRadius: "16px",
           }}
         >
-          <div className="container-fluid">
-            <div className="d-flex align-items-center justify-content-between flex-wrap result-wrap gap-3 mb-4">
-              <h3
-                className="mb-2"
-                style={{
-                  fontSize: "24px",
-                  fontWeight: "700",
-                  color: "#1a1a1a",
-                }}
-              >
-                <i className="fas fa-bolt text-warning me-2"></i>
-                Top CheckUp's
-              </h3>
+          <div className="container-fluid px-3">
+            <SectionHeader
+              title="Top CheckUp's"
+              icon="fas fa-bolt"
+              viewAllLink={`/${currentService}/all`}
+              viewAllText="View All"
+              isMobile={isMobile}
+            />
 
-              <div className="d-flex align-items-center flex-wrap gap-3 mb-2">
-                <Link
-                  to={`/${currentService}/all`}
-                  className="top-vendor-badge"
-                  style={{
-                    padding: isMobile ? "8px" : "8px 20px",
-                    borderRadius: isMobile ? "50%" : "50px",
-                    width: isMobile ? "36px" : "auto",
-                    height: isMobile ? "36px" : "auto",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontWeight: "600",
-                  }}
-                >
-                  {isMobile ? "" : "View All"}
-                  <i className={isMobile ? "isax isax-arrow-right-1" : "isax isax-arrow-right-1 ms-1"}></i>
-                </Link>
-              </div>
-            </div>
-
-            <div className="row" style={{ position: "relative" }}>
+            <div className="!flex !flex-wrap !relative">
               {cheaplabtests.length > 1 && (
                 <button
-                  className="meq-arrow-btn dental-prev"
+                  className="meq-arrow-btn dental-prev !absolute !left-[-10px] !top-1/2 !-translate-y-1/2 !z-10"
                   aria-label="Previous"
-                  style={{
-                    position: "absolute",
-                    left: "-10px",
-                    top: "50%",
-                    zIndex: 10,
-                  }}
                 >
                   <i className="fas fa-chevron-left"></i>
                 </button>
               )}
-              <div style={{ padding: "0 20px" }}>
+              <div className="!px-[20px] w-full">
                 <Swiper {...swiperSettings1}>
                   {cheaplabtests.map((test) => {
                     const vendor = test.businessDetails;
@@ -1548,20 +1077,13 @@ const labtests = ({
                     return (
                       <SwiperSlide key={test._id}>
                         <div
-                          className="px-2 mb-2 h-100"
-                          style={{ display: "flex", flexDirection: "column" }}
+                          className="!px-2 !mb-2 !h-full !flex !flex-col !cursor-pointer"
                           onClick={() => handleTestClick(test)}
                         >
                           <div
-                            className="health-card border rounded-3"
-                            style={{
-                              cursor: "pointer",
-                              display: "flex",
-                              flexDirection: "column",
-                              height: "100%",
-                            }}
+                            className="!border !border-solid !border-gray-200 !rounded-[8px] !flex !flex-col !h-full !bg-white !shadow-[0_2px_8px_rgba(0,0,0,0.08)]"
                           >
-                            <div className="card-imgs">
+                            <div className="!relative !w-full !pt-[50%] !overflow-hidden !bg-[#f8f9fa] !rounded-t-[8px] !flex !items-center !justify-center">
                               <img
                                 src={
                                   medicine?.files?.[0]
@@ -1569,7 +1091,7 @@ const labtests = ({
                                     : "/assets/default.png"
                                 }
                                 alt={medicine.name}
-                                style={{ objectFit: "contain" }}
+                                className="!absolute !top-0 !left-0 !w-full !h-full !object-contain"
                                 onError={(e) => {
                                   e.target.src = "/assets/default.png";
                                 }}
@@ -1594,72 +1116,25 @@ const labtests = ({
                                     `/${categorySlug}/${subcategorySlug}/${medicineSlug}/compare`,
                                   );
                                 }}
-                                style={{
-                                  position: "absolute",
-                                  top: "10px",
-                                  right: "10px",
-                                  background: "linear-gradient(135deg, #f59e0b 0%, #d97706 100%)",
-                                  borderRadius: "30px",
-                                  padding: "3px 14px",
-                                  display: "flex",
-                                  alignItems: "center",
-                                  gap: "6px",
-                                  boxShadow: "0 4px 12px rgba(245, 158, 11, 0.4)",
-                                  zIndex: 10,
-                                  border: "1.5px solid #ffffff",
-                                  cursor: "pointer",
-                                  transition: "all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
-                                  transform: "scale(1)",
-                                }}
-                                onMouseEnter={(e) => {
-                                  e.currentTarget.style.transform = "scale(1.12) translateY(-2px)";
-                                  e.currentTarget.style.boxShadow = "0 8px 20px rgba(245, 158, 11, 0.55)";
-                                }}
-                                onMouseLeave={(e) => {
-                                  e.currentTarget.style.transform = "scale(1)";
-                                  e.currentTarget.style.boxShadow = "0 4px 12px rgba(245, 158, 11, 0.4)";
-                                }}
+                                className="!absolute !top-[10px] !right-[10px] bg-gradient-to-br from-[#f59e0b] to-[#d97706] !rounded-[30px] !py-[3px] !px-[14px] !flex !items-center !gap-[6px] !shadow-[0_4px_12px_rgba(245, 158, 11, 0.4)] !z-10 !border-[1.5px] !border-solid !border-white !cursor-pointer transition-all duration-300 hover:!scale-[1.12] hover:!-translate-y-[2px] hover:!shadow-[0_8px_20px_rgba(245, 158, 11, 0.55)]"
                                 title="Compare Package"
                               >
                                 <i
-                                  className="fa-solid fa-hand-pointer"
-                                  style={{
-                                    fontSize: "13px",
-                                    color: "#ffffff",
-                                    transform: "rotate(90deg)",
-                                    display: "inline-block",
-                                  }}
+                                  className="fa-solid fa-hand-pointer !text-[13px] !text-white !rotate-90 !inline-block"
                                 ></i>
                                 <span
-                                  style={{
-                                    fontSize: "11px",
-                                    fontWeight: "800",
-                                    color: "#ffffff",
-                                    textTransform: "uppercase",
-                                    letterSpacing: "0.6px",
-                                  }}
+                                  className="!text-[11px] !font-extrabold !text-white !uppercase !tracking-[0.6px]"
                                 >
                                   Compare
                                 </span>
                               </div>
                             </div>
                             <div
-                              className="card-bodyyy"
-                              style={{
-                                display: "flex",
-                                flexDirection: "column",
-                                flexGrow: 1,
-                              }}
+                              className="!p-[8px_10px] !flex !flex-col !grow"
                             >
-                              <div className="d-flex justify-content-between align-items-center">
+                              <div className="!flex !items-center !justify-between !w-full !gap-2 !mb-1">
                                 <h6
-                                  className="mb-1 text-dark"
-                                  style={{
-                                    fontSize: "14px",
-                                    fontWeight: "600",
-                                    lineHeight: "1.2",
-                                    textTransform: "capitalize",
-                                  }}
+                                  className="!mb-0 !text-dark !text-[14px] !font-semibold !leading-[1.2] !capitalize !overflow-hidden !text-ellipsis !whiteSpace-nowrap"
                                 >
                                   {medicine?.name?.length > 25
                                     ? medicine.name.slice(0, 25) + "..."
@@ -1667,16 +1142,13 @@ const labtests = ({
                                 </h6>
 
                                 <div
-                                  className="d-flex align-items-center justify-content-end"
-                                  style={{ minWidth: "60px", fontSize: "11px" }}
+                                  className="!flex !items-center !justify-end !shrink-0 !text-[11px]"
                                 >
                                   <i
-                                    className="fa fa-star text-warning me-1"
-                                    style={{ fontSize: "11px" }}
+                                    className="fa fa-star text-warning !text-[11px] !mr-1"
                                   ></i>
                                   <span
-                                    className="me-1"
-                                    style={{ fontWeight: "600" }}
+                                    className="!mr-1 !font-semibold"
                                   >
                                     {medicine?.averageRating.toFixed(1) > 0
                                       ? medicine.averageRating.toFixed(1)
@@ -1684,10 +1156,9 @@ const labtests = ({
                                   </span>
 
                                   <i
-                                    className="fa fa-users me-1 text-primary"
-                                    style={{ fontSize: "11px" }}
+                                    className="fa fa-users !text-primary !text-[11px] !mr-1"
                                   ></i>
-                                  <span style={{ color: "#666" }}>
+                                  <span className="!text-[#666]">
                                     (
                                     {medicine?.ratingCount > 0
                                       ? `${medicine.ratingCount}+`
@@ -1697,86 +1168,18 @@ const labtests = ({
                                 </div>
                               </div>
 
-                              <div className="statsss mt-2">
+                              <div className="!mt-2">
                                 <div
-                                  className="d-flex align-items-center justify-content-center gap-1"
-                                  style={{
-                                    flexWrap: "nowrap",
-                                    overflow: "hidden",
-                                  }}
+                                  className="!flex !items-center !justify-center !gap-1 !flex-nowrap !overflow-hidden"
                                 >
-                                  {/* <div
-                                className="d-flex align-items-center gap-1 flex-shrink-0"
-                                style={{
-                                  background: "#F8F5FE",
-                                  padding: "3px 7px",
-                                  borderRadius: "5px",
-                                  border: "1px solid rgba(125, 46, 255, 0.15)",
-                                }}
-                              >
-                                <i
-                                  className="isax isax-profile-2user"
-                                  style={{ color: "#8059ca", fontSize: "11px" }}
-                                ></i>
-                                <span
-                                  style={{
-                                    fontSize: "10px",
-                                    color: "#333",
-                                    fontWeight: "600",
-                                    whiteSpace: "nowrap",
-                                  }}
-                                >
-                                  {medicine?.Profiles?.length || 0} Profiles
-                                </span>
-                              </div> */}
-                                  {/* <div
-                                className="d-flex align-items-center gap-1 flex-shrink-0"
-                                style={{
-                                  background: "#EAF3FF",
-                                  padding: "3px 7px",
-                                  borderRadius: "5px",
-                                  border: "1px solid rgba(17, 14, 253, 0.15)",
-                                }}
-                              >
-                                <i
-                                  className="isax isax-test-tube"
-                                  style={{ color: "#110EFD", fontSize: "11px" }}
-                                ></i>
-                                <span
-                                  style={{
-                                    fontSize: "10px",
-                                    color: "#333",
-                                    fontWeight: "600",
-                                    whiteSpace: "nowrap",
-                                  }}
-                                >
-                                  {medicine?.Tests?.length || 0} Tests
-                                </span>
-                              </div> */}
                                   <div
-                                    className="d-flex align-items-center gap-1 flex-shrink-0"
-                                    style={{
-                                      background: "#F1FAF3",
-                                      padding: "3px 7px",
-                                      borderRadius: "5px",
-                                      border:
-                                        "1px solid rgba(4, 189, 108, 0.15)",
-                                    }}
+                                    className="!flex !items-center !gap-1 !shrink-0 !bg-[#F1FAF3] !py-[3px] !px-[7px] !rounded-[5px] !border !border-solid !border-[#04bd6c]/20"
                                   >
                                     <i
-                                      className="isax isax-chart"
-                                      style={{
-                                        color: "#04BD6C",
-                                        fontSize: "11px",
-                                      }}
+                                      className="isax isax-chart !text-[#04BD6C] !text-[11px]"
                                     ></i>
                                     <span
-                                      style={{
-                                        fontSize: "10px",
-                                        color: "#333",
-                                        fontWeight: "600",
-                                        whiteSpace: "nowrap",
-                                      }}
+                                      className="!text-[10px] !text-[#333] !font-semibold !whiteSpace-nowrap"
                                     >
                                       {medicine?.parameters?.length || 0}{" "}
                                       Parameters
@@ -1785,30 +1188,21 @@ const labtests = ({
                                 </div>
                               </div>
                               <div
-                                className="report-timee"
-                                style={{
-                                  fontSize: "11px",
-                                  margin: "4px 0",
-                                  color: "#666",
-                                }}
+                                className="!text-[11px] !my-[4px] !text-[#666]"
                               >
                                 <i
-                                  className="fa-regular fa-file-lines"
-                                  style={{
-                                    fontSize: "10.5px",
-                                    color: "#8059ca",
-                                  }}
+                                  className="fa-regular fa-file-lines !text-[#8059ca] !text-[10.5px] !mr-1"
                                 />{" "}
                                 Reports in
                                 <strong
-                                  style={{ color: "#333", marginLeft: "2px" }}
+                                  className="!text-[#333] !ml-[2px]"
                                 >
                                   {" "}
                                   {medicine?.reportsDuration}
                                 </strong>
                               </div>
 
-                              <div className="price-section d-flex align-items-center flex-wrap gap-2 pb-2">
+                              <div className="!flex !flex-row !items-center !gap-2 !pb-2">
                                 {(() => {
                                   const originalPrice =
                                     parseFloat(test?.price) || 0;
@@ -1837,11 +1231,7 @@ const labtests = ({
                                   return (
                                     <>
                                       <span
-                                        className="current-price text-dark"
-                                        style={{
-                                          fontSize: "16px",
-                                          fontWeight: "700",
-                                        }}
+                                        className="!text-[16px] !font-bold !text-[#1a1a1a]"
                                       >
                                         ₹{displayPrice.toLocaleString("en-IN")}
                                       </span>
@@ -1849,8 +1239,7 @@ const labtests = ({
                                       {showDiscount && (
                                         <>
                                           <span
-                                            className="old-price"
-                                            style={{ fontSize: "11.5px" }}
+                                            className="!text-[#999] !line-through !text-[11.5px]"
                                           >
                                             ₹
                                             {originalPrice.toLocaleString(
@@ -1858,14 +1247,7 @@ const labtests = ({
                                             )}
                                           </span>
                                           <span
-                                            className="discountts"
-                                            style={{
-                                              backgroundColor: "#F97316",
-                                              fontSize: "10px",
-                                              padding: "2px 6px",
-                                              borderRadius: "4px",
-                                              fontWeight: "600",
-                                            }}
+                                            className="!bg-[#F97316] !text-white !text-[10px] !py-[2px] !px-[6px] !rounded-[4px] !font-semibold !inline-block"
                                           >
                                             {discountPercent}% OFF
                                           </span>
@@ -1876,7 +1258,7 @@ const labtests = ({
                                 })()}
                               </div>
 
-                              <div style={{ marginTop: "auto", marginBottom: "8px" }}>
+                              <div className="!mt-auto !mb-[8px]">
                                 <VendorActions
                                   bookingType={
                                     test?.businessDetails?.bookingType ||
@@ -1905,17 +1287,10 @@ const labtests = ({
 
                               {vendor && (
                                 <div
-                                  style={{
-                                    borderTop: "1px solid #00000015",
-                                  }}
+                                  className="!border-t !border-solid !border-black/10 !mt-1"
                                 >
                                   <div
-                                    className="d-flex align-items-center gap-2 footers"
-                                    style={{
-                                      padding: "8px 0 0 0",
-                                      cursor: "pointer",
-                                      transition: "all 0.2s ease",
-                                    }}
+                                    className="!flex !items-center !gap-2 !pt-[8px] !pb-0 !px-0 !cursor-pointer transition-all duration-200 hover:!opacity-80 hover:!translate-x-1"
                                     onClick={(e) => {
                                       e.stopPropagation();
                                       const vendorId =
@@ -1946,29 +1321,9 @@ const labtests = ({
                                         );
                                       }
                                     }}
-                                    onMouseEnter={(e) => {
-                                      e.currentTarget.style.opacity = "0.8";
-                                      e.currentTarget.style.transform =
-                                        "translateX(4px)";
-                                    }}
-                                    onMouseLeave={(e) => {
-                                      e.currentTarget.style.opacity = "1";
-                                      e.currentTarget.style.transform =
-                                        "translateX(0)";
-                                    }}
                                   >
                                     <div
-                                      style={{
-                                        width: "36px",
-                                        height: "36px",
-                                        borderRadius: "8px",
-                                        overflow: "hidden",
-                                        border: "1px solid #f0f0f0",
-                                        backgroundColor: "#fff",
-                                        flexShrink: 0,
-                                        padding: "3px",
-                                        boxShadow: "0 2px 4px rgba(0,0,0,0.02)",
-                                      }}
+                                      className="!w-[36px] !h-[36px] !rounded-[8px] !overflow-hidden !border !border-solid !border-[#f0f0f0] !bg-white !shrink-0 !p-[3px] !shadow-[0_2px_4px_rgba(0,0,0,0.02)]"
                                     >
                                       <img
                                         src={
@@ -1982,55 +1337,30 @@ const labtests = ({
                                         onError={(e) => {
                                           e.target.src = "/assets/default.png";
                                         }}
-                                        style={{
-                                          width: "100%",
-                                          height: "100%",
-                                          objectFit: "contain",
-                                        }}
+                                        className="!w-full !h-full !object-contain"
                                       />
                                     </div>
 
                                     <div
-                                      className="flex-grow-1"
-                                      style={{ minWidth: 0 }}
+                                      className="!grow !min-w-0"
                                     >
-                                      <div style={{ display: 'flex', alignItems: 'center' }}>
+                                      <div className="!flex !items-center !justify-between !w-full !gap-2 !mb-[2px]">
                                         <h6
-                                          className="mb-0 "
-                                          style={{
-                                            fontSize: "12px",
-                                            fontWeight: "600",
-                                            letterSpacing: "-0.2px",
-                                            whiteSpace: "nowrap",
-                                            overflow: "hidden",
-                                            textOverflow: "ellipsis",
-                                          }}
+                                          className="!mb-0 !text-[12px] !font-semibold !tracking-[-0.2px] !whiteSpace-nowrap !overflow-hidden !text-ellipsis"
                                         >
                                           {vendor.name}
                                         </h6>
                                         {test?.averageRating > 0 && test?.ratingCount > 0 && (
                                           <div
-                                            style={{
-                                              display: "flex",
-                                              alignItems: "center",
-                                              gap: "4px",
-                                              fontSize: "10px",
-                                              color: "#666",
-                                              marginTop: "2px",
-                                              marginBottom: "4px",
-                                            }}
+                                            className="!flex !items-center !gap-[4px] !text-[10px] !text-[#666] !shrink-0"
                                           >
                                             <i
-                                              className="fas fa-star"
-                                              style={{
-                                                color: "#ffc107",
-                                                fontSize: "9px"
-                                              }}
+                                              className="fas fa-star !text-[#ffc107] !text-[9px]"
                                             ></i>
-                                            <span style={{ fontWeight: "500" }}>
+                                            <span className="!font-medium">
                                               {test.averageRating.toFixed(1)}
                                             </span>
-                                            <span style={{ color: "#999" }}>
+                                            <span className="!text-[#999]">
                                               ({test.ratingCount}+)
                                             </span>
                                           </div>
@@ -2038,39 +1368,27 @@ const labtests = ({
                                       </div>
 
                                       <div
-                                        className="d-flex align-items-center gap-1 text-muted"
-                                        style={{ fontSize: "11px" }}
+                                        className="!flex !items-center !gap-1 !text-[#6b7280] !text-[11px] !overflow-hidden"
                                       >
                                         <i
-                                          className="fa-solid fa-location-dot"
-                                          style={{
-                                            fontSize: "11px",
-                                            color: "#8059ca",
-                                          }}
+                                          className="fa-solid fa-location-dot !text-[11px] !text-[#8059ca]"
                                         ></i>
                                         <span
-                                          style={{
-                                            overflow: "hidden",
-                                            textOverflow: "ellipsis",
-                                            whiteSpace: "nowrap",
-                                          }}
+                                          className="!overflow-hidden !text-ellipsis !whitespace-nowrap"
                                         >
                                           {vendor.address}
                                         </span>
                                       </div>
                                       <div
-                                        className="d-flex align-items-center gap-1 text-muted"
-                                        style={{ fontSize: "11px" }}
+                                        className="!flex !items-center !gap-1 !text-[#6b7280] !text-[11px] !overflow-hidden"
                                       >
                                         <i
-                                          className="isax isax-route-square"
-                                          style={{
-                                            fontSize: "11px",
-                                            color: "#8059ca",
-                                          }}
+                                          className="fas fa-map-marker-alt !text-[10px] !text-[#8059ca] !mr-[4px]"
                                         ></i>
 
-                                        <span>
+                                        <span
+                                          className="!overflow-hidden !text-ellipsis !whitespace-nowrap"
+                                        >
                                           {test?.distanceInKm
                                             ? `${parseFloat(test.distanceInKm).toFixed(1)} km away`
                                             : ""}
@@ -2090,14 +1408,8 @@ const labtests = ({
               </div>
               {cheaplabtests.length > 1 && (
                 <button
-                  className="meq-arrow-btn dental-next"
+                  className="meq-arrow-btn dental-next !absolute !right-[-10px] !top-1/2 !-translate-y-1/2 !z-10"
                   aria-label="Next"
-                  style={{
-                    position: "absolute",
-                    right: "-10px",
-                    top: "50%",
-                    zIndex: 10,
-                  }}
                 >
                   <i className="fas fa-chevron-right"></i>
                 </button>
@@ -2109,48 +1421,27 @@ const labtests = ({
 
 
       <section
-        style={{
-          // backgroundColor: "#E8E4F5",
-          // backgroundImage: "url('/assets/Medicompares%20Background.png')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-          // padding: isMobile ? "60px 0 45px 0" : "40px 0",
-          position: "relative",
-          overflow: "hidden",
-        }}
+        className="!relative !overflow-hidden !bg-cover !bg-center !bg-no-repeat"
       >
-        <div className=" py-4  py-lg-10  ">
-          <div className="text-center"
-            style={{
-              borderRadius: "20px",
-              padding: "10px 12px 12px",
-              marginTop: "10px"
-            }}>
-            <div className="section-badgese mx-auto" style={{ marginBottom: "12px" }}>
+        <div className="container-fluid !px-4 md:!px-6 lg:!px-8 !py-4 lg:!py-10">
+          <div className="!text-center !rounded-[20px] !p-[10px_12px_12px] !mt-[10px]">
+            <div className="!inline-flex !items-center !gap-2 !mb-[12px] !mx-auto !px-4 !py-[6px] !rounded-full !bg-[rgba(128,89,202,0.12)] !text-[#8059ca] !text-[12px] !font-semibold !tracking-wide !border !border-[rgba(128,89,202,0.25)]">
               <i className="fa-solid fa-hand-pointer" />
               How to Book a Lab Test
             </div>
             <h2
-              style={{
-                fontSize: "26px",
-                fontWeight: "600",
-                color: "#1a1a1a",
-                marginBottom: "8px",
-                lineHeight: "1.2",
-              }}
+              className="!text-[26px] !font-semibold !text-[#1a1a1a] !mb-[8px] !leading-[1.2]"
             >
               Three Easy Steps to Get Checked
             </h2>
             <p
-              className="sectionse-subtitle"
-              style={{ fontSize: "14px", color: "#666", margin: "0 auto 12px", maxWidth: "700px" }}
+              className="sectionse-subtitle !text-[14px] !text-[#666] !mx-auto !my-0 !mb-[12px] !max-w-[700px]"
             >
               Simple steps to get your health checkup done with certified
               professionals and accurate results
             </p>
             {isMobile ? (
-              <div style={{ padding: "0 10px" }}>
+              <div className="!px-[10px]">
                 <Swiper
                   modules={[Autoplay, Pagination]}
                   slidesPerView={1.2}
@@ -2181,68 +1472,25 @@ const labtests = ({
                   ].map((item, index) => (
                     <SwiperSlide key={index} style={{ height: "auto", display: "flex" }}>
                       <div
-                        className="text-center w-100"
-                        style={{
-                          position: "relative",
-                          padding: "32px 16px 24px",
-                          background: "#ffffff",
-                          borderRadius: "16px",
-                          border: "1px solid #e2e8f0",
-                          boxShadow: "0 4px 12px rgba(128, 89, 202, 0.02)",
-                          display: "flex",
-                          flexDirection: "column",
-                          alignItems: "center",
-                          height: "100%",
-                        }}
+                        className="!text-center !w-full !relative !p-[32px_16px_24px] !bg-white !rounded-[16px] !border !border-solid !border-[#e2e8f0] !shadow-[0_4px_12px_rgba(128, 89, 202, 0.02)] !flex !flex-col !items-center !h-full"
                       >
                         <span
-                          style={{
-                            position: "absolute",
-                            top: "16px",
-                            right: "16px",
-                            background: "rgba(128, 89, 202, 0.08)",
-                            color: "#8059ca",
-                            padding: "4px 10px",
-                            borderRadius: "20px",
-                            fontSize: "11px",
-                            fontWeight: "700",
-                            letterSpacing: "0.05em",
-                          }}
+                          className="!absolute !top-[16px] !right-[16px] !bg-[rgba(128,89,202,0.08)] !text-[#8059ca] !py-[4px] !px-[10px] !rounded-[20px] !text-[11px] !font-bold !tracking-[0.05em]"
                         >
                           {item.step}
                         </span>
                         <div
-                          style={{
-                            width: "60px",
-                            height: "60px",
-                            margin: "0 auto 20px",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            background: "rgba(128, 89, 202, 0.06)",
-                            borderRadius: "16px",
-                          }}
+                          className="!w-[60px] !h-[60px] !mx-auto !mb-[20px] !flex !items-center !justify-center !bg-[rgba(128,89,202,0.06)] !rounded-[16px]"
                         >
                           <i className={item.icon} style={{ fontSize: "26px", color: "#8059ca" }} />
                         </div>
                         <h5
-                          style={{
-                            fontSize: "16px",
-                            fontWeight: "600",
-                            color: "#1c1e21",
-                            marginBottom: "10px",
-                            letterSpacing: "-0.01em",
-                          }}
+                          className="!text-[16px] !font-semibold !text-[#1c1e21] !mb-[10px] !tracking-[-0.01em]"
                         >
                           {item.title}
                         </h5>
                         <p
-                          style={{
-                            fontSize: "12.5px",
-                            color: "#5c626a",
-                            margin: 0,
-                            lineHeight: "1.6",
-                          }}
+                          className="!text-[12.5px] !text-[#5c626a] !m-0 !leading-[1.6]"
                         >
                           {item.desc}
                         </p>
@@ -2252,7 +1500,7 @@ const labtests = ({
                 </Swiper>
               </div>
             ) : (
-              <div className="row align-items-center g-4">
+              <div className="!grid !grid-cols-1 md:!grid-cols-3 !gap-4 !items-stretch">
                 {[
                   {
                     step: "STEP 01",
@@ -2273,79 +1521,27 @@ const labtests = ({
                     desc: "Get reports in 12–24 hrs. View and download from the app anytime."
                   }
                 ].map((item, index) => (
-                  <div key={index} className="col-md-4 col-12">
+                  <div key={index} className="w-full">
                     <div
-                      className="text-center h-100"
-                      style={{
-                        position: "relative",
-                        padding: "32px 20px 24px",
-                        background: "#ffffff",
-                        borderRadius: "16px",
-                        border: "1px solid #e2e8f0",
-                        boxShadow: "0 4px 12px rgba(128, 89, 202, 0.02)",
-                        transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-                        cursor: "pointer",
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.transform = "translateY(-6px)";
-                        e.currentTarget.style.boxShadow = "0 12px 24px rgba(128, 89, 202, 0.08)";
-                        e.currentTarget.style.borderColor = "#8059ca";
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.transform = "translateY(0)";
-                        e.currentTarget.style.boxShadow = "0 4px 12px rgba(128, 89, 202, 0.02)";
-                        e.currentTarget.style.borderColor = "#e2e8f0";
-                      }}
+                      className="!text-center !h-full !relative !p-[32px_20px_24px] !bg-white !rounded-[16px] !border !border-solid !border-[#e2e8f0] !shadow-[0_4px_12px_rgba(128, 89, 202, 0.02)] transition-all duration-300 ease-out !cursor-pointer hover:!-translate-y-[6px] hover:!shadow-[0_12px_24px_rgba(128, 89, 202, 0.08)] hover:!border-[#8059ca]"
                     >
                       <span
-                        style={{
-                          position: "absolute",
-                          top: "16px",
-                          right: "16px",
-                          background: "rgba(128, 89, 202, 0.08)",
-                          color: "#8059ca",
-                          padding: "4px 10px",
-                          borderRadius: "20px",
-                          fontSize: "11px",
-                          fontWeight: "700",
-                          letterSpacing: "0.05em",
-                        }}
+                        className="!absolute !top-[16px] !right-[16px] !bg-[rgba(128,89,202,0.08)] !text-[#8059ca] !py-[4px] !px-[10px] !rounded-[20px] !text-[11px] !font-bold !tracking-[0.05em]"
                       >
                         {item.step}
                       </span>
                       <div
-                        style={{
-                          width: "60px",
-                          height: "60px",
-                          margin: "0 auto 20px",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          background: "rgba(128, 89, 202, 0.06)",
-                          borderRadius: "16px",
-                          transition: "all 0.3s ease",
-                        }}
+                        className="!w-[60px] !h-[60px] !mx-auto !mb-[20px] !flex !items-center !justify-center !bg-[rgba(128,89,202,0.06)] !rounded-[16px] transition-all duration-300"
                       >
                         <i className={item.icon} style={{ fontSize: "26px", color: "#8059ca" }} />
                       </div>
                       <h5
-                        style={{
-                          fontSize: "18px",
-                          fontWeight: "600",
-                          color: "#1c1e21",
-                          marginBottom: "10px",
-                          letterSpacing: "-0.01em",
-                        }}
+                        className="!text-[18px] !font-semibold !text-[#1c1e21] !mb-[10px] !tracking-[-0.01em]"
                       >
                         {item.title}
                       </h5>
                       <p
-                        style={{
-                          fontSize: "14px",
-                          color: "#5c626a",
-                          margin: 0,
-                          lineHeight: "1.6",
-                        }}
+                        className="!text-[14px] !text-[#5c626a] !m-0 !leading-[1.6]"
                       >
                         {item.desc}
                       </p>
@@ -2355,54 +1551,33 @@ const labtests = ({
               </div>
             )}
           </div>
-        </div >
-      </section >
+        </div>
+      </section>
 
       {/* why choose  */}
-      < section
+      <section
+        className="!bg-[#E8E4F5] bg-cover bg-center bg-no-repeat !py-[40px] !px-0 !relative !overflow-hidden"
         style={{
-          backgroundColor: "#E8E4F5",
           backgroundImage: "url('/assets/Medicompares%20Background.png')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-          padding: "40px 0",
-          position: "relative",
-          overflow: "hidden",
-        }
-        }
+        }}
       >
         <div
-          className="container-fluid"
-          style={{ position: "relative", zIndex: 1 }}
+          className="container-fluid !px-4 md:!px-6 lg:!px-8 !relative !z-[1]"
         >
           <div className="text-center mb-4">
             <div
-              className="section-badgese mx-auto"
-              style={{ marginBottom: "12px" }}
+              className="section-badgese !mb-[12px] !mx-auto"
             >
               <i className="fa-solid fa-circle-info" />
               Why Choose Us
             </div>
             <h2
-              style={{
-                fontSize: "26px",
-                fontWeight: "600",
-                color: "#0F172A",
-                marginBottom: "8px",
-                lineHeight: "1.2",
-              }}
+              className="!text-[26px] !font-semibold !text-[#0f172a] !mb-[8px] !leading-[1.2]"
             >
               Your Trusted Healthcare Partner
             </h2>
             <p
-              style={{
-                fontSize: "14px",
-                color: "#64748B",
-                maxWidth: "700px",
-                margin: "0 auto",
-                lineHeight: "1.5",
-              }}
+              className="!text-[14px] !text-[#64748b] !max-w-[700px] !mx-auto !my-0 !leading-[1.5]"
             >
               We are committed to providing you with accurate, reliable lab test
               results from NABL accredited laboratories with the convenience of
@@ -2410,7 +1585,7 @@ const labtests = ({
             </p>
           </div>
           {isMobile ? (
-            <div style={{ padding: "0 10px" }}>
+            <div className="!px-[10px]">
               <Swiper
                 modules={[Autoplay, Pagination]}
                 slidesPerView={1.2}
@@ -2459,54 +1634,22 @@ const labtests = ({
                 ].map((feature, index) => (
                   <SwiperSlide key={index} style={{ height: "auto", display: "flex" }}>
                     <div
-                      style={{
-                        background: "#FFFFFF",
-                        borderRadius: "16px",
-                        padding: "24px 16px",
-                        height: "100%",
-                        border: "1px solid rgba(128, 89, 202, 0.12)",
-                        display: "flex",
-                        flexDirection: "column",
-                        boxShadow: "0 4px 15px rgba(128, 89, 202, 0.03)",
-                        width: "100%",
-                      }}
+                      className="!bg-white !rounded-[16px] !p-[24px_16px] !h-full !border !border-solid !border-[#8059ca]/12 !flex !flex-col !shadow-[0_4px_15px_rgba(128, 89, 202, 0.03)] !w-full"
                     >
                       <div
-                        style={{
-                          width: "48px",
-                          height: "48px",
-                          borderRadius: "50%",
-                          backgroundColor: "#f3effa",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          marginBottom: "16px",
-                          color: "#8059ca",
-                          fontSize: "20px"
-                        }}
+                        className="!w-[48px] !h-[48px] !rounded-full !bg-[#f3effa] !flex !items-center !justify-center !mb-[16px] !text-[#8059ca] !text-[20px]"
                       >
                         <i className={feature.icon}></i>
                       </div>
 
                       <h4
-                        style={{
-                          fontSize: "15px",
-                          fontWeight: "600",
-                          color: "#1a1a1a",
-                          marginBottom: "10px",
-                          lineHeight: "1.4",
-                        }}
+                        className="!text-[15px] !font-semibold !text-[#1a1a1a] !mb-[10px] !leading-[1.4]"
                       >
                         {feature.title}
                       </h4>
 
                       <p
-                        style={{
-                          fontSize: "12.5px",
-                          color: "#666",
-                          lineHeight: "1.6",
-                          margin: 0,
-                        }}
+                        className="!text-[12.5px] !text-[#666] !leading-[1.6] !m-0"
                       >
                         {feature.description}
                       </p>
@@ -2516,7 +1659,7 @@ const labtests = ({
               </Swiper>
             </div>
           ) : (
-            <div className="row g-4">
+            <div className="!grid !grid-cols-1 md:!grid-cols-2 lg:!grid-cols-3 !gap-4">
               {[
                 {
                   icon: "fa-solid fa-flask-vial",
@@ -2557,70 +1700,27 @@ const labtests = ({
               ].map((feature, index) => (
                 <div
                   key={index}
-                  className="col-lg-4 col-md-6 col-sm-12"
+                  className="w-full"
                   data-aos="fade-up"
                   data-aos-delay={index * 100}
                 >
                   <div
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = "translateY(-6px)";
-                      e.currentTarget.style.boxShadow = "0 10px 25px rgba(128, 89, 202, 0.08)";
-                      e.currentTarget.style.borderColor = "#8059ca";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = "translateY(0)";
-                      e.currentTarget.style.boxShadow = "0 4px 15px rgba(128, 89, 202, 0.03)";
-                      e.currentTarget.style.borderColor = "rgba(128, 89, 202, 0.12)";
-                    }}
-                    style={{
-                      background: "#FFFFFF",
-                      borderRadius: "16px",
-                      padding: "24px",
-                      height: "100%",
-                      border: "1px solid rgba(128, 89, 202, 0.12)",
-                      transition: "all 0.3s cubic-bezier(0.23, 1, 0.32, 1)",
-                      cursor: "pointer",
-                      display: "flex",
-                      flexDirection: "column",
-                      boxShadow: "0 4px 15px rgba(128, 89, 202, 0.03)",
-                    }}
+                    className="!bg-white !rounded-[16px] !p-[24px] !h-full !border !border-solid !border-[#8059ca]/12 transition-all duration-300 ease-out !cursor-pointer !flex !flex-col !shadow-[0_4px_15px_rgba(128,89,202,0.03)] hover:!-translate-y-[6px] hover:!shadow-[0_10px_25px_rgba(128,89,202,0.08)] hover:!border-[#8059ca]"
                   >
                     <div
-                      style={{
-                        width: "48px",
-                        height: "48px",
-                        borderRadius: "50%",
-                        backgroundColor: "#f3effa",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        marginBottom: "16px",
-                        color: "#8059ca",
-                        fontSize: "20px"
-                      }}
+                      className="!w-[48px] !h-[48px] !rounded-full !bg-[#f3effa] !flex !items-center !justify-center !mb-[16px] !text-[#8059ca] !text-[20px]"
                     >
                       <i className={feature.icon}></i>
                     </div>
 
                     <h4
-                      style={{
-                        fontSize: "16px",
-                        fontWeight: "600",
-                        color: "#1a1a1a",
-                        marginBottom: "10px",
-                        lineHeight: "1.4",
-                      }}
+                      className="!text-[16px] !font-semibold !text-[#1a1a1a] !mb-[10px] !leading-[1.4]"
                     >
                       {feature.title}
                     </h4>
 
                     <p
-                      style={{
-                        fontSize: "13.5px",
-                        color: "#666",
-                        lineHeight: "1.6",
-                        margin: 0,
-                      }}
+                      className="!text-[13.5px] !text-[#666] !leading-[1.6] !m-0"
                     >
                       {feature.description}
                     </p>
@@ -2630,18 +1730,10 @@ const labtests = ({
             </div>
           )}
         </div>
-      </section >
+      </section>
 
       <section
-        className="py-4"
-        style={{
-          // backgroundImage: "url('/assets/Medicompares%20Background.png')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-          position: "relative",
-          overflow: "hidden",
-        }}
+        className="!py-4 !relative !overflow-hidden !bg-cover !bg-center !bg-no-repeat"
       >
         <div
           style={{
@@ -2671,24 +1763,17 @@ const labtests = ({
         ></div>
 
         <div
-          className="container-fluid"
-          style={{ position: "relative", zIndex: 1 }}
+          className="container-fluid !px-4 md:!px-6 lg:!px-8 !relative !z-[1]"
         >
           <div className="text-center mb-4">
             <h2
-              style={{
-                fontSize: "26px",
-                fontWeight: "600",
-                color: "#1a1a1a",
-                marginBottom: "8px",
-                lineHeight: "1.2",
-              }}
+              className="!text-[26px] !font-semibold !text-[#1a1a1a] !mb-[8px] !leading-[1.2]"
             >
               Best Practices We Offer
             </h2>
           </div>
           {isMobile ? (
-            <div style={{ padding: "0 10px" }}>
+            <div className="!px-[10px]">
               <Swiper
                 modules={[Autoplay, Pagination]}
                 slidesPerView={1.2}
@@ -2726,50 +1811,20 @@ const labtests = ({
                 ].map((practice, index) => (
                   <SwiperSlide key={index} style={{ height: "auto", display: "flex" }}>
                     <div
-                      className="text-center w-100"
-                      style={{
-                        padding: "24px 5px",
-                        background: "#ffffff",
-                        borderRadius: "16px",
-                        border: "1px solid #e2e8f0",
-                        boxShadow: "0 4px 12px rgba(128, 89, 202, 0.02)",
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center",
-                        height: "100%",
-                      }}
+                      className="!text-center !w-full !p-[24px_5px] !bg-white !rounded-[16px] !border !border-solid !border-[#e2e8f0] !shadow-[0_4px_12px_rgba(128, 89, 202, 0.02)] !flex !flex-col !items-center !h-full"
                     >
                       <div
-                        style={{
-                          width: "56px",
-                          height: "56px",
-                          margin: "0 auto 16px",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          background: "rgba(128, 89, 202, 0.06)",
-                          borderRadius: "14px",
-                        }}
+                        className="!w-[56px] !h-[56px] !mx-auto !mb-[16px] !flex !items-center !justify-center !bg-[rgba(128,89,202,0.06)] !rounded-[14px]"
                       >
                         {practice.icon}
                       </div>
                       <h5
-                        style={{
-                          fontSize: "15px",
-                          fontWeight: "600",
-                          color: "#1c1e21",
-                          marginBottom: "8px",
-                        }}
+                        className="!text-[15px] !font-semibold !text-[#1c1e21] !mb-[8px]"
                       >
                         {practice.title}
                       </h5>
                       <p
-                        style={{
-                          fontSize: "12.5px",
-                          color: "#5c626a",
-                          margin: 0,
-                          lineHeight: "1.5",
-                        }}
+                        className="!text-[12.5px] !text-[#5c626a] !m-0 !leading-[1.5]"
                       >
                         {practice.desc}
                       </p>
@@ -2780,12 +1835,7 @@ const labtests = ({
             </div>
           ) : (
             <div
-              style={{
-                display: "flex",
-                flexWrap: "wrap",
-                gap: "20px",
-                justifyContent: "center",
-              }}
+              className="!flex !flex-wrap !gap-5 !justify-center"
             >
               {[
                 {
@@ -2816,67 +1866,23 @@ const labtests = ({
               ].map((practice, index) => (
                 <div
                   key={index}
-                  style={{
-                    flex: "1 1 200px",
-                    maxWidth: "220px",
-                    minWidth: "200px",
-                  }}
+                  className="!flex-[1_1_200px] !max-w-[220px] !min-w-[200px]"
                 >
                   <div
-                    className="text-center h-100"
-                    style={{
-                      padding: "24px 16px",
-                      background: "#ffffff",
-                      borderRadius: "16px",
-                      border: "1px solid #e2e8f0",
-                      boxShadow: "0 4px 12px rgba(128, 89, 202, 0.02)",
-                      transition: "all 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-                      cursor: "pointer",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = "translateY(-6px)";
-                      e.currentTarget.style.boxShadow = "0 12px 24px rgba(128, 89, 202, 0.08)";
-                      e.currentTarget.style.borderColor = "#8059ca";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = "translateY(0)";
-                      e.currentTarget.style.boxShadow = "0 4px 12px rgba(128, 89, 202, 0.02)";
-                      e.currentTarget.style.borderColor = "#e2e8f0";
-                    }}
+                    className="!text-center !h-full !p-[24px_16px] !bg-white !rounded-[16px] !border !border-solid !border-[#e2e8f0] !shadow-[0_4px_12px_rgba(128, 89, 202, 0.02)] transition-all duration-300 ease-out !cursor-pointer hover:!-translate-y-[6px] hover:!shadow-[0_12px_24px_rgba(128, 89, 202, 0.08)] hover:!border-[#8059ca]"
                   >
                     <div
-                      style={{
-                        width: "56px",
-                        height: "56px",
-                        margin: "0 auto 16px",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        background: "rgba(128, 89, 202, 0.06)",
-                        borderRadius: "14px",
-                        transition: "all 0.3s ease",
-                      }}
+                      className="!w-[56px] !h-[56px] !mx-auto !mb-[16px] !flex !items-center !justify-center !bg-[rgba(128,89,202,0.06)] !rounded-[14px] transition-all duration-300"
                     >
                       {practice.icon}
                     </div>
                     <h5
-                      style={{
-                        fontSize: "16px",
-                        fontWeight: "600",
-                        color: "#1c1e21",
-                        marginBottom: "8px",
-                        letterSpacing: "-0.01em",
-                      }}
+                      className="!text-[16px] !font-semibold !text-[#1c1e21] !mb-[8px] !tracking-[-0.01em]"
                     >
                       {practice.title}
                     </h5>
                     <p
-                      style={{
-                        fontSize: "13px",
-                        color: "#5c626a",
-                        margin: 0,
-                        lineHeight: "1.5",
-                      }}
+                      className="!text-[13px] !text-[#5c626a] !m-0 !leading-[1.5]"
                     >
                       {practice.desc}
                     </p>
@@ -2889,7 +1895,7 @@ const labtests = ({
       </section>
 
       {/* discoount popup */}
-      {
+      {/* {
         showDiscountPopup && (
           <div
             style={{
@@ -2935,7 +1941,7 @@ const labtests = ({
                 backdropFilter: "blur(10px)",
               }}
             >
-              {/* Close Button */}
+            
               <button
                 onClick={() => setShowDiscountPopup(false)}
                 style={{
@@ -2969,7 +1975,7 @@ const labtests = ({
                 ×
               </button>
 
-              {/* Decorative Elements */}
+             
               <div
                 style={{
                   position: "absolute",
@@ -3030,7 +2036,7 @@ const labtests = ({
                   </div>
                 </div>
 
-                {/* Title */}
+             
                 <h4
                   style={{
                     fontSize: "18px",
@@ -3054,7 +2060,7 @@ const labtests = ({
                   Book any health package now and save big!
                 </p>
 
-                {/* Countdown Timer */}
+              
                 <div
                   style={{
                     background: "rgba(255, 255, 255, 0.15)",
@@ -3084,7 +2090,7 @@ const labtests = ({
                       gap: "8px",
                     }}
                   >
-                    {/* Hours */}
+                
                     <div
                       style={{
                         background: "rgba(255, 255, 255, 0.2)",
@@ -3119,7 +2125,7 @@ const labtests = ({
                       </div>
                     </div>
 
-                    {/* Minutes */}
+              
                     <div
                       style={{
                         background: "rgba(255, 255, 255, 0.2)",
@@ -3154,7 +2160,7 @@ const labtests = ({
                       </div>
                     </div>
 
-                    {/* Seconds */}
+           
                     <div
                       style={{
                         background: "rgba(255, 255, 255, 0.2)",
@@ -3191,7 +2197,7 @@ const labtests = ({
                   </div>
                 </div>
 
-                {/* CTA Button */}
+
                 <button
                   onClick={() => {
                     navigate(`/search/${service}`);
@@ -3227,7 +2233,7 @@ const labtests = ({
             </div>
           </div>
         )
-      }
+      } */}
 
       {/* Lead Modal */}
       <LeadModal

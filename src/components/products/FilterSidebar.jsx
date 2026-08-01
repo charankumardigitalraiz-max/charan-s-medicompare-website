@@ -125,16 +125,41 @@ const FilterSidebar = ({
   };
 
   const PlusMinus = ({ open }) => (
-    <span
-      style={{
-        fontSize: "18px",
-        fontWeight: "700",
-        position: "relative",
-        bottom: "6px",
-      }}
-    >
+    <span className="text-[18px] font-bold leading-none text-slate-500 select-none">
       {open ? "−" : "+"}
     </span>
+  );
+
+  const CheckboxRow = ({ isActive, label, count, onClick, disabled }) => (
+    <div
+      className={`flex items-center justify-between py-1.5 px-2 rounded-md transition-all duration-150 group ${disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer hover:bg-purple-50/50"
+        }`}
+      onClick={disabled ? undefined : onClick}
+    >
+      <div className="flex items-center gap-2.5">
+        <div
+          className={`w-3.5 h-3.5 rounded-[3px] flex items-center justify-center shrink-0 transition-all duration-150 ${isActive
+            ? "!border-1 !border-solid !border-[#8059ca] !bg-[#8059ca]"
+            : "!border-1 !border-solid !border-[#64748b] !bg-white group-hover:!border-[#8059ca]"
+            }`}
+        >
+          {isActive && (
+            <svg className="w-2.5 h-2.5 text-white" fill="none" viewBox="0 0 12 12" stroke="currentColor" strokeWidth="2.5">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M2 6l3 3 5-5" />
+            </svg>
+          )}
+        </div>
+        <span
+          className={`text-[13px] font-medium transition-colors leading-tight ${isActive ? "text-[#8059ca]" : "text-slate-600 group-hover:text-slate-800"
+            }`}
+        >
+          {label}
+        </span>
+      </div>
+      {count !== undefined && (
+        <span className="text-[11px] text-slate-400 ml-1">{count}</span>
+      )}
+    </div>
   );
 
   const AlphabetBar = () => {
@@ -187,24 +212,14 @@ const FilterSidebar = ({
     const showEndDots = end < alphabetData.length - 1;
 
     return (
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: "4px",
-          padding: "4px 0",
-          borderRadius: "8px",
-          margin: "5px 0",
-        }}
-      >
+      <div className="flex items-center justify-center gap-1 py-1 my-1.5 flex-wrap">
         {showStartDots && (
           <div
             onClick={() => {
               const newActiveLetter = alphabetData[Math.max(0, start - 3)]?.value;
               scrollToLetter(newActiveLetter);
             }}
-            className="w-7 h-7 !rounded-full border border-slate-300 bg-white flex items-center justify-center text-xs font-semibold text-[#8059ca] cursor-pointer hover:bg-slate-100 transition-all duration-200"
+            className="w-7 h-7 shrink-0 rounded-full border border-solid border-slate-300 bg-white flex items-center justify-center text-xs font-semibold text-[#8059ca] cursor-pointer hover:bg-slate-100 transition-all duration-200"
           >
             ...
           </div>
@@ -216,9 +231,9 @@ const FilterSidebar = ({
             <div
               key={alphaItem.value}
               onClick={() => scrollToLetter(alphaItem.value)}
-              className={`w-7 h-7 !rounded-full border flex items-center justify-center text-xs font-semibold cursor-pointer transition-all duration-200 ${isActive
-                ? "border-[#8059ca] bg-[#8059ca] text-white"
-                : "border-slate-300 bg-white text-[#8059ca] hover:bg-slate-100"
+              className={`w-7 h-7 shrink-0 rounded-full border-2 border-solid flex items-center justify-center text-xs font-semibold cursor-pointer transition-all duration-200 ${isActive
+                ? "!border-[#8059ca] !bg-[#8059ca] text-white shadow-sm"
+                : "!border-[#64748b] bg-white text-[#8059ca] hover:!bg-purple-50 hover:!border-[#8059ca]"
                 }`}
             >
               {alphaItem.label}
@@ -232,7 +247,7 @@ const FilterSidebar = ({
               const newActiveLetter = alphabetData[Math.min(alphabetData.length - 1, end + 3)]?.value;
               scrollToLetter(newActiveLetter);
             }}
-            className="w-7 h-7 !rounded-full border border-slate-300 bg-white flex items-center justify-center text-xs font-semibold text-[#8059ca] cursor-pointer hover:bg-slate-100 transition-all duration-200"
+            className="w-7 h-7 shrink-0 rounded-full border border-solid border-slate-300 bg-white flex items-center justify-center text-xs font-semibold text-[#8059ca] cursor-pointer hover:bg-slate-100 transition-all duration-200"
           >
             ...
           </div>
@@ -260,14 +275,14 @@ const FilterSidebar = ({
               {onClearFilters && (
                 <button
                   type="button"
-                  className="text-[#8059ca] hover:text-[#6d3fc7] font-semibold text-xs py-1 px-2.5 rounded-md bg-purple-50 hover:bg-purple-100 transition-colors duration-150 border-0 flex items-center gap-1.5"
+                  className="!text-slate-400 hover:!text-[#8059ca] !font-medium !text-[11px] !py-0.5 !px-2 !rounded !border !border-solid !border-slate-200 hover:!border-[#8059ca] !bg-transparent hover:!bg-purple-50/50 !transition-all !duration-150 flex items-center gap-1 cursor-pointer"
                   onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
                     onClearFilters();
                   }}
                 >
-                  <i className="fas fa-redo text-[10px]"></i>
+                  <i className="fas fa-redo text-[9px]"></i>
                   Reset
                 </button>
               )}
@@ -300,40 +315,19 @@ const FilterSidebar = ({
               categories?.data &&
               categories?.data?.length > 0 && (
                 <>
-                  <div className="max-h-[160px] overflow-y-auto pr-1 scrollbar-thin flex flex-col gap-1 mt-1.5">
+                  <div className="max-h-[160px] overflow-y-auto pr-1 flex flex-col gap-0.5 mt-1.5">
                     {categories?.data?.map((cat) => {
-                      const isActive =
-                        selectedCategories.includes(cat.slug);
-
-                      const isDefaultCategory =
-                        cat.slug === defaultCategoryId;
-
+                      const isActive = selectedCategories.includes(cat.slug);
+                      const isDefaultCategory = cat.slug === defaultCategoryId;
                       return (
-                        <div
+                        <CheckboxRow
                           key={cat.slug}
-                          className="flex items-center justify-between py-1 px-2 hover:bg-purple-50/40 rounded-md cursor-pointer transition-colors"
-                          onClick={() =>
-                            onCategoryToggle(cat.slug)
-                          }
-                        >
-                          <div className="flex items-center gap-2">
-                            <input
-                              type="checkbox"
-                              checked={isActive}
-                              disabled={isDefaultCategory}
-                              readOnly
-                              className="w-3.5 h-3.5 rounded border-slate-300 text-[#8059ca] focus:ring-[#8059ca]"
-                            />
-
-                            <span className="text-[13px] text-slate-700">
-                              {cat.name}
-                            </span>
-                          </div>
-
-                          <span className="text-[11px] text-slate-400">
-                            ({cat.productCount || 0})
-                          </span>
-                        </div>
+                          isActive={isActive}
+                          label={cat.name}
+                          count={`(${cat.productCount || 0})`}
+                          onClick={() => onCategoryToggle(cat.slug)}
+                          disabled={isDefaultCategory}
+                        />
                       );
                     })}
                   </div>
@@ -346,20 +340,14 @@ const FilterSidebar = ({
                           onClick={(e) => {
                             e.preventDefault();
                             e.stopPropagation();
-
-                            if (
-                              typeof loadMoreCategories ===
-                              "function"
-                            ) {
+                            if (typeof loadMoreCategories === "function") {
                               loadMoreCategories();
                             }
                           }}
                           disabled={categoryLoading}
-                          className="w-full text-center py-1.5 px-3 rounded-lg border border-[#8059ca] text-[#8059ca] hover:bg-[#8059ca] hover:text-white transition-all text-xs font-semibold cursor-pointer bg-transparent mt-2 block !bg-transparent hover:!bg-[#8059ca] hover:!text-white !text-[#8059ca]"
+                          className="w-full text-center py-1.5 px-3 !rounded-lg !border !border-[#8059ca] !text-[#8059ca] hover:!bg-[#8059ca] hover:!text-white transition-all !text-xs !font-semibold !cursor-pointer !bg-transparent !mt-2"
                         >
-                          {categoryLoading
-                            ? "Loading..."
-                            : "View More"}
+                          {categoryLoading ? "Loading..." : "View More"}
                         </button>
                       </div>
                     )}
@@ -504,31 +492,18 @@ const FilterSidebar = ({
                 </div>
 
                 {openAccordion.brands && (
-                  <div className="max-h-[160px] overflow-y-auto pr-1 scrollbar-thin flex flex-col gap-1 mt-1.5">
+                  <div className="max-h-[160px] overflow-y-auto pr-1 flex flex-col gap-0.5 mt-1.5">
                     {brands?.data?.map((brand) => {
                       const isActive = selectedBrands.includes(brand.slug);
                       return (
-                        <div
+                        <CheckboxRow
                           key={brand.slug}
-                          className="flex items-center justify-between py-1 px-2 hover:bg-purple-50/40 rounded-md cursor-pointer transition-colors"
+                          isActive={isActive}
+                          label={brand.name}
+                          count={`(${brand.productCount || 0})`}
                           onClick={() => onBrandToggle(brand.slug)}
-                        >
-                          <div className="flex items-center gap-2">
-                            <input
-                              type="checkbox"
-                              checked={isActive}
-                              readOnly
-                              className="w-3.5 h-3.5 rounded border-slate-300 text-[#8059ca] focus:ring-[#8059ca]"
-                            />
-                            <span className="text-[13px] text-slate-700">
-                              {brand.name}
-                            </span>
-                          </div>
-                          <span className="text-[11px] text-slate-400">
-                            ({brand.productCount || 0})
-                          </span>
-                        </div>
-                      )
+                        />
+                      );
                     })}
                   </div>
                 )}
@@ -536,27 +511,20 @@ const FilterSidebar = ({
                 {openAccordion.brands &&
                   brands?.pagination?.page <
                   brands?.pagination?.totalPages && (
-                    <div style={{ padding: "10px" }}>
+                    <div className="p-2">
                       <button
                         type="button"
                         onClick={(e) => {
                           e.preventDefault();
                           e.stopPropagation();
-
-                          console.log("BRAND VIEW MORE");
-
                           if (typeof loadMoreBrands === "function") {
                             loadMoreBrands();
                           }
                         }}
                         disabled={brandLoading}
-                        className="w-full text-center py-1.5 px-3 rounded-lg border border-[#8059ca] text-[#8059ca] hover:bg-[#8059ca] hover:text-white transition-all text-xs font-semibold cursor-pointer bg-transparent mt-2 block !bg-transparent hover:!bg-[#8059ca] hover:!text-white !text-[#8059ca]"
+                        className="w-full text-center py-1.5 px-3 !rounded-lg !border !border-[#8059ca] !text-[#8059ca] hover:!bg-[#8059ca] hover:!text-white transition-all !text-xs !font-semibold !cursor-pointer !bg-transparent !mt-2"
                       >
-                        {
-                          brandLoading
-                            ? "Loading..."
-                            : "View More"
-                        }
+                        {brandLoading ? "Loading..." : "View More"}
                       </button>
                     </div>
                   )
@@ -569,120 +537,100 @@ const FilterSidebar = ({
           )}
 
 
-          <hr className="border-t border-slate-100 my-0" />
-          <div className="bg-white p-2.5" style={{ display: complexityData.length > 0 ? "block" : "none" }}>
-            <div
-              onClick={() => toggleAccordion("complexity")}
-              className="flex justify-between items-center py-2 px-3 font-semibold text-slate-800 text-xs cursor-pointer select-none hover:bg-slate-50/50 rounded-lg transition-colors"
-            >
-              <span className="uppercase tracking-wider">Complexity</span>
-              <PlusMinus open={openAccordion.complexity} />
-            </div>
+          {complexityData.length > 0 && (
+            <>
+              <hr className="border-t border-slate-100 my-0" />
+              <div className="bg-white p-2.5">
+                <div
+                  onClick={() => toggleAccordion("complexity")}
+                  className="flex justify-between items-center py-2 px-3 font-semibold text-slate-800 text-xs cursor-pointer select-none hover:bg-slate-50/50 rounded-lg transition-colors"
+                >
+                  <span className="uppercase tracking-wider">Complexity</span>
+                  <PlusMinus open={openAccordion.complexity} />
+                </div>
 
-            {openAccordion.complexity && complexityData && complexityData.length > 0 && (
-              <div className="flex flex-col gap-1 mt-1.5">
-                {complexityData.map((form) => {
-                  const isActive = Array.isArray(selectedComplexity)
-                    ? selectedComplexity.includes(form.value)
-                    : false;
-                  const toggle = onComplexityToggle || onFormToggle;
-                  return (
-                    <div
-                      key={form.value}
-                      className="flex items-center py-1 px-2 hover:bg-purple-50/40 rounded-md cursor-pointer transition-colors"
-                      onClick={() => toggle(form.value)}
-                    >
-                      <div className="flex items-center gap-2">
-                        <input
-                          type="checkbox"
-                          checked={isActive}
-                          readOnly
-                          className="w-3.5 h-3.5 rounded border-slate-300 text-[#8059ca] focus:ring-[#8059ca]"
+                {openAccordion.complexity && (
+                  <div className="flex flex-col gap-0.5 mt-1.5">
+                    {complexityData.map((form) => {
+                      const isActive = Array.isArray(selectedComplexity) ? selectedComplexity.includes(form.value) : false;
+                      const toggle = onComplexityToggle || onFormToggle;
+                      return (
+                        <CheckboxRow
+                          key={form.value}
+                          isActive={isActive}
+                          label={form.label}
+                          onClick={() => toggle(form.value)}
                         />
-                        <span className="text-[13px] text-slate-700">
-                          {form.label}
-                        </span>
-                      </div>
-                    </div>
-                  );
-                })}
+                      );
+                    })}
+                  </div>
+                )}
               </div>
-            )}
-          </div>
+            </>
+          )}
 
-          <hr className="border-t border-slate-100 my-0" />
-          <div className="bg-white p-2.5" style={{ display: genderData.length > 0 ? "block" : "none" }}>
-            <div
-              onClick={() => toggleAccordion("gender")}
-              className="flex justify-between items-center py-2 px-3 font-semibold text-slate-800 text-xs cursor-pointer select-none hover:bg-slate-50/50 rounded-lg transition-colors"
-            >
-              <span className="uppercase tracking-wider">Gender</span>
-              <PlusMinus open={openAccordion.gender} />
-            </div>
+          {genderData.length > 0 && (
+            <>
+              <hr className="border-t border-slate-100 my-0" />
+              <div className="bg-white p-2.5">
+                <div
+                  onClick={() => toggleAccordion("gender")}
+                  className="flex justify-between items-center py-2 px-3 font-semibold text-slate-800 text-xs cursor-pointer select-none hover:bg-slate-50/50 rounded-lg transition-colors"
+                >
+                  <span className="uppercase tracking-wider">Gender</span>
+                  <PlusMinus open={openAccordion.gender} />
+                </div>
 
-            {openAccordion.gender && genderData && genderData.length > 0 && (
-              <div className="flex flex-col gap-1 mt-1.5">
-                {genderData.map((g) => {
-                  const isActive = Array.isArray(selectedGender) ? selectedGender.includes(g.value) : false;
-                  const toggle = onGenderToggle || onFormToggle;
-                  return (
-                    <div
-                      key={g.value}
-                      className="flex items-center py-1 px-2 hover:bg-purple-50/40 rounded-md cursor-pointer transition-colors"
-                      onClick={() => toggle(g.value)}
-                    >
-                      <div className="flex items-center gap-2">
-                        <input
-                          type="checkbox"
-                          checked={isActive}
-                          readOnly
-                          className="w-3.5 h-3.5 rounded border-slate-300 text-[#8059ca] focus:ring-[#8059ca]"
+                {openAccordion.gender && (
+                  <div className="flex flex-col gap-0.5 mt-1.5">
+                    {genderData.map((g) => {
+                      const isActive = Array.isArray(selectedGender) ? selectedGender.includes(g.value) : false;
+                      const toggle = onGenderToggle || onFormToggle;
+                      return (
+                        <CheckboxRow
+                          key={g.value}
+                          isActive={isActive}
+                          label={g.label}
+                          onClick={() => toggle(g.value)}
                         />
-                        <span className="text-[13px] text-slate-700">{g.label}</span>
-                      </div>
-                    </div>
-                  );
-                })}
+                      );
+                    })}
+                  </div>
+                )}
               </div>
-            )}
-          </div>
+            </>
+          )}
 
-          <hr className="border-t border-slate-100 my-0" />
-          <div className="bg-white p-2.5" style={{ display: samplesData.length > 0 ? "block" : "none" }}>
-            <div
-              onClick={() => toggleAccordion("samples")}
-              className="flex justify-between items-center py-2 px-3 font-semibold text-slate-800 text-xs cursor-pointer select-none hover:bg-slate-50/50 rounded-lg transition-colors"
-            >
-              <span className="uppercase tracking-wider">Samples</span>
-              <PlusMinus open={openAccordion.samples} />
-            </div>
-            {openAccordion.samples && samplesData && samplesData.length > 0 && (
-              <div className="flex flex-col gap-1 mt-1.5">
-                {samplesData.map((s) => {
-                  const isActive = Array.isArray(selectedSamples) ? selectedSamples.includes(s.value) : false;
-                  const toggle = onSampleToggle || onFormToggle;
-                  return (
-                    <div
-                      key={s.value}
-                      className="flex items-center py-1 px-2 hover:bg-purple-50/40 rounded-md cursor-pointer transition-colors"
-                      onClick={() => toggle(s.value)}
-                    >
-                      <div className="flex items-center gap-2">
-                        <input
-                          type="checkbox"
-                          checked={isActive}
-                          readOnly
-                          className="w-3.5 h-3.5 rounded border-slate-300 text-[#8059ca] focus:ring-[#8059ca]"
+          {samplesData.length > 0 && (
+            <>
+              <hr className="border-t border-slate-100 my-0" />
+              <div className="bg-white p-2.5">
+                <div
+                  onClick={() => toggleAccordion("samples")}
+                  className="flex justify-between items-center py-2 px-3 font-semibold text-slate-800 text-xs cursor-pointer select-none hover:bg-slate-50/50 rounded-lg transition-colors"
+                >
+                  <span className="uppercase tracking-wider">Samples</span>
+                  <PlusMinus open={openAccordion.samples} />
+                </div>
+                {openAccordion.samples && (
+                  <div className="flex flex-col gap-0.5 mt-1.5">
+                    {samplesData.map((s) => {
+                      const isActive = Array.isArray(selectedSamples) ? selectedSamples.includes(s.value) : false;
+                      const toggle = onSampleToggle || onFormToggle;
+                      return (
+                        <CheckboxRow
+                          key={s.value}
+                          isActive={isActive}
+                          label={s.label}
+                          onClick={() => toggle(s.value)}
                         />
-                        <span className="text-[13px] text-slate-700">{s.label}</span>
-                      </div>
-                    </div>
-                  );
-                })}
+                      );
+                    })}
+                  </div>
+                )}
               </div>
-            )}
-
-          </div>
+            </>
+          )}
 
           {/* Conditions Filter */}
           {conditionsData && conditionsData.length > 0 && (
@@ -697,26 +645,17 @@ const FilterSidebar = ({
                   <PlusMinus open={openAccordion.conditions} />
                 </div>
                 {openAccordion.conditions && conditionsData && conditionsData.length > 0 && (
-                  <div className="flex flex-col gap-1 mt-1.5">
+                  <div className="flex flex-col gap-0.5 mt-1.5">
                     {conditionsData.map((c) => {
                       const isActive = Array.isArray(selectedConditions) ? selectedConditions.includes(c.value) : false;
                       const toggle = onConditionToggle || onFormToggle;
                       return (
-                        <div
+                        <CheckboxRow
                           key={c.value}
-                          className="flex items-center py-1 px-2 hover:bg-purple-50/40 rounded-md cursor-pointer transition-colors"
+                          isActive={isActive}
+                          label={c.label}
                           onClick={() => toggle(c.value)}
-                        >
-                          <div className="flex items-center gap-2">
-                            <input
-                              type="checkbox"
-                              checked={isActive}
-                              readOnly
-                              className="w-3.5 h-3.5 rounded border-slate-300 text-[#8059ca] focus:ring-[#8059ca]"
-                            />
-                            <span className="text-[13px] text-slate-700">{c.label}</span>
-                          </div>
-                        </div>
+                        />
                       );
                     })}
                   </div>
@@ -738,28 +677,17 @@ const FilterSidebar = ({
                 </div>
 
                 {openAccordion.nature && (
-                  <div className="flex flex-col gap-1 mt-1.5">
+                  <div className="flex flex-col gap-0.5 mt-1.5">
                     {types?.map((type) => {
                       const isActive = selectedTypes.includes(type.value);
                       return (
-                        <div
+                        <CheckboxRow
                           key={type.value}
-                          className="flex items-center py-1 px-2 hover:bg-purple-50/40 rounded-md cursor-pointer transition-colors"
+                          isActive={isActive}
+                          label={type.label}
                           onClick={() => onTypeToggle(type.value)}
-                        >
-                          <div className="flex items-center gap-2">
-                            <input
-                              type="checkbox"
-                              checked={isActive}
-                              readOnly
-                              className="w-3.5 h-3.5 rounded border-slate-300 text-[#8059ca] focus:ring-[#8059ca]"
-                            />
-                            <span className="text-[13px] text-slate-700">
-                              {type.label}
-                            </span>
-                          </div>
-                        </div>
-                      )
+                        />
+                      );
                     })}
                   </div>
                 )}
@@ -781,31 +709,18 @@ const FilterSidebar = ({
                 </div>
 
                 {openAccordion.form && (
-                  <div className="flex flex-col gap-1 mt-1.5">
+                  <div className="flex flex-col gap-0.5 mt-1.5">
                     {medicineForms?.map((form) => {
                       const isActive = selectedForms.includes(form.value);
                       return (
-                        <div
+                        <CheckboxRow
                           key={form.value}
-                          className="flex items-center justify-between py-1 px-2 hover:bg-purple-50/40 rounded-md cursor-pointer transition-colors"
+                          isActive={isActive}
+                          label={form.label}
+                          count={`(${form.productCount || 0})`}
                           onClick={() => onFormToggle(form.value)}
-                        >
-                          <div className="flex items-center gap-2">
-                            <input
-                              type="checkbox"
-                              checked={isActive}
-                              readOnly
-                              className="w-3.5 h-3.5 rounded border-slate-300 text-[#8059ca] focus:ring-[#8059ca]"
-                            />
-                            <span className="text-[13px] text-slate-700">
-                              {form.label}
-                            </span>
-                          </div>
-                          <span className="text-[11px] text-slate-400">
-                            ({form.productCount || 0})
-                          </span>
-                        </div>
-                      )
+                        />
+                      );
                     })}
                   </div>
                 )}
@@ -827,31 +742,18 @@ const FilterSidebar = ({
                 </div>
 
                 {openAccordion.compositions && (
-                  <div className="max-h-[160px] overflow-y-auto pr-1 scrollbar-thin flex flex-col gap-1 mt-1.5">
+                  <div className="max-h-[160px] overflow-y-auto pr-1 flex flex-col gap-0.5 mt-1.5">
                     {compositions?.data?.map((composition) => {
                       const isActive = selectedCompositions.includes(composition.slug);
                       return (
-                        <div
+                        <CheckboxRow
                           key={composition.slug}
-                          className="flex items-center justify-between py-1 px-2 hover:bg-purple-50/40 rounded-md cursor-pointer transition-colors"
+                          isActive={isActive}
+                          label={composition.name}
+                          count={`(${composition.productCount || 0})`}
                           onClick={() => onCompositionToggle(composition.slug)}
-                        >
-                          <div className="flex items-center gap-2">
-                            <input
-                              type="checkbox"
-                              checked={isActive}
-                              readOnly
-                              className="w-3.5 h-3.5 rounded border-slate-300 text-[#8059ca] focus:ring-[#8059ca]"
-                            />
-                            <span className="text-[13px] text-slate-700">
-                              {composition.name}
-                            </span>
-                          </div>
-                          <span className="text-[11px] text-slate-400">
-                            ({composition.productCount || 0})
-                          </span>
-                        </div>
-                      )
+                        />
+                      );
                     })}
                   </div>
                 )}
@@ -864,17 +766,14 @@ const FilterSidebar = ({
                         onClick={(e) => {
                           e.preventDefault();
                           e.stopPropagation();
-
                           if (typeof loadMoreCompositions === "function") {
                             loadMoreCompositions();
                           }
                         }}
                         disabled={compositionLoading}
-                        className="w-full text-center font-[600] py-1.5 px-3 rounded-lg border border-[#8059ca] text-[#8059ca] hover:bg-[#8059ca] hover:text-white transition-all text-xs font-semibold cursor-pointer bg-transparent mt-2 block !bg-transparent hover:!bg-[#8059ca] hover:!text-white !text-[#8059ca]"
+                        className="w-full text-center py-1.5 px-3 !rounded-lg !border !border-[#8059ca] !text-[#8059ca] hover:!bg-[#8059ca] hover:!text-white transition-all !text-xs !font-semibold !cursor-pointer !bg-transparent !mt-2"
                       >
-                        {compositionLoading
-                          ? "Loading..."
-                          : "View More"}
+                        {compositionLoading ? "Loading..." : "View More"}
                       </button>
                     </div>
                   )}

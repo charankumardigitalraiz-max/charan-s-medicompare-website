@@ -497,41 +497,26 @@ const HomeCareServices = ({
     <>
       <SEOHelmet page="homecare" />
       {medicalTreatments && medicalTreatments.length > 0 && (
-        <section
-          className="section pb-5"
-          style={{ backgroundColor: PRIMARY_SECTION_BG, paddingTop: "0" }}
-        >
-          <div className="container-fluid">
-            <div className="row align-items-center py-3">
-              <div className="col-6 text-start">
-                <h3 className="mb-2 top-vendor-badge">
-                  <i className="fas fa-bolt"></i>
-                  Top Services
-                </h3>
-              </div>
-
-              <div className="col-6 text-end">
-                <Link
-                  to={`/${currentService}/all`}
-                  className="top-vendor-badge"
-                  style={{
-                    fontWeight: "600"
-                  }}
-                >
-                  View All
-                  <i className="isax isax-arrow-right-1 ms-1"></i>
-                </Link>
-              </div>
+        <section className="!pb-5 !pt-0 !bg-[#f8f4ff]">
+          <div className="container-fluid !px-3">
+            {/* Header */}
+            <div className="!flex !items-center !justify-between !flex-wrap !gap-3 !mb-4 !pt-4">
+              <h3 className="!m-0 !text-[20px] !font-semibold !text-[#1a1a1a]">
+                <i className="fas fa-bolt !text-warning !me-2"></i>
+                Top Services
+              </h3>
+              <Link
+                to={`/${currentService}/all`}
+                className="!inline-flex !items-center !justify-center !font-semibold !text-[12px] !text-[#8059ca] hover:!bg-[#8059ca] hover:!text-white !transition-all !duration-300 !bg-gradient-to-br !from-[rgba(125,46,255,0.1)] !to-[rgba(59,130,246,0.1)] !p-[8px] !rounded-full !w-[36px] !h-[36px] md:!py-[8px] md:!px-[20px] md:!rounded-[50px] md:!w-auto md:!h-auto"
+              >
+                <span className="!hidden md:!inline">View All</span>
+                <i className="isax isax-arrow-right-1 md:!ms-1"></i>
+              </Link>
             </div>
 
-            <div
-              className="meq-swiper-wrapper"
-              style={{ position: "relative" }}
-            >
-              <button
-                className="meq-arrow-btn homecare-prev"
-                aria-label="Previous"
-              >
+            {/* Swiper */}
+            <div className="meq-swiper-wrapper !relative [&_.swiper-wrapper]:!items-stretch [&_.swiper-slide]:!h-auto">
+              <button className="meq-arrow-btn homecare-prev" aria-label="Previous">
                 <i className="fas fa-chevron-left"></i>
               </button>
               <Swiper {...swiperSettings}>
@@ -540,309 +525,111 @@ const HomeCareServices = ({
                   const med = treatment?.tabletdetails;
                   const bookingType = vendor?.bookingType || service?.categoryType || "cart";
                   return (
-                    <SwiperSlide
-                      key={index}
-                      style={{ display: "flex", alignSelf: "stretch" }}
-                    >
-                      <div
-                        className="card border-0"
-                        style={{
-                          borderRadius: "16px",
-                          backgroundColor: "#ffffff",
-                          boxShadow: "0 4px 20px rgba(0,0,0,0.1)",
-                          transition: "transform 0.3s, box-shadow 0.3s",
-                          overflow: "hidden",
-                          display: "flex",
-                          flexDirection: "column",
-                          width: "100%",
-                          height: "100%",
-                        }}
-                      >
+                    <SwiperSlide key={index} className="!p-2 !flex !self-stretch">
+                      <div className="!flex !flex-col !h-full !w-full !rounded-[16px] !bg-white !shadow-[0_4px_20px_rgba(0,0,0,0.1)] !overflow-hidden !transition-all !duration-300 hover:!shadow-[0_8px_28px_rgba(0,0,0,0.13)] hover:!-translate-y-[2px] !relative">
+
+                        {/* Compare Badge */}
                         <div
                           onClick={(e) => {
                             e.stopPropagation();
                             const data = treatment?.tabletdetails;
-
-                            const categorySlug =
-                              data?.subcategorydetails?.catdetails?.slug;
-
-                            const subcategorySlug =
-                              data?.subcategorydetails?.slug;
-
+                            const categorySlug = data?.subcategorydetails?.catdetails?.slug;
+                            const subcategorySlug = data?.subcategorydetails?.slug;
                             const productSlug = data?.slug;
-                            if (
-                              !categorySlug ||
-                              !subcategorySlug ||
-                              !productSlug
-                            )
-                              return;
-
-                            navigate(
-                              `/${categorySlug}/${subcategorySlug}/${productSlug}/compare`,
-                            );
+                            if (!categorySlug || !subcategorySlug || !productSlug) return;
+                            navigate(`/${categorySlug}/${subcategorySlug}/${productSlug}/compare`);
                           }}
-                          style={{
-                            position: "absolute",
-                            top: "10px",
-                            right: "10px",
-                            background: "linear-gradient(135deg, #f59e0b 0%, #d97706 100%)",
-                            borderRadius: "30px",
-                            padding: "3px 14px",
-                            display: "flex",
-                            alignItems: "center",
-                            gap: "6px",
-                            boxShadow: "0 4px 12px rgba(245, 158, 11, 0.4)",
-                            zIndex: 10,
-                            border: "1.5px solid #ffffff",
-                            cursor: "pointer",
-                            transition: "all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
-                            transform: "scale(1)",
-                          }}
-                          onMouseEnter={(e) => {
-                            e.currentTarget.style.transform = "scale(1.12) translateY(-2px)";
-                            e.currentTarget.style.boxShadow = "0 8px 20px rgba(245, 158, 11, 0.55)";
-                          }}
-                          onMouseLeave={(e) => {
-                            e.currentTarget.style.transform = "scale(1)";
-                            e.currentTarget.style.boxShadow = "0 4px 12px rgba(245, 158, 11, 0.4)";
-                          }}
+                          className="!absolute !top-[10px] !right-[10px] !flex !items-center !gap-[6px] !z-10 !cursor-pointer !transition-all !duration-300 hover:!scale-[1.12] hover:!-translate-y-[2px]"
+                          style={{ background: "linear-gradient(135deg, #f59e0b 0%, #d97706 100%)", borderRadius: "30px", padding: "3px 14px", boxShadow: "0 4px 12px rgba(245,158,11,0.4)", border: "1.5px solid #fff" }}
                           title="Compare Package"
                         >
-                          <i
-                            className="fa-solid fa-hand-pointer"
-                            style={{
-                              fontSize: "13px",
-                              color: "#ffffff",
-                              transform: "rotate(90deg)",
-                              display: "inline-block",
-                            }}
-                          ></i>
-                          <span
-                            style={{
-                              fontSize: "11px",
-                              fontWeight: "800",
-                              color: "#ffffff",
-                              textTransform: "uppercase",
-                              letterSpacing: "0.6px",
-                            }}
-                          >
-                            Compare
-                          </span>
+                          <i className="fa-solid fa-hand-pointer" style={{ fontSize: "13px", color: "#fff", transform: "rotate(90deg)", display: "inline-block" }}></i>
+                          <span style={{ fontSize: "11px", fontWeight: "800", color: "#fff", textTransform: "uppercase", letterSpacing: "0.6px" }}>Compare</span>
                         </div>
 
-                        <div
-                          style={{
-                            width: "100%",
-                            height: "220px",
-                            borderTopLeftRadius: "16px",
-                            borderTopRightRadius: "16px",
-                            overflow: "hidden",
-                            backgroundColor: "#fff",
-                          }}
-                        >
+                        {/* Product Image */}
+                        <div className="!w-full !h-[180px] !rounded-t-[16px] !overflow-hidden !bg-white">
                           <img
-                            src={getImageUrl(
-                              treatment?.tabletdetails?.files[0],
-                            )}
+                            src={getImageUrl(treatment?.tabletdetails?.files[0])}
                             alt={treatment?.tabletdetails?.name}
                             title={treatment?.tabletdetails?.name}
                             onClick={() => handleProductClick(treatment)}
-                            style={{
-                              width: "100%",
-                              height: "100%",
-                              objectFit: "contain",
-                              cursor: "pointer",
-                            }}
+                            className="!w-full !h-full !object-contain !cursor-pointer"
                           />
                         </div>
 
-                        <div
-                          className="card-body"
-                          style={{
-                            display: "flex",
-                            flexDirection: "column",
-                            padding: "8px 8px 0 8px",
-                          }}
-                        >
-                          <div className="d-flex justify-content-between align-items-center">
-                            <h3
-                              className="titlee text-dark mb-0 mt-0"
-                              style={{ marginTop: "0", textTransform: "capitalize" }}
-                            >
-                              {treatment?.tabletdetails.name?.length > 20
-                                ? treatment?.tabletdetails.name.slice(0, 20) +
-                                "..."
-                                : treatment?.tabletdetails.name}
+                        {/* Card Body */}
+                        <div className="!flex !flex-col !flex-1 !p-3">
+
+                          {/* Name & Rating */}
+                          <div className="!flex !items-start !justify-between !gap-2 !mb-2">
+                            <h3 className="!m-0 !text-[14px] !font-semibold !text-[#1a1a1a] !capitalize !leading-snug !line-clamp-2 !min-h-[2.8em] !cursor-pointer" onClick={() => handleProductClick(treatment)}>
+                              {treatment?.tabletdetails?.name || "Service"}
                             </h3>
-
-                            <div
-                              className="d-flex align-items-center justify-content-end"
-                              style={{ minWidth: "80px", fontSize: "12px" }}
-                            >
-                              <i className="fa fa-star text-warning me-1"></i>
-                              <span className="me-1">
-                                {treatment?.tabletdetails?.averageRating?.toFixed(
-                                  1,
-                                ) > 0
-                                  ? treatment?.tabletdetails.averageRating?.toFixed(
-                                    1,
-                                  )
-                                  : 0}
+                            <div className="!flex !items-center !shrink-0 !gap-[3px] !text-[11px]">
+                              <i className="fa fa-star !text-[#ffc107]"></i>
+                              <span className="!text-[#444]">
+                                {treatment?.tabletdetails?.averageRating?.toFixed(1) > 0 ? treatment?.tabletdetails.averageRating?.toFixed(1) : 0}
                               </span>
-
-                              <i
-                                className="fa fa-users me-1"
-                                style={{ color: PRIMARY_COLOR }}
-                              ></i>
-                              <span>
-                                (
-                                {treatment?.tabletdetails?.ratingCount > 0
-                                  ? `${treatment?.tabletdetails.ratingCount}+`
-                                  : 0}
-                                )
+                              <i className="fa fa-users !ml-1 !text-primary"></i>
+                              <span className="!text-[#666]">
+                                ({treatment?.tabletdetails?.ratingCount > 0 ? `${treatment?.tabletdetails.ratingCount}+` : 0})
                               </span>
                             </div>
                           </div>
 
-                          <div
-                            style={{
-                              // flexGrow: 1,
-                              cursor: "pointer",
-                              display: "flex",
-                              flexDirection: "column",
+                          {/* Description */}
+                          <p className="!m-0 !mb-2 !text-[11px] !text-[#666] !leading-normal !line-clamp-2 !min-h-[2.8em] !cursor-pointer" onClick={() => handleProductClick(treatment)}>
+                            {formatDescription(treatment?.tabletdetails?.description, 100)}
+                          </p>
 
-                            }}
-                            onClick={() => handleProductClick(treatment)}
-                          >
-                            <p
-                              style={{
-                                fontSize: "13px",
-                                color: "#666",
-                                lineHeight: "1.5",
-                                display: "block",
-                                marginBottom: "0",
-                              }}
-                              className="mb-1"
-                            >
-                              {formatDescription(
-                                treatment?.tabletdetails?.description,
-                                100,
-                              )}
-                            </p>
-
-                            {treatment?.tabletdetails?.duration && (
-                              <div className="report-timee d-flex align-items-center gap-2">
-                                <i
-                                  className="fa-regular fa-clock"
-                                  style={{ color: PRIMARY_COLOR }}
-                                ></i>
-                                <span>Duration : </span>
-                                <strong>
-                                  {treatment?.tabletdetails?.duration}
-                                </strong>
-                              </div>
-                            )}
-                            {treatment?.tabletdetails?.shiftType && (
-                              <div className="report-timee d-flex align-items-center gap-2">
-                                <i
-                                  className="fa-regular fa-calendar-days"
-                                  style={{ color: PRIMARY_COLOR }}
-                                ></i>
-                                <span>Shift : </span>
-                                <strong>
-                                  {treatment?.tabletdetails?.shiftType}
-                                </strong>
-                              </div>
-                            )}
-                            {treatment?.tabletdetails?.nursecareType && (
-                              <div className="report-timee d-flex align-items-center gap-2">
-                                <i
-                                  className="fas fa-house-user"
-                                  style={{ color: PRIMARY_COLOR }}
-                                ></i>
-                                <span>Type : </span>
-                                <strong>
-                                  {treatment?.tabletdetails?.nursecareType}
-                                </strong>
-                              </div>
-                            )}
-                            {treatment?.tabletdetails?.homecareMode && (
-                              <div className="report-timee d-flex align-items-center gap-2">
-                                <i
-                                  className="fa-solid fa-house"
-                                  style={{ color: PRIMARY_COLOR }}
-                                ></i>
-                                <span>Mode : </span>
-                                <strong>
-                                  {treatment?.tabletdetails?.homecareMode}
-                                </strong>
-                              </div>
-                            )}
-
-                            <div
-                              style={{
-                                backgroundColor: PRIMARY_SECTION_BG,
-                                padding: "10px",
-                                borderRadius: "8px",
-                                border: "1px solid rgba(128, 89, 202, 0.15)",
-                              }}
-                            >
-                              <div
-                                style={{
-                                  display: "flex",
-                                  flexDirection: "column",
-                                }}
-                              >
-                                <div
-                                  style={{
-                                    fontSize: "11px",
-                                    color: "#000",
-                                    marginBottom: "4px",
-                                    fontWeight: "500",
-                                  }}
-                                >
-                                  Starting From
-                                </div>
-                                {treatment?.discountprice ? (
-                                  <div>
-                                    <span
-                                      style={{
-                                        fontWeight: "bold",
-                                        marginRight: "8px",
-                                        fontSize: "16px",
-                                      }}
-                                    >
-                                      ₹{treatment.discountprice}
-                                    </span>
-
-                                    <span
-                                      style={{
-                                        textDecoration: "line-through",
-                                        color: "#999",
-                                        marginRight: "8px",
-                                      }}
-                                    >
-                                      ₹{treatment.price}
-                                    </span>
-
-                                    <span
-                                      style={{ color: "red", fontSize: "12px" }}
-                                    >
-                                      {Math.round(
-                                        ((treatment.price -
-                                          treatment.discountprice) /
-                                          treatment.price) *
-                                        100,
-                                      )}
-                                      % OFF
-                                    </span>
-                                  </div>
-                                ) : (
-                                  <span>₹{treatment?.price || 0}</span>
-                                )}
-                              </div>
+                          {/* Optional metadata */}
+                          {treatment?.tabletdetails?.duration && (
+                            <div className="!flex !items-center !gap-2 !text-[11px] !text-[#555] !mt-[4px]">
+                              <i className="fa-regular fa-clock !text-primary"></i>
+                              <span>Duration:</span>
+                              <strong>{treatment?.tabletdetails?.duration}</strong>
                             </div>
+                          )}
+                          {treatment?.tabletdetails?.shiftType && (
+                            <div className="!flex !items-center !gap-2 !text-[11px] !text-[#555] !mt-[2px]">
+                              <i className="fa-regular fa-calendar-days !text-primary"></i>
+                              <span>Shift:</span>
+                              <strong>{treatment?.tabletdetails?.shiftType}</strong>
+                            </div>
+                          )}
+                          {treatment?.tabletdetails?.nursecareType && (
+                            <div className="!flex !items-center !gap-2 !text-[11px] !text-[#555] !mt-[2px]">
+                              <i className="fas fa-house-user !text-primary"></i>
+                              <span>Type:</span>
+                              <strong>{treatment?.tabletdetails?.nursecareType}</strong>
+                            </div>
+                          )}
+                          {treatment?.tabletdetails?.homecareMode && (
+                            <div className="!flex !items-center !gap-2 !text-[11px] !text-[#555] !mt-[2px]">
+                              <i className="fa-solid fa-house !text-primary"></i>
+                              <span>Mode:</span>
+                              <strong>{treatment?.tabletdetails?.homecareMode}</strong>
+                            </div>
+                          )}
+
+                          {/* Price — pushed to bottom */}
+                          <div className="!rounded-[8px] !p-[8px] !mt-auto !border !border-[rgba(128,89,202,0.15)] !bg-[#f8f4ff]">
+                            <div className="!text-[11px] !text-[#000] !font-medium !mb-1">Starting From</div>
+                            {treatment?.discountprice ? (
+                              <div className="!flex !flex-wrap !items-center !gap-2">
+                                <span className="!font-bold !text-[16px] !text-[#1a1a1a]">₹{treatment.discountprice}</span>
+                                <span className="!line-through !text-[#999] !text-[13px]">₹{treatment.price}</span>
+                                <span className="!text-green-600 !text-[11px] !font-semibold">
+                                  {Math.round(((treatment.price - treatment.discountprice) / treatment.price) * 100)}% OFF
+                                </span>
+                              </div>
+                            ) : (
+                              <span className="!font-bold !text-[16px] !text-[#1a1a1a]">₹{treatment?.price || 0}</span>
+                            )}
                           </div>
+
+                          {/* Actions */}
                           <VendorActions
                             bookingType={
                               ["cart", "booking", "slots", "leads", "lead", "rentals", "consultation", "ride", "appointment", "rentals_addtocarts"].includes(bookingType)
@@ -855,11 +642,7 @@ const HomeCareServices = ({
                             price={treatment?.price || 0}
                             stock={treatment?.stock || 999}
                             service={treatment?.tabletdetails?.subcategorydetails?.catdetails?.fixedType || treatment?.tabletdetails?.subcategorydetails?.category?.fixedType || treatment?.tabletdetails?.category?.fixedType || "homecareservices"}
-                            calculatedDiscountPrice={
-                              treatment?.discountprice ||
-                              treatment?.discountPrice ||
-                              null
-                            }
+                            calculatedDiscountPrice={treatment?.discountprice || treatment?.discountPrice || null}
                             handleRentalBookinProcess={handleRentalBookinProcess}
                             handleNavigateToBooking={
                               ["cart", "booking", "slots", "leads", "lead", "rentals", "consultation", "ride", "appointment", "rentals_addtocarts"].includes(bookingType)
@@ -870,206 +653,60 @@ const HomeCareServices = ({
                             handleOpenConsultationModal={handleConsultationClick}
                             handleOpenAppointmentModal={handleAppointmentClick}
                             handleOpenRideModal=""
-                            containerStyle={{ width: "100%", marginTop: "5px" }}
-                            buttonStyle={{
-                              width: "100%",
-                              padding: "8px 8px",
-                              borderRadius: "8px",
-                              fontSize: "12px",
-                              fontWeight: "600",
-
-                            }}
+                            containerStyle={{ width: "100%", marginTop: "6px" }}
+                            buttonStyle={{ width: "100%", padding: "8px", borderRadius: "8px", fontSize: "12px", fontWeight: "600" }}
                           />
+
+                          {/* Vendor footer */}
                           {vendor && (
                             <div
-                              style={{
-                                marginTop: "4px",
-                                borderTop: "1px solid #e0e0e0",
-                                cursor: "pointer",
+                              className="!flex !items-center !gap-2 !mt-[6px] !pt-[6px] !border-t !border-[#e0e0e0] !cursor-pointer"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                const vendorId = vendor?.slug || vendor?.vendorId || vendor?._id || vendor?.bussinessdetails?.slug || vendor?.bussinessdetails?.vendorId || vendor?.bussinessdetails?._id;
+                                if (vendorId) {
+                                  sessionStorage.setItem("vendorId", vendorId);
+                                  const name = vendor?.bussinessdetails?.name || vendor?.name || "Vendor Store";
+                                  const vendorSlug = name.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "");
+                                  navigate(`/vendor-profile/${vendorSlug}`);
+                                } else {
+                                  toast.error("Vendor information not available");
+                                }
                               }}
                             >
-                              <div
-                                className="d-flex align-items-center gap-2 footers"
-                                style={{
-                                  padding: "0px 0 0 0",
-                                  justifyContent: "center",
-                                }}
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  const vendorId =
-                                    vendor?.slug ||
-                                    vendor?.vendorId ||
-                                    vendor?._id ||
-                                    vendor?.bussinessdetails?.slug ||
-                                    vendor?.bussinessdetails?.vendorId ||
-                                    vendor?.bussinessdetails?._id;
-                                  if (vendorId) {
-                                    sessionStorage.setItem(
-                                      "vendorId",
-                                      vendorId,
-                                    );
-                                    const name =
-                                      vendor?.bussinessdetails?.name ||
-                                      vendor?.name ||
-                                      "Vendor Store";
-                                    const vendorSlug = name
-                                      .toLowerCase()
-                                      .replace(/\s+/g, "-")
-                                      .replace(/[^a-z0-9-]/g, "");
-                                    navigate(`/vendor-profile/${vendorSlug}`);
-                                  } else {
-                                    toast.error(
-                                      "Vendor information not available",
-                                    );
-                                  }
-                                }}
-                              >
-                                <div
-                                  style={{
-                                    width: "48px",
-                                    height: "48px",
-                                    borderRadius: "6px",
-                                    overflow: "hidden",
-                                    background: "#fff",
-                                    flexShrink: 0,
-                                  }}
-                                >
-                                  <img
-                                    src={
-                                      getImageUrl(
-                                        vendor?.bussiness_image?.[0]?.url,
-                                      ) || ""
-                                    }
-                                    alt={vendor.name}
-                                    style={{
-                                      width: "100%",
-                                      height: "100%",
-                                      objectFit: "contain",
-                                    }}
-                                  />
-                                </div>
-
-                                <div
-                                  className="flex-grow-1"
-                                  style={{ minWidth: 0 }}
-                                >
-                                  <h6
-                                    className="mb-0 text-dark"
-                                    style={{
-                                      fontSize: "12px",
-                                      fontWeight: "600",
-                                      whiteSpace: "nowrap",
-                                      overflow: "hidden",
-                                      textOverflow: "ellipsis",
-                                    }}
-                                  >
-                                    {vendor.name}
-                                  </h6>
-
-
+                              <div className="!w-10 !h-10 !rounded-lg !overflow-hidden !bg-white !border !border-[rgba(125,46,255,0.15)] !shrink-0">
+                                <img
+                                  src={getImageUrl(vendor?.bussiness_image?.[0]?.url) || ""}
+                                  alt={vendor.name}
+                                  className="!w-full !h-full !object-contain"
+                                />
+                              </div>
+                              <div className="!grow !min-w-0">
+                                <div className="!flex !items-center !justify-between !gap-2 !mb-[2px]">
+                                  <h6 className="!m-0 !text-[12px] !font-semibold !truncate">{vendor.name}</h6>
                                   {(() => {
                                     const rating = Number(treatment?.averageRating);
                                     const count = Number(treatment?.ratingCount);
                                     if (!rating || !count || rating === 0 || count === 0) return null;
-
                                     return (
-                                      <div
-                                        style={{
-                                          display: "flex",
-                                          alignItems: "center",
-                                          gap: "4px",
-                                          fontSize: "10px",
-                                          color: "#666",
-                                          marginTop: "2px",
-                                          marginBottom: "4px",
-                                        }}
-                                      >
-                                        <i className="fas fa-star" style={{ color: "#ffc107", fontSize: "9px" }}></i>
-                                        <span style={{ fontWeight: "500" }}>{rating.toFixed(1)}</span>
-                                        <span style={{ color: "#999" }}>({count}+)</span>
+                                      <div className="!flex !items-center !gap-[4px] !text-[10px] !text-[#666] !shrink-0">
+                                        <i className="fas fa-star !text-[#ffc107] !text-[9px]"></i>
+                                        <span className="!font-medium">{rating.toFixed(1)}</span>
+                                        <span className="!text-[#999]">({count}+)</span>
                                       </div>
                                     );
                                   })()}
-
-
-                                  {/* {treatment?.averageRating && treatment?.ratingCount && (
-                                    <div
-                                      style={{
-                                        display: "flex",
-                                        alignItems: "center",
-                                        gap: "4px",
-                                        fontSize: "10px",
-                                        color: "#666",
-                                        marginTop: "2px",
-                                        marginBottom: "4px",
-                                      }}
-                                    >
-                                      <i
-                                        className="fas fa-star"
-                                        style={{
-                                          color: "#ffc107",
-                                          fontSize: "9px"
-                                        }}
-                                      ></i>
-                                      <span style={{ fontWeight: "500" }}>
-                                        {treatment?.averageRating.toFixed(1)}
-                                      </span>
-                                      <span style={{ color: "#999" }}>
-                                        ({treatment?.ratingCount}+)
-                                      </span>
-                                    </div>
-                                  )} */}
-
-
-
-                                  <div
-                                    className="d-flex align-items-center gap-1 text-dark"
-                                    style={{ marginTop: "2px" }}
-                                  >
-                                    <i
-                                      className="fa-solid fa-location-dot"
-                                      style={{
-                                        fontSize: "11px",
-                                        color: "#8059ca",
-                                        flexShrink: 0,
-                                      }}
-                                    ></i>
-                                    <span
-                                      style={{
-                                        fontSize: "11px",
-                                        whiteSpace: "nowrap",
-                                        overflow: "hidden",
-                                        textOverflow: "ellipsis",
-                                      }}
-                                    >
-                                      {vendor.address?.length > 22
-                                        ? vendor.address.slice(0, 22) + "..."
-                                        : vendor.address ||
-                                        "Address not available"}
-                                    </span>
-                                  </div>
-                                  {treatment?.distanceInKm && (
-                                    <div
-                                      className="d-flex align-items-center gap-1 text-muted"
-                                      style={{ marginTop: "2px" }}
-                                    >
-                                      <i
-                                        className="isax isax-route-square"
-                                        style={{
-                                          fontSize: "11px",
-                                          color: "#8059ca",
-                                        }}
-                                      ></i>
-
-                                      <span style={{ fontSize: "11px" }}>
-                                        {parseFloat(
-                                          treatment.distanceInKm,
-                                        ).toFixed(1)}{" "}
-                                        km away
-                                      </span>
-                                    </div>
-                                  )}
                                 </div>
+                                <div className="!flex !items-center !gap-1 !text-[#6b7280] !text-[10px] !overflow-hidden">
+                                  <i className="fa-solid fa-location-dot !text-[10px] !text-[#8059ca]"></i>
+                                  <span className="!truncate">{vendor.address}</span>
+                                </div>
+                                {treatment?.distanceInKm && (
+                                  <div className="!flex !items-center !gap-1 !text-[#6b7280] !text-[10px]">
+                                    <i className="fas fa-map-marker-alt !text-[9px] !text-[#8059ca]"></i>
+                                    <span>{parseFloat(treatment.distanceInKm).toFixed(1)} km away</span>
+                                  </div>
+                                )}
                               </div>
                             </div>
                           )}
@@ -1084,12 +721,14 @@ const HomeCareServices = ({
               </button>
             </div>
           </div>
-        </section >
+        </section>
       )}
+
+
 
       {/* How It Works Section */}
       <section
-        className="how-it-work-fourteen py-5"
+        className="!py-10"
         style={{
           backgroundColor: "#E8E4F5",
           backgroundImage: "url('/assets/Medicompares%20Background.png')",
@@ -1098,428 +737,246 @@ const HomeCareServices = ({
           backgroundRepeat: "no-repeat",
         }}
       >
-        <style>{`
-          .hc-mobile-steps {
-            display: none;
-          }
+        <div className="!max-w-7xl !mx-auto !px-4">
+          <div className="!flex !flex-col lg:!flex-row !items-center !gap-8">
 
-          @media (max-width: 991.98px) {
-            .how-it-work-fourteen .work-flow-chart {
-              display: none !important;
-            }
-
-            .hc-mobile-steps {
-              display: flex;
-              flex-direction: column;
-              gap: 0;
-              margin-top: 8px;
-              padding: 0 4px;
-            }
-
-            .how-it-work-fourteen .section-work-head {
-              text-align: center;
-            }
-          }
-
-          .hc-mobile-step {
-            display: flex;
-            align-items: flex-start;
-            gap: 14px;
-            position: relative;
-            padding-bottom: 18px;
-          }
-
-          .hc-mobile-step:not(:last-child)::after {
-            content: "";
-            position: absolute;
-            left: 23px;
-            top: 50px;
-            bottom: 2px;
-            width: 2px;
-            background: linear-gradient(180deg, #8059ca 0%, #d8c9f5 100%);
-          }
-
-          .hc-mobile-step__badge {
-            width: 48px;
-            height: 48px;
-            border-radius: 14px;
-            background: #fff;
-            border: 2px solid #8059ca;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            box-shadow: 0 4px 12px rgba(128, 89, 202, 0.14);
-            z-index: 1;
-          }
-
-          .hc-mobile-step__badge img {
-            width: 24px;
-            height: 24px;
-          }
-
-          .hc-mobile-step__content {
-            flex: 1;
-            background: #fff;
-            border-radius: 14px;
-            padding: 14px 16px;
-            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
-            border: 1px solid rgba(128, 89, 202, 0.12);
-          }
-
-          .hc-mobile-step__content.hc-highlight {
-            background: #fff8e6;
-            border-color: #f0d56b;
-          }
-
-          .hc-mobile-step__count {
-            font-size: 11px;
-            font-weight: 700;
-            color: #8059ca;
-            letter-spacing: 0.4px;
-          }
-
-          .hc-mobile-step__title {
-            font-size: 15px;
-            font-weight: 600;
-            color: #1a1a1a;
-            margin: 4px 0 0;
-          }
-        `}</style>
-
-        <div className="container">
-          <div className="row align-items-center">
-            <div className="col-xl-5 col-lg-4">
-              <div
-                className="section-work-head aos-init aos-animate"
-                data-aos="fade-up"
-                data-aos-delay={400}
-              >
-                <span>Simple booking process</span>
-                <h2>
-                  How it <span>Works &amp; Booking</span>
-                </h2>
-                <p className="text-muted mt-3">
-                  Book professional home care services in just a few simple
-                  steps. Our streamlined process ensures you get the care you
-                  need quickly and efficiently.
-                </p>
-              </div>
+            {/* Left Column Header Info */}
+            <div className="lg:!w-5/12 !text-center lg:!text-left">
+              <span className="!text-[12px] !font-semibold !text-[#8059ca] !tracking-wider !uppercase">Simple booking process</span>
+              <h2 className="!mt-2 !text-[32px] !font-bold !text-[#1a1a1a] !leading-tight">
+                How it <span className="!text-[#8059ca]">Works &amp; Booking</span>
+              </h2>
+              <p className="!text-[#666] !text-[14px] !leading-[1.6] !mt-3">
+                Book professional home care services in just a few simple
+                steps. Our streamlined process ensures you get the care you
+                need quickly and efficiently.
+              </p>
             </div>
-            <div className="col-xl-7 col-lg-8">
-              <ul className="work-flow-chart">
 
-                <li
-                  data-aos="fade-up"
-                  data-aos-delay={500}
-                  className="aos-init aos-animate"
-                >
-                  <img src="assets/img/bg/chart-arrow-3.png" alt="Img" />
-                  <div className="flow-chart-list">
-                    <span className="chart-icon">
-                      <img
-                        src="assets/img/icons/flow-chart-icon-01.svg"
-                        alt="Img"
-                      />
-                    </span>
-                    <h6 style={{ fontSize: "11px" }}>Select Service</h6>
-                    <span className="chart-count">01</span>
+            {/* Right Column Step Indicators */}
+            <div className="lg:!w-7/12 !w-full">
+              {/* Desktop view */}
+              <div className="!hidden md:!grid !grid-cols-4 !gap-4 !relative">
+
+                {/* Step 1 */}
+                <div className="!flex !flex-col !items-center !text-center !p-4 !bg-white !rounded-[16px] !shadow-[0_4px_16px_rgba(0,0,0,0.05)] !relative">
+                  <div className="!w-[54px] !h-[54px] !bg-[#f8f6fc] !rounded-full !flex !items-center !justify-center !mb-3">
+                    <img src="assets/img/icons/flow-chart-icon-01.svg" alt="Img" className="!w-[28px] !h-[28px]" />
                   </div>
-                </li>
+                  <h6 className="!m-0 !text-[13px] !font-semibold !text-[#1a1a1a]">Select Service</h6>
+                  <span className="!absolute !bottom-2 !right-3 !text-[11px] !font-bold !text-[#8059ca] !opacity-30">01</span>
+                </div>
 
-                <li
-                  data-aos="fade-up"
-                  data-aos-delay={600}
-                  className="aos-init aos-animate"
-                >
-                  <img src="assets/img/bg/chart-arrow-01.png" alt="Img" />
-                  <div className="flow-chart-list bg-yelllow">
-                    <span className="chart-icon">
-                      <img
-                        src="assets/img/icons/flow-chart-icon-02.svg"
-                        alt="Img"
-                      />
-                    </span>
-                    <h6 style={{ fontSize: "11px" }}>Book Appointment</h6>
-                    <span className="chart-count">02</span>
+                {/* Step 2 */}
+                <div className="!flex !flex-col !items-center !text-center !p-4 !bg-white !rounded-[16px] !shadow-[0_4px_16px_rgba(0,0,0,0.05)] !relative">
+                  <div className="!w-[54px] !h-[54px] !bg-[#fffbe6] !rounded-full !flex !items-center !justify-center !mb-3">
+                    <img src="assets/img/icons/flow-chart-icon-02.svg" alt="Img" className="!w-[28px] !h-[28px]" />
                   </div>
-                </li>
+                  <h6 className="!m-0 !text-[13px] !font-semibold !text-[#1a1a1a]">Book Appointment</h6>
+                  <span className="!absolute !bottom-2 !right-3 !text-[11px] !font-bold !text-[#8059ca] !opacity-30">02</span>
+                </div>
 
-                <li
-                  data-aos="fade-up"
-                  data-aos-delay={700}
-                  className="aos-init aos-animate"
-                >
-                  <img src="assets/img/bg/chart-arrow-3.png" alt="Img" />
-                  <div className="flow-chart-list">
-                    <span className="chart-icon">
-                      <img
-                        src="assets/img/icons/flow-chart-icon-03.svg"
-                        alt="Img"
-                      />
-                    </span>
-                    <h6 style={{ fontSize: "11px" }}>Caregiver Arrives</h6>
-                    <span className="chart-count">03</span>
+                {/* Step 3 */}
+                <div className="!flex !flex-col !items-center !text-center !p-4 !bg-white !rounded-[16px] !shadow-[0_4px_16px_rgba(0,0,0,0.05)] !relative">
+                  <div className="!w-[54px] !h-[54px] !bg-[#f8f6fc] !rounded-full !flex !items-center !justify-center !mb-3">
+                    <img src="assets/img/icons/flow-chart-icon-03.svg" alt="Img" className="!w-[28px] !h-[28px]" />
                   </div>
-                </li>
+                  <h6 className="!m-0 !text-[13px] !font-semibold !text-[#1a1a1a]">Caregiver Arrives</h6>
+                  <span className="!absolute !bottom-2 !right-3 !text-[11px] !font-bold !text-[#8059ca] !opacity-30">03</span>
+                </div>
 
-                <li
-                  data-aos="fade-up"
-                  data-aos-delay={800}
-                  className="aos-init aos-animate"
-                >
-                  <img src="assets/img/bg/chart-arrow-02.png" alt="Img" />
-                  <div className="flow-chart-list bg-yelllow">
-                    <span className="chart-icon">
-                      <img
-                        src="assets/img/icons/flow-chart-icon-04.svg"
-                        alt="Img"
-                      />
-                    </span>
-                    <h6 style={{ fontSize: "11px" }}>Receive Care</h6>
-                    <span className="chart-count">04</span>
+                {/* Step 4 */}
+                <div className="!flex !flex-col !items-center !text-center !p-4 !bg-white !rounded-[16px] !shadow-[0_4px_16px_rgba(0,0,0,0.05)] !relative">
+                  <div className="!w-[54px] !h-[54px] !bg-[#fffbe6] !rounded-full !flex !items-center !justify-center !mb-3">
+                    <img src="assets/img/icons/flow-chart-icon-04.svg" alt="Img" className="!w-[28px] !h-[28px]" />
                   </div>
-                </li>
+                  <h6 className="!m-0 !text-[13px] !font-semibold !text-[#1a1a1a]">Receive Care</h6>
+                  <span className="!absolute !bottom-2 !right-3 !text-[11px] !font-bold !text-[#8059ca] !opacity-30">04</span>
+                </div>
 
-              </ul>
+              </div>
 
-              <div className="hc-mobile-steps">
+              {/* Mobile steps */}
+              <div className="md:!hidden !flex !flex-col !gap-3 !mt-4">
                 {MOBILE_BOOKING_STEPS.map((item) => (
-                  <div key={item.step} className="hc-mobile-step">
-                    <div className="hc-mobile-step__badge">
-                      <img src={item.icon} alt="" />
+                  <div key={item.step} className="!flex !items-center !gap-4 !p-4 !bg-white !rounded-[14px] !shadow-[0_2px_8px_rgba(0,0,0,0.05)] !border !border-[rgba(128,89,202,0.1)]">
+                    <div className="!w-[44px] !h-[44px] !rounded-[10px] !bg-[#f8f6fc] !flex !items-center !justify-center !shrink-0 !border !border-[#8059ca]">
+                      <img src={item.icon} alt="" className="!w-[22px] !h-[22px]" />
                     </div>
-                    <div
-                      className={`hc-mobile-step__content${item.highlight ? " hc-highlight" : ""}`}
-                    >
-                      <span className="hc-mobile-step__count">
-                        Step {item.step}
-                      </span>
-                      <h6 className="hc-mobile-step__title">{item.title}</h6>
+                    <div className="!grow">
+                      <span className="!text-[10px] !font-bold !text-[#8059ca] !uppercase">Step {item.step}</span>
+                      <h6 className="!m-0 !text-[14px] !font-semibold !text-[#1a1a1a]">{item.title}</h6>
                     </div>
                   </div>
                 ))}
               </div>
             </div>
+
           </div>
         </div>
       </section>
 
-      {
-        middleBanners?.length > 0 && (
-          <section
-            className="section welcome-section px-3 mt-3 offers-section"
-            style={{ backgroundColor: PRIMARY_SECTION_BG }}
-          >
-            <div className="container-fluid">
-              <div className="text-center mb-3">
-                <h2
-                  className="mb-3"
-                  style={{
-                    fontSize: "28px",
-                    fontWeight: "600",
-                    color: "#1a1a1a",
-                  }}
-                >
-                  <i className="fas fa-bolt text-warning me-2"></i>Offers &
-                  Promotions
-                </h2>
-              </div>
-              {middleBanners.length > 1 ? (
-                <Slider {...settings}>
-                  {middleBanners.map((image, index) => (
-                    <div key={index} className="col-lg-4 col-md-6 d-flex">
-                      <img
-                        src={image.src}
-                        alt={image.alt}
-                        loading="lazy"
-                        className="px-1"
-                        style={{
-                          borderRadius: "10px",
-                        }}
-                      />
-                    </div>
-                  ))}
-                </Slider>
-              ) : (
-                <div className="col-lg-12 d-flex">
-                  <img
-                    src={middleBanners[0]?.src}
-                    alt={middleBanners[0]?.alt}
-                    title={middleBanners[0]?.alt}
-                    loading="lazy"
-                    className="px-1"
-                    style={{ borderRadius: "10px" }}
-                  />
-                </div>
-              )}
-            </div>
-          </section>
-        )
-      }
-
-      <section
-        className="section py-5 d-none d-md-block"
-        style={{ backgroundColor: PRIMARY_SECTION_BG, overflow: "hidden" }}
-      >
-        <div className="container">
-          {/* Header */}
-          <div className="row mb-5" data-aos="fade-up">
-            <div className="col-12 text-center">
-              <h2
-                className="text-[42px] font-semibold bg-gradient-to-r from-[#8059ca] to-[#5d3ebc] bg-clip-text text-transparent tracking-[-1px]"
-              >
-                How do we Deliver Fastest Recovery?
+      {/* Offers & Promotions */}
+      {middleBanners?.length > 0 && (
+        <section
+          className="!py-8 !px-4"
+          style={{ backgroundColor: PRIMARY_SECTION_BG }}
+        >
+          <div className="!max-w-7xl !mx-auto">
+            <div className="!text-center !mb-6">
+              <h2 className="!m-0 !text-[26px] !font-semibold !text-[#1a1a1a]">
+                <i className="fas fa-bolt text-warning me-2"></i>Offers &amp; Promotions
               </h2>
-              <p
-                className="text-muted mx-auto"
-                style={{ maxWidth: "600px", fontSize: "16px" }}
-              >
-                Our scientifically-backed methodology focuses on personalized
-                milestones and holistic care for rapid rehabilitation.
-              </p>
             </div>
-          </div>
-
-          <div className="row align-items-stretch g-4">
-            {/* Left Column - Interaction Phases */}
-            <div className="col-lg-5 col-md-6" data-aos="fade-right">
-              <div className="d-flex flex-column gap-3 h-100 justify-content-center">
-                {[
-                  {
-                    id: "milestone",
-                    phase: "Phase 01",
-                    title: "Milestone Based Approach",
-                    desc: "MediCompares ensures Fastest Recovery with clear goals at every step of recovery journey.",
-                    icon: "fa-solid fa-flag-checkered",
-                    color: PRIMARY_COLOR,
-                    bg: PRIMARY_SECTION_BG,
-                  },
-                  {
-                    id: "pmr",
-                    phase: "Phase 02",
-                    title: "Personalized Treatment",
-                    desc: "Expert medical supervision ensures personalized treatment plans tailored to each patient's unique recovery needs.",
-                    icon: "fa-solid fa-user-doctor",
-                    color: PRIMARY_COLOR,
-                    bg: PRIMARY_SECTION_BG,
-                  },
-                  {
-                    id: "team",
-                    phase: "Phase 03",
-                    title: "Multidisciplinary Team",
-                    desc: "A comprehensive team of specialists including physiotherapists, occupational therapists, and speech therapists.",
-                    icon: "fa-solid fa-people-group",
-                    color: PRIMARY_COLOR,
-                    bg: PRIMARY_SECTION_BG,
-                  },
-                ].map((card, index) => (
-                  <div
-                    key={card.id}
-                    className={`recovery-phase-card ${selectedCard === card.id ? "active" : ""}`}
-                    style={{
-                      borderRadius: "20px",
-                      padding: "24px",
-                      backgroundColor:
-                        selectedCard === card.id ? card.bg : "#ffffff",
-                      border: `2px solid ${selectedCard === card.id ? card.color : "#f0f0f0"}`,
-                      transition:
-                        "all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
-                      cursor: "pointer",
-                      position: "relative",
-                      boxShadow:
-                        selectedCard === card.id
-                          ? `0 10px 30px ${card.color}20`
-                          : "0 4px 12px rgba(0,0,0,0.05)",
-                    }}
-                    onClick={() => setSelectedCard(card.id)}
-                    onMouseEnter={(e) => {
-                      if (selectedCard !== card.id) {
-                        e.currentTarget.style.transform = "translateX(5px)";
-                        e.currentTarget.style.borderColor = card.color;
-                      }
-                    }}
-                    onMouseLeave={(e) => {
-                      if (selectedCard !== card.id) {
-                        e.currentTarget.style.transform = "translateX(0)";
-                        e.currentTarget.style.borderColor = "#f0f0f0";
-                      }
-                    }}
-                  >
-                    <div className="d-flex align-items-center gap-3 mb-1">
-                      <div
-                        style={{
-                          width: "48px",
-                          height: "48px",
-                          borderRadius: "12px",
-                          backgroundColor: card.color,
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          color: "#fff",
-                          fontSize: "20px",
-                          boxShadow: `0 4px 12px ${card.color}40`,
-                        }}
-                      >
-                        <i className={card.icon}></i>
-                      </div>
-                      <div>
-                        <span
-                          style={{
-                            fontSize: "11px",
-                            fontWeight: "700",
-                            textTransform: "uppercase",
-                            color: card.color,
-                            letterSpacing: "1px",
-                          }}
-                        >
-                          {card.phase}
-                        </span>
-                        <h5
-                          className="mb-0"
-                          style={{
-                            fontWeight: "600",
-                            color: "#1a1a1a",
-                            fontSize: "18px",
-                          }}
-                        >
-                          {card.title}
-                        </h5>
-                      </div>
-                    </div>
-                    <div
-                      style={{
-                        maxHeight: selectedCard === card.id ? "100px" : "0",
-                        opacity: selectedCard === card.id ? "1" : "0",
-                        overflow: "hidden",
-                        transition: "all 0.4s ease",
-                        marginTop: selectedCard === card.id ? "12px" : "0",
-                      }}
-                    >
-                      <p
-                        className="mb-0 text-muted"
-                        style={{ fontSize: "14px", lineHeight: "1.6" }}
-                      >
-                        {card.desc}
-                      </p>
-                    </div>
+            {middleBanners.length > 1 ? (
+              <Slider {...settings}>
+                {middleBanners.map((image, index) => (
+                  <div key={index} className="!px-2">
+                    <img
+                      src={image.src}
+                      alt={image.alt}
+                      loading="lazy"
+                      className="!w-full !rounded-[12px] !object-cover"
+                    />
                   </div>
                 ))}
+              </Slider>
+            ) : (
+              <div className="!w-full">
+                <img
+                  src={middleBanners[0]?.src}
+                  alt={middleBanners[0]?.alt}
+                  title={middleBanners[0]?.alt}
+                  loading="lazy"
+                  className="!w-full !rounded-[12px] !object-cover"
+                />
               </div>
+            )}
+          </div>
+        </section>
+      )}
+
+      <section
+        className="!py-10 !hidden md:!block !overflow-hidden"
+        style={{ backgroundColor: PRIMARY_SECTION_BG }}
+      >
+        <div className="!max-w-7xl !mx-auto !px-4">
+          {/* Header */}
+          <div className="!text-center !mb-8">
+            <h2 className="!text-[38px] !font-semibold !bg-gradient-to-r !from-[#8059ca] !to-[#5d3ebc] !bg-clip-text !text-transparent !tracking-tight">
+              How do we Deliver Fastest Recovery?
+            </h2>
+            <p className="!text-[#666] !mx-auto !mt-2 !max-w-[600px] !text-[15px] !leading-relaxed">
+              Our scientifically-backed methodology focuses on personalized
+              milestones and holistic care for rapid rehabilitation.
+            </p>
+          </div>
+
+          <div className="!grid !grid-cols-12 !gap-6 !items-stretch">
+            {/* Left Column - Interaction Phases */}
+            <div className="!col-span-5 !flex !flex-col !justify-center !gap-3">
+              {[
+                {
+                  id: "milestone",
+                  phase: "Phase 01",
+                  title: "Milestone Based Approach",
+                  desc: "MediCompares ensures Fastest Recovery with clear goals at every step of recovery journey.",
+                  icon: "fa-solid fa-flag-checkered",
+                  color: PRIMARY_COLOR,
+                  bg: PRIMARY_SECTION_BG,
+                },
+                {
+                  id: "pmr",
+                  phase: "Phase 02",
+                  title: "Personalized Treatment",
+                  desc: "Expert medical supervision ensures personalized treatment plans tailored to each patient's unique recovery needs.",
+                  icon: "fa-solid fa-user-doctor",
+                  color: PRIMARY_COLOR,
+                  bg: PRIMARY_SECTION_BG,
+                },
+                {
+                  id: "team",
+                  phase: "Phase 03",
+                  title: "Multidisciplinary Team",
+                  desc: "A comprehensive team of specialists including physiotherapists, occupational therapists, and speech therapists.",
+                  icon: "fa-solid fa-people-group",
+                  color: PRIMARY_COLOR,
+                  bg: PRIMARY_SECTION_BG,
+                },
+              ].map((card) => (
+                <div
+                  key={card.id}
+                  className={`recovery-phase-card ${selectedCard === card.id ? "active" : ""}`}
+                  style={{
+                    borderRadius: "20px",
+                    padding: "20px",
+                    backgroundColor: selectedCard === card.id ? card.bg : "#ffffff",
+                    border: `2px solid ${selectedCard === card.id ? card.color : "#f0f0f0"}`,
+                    transition: "all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
+                    cursor: "pointer",
+                    position: "relative",
+                    boxShadow: selectedCard === card.id ? `0 10px 30px ${card.color}20` : "0 4px 12px rgba(0,0,0,0.05)",
+                  }}
+                  onClick={() => setSelectedCard(card.id)}
+                  onMouseEnter={(e) => {
+                    if (selectedCard !== card.id) {
+                      e.currentTarget.style.transform = "translateX(5px)";
+                      e.currentTarget.style.borderColor = card.color;
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (selectedCard !== card.id) {
+                      e.currentTarget.style.transform = "translateX(0)";
+                      e.currentTarget.style.borderColor = "#f0f0f0";
+                    }
+                  }}
+                >
+                  <div className="!flex !items-center !gap-3">
+                    <div
+                      style={{
+                        width: "44px",
+                        height: "44px",
+                        borderRadius: "12px",
+                        backgroundColor: card.color,
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        color: "#fff",
+                        fontSize: "18px",
+                        boxShadow: `0 4px 12px ${card.color}40`,
+                      }}
+                    >
+                      <i className={card.icon}></i>
+                    </div>
+                    <div>
+                      <span className="!block !text-[10px] !font-bold !text-[#8059ca] !uppercase !tracking-wider">
+                        {card.phase}
+                      </span>
+                      <h5 className="!m-0 !text-[16px] !font-semibold !text-[#1a1a1a]">
+                        {card.title}
+                      </h5>
+                    </div>
+                  </div>
+                  <div
+                    style={{
+                      maxHeight: selectedCard === card.id ? "100px" : "0",
+                      opacity: selectedCard === card.id ? "1" : "0",
+                      overflow: "hidden",
+                      transition: "all 0.4s ease",
+                      marginTop: selectedCard === card.id ? "12px" : "0",
+                    }}
+                  >
+                    <p className="!m-0 !text-[13px] !text-[#666] !leading-relaxed">
+                      {card.desc}
+                    </p>
+                  </div>
+                </div>
+              ))}
             </div>
 
             {/* Right Column - Dynamic Image Showcase */}
-            <div className="col-lg-7 col-md-6 mt-4 mt-lg-0" data-aos="zoom-in">
-              <div
-                style={{
-                  position: "relative",
-                  height: "100%",
-                  minHeight: "450px",
-                  borderRadius: "30px",
-                  overflow: "hidden",
-                  boxShadow: "0 20px 50px rgba(0,0,0,0.15)",
-                }}
-              >
+            <div className="!col-span-7 !relative" style={{ minHeight: "450px" }}>
+              <div className="!relative !w-full !h-full !rounded-[30px] !overflow-hidden !shadow-[0_20px_50px_rgba(0,0,0,0.15)]">
                 <style>
                   {`
                     @keyframes slideUpRecovery {
@@ -1588,14 +1045,10 @@ const HomeCareServices = ({
                     <img
                       src={phase.img}
                       alt={phase.id}
-                      style={{
-                        width: "100%",
-                        height: "100%",
-                        objectFit: "cover",
-                      }}
+                      className="!w-full !h-full !object-cover"
                     />
                     <div className="glass-caption-recovery">
-                      <div className="d-flex align-items-center gap-3">
+                      <div className="!flex !items-center !gap-3">
                         <div
                           style={{
                             width: "4px",
@@ -1604,14 +1057,7 @@ const HomeCareServices = ({
                             borderRadius: "2px",
                           }}
                         ></div>
-                        <p
-                          className="mb-0 text-white"
-                          style={{
-                            fontSize: "15px",
-                            fontWeight: "400",
-                            lineHeight: "1.6",
-                          }}
-                        >
+                        <p className="!m-0 !text-white !text-[14px] !leading-relaxed">
                           {phase.caption}
                         </p>
                       </div>
@@ -1624,16 +1070,15 @@ const HomeCareServices = ({
         </div>
       </section>
 
+      {/* Why Families Choose Us */}
       <section
         style={{
           background: PRIMARY_SECTION_BG,
-          padding: "40px 0",
-          position: "relative",
         }}
-        className="container-fluid px-md-5"
+        className="!py-10 !px-4"
       >
-        <div className="container">
-          <div className="text-center mb-5">
+        <div className="!max-w-7xl !mx-auto">
+          <div className="!text-center !mb-8">
             <span
               style={{
                 display: "inline-block",
@@ -1661,20 +1106,12 @@ const HomeCareServices = ({
             >
               Why Families Choose Us?
             </h2>
-            <p
-              style={{
-                fontSize: "16px",
-                color: "#666",
-                maxWidth: "600px",
-                margin: "0 auto",
-                fontWeight: "400",
-              }}
-            >
+            <p className="!text-[#666] !text-[15px] !max-w-[600px] !mx-auto !font-normal">
               Professional, compassionate care tailored to your family's needs
             </p>
           </div>
 
-          <div className="row g-3">
+          <div className="!grid !grid-cols-1 md:!grid-cols-2 lg:!grid-cols-3 !gap-4">
             {[
               {
                 icon: "fas fa-users-cog",
@@ -1709,30 +1146,9 @@ const HomeCareServices = ({
             ].map((item, index) => {
               const primaryGradient = `linear-gradient(135deg, ${PRIMARY_COLOR} 0%, ${PRIMARY_DARK} 100%)`;
               return (
-                <div key={index} className="col-lg-4 col-md-6">
+                <div key={index} className="!w-full">
                   <div
-                    style={{
-                      position: "relative",
-                      padding: "20px",
-                      background: "#fff",
-                      borderRadius: "12px",
-                      border: "1px solid #f0f0f0",
-
-                      marginTop: "8px",
-                      height: "100%",
-                      overflow: "hidden",
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = "translateY(-4px)";
-                      e.currentTarget.style.boxShadow =
-                        "0 12px 24px rgba(0,0,0,0.1)";
-                      e.currentTarget.style.borderColor = PRIMARY_COLOR;
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = "translateY(0)";
-                      e.currentTarget.style.boxShadow = "none";
-                      e.currentTarget.style.borderColor = "#f0f0f0";
-                    }}
+                    className="!group !relative !p-5 !bg-white !rounded-[12px] !border !border-[#f0f0f0] !h-full !overflow-hidden !transition-all !duration-300 hover:!-translate-y-[4px] hover:!shadow-[0_12px_24px_rgba(0,0,0,0.1)] hover:!border-[#8059ca]"
                   >
                     {/* Diagonal accent line */}
                     <div
@@ -1746,13 +1162,7 @@ const HomeCareServices = ({
                       }}
                     />
 
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "flex-start",
-                        gap: "16px",
-                      }}
-                    >
+                    <div className="!flex !items-start !gap-4">
                       {/* Icon */}
                       <div
                         style={{
@@ -1777,27 +1187,11 @@ const HomeCareServices = ({
                       </div>
 
                       {/* Content */}
-                      <div style={{ flex: 1, minWidth: 0 }}>
-                        <h5
-                          style={{
-                            fontSize: "16px",
-                            fontWeight: "600",
-                            color: "#1a1a1a",
-                            marginBottom: "6px",
-                            lineHeight: "1.3",
-                          }}
-                        >
+                      <div className="!flex-1 !min-w-0">
+                        <h5 className="!m-0 !mb-[6px] !text-[16px] !font-semibold !text-[#1a1a1a] !leading-snug">
                           {item.title}
                         </h5>
-                        <p
-                          style={{
-                            fontSize: "13px",
-                            color: "#666",
-                            lineHeight: "1.5",
-                            marginBottom: "0",
-                            fontWeight: "400",
-                          }}
-                        >
+                        <p className="!m-0 !text-[13px] !text-[#666] !leading-normal !font-normal">
                           {item.desc}
                         </p>
                       </div>
@@ -1807,130 +1201,104 @@ const HomeCareServices = ({
               );
             })}
           </div>
-
-          <div
-            onClick={() => {
-              if (medicalTreatments && medicalTreatments.length > 0) {
-                handleBookNow(medicalTreatments[0]);
-              }
-            }}
-            className="contact-circle d-none"
-            style={{ cursor: "pointer" }}
-          >
-            Contact
-            <br />
-            Us
-          </div>
         </div>
       </section>
 
-      <section className="section py-3" style={{ backgroundColor: PRIMARY_SECTION_BG }}>
-        <div className="container">
-          <div className="row">
-            <div className="col-12 text-center mb-3">
-              <span style={{
-                display: "inline-block",
-                padding: "6px 20px",
-                background: `linear-gradient(135deg, ${PRIMARY_COLOR} 0%, ${PRIMARY_DARK} 100%)`,
-                color: "#fff",
-                borderRadius: "50px",
-                fontSize: "12px",
-                fontWeight: "600",
-                letterSpacing: "1.5px",
-                textTransform: "uppercase",
-              }}>
-                <i className="fas fa-bolt"></i>
-                Frequently Asked Questions
-              </span>
-              <h2 style={{
+      {/* FAQs */}
+      <section className="!py-10 !px-4" style={{ backgroundColor: PRIMARY_SECTION_BG }}>
+        <div className="!max-w-4xl !mx-auto">
+          <div className="!text-center !mb-8">
+            <span style={{
+              display: "inline-block",
+              padding: "6px 20px",
+              background: `linear-gradient(135deg, ${PRIMARY_COLOR} 0%, ${PRIMARY_DARK} 100%)`,
+              color: "#fff",
+              borderRadius: "50px",
+              fontSize: "12px",
+              fontWeight: "600",
+              letterSpacing: "1.5px",
+              textTransform: "uppercase",
+            }}>
+              <i className="fas fa-bolt me-2"></i>Frequently Asked Questions
+            </span>
+            <h2
+              style={{
                 fontSize: "36px",
                 fontWeight: "600",
                 color: "#1a1a1a",
                 marginTop: "16px",
                 marginBottom: "12px",
                 lineHeight: "1.2",
-              }}>
-                Common Questions About Home Care
-              </h2>
-            </div>
+              }}
+            >
+              Common Questions About Home Care
+            </h2>
           </div>
 
-          <div className="row justify-content-center">
-            <div className="col-lg-10">
-              <div className="accordion" id="homeCareFAQ">
-                {[
-                  {
-                    question: "What services are included in home care?",
-                    answer:
-                      "Our home care services include nursing care, doctor visits, physiotherapy, elderly care, postpartum care, lab tests at home, injection services, and health monitoring. We provide comprehensive healthcare solutions tailored to your needs.",
-                  },
-                  {
-                    question: "How do I book a home care service?",
-                    answer:
-                      "You can book a service by calling our helpline, using our online booking system, or through our mobile app. Simply select the service you need, choose your preferred date and time, and provide your location details.",
-                  },
-                  {
-                    question: "Are the caregivers certified and verified?",
-                    answer:
-                      "Yes, all our caregivers and medical professionals are certified, licensed, and undergo thorough background checks. We ensure they have the necessary qualifications and experience to provide quality care.",
-                  },
-                  {
-                    question: "What are the charges for home care services?",
-                    answer:
-                      "Pricing varies based on the type of service, duration, and specific requirements. We offer competitive rates and transparent pricing. Contact us for a detailed quote tailored to your needs.",
-                  },
-                  {
-                    question: "Is home care available 24/7?",
-                    answer:
-                      "Yes, we provide 24/7 availability for emergency services and scheduled care. Our team is always ready to assist you whenever you need medical care at home.",
-                  },
-                  {
-                    question: "Can I choose a specific caregiver?",
-                    answer:
-                      "We try to accommodate preferences for specific caregivers when possible. However, availability depends on scheduling and location. We ensure all our caregivers meet our high standards of care.",
-                  },
-                ].map((faq, index) => {
-                  const isOpen = openIndex === index;
+          <div className="!flex !flex-col !gap-3">
+            {[
+              {
+                question: "What services are included in home care?",
+                answer:
+                  "Our home care services include nursing care, doctor visits, physiotherapy, elderly care, postpartum care, lab tests at home, injection services, and health monitoring. We provide comprehensive healthcare solutions tailored to your needs.",
+              },
+              {
+                question: "How do I book a home care service?",
+                answer:
+                  "You can book a service by calling our helpline, using our online booking system, or through our mobile app. Simply select the service you need, choose your preferred date and time, and provide your location details.",
+              },
+              {
+                question: "Are the caregivers certified and verified?",
+                answer:
+                  "Yes, all our caregivers and medical professionals are certified, licensed, and undergo thorough background checks. We ensure they have the necessary qualifications and experience to provide quality care.",
+              },
+              {
+                question: "What are the charges for home care services?",
+                answer:
+                  "Pricing varies based on the type of service, duration, and specific requirements. We offer competitive rates and transparent pricing. Contact us for a detailed quote tailored to your needs.",
+              },
+              {
+                question: "Is home care available 24/7?",
+                answer:
+                  "Yes, we provide 24/7 availability for emergency services and scheduled care. Our team is always ready to assist you whenever you need medical care at home.",
+              },
+              {
+                question: "Can I choose a specific caregiver?",
+                answer:
+                  "We try to accommodate preferences for specific caregivers when possible. However, availability depends on scheduling and location. We ensure all our caregivers meet our high standards of care.",
+              },
+            ].map((faq, index) => {
+              const isOpen = openIndex === index;
 
-                  return (
-                    <div
-                      key={index}
-                      className="accordion-item border-0 mb-3 shadow-sm"
-                      style={{ borderRadius: "12px" }}
+              return (
+                <div
+                  key={index}
+                  className="!bg-white !rounded-[12px] !border !border-solid !border-[#e5e7eb] !overflow-hidden !shadow-sm"
+                >
+                  <h2>
+                    <button
+                      type="button"
+                      onClick={() => toggleFAQ(index)}
+                      className="!w-full !flex !items-center !justify-between !px-5 !py-4 !text-left !text-[15px] !font-semibold !text-[#1a1a1a] !transition-all !duration-200"
+                      style={{
+                        backgroundColor: index % 2 === 0 ? "#ffffff" : PRIMARY_SECTION_BG,
+                      }}
                     >
-                      <h2 className="accordion-header">
-                        <button
-                          type="button"
-                          onClick={() => toggleFAQ(index)}
-                          className={`accordion-button ${!isOpen ? "collapsed" : ""
-                            }`}
-                          style={{
-                            borderRadius: "12px",
-                            fontWeight: "600",
-                            backgroundColor:
-                              index % 2 === 0 ? "#ffffff" : PRIMARY_SECTION_BG,
-                          }}
-                        >
-                          {faq.question}
-                        </button>
-                      </h2>
+                      <span>{faq.question}</span>
+                      <i className={`fas fa-chevron-${isOpen ? "up" : "down"} !text-[12px] !text-[#8059ca]`}></i>
+                    </button>
+                  </h2>
 
-                      <div
-                        className={`accordion-collapse collapse ${isOpen ? "show" : ""
-                          }`}
-                      >
-                        <div
-                          className="accordion-body"
-                          style={{ lineHeight: "1.8" }}
-                        >
-                          {faq.answer}
-                        </div>
-                      </div>
+                  <div
+                    className={`!transition-all !duration-300 ${isOpen ? "!block" : "!hidden"}`}
+                  >
+                    <div className="!px-5 !py-4 !text-[14px] !text-[#666] !leading-relaxed !bg-white !border-t !border-solid !border-[#f0f0f0]">
+                      {faq.answer}
                     </div>
-                  );
-                })}
-              </div>
-            </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>

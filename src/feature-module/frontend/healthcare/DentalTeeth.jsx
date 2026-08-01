@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { SectionHeader } from "../../../components/ui/index.js";
 import { Link, useNavigate } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -408,12 +409,12 @@ const DentalTeeth = ({
       loop: cheaplabtests?.length > 4,
     }),
     slidesPerView: 4,
-    spaceBetween: 10,
+    spaceBetween: 12,
     breakpoints: {
-      1200: { slidesPerView: 3, spaceBetween: 10 },
-      992: { slidesPerView: 2.2, spaceBetween: 10 },
-      768: { slidesPerView: 1.8, spaceBetween: 8 },
-      0: { slidesPerView: 1.1, spaceBetween: 6 },
+      1200: { slidesPerView: 4, spaceBetween: 12 },
+      992: { slidesPerView: 3, spaceBetween: 10 },
+      768: { slidesPerView: 2.2, spaceBetween: 8 },
+      0: { slidesPerView: 1.2, spaceBetween: 6 },
     },
   };
 
@@ -504,72 +505,20 @@ const DentalTeeth = ({
     <>
       <SEOHelmet page="dental" />
       {cheaplabtests && cheaplabtests.length > 0 && (
-        <div className="content doctor-content pb-0 mx-2">
-          <div className="container-fluid">
-            <div className="d-flex align-items-center justify-content-between flex-wrap result-wrap gap-3">
-              <h3 className="mb-2 top-vendor-badge">
-                <i className="fas fa-bolt"></i>
-                Dental Care Services
-              </h3>
+        <div className="!py-3 !mx-2 !px-2">
+          <div className="!w-full">
+            <SectionHeader
+              title="Dental Care Services"
+              icon="fas fa-bolt"
+              viewAllLink={`/${currentService}/all`}
+              viewAllText="View All"
+            />
 
-              <div className="d-flex align-items-center flex-wrap gap-3 mb-3">
-                <Link
-                  to={`/${currentService}/all`}
-                  className="top-vendor-badge"
-                >
-                  View All
-                  <i className="isax isax-arrow-right-1 ms-1"></i>
-                </Link>
-              </div>
-            </div>
-
-            <div
-              className="meq-swiper-wrapper relative"
-            >
-              <style>{`
-                .meq-arrow-btn {
-                  position: absolute;
-                  top: 50%;
-                  transform: translateY(-50%);
-                  z-index: 10;
-                  width: 40px;
-                  height: 40px;
-                  background: #fff;
-                  border: 1px solid #ddd;
-                  border-radius: 50%;
-                  display: flex;
-                  align-items: center;
-                  justify-content: center;
-                  cursor: pointer;
-                  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-                  transition: all 0.3s ease;
-                }
-                .meq-arrow-btn:hover {
-                  background: #8059ca;
-                  border-color: #8059ca;
-                  color: #fff;
-                }
-                .dental-prev {
-                  left: 10px;
-                }
-                .dental-next {
-                  right: 10px;
-                }
-                @media (max-width: 768px) {
-                  .dental-prev {
-                    left: 5px;
-                  }
-                  .dental-next {
-                    right: 5px;
-                  }
-                }
-              `}</style>
-              <button
-                className="meq-arrow-btn dental-prev"
-                aria-label="Previous"
-              >
+            <div className="meq-swiper-wrapper" style={{ position: "relative" }}>
+              <button className="meq-arrow-btn dental-prev" aria-label="Previous">
                 <i className="fas fa-chevron-left"></i>
               </button>
+
               <Swiper {...swiperSettings}>
                 {cheaplabtests?.map((test) => {
                   const vendor = test?.businessDetails;
@@ -578,197 +527,103 @@ const DentalTeeth = ({
                     ...test,
                     tabletdetails: {
                       _id: medicine?._id || test?._id,
-                      slug:
-                        medicine?.slug ||
-                        test?.slug ||
-                        test?.categorySlug ||
-                        currentService,
+                      slug: medicine?.slug || test?.slug || test?.categorySlug || currentService,
                       name: medicine?.name || test?.name,
                       files: medicine?.files || [],
                       description: medicine?.description || test?.description,
                     },
                   };
                   return (
-                    <SwiperSlide
-                      key={test?._id}
-                      className="flex self-stretch"
-                    >
+                    <SwiperSlide key={test?._id} className="!flex !self-stretch">
                       <div
-                        className="w-100 px-1 mb-2"
+                        className="!w-full !px-1 !pb-2 !h-full !flex !flex-col !cursor-pointer"
                         onClick={() => handleProductClick(transformedProduct)}
                       >
-                        <div
-                          className="health-card cursor-pointer flex flex-col h-full"
-                        >
-                          <div className="card-imgs">
+                        {/* Card wrapper */}
+                        <div className="!flex !flex-col !h-full !w-full !bg-white !rounded-[14px] !overflow-hidden !shadow-[0_2px_16px_rgba(0,0,0,0.07)] hover:!shadow-[0_4px_24px_rgba(128,89,202,0.12)] !transition-all !duration-300">
+
+                          {/* Image */}
+                          <div className="!relative !w-full !h-[140px] !bg-[#f8f6fc] !overflow-hidden !flex-shrink-0">
                             <img
-                              src={
-                                medicine?.files?.[0]
-                                  ? getImageUrl(medicine.files[0])
-                                  : "/assets/default.png"
-                              }
-                              className="object-contain"
-                              alt={medicine.name}
-                              onError={(e) => {
-                                e.target.src = "/assets/default.png";
-                              }}
+                              src={medicine?.files?.[0] ? getImageUrl(medicine.files[0]) : "/assets/default.png"}
+                              className="!w-full !h-full !object-contain"
+                              alt={medicine?.name}
+                              onError={(e) => { e.target.src = "/assets/default.png"; }}
                             />
+                            {/* Compare Button */}
                             <div
                               onClick={(e) => {
                                 e.stopPropagation();
                                 const data = test?.medicineDetails || test;
-                                const categorySlug =
-                                  data?.subcatdetails?.catdetails?.slug;
-                                const subcategorySlug =
-                                  data?.subcatdetails?.slug;
+                                const categorySlug = data?.subcatdetails?.catdetails?.slug;
+                                const subcategorySlug = data?.subcatdetails?.slug;
                                 const medicineSlug = data?.slug;
-                                if (
-                                  !categorySlug ||
-                                  !subcategorySlug ||
-                                  !medicineSlug
-                                )
-                                  return;
-
-                                console.log(categorySlug, "categorySlug")
-                                navigate(
-                                  `/${categorySlug}/${subcategorySlug}/${medicineSlug}/compare`,
-                                );
+                                if (!categorySlug || !subcategorySlug || !medicineSlug) return;
+                                navigate(`/${categorySlug}/${subcategorySlug}/${medicineSlug}/compare`);
                               }}
-                              className="absolute top-[10px] right-[10px] bg-gradient-to-br from-[#f59e0b] to-[#d97706] rounded-[30px] px-[14px] py-[3px] flex items-center gap-[6px] shadow-[0_4px_12px_rgba(245,158,11,0.4)] z-10 border-[1.5px] border-solid border-white cursor-pointer transition-all duration-300 transform scale-100 hover:scale-[1.12] hover:-translate-y-[2px] hover:shadow-[0_8px_20px_rgba(245,158,11,0.55)]"
+                              className="!absolute !top-[8px] !right-[8px] !bg-gradient-to-br !from-[#f59e0b] !to-[#d97706] !rounded-[30px] !px-[10px] !py-[3px] !flex !items-center !gap-[5px] !shadow-[0_4px_12px_rgba(245,158,11,0.4)] !z-10 !cursor-pointer !transition-all !duration-300 hover:!scale-[1.08]"
                               title="Compare Package"
                             >
-                              <i
-                                className="fa-solid fa-hand-pointer text-[13px] text-white rotate-90 inline-block"
-                              ></i>
-                              <span
-                                className="text-[11px] font-extrabold text-white uppercase tracking-[0.6px]"
-                              >
-                                Compare
-                              </span>
+                              <i className="fa-solid fa-hand-pointer !text-[11px] !text-white !rotate-90 !inline-block"></i>
+                              <span className="!text-[10px] !font-extrabold !text-white !uppercase !tracking-[0.6px]">Compare</span>
                             </div>
                           </div>
-                          <div className="card-bodyyy">
-                            <div className="d-flex justify-content-between align-items-center">
-                              <h3 className="titlee text-dark mb-0">
-                                {medicine?.name?.length > 20
-                                  ? medicine.name.slice(0, 20) + "..."
-                                  : medicine?.name}
+
+                          {/* Body */}
+                          <div className="!flex !flex-col !flex-grow !p-[10px] !gap-[6px]">
+                            {/* Title + Rating */}
+                            <div className="!flex !items-start !justify-between !gap-2">
+                              <h3 className="!m-0 !text-[13px] !font-semibold !text-[#1a1a1a] !leading-snug">
+                                {medicine?.name?.length > 20 ? medicine.name.slice(0, 20) + "..." : medicine?.name}
                               </h3>
-
-                              <div
-                                className="d-flex align-items-center justify-content-end min-w-[80px] text-[12px]"
-                              >
-                                <i className="fa fa-star text-warning me-1"></i>
-                                <span className="me-1">
-                                  {medicine?.averageRating?.toFixed(1) > 0
-                                    ? medicine.averageRating?.toFixed(1)
-                                    : ""}
-                                </span>
-
-                                <i className="fa fa-users me-1 text-primary"></i>
-                                <span>
-                                  (
-                                  {medicine?.ratingCount > 0
-                                    ? `${medicine.ratingCount}+`
-                                    : ""}
-                                  )
-                                </span>
+                              <div className="!flex !items-center !shrink-0 !text-[11px] !gap-[3px]">
+                                <i className="fa fa-star" style={{ color: "#ffc107" }}></i>
+                                <span className="!text-[#444]">{medicine?.averageRating?.toFixed(1) > 0 ? medicine.averageRating?.toFixed(1) : ""}</span>
                               </div>
                             </div>
-                            <p className="text-[12px]">
-                              Routine checkup, scaling & polishing
-                            </p>
 
-                            <div className="flex-[0_0_50%]">
-                              <p
-                                className="mb-1 d-flex align-items-center text-[11px] text-black capitalize"
-                              >
-                                <i
-                                  className="fas fa-procedures me-1 text-primary w-[14px]"
-                                ></i>
-                                <span className="me-1">Treatment Type :</span>
+                            <p className="!m-0 !text-[11px] !text-[#666]">Routine checkup, scaling & polishing</p>
+
+                            {/* Meta info */}
+                            <div className="!flex !flex-col !gap-[3px]">
+                              <p className="!m-0 !flex !items-center !gap-[5px] !text-[10px] !text-[#444] !capitalize">
+                                <i className="fas fa-procedures !text-[#8059ca] !w-[12px]"></i>
+                                <span>Treatment:</span>
                                 <strong>{medicine?.treatmenttype}</strong>
                               </p>
-                            </div>
-
-                            <div className="flex-[0_0_50%]">
-                              <p
-                                className="mb-1 d-flex align-items-center text-[11px] text-black"
-                              >
-                                <i
-                                  className="fas fa-clock me-1 text-primary w-[14px]"
-                                ></i>
-                                <span className="me-1">
-                                  Treatment Duration :
-                                </span>
-                                <strong>30 - 90 mins</strong>
+                              <p className="!m-0 !flex !items-center !gap-[5px] !text-[10px] !text-[#444]">
+                                <i className="fas fa-clock !text-[#8059ca] !w-[12px]"></i>
+                                <span>Duration:</span>
+                                <strong>30–90 mins</strong>
                               </p>
-                            </div>
-
-                            <div className="flex-[0_0_50%]">
-                              <p
-                                className="mb-1 d-flex align-items-center text-[11px] text-black"
-                              >
-                                <i
-                                  className="fas fa-user-md me-1 text-primary w-[14px]"
-                                ></i>
-                                <span className="me-1">Specialist Type :</span>
+                              <p className="!m-0 !flex !items-center !gap-[5px] !text-[10px] !text-[#444]">
+                                <i className="fas fa-user-md !text-[#8059ca] !w-[12px]"></i>
+                                <span>Specialist:</span>
                                 <strong>Dentist</strong>
                               </p>
+                              {medicine?.reportsDuration && (
+                                <p className="!m-0 !flex !items-center !gap-[5px] !text-[10px] !text-[#444]">
+                                  <i className="fa-regular fa-file-lines !text-[#8059ca]"></i>
+                                  Reports in <strong>{medicine?.reportsDuration}</strong>
+                                </p>
+                              )}
                             </div>
 
-                            {medicine?.reportsDuration && (
-                              <div className="report-timee">
-                                <i className="fa-regular fa-file-lines" />{" "}
-                                Reports in
-                                <strong> {medicine?.reportsDuration}</strong>
-                              </div>
-                            )}
-
-                            <div className="price-section d-flex align-items-center flex-wrap gap-2 pb-2">
+                            {/* Price */}
+                            <div className="!flex !items-center !flex-wrap !gap-[6px] !mt-auto !pt-[4px]">
                               {(() => {
-                                const originalPrice =
-                                  parseFloat(test?.price) || 0;
-                                const discountPrice =
-                                  parseFloat(
-                                    test?.discountprice || test?.discountPrice,
-                                  ) || null;
-
-                                const showDiscount =
-                                  discountPrice &&
-                                  discountPrice > 0 &&
-                                  discountPrice < originalPrice;
-                                const displayPrice = showDiscount
-                                  ? discountPrice
-                                  : originalPrice;
-
-                                const discountPercent = showDiscount
-                                  ? Math.round(
-                                    ((originalPrice - discountPrice) /
-                                      originalPrice) *
-                                    100,
-                                  )
-                                  : 0;
-
+                                const originalPrice = parseFloat(test?.price) || 0;
+                                const discountPrice = parseFloat(test?.discountprice || test?.discountPrice) || null;
+                                const showDiscount = discountPrice && discountPrice > 0 && discountPrice < originalPrice;
+                                const displayPrice = showDiscount ? discountPrice : originalPrice;
+                                const discountPercent = showDiscount ? Math.round(((originalPrice - discountPrice) / originalPrice) * 100) : 0;
                                 return (
                                   <>
-                                    <span className="current-price text-dark">
-                                      ₹{displayPrice.toLocaleString("en-IN")}
-                                    </span>
-
+                                    <span className="!font-bold !text-[14px] !text-[#1a1a1a]">₹{displayPrice.toLocaleString("en-IN")}</span>
                                     {showDiscount && (
                                       <>
-                                        <span className="old-price">
-                                          ₹
-                                          {originalPrice.toLocaleString(
-                                            "en-IN",
-                                          )}
-                                        </span>
-                                        <span
-                                          className="discountts bg-[#F97316] text-[12px]"
-                                        >
-                                          {discountPercent}% OFF
-                                        </span>
+                                        <span className="!text-[11px] !text-[#999] !line-through">₹{originalPrice.toLocaleString("en-IN")}</span>
+                                        <span className="!text-[10px] !font-bold !text-white !bg-[#F97316] !rounded-[4px] !px-[5px] !py-[2px]">{discountPercent}% OFF</span>
                                       </>
                                     )}
                                   </>
@@ -777,16 +632,11 @@ const DentalTeeth = ({
                             </div>
 
                             <VendorActions
-                              bookingType={
-                                test?.medicineDetails?.subcatdetails?.catdetails?.categoryType ||
-                                service?.categoryType ||
-                                "cart"
-                              }
+                              bookingType={test?.medicineDetails?.subcatdetails?.catdetails?.categoryType || service?.categoryType || "cart"}
                               med={test?.medicineDetails || test}
                               vendor={test?.businessDetails || {}}
                               price={parseFloat(test?.price) || 0}
                               calculatedDiscountPrice={parseFloat(test?.discountprice || test?.discountPrice) || null}
-                              // stock={test?.stock || (test?.medicineDetails || test).stock || (test?.vendordetails || {}).stock || 999}
                               service={test?.medicineDetails?.subcatdetails?.catdetails?.fixedType || "dentalservice"}
                               handleRentalBookinProcess={handleRentalBookinProcess}
                               handleNavigateToBooking={handleBooking}
@@ -795,119 +645,52 @@ const DentalTeeth = ({
                               handleOpenAppointmentModal={handleAppointmentClick}
                               handleOpenRideModal=""
                               className="w-100"
-                              containerStyle={{
-                                display: "flex",
-                                width: "100%",
-                              }}
+                              containerStyle={{ display: "flex", width: "100%" }}
                             />
 
+                            {/* Vendor */}
                             {vendor && (
-                              <div
-                                className="mt-[12px] border-t border-solid border-[#0000002e]"
-                              >
+                              <div className="!mt-[8px] !pt-[8px] !border-t !border-[#0000001a]">
                                 <div
-                                  className="d-flex align-items-center footers pt-[10px] pb-0 px-0 hover:opacity-90 cursor-pointer"
+                                  className="!flex !items-center !gap-[8px] !cursor-pointer hover:!opacity-90"
                                   onClick={(e) => {
                                     e.stopPropagation();
-                                    const vendorId =
-                                      vendor?.slug ||
-                                      vendor?.vendorId ||
-                                      vendor?._id ||
-                                      vendor?.bussinessdetails?.slug ||
-                                      vendor?.bussinessdetails?.vendorId ||
-                                      vendor?.bussinessdetails?._id;
+                                    const vendorId = vendor?.slug || vendor?.vendorId || vendor?._id || vendor?.bussinessdetails?.slug || vendor?.bussinessdetails?.vendorId || vendor?.bussinessdetails?._id;
                                     if (vendorId) {
-                                      const name =
-                                        vendor?.bussinessdetails?.name ||
-                                        vendor?.name ||
-                                        "Vendor Store";
-                                      const vendorSlug = name
-                                        .toLowerCase()
-                                        .replace(/\s+/g, "-")
-                                        .replace(/[^a-z0-9-]/g, "");
-                                      sessionStorage.setItem(
-                                        "vendorId",
-                                        vendorId,
-                                      );
+                                      const name = vendor?.bussinessdetails?.name || vendor?.name || "Vendor Store";
+                                      const vendorSlug = name.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, "");
+                                      sessionStorage.setItem("vendorId", vendorId);
                                       navigate(`/vendor-profile/${vendorSlug}`);
                                     } else {
-                                      toast.error(
-                                        "Vendor information not available",
-                                      );
+                                      toast.error("Vendor information not available");
                                     }
                                   }}
                                 >
-                                  <div
-                                    className="w-[56px] h-[56px] rounded-[8px] overflow-hidden bg-white"
-                                  >
+                                  <div className="!w-[44px] !h-[44px] !rounded-[8px] !overflow-hidden !bg-[#f0f0f0] !shrink-0">
                                     <img
-                                      src={
-                                        vendor?.bussiness_image?.url
-                                          ? getImageUrl(
-                                            vendor.bussiness_image.url,
-                                          )
-                                          : "/assets/default.png"
-                                      }
+                                      src={vendor?.bussiness_image?.url ? getImageUrl(vendor.bussiness_image.url) : "/assets/default.png"}
                                       alt={vendor.name}
-                                      onError={(e) => {
-                                        e.target.src = "/assets/default.png";
-                                      }}
-                                      className="w-full h-full object-contain"
+                                      onError={(e) => { e.target.src = "/assets/default.png"; }}
+                                      className="!w-full !h-full !object-contain"
                                     />
                                   </div>
-
-                                  <div className="flex-grow-1">
-                                    <h6
-                                      className="mb-1 !text-[14px] font-semibold"
-                                    >
-                                      {vendor.name}
-                                    </h6>
-                                    {Number(test?.averageRating) > 0 &&
-                                      Number(test?.ratingCount) > 0 && (
-                                        <div
-                                          className="flex items-center gap-[4px] text-[10px] text-[#666] mt-[2px] mb-[4px]"
-                                        >
-                                          <i
-                                            className="fas fa-star text-[#ffc107] text-[9px]"
-                                          ></i>
-
-                                          <span className="font-medium">
-                                            {Number(
-                                              test.averageRating,
-                                            ).toFixed(1)}
-                                          </span>
-
-                                          <span className="text-[#999]">
-                                            ({test?.ratingCount}+)
-                                          </span>
-                                        </div>
-                                      )}
-
-                                    <div className="d-flex align-items-center text-dark">
-                                      <i
-                                        className="fa-solid fa-location-dot text-[13px] text-[#8059ca]"
-                                      ></i>
-                                      <span>
-                                        {vendor.address?.length > 22
-                                          ? vendor.address.slice(0, 22) + "..."
-                                          : vendor.address ||
-                                          "Address not available"}
-                                      </span>
+                                  <div className="!flex-1 !min-w-0">
+                                    <h6 className="!m-0 !text-[12px] !font-semibold !text-[#1a1a1a] !truncate">{vendor.name}</h6>
+                                    {Number(test?.averageRating) > 0 && Number(test?.ratingCount) > 0 && (
+                                      <div className="!flex !items-center !gap-[3px] !text-[10px] !text-[#666]">
+                                        <i className="fas fa-star !text-[#ffc107] !text-[9px]"></i>
+                                        <span className="!font-medium">{Number(test.averageRating).toFixed(1)}</span>
+                                        <span className="!text-[#999]">({test?.ratingCount}+)</span>
+                                      </div>
+                                    )}
+                                    <div className="!flex !items-center !gap-[4px] !text-[10px] !text-[#444] !mt-[1px]">
+                                      <i className="fa-solid fa-location-dot !text-[#8059ca] !text-[10px]"></i>
+                                      <span className="!truncate">{vendor.address?.length > 22 ? vendor.address.slice(0, 22) + "..." : vendor.address || "Address not available"}</span>
                                     </div>
                                     {test?.distanceInKm && (
-                                      <div
-                                        className="d-flex align-items-center gap-1 text-muted mt-[4px]"
-                                      >
-                                        <i
-                                          className="isax isax-route-square text-[11px] text-[#8059ca]"
-                                        ></i>
-
-                                        <span className="text-[11px]">
-                                          {parseFloat(
-                                            test.distanceInKm,
-                                          ).toFixed(1)}{" "}
-                                          km away
-                                        </span>
+                                      <div className="!flex !items-center !gap-[3px] !text-[10px] !text-[#666] !mt-[1px]">
+                                        <i className="isax isax-route-square !text-[#8059ca] !text-[10px]"></i>
+                                        <span>{parseFloat(test.distanceInKm).toFixed(1)} km away</span>
                                       </div>
                                     )}
                                   </div>
@@ -921,6 +704,7 @@ const DentalTeeth = ({
                   );
                 })}
               </Swiper>
+
               <button className="meq-arrow-btn dental-next" aria-label="Next">
                 <i className="fas fa-chevron-right"></i>
               </button>
@@ -969,43 +753,30 @@ const DentalTeeth = ({
           </div>
         </section>
       )}
-
       <section
-        className="mt-3 bg-[#E8E4F5] bg-[url('/assets/Medicompares%20Background.png')] bg-cover bg-center bg-no-repeat"
+        className="!mt-3 !bg-[#E8E4F5] !bg-[url('/assets/Medicompares%20Background.png')] !bg-cover !bg-center !bg-no-repeat"
       >
-        <div className="container-fluid">
-          <div className="row align-items-center pt-3">
-            <div className="col-12 col-md-6 text-center mb-4 mb-md-0 d-lg-block d-none">
-              <div className="position-relative d-inline-block">
+        <div className="!w-full !px-4">
+          <div className="!flex !flex-col md:!flex-row !items-center !pt-3 !w-full">
+            <div className="!w-full md:!w-1/2 !text-center !mb-4 md:!mb-0 lg:!block !hidden">
+              <div className="!relative !inline-block">
                 <img
                   src="/assets/Medicompares Dentist Webpage 2 (1).png"
                   alt="Dental Doctor"
-                  className="img-fluid max-h-[420px]"
+                  className="!max-w-full !h-auto !max-h-[420px]"
                 />
-                {/* 
-                <img
-                  src="/assets/dentalLeft.jpg"
-                  alt="Dental Care"
-                  className="floating-img floating-left"
-                />
-
-                <img
-                  src="/assets/dentalRight.jpg"
-                  alt="Dental Tools"
-                  className="floating-img floating-right"
-                /> */}
               </div>
             </div>
 
-            <div className="col-12 col-md-6">
+            <div className="!w-full md:!w-1/2">
               <h2
-                className="fw-bold text-dark dental-heading leading-[46px]"
+                className="!font-semibold !text-[#1a1a1a] !text-[32px] md:!text-[36px] !leading-[46px]"
               >
                 The Best Dental Clinics <br /> That You Can Trust
               </h2>
 
               <p
-                className="text-dark text-[14px] leading-[28px]"
+                className="!text-[#1a1a1a] !text-[14px] !leading-[28px]"
               >
                 Our clinic delivers comprehensive dental solutions, from routine
                 checkups to advanced procedures, supported by modern equipment
@@ -1017,31 +788,31 @@ const DentalTeeth = ({
                 long-term oral health.
               </p>
 
-              <div className="row mb-2">
-                <div className="col-6 mb-3 d-flex align-items-center gap-2">
-                  <i className="fa-solid fa-circle-check text-success"></i>
-                  <span className="small fw-semibold text-dark">
+              <div className="!grid !grid-cols-2 !gap-3 !mb-2">
+                <div className="!flex !items-center !gap-2">
+                  <i className="fa-solid fa-circle-check" style={{ color: "#22c55e", fontSize: "16px", flexShrink: 0 }}></i>
+                  <span className="!text-sm !font-semibold !text-[#1a1a1a]">
                     Modern Equipment
                   </span>
                 </div>
 
-                <div className="col-6 mb-3 d-flex align-items-center gap-2">
-                  <i className="fa-solid fa-circle-check text-success"></i>
-                  <span className="small fw-semibold text-dark">
+                <div className="!flex !items-center !gap-2">
+                  <i className="fa-solid fa-circle-check" style={{ color: "#22c55e", fontSize: "16px", flexShrink: 0 }}></i>
+                  <span className="!text-sm !font-semibold !text-[#1a1a1a]">
                     Easy Online Appointment
                   </span>
                 </div>
 
-                <div className="col-6 d-flex align-items-center gap-2">
-                  <i className="fa-solid fa-circle-check text-success"></i>
-                  <span className="small fw-semibold text-dark">
+                <div className="!flex !items-center !gap-2">
+                  <i className="fa-solid fa-circle-check" style={{ color: "#22c55e", fontSize: "16px", flexShrink: 0 }}></i>
+                  <span className="!text-sm !font-semibold !text-[#1a1a1a]">
                     Comfortable Clinic
                   </span>
                 </div>
 
-                <div className="col-6 d-flex align-items-center gap-2">
-                  <i className="fa-solid fa-circle-check text-success"></i>
-                  <span className="small fw-semibold text-dark">
+                <div className="!flex !items-center !gap-2">
+                  <i className="fa-solid fa-circle-check" style={{ color: "#22c55e", fontSize: "16px", flexShrink: 0 }}></i>
+                  <span className="!text-sm !font-semibold !text-[#1a1a1a]">
                     Always Monitored
                   </span>
                 </div>
@@ -1051,28 +822,28 @@ const DentalTeeth = ({
         </div>
       </section>
 
-      <div className="py-md-5 py-4 bg-[#f8f6fc]">
-        <div className="container">
-          <div className="row align-items-center justify-content-center position-relative">
+      <div className="!py-8 md:!py-12 !bg-[#f8f6fc]">
+        <div className="!max-w-6xl !mx-auto !px-4">
+          <div className="!grid !grid-cols-2 lg:!grid-cols-4 !gap-4">
             {stats.map((stat, idx) => (
               <div
                 key={idx}
-                className={`col-6 col-lg-3 mb-4 mb-md-0 position-relative ${stats && stats.length > 0 && idx !== stats.length - 1 ? "border-r-2 border-solid border-[rgba(128, 89, 202, 0.15)]" : "border-r-0"}`}
+                className="!flex !items-center !gap-3 !bg-white !rounded-sm !px-4 !py-5 !shadow-[0_4px_24px_rgba(128,89,202,0.10)]"
               >
-                <div className="d-flex flex-row align-items-center justify-content-center justify-content-md-start">
-                  <div
-                    className="d-flex align-items-center justify-content-center me-3 w-[60px] h-[60px] bg-[#8059ca] text-white text-[24px] rounded-[8px]"
-                  >
-                    <i className={`fa-solid ${stat.iconClass}`}></i>
-                  </div>
-
-                  <div className="text-center text-md-start">
-                    <h3 className="mb-1 fw-bold countingText text-[#8059ca]">
-                      {stat.value.split("+")[0]}
-                      <span className="text-[#8059ca]">+</span>
-                    </h3>
-                    <p className="mb-0 text-[14px] text-[#666]">{stat.label}</p>
-                  </div>
+                <div
+                  className="!flex !items-center !justify-center !shrink-0 !w-[52px] !h-[52px] !rounded-[12px]"
+                  style={{ background: "linear-gradient(135deg, #8059ca, #a07dd8)" }}
+                >
+                  <i
+                    className={`fa-solid ${stat.iconClass}`}
+                    style={{ color: "#fff", fontSize: "20px" }}
+                  ></i>
+                </div>
+                <div>
+                  <h3 className="!m-0 !font-bold !text-[24px] !leading-none !text-[#8059ca]">
+                    {stat.value.split("+")[0]}<span>+</span>
+                  </h3>
+                  <p className="!mt-[4px] !mb-0 !text-[12px] !font-medium !text-[#666] !leading-tight">{stat.label}</p>
                 </div>
               </div>
             ))}
@@ -1082,34 +853,34 @@ const DentalTeeth = ({
 
       {/* FAQ  */}
       <section
-        className="mx-2 py-[30px] px-0 bg-[#E8E4F5] bg-[url('/assets/Medicompares%20Background.png')] bg-cover bg-center bg-no-repeat"
+        className="!mx-2 !py-[30px] !px-0 !bg-[#E8E4F5] !bg-[url('/assets/Medicompares%20Background.png')] !bg-cover !bg-center !bg-no-repeat"
       >
-        <div className="container-fluid">
-          <div className="row">
-            <div className="col-lg-5 col-md-12 mb-4 mb-lg-0">
+        <div className="!w-full !px-4">
+          <div className="!flex !flex-col lg:!flex-row !gap-6">
+            <div className="!w-full lg:!w-[40%] !mb-4 lg:!mb-0">
               <img
                 src="/assets/Medicomapres Dentist Website (1).png"
                 alt="FAQ"
-                className="img-fluid rounded w-100 d-lg-block d-none max-h-[420px]"
+                className="!img-fluid !rounded !w-100 lg:!block !hidden !max-h-[420px]"
               />
             </div>
-            <div className="col-lg-7 col-md-12">
+            <div className="!w-full lg:!w-[60%]">
               {faqs.map((faq) => (
                 <div
                   key={faq.id}
-                  className="bg-white rounded-[12px] mb-[15px] overflow-hidden shadow-[0_2px_10px_rgba(0,0,0,0.05)]"
+                  className="!bg-white !rounded-[12px] !mb-[15px] !overflow-hidden !shadow-[0_2px_10px_rgba(0,0,0,0.05)]"
                 >
                   <div
-                    className="py-[14px] px-[16px] flex justify-between items-center cursor-pointer"
+                    className="!py-[14px] !px-[16px] !flex !justify-between !items-center !cursor-pointer"
                     onClick={() => toggleFaq(faq.id)}
                   >
                     <h5
-                      className="text-[16px] font-semibold text-[#212121] m-0 flex-1"
+                      className="!text-[16px] !font-semibold !text-[#212121] !m-0 !flex-1"
                     >
                       {faq.question}
                     </h5>
                     <span
-                      className="text-[20px] text-[#7f2ef6] font-semibold transition-all duration-300 ease flex items-center justify-center w-[24px] h-[24px]"
+                      className="!text-[20px] !text-[#7f2ef6] !font-semibold !transition-all !duration-300 !ease !flex !items-center !justify-center !w-[24px] !h-[24px]"
                     >
                       {expandedFaq === faq.id ? (
                         <i className="fas fa-minus"></i>
@@ -1120,7 +891,7 @@ const DentalTeeth = ({
                   </div>
                   {expandedFaq === faq.id && (
                     <div
-                      className="pt-0 pb-[16px] px-[16px] text-[14px] text-[#757575] leading-[1.6]"
+                      className="!pt-0 !pb-[16px] !px-[16px] !text-[14px] !text-[#757575] !leading-[1.6]"
                     >
                       {faq.answer}
                     </div>

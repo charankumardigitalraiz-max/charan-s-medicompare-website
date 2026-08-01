@@ -98,9 +98,9 @@ const CartOrderCard = ({
         )}
 
         {/* ── CARD BODY: Image + Info ── */}
-        <div className="row align-items-start">
+        <div className="flex items-start gap-4 flex-wrap sm:flex-nowrap">
           {/* IMAGE */}
-          <div className="col-sm-3 col-12 mb-3 mb-sm-0">
+          <div className="w-full sm:w-1/4 mb-3 sm:mb-0">
             <div
               onClick={() => onView(order)}
               className="relative cursor-pointer w-[72px] h-[72px] border border-[#eee] rounded-[10px] overflow-hidden bg-[#fafafa]"
@@ -122,7 +122,7 @@ const CartOrderCard = ({
           </div>
 
           {/* PRODUCT INFO */}
-          <div className="col-sm-9 col-12">
+          <div className="w-full sm:w-3/4">
             <div
               className="mb-2 cursor-pointer font-semibold text-[14px] text-[#222] text-capitalize"
               onClick={() => onView(order)}
@@ -134,8 +134,8 @@ const CartOrderCard = ({
                 "Not Available"}
             </div>
 
-            <div className="row g-2">
-              <div className="col-6">
+            <div className="grid grid-cols-2 gap-2 mt-2">
+              <div className="w-full">
                 <div style={{ fontSize: "11px", color: "#aaa" }}>Payment</div>
                 <div
                   style={{
@@ -150,7 +150,7 @@ const CartOrderCard = ({
                     : "N/A"}
                 </div>
               </div>
-              <div className="col-6">
+              <div className="w-full">
                 <div style={{ fontSize: "11px", color: "#aaa" }}>Method</div>
                 <div style={{ fontSize: "12px", fontWeight: 600, color: "#444", textTransform: "capitalize" }}>
                   {order.paymentmethod ? order.paymentmethod.toLowerCase() : "N/A"}
@@ -162,8 +162,8 @@ const CartOrderCard = ({
       </div>
 
       {/* ── FOOTER: Total Paid + Action Buttons ── */}
-      <div className="flex flex-col align-items-sm-end justify-between mt-3 pt-2 border-t border-[#f8f8f8]">
-        <div className="d-flex justify-content-between align-items-center w-100 mb-2">
+      <div className="flex flex-col sm:items-end justify-between mt-3 pt-2 border-t border-[#f8f8f8]">
+        <div className="flex justify-between items-center w-full mb-2">
           <div>
             <span style={{ fontSize: "11px", color: "#aaa" }}>Total Paid</span>
             <span className="text-[16px] font-bold text-[#7c4dc4] block">
