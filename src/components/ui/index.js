@@ -22,3 +22,4 @@ export { default as Table } from "./Table";
 export { default as Tabs } from "./Tabs";
 export { default as SectionHeader } from "./SectionHeader";
 export { default as BackButton } from "./BackButton";
+export { default as SectionProductCard } from "./SectionProductCard"

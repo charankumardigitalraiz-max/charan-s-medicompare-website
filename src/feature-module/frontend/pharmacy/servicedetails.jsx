@@ -43,9 +43,9 @@ import "../../../components/home/home-enhanced.css";
 const getSearchItemId = (item) => item?.tablet?._id || item?._id || null;
 
 const ServiceCategoryCard = memo(({ cat, index, onClick }) => (
-  <div className="lg:w-[16.666%] md:w-[25%] sm:w-[50%] w-[33.333%] flex ">
+  <div className="w-1/2 sm:w-1/2 md:w-1/4 lg:w-1/6 xl:w-1/6 px-2 mb-4 flex">
     <div
-      className="group service-category-card-lite w-full [contain:layout_style_paint] flex-1 cursor-pointer bg-white !border !border-[#eef1f6] !shadow-[0_8px_30px_rgb(0,0,0,0.03)] hover:!shadow-[0_20px_40px_rgba(128,89,202,0.12)] !rounded-2xl hover:!border-[#8059ca]/40 hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-center items-center min-h-[135px] !py-5 !px-3 !m-[0_0_12px]"
+      className="group flex-1 cursor-pointer bg-white !border !border-[#eef1f6] !shadow-[0_8px_30px_rgb(0,0,0,0.03)] hover:!shadow-[0_20px_40px_rgba(128,89,202,0.12)] !rounded-2xl w-full text-center p-5 hover:!border-[#8059ca]/40 hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-center items-center"
       onClick={() => onClick(cat)}
       role="button"
       tabIndex={0}
@@ -53,18 +53,18 @@ const ServiceCategoryCard = memo(({ cat, index, onClick }) => (
         if (e.key === "Enter" || e.key === " ") onClick(cat);
       }}
     >
-      <span className="flex items-center justify-center mb-3 rounded-full bg-gradient-to-br from-[#f8f4ff] to-[#f3ebff] border border-[#f3effc] w-[50px] h-[50px] shrink-0 transition-all duration-300 group-hover:scale-105">
+      <span className="w-[72px] h-[72px] rounded-full mx-auto mb-3 flex items-center justify-center bg-gradient-to-br from-[#f8f4ff] to-[#f3ebff] border border-[#f3effc] transition-all duration-300 group-hover:scale-105">
         <img
           src={getImageUrl(cat?.files?.[0]) || "/assets/default.png"}
           alt={cat?.name || "Category"}
           title={cat?.name}
-          className="h-[32px] w-[32px] object-contain transition-transform duration-[700ms] ease-in-out group-hover:[transform:rotateY(360deg)]"
+          className="h-[46px] w-[46px] object-contain transition-transform duration-[700ms] ease-in-out group-hover:[transform:rotateY(360deg)]"
           loading={index < 8 ? "eager" : "lazy"}
           fetchPriority={index < 4 ? "high" : "auto"}
           decoding="async"
         />
       </span>
-      <h4 className="!text-[12px] leading-[1.3] !font-semibold m-0 text-center line-clamp-2 h-auto min-h-[32px] !text-slate-700 group-hover:!text-[#8059ca] transition-colors duration-200">
+      <h4 className="!font-semibold !text-[13.5px] !text-slate-700 group-hover:!text-[#8059ca] transition-colors duration-200 mb-0 line-clamp-2 text-center leading-snug">
         {cat?.name || "No Category"}
       </h4>
     </div>
@@ -887,6 +887,11 @@ const ServiceDetails = () => {
 
   const handleCategoryClick = useCallback(
     (item) => {
+      sessionStorage.setItem("activeCategoryLoader", JSON.stringify({
+        name: item.name,
+        fixedType: item.fixedType || item.slug || "",
+        colorcode: item.colorcode || ""
+      }));
       navigate(`/${service}/all?maincategories=${item.slug}`);
     },
     [navigate, service],
@@ -1482,7 +1487,7 @@ const ServiceDetails = () => {
               </div>
             </div>
 
-            <div className="flex flex-wrap -mx-1 [&>*]:px-1">
+            <div className="flex flex-wrap justify-center mt-3">
               {displayCategories.length > 0 ? (
                 displayCategories.slice(0, 12).map((cat, index) => (
                   <ServiceCategoryCard

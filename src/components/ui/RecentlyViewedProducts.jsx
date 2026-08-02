@@ -30,7 +30,7 @@ const RecentlyViewedProducts = ({
 
         {/* Header */}
         <div className="flex items-center gap-3 mb-4 border-l-4 border-[#8059ca] pl-3">
-          <h2 className="text-lg sm:text-xl font-semibold text-[#0f172a] m-0 leading-none">
+          <h2 className="!text-lg sm:!text-xl !font-semibold !text-[#0f172a] m-0 leading-none">
             Recently Viewed Products
           </h2>
           <span className="text-[11px] text-[#8059ca] font-bold bg-[#f3e8ff] px-2.5 py-1 rounded-full uppercase tracking-wide shrink-0">
@@ -125,7 +125,7 @@ const RecentlyViewedProducts = ({
               return (
                 <div
                   key={`rvp-${product._id || "p"}-${product.vendor?.vendorId || "v"}-${index}`}
-                  className="min-w-[210px] max-w-[210px] flex-shrink-0 self-stretch flex flex-col bg-white rounded-xl border border-[#f1f5f9] shadow-[0_4px_18px_rgba(0,0,0,0.07)] relative overflow-hidden transition-all duration-300 hover:-translate-y-[3px] hover:border-[#8059ca] hover:shadow-[0_8px_24px_rgba(128,89,202,0.15)]"
+                  className="min-w-[210px] max-w-[210px] flex-shrink-0 self-stretch flex flex-col bg-white rounded-md border border-[#f1f5f9] shadow-[0_4px_18px_rgba(0,0,0,0.07)] relative overflow-hidden transition-all duration-300 hover:-translate-y-[3px] hover:border-[#8059ca] hover:shadow-[0_8px_24px_rgba(128,89,202,0.15)]"
                 >
                   {/* Compare badge */}
                   <div className="rvp-compare absolute right-2 top-2 z-10 cursor-pointer bg-[#8059ca] text-white border-[1.5px] border-[#8059ca] rounded-[20px] w-8 h-[26px] flex items-center justify-start pl-[9px] shadow-[0_2px_8px_rgba(128,89,202,0.4)] overflow-hidden whitespace-nowrap transition-all duration-300">

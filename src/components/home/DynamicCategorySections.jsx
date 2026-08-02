@@ -1,9 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Slider from "react-slick";
-import { ProductCard, SectionHeader } from "../ui";
+import { SectionProductCard } from "../ui";
 import { useResponsive } from "../../hooks";
-import HomeProductScrollCarousel from "./HomeProductScrollCarousel";
 
 const DynamicCategorySections = ({
   sections,
@@ -23,81 +22,48 @@ const DynamicCategorySections = ({
     isTablet,
   } = useResponsive();
   const isMobile = isMobileProp !== undefined ? isMobileProp : isMobileLocal;
-  // console.log("current service in category section",)
-  const slidesToShow = extraSmallScreen
-    ? 2
-    : isTablet
-      ? 3
-      : isSmallLaptop
-        ? 5
-        : 6;
 
-  const NextArrow = (props) => {
-    const { style, onClick } = props;
-    return (
-      <button
-        className="meq-arrow-btn dental-next"
-        style={{ ...style, display: "block" }}
-        onClick={onClick}
-        aria-label="Next"
-      >
-        <i className="fas fa-chevron-right"></i>
-      </button>
-    );
-  };
+  // Since products now render on the right (lg:col-span-9), we scale slidesToShow down slightly
+  const slidesToShow = isMobile ? 2 : isTablet ? 2 : isSmallLaptop ? 3 : 4;
 
-  const PrevArrow = (props) => {
-    const { style, onClick } = props;
-    return (
-      <button
-        className="meq-arrow-btn dental-prev"
-        style={{ ...style, display: "block" }}
-        onClick={onClick}
-        aria-label="Previous"
-      >
-        <i className="fas fa-chevron-left"></i>
-      </button>
-    );
-  };
+  // React State for a Live Countdown Timer
+  const [timeLeft, setTimeLeft] = useState({ hours: 4, minutes: 12, seconds: 48 });
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeLeft((prev) => {
+        if (prev.seconds > 0) {
+          return { ...prev, seconds: prev.seconds - 1 };
+        } else if (prev.minutes > 0) {
+          return { ...prev, minutes: prev.minutes - 1, seconds: 59 };
+        } else if (prev.hours > 0) {
+          return { hours: prev.hours - 1, minutes: 59, seconds: 59 };
+        } else {
+          return { hours: 4, minutes: 12, seconds: 48 }; // Loop reset
+        }
+      });
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
 
   const dynamicSettings = {
     dots: false,
-    infinite: true,
-    speed: 400,
+    arrows: true,
+    infinite: false,
+    speed: 500,
     slidesToShow: slidesToShow,
     slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 3000,
-    pauseOnHover: true,
-    pauseOnFocus: true,
-    arrows: slidesToShow > 2,
-    nextArrow: <NextArrow />,
-    prevArrow: <PrevArrow />,
-    ...(sliderSettings || {}),
+    responsive: [
+      { breakpoint: 1200, settings: { slidesToShow: 3, arrows: true } },
+      { breakpoint: 992, settings: { slidesToShow: 2, arrows: true } },
+      { breakpoint: 768, settings: { slidesToShow: 2, arrows: true } },
+      { breakpoint: 480, settings: { slidesToShow: 1.5, arrows: true } },
+    ],
   };
-
-  // const bgColors = [
-  //   "#E0FDFF",
-  //   "#E0FFEA",
-  //   "#EEFFE0",
-  //   "#f3e8ff",
-  //   "#FFDFD1",
-  //   "#FEE0FF",
-  // ];
-
-  const bgColors = [
-    "#e9faff",
-    "#f2ffec",
-    "#fff1e0",
-    "#fff3f0",
-    "#fbeeff",
-    "#fff7e6",
-  ];
 
   const normalizeItem = (item) => {
     const DiscusedPrice = item?.tablet?.price;
 
-    // NEW API SUPPORT
     const productDetails = item?.productDetails || {};
     const businessDetails = productDetails?.businessDetails || {};
     const vendorDetails = productDetails?.vendor || {};
@@ -108,33 +74,24 @@ const DynamicCategorySections = ({
       item.vendor ||
       null;
 
-    // Extract vendor information from new API structure
     const newApiVendor = {
       vendorId: vendorDetails._id || vendorDetails.id,
-      name: businessDetails.name || vendorDetails.firstName + " " + vendorDetails.lastName || "",
-      price: productDetails.price || 0,
-      discountprice: productDetails.discountprice || null,
-      discountType: productDetails.discountType || null,
-      stock: productDetails.stock || 0,
-      bussiness_image: businessDetails.bussiness_image || null,
-      bussinessdetails: {
-        name: businessDetails.name || "",
-        bussiness_image: businessDetails.bussiness_image || null,
-      },
+      name: businessDetails.name || vendorDetails.name || "",
+      bussiness_image: businessDetails.bussiness_image || vendorDetails.bussiness_image || [],
+      price: item.price || item.matchedPrice || 0,
+      discountprice: item.discountPrice || item.matchedDiscountPrice || null,
+      discountType: item.discountType || null,
+      stock: item.stock || 999,
+      bookingType: item.bookingType || "cart",
     };
+    // const categoryFixedType = item?.serviceId?.fixedType;
 
-    // Use new API vendor if available, otherwise fall back to old structure
-    const finalVendor = productDetails.price ? newApiVendor : (firstVendor ? {
+
+    // console.log('normallzied product  fixedtype', categoryFixedType)
+
+    const finalVendor = firstVendor ? {
       ...firstVendor,
-      vendorId:
-        firstVendor.vendorId ||
-        firstVendor._id ||
-        firstVendor.id,
-      name:
-        firstVendor.name ||
-        firstVendor.vendorName ||
-        firstVendor?.bussinessdetails?.name ||
-        "",
+      name: firstVendor.name || firstVendor.businessdetails?.name || "",
       price:
         firstVendor.price ||
         firstVendor.matchedVariantPrice ||
@@ -143,12 +100,20 @@ const DynamicCategorySections = ({
         firstVendor.sellingPrice ||
         DiscusedPrice ||
         0,
+    } : (vendorDetails._id ? {
+      ...newApiVendor,
+      name: newApiVendor.name,
+      price:
+        newApiVendor.price ||
+        DiscusedPrice ||
+        0,
     } : null);
 
     return {
       ...item,
       tabletdetails: item.tabletdetails || item.tablet || item,
       vendordetails: finalVendor,
+      // currentService: categoryFixedType,
       variants:
         item.variants ||
         item.tablet?.variant ||
@@ -158,129 +123,434 @@ const DynamicCategorySections = ({
     };
   };
 
+  // Helper mapping service details to custom backgrounds and specialized GPU-accelerated animations
+  const getServiceTheme = (serviceSlug = "", index) => {
+    const slug = String(serviceSlug || "").toLowerCase().replace("-", "").replace("_", "");
+    const themeIndex = index % 3;
+
+    // Explicit mapping for all 10 category fixedType values from the API
+    if (slug.includes("medicine")) {
+      return {
+        bgClass: "!bg-gradient-to-br !from-[#f6f2ff] !to-[#fbfaff] !border-[#e8dbff] !shadow-[0_15px_40px_rgba(128,89,202,0.05)]",
+        bannerBg: "from-[#8059ca] to-[#6d4db8]",
+        iconClass: "fas fa-pills text-[#8059ca] animate-pulse-glow",
+        bubbleColor: "text-[#8059ca]/35",
+        animationType: "medicine",
+        badge: "💊 Best Prices",
+        description: "Compare & buy prescription medicines from top verified pharmacies near you.",
+      };
+    } else if (slug.includes("labtest")) {
+      return {
+        bgClass: "!bg-gradient-to-br !from-[#f0fdfa] !to-[#fcfdfd] !border-[#b2f5ea] !shadow-[0_15px_40px_rgba(13,148,136,0.05)]",
+        bannerBg: "from-[#0d9488] to-[#0f766e]",
+        iconClass: "fas fa-flask text-[#0d9488] animate-pulse-glow",
+        bubbleColor: "text-[#0d9488]/35",
+        animationType: "diagnostics",
+        badge: "🧪 Lab Offers",
+        description: "Book NABL-certified lab tests at home with fast results and expert review.",
+      };
+    } else if (slug.includes("diagnostic")) {
+      return {
+        bgClass: "!bg-gradient-to-br !from-[#f0f8ff] !to-[#f8fbff] !border-[#cce4ff] !shadow-[0_15px_40px_rgba(59,130,246,0.05)]",
+        bannerBg: "from-[#1e3a8a] via-[#3b82f6] to-[#1d4ed8]",
+        iconClass: "fas fa-microscope text-[#3b82f6] animate-pulse-glow",
+        bubbleColor: "text-[#3b82f6]/35",
+        animationType: "diagnostics",
+        badge: "🔬 Scan & Save",
+        description: "MRI, CT, X-Ray & ultrasound comparisons from accredited diagnostic centres.",
+      };
+    } else if (slug.includes("homecare")) {
+      return {
+        bgClass: "!bg-gradient-to-br !from-[#fff6ed] !to-[#fffcf8] !border-[#ffe3cc] !shadow-[0_15px_40px_rgba(249,115,22,0.05)]",
+        bannerBg: "from-[#f97316] to-[#ea580c]",
+        iconClass: "fas fa-home text-[#f97316] animate-pulse-glow",
+        bubbleColor: "text-[#f97316]/35",
+        animationType: "homecare",
+        badge: "🏠 Home Visit",
+        description: "Professional healthcare at your doorstep — physiotherapy, nursing & more.",
+      };
+    } else if (slug.includes("nursingcare")) {
+      return {
+        bgClass: "!bg-gradient-to-br !from-[#eef2ff] !to-[#fafbfe] !border-[#c7d2fe] !shadow-[0_15px_40px_rgba(79,70,229,0.05)]",
+        bannerBg: "from-[#4f46e5] to-[#3730a3]",
+        iconClass: "fas fa-user-nurse text-[#4f46e5] animate-pulse-glow",
+        bubbleColor: "text-[#4f46e5]/35",
+        animationType: "homecare",
+        badge: "👩‍⚕️ Verified Nurses",
+        description: "Trained nursing staff & clinic services for personalised recovery care.",
+      };
+    } else if (slug.includes("dental")) {
+      return {
+        bgClass: "!bg-gradient-to-br !from-[#fefcd7] !to-[#fffdf5] !border-[#fef08a] !shadow-[0_15px_40px_rgba(202,138,4,0.05)]",
+        bannerBg: "from-[#ca8a04] to-[#a16207]",
+        iconClass: "fas fa-tooth text-[#ca8a04] animate-pulse-glow",
+        bubbleColor: "text-[#ca8a04]/35",
+        animationType: "homecare",
+        badge: "🦷 Dental Deals",
+        description: "Whitening, braces, implants & more — compare trusted dental clinics.",
+      };
+    } else if (slug.includes("equipment")) {
+      return {
+        bgClass: "!bg-gradient-to-br !from-[#f1f5f9] !to-[#fafbfc] !border-[#cbd5e1] !shadow-[0_15px_40px_rgba(71,85,105,0.05)]",
+        bannerBg: "from-[#475569] to-[#334155]",
+        iconClass: "fas fa-wheelchair text-[#475569] animate-pulse-glow",
+        bubbleColor: "text-[#475569]/35",
+        animationType: "medicine",
+        badge: "🏥 Rent or Buy",
+        description: "Hospital-grade equipment for home use — beds, wheelchairs, oxygen & more.",
+      };
+    } else if (slug.includes("treatment")) {
+      return {
+        bgClass: "!bg-gradient-to-br !from-[#fae8ff] !to-[#fdf4ff] !border-[#f5d0fe] !shadow-[0_15px_40px_rgba(192,132,252,0.05)]",
+        bannerBg: "from-[#c084fc] to-[#a855f7]",
+        iconClass: "fas fa-procedures text-[#c084fc] animate-pulse-glow",
+        bubbleColor: "text-[#c084fc]/35",
+        animationType: "homecare",
+        badge: "💜 Certified Plans",
+        description: "Explore treatment packages from certified healthcare specialists.",
+      };
+    } else if (slug.includes("surgeries") || slug.includes("surgery")) {
+      return {
+        bgClass: "!bg-gradient-to-br !from-[#fff5f5] !to-[#fffbfb] !border-[#fee2e2] !shadow-[0_15px_40px_rgba(220,38,38,0.05)]",
+        bannerBg: "from-[#dc2626] to-[#b91c1c]",
+        iconClass: "fas fa-syringe text-[#dc2626] animate-pulse-glow",
+        bubbleColor: "text-[#dc2626]/35",
+        animationType: "homecare",
+        badge: "🔴 Expert Surgeons",
+        description: "Compare surgery costs & connect with top surgeons across specialities.",
+      };
+    } else if (slug.includes("ambulance")) {
+      return {
+        bgClass: "!bg-gradient-to-br !from-[#fef2f2] !to-[#fffbfa] !border-[#fee2e2] !shadow-[0_15px_40px_rgba(153,27,27,0.05)]",
+        bannerBg: "from-[#991b1b] to-[#7f1d1d]",
+        iconClass: "fas fa-ambulance text-[#991b1b] animate-pulse-glow",
+        bubbleColor: "text-[#991b1b]/35",
+        animationType: "homecare",
+        badge: "🚑 24/7 Emergency",
+        description: "Book verified ambulance services instantly for emergency transport.",
+      };
+    } else {
+      // Fallbacks based on themeIndex
+      if (themeIndex === 0) {
+        return {
+          bgClass: "!bg-gradient-to-br !from-[#f6f2ff] !to-[#fbfaff] !border-[#e8dbff] !shadow-[0_15px_40px_rgba(128,89,202,0.05)]",
+          bannerBg: "from-[#8059ca] to-[#6d4db8]",
+          iconClass: "fas fa-heartbeat text-[#8059ca]",
+          bubbleColor: "text-[#8059ca]/35",
+          animationType: "medicine",
+          badge: "⭐ Top Picks",
+          description: "Discover the best healthcare options compared in one place.",
+        };
+      } else if (themeIndex === 1) {
+        return {
+          bgClass: "!bg-gradient-to-br !from-[#f0f8ff] !to-[#f8fbff] !border-[#cce4ff] !shadow-[0_15px_40px_rgba(59,130,246,0.05)]",
+          bannerBg: "from-[#1e3a8a] via-[#3b82f6] to-[#1d4ed8]",
+          iconClass: "fas fa-laptop-medical text-[#3b82f6]",
+          bubbleColor: "text-[#3b82f6]/35",
+          animationType: "diagnostics",
+          badge: "✅ Verified Brands",
+          description: "Quality-checked medical services from trusted providers near you.",
+        };
+      } else {
+        return {
+          bgClass: "!bg-gradient-to-br !from-[#fff6ed] !to-[#fffcf8] !border-[#ffe3cc] !shadow-[0_15px_40px_rgba(249,115,22,0.05)]",
+          bannerBg: "from-[#f97316] to-[#ea580c]",
+          iconClass: "fas fa-prescription-bottle-alt text-[#f97316]",
+          bubbleColor: "text-[#f97316]/35",
+          animationType: "homecare",
+          badge: "🔥 Flash Deal",
+          description: "Limited-time offers on premium healthcare — grab them before they go!",
+        };
+      }
+    }
+  };
+
+  const renderFloatingIcons = (animationType, colorClass) => {
+    let icons = [];
+    if (animationType === "medicine") {
+      icons = [
+        "fa-pills", "fa-capsules", "fa-prescription-bottle", "fa-tablet-alt", "fa-first-aid",
+        "fa-capsules", "fa-tablets", "fa-prescription", "fa-hand-holding-medical", "fa-plus-circle",
+        "fa-pills", "fa-capsules", "fa-prescription-bottle", "fa-tablet-alt", "fa-first-aid"
+      ];
+    } else if (animationType === "diagnostics") {
+      icons = [
+        "fa-flask", "fa-microscope", "fa-vial", "fa-dna", "fa-stethoscope",
+        "fa-thermometer", "fa-vials", "fa-file-medical-alt", "fa-heartbeat", "fa-user-md",
+        "fa-flask", "fa-microscope", "fa-vial", "fa-dna", "fa-stethoscope"
+      ];
+    } else if (animationType === "homecare") {
+      icons = [
+        "fa-heartbeat", "fa-user-nurse", "fa-ambulance", "fa-syringe", "fa-briefcase-medical",
+        "fa-procedures", "fa-hand-holding-heart", "fa-clock", "fa-user-md", "fa-clinic-medical",
+        "fa-heartbeat", "fa-user-nurse", "fa-ambulance", "fa-syringe", "fa-briefcase-medical"
+      ];
+    } else {
+      icons = [
+        "fa-heartbeat", "fa-pills", "fa-flask", "fa-microscope", "fa-user-nurse",
+        "fa-stethoscope", "fa-first-aid", "fa-capsules", "fa-ambulance", "fa-dna",
+        "fa-heartbeat", "fa-pills", "fa-flask", "fa-microscope", "fa-user-nurse"
+      ];
+    }
+
+    return (
+      <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
+        {icons.map((icon, i) => {
+          const left = `${2 + i * 6.5}%`; // Distribute across width
+          const dimension = 32 + (i % 4) * 6; // Sizes: 32px, 38px, 44px, 50px
+          const rotation = (i * 24) % 360;
+
+          return (
+            <div
+              key={i}
+              className="absolute animate-float flex items-center justify-center rounded-2xl border border-black/5 bg-white/20 shadow-sm transition-all duration-300 hover:scale-110"
+              style={{
+                left: left,
+                top: `${8 + (i * 17) % 75}%`,
+                width: `${dimension}px`,
+                height: `${dimension}px`,
+                animationDelay: `${i * 0.4}s`,
+                animationDuration: `${7 + (i % 3) * 4}s`
+              }}
+            >
+              <i
+                className={`fas ${icon} ${colorClass.split("/")[0]}`}
+                style={{
+                  fontSize: `${dimension * 0.45}px`,
+                  opacity: 0.25,
+                  transform: `rotate(${rotation}deg)`
+                }}
+              />
+            </div>
+          );
+        })}
+      </div>
+    );
+  };
+
   return (
-    sections &&
-    sections.length > 0 &&
-    sections.map((section, index) => {
-      const { title, serviceId, products } = section;
+    <>
+      {/* Premium Injected Styles for Highly Optimized GPU-Accelerated Animations */}
+      <style>{`
+        @keyframes floatBubble {
+          0% { transform: translate3d(0, 0, 0) rotate(0deg); }
+          50% { transform: translate3d(8px, -35px, 0) rotate(4deg); }
+          100% { transform: translate3d(0, 0, 0) rotate(0deg); }
+        }
+        @keyframes gradientMove {
+          0% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+          100% { background-position: 0% 50%; }
+        }
+        @keyframes pulseGlow {
+          0%, 100% { opacity: 0.6; transform: scale(1); }
+          50% { opacity: 1; transform: scale(1.06); }
+        }
+        .animate-float {
+          animation: floatBubble 10s ease-in-out infinite;
+          will-change: transform;
+        }
+        .animate-gradient-bg {
+          background-size: 200% 200%;
+          animation: gradientMove 14s ease infinite;
+          will-change: background-position;
+        }
+        .animate-pulse-glow {
+          animation: pulseGlow 2.5s infinite ease-in-out;
+          will-change: transform, opacity;
+        }
+        @keyframes scanLaser {
+          0% { transform: translateY(-100%); opacity: 0; }
+          10%, 90% { opacity: 0.08; }
+          50% { transform: translateY(100%); opacity: 0.18; }
+          100% { transform: translateY(-100%); opacity: 0; }
+        }
+        @keyframes heartbeatPulse {
+          0% { transform: scaleX(0); opacity: 0.05; transform-origin: left; }
+          40% { opacity: 0.2; }
+          80%, 100% { transform: scaleX(1); opacity: 0.05; transform-origin: left; }
+        }
+        .animate-gradient-bg {
+          background-size: 200% 200%;
+          animation: gradientMove 14s ease infinite;
+          will-change: background-position;
+        }
+        .animate-pulse-glow {
+          animation: pulseGlow 2.5s infinite ease-in-out;
+          will-change: transform, opacity;
+        }
+        .laser-scan-effect {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(180deg, transparent 48%, rgba(59, 130, 246, 0.25) 50%, transparent 52%);
+          pointer-events: none;
+          animation: scanLaser 7s linear infinite;
+          z-index: 1;
+          will-change: transform, opacity;
+        }
+        .vital-pulse-line {
+          position: absolute;
+          bottom: 2px;
+          left: 0;
+          width: 100%;
+          height: 3px;
+          background: linear-gradient(90deg, transparent, rgba(245, 158, 11, 0.4), transparent);
+          pointer-events: none;
+          animation: heartbeatPulse 4s ease-in-out infinite;
+          z-index: 1;
+          will-change: transform, opacity;
+        }
+        /* Style adjustments for custom slider arrows of react-slick to ensure they stand out */
+        .dynamic-equal-slider {
+          position: relative !important;
+          padding: 0 10px !important;
+        }
+        .dynamic-equal-slider .slick-prev,
+        .dynamic-equal-slider .slick-next {
+          width: 36px !important;
+          height: 36px !important;
+          background: #8059ca !important;
+          border-radius: 50% !important;
+          z-index: 50 !important;
+          display: flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          box-shadow: 0 4px 12px rgba(128,89,202,0.2) !important;
+          transition: all 0.2s ease-in-out !important;
+          top: 50% !important;
+          transform: translateY(-50%) !important;
+          border: none !important;
+          outline: none !important;
+          padding: 0 !important;
+        }
+        .dynamic-equal-slider .slick-prev:hover,
+        .dynamic-equal-slider .slick-next:hover {
+          background: #6d4db8 !important;
+          box-shadow: 0 6px 16px rgba(128,89,202,0.3) !important;
+          transform: translateY(-50%) scale(1.1) !important;
+        }
+        .dynamic-equal-slider .slick-prev {
+          left: -12px !important;
+        }
+        .dynamic-equal-slider .slick-next {
+          right: -12px !important;
+        }
+        .dynamic-equal-slider .slick-prev::before {
+          content: "←" !important;
+          color: white !important;
+          font-size: 16px !important;
+          font-weight: bold !important;
+          display: block !important;
+          line-height: 1 !important;
+          opacity: 1 !important;
+          font-family: inherit !important;
+        }
+        .dynamic-equal-slider .slick-next::before {
+          content: "→" !important;
+          color: white !important;
+          font-size: 16px !important;
+          font-weight: bold !important;
+          display: block !important;
+          line-height: 1 !important;
+          opacity: 1 !important;
+          font-family: inherit !important;
+        }
+      `}</style>
 
-      const useSlider = products?.length > slidesToShow;
+      {sections &&
+        sections.length > 0 &&
+        sections.map((section, index) => {
+          const { title, serviceId, products } = section;
+          if (!products || products.length === 0) return null;
 
-      return (
-        <section
-          className={`w-full px-3 py-3 my-3${liteMode ? " home-dynamic-section-lite" : ""
-            }`}
-          style={
-            liteMode
-              ? {
-                background:
-                  "linear-gradient(135deg, rgba(243, 232, 255, 0.85) 0%, rgba(237, 233, 254, 0.9) 100%)",
-                border: "1px solid rgba(128, 89, 202, 0.12)",
-                borderRadius: "24px",
-                boxShadow: "0 8px 24px -8px rgba(147, 51, 234, 0.1)",
-              }
-              : {
-                background:
-                  "linear-gradient(135deg, rgba(243, 232, 255, 0.4) 0%, rgba(216, 180, 254, 0.15) 100%)",
-                backdropFilter: "blur(24px) saturate(180%)",
-                WebkitBackdropFilter: "blur(24px) saturate(180%)",
-                border: "1px solid rgba(255, 255, 255, 0.55)",
-                borderRadius: "24px",
-                boxShadow:
-                  "inset 0 1px 1px 0 rgba(255, 255, 255, 0.65), 0 12px 32px -4px rgba(147, 51, 234, 0.08)",
-              }
-          }
-          key={section._id}
-        >
+          const themeIndex = index % 3;
 
-          <SectionHeader
-            title={title}
-            icon="fas fa-bolt"
-            viewAllLink={`/${currentService || serviceId?.slug || "medicine"}/all`}
-            viewAllText="View All"
-            className="!mb-4"
-          />
+          const serviceSlug = currentService || serviceId?.slug || section.serviceType || "";
+          const serviceTheme = getServiceTheme(serviceSlug, index);
+          const categoryFixedType = section?.serviceId?.fixedType || "";
 
-          <div className={extraSmallScreen ? "px-2" : ""}>
-            {useSlider ? (
-              <>
-                <style>{`
-                  .dynamic-equal-slider .slick-track {
-                    display: flex !important;
-                    align-items: stretch !important;
-                  }
-                  .dynamic-equal-slider .slick-slide {
-                    height: auto !important;
-                    display: flex !important;
-                    flex-direction: column !important;
-                  }
-                  .dynamic-equal-slider .slick-slide > div {
-                    height: 100% !important;
-                    display: flex !important;
-                    flex-direction: column !important;
-                    flex: 1 !important;
-                  }
-                `}</style>
-                <Slider {...dynamicSettings} className="dynamic-equal-slider">
-                  {products.map((item, i) => {
-                    const normalizedItem = normalizeItem(item);
-                    const variant = Array.isArray(normalizedItem?.variants)
-                      ? normalizedItem.variants[0]
-                      : normalizedItem?.variants;
+          return (
+            <section
+              key={section._id || index}
+              className={`w-full px-5 py-10 relative overflow-hidden ${serviceTheme.bgClass}`}
+            >
+              {/* Floating Service-Specific Glass Badges */}
+              {renderFloatingIcons(serviceTheme.animationType, serviceTheme.bubbleColor)}
 
-                    return (
-                      <div key={i} className="px-2 h-full flex">
-                        <ProductCard
-                          item={normalizedItem}
-                          variant={variant}
-                          imgUrl={imgUrl}
-                          onProductClick={onProductClick}
-                          onCompareClick={onCompareClick}
-                          onVendorClick={onVendorClick}
-                          maxStock={variant?.stock || 999}
-                          isMobile={isMobile}
-                          currentService={currentService}
-                          disableTooltips={liteMode}
-                          className="!h-full"
-                        />
-                      </div>
-                    );
-                  })}
-                </Slider>
-              </>
-            ) : (
-              <div className="flex flex-wrap -mx-3 items-stretch">
-                {products.map((item, i) => {
-                  const normalizedItem = normalizeItem(item);
-                  const variant = Array.isArray(normalizedItem?.variants)
-                    ? normalizedItem.variants[0]
-                    : normalizedItem?.variants;
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 relative z-10">
+                {/* Left/Right Alternating Column: Glass Banner Card */}
+                <div className={`lg:col-span-3 ${index % 2 === 0 ? "lg:order-first" : "lg:order-last"} order-first flex flex-col justify-between bg-gradient-to-br ${serviceTheme.bannerBg} text-white p-7 rounded-[24px] shadow-lg relative overflow-hidden min-h-[260px] lg:min-h-full animate-gradient-bg`}>
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.15),transparent)]" />
 
-                  return (
-                    <div
-                      key={i}
-                      className="w-1/2 md:w-[33.333%] lg:w-[25%] xl:w-[16.666%] px-3 mb-6 flex"
-                    >
-                      <ProductCard
-                        item={normalizedItem}
-                        variant={variant}
-                        imgUrl={imgUrl}
-                        onProductClick={onProductClick}
-                        onCompareClick={onCompareClick}
-                        onVendorClick={onVendorClick}
-                        maxStock={variant?.stock || 999}
-                        isMobile={isMobile}
-                        currentService={currentService}
-                      />
+                  <div className="relative z-10">
+                    <div className="flex items-center gap-2 mb-4">
+                      <span className="bg-white/20 text-white text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-md shadow-sm">
+                        {serviceTheme.badge || "⭐ Top Picks"}
+                      </span>
                     </div>
-                  );
-                })}
+
+                    <h3 className="!text-2xl !font-black !text-white !m-0 !leading-tight tracking-wide">
+                      {title}
+                    </h3>
+
+                    <p className="!text-[12px] !text-white/90 !mt-2.5 !leading-relaxed !m-0">
+                      {serviceTheme.description || "Explore premium items with comparison features and instant delivery."}
+                    </p>
+                  </div>
+
+                  <div className="relative z-10 mt-6 lg:mt-0">
+                    <Link
+                      to={`/${currentService || serviceId?.slug || "medicine"}/all`}
+                      className="inline-flex items-center gap-2 !bg-white !text-[#8059ca] hover:!bg-gray-50 px-5 py-2.5 !rounded-xl !text-xs font-bold transition-all shadow-md hover:shadow-lg !no-underline animate-pulse-glow"
+                    >
+                      <span>Explore Shop</span>
+                      <i className="fas fa-chevron-right text-[9px]" />
+                    </Link>
+                  </div>
+                </div>
+
+                {/* Right/Left Alternating Column: Products Content Area */}
+                <div className={`lg:col-span-9 ${index % 2 === 0 ? "lg:order-last" : "lg:order-first"} order-last`}>
+                  {/* Carousel slider (All sections render as a carousel slider on both desktop and mobile) */}
+                  <div className="h-full">
+                    <style>{`
+                      .dynamic-equal-slider .slick-track { display: flex !important; align-items: stretch !important; }
+                      .dynamic-equal-slider .slick-slide { height: auto !important; display: flex !important; flex-direction: column !important; }
+                      .dynamic-equal-slider .slick-slide > div { height: 100% !important; display: flex !important; flex-direction: column !important; flex: 1 !important; }
+                    `}</style>
+                    <Slider {...dynamicSettings} className="dynamic-equal-slider">
+                      {products.map((item, i) => {
+                        const normalizedItem = normalizeItem(item);
+                        const variant = Array.isArray(normalizedItem?.variants)
+                          ? normalizedItem.variants[0]
+                          : normalizedItem?.variants;
+
+                        return (
+                          <div key={i} className="px-2 h-full flex">
+                            <SectionProductCard
+                              item={normalizedItem}
+                              variant={variant}
+                              imgUrl={imgUrl}
+                              onProductClick={onProductClick}
+                              onCompareClick={onCompareClick}
+                              onVendorClick={onVendorClick}
+                              maxStock={variant?.stock || 999}
+                              isMobile={isMobile}
+                              currentService={currentService || categoryFixedType}
+                              disableTooltips={liteMode}
+                              className="!h-full"
+                            />
+                          </div>
+                        );
+                      })}
+                    </Slider>
+                  </div>
+                </div>
               </div>
-            )}
-          </div>
-        </section>
-      );
-    })
+            </section>
+          );
+        })}
+    </>
   );
 };
 

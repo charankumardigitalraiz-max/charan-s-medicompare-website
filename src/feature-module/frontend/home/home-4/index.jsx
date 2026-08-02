@@ -606,6 +606,11 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
   }, [showSuggestions]);
 
   const handleCategoryClick = (item) => {
+    sessionStorage.setItem("activeCategoryLoader", JSON.stringify({
+      name: item.name,
+      fixedType: item.fixedType || item.slug || "",
+      colorcode: item.colorcode || ""
+    }));
     navigate(`/${item.slug}`);
   };
 
@@ -1238,7 +1243,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                 <div className="hidden lg:block mt-0">
                   <div className="w-full">
                     <div className="mb-5 text-center">
-                      <h2 className="text-[23px] font-semibold text-[#1a1a1a] mb-3">
+                      <h2 className="!text-[23px] !font-semibold !text-[#1a1a1a] mb-3">
                         Explore Multiple Categories Compare
                       </h2>
                       <p className="text-[13px] max-w-[700px] mx-auto mb-5 leading-[1.6] text-gray-600">
@@ -1381,6 +1386,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
             imgUrl={imgUrl}
             liteMode={homeLiteMode}
             isMobile={isMobile}
+          // currentService={sections?.}
           />
 
           {/* PROMOTIONAL BANNER */}
