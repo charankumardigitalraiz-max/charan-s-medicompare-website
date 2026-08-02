@@ -6,10 +6,10 @@ import CategoryProvider from "../../../components/CategoryProvider.jsx";
 import { axiosCommonInstance } from "../../../Apiservice.jsx";
 import { getImageUrl } from "../../../utils/index";
 import toast from "react-hot-toast";
-import { useLocation } from "../../../context/LocationContext";
+import { useLocation } from "../../../context/LocationContext.jsx";
 import PageLoader from "../../../components/ui/PageLoader.jsx";
 import VendorActions from "../../../components/ui/VendorActions.jsx";
-import { handleRentalBookingProcess, handleGeneralBookingProcess } from "../../../services/bookingService";
+import { handleRentalBookingProcess, handleGeneralBookingProcess } from "../../../services/bookingService.js";
 const ViewAllPackages = () => {
   const navigate = useNavigate();
   const { service } = useParams();

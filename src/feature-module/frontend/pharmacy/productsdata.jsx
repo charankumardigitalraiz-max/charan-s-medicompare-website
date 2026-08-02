@@ -13,9 +13,9 @@ import {
   ProductsSection,
   LeadModal,
   ShareModal,
-} from "../../../components/products";
+} from "../../../components/products/index.js";
 
-import { useCart } from "../../../hooks/useCart";
+import { useCart } from "../../../hooks/useCart.js";
 import {
   getDisplayPrice,
   getVendorPrice,
@@ -28,19 +28,19 @@ import {
   copyToClipboard,
   shareToEmail,
   shareToTelegram,
-} from "../../../utils";
-import { redirectToLoginWithPendingBooking } from "../../../utils/pendingBookingUtils";
+} from "../../../utils/index.js";
+import { redirectToLoginWithPendingBooking } from "../../../utils/pendingBookingUtils.js";
 import {
   SearchInput,
   ViewToggleButtons,
   SortSelect,
-} from "../../../components/ui";
-import { useAddToCart } from "../../../hooks/useAddToCart";
-import { CartQuantityControls } from "../../../components/ui";
-import { useResponsive } from "../../../hooks";
-import { useProfile } from "../../../context/ProfileContext";
-import { useLocation } from "../../../context/LocationContext";
-import { handleGeneralBookingProcess } from "../../../services/bookingService";
+} from "../../../components/ui/index.js";
+import { useAddToCart } from "../../../hooks/useAddToCart.js";
+import { CartQuantityControls } from "../../../components/ui/index.js";
+import { useResponsive } from "../../../hooks/index.js";
+import { useProfile } from "../../../context/ProfileContext.jsx";
+import { useLocation } from "../../../context/LocationContext.jsx";
+import { handleGeneralBookingProcess } from "../../../services/bookingService.js";
 
 const ProductsData = () => {
   let { service, id } = useParams();

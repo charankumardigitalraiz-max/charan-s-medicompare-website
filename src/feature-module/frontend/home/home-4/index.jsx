@@ -2045,7 +2045,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                     </div>
                     <Link
                       to="/medicine/all"
-                      className="bg-white text-[#8059ca] hover:bg-gray-50 py-3 px-8 rounded-full font-medium text-[15px] no-underline inline-block transition-all shadow-md"
+                      className="!bg-white !text-[#8059ca] hover:bg-gray-50 py-3 px-8 rounded-full !font-medium !text-[15px] !no-underline inline-block transition-all shadow-md"
                     >
                       Start Comparing Now{" "}
                       <i className="fas fa-arrow-right ms-2"></i>

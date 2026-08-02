@@ -13,6 +13,7 @@ import {
 import { getImageUrl } from "../../../utils/index";
 import toast from "react-hot-toast";
 import PageLoader from "../../../components/ui/PageLoader.jsx";
+import BackButton from "../../../components/ui/BackButton.jsx";
 import ShareModal from "./products-components/ShareModal.jsx";
 import {
   getShareUrl,
@@ -26,8 +27,8 @@ import {
   shareToEmail,
 } from "./utils/shareUtils.js";
 import CategoryProvider from "../../../components/CategoryProvider.jsx";
-import { Offcanvas } from "../../../components/ui/Offcanvas";
-import { PriceDisplay, ProductImage, CompareOverlayButton, Pagination } from "../../../components/ui";
+import { Offcanvas } from "../../../components/ui/Offcanvas.jsx";
+import { PriceDisplay, ProductImage, CompareOverlayButton, Pagination } from "../../../components/ui/index.js";
 import { getDisplayPrice } from "./utils/productUtils.js";
 import { FaRegShareSquare, FaHeart, FaExchangeAlt, FaStar } from "react-icons/fa";
 import { IoIosHeartEmpty } from "react-icons/io";
@@ -665,7 +666,7 @@ const VendorProfile = () => {
                   </div>
 
                   {activeCategory.id === cat._id && (
-                    <ul className="list-none p-0 m-0 pl-4 mt-2">
+                    <ul className="list-none p-0 m-0 pl-4 !mt-2">
                       {subcategories?.length > 0 ? (
                         subcategories?.map((sub) => (
                           <li
@@ -774,15 +775,16 @@ const VendorProfile = () => {
             )}
           </ul>
           {Brands.length > brandsToShow && (
-            <div className="text-center mt-2">
-              <span
-                className="text-[#8059ca] cursor-pointer text-[12px] underline hover:text-[#6d28d9] transition-colors"
+            <div className="text-center mt-3">
+              <button
+                className="inline-flex items-center gap-1.5 px-4 py-1.5 !text-[12px] !font-semibold !text-[#8059ca] hover:!text-white !bg-[#8059ca]/10 !hover:!bg-[#8059ca] !border border-[#8059ca]/20 !hover:border-transparent !rounded-full !shadow-sm transition-all duration-250 cursor-pointer"
                 onClick={() =>
                   setBrandsToShow(brandsToShow === 6 ? Brands.length : 6)
                 }
               >
-                {brandsToShow === 6 ? "View More" : "View Less"}
-              </span>
+                <span>{brandsToShow === 6 ? "View More" : "View Less"}</span>
+                <i className={`fa-solid ${brandsToShow === 6 ? "fa-chevron-down" : "fa-chevron-up"} text-[10px]`} />
+              </button>
             </div>
           )}
           <hr className="border-gray-200 my-4" />
@@ -818,61 +820,59 @@ const VendorProfile = () => {
       <Home2Header />
       <CategoryProvider />
 
-      <div className="relative overflow-hidden bg-[#f9fbff] pt-[35px] pb-[28px] md:pt-[35px] md:pb-[28px] bottom-[2px] z-[1]">
+      <div className="relative overflow-hidden bg-[#f9fbff] py-10 md:py-12 bottom-[2px] z-[1]">
         <div className="absolute inset-0 z-[1] after:content-[''] after:absolute after:inset-0 after:bg-white/30">
           <img className="w-full h-full object-cover" src={breadcrumbBg} />
         </div>
-        <div className="relative z-[2] px-[15px] py-0 sm:pt-[27px] sm:pr-[16px] sm:pb-0 sm:pl-[13px]">
-          <div className="flex flex-wrap items-center">
-            <div className="w-full lg:w-2/3">
-              <div
-                className="relative hidden lg:block"
-              >
-                <img
-                  src={doctors}
-                  className="h-[150px] absolute top-0 left-0"
-                />
+        <div className="relative z-[2] px-[15px] max-w-[1400px] mx-auto">
+          <div className="mb-5">
+            <BackButton className="z-[20] relative" />
+          </div>
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
+            {/* Left side: Vendor details directly on the hero banner */}
+            <div className="w-full lg:w-2/3 text-center lg:text-left">
+              <h1 className="!text-[28px] md:text-[38px] !font-[600] !text-[#0a2540] !leading-tight mb-3 !tracking-tight">
+                {data?.bussinessdetails?.name || "Partner Store"}
+              </h1>
+
+              {/* Rating + Order Badges */}
+              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3 mb-3">
+                <div className="flex items-center gap-1.5 bg-white px-3 py-1 rounded-full border border-gray-200 shadow-sm">
+                  <span className="text-[#f5a623] text-sm leading-none">★</span>
+                  <span className="!text-[13px] !font-bold !text-gray-800">
+                    {data?.averageRating ? data.averageRating.toFixed(1) : "4.8"}
+                  </span>
+                  <span className="text-gray-400 text-xs">
+                    ({data?.ratingCount || 0} reviews)
+                  </span>
+                </div>
+
+                <div className="bg-[#8059ca]/10 text-[#8059ca] text-[12px] font-bold px-3 py-1 rounded-full border border-[#8059ca]/20 shadow-sm">
+                  {data?.totalOrders ? `${data.totalOrders}+ Orders` : "100+ Orders"}
+                </div>
               </div>
-              <h2
-                className="hidden lg:block relative lg:left-[150px] !text-[30px] font-[700] text-[#0a2540] text-center"
-              >
-                Trusted Excellence <br /> in Healthcare
-              </h2>
+
+              {/* Vendor address if available */}
+              {data?.bussinessdetails?.address && (
+                <p className="!text-[14px] !text-gray-600 !font-medium !flex !items-center !justify-center lg:!justify-start !gap-1.5 m-0 max-w-[500px]">
+                  <i className="fas fa-map-marker-alt text-[#8059ca] text-[13px]" />
+                  <span>{data.bussinessdetails.address}</span>
+                </p>
+              )}
             </div>
+
+            {/* Right side: Large Brand Logo Container */}
             <div className="w-full lg:w-1/3 shrink-0">
-              <div className="bg-white rounded-[14px] p-[18px_20px] flex items-center gap-[15px] shadow-[0_12px_30px_rgba(0,0,0,0.12)] max-w-[360px] ml-auto lg:ml-auto lg:mt-0 mt-5 mx-auto">
-                <div className="w-[70px] h-[70px] rounded-[10px] bg-[#f0f7ff] flex items-center justify-center shrink-0">
-                  <img
-                    className="w-[70px]"
-                    src={
-                      getImageUrl(
-                        data?.bussinessdetails?.bussiness_image?.[0]?.url,
-                      ) || "/assets/default.png"
-                    }
-                  />
-                </div>
-                <div>
-                  <div className="font-[700] mb-1 text-black">
-                    {" "}
-                    {data?.bussinessdetails?.name}
-                  </div>
-                  <div className="text-[#f5a623] text-[14px]">
-                    {data?.averageRating ? (
-                      <>
-                        {"★".repeat(Math.floor(data.averageRating))}
-                        {data.averageRating % 1 >= 0.5 ? "☆" : ""}
-                        <strong>{data.averageRating.toFixed(1)}</strong>
-                        <span className="text-[#6b7280] text-[13px]">({data.ratingCount} reviews)</span>
-                      </>
-                    ) : (
-                      <>
-                        ★★★★☆ <strong>4.8</strong>
-                        <span className="text-[#6b7280] text-[13px]">(0 reviews)</span>
-                      </>
-                    )}
-                  </div>
-                  <div className="text-[13px] text-[#6b7280] mt-1">{data?.totalOrders ? `${data.totalOrders}+ Orders` : ""}</div>
-                </div>
+              <div className="w-[140px] h-[140px] md:w-[160px] md:h-[160px] bg-white rounded-[20px] p-3 shadow-[0_12px_30px_rgba(0,0,0,0.08)] border border-gray-100 flex items-center justify-center mx-auto lg:ml-auto">
+                <img
+                  className="max-w-full max-h-full object-contain"
+                  src={
+                    getImageUrl(
+                      data?.bussinessdetails?.bussiness_image?.[0]?.url,
+                    ) || "/assets/default.png"
+                  }
+                  alt={data?.bussinessdetails?.name}
+                />
               </div>
             </div>
           </div>
@@ -883,7 +883,7 @@ const VendorProfile = () => {
         <div className="flex items-center justify-between lg:hidden mb-3 mobile-filter-buttons-container">
           <button
             type="button"
-            className="inline-flex items-center gap-1 !text-xs !font-semibold px-2.5 py-1.5 !rounded bg-[#8059ca] text-white hover:bg-[#6d28d9] transition-colors"
+            className="inline-flex items-center gap-1 !text-xs !font-semibold px-2.5 py-1.5 !rounded bg-[#8059ca] !text-white hover:bg-[#6d28d9] transition-colors"
             onClick={() => setShowFilterCanvas(true)}
           >
             <i className="fas fa-filter"></i>
@@ -892,7 +892,7 @@ const VendorProfile = () => {
 
           <button
             type="button"
-            className="inline-flex items-center gap-1 !text-xs !font-semibold px-2.5 py-1.5 !rounded bg-[#8059ca] text-white hover:bg-[#6d28d9] transition-colors"
+            className="inline-flex items-center gap-1 !text-xs !font-semibold px-2.5 py-1.5 !rounded bg-[#8059ca] !text-white hover:bg-[#6d28d9] transition-colors"
           >
             <i className="fas fa-redo"></i>
             <span>Clear</span>
