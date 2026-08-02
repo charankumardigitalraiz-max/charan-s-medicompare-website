@@ -8,6 +8,7 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import { toast, Toaster } from "sonner";
 import { onMessageListener } from "./core/redux/firebase/fcm";
 
+
 const safeLazy = (importFunc) => {
   return lazy(() =>
     importFunc().catch((error) => {
