@@ -1124,7 +1124,7 @@ const Home2Header = () => {
                   <ul className="flex items-center list-none m-0 p-0">
                     <li>
                       <Link
-                        className="bg-[linear-gradient(135deg,#8059ca_0%,#822BD4_100%)] hover:opacity-90 text-white font-semibold text-[13px] px-4 py-2 rounded-full inline-flex items-center border-none shadow-sm transition-all"
+                        className="!bg-[linear-gradient(135deg,#8059ca_0%,#822BD4_100%)] hover:opacity-90 !text-white !font-semibold !text-[13px] !px-4 !py-2 !rounded-full inline-flex items-center !border-none shadow-sm !transition-all"
                         to="/login"
                       >
                         <i className="isax isax-lock-1 mr-1" />
