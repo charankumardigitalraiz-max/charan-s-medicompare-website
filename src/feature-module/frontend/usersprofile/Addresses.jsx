@@ -164,7 +164,7 @@ const Address = ({ HomeNavigate, BackButton }) => {
                   {currentAddresses.map((addr) => (
                     <div key={addr._id} className="h-full">
                       <div className="bg-white border border-[#e2e8f0] rounded-[9px] shadow-[0_2px_10px_rgba(15,23,42,0.03)] transition-all duration-300 hover:shadow-[0_8px_24px_rgba(128,89,202,0.1)] hover:border-[#c0a6f3] p-4 h-full">
-                        <div className="d-flex justify-content-between align-items-center">
+                        <div className="flex justify-between items-center">
                           <div className="font-semibold text-[15px] inline-flex items-center bg-[#faf8ff] text-[#8059ca] py-1 px-3 rounded-[20px] border border-[#f3effc]">
                             <i
                               className={`${getAddressIcon(addr.addressType)} me-2`}

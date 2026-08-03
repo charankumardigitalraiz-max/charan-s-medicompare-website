@@ -205,7 +205,7 @@ const Enquiries = ({ HomeNavigate, BackButton }) => {
 
                 </div>
                 <div className="flex items-center gap-3 w-full sm:w-auto">
-                  <div className="relative w-full sm:w-[260px] shrink-0">
+                  <div className="relative w-full sm:w-[250px] shrink-0">
                     <input
                       type="text"
                       placeholder="Search by Name..."
@@ -214,9 +214,9 @@ const Enquiries = ({ HomeNavigate, BackButton }) => {
                         setSearchTerm(e.target.value);
                         setCurrentPage(1);
                       }}
-                      className="h-[38px] rounded-sm border border-slate-200 pl-9 pr-3 text-[13px] w-full outline-none bg-slate-50 hover:bg-white hover:border-[#8059ca] focus:bg-white focus:border-[#8059ca] transition-all duration-200"
+                      className="h-[42px] rounded-sm border border-[#e0e0e0] pl-10 pr-4 text-sm w-full outline-none focus:border-[#8059ca] transition-colors"
                     />
-                    <span className="absolute left-[12px] top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none text-[13px]">
+                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[#999] pointer-events-none">
                       <i className="fa-solid fa-search" />
                     </span>
                   </div>
@@ -249,7 +249,7 @@ const Enquiries = ({ HomeNavigate, BackButton }) => {
             show={showModal}
             onClose={() => setShowModal(false)}
             title={
-              <div className="d-flex align-items-center gap-2" style={{ gap: "10px" }}>
+              <div className="flex items-center gap-2" style={{ gap: "10px" }}>
                 <h5 style={{ margin: 0, fontWeight: "700", fontSize: "18px", color: "#0f172a" }}>
                   Enquiry Details
                 </h5>
@@ -289,7 +289,7 @@ const Enquiries = ({ HomeNavigate, BackButton }) => {
                     gap: "12px",
                   }}
                 >
-                  <div className="d-flex align-items-center gap-3">
+                  <div className="flex items-center gap-3">
                     {selectedLead.productdetails?.tabletdetails?.[0]?.files?.length > 0 ? (
                       <div
                         style={{

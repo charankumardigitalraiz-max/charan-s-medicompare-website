@@ -203,38 +203,21 @@ const ProfileSideBar = () => {
     <>
       {/* Profile Header Section */}
       <div
-        className="widget-profile pro-widget-content relative overflow-hidden rounded-xl"
+        className="widget-profile pro-widget-content relative overflow-hidden rounded-sm"
         style={{
-          background: "linear-gradient(135deg, #8059ca 0%, #9b5dff 100%)",
-          padding: "30px 20px 25px",
+          background: "linear-gradient(135deg, #fbfafd 0%, #f5f0ff 100%)",
+          padding: isMobile ? "16px" : "18px 16px",
+          border: "1px solid #e9e4f5",
         }}
       >
-        {/* Decorative circles */}
-        <div
-          className="absolute rounded-full"
-          style={{
-            top: "-40px", right: "-40px",
-            width: "100px", height: "100px",
-            background: "rgba(255,255,255,0.1)",
-          }}
-        />
-        <div
-          className="absolute rounded-full"
-          style={{
-            bottom: "-20px", left: "-20px",
-            width: "60px", height: "60px",
-            background: "rgba(255,255,255,0.05)",
-          }}
-        />
-
         {/* Profile Info */}
-        <div className="profile-info-widget relative text-center">
+        <div className="profile-info-widget relative flex items-center gap-3.5 text-left">
           {/* Avatar */}
-          <div className="profile-avatar-container relative mb-2 inline-block">
+          <div className="profile-avatar-container relative inline-block mb-0">
             <Link to="/profile-sidebar" className="block" onClick={onItemClick}>
               {profile?.image ? (
                 <img
-                  className="avatar-img rounded-full shadow-lg block mx-auto"
+                  className="avatar-img rounded-full shadow-md block mx-auto"
                   src={
                     profile.image.startsWith("blob:")
                       ? profile.image
@@ -244,24 +227,26 @@ const ProfileSideBar = () => {
                   alt={profile.first_name}
                   title={profile.first_name}
                   style={{
-                    width: "90px", height: "90px",
+                    width: isMobile ? "64px" : "72px",
+                    height: isMobile ? "64px" : "72px",
                     objectFit: "cover",
-                    border: "4px solid white",
-                    boxShadow: "0 4px 15px rgba(0,0,0,0.15)",
+                    border: "2.5px solid #8059ca",
+                    boxShadow: "0 4px 15px rgba(128,89,202,0.12)",
                   }}
                 />
               ) : (
                 <div
-                  className="avatar-placeholder rounded-full flex items-center justify-center shadow-lg mx-auto"
+                  className="avatar-placeholder rounded-full flex items-center justify-center shadow-md mx-auto"
                   style={{
-                    width: "90px", height: "90px",
-                    background: "linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%)",
-                    color: "#8059ca",
+                    width: isMobile ? "64px" : "72px",
+                    height: isMobile ? "64px" : "72px",
+                    background: "linear-gradient(135deg, #8059ca 0%, #9b5dff 100%)",
+                    color: "#ffffff",
                     fontWeight: "700",
-                    fontSize: "38px",
+                    fontSize: isMobile ? "24px" : "28px",
                     textTransform: "uppercase",
-                    border: "4px solid white",
-                    boxShadow: "0 4px 15px rgba(0,0,0,0.15)",
+                    border: "2.5px solid #8059ca",
+                    boxShadow: "0 4px 15px rgba(128,89,202,0.12)",
                   }}
                   title={profile?.first_name}
                 >
@@ -275,14 +260,15 @@ const ProfileSideBar = () => {
               htmlFor="sidebar-image-upload"
               className="avatar-edit-btn absolute flex items-center justify-center rounded-full cursor-pointer transition-all duration-300 z-10"
               style={{
-                bottom: "5px", right: "0",
-                width: "30px", height: "30px",
+                bottom: "0px",
+                right: "-2px",
+                width: "22px",
+                height: "22px",
                 backgroundColor: "white",
                 color: "#8059ca",
-                fontSize: "13px",
-                border: "2px solid #8059ca",
+                fontSize: "10px",
+                border: "1.5px solid #8059ca",
                 boxShadow: "0 3px 8px rgba(0,0,0,0.2)",
-                transform: "translateX(5px)",
               }}
               title="Update profile picture"
             >
@@ -300,29 +286,20 @@ const ProfileSideBar = () => {
           </div>
 
           {/* Profile Details */}
-          <div className="profile-det-info">
+          <div className="profile-det-info min-w-0 flex-1">
             <h3
-              className="m-0"
+              className="m-0 truncate"
               style={{
-                fontSize: "21px",
+                fontSize: isMobile ? "16px" : "16px",
                 fontWeight: "600",
-                color: "white",
+                color: "#1e1b4b",
                 letterSpacing: "-0.2px",
-                textShadow: "0 2px 4px rgba(0,0,0,0.1)",
               }}
             >
               <Link
                 to="/profile-sidebar"
                 onClick={onItemClick}
-                style={{ color: "white", textDecoration: "none", transition: "all 0.3s ease" }}
-                onMouseEnter={(e) => {
-                  e.target.style.textShadow = "0 2px 6px rgba(0,0,0,0.2)";
-                  e.target.style.transform = "translateY(-1px)";
-                }}
-                onMouseLeave={(e) => {
-                  e.target.style.textShadow = "0 2px 4px rgba(0,0,0,0.1)";
-                  e.target.style.transform = "translateY(0)";
-                }}
+                style={{ color: "#1e1b4b", textDecoration: "none" }}
               >
                 {profile?.first_name?.charAt(0).toUpperCase() +
                   profile?.first_name?.slice(1)}{" "}
@@ -331,35 +308,33 @@ const ProfileSideBar = () => {
             </h3>
 
             {/* Email badge */}
-            <div className="profile-email-badge mt-1">
+            <div className="profile-email-badge mt-1 flex justify-start">
               <span
-                className="inline-flex items-center px-3 py-1 rounded-[18px]"
+                className="inline-flex items-center px-2 py-0.5 rounded-[18px] max-w-full"
                 style={{
-                  backgroundColor: "rgba(255,255,255,0.15)",
-                  backdropFilter: "blur(10px)",
-                  color: "white",
+                  backgroundColor: "rgba(128,89,202,0.06)",
+                  color: "#8059ca",
                   fontWeight: "500",
-                  fontSize: "13px",
-                  border: "1px solid rgba(255,255,255,0.2)",
-                  boxShadow: "0 3px 12px rgba(0,0,0,0.1)",
+                  fontSize: isMobile ? "11px" : "12px",
+                  border: "1px solid rgba(128,89,202,0.12)",
                 }}
               >
-                <i className="fa-solid fa-envelope mr-2" style={{ fontSize: "11px" }} />
-                <small className="truncate" style={{ maxWidth: "180px" }}>
+                <i className="fa-solid fa-envelope mr-1.5" style={{ fontSize: "10px" }} />
+                <small className="truncate" style={{ maxWidth: isMobile ? "140px" : "170px" }}>
                   {profile?.email}
                 </small>
               </span>
             </div>
 
             {/* Status */}
-            <div className="profile-status mt-1">
+            <div className="profile-status mt-1 flex items-center justify-start">
               <span
                 className="inline-flex items-center"
-                style={{ color: "rgba(255,255,255,0.9)", fontSize: "12px", fontWeight: "500" }}
+                style={{ color: "#6b7280", fontSize: "11px", fontWeight: "500" }}
               >
                 <i
                   className="fa-solid fa-circle mr-1"
-                  style={{ fontSize: "7px", color: "#4cd964", animation: "pulse 2s infinite" }}
+                  style={{ fontSize: "6px", color: "#4cd964", animation: "pulse 2s infinite" }}
                 />
                 Active Now
               </span>
@@ -369,9 +344,9 @@ const ProfileSideBar = () => {
       </div>
 
       {/* Navigation Menu */}
-      <div className="dashboard-widget bg-white rounded-xl overflow-hidden shadow-[0_3px_15px_rgba(0,0,0,0.08)]">
+      <div className="dashboard-widget mt-4 overflow-hidden">
         <nav className="dashboard-menu">
-          <ul className="list-none p-0 m-0">
+          <ul className="list-none p-0 m-0 flex flex-col gap-1">
             {[
               { id: "my-orders", label: "My Orders", icon: "isax isax-bag" },
               { id: "AppointmentsOrders", label: "Appointments", icon: "isax isax-calendar-2" },
@@ -394,40 +369,37 @@ const ProfileSideBar = () => {
               const itemPath = sectionToPathMap[item.id];
               const isActive = activeSection === item.id;
               return (
-                <li key={item.id} className={`nav-item ${isActive ? "active" : ""}`}>
+                <li key={item.id} className="nav-item">
                   <Link
                     to={itemPath || "#"}
                     onClick={(e) => {
                       handleSectionChange(item.id, e);
                       if (onItemClick) onItemClick();
                     }}
-                    className="flex items-center py-2 pl-4 no-underline relative transition-all duration-300 border-b border-black/[0.03] group"
+                    className="flex items-center py-2.5 px-3.5 no-underline rounded-xl transition-all duration-200 group"
                     style={{
-                      color: isActive ? "#8059ca" : "#555",
-                      backgroundColor: isActive ? "rgba(125,46,255,0.08)" : "transparent",
-                      borderLeft: `3px solid ${isActive ? "#8059ca" : "transparent"}`,
+                      color: isActive ? "#8059ca" : "#4a5568",
+                      backgroundColor: isActive ? "rgba(128,89,202,0.08)" : "transparent",
                     }}
                     onMouseEnter={(e) => {
                       if (!isActive) {
-                        e.currentTarget.style.backgroundColor = "rgba(125,46,255,0.05)";
-                        e.currentTarget.style.paddingLeft = "20px";
+                        e.currentTarget.style.backgroundColor = "rgba(128,89,202,0.04)";
                         e.currentTarget.style.color = "#8059ca";
                       }
                     }}
                     onMouseLeave={(e) => {
                       if (!isActive) {
                         e.currentTarget.style.backgroundColor = "transparent";
-                        e.currentTarget.style.paddingLeft = "16px";
-                        e.currentTarget.style.color = "#555";
+                        e.currentTarget.style.color = "#4a5568";
                       }
                     }}
                   >
                     <i
-                      className={`${item.icon} mr-3 transition-colors duration-300 ${isActive ? "!text-[#8059ca]" : "!text-slate-500 group-hover:!text-[#8059ca]"}`}
+                      className={`${item.icon} mr-3 transition-colors duration-200 ${isActive ? "!text-[#8059ca]" : "!text-slate-400 group-hover:!text-[#8059ca]"}`}
                       style={{ fontSize: "18px", width: "22px" }}
                     />
                     <span
-                      className="text-[14px] flex-1 transition-all duration-300"
+                      className="text-[13.5px] flex-1 transition-all duration-200"
                       style={{ fontWeight: isActive ? "600" : "500" }}
                     >
                       {item.label}
@@ -438,21 +410,20 @@ const ProfileSideBar = () => {
             })}
 
             {/* Logout */}
-            <li className="nav-item border-t border-[#eee]">
+            <li className="nav-item border-t border-[#f1effc] mt-2 pt-2">
               <a
                 href="#"
                 onClick={(e) => {
                   handleLogout(e);
                   if (onItemClick) onItemClick();
                 }}
-                className="flex items-center py-2 px-6 no-underline !text-[#ff4757] cursor-pointer transition-all duration-300 bg-transparent"
-                style={{ borderLeft: "3px solid transparent" }}
+                className="flex items-center py-2.5 px-3.5 no-underline rounded-xl !text-[#ff4757] cursor-pointer transition-all duration-200 hover:bg-[#fff0f2]"
               >
                 <i
                   className="isax isax-logout mr-3 !text-[#ff4757]"
                   style={{ fontSize: "18px", width: "22px" }}
                 />
-                <span className="!text-[14px] !font-semibold">Logout</span>
+                <span className="text-[13.5px] font-semibold">Logout</span>
               </a>
             </li>
           </ul>
@@ -525,7 +496,7 @@ const ProfileSideBar = () => {
           <div className="flex flex-col lg:flex-row gap-6 items-start w-full">
             {/* Sidebar — desktop only */}
             <div className="hidden lg:block w-[300px] shrink-0 sticky top-[calc(var(--header-height,0px)+var(--nav-height,0px)+16px)]">
-              <div className="profile-sidebar doctor-sidebar profile-sidebar-new bg-white rounded-xl shadow-[0_4px_15px_rgba(0,0,0,0.05)] overflow-hidden">
+              <div className="profile-sidebar doctor-sidebar profile-sidebar-new bg-white rounded-sm shadow-[0_10px_30px_rgba(128,89,202,0.06)] border border-[#f1effc] p-3 overflow-hidden">
                 <SidebarContent />
               </div>
             </div>

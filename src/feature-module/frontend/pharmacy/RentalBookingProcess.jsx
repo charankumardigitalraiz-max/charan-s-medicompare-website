@@ -865,12 +865,17 @@ const RentalBookingProcess = () => {
         return;
       }
 
+      const phone = localStorage.getItem("phone")
+      const email = localStorage.getItem("email")
+      const name = localStorage.getItem("name") || "Customer"
+
       openRazorpayCheckout({
         razorpayData,
         description: "Rental Order Payment",
         prefill: {
-          name: selectedAddress?.name || userProfile?.first_name || "Customer",
-          contact: selectedAddress?.phone || userProfile?.mobile || "",
+          name: name || "Customer",
+          contact: phone || "",
+          email: email || ""
         },
         setIsSubmitting,
         onSuccess: async (res) => {

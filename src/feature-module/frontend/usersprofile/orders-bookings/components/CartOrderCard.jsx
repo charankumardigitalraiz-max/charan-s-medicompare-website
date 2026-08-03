@@ -37,7 +37,7 @@ const CartOrderCard = ({
   const badgeColorClasses = badgeColorsMap[statusMeta.badgeClass] || "bg-[#ffe9d6] text-[#ff7a00]";
 
   return (
-    <div className="bg-white border-[1.5px] border-[#f0f0f0] rounded-[14px] shadow-[0_2px_8px_rgba(0,0,0,0.03)] p-3 h-100 flex flex-col justify-between hover:shadow-[0_6px_18px_rgba(128,89,202,0.12)] transition-shadow duration-300">
+    <div className="bg-white border-[1.5px] border-[#f0f0f0] rounded-[14px] shadow-[0_2px_8px_rgba(0,0,0,0.03)] p-3 h-auto flex flex-col justify-between hover:shadow-[0_6px_18px_rgba(128,89,202,0.12)] transition-shadow duration-300">
       <div>
         {/* ── HEADER: Order ID + vendor inline + date + status badge ── */}
         <div className="flex justify-between items-center mb-3 flex-wrap gap-2 pb-2 border-b border-[#f8f8f8]">
@@ -175,7 +175,7 @@ const CartOrderCard = ({
               {/* Details */}
               <button
                 type="button"
-                className="inline-flex items-center justify-center gap-1.5 !rounded-md !text-[12px] font-medium  min-w-fit whitespace-nowrap leading-tight text-primary border-1 border-dashed border-[#8059ca] transition-all duration-200 "
+                className="inline-flex items-center justify-center gap-1.5 !rounded-md !text-[11px] !font-medium p-[4px_8px] min-w-fit whitespace-nowrap leading-tight bg-[#8059ca] text-white border border-[#8059ca] transition-all duration-200 no-underline shadow-none hover:bg-[#6f42c1] hover:border-[#6f42c1] focus:bg-[#6f42c1] focus:border-[#6f42c1]"
                 onClick={() => onView(order)}
               >
                 <i className="fa-solid fa-eye text-[12px] w-3.5 text-center shrink-0" /> Details

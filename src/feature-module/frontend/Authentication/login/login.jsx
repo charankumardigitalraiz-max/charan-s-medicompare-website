@@ -8,7 +8,6 @@ import axios from "axios";
 import { getFCMToken } from "../../../../core/redux/firebase/fcm";
 import { handlePostLoginRedirect } from "../../../../utils/redirectUtils";
 import { executePendingLabBooking } from "../../../../utils/pendingBookingUtils";
-import "./login.css";
 
 const Login = () => {
   const [phoneInfo, setPhoneInfo] = useState({
@@ -38,7 +37,6 @@ const Login = () => {
       identifier: phoneInfo.phoneNumber,
       type: "phone",
       usertype: "web",
-      // referral: sessionStorage.getItem("referral") || "",
     };
 
     try {
@@ -112,6 +110,9 @@ const Login = () => {
       localStorage.setItem("medicomparestoken", response.data?.data?.token);
       localStorage.removeItem("phone");
       window.dispatchEvent(new Event("userLoggedIn"));
+      localStorage.setItem('name', response.data?.data?.user?.first_name)
+      localStorage.setItem('phone', response.data.data.user.phone);
+      localStorage.setItem('email', response.data.data.user.email);
 
       let bookingResumed = false;
       try {
@@ -131,66 +132,65 @@ const Login = () => {
   };
 
   return (
-    <section className="auth-login-screen">
-      <div className="auth-login-container">
-        <div className="auth-form-card">
-          <h1 className="auth-form-title">Login with MediCompares</h1>
+    <section className="w-full min-h-screen flex justify-center items-center p-5 box-border bg-white">
+      <div className="relative w-full max-w-[897px] min-h-[451px] h-auto bg-gradient-to-r from-[#4B22AA] via-[#341777] to-[#6941C6] rounded-[40px] shadow-[2px_4px_10px_0px_rgba(82,82,82,0.1),-1px_1px_4px_0px_rgba(0,0,0,0.24)] flex items-center overflow-hidden max-md:h-auto max-md:flex-col max-md:items-center max-md:p-2.5 max-md:max-w-full max-lg:h-auto max-lg:flex-col max-lg:items-center max-lg:pb-10 max-lg:max-w-[500px] py-6 md:py-0">
+        <div className="relative w-[468px] min-h-[381px] h-auto bg-[#f9fafb] rounded-[12px] ml-[52px] my-auto px-[46px] pt-[30px] pb-[30px] flex flex-col z-10 shrink-0 max-md:my-5 max-md:mx-0 max-md:w-[95%] max-md:h-auto max-md:p-5 max-lg:my-[35px] max-lg:mx-0 max-lg:w-[90%] max-lg:h-auto">
+          <h1 className="!text-[22px] !font-semibold !text-[#344055] !m-0 !mb-4 !leading-normal max-md:text-[18px] max-md:font-bold">Login with MediCompares</h1>
 
-          <button className="auth-google-btn" onClick={() => login()}>
+          <button className="flex items-center justify-center gap-2.5 w-full h-[45px] !bg-[#f9fafb] !border !border-[#d0d5dd] rounded-[8px] !text-[#1d2939] !text-[14px] !font-medium !mb-[5px] !transition-colors hover:bg-[#f0f2f5] cursor-pointer" onClick={() => login()}>
             <img
               src="assets/img/icons/google-icon.svg"
               alt="Google Logo"
-              className="auth-google-icon"
+              className="w-6 h-6"
             />
             <span>Continue with Google</span>
           </button>
 
-          <div className="auth-divider">
-            <hr className="auth-divider-line" />
-            <span className="auth-divider-text">Or</span>
-            <hr className="auth-divider-line" />
+          <div className="flex items-center justify-between mb-2 w-full">
+            <hr className="grow border-none border-t border-[#7c7e80] mx-2.5" />
+            <span className="text-[12px] text-[#667085] m-0 whitespace-nowrap">Or</span>
+            <hr className="grow border-none border-t border-[#7c7e80] mx-2.5" />
           </div>
 
           <form onSubmit={handleLogin}>
-            <div className="auth-input-group">
-              <div className="auth-input-wrapper">
+            <div className="mb-5">
+              <div className="mb-4">
                 <CommonPhoneInput
                   onChange={(data) => setPhoneInfo(data)}
                   placeholder="Mobile Number"
-                  className="auth-mobile-input"
                 />
               </div>
-              <p className="auth-helper-text">
+              <p className="text-[12px] text-[#667085] mt-2 mb-0 ml-1 leading-[1.4] max-md:ml-0">
                 OTP will be sent to this number
               </p>
             </div>
 
             <button
               type="submit"
-              className="auth-primary-btn"
+              className="w-full h-10 !bg-[#512aac] hover:bg-[#422291] text-white !border-none !rounded-[8px] !text-[16px] !font-medium !mb-3.5 !transition-colors !duration-200 !disabled:opacity-50 cursor-pointer"
               disabled={loading}
             >
               {loading ? "Sending..." : "Send OTP"}
             </button>
           </form>
 
-          <div className="auth-terms-footer">
-            <p className="auth-terms-text">
+          <div className="mt-auto">
+            <p className="text-[12px] text-[#6b7280] m-0 leading-[1.4]">
               By continuing, you agree to our{" "}
               <a
                 href="/policies/privacy-policy"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="auth-terms-link"
+                className="text-[12px] text-[#8059ca] no-underline font-medium"
               >
                 Privacy Policy
               </a>
-              {" "} &{" "}
+              {" "} & {" "}
               <a
                 href="/policies/terms-and-conditions"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="auth-terms-link"
+                className="text-[12px] text-[#8059ca] no-underline font-medium"
               >
                 Terms and Conditions
               </a>
@@ -198,69 +198,69 @@ const Login = () => {
           </div>
         </div>
 
-        <div className="auth-promo-section">
+        <div className="absolute top-0 left-0 w-full h-full pointer-events-none max-md:flex max-md:flex-col max-md:items-center max-md:mt-5 max-md:relative max-md:h-auto max-md:w-full max-lg:relative max-lg:h-auto max-lg:flex max-lg:flex-col max-lg:items-center max-lg:mt-5">
           <img
             src="/assets/logo-white.png"
             alt="Medi Compares Logo"
-            className="auth-brand-logo"
+            className="absolute top-[36px] left-[699px] w-[162px] h-[61px] max-md:hidden max-lg:static max-lg:mb-5"
           />
 
-          <div className="auth-phones-container">
+          <div className="absolute top-[102px] left-[567px] w-[200px] h-[234px] max-md:hidden max-lg:hidden">
             <img
               src="/assets/login/front.png"
               alt="App Screen Back"
-              className="auth-phone-back"
+              className="absolute top-0 left-0 w-[116px] h-[234px] z-[1]"
             />
             <img
               src="/assets/login/back.png"
               alt="App Screen Front"
-              className="auth-phone-front"
+              className="absolute top-[29px] left-[85px] w-[88px] h-[177px]"
             />
           </div>
 
-          <div className="auth-qr-group">
+          <div className="absolute top-[145px] left-[754px] text-center flex flex-col items-center max-md:hidden max-lg:hidden">
             <img
               src="/assets/qurcode.png"
               alt="QR Code"
-              className="auth-qr-code"
+              className="w-[53px] h-[49px] mb-2.5"
             />
-            <p className="auth-qr-text">
+            <p className="text-[12px] text-white m-0 leading-[1.4] whitespace-pre-line">
               Scan the QR code
-              <br />
+              {"\n"}
               to get the app now
             </p>
           </div>
 
-          <div className="auth-store-buttons">
+          <div className="absolute top-[359px] left-[566px] flex gap-2.5 pointer-events-auto max-md:static max-md:flex max-md:flex-row max-md:justify-center max-md:gap-[15px] max-md:mt-0 max-lg:static max-lg:flex-row max-lg:justify-center">
             <a
               href="https://www.apple.com/in/store"
               target="_blank"
-              className="auth-store-btn"
+              className="flex items-center w-[150px] h-11 bg-[rgba(103,164,255,0.2)] rounded-[12px] backdrop-blur-[1px] shadow-[inset_0px_4px_50px_0px_#ffffff] no-underline px-3 transition-opacity duration-200 hover:opacity-90 max-md:w-[140px] max-md:h-10"
             >
               <img
                 src="/assets/login/apple.png"
                 alt="Apple Logo"
-                className="auth-store-icon"
+                className="w-[22px] h-[22px] mr-2 object-contain"
               />
-              <div className="auth-store-text">
-                <span className="auth-store-subtitle">Download on the</span>
-                <span className="auth-store-title">App Store</span>
+              <div className="flex flex-col justify-center">
+                <span className="text-[9px] text-white leading-tight">Download on the</span>
+                <span className="text-[14px] font-semibold text-white leading-tight">App Store</span>
               </div>
             </a>
 
             <a
               href="https://play.google.com/store/apps?hl=en_IN&pli=1"
               target="_blank"
-              className="auth-store-btn"
+              className="flex items-center w-[150px] h-11 bg-[rgba(103,164,255,0.2)] rounded-[12px] backdrop-blur-[1px] shadow-[inset_0px_4px_50px_0px_#ffffff] no-underline px-3 transition-opacity duration-200 hover:opacity-90 max-md:w-[140px] max-md:h-10"
             >
               <img
                 src="/assets/login/playstore.png"
                 alt="Play Store Logo"
-                className="auth-store-icon"
+                className="w-[22px] h-[22px] mr-2 object-contain"
               />
-              <div className="auth-store-text">
-                <span className="auth-store-subtitle">GET IT ON</span>
-                <span className="auth-store-title">Google Play</span>
+              <div className="flex flex-col justify-center">
+                <span className="text-[9px] text-white leading-tight">GET IT ON</span>
+                <span className="text-[14px] font-semibold text-white leading-tight">Google Play</span>
               </div>
             </a>
           </div>

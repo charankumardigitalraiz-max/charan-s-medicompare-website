@@ -201,7 +201,7 @@ const Consultation = ({ HomeNavigate, BackButton }) => {
                         setSearchTerm(e.target.value);
                         setCurrentPage(1);
                       }}
-                      className="h-[42px] rounded-lg border border-[#e0e0e0] pl-10 pr-4 text-sm w-full outline-none focus:border-[#8059ca] transition-colors"
+                      className="h-[42px] rounded-sm border border-[#e0e0e0] pl-10 pr-4 text-sm w-full outline-none focus:border-[#8059ca] transition-colors"
                     />
                     <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[#999] pointer-events-none">
                       <i className="fa-solid fa-search" />

@@ -4,6 +4,7 @@ import { useResponsive } from "../../../hooks/useResponsive";
 import { toast } from "react-hot-toast";
 import { axiosInstance } from "../../../Apiservice";
 import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
+import Pagination from "../../../components/ui/Pagination.jsx";
 
 // Styles migrated to Tailwind CSS
 
@@ -208,15 +209,15 @@ const Reviews = ({ HomeNavigate, BackButton }) => {
         </div>
       </div>
 
-      <div className="row">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {currentReviews.length > 0 ? (
           currentReviews.map((review, index) => (
-            <div className="col-md-6 col-12 mb-4" key={index}>
+            <div className="w-full" key={index}>
               {renderReviewCard(review, index)}
             </div>
           ))
         ) : (
-          <div className="col-12 text-center py-10 px-5 text-slate-500">
+          <div className="col-span-full text-center py-10 px-5 text-slate-500">
             <i className="far fa-comment-alt text-[36px] text-slate-200 mb-3 block"></i>
             <h4 className="mb-2 text-slate-700 font-medium text-base">No Reviews Yet</h4>
             <p className="mb-4 text-sm text-slate-400">You haven't reviewed any products yet.</p>
@@ -225,41 +226,12 @@ const Reviews = ({ HomeNavigate, BackButton }) => {
       </div>
 
       {totalReviews > reviewsPerPage && (
-        <div className="pagination dashboard-pagination mt-4">
-          <ul className="d-flex justify-content-center align-items-center gap-1">
-            <li>
-              <button
-                className="page-link"
-                onClick={() => paginate(currentPage - 1)}
-                disabled={currentPage === 1}
-              >
-                <i className="fa-solid fa-chevron-left"></i>
-              </button>
-            </li>
-
-            {Array.from({ length: totalPages }, (_, i) => i + 1).map(
-              (number) => (
-                <li key={number}>
-                  <button
-                    className={`page-link ${currentPage === number ? "active" : ""}`}
-                    onClick={() => paginate(number)}
-                  >
-                    {number}
-                  </button>
-                </li>
-              ),
-            )}
-
-            <li>
-              <button
-                className="page-link"
-                onClick={() => paginate(currentPage + 1)}
-                disabled={currentPage === totalPages}
-              >
-                <i className="fa-solid fa-chevron-right"></i>
-              </button>
-            </li>
-          </ul>
+        <div className="mt-6 flex justify-center">
+          <Pagination
+            page={currentPage}
+            totalPages={totalPages}
+            onPageChange={paginate}
+          />
         </div>
       )}
     </div>

@@ -40,6 +40,7 @@ const Home2Header = () => {
   const [showMobileSearchDropdown, setShowMobileSearchDropdown] =
     useState(false);
   const [isDesktop, setIsDesktop] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -577,15 +578,23 @@ const Home2Header = () => {
   useEffect(() => {
     let ticking = false;
     let lastShowSearch = window.scrollY > 200;
+    let lastIsScrolled = window.scrollY > 0;
 
     const handleScroll = () => {
       if (ticking) return;
       ticking = true;
       requestAnimationFrame(() => {
-        const shouldShow = window.scrollY > 200;
+        const currentScrollY = window.scrollY;
+        const shouldShow = currentScrollY > 200;
         if (shouldShow !== lastShowSearch) {
           lastShowSearch = shouldShow;
           setShowSearch(shouldShow);
+        }
+
+        const scrolled = currentScrollY > 0;
+        if (scrolled !== lastIsScrolled) {
+          lastIsScrolled = scrolled;
+          setIsScrolled(scrolled);
         }
         ticking = false;
       });
@@ -944,7 +953,7 @@ const Home2Header = () => {
 
       {/* Desktop Header */}
       <header
-        className={`header-custom w-full h-[75px] bg-[#fcfcfc] border-b border-gray-100 hidden lg:block fixed top-0 left-0 right-0 z-[99999999] shadow-sm ${isLocationUpdating ? "hidden" : "block"
+        className={`header-custom w-full h-[75px] bg-[#fcfcfc] border-b border-gray-100 hidden lg:block fixed top-0 left-0 right-0 z-[99999999] ${isScrolled ? "shadow-sm" : ""} ${isLocationUpdating ? "hidden" : "block"
           }`}
       >
         <div

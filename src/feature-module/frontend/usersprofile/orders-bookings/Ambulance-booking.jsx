@@ -178,7 +178,7 @@ const AmbulanceBooking = ({ HomeNavigate, BackButton }) => {
             </div>
           </div>
           <div className="flex items-center gap-3 w-full sm:w-auto">
-            <div className="relative w-full sm:w-[260px] shrink-0">
+            <div className="relative w-full sm:w-[250px] shrink-0">
               <input
                 type="text"
                 placeholder="Search by Booking ID, Address..."
@@ -187,9 +187,9 @@ const AmbulanceBooking = ({ HomeNavigate, BackButton }) => {
                   setSearchTerm(e.target.value);
                   setCurrentPage(1);
                 }}
-                className="h-[38px] rounded-lg border border-slate-200 pl-9 pr-3 text-[13px] w-full outline-none bg-slate-50 hover:bg-white hover:border-[#8059ca] focus:bg-white focus:border-[#8059ca] transition-all duration-200"
+                className="h-[42px] rounded-sm border border-[#e0e0e0] pl-10 pr-4 text-sm w-full outline-none focus:border-[#8059ca] transition-colors"
               />
-              <span className="absolute left-[12px] top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none text-[13px]">
+              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[#999] pointer-events-none">
                 <i className="fa-solid fa-search" />
               </span>
             </div>
@@ -425,151 +425,221 @@ const AmbulanceBooking = ({ HomeNavigate, BackButton }) => {
           <BaseModal
             show={selectedLead}
             onClose={onClose}
-            title={`Booking #${selectedLead.bookingId || (selectedLead._id ? selectedLead._id.substring(selectedLead._id.length - 8) : "")}`}
+            title={
+              <div className="flex flex-col">
+                <span className="text-[15px] md:text-[17px] font-bold text-slate-900">
+                  Ambulance Booking Details
+                </span>
+                <div className="flex items-center gap-2 mt-1">
+                  <span className={`px-2 py-0.5 rounded-full text-[10px] font-semibold text-capitalize ${
+                    (selectedLead.status || "").toLowerCase() === "completed" || (selectedLead.status || "").toLowerCase() === "delivered"
+                      ? "bg-emerald-100 text-emerald-700"
+                      : (selectedLead.status || "").toLowerCase() === "cancelled" || (selectedLead.status || "").toLowerCase() === "canceled"
+                      ? "bg-red-100 text-red-700"
+                      : "bg-purple-100 text-purple-700"
+                  }`}>
+                    {selectedLead.status || "Pending"}
+                  </span>
+                  <span className="text-[11px] text-slate-500 font-medium">
+                    #{selectedLead.bookingId || "N/A"}
+                  </span>
+                </div>
+              </div>
+            }
             size="md"
-            bodyClassName="!p-2"
-            headerClassName="border-b-0 pb-0"
+            bodyClassName="!p-0"
+            headerClassName="border-b border-slate-100 pb-4"
           >
-
             {/* Modal Body */}
-            <div className="p-2 overflow-y-auto">
+            <div className="p-5 space-y-5 overflow-y-auto">
               {/* Product */}
-              <div className="flex gap-3 items-start mb-4 p-3 bg-purple-50/50 border border-purple-100/50 rounded-xl">
-                <img
-                  src={getImageUrl(selectedLead.productdetails?.tabletdetails?.files?.[0])}
-                  alt="Ambulance"
-                  onError={(e) => { e.currentTarget.src = "/assets/default.png"; }}
-                  className="w-[60px] h-[60px] object-contain rounded-lg bg-white border border-[#ede9f6]"
-                />
+              <div className="flex gap-3.5 items-center p-3 bg-[#faf8ff] border border-[#f1edfa] rounded-[14px]">
+                <div className="w-[60px] h-[60px] rounded-[10px] border border-[#e1dcf5] bg-[#fff] flex items-center justify-center shrink-0 overflow-hidden">
+                  <img
+                    src={getImageUrl(selectedLead.productdetails?.tabletdetails?.files?.[0])}
+                    alt="Ambulance"
+                    onError={(e) => { e.currentTarget.src = "/assets/default.png"; }}
+                    className="w-full h-full object-contain"
+                  />
+                </div>
                 <div>
-                  <div className="font-semibold text-[14px] text-[#333] capitalize">
+                  <div className="font-bold text-[13.5px] text-[#1e1b4b] capitalize">
                     {selectedLead.productdetails?.tabletdetails?.name ||
                       selectedLead.productdetails?.variantcurrentDetails?.productname ||
                       selectedLead.productdetails?.packagedetails?.name ||
                       "Ambulance Service"}
                   </div>
                   {selectedLead.bookingDateTime && (
-                    <div className="text-[12px] text-[#8059ca] mt-1">
-                      <i className="fas fa-calendar-alt mr-1"></i>
+                    <div className="text-[11.5px] text-[#8059ca] font-semibold mt-1">
+                      <i className="fas fa-calendar-alt mr-1.5"></i>
                       {new Date(selectedLead.bookingDateTime).toLocaleString("en-US", { day: "2-digit", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" })}
                     </div>
                   )}
                 </div>
               </div>
 
-              {/* Location Info */}
-              {[
-                { label: "Pickup Location", value: selectedLead.pickupLocation?.address, icon: "fa-map-marker-alt", color: "#28a745", loc: selectedLead.pickupLocation },
-                { label: "Drop-off Location", value: selectedLead.dropoffLocation?.address, icon: "fa-map-pin", color: "#dc3545", loc: selectedLead.dropoffLocation },
-              ].map((item) => (
-                <div key={item.label} className="mb-2.5 p-2.5 bg-slate-50 rounded-lg border-l-4" style={{ borderLeftColor: item.color }}>
-                  <div className="flex justify-between items-center mb-1">
-                    <div className="text-[11px] text-[#777] flex items-center gap-1">
-                      <i className={`fas ${item.icon}`} style={{ color: item.color }}></i>
-                      {item.label}
-                    </div>
-                    {getMapUrl(item.loc) && (
-                      <a
-                        href={getMapUrl(item.loc)}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-[11px] text-white p-[3px_9px] rounded-md no-underline inline-flex items-center gap-1 font-medium"
-                        style={{ backgroundColor: item.color }}
-                        title="Open in Google Maps"
-                      >
-                        <i className="fas fa-map-marked-alt"></i> Maps
-                      </a>
-                    )}
-                  </div>
-                  <div className="text-[13px] font-medium text-[#333] break-words">{item.value || "N/A"}</div>
+              {/* Route Timeline */}
+              <div>
+                <div style={{ fontSize: "10px", fontWeight: 700, color: "#8059ca", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "12px" }}>
+                  Route Details
                 </div>
-              ))}
+                <div className="bg-[#faf9fe] border border-[#f1eff9] rounded-xl p-4 relative">
+                  {/* Vertical connector line */}
+                  <div className="absolute left-[25px] top-[34px] bottom-[34px] w-0.5 border-l-2 border-dashed border-slate-200"></div>
 
-              {/* Details Grid */}
-              <div className="grid grid-cols-2 gap-2.5 mt-3">
-                {[
-                  {
-                    label: "Service Type",
-                    value: selectedLead.emergencyType
-                      ? selectedLead.emergencyType.toLowerCase() === "nonemergency"
-                        ? "Non-Emergency"
-                        : selectedLead.emergencyType.charAt(0).toUpperCase() + selectedLead.emergencyType.slice(1).toLowerCase()
-                      : null,
-                    icon: "fa-ambulance",
-                    iconColor: "#8059ca",
-                  },
-                  {
-                    label: "Booking Status",
-                    value: selectedLead.bookingStatus,
-                    icon: "fa-clipboard-list",
-                    iconColor: "#0ea5e9",
-                    colored: true,
-                    isPaid: ["confirmed", "completed"].includes((selectedLead.bookingStatus || "").toLowerCase()),
-                  },
-                  {
-                    label: "Payment Status",
-                    value: selectedLead.paymentStatus,
-                    icon: "fa-credit-card",
-                    iconColor: "#22c55e",
-                    colored: true,
-                    isPaid: selectedLead.paymentStatus === "paid",
-                  },
-                  {
-                    label: "Payment Method",
-                    value: selectedLead.paymentmethod || selectedLead.paymentMethod,
-                    icon: "fa-wallet",
-                    iconColor: "#f59e0b",
-                  },
-                  {
-                    label: "Distance",
-                    value: selectedLead.distance ? `${selectedLead.distance} km` : (selectedLead.distanceKm ? `${selectedLead.distanceKm} km` : null),
-                    icon: "fa-route",
-                    iconColor: "#6366f1",
-                  },
-                ].filter(i => i.value).map((item) => (
-                  <div key={item.label} className="bg-slate-50 rounded-lg p-2.5">
-                    <div className="text-[11px] text-[#777] mb-1 flex items-center gap-1">
-                      <i className={`fas ${item.icon}`} style={{ color: item.iconColor, fontSize: "10px" }}></i>
-                      {item.label}
+                  {/* Pickup */}
+                  <div className="flex items-start gap-3 relative mb-5">
+                    <div className="w-5 h-5 rounded-full bg-emerald-100 flex items-center justify-center shrink-0 z-10 mt-0.5">
+                      <div className="w-2.5 h-2.5 rounded-full bg-emerald-500"></div>
                     </div>
-                    <div className={`text-[13px] font-semibold capitalize ${item.colored ? (item.isPaid ? "text-[#28a745]" : "text-[#dc3545]") : "text-[#333]"}`}>
-                      {item.value}
+                    <div className="flex-1 min-w-0">
+                      <div className="flex justify-between items-center mb-0.5">
+                        <span className="text-[11px] font-semibold text-emerald-600 uppercase tracking-wider">Pickup Address</span>
+                        {getMapUrl(selectedLead.pickupLocation) && (
+                          <a
+                            href={getMapUrl(selectedLead.pickupLocation)}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-[10px] text-emerald-600 hover:text-emerald-700 font-semibold flex items-center gap-1 bg-emerald-50/50 px-2 py-0.5 rounded border border-emerald-100"
+                          >
+                            <i className="fas fa-map-marked-alt"></i> Maps
+                          </a>
+                        )}
+                      </div>
+                      <div className="text-xs text-slate-700 font-medium break-words">
+                        {selectedLead.pickupLocation?.address || "N/A"}
+                      </div>
                     </div>
                   </div>
-                ))}
+
+                  {/* Drop-off */}
+                  <div className="flex items-start gap-3 relative">
+                    <div className="w-5 h-5 rounded-full bg-red-100 flex items-center justify-center shrink-0 z-10 mt-0.5">
+                      <div className="w-2.5 h-2.5 rounded-full bg-red-500"></div>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex justify-between items-center mb-0.5">
+                        <span className="text-[11px] font-semibold text-red-600 uppercase tracking-wider">Drop-off Address</span>
+                        {getMapUrl(selectedLead.dropoffLocation) && (
+                          <a
+                            href={getMapUrl(selectedLead.dropoffLocation)}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-[10px] text-red-600 hover:text-red-700 font-semibold flex items-center gap-1 bg-red-50/50 px-2 py-0.5 rounded border border-red-100"
+                          >
+                            <i className="fas fa-map-marked-alt"></i> Maps
+                          </a>
+                        )}
+                      </div>
+                      <div className="text-xs text-slate-700 font-medium break-words">
+                        {selectedLead.dropoffLocation?.address || "N/A"}
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
 
-              {/* Vendor Details */}
-              {selectedLead.vendordetails && (selectedLead.vendordetails.firstName || selectedLead.vendordetails.email || selectedLead.vendordetails.mobile) && (
-                <div className="mt-3.5 p-3 bg-slate-50 rounded-xl border border-slate-200">
-                  <div className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-                    <i className="fas fa-store text-[#8059ca]"></i>
-                    Vendor Details
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <div>
-                      <div className="text-[13px] font-semibold text-[#0f172a] capitalize">
-                        {selectedLead.vendordetails.firstName || ""} {selectedLead.vendordetails.lastName || ""}
+              {/* Booking Info Grid */}
+              <div>
+                <div style={{ fontSize: "10px", fontWeight: 700, color: "#8059ca", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "12px" }}>
+                  Booking Information
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                  {[
+                    {
+                      label: "Service Type",
+                      value: selectedLead.emergencyType
+                        ? selectedLead.emergencyType.toLowerCase() === "nonemergency"
+                          ? "Non-Emergency"
+                          : selectedLead.emergencyType.charAt(0).toUpperCase() + selectedLead.emergencyType.slice(1).toLowerCase()
+                        : "Standard",
+                      icon: "fa-ambulance",
+                      iconColor: "#8059ca",
+                    },
+                    {
+                      label: "Distance",
+                      value: selectedLead.distance ? `${selectedLead.distance} km` : (selectedLead.distanceKm ? `${selectedLead.distanceKm} km` : "N/A"),
+                      icon: "fa-route",
+                      iconColor: "#6366f1",
+                    },
+                    {
+                      label: "Payment Status",
+                      value: selectedLead.paymentStatus || "Unpaid",
+                      icon: "fa-credit-card",
+                      iconColor: selectedLead.paymentStatus === "paid" ? "#10b981" : "#f59e0b",
+                      colored: true,
+                      isPaid: selectedLead.paymentStatus === "paid",
+                    },
+                    {
+                      label: "Payment Method",
+                      value: selectedLead.paymentmethod || selectedLead.paymentMethod || "N/A",
+                      icon: "fa-wallet",
+                      iconColor: "#f59e0b",
+                    },
+                  ].map((item) => (
+                    <div key={item.label} className="bg-[#faf9fe] rounded-xl p-3 border border-[#f1eff9]">
+                      <div className="text-[10px] text-slate-400 mb-1 flex items-center gap-1.5 font-medium uppercase tracking-wider">
+                        <i className={`fas ${item.icon}`} style={{ color: item.iconColor }}></i>
+                        {item.label}
                       </div>
-                      {selectedLead.vendordetails.email && (
-                        <div className="text-[12px] text-slate-500 mt-0.5">
-                          <i className="fas fa-envelope mr-1 text-[10px]"></i>
-                          {selectedLead.vendordetails.email}
-                        </div>
-                      )}
+                      <div className={`text-xs font-semibold capitalize ${item.colored ? (item.isPaid ? "text-emerald-600" : "text-amber-600") : "text-slate-700"}`}>
+                        {item.value}
+                      </div>
                     </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Service Provider */}
+              {selectedLead.vendordetails && (selectedLead.vendordetails.firstName || selectedLead.vendordetails.email || selectedLead.vendordetails.mobile) && (
+                <div>
+                  <div style={{ fontSize: "10px", fontWeight: 700, color: "#8059ca", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "12px" }}>
+                    Service Provider
+                  </div>
+                  <div className="bg-[#faf9fe] border border-[#f1eff9] rounded-xl p-4">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-full bg-[#efe7ff] text-[#8059ca] flex items-center justify-center font-bold text-sm shrink-0 border border-[#f1eaff]">
+                        <i className="fas fa-store"></i>
+                      </div>
+                      <div>
+                        <div className="text-xs font-bold text-slate-800 capitalize">
+                          {selectedLead.vendordetails.firstName || ""} {selectedLead.vendordetails.lastName || ""}
+                        </div>
+                        {selectedLead.vendordetails.mobile && (
+                          <div className="text-[11px] text-[#8059ca] font-semibold mt-0.5">
+                            <i className="fas fa-phone mr-1.5"></i>
+                            {selectedLead.vendordetails.mobile}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                    {selectedLead.vendordetails.email && (
+                      <div className="pt-2.5 mt-2.5 border-t border-dashed border-[#e2e8f0] text-[11px] text-slate-500 flex items-center gap-1.5">
+                        <i className="fas fa-envelope text-[#8059ca]"></i>
+                        <span>{selectedLead.vendordetails.email}</span>
+                      </div>
+                    )}
                   </div>
                 </div>
               )}
 
-              {/* Total Fare */}
-              <div className="mt-3.5 bg-gradient-to-r from-[#8059ca] to-[#a07de0] rounded-xl p-3.5 flex justify-between items-center">
-                <span className="text-white text-[13px] font-medium">Total Fare</span>
-                <span className="text-white text-[20px] font-bold">₹{selectedLead.fare?.toLocaleString() || "0"}</span>
+              {/* Billing Summary */}
+              <div className="pb-2">
+                <div style={{ fontSize: "10px", fontWeight: 700, color: "#8059ca", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "12px" }}>
+                  Fare Details
+                </div>
+                <div className="bg-[#faf9fe] rounded-xl p-4 border border-[#f1eff9]">
+                  <div className="flex justify-between items-center text-xs mb-2.5">
+                    <span className="text-slate-500">Base Ride Fare</span>
+                    <span className="font-medium text-slate-700">₹{selectedLead.fare?.toLocaleString() || "0"}</span>
+                  </div>
+                  <div className="flex justify-between items-center border-t border-dashed border-[#e0daf5] pt-3 mt-1.5 text-[15px] font-bold">
+                    <span className="text-slate-800">Total Amount</span>
+                    <span className="text-[16px] text-[#7c4dc4]">₹{selectedLead.fare?.toLocaleString() || "0"}</span>
+                  </div>
+                </div>
               </div>
             </div>
-
-
           </BaseModal>,
           document.body
         )}

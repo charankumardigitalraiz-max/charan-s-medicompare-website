@@ -660,18 +660,18 @@ const RentalBooking = ({ HomeNavigate, ServiceTabs }) => {
 
           </div>
           <div className="flex items-center gap-3 w-full sm:w-auto">
-            <div className="relative w-full sm:w-[260px] shrink-0">
+            <div className="relative w-full sm:w-[250px] shrink-0">
               <input
                 type="text"
-                placeholder="Search by Order ID"
+                placeholder="Search by Order ID..."
                 value={searchTerm}
                 onChange={(e) => {
                   setSearchTerm(e.target.value);
                   setCurrentPage(1);
                 }}
-                className="h-[38px] rounded-lg border border-slate-200 pl-9 pr-3 text-[13px] w-full outline-none bg-slate-50 hover:bg-white hover:border-[#8059ca] focus:bg-white focus:border-[#8059ca] transition-all duration-200"
+                className="h-[42px] rounded-sm border border-[#e0e0e0] pl-10 pr-4 text-sm w-full outline-none focus:border-[#8059ca] transition-colors"
               />
-              <span className="absolute left-[12px] top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none text-[13px]">
+              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[#999] pointer-events-none">
                 <i className="fa-solid fa-search" />
               </span>
             </div>
@@ -828,7 +828,7 @@ const RentalBooking = ({ HomeNavigate, ServiceTabs }) => {
 
                 return (
                   <div key={index} className="w-full">
-                    <div className="bg-white border-[1.5px] border-[#f0f0f0] rounded-[14px] shadow-[0_2px_8px_rgba(0,0,0,0.03)] p-3 h-100 flex flex-col justify-between hover:shadow-[0_6px_18px_rgba(128,89,202,0.12)] transition-shadow duration-300">
+                    <div className="bg-white border-[1.5px] border-[#f0f0f0] rounded-[14px] shadow-[0_2px_8px_rgba(0,0,0,0.03)] p-3 h-auto flex flex-col justify-between hover:shadow-[0_6px_18px_rgba(128,89,202,0.12)] transition-shadow duration-300">
                       {/* HEADER */}
                       <div>
                         <div className="flex justify-between items-center mb-3 flex-wrap gap-2 pb-2 border-b border-[#f8f8f8]">
@@ -945,7 +945,8 @@ const RentalBooking = ({ HomeNavigate, ServiceTabs }) => {
 
                           <div className="w-full sm:w-auto flex gap-2 justify-start sm:justify-end flex-wrap">
                             <button
-                              className="inline-flex items-center justify-center gap-1.5 rounded-lg text-[11px] font-medium p-[4px_8px] min-w-fit whitespace-nowrap leading-tight bg-[#8059ca] text-white border border-[#8059ca] transition-all duration-200 no-underline shadow-none hover:bg-[#6f42c1] hover:border-[#6f42c1] focus:bg-[#6f42c1] focus:border-[#6f42c1]"
+                              type="button"
+                              className="inline-flex items-center justify-center gap-1.5 !rounded-md !text-[11px] !font-medium p-[4px_8px] min-w-fit whitespace-nowrap leading-tight bg-[#8059ca] text-white border border-[#8059ca] transition-all duration-200 no-underline shadow-none hover:bg-[#6f42c1] hover:border-[#6f42c1] focus:bg-[#6f42c1] focus:border-[#6f42c1]"
                               onClick={() => handleView(order)}
                             >
                               <i className="fa-solid fa-eye text-[12px] w-3.5 text-center shrink-0"></i> Details
@@ -1125,49 +1126,62 @@ const RentalBooking = ({ HomeNavigate, ServiceTabs }) => {
                         ? (Array.isArray(vendor0.bussiness_image) ? vendor0.bussiness_image[0]?.url : vendor0.bussiness_image?.url)
                         : null;
                       return (
-                        <div key={idx} className="d-flex align-items-start gap-3"
-                          style={{ marginBottom: idx < displayItems.length - 1 ? "12px" : 0 }}>
-                          <div style={{
-                            width: "64px", height: "64px", border: "1px solid #eee",
-                            borderRadius: "10px", flexShrink: 0, overflow: "hidden", background: "#fafafa",
+                        <div key={idx} className="flex items-start justify-between gap-3"
+                          style={{
+                            padding: "12px",
+                            background: "#faf8ff",
+                            border: "1.5px solid #f1edfa",
+                            borderRadius: "12px",
+                            marginBottom: idx < displayItems.length - 1 ? "12px" : 0
                           }}>
-                            <img src={resolveOrderItemImage(orderItem)} alt="product"
-                              style={{ height: "64px", width: "64px", objectFit: "contain" }}
-                              onError={(e) => { e.currentTarget.src = "/assets/default.png"; }} />
-                          </div>
-                          <div style={{ flex: 1, minWidth: 0 }}>
-                            <div style={{ fontWeight: 600, fontSize: "13px", color: "#222", marginBottom: "4px" }}>
-                              {itemName.length > 38 ? itemName.slice(0, 38) + "\u2026" : itemName}
+                          <div className="flex items-start gap-3" style={{ flex: 1, minWidth: 0 }}>
+                            <div style={{
+                              width: "60px", height: "60px", border: "1px solid #e1dcf5",
+                              borderRadius: "10px", flexShrink: 0, overflow: "hidden", background: "#fff",
+                              display: "flex", alignItems: "center", justifyContent: "center"
+                            }}>
+                              <img src={resolveOrderItemImage(orderItem)} alt="product"
+                                style={{ height: "100%", width: "100%", objectFit: "contain" }}
+                                onError={(e) => { e.currentTarget.src = "/assets/default.png"; }} />
                             </div>
-                            {vendorName && (
-                              <div className="d-flex align-items-center gap-1"
-                                style={{ fontSize: "11px", color: "#8059ca", marginBottom: "5px" }}>
-                                {vendorImg && (
-                                  <img src={vendorImg} alt={vendorName}
-                                    onError={(e) => { e.currentTarget.src = "/assets/default.png"; }}
-                                    style={{ width: "16px", height: "16px", borderRadius: "50%", objectFit: "cover", border: "1px solid #e1dcf5" }} />
-                                )}
-                                <span style={{ fontWeight: 600 }}>{vendorName}</span>
+                            <div style={{ flex: 1, minWidth: 0 }}>
+                              <div style={{ fontWeight: 700, fontSize: "13px", color: "#1e1b4b", textTransform: "capitalize", marginBottom: "4px" }}>
+                                {itemName.length > 38 ? itemName.slice(0, 38) + "\u2026" : itemName}
                               </div>
-                            )}
-                            <div className="d-flex flex-wrap gap-2">
-                              {orderItem?.rentalDetails?.rentalPlan && (
-                                <span style={{ fontSize: "11px", background: "#f5f3ff", color: "#7c4dc4", padding: "2px 8px", borderRadius: "20px", fontWeight: 500 }}>
-                                  {orderItem.rentalDetails.rentalPlan} plan
-                                </span>
+                              {vendorName && (
+                                <div className="flex items-center gap-1"
+                                  style={{ fontSize: "11px", color: "#8059ca", marginBottom: "4px" }}>
+                                  {vendorImg && (
+                                    <img src={vendorImg} alt={vendorName}
+                                      onError={(e) => { e.currentTarget.src = "/assets/default.png"; }}
+                                      style={{ width: "14px", height: "14px", borderRadius: "50%", objectFit: "cover", border: "1px solid #e1dcf5" }} />
+                                  )}
+                                  <span style={{ fontWeight: 600, textTransform: "capitalize" }}>{vendorName}</span>
+                                </div>
                               )}
-                              {orderItem?.rentalDetails?.basePricePerDay > 0 && (
-                                <span style={{ fontSize: "11px", color: "#555" }}>
-                                  ₹{orderItem?.rentalDetails?.basePricePerDay}/day
+                              <div className="flex flex-wrap gap-2 items-center">
+                                {orderItem?.rentalDetails?.rentalPlan && (
+                                  <span style={{ fontSize: "10px", background: "#f3e8ff", color: "#8059ca", padding: "2px 8px", borderRadius: "6px", fontWeight: 600 }}>
+                                    {orderItem.rentalDetails.rentalPlan} plan
+                                  </span>
+                                )}
+                                {orderItem?.rentalDetails?.basePricePerDay > 0 && (
+                                  <span style={{ fontSize: "11px", color: "#64748b" }}>
+                                    ₹{orderItem?.rentalDetails?.basePricePerDay}/day
+                                  </span>
+                                )}
+                                <span style={{ fontSize: "11px", color: "#64748b" }}>•</span>
+                                <span style={{ fontSize: "11px", color: "#64748b" }}>
+                                  Qty: <strong style={{ color: "#334155" }}>{orderItem?.quantity || 1}</strong>
                                 </span>
-                              )}
-                              <span style={{ fontSize: "11px", color: "#777" }}>
-                                Qty: <strong>{orderItem?.quantity || 1}</strong>
-                              </span>
+                              </div>
                             </div>
                           </div>
-                          <div style={{ fontWeight: 700, fontSize: "14px", color: "#222", flexShrink: 0 }}>
-                            {(Number(selectedOrder?.billingSummary?.total ?? 0) || 0).toFixed(2)}
+                          <div style={{ textAlign: "right", flexShrink: 0 }}>
+                            <div style={{ fontSize: "10.5px", color: "#94a3b8", marginBottom: "2px", fontWeight: "500" }}>Total</div>
+                            <div style={{ fontWeight: 800, fontSize: "14px", color: "#8059ca" }}>
+                              ₹{(Number(orderItem?.totalPrice ?? selectedOrder?.billingSummary?.subtotal ?? selectedOrder?.subtotal ?? 0)).toFixed(2)}
+                            </div>
                           </div>
                         </div>
                       );
@@ -1251,33 +1265,33 @@ const RentalBooking = ({ HomeNavigate, ServiceTabs }) => {
 
                   return (
                     <div style={{ background: "#faf9fe", borderRadius: "12px", padding: "14px 16px", border: "1px solid #f1eff9" }}>
-                      <div className="d-flex justify-content-between align-items-center" style={{ marginBottom: "9px", fontSize: "13px" }}>
+                      <div className="flex justify-between items-center" style={{ marginBottom: "9px", fontSize: "13px" }}>
                         <span style={{ color: "#666" }}>Per Day Rental Charges</span>
                         <span style={{ fontWeight: 500 }}>₹{Number(rentaDetails?.basePricePerDay || 0).toFixed(2)}</span>
                       </div>
 
-                      <div className="d-flex justify-content-between align-items-center" style={{ marginBottom: "9px", fontSize: "13px" }}>
+                      <div className="flex justify-between items-center" style={{ marginBottom: "9px", fontSize: "13px" }}>
                         <span style={{ color: "#666" }}>Rental Duration</span>
                         <span style={{ fontWeight: 500 }}>{rentaDetails?.totalDays || 0} days</span>
                       </div>
                       {rows.map(({ label, value, prefix, suffix }) => (
-                        <div key={label} className="d-flex justify-content-between align-items-center" style={{ marginBottom: "9px", fontSize: "13px" }}>
+                        <div key={label} className="flex justify-between items-center" style={{ marginBottom: "9px", fontSize: "13px" }}>
                           <span style={{ color: "#666" }}>{label}</span>
                           <span style={{ fontWeight: 500 }}>{prefix} ₹{Number(value).toFixed(2)}{suffix}</span>
                         </div>
                       ))}
                       {coupon > 0 && (
-                        <div className="d-flex justify-content-between align-items-center" style={{ marginBottom: "9px", fontSize: "13px", color: "#28a745" }}>
+                        <div className="flex justify-between items-center" style={{ marginBottom: "9px", fontSize: "13px", color: "#28a745" }}>
                           <span>Coupon Discount</span>
                           <span style={{ fontWeight: 600 }}>-₹{coupon.toFixed(2)}</span>
                         </div>
                       )}
-                      <div className="d-flex justify-content-between align-items-center" style={{ borderTop: "1.5px dashed #e0daf5", paddingTop: "12px", marginTop: "6px", fontSize: "15px", fontWeight: 700 }}>
+                      <div className="flex justify-between items-center" style={{ borderTop: "1.5px dashed #e0daf5", paddingTop: "12px", marginTop: "6px", fontSize: "15px", fontWeight: 700 }}>
                         <span style={{ color: "#333" }}>Total Amount</span>
                         <span style={{ color: "#7c4dc4", fontSize: "16px" }}>₹{total.toFixed(2)}</span>
                       </div>
 
-                      <div className="d-flex justify-content-between align-items-center" style={{ borderTop: "1.5px dashed #e0daf5", color: "green", paddingTop: "12px", marginTop: "6px", fontSize: "13px", fontWeight: 600 }}>
+                      <div className="flex justify-between items-center" style={{ borderTop: "1.5px dashed #e0daf5", color: "green", paddingTop: "12px", marginTop: "6px", fontSize: "13px", fontWeight: 600 }}>
                         <span >First Installment (Paid)</span>
                         <span style={{ color: "green", fontSize: "16px" }}>₹{(bs?.paidAmount || 0).toFixed(2)}</span>
                       </div>
@@ -1336,152 +1350,66 @@ const RentalBooking = ({ HomeNavigate, ServiceTabs }) => {
           </BaseModal>
         )}
 
-        {/* Vendor Modal */}
         {showVendorModal && selectedVendorOrder && (
-          <div
-            className="modal fade show d-block"
-            tabIndex="-1"
-            role="dialog"
-            style={{
-              position: "fixed",
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              backgroundColor: "rgba(0, 0, 0, 0.5)",
-              zIndex: 999999999,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              animation: "fadeIn 0.3s ease-in-out",
+          <BaseModal
+            show={showVendorModal}
+            onClose={() => {
+              setShowVendorModal(false);
+              setSelectedVendorOrder(null);
             }}
+            title="Order Vendors"
+            size="md"
+            bodyClassName="!p-4 bg-slate-50"
           >
-            <div
-              className="modal-dialog modal-dialog-centered"
-              role="document"
-              style={{
-                width: "100%",
-                maxWidth: "400px",
-                margin: "1.75rem",
-              }}
-            >
-              <div className="modal-content" style={{ borderRadius: "16px", border: "none", boxShadow: "0 10px 30px rgba(0,0,0,0.2)" }}>
-                {/* HEADER */}
+            <div className="d-flex flex-column gap-3">
+              {getOrderVendors(selectedVendorOrder).map((vendor) => (
                 <div
-                  className="modal-header d-flex justify-content-between align-items-center"
-                  style={{ padding: "20px 24px 16px", borderBottom: "1px solid #f0f0f0" }}
+                  key={vendor.vendorId || vendor.name}
+                  className="p-3 bg-white border border-slate-100 rounded-xl shadow-sm"
                 >
-                  <h5
-                    className="modal-title"
-                    style={{
-                      fontWeight: 600,
-                      fontSize: "18px",
-                      color: "#333",
-                      margin: 0,
-                    }}
-                  >
-                    Order Vendors
-                  </h5>
-                  <button
-                    type="button"
-                    style={{
-                      border: "none",
-                      background: "none",
-                      fontSize: "24px",
-                      lineHeight: 1,
-                      color: "#999",
-                      cursor: "pointer",
-                      padding: 0,
-                    }}
-                    onClick={() => {
-                      setShowVendorModal(false);
-                      setSelectedVendorOrder(null);
-                    }}
-                  >
-                    &times;
-                  </button>
-                </div>
+                  <div className="d-flex align-items-center gap-3 mb-3">
+                    <img
+                      src={vendor.imageUrl}
+                      alt={vendor.name}
+                      className="w-12 h-12 rounded-full object-cover border-2 border-[#8059ca] shrink-0"
+                      onError={(e) => {
+                        e.currentTarget.src = "/assets/default.png";
+                      }}
+                    />
+                    <div className="d-flex flex-column">
+                      <span className="text-[15px] text-slate-800 font-semibold">
+                        {vendor.name}
+                      </span>
+                      <span className="text-[11px] text-slate-400">
+                        ID: {vendor.vendorId || "N/A"}
+                      </span>
+                    </div>
+                  </div>
 
-                {/* BODY */}
-                <div
-                  className="modal-body"
-                  style={{
-                    maxHeight: "450px",
-                    overflowY: "auto",
-                    padding: "24px",
-                  }}
-                >
-                  <div className="d-flex flex-column gap-3">
-                    {getOrderVendors(selectedVendorOrder).map((vendor) => (
-                      <div
-                        key={vendor.vendorId || vendor.name}
-                        className="p-3"
-                        style={{
-                          border: "1px solid #f0f0f0",
-                          borderRadius: "12px",
-                          backgroundColor: "#fcfaff",
-                          boxShadow: "0 2px 8px rgba(0,0,0,0.03)",
-                        }}
-                      >
-                        <div className="d-flex align-items-center gap-3 mb-3">
-                          <img
-                            src={vendor.imageUrl}
-                            alt={vendor.name}
-                            style={{
-                              width: "48px",
-                              height: "48px",
-                              borderRadius: "50%",
-                              objectFit: "cover",
-                              flexShrink: 0,
-                              border: "2px solid #8059ca",
-                            }}
-                            onError={(e) => {
-                              e.currentTarget.src = "/assets/default.png";
-                            }}
-                          />
-                          <div className="d-flex flex-column">
-                            <span
-                              style={{
-                                fontSize: "15px",
-                                color: "#333",
-                                fontWeight: 600,
-                              }}
-                            >
-                              {vendor.name}
-                            </span>
-                            <span style={{ fontSize: "11px", color: "#888" }}>
-                              ID: {vendor.vendorId || "N/A"}
-                            </span>
-                          </div>
-                        </div>
-
-                        <div className="pt-2" style={{ borderTop: "1px dashed #eaeaea" }}>
-                          {vendor.phone && (
-                            <div className="d-flex align-items-center gap-2 mb-2" style={{ fontSize: "12px", color: "#555" }}>
-                              <i className="fa-solid fa-phone" style={{ color: "#8059ca", width: "16px" }} />
-                              <span>{vendor.phone}</span>
-                            </div>
-                          )}
-                          {vendor.email && (
-                            <div className="d-flex align-items-center gap-2 mb-2" style={{ fontSize: "12px", color: "#555" }}>
-                              <i className="fa-solid fa-envelope" style={{ color: "#8059ca", width: "16px" }} />
-                              <span style={{ wordBreak: "break-all" }}>{vendor.email}</span>
-                            </div>
-                          )}
-                          {vendor.address && (
-                            <div className="d-flex align-items-start gap-2" style={{ fontSize: "12px", color: "#555" }}>
-                              <i className="fa-solid fa-location-dot" style={{ color: "#8059ca", width: "16px", marginTop: "3px" }} />
-                              <span>{vendor.address}</span>
-                            </div>
-                          )}
-                        </div>
+                  <div className="pt-2 border-t border-dashed border-slate-100">
+                    {vendor.phone && (
+                      <div className="d-flex align-items-center gap-2 mb-2 text-xs text-slate-600">
+                        <i className="fa-solid fa-phone text-[#8059ca] w-4" />
+                        <span>{vendor.phone}</span>
                       </div>
-                    ))}
+                    )}
+                    {vendor.email && (
+                      <div className="d-flex align-items-center gap-2 mb-2 text-xs text-slate-600">
+                        <i className="fa-solid fa-envelope text-[#8059ca] w-4" />
+                        <span className="break-all">{vendor.email}</span>
+                      </div>
+                    )}
+                    {vendor.address && (
+                      <div className="d-flex align-items-start gap-2 mb-2 text-xs text-slate-600">
+                        <i className="fa-solid fa-location-dot text-[#8059ca] w-4 mt-0.5" />
+                        <span>{vendor.address}</span>
+                      </div>
+                    )}
                   </div>
                 </div>
-              </div>
+              ))}
             </div>
-          </div>
+          </BaseModal>
         )}
 
         <div style={{ position: "absolute", left: "-9999px", top: 0 }}>
@@ -1496,474 +1424,383 @@ const RentalBooking = ({ HomeNavigate, ServiceTabs }) => {
 
         <Pagination page={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
 
-        {/* Installments  */}
         {showInstallmentsModal && (
-          <div
-            className="modal fade show"
-            style={{
-              position: "fixed",
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              backgroundColor: "rgba(0, 0, 0, 0.5)",
-              zIndex: 999999999,
-              display: "flex",
-              alignItems: "flex-end",
-              justifyContent: "center",
-              animation: "fadeIn 0.4s ease-in-out",
-            }}
-            tabIndex="-1"
-          >
-            <div
-              className="modal-dialog modal-dialog-centered"
-              style={{
-                maxWidth: "800px",
-                width: "100%",
-                margin: "0",
-              }}
-            >
-              <div className="modal-content">
-                <div
-                  className="modal-header"
-                  style={{ padding: "20px 24px 16px" }}
+          <BaseModal
+            show={showInstallmentsModal}
+            onClose={() => setShowInstallmentsModal(false)}
+            title={
+              <div className="flex items-center gap-4">
+                <span className="text-[16px] font-bold text-slate-800">
+                  Installment Details
+                </span>
+                <button
+                  onClick={exportInstallmentsPDF}
+                  className="w-8 h-8 rounded-lg bg-purple-50 text-[#8059ca] flex items-center justify-center border border-purple-100/50 hover:bg-[#8059ca] hover:text-white transition-colors"
                 >
-                  <div>
-                    <h5
-                      className="modal-title"
-                      style={{
-                        fontSize: "16px",
-                        margin: 0,
-                      }}
-                    >
-                      Installment Details
-                    </h5>
-                    <button
-                      onClick={exportInstallmentsPDF}
-                    >
-                      <i className="fa-solid fa-download"></i>
-                    </button>
-                  </div>
-                  <button
-                    type="button"
-                    style={{ border: "none" }}
-                    className="close"
-                    onClick={() => setShowInstallmentsModal(false)}
-                  >
-                    <span>&times;</span>
-                  </button>
-                </div>
-
-                <div className="modal-body">
-                  {selectedInstallments.length > 0 ? (
-                    <div
-                      style={{
-                        maxHeight: "300px",
-                        overflowY: "auto",
-                      }}
-                    >
-                      <table className="table table-bordered table-hover table-striped">
-                        <thead>
-                          <tr>
-                            <th>S.no</th>
-                            <th>Amount</th>
-                            <th>Due Date</th>
-                            <th>Plan</th>
-                            <th>Status</th>
-                            <th>Type</th>
-                          </tr>
-                        </thead>
-                        <tbody
-                          style={{
-                            textTransform: "capitalize",
-                          }}
-                        >
-                          {selectedInstallments.map((installment, index) => (
-                            <tr key={installment._id || index}>
-                              <td>{installment.installmentNumber}</td>
-                              <td>₹{installment.amount?.toFixed(2) || "0.00"}</td>
-                              <td>{installment.dueDate.slice(0, 10)}</td>
-                              <td>
-                                {orders.find((o) => o._id === installment.orderId)
-                                  ?.rentalPlan || "N/A"}
-                              </td>
-                              <td>{installment.status}</td>
-                              <td>{installment.paymentMethod}</td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-                  ) : (
-                    <p className="text-center">No installments found</p>
-                  )}
-                </div>
+                  <i className="fa-solid fa-download"></i>
+                </button>
               </div>
-            </div>
-          </div>
+            }
+            size="lg"
+            bodyClassName="!p-4"
+          >
+            {selectedInstallments.length > 0 ? (
+              <div className="overflow-x-auto">
+                <table className="table table-bordered table-hover table-striped">
+                  <thead>
+                    <tr>
+                      <th>S.no</th>
+                      <th>Amount</th>
+                      <th>Due Date</th>
+                      <th>Plan</th>
+                      <th>Status</th>
+                      <th>Type</th>
+                    </tr>
+                  </thead>
+                  <tbody
+                    style={{
+                      textTransform: "capitalize",
+                    }}
+                  >
+                    {selectedInstallments.map((installment, index) => (
+                      <tr key={installment._id || index}>
+                        <td>{installment.installmentNumber}</td>
+                        <td>₹{installment.amount?.toFixed(2) || "0.00"}</td>
+                        <td>{installment.dueDate.slice(0, 10)}</td>
+                        <td>
+                          {orders.find((o) => o._id === installment.orderId)
+                            ?.rentalPlan || "N/A"}
+                        </td>
+                        <td>{installment.status}</td>
+                        <td>{installment.paymentMethod}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            ) : (
+              <p className="text-center text-slate-500 py-6">No installments found</p>
+            )}
+          </BaseModal>
         )}
 
 
-        {/* Report Issue Modal */}
         {showReportModal && (
-          <div
-            className="modal fade show"
-            style={{
-              display: "block",
-              position: "fixed",
-              inset: 0,
-              background: "rgba(0,0,0,0.85)",
-              zIndex: 99999999999,
-            }}
+          <BaseModal
+            show={showReportModal}
+            onClose={() => setShowReportModal(false)}
+            title={
+              <div className="flex flex-col">
+                <span className="text-[17px] font-bold text-slate-800">
+                  Report an Issue
+                </span>
+                <span className="text-[11px] text-slate-400 mt-0.5">
+                  Order ID: #{selectedReportOrder?.orderId}
+                </span>
+              </div>
+            }
+            size="md"
+            bodyClassName="!p-4"
           >
-            <div className="modal-dialog modal-dialog-centered modal-md">
-              <div className="modal-content border-0 rounded-4">
-                <div className="modal-body p-4 bg-white rounded-4">
-                  {/* Header */}
-                  <div className="d-flex justify-content-between mb-3">
-                    <div>
-                      <div className="d-flex align-items-center gap-2">
-                        <i className="fas fa-exclamation-circle text-danger fs-5"></i>
-                        <h5 className="fw-bold mb-0">Report an Issue</h5>
-                      </div>
-                      <p
-                        className="text-muted mb-0"
-                        style={{ fontSize: "13px" }}
-                      >
-                        Order Id {selectedReportOrder?.orderId}
-                      </p>
-                    </div>
-                    <button
-                      className="btn-close"
-                      onClick={() => setShowReportModal(false)}
-                    ></button>
-                  </div>
+            <form onSubmit={handleSubmit}>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div className="w-full">
+                  <label className="form-label" style={{ fontSize: "14px", fontWeight: "500", color: "#333", marginBottom: "6px" }}>Product *</label>
+                  {(() => {
+                    const isSameItem = (a, b) => {
+                      if (!a || !b) return false;
+                      if (a.patientId !== b.patientId) return false;
+                      const aId = a.productId || a.packageId;
+                      const bId = b.productId || b.packageId;
+                      return aId === bId;
+                    };
 
-                  <form onSubmit={handleSubmit}>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                      <div className="w-full">
-                        <label className="form-label" style={{ fontSize: "14px", fontWeight: "500", color: "#333", marginBottom: "6px" }}>Product *</label>
-                        {(() => {
-                          const isSameItem = (a, b) => {
-                            if (!a || !b) return false;
-                            if (a.patientId !== b.patientId) return false;
-                            const aId = a.productId || a.packageId;
-                            const bId = b.productId || b.packageId;
-                            return aId === bId;
-                          };
+                    const selectedNames = (Array.isArray(formData.product) ? formData.product : []).map(prod => `${prod.orderName} (${prod.patientName})`);
 
-                          const selectedNames = (Array.isArray(formData.product) ? formData.product : []).map(prod => `${prod.orderName} (${prod.patientName})`);
-
-                          return (
-                            <div style={{ position: "relative" }} ref={productDropdownRef}>
-                              <div
-                                onClick={() => setIsProductDropdownOpen(prev => !prev)}
-                                style={{
-                                  border: "1px solid #e0e0e0",
-                                  borderRadius: "8px",
-                                  fontSize: "14px",
-                                  padding: "10px 12px",
-                                  background: "#fff",
-                                  cursor: "pointer",
-                                  display: "flex",
-                                  justifyContent: "space-between",
-                                  alignItems: "center",
-                                  minHeight: "40px"
-                                }}
-                              >
-                                <span style={{ color: selectedNames.length > 0 ? "#333" : "#999", textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap", maxWidth: "90%" }}>
-                                  {selectedNames.length > 0
-                                    ? selectedNames.join(", ")
-                                    : "Select Products"}
-                                </span>
-                                <i className={`fas fa-chevron-${isProductDropdownOpen ? "up" : "down"}`} style={{ fontSize: "12px", color: "#666" }}></i>
-                              </div>
-
-                              {isProductDropdownOpen && (
-                                <div
-                                  style={{
-                                    position: "absolute",
-                                    top: "100%",
-                                    left: 0,
-                                    right: 0,
-                                    background: "#fff",
-                                    border: "1px solid #e0e0e0",
-                                    borderRadius: "8px",
-                                    boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
-                                    zIndex: 1000,
-                                    maxHeight: "200px",
-                                    overflowY: "auto",
-                                    marginTop: "4px",
-                                    padding: "8px 0"
-                                  }}
-                                >
-                                  {reportDropdownList.map((prod, idx) => {
-                                    const isChecked = (Array.isArray(formData.product) ? formData.product : []).some(p => isSameItem(p, prod));
-                                    const displayName = `${prod.orderName} (${prod.patientName})`;
-                                    const uniqueKey = prod._id || `${prod.productId || prod.packageId}-${prod.patientId || ''}-${idx}`;
-                                    return (
-                                      <div
-                                        key={uniqueKey}
-                                        onClick={(e) => {
-                                          e.stopPropagation();
-                                          const currentProductList = Array.isArray(formData.product) ? formData.product : [];
-                                          const nextVal = isChecked
-                                            ? currentProductList.filter(p => !isSameItem(p, prod))
-                                            : [...currentProductList, prod];
-                                          setFormData(prev => ({ ...prev, product: nextVal }));
-                                        }}
-                                        style={{
-                                          padding: "8px 15px",
-                                          display: "flex",
-                                          alignItems: "center",
-                                          gap: "10px",
-                                          cursor: "pointer",
-                                          transition: "background 0.2s"
-                                        }}
-                                        onMouseEnter={(e) => e.currentTarget.style.background = "#f5f5f5"}
-                                        onMouseLeave={(e) => e.currentTarget.style.background = "transparent"}
-                                      >
-                                        <input
-                                          type="checkbox"
-                                          checked={isChecked}
-                                          onChange={() => { }}
-                                          style={{ cursor: "pointer" }}
-                                        />
-                                        <span style={{ fontSize: "14px", color: "#333" }}>{displayName}</span>
-                                      </div>
-                                    );
-                                  })}
-                                </div>
-                              )}
-                            </div>
-                          );
-                        })()}
-                      </div>
-
-                      {/* Category */}
-                      <div className="w-full">
-                        <label className="form-label" style={{ fontSize: "14px", fontWeight: "500", color: "#333", marginBottom: "6px" }}>Issue Type *</label>
-                        <select
-                          name="category"
-                          className="form-control form-select"
-                          required
-                          value={formData.category || ""}
-                          onChange={onFormChange}
+                    return (
+                      <div style={{ position: "relative" }} ref={productDropdownRef}>
+                        <div
+                          onClick={() => setIsProductDropdownOpen(prev => !prev)}
                           style={{
-                            borderRadius: "8px",
                             border: "1px solid #e0e0e0",
+                            borderRadius: "8px",
                             fontSize: "14px",
-                            padding: "8px 12px",
+                            padding: "10px 12px",
+                            background: "#fff",
+                            cursor: "pointer",
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            minHeight: "40px"
                           }}
                         >
-                          <option value="">Select Category</option>
-                          <option value="damaged_equipment">
-                            Damaged / Defective Equipment
-                          </option>
-                          <option value="delayed_delivery">
-                            Delayed Delivery / Setup
-                          </option>
-                          <option value="incorrect_item">
-                            Incorrect Item Delivered
-                          </option>
-                          <option value="billing_payment">
-                            Billing, Refund or Deposit Issue
-                          </option>
-                          <option value="pickup_return">
-                            Return or Pickup Scheduling
-                          </option>
-                          <option value="rental_extension">
-                            Extend Rental Period
-                          </option>
-                          <option value="early_return">
-                            Return Equipment Early
-                          </option>
-                          <option value="other">Other</option>
-                        </select>
-                      </div>
-
-                      {/* Subject */}
-                      <div className="w-full md:col-span-2">
-                        <input
-                          type="text"
-                          name="subject"
-                          className="form-control"
-                          placeholder="Subject"
-                          required
-                          value={formData.subject || ""}
-                          onChange={onFormChange}
-                          style={{
-                            borderRadius: "8px",
-                            border: "1px solid #e0e0e0",
-                            fontSize: "14px",
-                            padding: "8px 12px",
-                          }}
-                        />
-                      </div>
-
-                      {/* Description */}
-                      <div className="w-full md:col-span-2">
-                        <textarea
-                          name="description"
-                          className="form-control"
-                          rows="4"
-                          placeholder="Describe your issue..."
-                          required
-                          value={formData.description || ""}
-                          onChange={onFormChange}
-                          style={{
-                            borderRadius: "8px",
-                            border: "1px solid #e0e0e0",
-                            fontSize: "14px",
-                            padding: "8px 12px",
-                            resize: "vertical",
-                          }}
-                        ></textarea>
-                      </div>
-
-                      {/* Priority */}
-                      {/* <div className="col-md-6 col-12">
-                              <select
-                                name="priority"
-                                className="form-control form-select"
-                                required
-                                value={formData.priority || ""}
-                                onChange={onFormChange}
-                                style={{
-                                  borderRadius: "8px",
-                                  border: "1px solid #e0e0e0",
-                                  fontSize: "14px",
-                                  padding: "8px 12px",
-                                }}
-                              >
-                                <option value="">Select Priority</option>
-                                <option value="low">Low</option>
-                                <option value="medium">Medium</option>
-                                <option value="high">High</option>
-                              </select>
-                            </div> */}
-
-                      <div className="w-full">
-                        <input
-                          type="file"
-                          name="attachments"
-                          className="form-control"
-                          accept="image/*"
-                          multiple
-                          onChange={(e) => {
-                            const files = Array.from(e.target.files);
-                            const validFiles = [];
-                            const maxSizeBytes = 5 * 1024 * 1024; // 5MB limit
-
-                            files.forEach((file) => {
-                              if (file.size > maxSizeBytes) {
-                                toast.error(`${file.name} is too large. Max file size is 5MB.`);
-                              } else {
-                                validFiles.push(file);
-                              }
-                            });
-
-                            setFormData((prev) => ({
-                              ...prev,
-                              attachments: [...(prev.attachments || []), ...validFiles],
-                            }));
-
-                            // Reset value so user can upload the same file again if removed
-                            e.target.value = "";
-                          }}
-                          style={{
-                            borderRadius: "8px",
-                            border: "1px solid #e0e0e0",
-                            fontSize: "14px",
-                            padding: "11px 12px",
-                          }}
-                        />
-                        <div className="text-muted mt-1" style={{ fontSize: "11px" }}>
-                          Max file size: 5MB. Multiple files allowed.
+                          <span style={{ color: selectedNames.length > 0 ? "#333" : "#999", textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap", maxWidth: "90%" }}>
+                            {selectedNames.length > 0
+                              ? selectedNames.join(", ")
+                              : "Select Products"}
+                          </span>
+                          <i className={`fas fa-chevron-${isProductDropdownOpen ? "up" : "down"}`} style={{ fontSize: "12px", color: "#666" }}></i>
                         </div>
-                      </div>
 
-                      {formData.attachments && formData.attachments.length > 0 && (
-                        <div className="w-full mt-2">
-                          <label className="block mb-1" style={{ fontSize: "12px", fontWeight: "600", color: "#666" }}>
-                            Selected Attachments ({formData.attachments.length})
-                          </label>
-                          <div className="flex flex-wrap gap-2">
-                            {formData.attachments.map((attachment, index) => {
-                              const objectUrl = URL.createObjectURL(attachment);
+                        {isProductDropdownOpen && (
+                          <div
+                            style={{
+                              position: "absolute",
+                              top: "100%",
+                              left: 0,
+                              right: 0,
+                              background: "#fff",
+                              border: "1px solid #e0e0e0",
+                              borderRadius: "8px",
+                              boxShadow: "0 4px 12px rgba(0,0,0,0.15)",
+                              zIndex: 1000,
+                              maxHeight: "200px",
+                              overflowY: "auto",
+                              marginTop: "4px",
+                              padding: "8px 0"
+                            }}
+                          >
+                            {reportDropdownList.map((prod, idx) => {
+                              const isChecked = (Array.isArray(formData.product) ? formData.product : []).some(p => isSameItem(p, prod));
+                              const displayName = `${prod.orderName} (${prod.patientName})`;
+                              const uniqueKey = prod._id || `${prod.productId || prod.packageId}-${prod.patientId || ''}-${idx}`;
                               return (
                                 <div
-                                  key={index}
-                                  className="relative"
-                                  style={{
-                                    width: "65px",
-                                    height: "65px",
-                                    borderRadius: "8px",
-                                    overflow: "hidden",
-                                    border: "1px solid #e0e0e0",
-                                    boxShadow: "0 2px 4px rgba(0,0,0,0.05)",
+                                  key={uniqueKey}
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    const currentProductList = Array.isArray(formData.product) ? formData.product : [];
+                                    const nextVal = isChecked
+                                      ? currentProductList.filter(p => !isSameItem(p, prod))
+                                      : [...currentProductList, prod];
+                                    setFormData(prev => ({ ...prev, product: nextVal }));
                                   }}
+                                  style={{
+                                    padding: "8px 15px",
+                                    display: "flex",
+                                    alignItems: "center",
+                                    gap: "10px",
+                                    cursor: "pointer",
+                                    transition: "background 0.2s"
+                                  }}
+                                  onMouseEnter={(e) => e.currentTarget.style.background = "#f5f5f5"}
+                                  onMouseLeave={(e) => e.currentTarget.style.background = "transparent"}
                                 >
-                                  <img
-                                    src={objectUrl}
-                                    alt="attachment"
-                                    style={{
-                                      width: "100%",
-                                      height: "100%",
-                                      objectFit: "cover",
-                                    }}
+                                  <input
+                                    type="checkbox"
+                                    checked={isChecked}
+                                    onChange={() => { }}
+                                    style={{ cursor: "pointer" }}
                                   />
-                                  <button
-                                    type="button"
-                                    className="btn btn-danger d-flex align-items-center justify-content-center position-absolute"
-                                    onClick={() =>
-                                      setFormData((prev) => ({
-                                        ...prev,
-                                        attachments: prev.attachments.filter(
-                                          (_, i) => i !== index,
-                                        ),
-                                      }))
-                                    }
-                                    style={{
-                                      top: "2px",
-                                      right: "2px",
-                                      width: "18px",
-                                      height: "18px",
-                                      borderRadius: "50%",
-                                      padding: 0,
-                                      fontSize: "10px",
-                                      lineHeight: 1,
-                                      backgroundColor: "#dc3545",
-                                      border: "none",
-                                      boxShadow: "0 1px 3px rgba(0,0,0,0.2)",
-                                    }}
-                                  >
-                                    <i className="fas fa-times"></i>
-                                  </button>
+                                  <span style={{ fontSize: "14px", color: "#333" }}>{displayName}</span>
                                 </div>
                               );
                             })}
                           </div>
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Submit */}
-                    <div className="text-center mt-4">
-                      <button
-                        type="submit"
-                        className="btn btn-primary w-100 py-2"
-                        disabled={isSubmitting}
-                        style={{ fontWeight: 600, borderRadius: "8px" }}
-                      >
-                        {isSubmitting ? "Submitting..." : "Submit Issue"}
-                      </button>
-                    </div>
-                  </form>
+                        )}
+                      </div>
+                    );
+                  })()}
                 </div>
+
+                {/* Category */}
+                <div className="w-full">
+                  <label className="form-label" style={{ fontSize: "14px", fontWeight: "500", color: "#333", marginBottom: "6px" }}>Issue Type *</label>
+                  <select
+                    name="category"
+                    className="form-control form-select"
+                    required
+                    value={formData.category || ""}
+                    onChange={onFormChange}
+                    style={{
+                      borderRadius: "8px",
+                      border: "1px solid #e0e0e0",
+                      fontSize: "14px",
+                      padding: "8px 12px",
+                    }}
+                  >
+                    <option value="">Select Category</option>
+                    <option value="damaged_equipment">
+                      Damaged / Defective Equipment
+                    </option>
+                    <option value="delayed_delivery">
+                      Delayed Delivery / Setup
+                    </option>
+                    <option value="incorrect_item">
+                      Incorrect Item Delivered
+                    </option>
+                    <option value="billing_payment">
+                      Billing, Refund or Deposit Issue
+                    </option>
+                    <option value="pickup_return">
+                      Return or Pickup Scheduling
+                    </option>
+                    <option value="rental_extension">
+                      Extend Rental Period
+                    </option>
+                    <option value="early_return">
+                      Return Equipment Early
+                    </option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+
+                {/* Subject */}
+                <div className="w-full md:col-span-2">
+                  <input
+                    type="text"
+                    name="subject"
+                    className="form-control"
+                    placeholder="Subject"
+                    required
+                    value={formData.subject || ""}
+                    onChange={onFormChange}
+                    style={{
+                      borderRadius: "8px",
+                      border: "1px solid #e0e0e0",
+                      fontSize: "14px",
+                      padding: "8px 12px",
+                    }}
+                  />
+                </div>
+
+                {/* Description */}
+                <div className="w-full md:col-span-2">
+                  <textarea
+                    name="description"
+                    className="form-control"
+                    rows="4"
+                    placeholder="Describe your issue..."
+                    required
+                    value={formData.description || ""}
+                    onChange={onFormChange}
+                    style={{
+                      borderRadius: "8px",
+                      border: "1px solid #e0e0e0",
+                      fontSize: "14px",
+                      padding: "8px 12px",
+                      resize: "vertical",
+                    }}
+                  ></textarea>
+                </div>
+
+                <div className="w-full">
+                  <input
+                    type="file"
+                    name="attachments"
+                    className="form-control"
+                    accept="image/*"
+                    multiple
+                    onChange={(e) => {
+                      const files = Array.from(e.target.files);
+                      const validFiles = [];
+                      const maxSizeBytes = 5 * 1024 * 1024; // 5MB limit
+
+                      files.forEach((file) => {
+                        if (file.size > maxSizeBytes) {
+                          toast.error(`${file.name} is too large. Max file size is 5MB.`);
+                        } else {
+                          validFiles.push(file);
+                        }
+                      });
+
+                      setFormData((prev) => ({
+                        ...prev,
+                        attachments: [...(prev.attachments || []), ...validFiles],
+                      }));
+
+                      e.target.value = "";
+                    }}
+                    style={{
+                      borderRadius: "8px",
+                      border: "1px solid #e0e0e0",
+                      fontSize: "14px",
+                      padding: "11px 12px",
+                    }}
+                  />
+                  <div className="text-muted mt-1" style={{ fontSize: "11px" }}>
+                    Max file size: 5MB. Multiple files allowed.
+                  </div>
+                </div>
+
+                {formData.attachments && formData.attachments.length > 0 && (
+                  <div className="w-full mt-2">
+                    <label className="block mb-1" style={{ fontSize: "12px", fontWeight: "600", color: "#666" }}>
+                      Selected Attachments ({formData.attachments.length})
+                    </label>
+                    <div className="flex flex-wrap gap-2">
+                      {formData.attachments.map((attachment, index) => {
+                        const objectUrl = URL.createObjectURL(attachment);
+                        return (
+                          <div
+                            key={index}
+                            className="relative"
+                            style={{
+                              width: "65px",
+                              height: "65px",
+                              borderRadius: "8px",
+                              overflow: "hidden",
+                              border: "1px solid #e0e0e0",
+                              boxShadow: "0 2px 4px rgba(0,0,0,0.05)",
+                            }}
+                          >
+                            <img
+                              src={objectUrl}
+                              alt="attachment"
+                              style={{
+                                width: "100%",
+                                height: "100%",
+                                objectFit: "cover",
+                              }}
+                            />
+                            <button
+                              type="button"
+                              className="btn btn-danger d-flex align-items-center justify-content-center position-absolute"
+                              onClick={() =>
+                                setFormData((prev) => ({
+                                  ...prev,
+                                  attachments: prev.attachments.filter(
+                                    (_, i) => i !== index,
+                                  ),
+                                }))
+                              }
+                              style={{
+                                top: "2px",
+                                right: "2px",
+                                width: "18px",
+                                height: "18px",
+                                borderRadius: "50%",
+                                padding: 0,
+                                fontSize: "10px",
+                                lineHeight: 1,
+                                backgroundColor: "#dc3545",
+                                border: "none",
+                                boxShadow: "0 1px 3px rgba(0,0,0,0.2)",
+                              }}
+                            >
+                              <i className="fas fa-times"></i>
+                            </button>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
               </div>
-            </div>
-          </div >
+
+              {/* Submit */}
+              <div className="text-center mt-4">
+                <button
+                  type="submit"
+                  className="btn btn-primary w-100 py-2"
+                  disabled={isSubmitting}
+                  style={{ fontWeight: 600, borderRadius: "8px" }}
+                >
+                  {isSubmitting ? "Submitting..." : "Submit Issue"}
+                </button>
+              </div>
+            </form>
+          </BaseModal>
         )}
 
         {/* Review Modal */}

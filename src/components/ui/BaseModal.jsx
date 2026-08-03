@@ -46,7 +46,7 @@ const BaseModal = ({
         {(title || closeButton) && (
           <div className={`flex items-center justify-between px-6 py-4 border-b border-slate-100 ${headerClassName}`}>
             {title && (
-              <h3 className="m-0 text-base font-semibold leading-6 tracking-tight text-slate-900 break-words sm:text-lg md:text-xl">
+              <h3 className="m-0 !text-base !font-semibold !leading-6 tracking-tight text-slate-900 break-words sm:!text-lg md:!text-xl">
                 {title}
               </h3>
             )}

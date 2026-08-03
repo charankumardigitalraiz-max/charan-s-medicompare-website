@@ -775,13 +775,17 @@ export const LabTestCheckout = () => {
         toast.error("Razorpay not loaded");
         return;
       }
+      const phone = localStorage.getItem("phone")
+      const email = localStorage.getItem("email")
+      const name = localStorage.getItem("name") || "Customer"
 
       openRazorpayCheckout({
         razorpayData,
         description: "Lab Test Order Payment",
         prefill: {
-          name: selectedAddress?.name || "Customer",
-          contact: selectedAddress?.phone || "",
+          name: name,
+          contact: phone,
+          email: email
         },
         setIsSubmitting,
         onSuccess: async (res) => {

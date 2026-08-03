@@ -57,10 +57,10 @@ const PaymentSuccess = () => {
         : "/my-orders";
 
   const viewOrdersLabel = isAmbulance
-    ? "View My Bookings"
-    : isRental ? "View My Rentals"
-      : isSlot ? "View My Appointments"
-        : "View My Orders";
+    ? "View Bookings"
+    : isRental ? "View Rentals"
+      : isSlot ? "View Appointments"
+        : "View Orders";
 
   const successMessage = paymentMethod === "cod"
     ? "Payment will be collected at the time of delivery"
@@ -108,7 +108,7 @@ const PaymentSuccess = () => {
 
               {/* Title */}
               <div className="text-center mb-6">
-                <h1 className="text-2xl md:text-3xl font-bold text-[#1a1a2e] mb-2">
+                <h1 className="!text-2xl md:!text-3xl !font-bold !text-[#1a1a2e] mb-2">
                   {paymentMethod === "cod" ? "Order Confirmed!" : "Payment Successful!"}
                 </h1>
                 <p className="text-sm md:text-base text-[#666] leading-relaxed">{successMessage}</p>
@@ -118,7 +118,7 @@ const PaymentSuccess = () => {
               <div className="bg-[#f8f5fe] rounded-[16px] p-3 md:p-6 mb-6 border border-[#e8d5ff]">
                 <div className="flex items-center gap-2 mb-4 pb-3 border-b border-[#e0c8ff]">
                   <i className="fas fa-receipt text-[#8059ca]" />
-                  <h3 className="text-sm md:text-base font-semibold text-[#333] mb-0">Order Details</h3>
+                  <h3 className="!text-sm md:!text-base !font-semibold !text-[#333] mb-0">Order Details</h3>
                 </div>
                 <div className="space-y-3.5">
                   <div className="flex justify-between items-center gap-4">
@@ -146,7 +146,7 @@ const PaymentSuccess = () => {
 
               {/* Next Steps Card */}
               <div className="bg-[#fffbea] rounded-[16px] p-3 md:p-6 mb-6 border border-[#ffe9a0]">
-                <h4 className="flex items-center gap-2 text-sm md:text-[15px] font-semibold text-[#92600a] mb-3">
+                <h4 className="flex items-center gap-2 !text-sm md:!text-[15px] !font-semibold !text-[#92600a] mb-3">
                   <i className="fas fa-info-circle" /> What's Next?
                 </h4>
                 <ul className="space-y-2.5">
@@ -163,17 +163,17 @@ const PaymentSuccess = () => {
                 </ul>
               </div>
 
-              <div className="flex flex-col sm:flex-row gap-3">
+              <div className="flex flex-col sm:flex-row gap-3 justify-center max-w-md mx-auto">
                 <Link
                   to={viewOrdersLink}
-                  className="flex-1 flex items-center justify-center gap-2 bg-[#8059ca] hover:bg-[#6b44b8] text-white text-sm md:text-base font-semibold py-3 px-5 rounded-[12px] transition-all duration-200 no-underline"
+                  className="flex-1 flex items-center justify-center gap-2 !bg-[#8059ca] hover:!bg-[#6b44b8] !text-white !text-[13px] md:!text-[15px] !font-semibold py-2 px-4 !rounded-[10px] transition-all duration-200 !no-underline whitespace-nowrap"
                 >
                   <i className="fas fa-list-alt" />
                   {viewOrdersLabel}
                 </Link>
                 <Link
                   to="/"
-                  className="flex-1 flex items-center justify-center gap-2 bg-white hover:bg-[#f5f0ff] text-[#8059ca] border border-[#8059ca] text-sm md:text-base font-semibold py-3 px-5 rounded-[12px] transition-all duration-200 no-underline"
+                  className="flex-1 flex items-center justify-center gap-2 !bg-white hover:!bg-[#f5f0ff] !text-[#8059ca] border border-[#8059ca] !text-[13px] md:!text-[15px] !font-semibold py-2 px-4 !rounded-[10px] transition-all duration-200 !no-underline whitespace-nowrap"
                 >
                   <i className="fas fa-home" />
                   Back to Home

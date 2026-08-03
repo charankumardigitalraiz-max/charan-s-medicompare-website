@@ -1,6 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'Poppins';
+  src: url('../fonts/poppins-light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('../fonts/poppins-regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('../fonts/poppins-medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('../fonts/poppins-semibold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('../fonts/poppins-bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+}
+
 @theme {
+  --font-sans: 'Inter', sans-serif;
   --color-primary: #8059ca;
   --color-primary-dark: #6d48b8;
   --color-primary-bg: #f8f4ff;
@@ -30,6 +67,40 @@
   --radius-xxl: 24px;
 }
 
+/* Set global font family */
+html,
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span,
+a,
+div,
+li,
+input,
+textarea,
+select,
+button,
+label,
+th,
+td {
+  font-family: 'Inter', sans-serif !important;
+}
+
+/* Force headings to have a maximum font-weight of 600 */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 600 !important;
+}
+
 /* Global Table Styles */
 .profile-table-wrapper {
   @apply bg-white rounded-xl border border-[#ececf6] overflow-hidden mb-5 shadow-[0_4px_16px_rgba(0,0,0,0.03)];
@@ -56,8 +127,16 @@
 }
 
 /* Global Button Styles */
+button,
+[type='button'],
+[type='reset'],
+[type='submit'] {
+  color: inherit;
+}
+
 .btn-profile-primary {
   @apply h-[38px] inline-flex items-center justify-center gap-1.5 bg-[#8059ca] hover:bg-[#6a4ab0] text-white px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 border-none cursor-pointer hover:-translate-y-px shadow-[0_2px_8px_rgba(128,89,202,0.25)];
+  color: #ffffff !important;
 }
 
 .btn-profile-primary:hover {
@@ -66,6 +145,7 @@
 
 .btn-profile-secondary {
   @apply h-[38px] inline-flex items-center justify-center gap-1.5 bg-purple-50 hover:bg-purple-100 text-[#8059ca] px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 border border-purple-200/60 cursor-pointer hover:-translate-y-px;
+  color: #8059ca !important;
 }
 
 .btn-profile-icon {
@@ -81,46 +161,55 @@
 /* Base: all buttons get soft corners and smooth transitions */
 .btn {
   @apply text-[13px] font-medium py-2 px-[18px] transition-all duration-200 leading-snug rounded-[10px];
+  color: inherit;
 }
 
 /* Primary — purple brand */
 .btn-primary {
   @apply bg-[#8059ca] border-[#8059ca] text-white shadow-[0_2px_8px_rgba(128,89,202,0.25)];
+  color: #ffffff !important;
 }
 
 .btn-primary:hover,
 .btn-primary:focus {
   @apply bg-[#6a4ab0] border-[#6a4ab0] -translate-y-px shadow-[0_4px_14px_rgba(128,89,202,0.4)];
+  color: #ffffff !important;
 }
 
 /* Outline Primary */
 .btn-outline-primary {
   @apply border-[1.5px] border-[#8059ca] text-[#8059ca] hover:bg-[#8059ca] hover:border-[#8059ca] hover:text-white transition-all duration-200 bg-transparent;
+  color: #8059ca !important;
 }
 
 .btn-outline-primary:hover,
 .btn-outline-primary:focus {
   @apply bg-[#8059ca] border-[#8059ca] text-white -translate-y-px shadow-[0_4px_14px_rgba(128,89,202,0.3)];
+  color: #ffffff !important;
 }
 
 /* Light / Gray */
 .btn-light,
 .btn-gray {
   @apply bg-slate-100 border-slate-200 text-slate-600;
+  color: #475569 !important;
 }
 
 .btn-light:hover,
 .btn-gray:hover {
   @apply bg-slate-200 text-slate-800 -translate-y-px;
+  color: #1e293b !important;
 }
 
 /* Danger */
 .btn-danger {
   @apply bg-red-500 border-red-500 text-white shadow-[0_2px_8px_rgba(239,68,68,0.2)];
+  color: #ffffff !important;
 }
 
 .btn-danger:hover {
   @apply bg-red-600 border-red-600 -translate-y-px shadow-[0_4px_14px_rgba(239,68,68,0.3)];
+  color: #ffffff !important;
 }
 
 /* Small buttons */
@@ -283,6 +372,7 @@
   .custom-prev {
     left: -10px;
   }
+
   .custom-next {
     right: -10px;
   }
@@ -315,9 +405,11 @@
   0% {
     box-shadow: 0 0 0 0 rgba(125, 46, 255, 0.5);
   }
+
   70% {
     box-shadow: 0 0 0 10px rgba(125, 46, 255, 0);
   }
+
   100% {
     box-shadow: 0 0 0 0 rgba(125, 46, 255, 0);
   }
@@ -419,8 +511,8 @@
 
 .service-partners-section-lite {
   background: linear-gradient(135deg,
-    rgba(243, 232, 255, 0.85) 0%,
-    rgba(237, 233, 254, 0.9) 100%);
+      rgba(243, 232, 255, 0.85) 0%,
+      rgba(237, 233, 254, 0.9) 100%);
   border: 1px solid rgba(128, 89, 202, 0.12);
   box-shadow: 0 8px 24px -8px rgba(147, 51, 234, 0.1);
   border-radius: 12px;
@@ -462,4 +554,35 @@
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
+}
+
+/* ========================================
+   Global Button/Link Text Color Override
+   ======================================== */
+[class*="text-white"],
+[class*="!text-white"] {
+  color: #ffffff !important;
+}
+
+[class*="text-[#8059ca]"],
+[class*="!text-[#8059ca]"] {
+  color: #8059ca !important;
+}
+
+a[class*="bg-[#8059ca]"],
+a[class*="!bg-[#8059ca]"],
+a.btn-primary,
+button.btn-primary {
+  color: #ffffff !important;
+}
+
+/* Prevent underline decoration on button classes and no-underline links */
+[class*="no-underline"],
+[class*="!no-underline"],
+a.btn,
+.btn,
+[class*="btn-"],
+a[class*="bg-[#8059ca]"],
+a[class*="!bg-[#8059ca]"] {
+  text-decoration: none !important;
 }

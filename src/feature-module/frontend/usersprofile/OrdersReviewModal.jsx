@@ -293,13 +293,13 @@ const OrderFeedbackOffcanvas = ({ isOpen, toggle, order, onReviewSubmitted }) =>
             return (
               <div key={index} className="mb-[15px]">
                 {vendor && (
-                  <div className="card-box1 d-flex align-items-center">
+                  <div className="card-box1 flex items-center">
                     <img
                       src={formattedVendorImage}
-                      className="product-img1 me-2 bg-white"
+                      className="product-img1 mr-2 bg-white"
                       alt="Vendor"
                     />
-                    <div className="flex-grow-1">
+                    <div className="flex-grow">
                       <div
                         className="font-medium mb-[5px] whitespace-nowrap overflow-hidden text-ellipsis text-[13px]"
                       >
@@ -320,13 +320,13 @@ const OrderFeedbackOffcanvas = ({ isOpen, toggle, order, onReviewSubmitted }) =>
                   </div>
                 )}
 
-                <div className="card-box1 d-flex align-items-center">
+                <div className="card-box1 flex items-center">
                   <img
                     src={productImage}
-                    className="product-img1 me-2 bg-white"
+                    className="product-img1 mr-2 bg-white"
                     alt={productName}
                   />
-                  <div className="flex-grow-1">
+                  <div className="flex-grow">
                     <div
                       className="font-medium mb-[5px] whitespace-nowrap overflow-hidden text-ellipsis text-[13px]"
                     >

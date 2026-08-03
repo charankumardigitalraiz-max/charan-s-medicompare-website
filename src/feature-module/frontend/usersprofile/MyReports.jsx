@@ -3,6 +3,8 @@ import { axiosUserInstance, imgUrl } from "../../../Apiservice";
 import { getImageUrl } from "../../../utils/index";
 import { useResponsive } from "../../../hooks/useResponsive";
 import toast from "react-hot-toast";
+import BaseModal from "../../../components/ui/BaseModal";
+import Pagination from "../../../components/ui/Pagination.jsx";
 
 // Styles migrated to Tailwind CSS
 
@@ -158,15 +160,15 @@ const MyReports = ({ HomeNavigate }) => {
 
           </div>
           <div className="flex items-center gap-3 w-full sm:w-auto">
-            <div className="relative w-full sm:w-[260px] shrink-0">
+            <div className="relative w-full sm:w-[250px] shrink-0">
               <input
                 type="text"
                 placeholder="Search by Order ID or Item Name..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="h-[38px] rounded-lg border border-slate-200 pl-9 pr-3 text-[13px] w-full outline-none bg-slate-50 hover:bg-white hover:border-[#8059ca] focus:bg-white focus:border-[#8059ca] transition-all duration-200"
+                className="h-[42px] rounded-sm border border-[#e0e0e0] pl-10 pr-4 text-sm w-full outline-none focus:border-[#8059ca] transition-colors"
               />
-              <span className="absolute left-[12px] top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none text-[13px]">
+              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[#999] pointer-events-none">
                 <i className="fa-solid fa-search" />
               </span>
             </div>
@@ -181,7 +183,7 @@ const MyReports = ({ HomeNavigate }) => {
               </div>
             </div>
           ) : currentOrders.length > 0 ? (
-            <div className="row">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {currentOrders.map((order, index) => {
                 const orderStatus = order.orderStatus?.toLowerCase() || "";
                 const isProcessing =
@@ -192,11 +194,11 @@ const MyReports = ({ HomeNavigate }) => {
                   orderStatus === "cancelled" || orderStatus === "canceled";
 
                 return (
-                  <div key={index} className="col-md-6 col-12 mb-4">
-                    <div className="h-100 flex flex-col justify-between bg-white rounded-xl shadow-[0_4px_16px_rgba(0,0,0,0.1)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.15)] transition-shadow duration-300 p-4 m-0">
+                  <div key={index} className="w-full">
+                    <div className="h-full flex flex-col justify-between bg-white rounded-xl shadow-[0_4px_16px_rgba(0,0,0,0.06)] hover:shadow-[0_8px_24px_rgba(128,89,202,0.12)] border border-slate-100 hover:border-[#c0a6f3] transition-all duration-300 p-4 m-0">
                       {/* Card Header */}
                       <div className="flex justify-between items-center mb-3 border-b border-[#f0f0f0] pb-2.5">
-                        <div className="text-[14px] font-semibold">
+                        <div className="text-[14px] font-semibold text-slate-800">
                           #{order.orderDetails?.orderId || "N/A"}
                         </div>
                         {(() => {
@@ -205,9 +207,9 @@ const MyReports = ({ HomeNavigate }) => {
                           );
                           return (
                             <span
-                              className={`text-[11px] px-2.5 py-1 rounded-xl font-semibold ${!hasPendingReport
-                                ? "bg-[#d7f5e8] text-[#00a86b]"
-                                : "bg-[#ffe9d6] text-[#ff7a00]"
+                              className={`text-[10px] px-2 py-0.5 rounded-full font-semibold ${!hasPendingReport
+                                ? "bg-emerald-100 text-emerald-700"
+                                : "bg-amber-100 text-amber-700"
                                 }`}
                             >
                               {!hasPendingReport ? "READY" : "PENDING"}
@@ -224,7 +226,7 @@ const MyReports = ({ HomeNavigate }) => {
                         >
                           <img
                             src={resolveOrderImage(order)}
-                            className="w-20 h-20 object-contain rounded-lg border border-[#f0f0f0]"
+                            className="w-20 h-20 object-contain rounded-lg border border-[#f0f0f0] bg-[#fafafa] p-1"
                             alt="Product"
                             onError={(e) => {
                               e.currentTarget.src = "/assets/default.png";
@@ -234,7 +236,7 @@ const MyReports = ({ HomeNavigate }) => {
 
                         <div className="flex-1 min-w-0">
                           <div
-                            className="cursor-pointer text-[14px] font-semibold text-[#333] mb-2 whitespace-nowrap overflow-hidden text-ellipsis"
+                            className="cursor-pointer text-[14px] font-bold text-slate-800 mb-2 whitespace-nowrap overflow-hidden text-ellipsis"
                             onClick={() => handleView(order)}
                           >
                             {(() => {
@@ -249,12 +251,12 @@ const MyReports = ({ HomeNavigate }) => {
                             })()}
                           </div>
 
-                          <div className="row g-2">
-                            <div className="col-12 text-[12px] mb-0.5">
+                          <div className="flex flex-col gap-1">
+                            <div className="text-[12px] mb-0.5">
                               <span className="text-[#777]">Doctor: </span>
                               <span className="font-medium text-[#333]">{order.orderDetails?.doctorName || "N/A"}</span>
                             </div>
-                            <div className="col-12 text-[12px] mb-0.5">
+                            <div className="text-[12px] mb-0.5">
                               <span className="text-[#777]">Lab: </span>
                               <span className="font-medium text-[#333]">
                                 {(() => {
@@ -265,7 +267,7 @@ const MyReports = ({ HomeNavigate }) => {
                                 })()}
                               </span>
                             </div>
-                            <div className="col-12 text-[12px]">
+                            <div className="text-[12px]">
                               <span className="text-[#777]">Patient: </span>
                               <span className="capitalize font-semibold text-[#8059ca]">
                                 {(() => {
@@ -293,7 +295,7 @@ const MyReports = ({ HomeNavigate }) => {
 
                       {/* Card Footer */}
                       <div className="flex items-center justify-between mt-3 pt-3 border-t border-dashed border-[#f0f0f0]">
-                        <div className="text-[12px] m-0">
+                        <div className="text-[12px] text-slate-500 font-medium m-0">
                           {order?.updatedAt
                             ? new Date(order.updatedAt).toLocaleDateString(
                               "en-GB",
@@ -301,7 +303,7 @@ const MyReports = ({ HomeNavigate }) => {
                             : "N/A"}
                         </div>
                         <button
-                          className="flex gap-1 items-center rounded-md text-[11px] px-2.5 py-[5px] border border-[#8059ca] text-[#8059ca] bg-transparent font-semibold hover:bg-[#8059ca] hover:text-white transition-colors"
+                          className="flex gap-1.5 items-center !bg-primary !rounded-md !text-[11px] px-3 py-[6px] border border-[#8059ca] !text-white bg-transparent font-semibold hover:bg-[#8059ca] hover:text-white transition-colors"
                           onClick={() => handleView(order)}
                         >
                           <i className="fas fa-file-pdf"></i>
@@ -327,202 +329,122 @@ const MyReports = ({ HomeNavigate }) => {
         </div>
 
         {showModel && (
-          <div
-            className="modal fade show d-block fixed inset-0 bg-black/50 z-[999999999] flex items-center justify-center"
-            tabIndex="-1"
-            role="dialog"
+          <BaseModal
+            show={showModel}
+            onClose={() => setShowModel(false)}
+            title="Patient Reports Details"
+            size="md"
+            bodyClassName="!p-4 bg-slate-50"
           >
-            <div className="modal-dialog modal-dialog-centered w-full max-w-[600px] m-auto" role="document">
-              <div className="modal-content rounded-xl border-none overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.15)]">
-                <div className="modal-header flex justify-between items-center bg-[#8059ca] text-white px-5 py-4">
-                  <h6 className="modal-title m-0 font-semibold text-[16px]">Patient Reports Details</h6>
-                  <button
-                    type="button"
-                    className="border-none bg-transparent text-[22px] text-white cursor-pointer opacity-80 hover:opacity-100"
-                    onClick={() => setShowModel(false)}
-                  >
-                    &times;
-                  </button>
-                </div>
+            <div className="flex flex-col gap-3">
+              {(() => {
+                const patientCards = [];
+                selectedOrder?.items?.forEach((item) => {
+                  item.patients?.forEach((patient, idx) => {
+                    const name = patient?.patient?.name || `${selectedOrder.userDetails?.first_name || ""} ${selectedOrder.userDetails?.last_name || ""}`.trim() || "N/A";
+                    const relation = patient?.patient?.relationship || "Self";
+                    const testName = item.type === "package"
+                      ? item.packageDetails?.[0]?.name
+                      : item.productDetails?.tabletdetails?.name || "Lab Test";
+                    const hasReport = !!patient?.reports?.reportFile;
 
-                <div className="modal-body p-5 bg-slate-50 max-h-[70vh] overflow-y-auto">
-                  <div className="flex flex-col gap-3">
-                    {(() => {
-                      const patientCards = [];
-                      selectedOrder?.items?.forEach((item) => {
-                        item.patients?.forEach((patient, idx) => {
-                          const name = patient?.patient?.name || `${selectedOrder.userDetails?.first_name || ""} ${selectedOrder.userDetails?.last_name || ""}`.trim() || "N/A";
-                          const relation = patient?.patient?.relationship || "Self";
-                          const testName = item.type === "package"
-                            ? item.packageDetails?.[0]?.name
-                            : item.productDetails?.tabletdetails?.name || "Lab Test";
-                          const hasReport = !!patient?.reports?.reportFile;
+                    patientCards.push(
+                      <div
+                        key={`${item.orderItemId}-${idx}`}
+                        className="bg-white border border-slate-200 rounded-sm p-4 flex justify-between items-center transition-all shadow-sm"
+                      >
+                        <div className="min-w-0 flex-1 pr-3">
+                          <div className="font-bold text-[14px] text-slate-800 capitalize">
+                            {name}
+                          </div>
+                          <div className="text-[12px] text-slate-500 mt-1">
+                            Relation: <span className="font-semibold text-slate-700">{relation}</span>
+                          </div>
+                          <div className="text-[12px] text-slate-500 mt-0.5">
+                            Test: <span className="font-semibold text-slate-700">{testName}</span>
+                          </div>
+                        </div>
 
-                          patientCards.push(
-                            <div
-                              key={`${item.orderItemId}-${idx}`}
-                              className="bg-white border border-slate-200 rounded-[10px] px-4 py-3.5 flex justify-between items-center transition-transform duration-150"
+                        <div className="shrink-0">
+                          {hasReport ? (
+                            <button
+                              type="button"
+                              className="btn btn-sm flex items-center gap-1.5 bg-[#8059ca] text-white font-semibold text-[12px] px-3.5 py-2 rounded-sm border-none hover:bg-[#6b1fe6] transition-colors"
+                              onClick={() => {
+                                const rawPath = patient.reports.reportFile;
+                                const fullUrl = rawPath.startsWith("http://") || rawPath.startsWith("https://")
+                                  ? rawPath
+                                  : `${imgUrl}/${rawPath.startsWith("/") ? rawPath.slice(1) : rawPath}`;
+                                setPdfUrl(fullUrl);
+                                setPdfLoading(true);
+                                setShowPdfModel(true);
+                              }}
                             >
-                              <div className="min-w-0 flex-1">
-                                <div className="font-semibold text-[14px] text-slate-800 capitalize">
-                                  {name}
-                                </div>
-                                <div className="text-[12px] text-slate-500 mt-0.5">
-                                  Relation: <span className="font-medium">{relation}</span>
-                                </div>
-                                <div className="text-[12px] text-slate-500 mt-0.5">
-                                  Test: <span className="font-medium text-slate-700">{testName}</span>
-                                </div>
-                              </div>
+                              <i className="fas fa-eye text-[11px]"></i>
+                              View Report
+                            </button>
+                          ) : (
+                            <span className="bg-slate-100 text-slate-500 text-[11px] font-semibold px-3 py-1.5 rounded-sm border border-slate-200 inline-block">
+                              Not Ready
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  });
+                });
 
-                              <div>
-                                {hasReport ? (
-                                  <button
-                                    type="button"
-                                    className="btn btn-sm flex items-center gap-1.5 bg-[#8059ca] text-white font-semibold text-[12px] px-3 py-1.5 rounded-md border-none"
-                                    onClick={() => {
-                                      const rawPath = patient.reports.reportFile;
-                                      const fullUrl = rawPath.startsWith("http://") || rawPath.startsWith("https://")
-                                        ? rawPath
-                                        : `${imgUrl}/${rawPath.startsWith("/") ? rawPath.slice(1) : rawPath}`;
-                                      setPdfUrl(fullUrl);
-                                      setPdfLoading(true);
-                                      setShowPdfModel(true);
-                                    }}
-                                  >
-                                    <i className="fas fa-eye text-[11px]"></i>
-                                    View Report
-                                  </button>
-                                ) : (
-                                  <span className="bg-slate-100 text-slate-500 text-[11px] font-semibold px-3 py-1.5 rounded-md border border-slate-200 inline-block">
-                                    Not Ready
-                                  </span>
-                                )}
-                              </div>
-                            </div>
-                          );
-                        });
-                      });
-
-                      return patientCards.length > 0 ? patientCards : (
-                        <div className="text-center text-muted py-4">No patients registered for this order</div>
-                      );
-                    })()}
-                  </div>
-                </div>
-              </div>
+                return patientCards.length > 0 ? patientCards : (
+                  <div className="text-center text-muted py-4">No patients registered for this order</div>
+                );
+              })()}
             </div>
-          </div>
+          </BaseModal>
         )}
 
         {showPdfModel && (
-          <div
-            className="modal fade show d-block fixed inset-0 bg-black/60 z-[9999999999] flex items-center justify-center"
-            tabIndex="-1"
-            role="dialog"
+          <BaseModal
+            show={showPdfModel}
+            onClose={() => setShowPdfModel(false)}
+            title="View Report PDF"
+            size="xl"
+            bodyClassName="!p-0 h-[80vh]"
           >
-            <div className="modal-dialog modal-dialog-centered w-full max-w-[800px] m-auto" role="document">
-              <div className="modal-content rounded-xl border-none shadow-[0_5px_25px_rgba(0,0,0,0.15)] overflow-hidden flex flex-col h-[85vh]">
-                <div className="flex justify-between items-center px-5 py-4 border-b border-[#f1f1f1] bg-white">
-                  <h6 className="text-[16px] font-semibold text-[#333] m-0">View Report PDF</h6>
-                  <button
-                    type="button"
-                    className="border-none bg-transparent text-[22px] text-[#999] cursor-pointer leading-none p-0 hover:text-[#333]"
-                    onClick={() => setShowPdfModel(false)}
-                  >
-                    &times;
-                  </button>
-                </div>
-
-                <div className="flex-1 bg-[#fafafa] relative h-full">
-                  {pdfLoading && (
-                    <div className="flex justify-center items-center h-full absolute inset-0 bg-[#fafafa] z-10">
-                      <div className="text-center">
-                        <div className="spinner-border text-primary" role="status">
-                          <span className="visually-hidden">Loading report...</span>
-                        </div>
-                        <p className="mt-3 text-muted">Loading report...</p>
-                      </div>
+            <div className="w-full h-full bg-[#fafafa] relative">
+              {pdfLoading && (
+                <div className="flex justify-center items-center h-full absolute inset-0 bg-[#fafafa] z-10">
+                  <div className="text-center">
+                    <div className="spinner-border text-primary" role="status">
+                      <span className="visually-hidden">Loading report...</span>
                     </div>
-                  )}
-
-                  {pdfUrl ? (
-                    <iframe
-                      src={pdfUrl}
-                      title="Patient Report PDF"
-                      width="100%"
-                      height="100%"
-                      className={`border-none ${pdfLoading ? "hidden" : "block"}`}
-                      onLoad={() => setPdfLoading(false)}
-                    />
-                  ) : (
-                    <div className="p-3 text-center text-muted">No report file available</div>
-                  )}
+                    <p className="mt-3 text-muted">Loading report...</p>
+                  </div>
                 </div>
-              </div>
+              )}
+
+              {pdfUrl ? (
+                <iframe
+                  src={pdfUrl}
+                  title="Patient Report PDF"
+                  width="100%"
+                  height="100%"
+                  className={`border-none ${pdfLoading ? "hidden" : "block"}`}
+                  onLoad={() => setPdfLoading(false)}
+                />
+              ) : (
+                <div className="p-3 text-center text-muted">No report file available</div>
+              )}
             </div>
-          </div>
+          </BaseModal>
         )}
 
         {totalPages > 1 && (
-          <div className="pagination dashboard-pagination mt-0">
-            <ul className="d-flex justify-content-center align-items-center gap-1">
-              <li>
-                <button
-                  className="page-link"
-                  onClick={() =>
-                    handlePageChange(Math.max(currentPage - 1, 1))
-                  }
-                  disabled={currentPage === 1}
-                >
-                  <i className="fa-solid fa-chevron-left" />
-                </button>
-              </li>
-
-              {Array.from({ length: totalPages }, (_, i) => {
-                const page = i + 1;
-
-                if (
-                  page === 1 ||
-                  page === totalPages ||
-                  (page >= currentPage - 1 && page <= currentPage + 1)
-                ) {
-                  return (
-                    <li key={page}>
-                      <button
-                        className={`page-link ${currentPage === page ? "active" : ""
-                          }`}
-                        onClick={() => handlePageChange(page)}
-                      >
-                        {page}
-                      </button>
-                    </li>
-                  );
-                }
-
-                if (page === currentPage - 2 || page === currentPage + 2) {
-                  return (
-                    <li key={`dots-${page}`}>
-                      <span className="page-link disabled">…</span>
-                    </li>
-                  );
-                }
-
-                return null;
-              })}
-
-              <li>
-                <button
-                  className="page-link"
-                  onClick={() =>
-                    handlePageChange(Math.min(currentPage + 1, totalPages))
-                  }
-                  disabled={currentPage === totalPages}
-                >
-                  <i className="fa-solid fa-chevron-right" />
-                </button>
-              </li>
-            </ul>
+          <div className="mt-6 flex justify-center">
+            <Pagination
+              page={currentPage}
+              totalPages={totalPages}
+              onPageChange={handlePageChange}
+            />
           </div>
         )}
       </div>

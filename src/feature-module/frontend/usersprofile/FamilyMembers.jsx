@@ -534,21 +534,21 @@ const FamilyMembers = ({ HomeNavigate, BackButton }) => {
 
 
           </div>
-          <div className="flex items-center gap-3 w-full sm:w-auto">
-            <div className="relative w-full sm:w-[220px] shrink-0">
+          <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
+            <div className="relative w-full sm:w-[250px] shrink-0">
               <input
                 type="text"
                 placeholder="Search family member..."
                 value={memberSearchTerm}
                 onChange={handleSearchChange}
-                className="h-[38px] rounded-lg border border-slate-200 pl-9 pr-3 text-[13px] w-full outline-none bg-slate-50 hover:bg-white hover:border-[#8059ca] focus:bg-white focus:border-[#8059ca] transition-all duration-200"
+                className="h-[42px] rounded-sm border border-[#e0e0e0] pl-10 pr-4 text-sm w-full outline-none focus:border-[#8059ca] transition-colors"
               />
-              <span className="absolute left-[12px] top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none text-[13px]">
+              <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[#999] pointer-events-none">
                 <i className="fa-solid fa-search" />
               </span>
             </div>
             <button
-              className="h-[38px] inline-flex items-center justify-center gap-1.5 whitespace-nowrap bg-[#8059ca] hover:bg-[#6a4ab0] text-white px-4 py-2 !rounded-md text-sm font-medium transition-all duration-200"
+              className="h-[38px] w-full sm:w-auto inline-flex items-center justify-center gap-1.5 whitespace-nowrap bg-[#8059ca] hover:bg-[#6a4ab0] text-white px-4 py-2 !rounded-md text-sm font-medium transition-all duration-200"
               onClick={handleAdd}
             >
               <i className="fa-solid fa-plus" />

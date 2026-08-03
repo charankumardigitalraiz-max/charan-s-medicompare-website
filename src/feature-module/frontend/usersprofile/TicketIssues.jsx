@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { axiosUserInstance, imgUrl } from "../../../Apiservice";
 import { useResponsive } from "../../../hooks/useResponsive";
-import Modal from "../../../components/ui/Modal";
+import BaseModal from "../../../components/ui/BaseModal";
 import { Offcanvas } from "../../../components/ui/Offcanvas";
 import toast from "react-hot-toast";
 import { io } from "socket.io-client";
@@ -410,18 +410,18 @@ const TicketIssues = ({ HomeNavigate, BackButton }) => {
 
                 </div>
                 <div className="flex items-center gap-3 w-full sm:w-auto">
-                  <div className="relative w-full sm:w-[260px] shrink-0">
+                  <div className="relative w-full sm:w-[250px] shrink-0">
                     <input
                       type="text"
-                      placeholder="Search by Ticket ID"
+                      placeholder="Search by Ticket ID..."
                       value={searchTerm}
                       onChange={(e) => {
                         setSearchTerm(e.target.value);
                         setCurrentPage(1);
                       }}
-                      className="h-[38px] rounded-sm border border-slate-200 pl-9 pr-3 text-[13px] w-full outline-none bg-slate-50 hover:bg-white hover:border-[#8059ca] focus:bg-white focus:border-[#8059ca] transition-all duration-200"
+                      className="h-[42px] rounded-sm border border-[#e0e0e0] pl-10 pr-4 text-sm w-full outline-none focus:border-[#8059ca] transition-colors"
                     />
-                    <span className="absolute left-[12px] top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none text-[13px]">
+                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[#999] pointer-events-none">
                       <i className="fa-solid fa-search" />
                     </span>
                   </div>
@@ -447,137 +447,142 @@ const TicketIssues = ({ HomeNavigate, BackButton }) => {
         </div>
       </div>
       {/* Lead Details Modal */}
-      <Modal
-        show={showModal}
-        onHide={closeModal}
-        centered
-        size="md"
-      >
-      <Modal.Body>
+      {showModal && (
+        <BaseModal
+          show={showModal}
+          onClose={closeModal}
+          title={
+            <div className="flex flex-col">
+              <span className="text-[15px] md:text-[17px] font-bold text-slate-900">
+                Ticket Details
+              </span>
+              {selectedLead && (
+                <div className="flex items-center gap-2 mt-1">
+                  <span className={`px-2 py-0.5 rounded-full text-[10px] font-semibold capitalize ${selectedLead.status?.toLowerCase() === "open"
+                    ? "bg-purple-100 text-purple-700"
+                    : selectedLead.status?.toLowerCase() === "closed"
+                      ? "bg-slate-100 text-slate-700"
+                      : "bg-emerald-100 text-emerald-700"
+                    }`}>
+                    {selectedLead.status || "Pending"}
+                  </span>
+                  <span className="text-[11px] text-slate-500 font-medium">
+                    #{selectedLead.ticketNo || "N/A"}
+                  </span>
+                </div>
+              )}
+            </div>
+          }
+          size="md"
+          bodyClassName="!p-0"
+          headerClassName="border-b border-slate-100 pb-4"
+        >
           {selectedLead && (
-            <div className="p-6 bg-white">
-              {/* Header */}
-              <div className="flex justify-between items-center border-b border-[#f1f1f1] pb-3 mb-5">
-                <h5 className="text-[17px] font-semibold text-slate-800 m-0">Ticket Details</h5>
-                <button
-                  type="button"
-                  className="border-none bg-transparent text-xl cursor-pointer text-slate-400 leading-none p-0 hover:text-slate-800"
-                  onClick={closeModal}
-                >
-                  &times;
-                </button>
-              </div>
-
+            <div className="p-5 space-y-5 overflow-y-auto">
               {/* Ticket Information */}
-              <div className="row">
-                {selectedLead?.ticketNo && (
-                  <div className="col-md-6 col-12 mb-4">
-                    <span className="text-xs text-slate-500 mb-1 block">Ticket No</span>
-                    <span className="text-slate-900 font-medium text-[14.5px] block">{selectedLead.ticketNo}</span>
-                  </div>
-                )}
+              <div>
+                <div style={{ fontSize: "10px", fontWeight: 700, color: "#8059ca", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "12px" }}>
+                  Ticket Information
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                  {selectedLead.subject && (
+                    <div className="bg-[#faf9fe] rounded-xl p-3 border border-[#f1eff9] col-span-2">
+                      <div className="text-[10px] text-slate-400 mb-0.5 font-medium uppercase tracking-wider">Subject</div>
+                      <div className="text-xs font-semibold text-slate-700">{selectedLead.subject}</div>
+                    </div>
+                  )}
 
-                {selectedLead?.subject && (
-                  <div className="col-md-6 col-12 mb-4">
-                    <span className="text-xs text-slate-500 mb-1 block">Subject</span>
-                    <span className="text-slate-900 font-medium text-[14.5px] block">{selectedLead.subject}</span>
-                  </div>
-                )}
+                  {selectedLead.category && (
+                    <div className="bg-[#faf9fe] rounded-xl p-3 border border-[#f1eff9]">
+                      <div className="text-[10px] text-slate-400 mb-0.5 font-medium uppercase tracking-wider">Category</div>
+                      <div className="text-xs font-semibold text-slate-700 capitalize">{capitalize(selectedLead.category.replace(/_/g, ' '))}</div>
+                    </div>
+                  )}
 
-                {selectedLead?.category && (
-                  <div className="col-md-6 col-12 mb-4">
-                    <span className="text-xs text-slate-500 mb-1 block">Category</span>
-                    <span className="text-slate-900 font-medium text-[14.5px] block">{capitalize(selectedLead.category.replace(/_/g, ' '))}</span>
-                  </div>
-                )}
+                  {selectedLead.priority && (
+                    <div className="bg-[#faf9fe] rounded-xl p-3 border border-[#f1eff9]">
+                      <div className="text-[10px] text-slate-400 mb-0.5 font-medium uppercase tracking-wider">Priority</div>
+                      <span className={`inline-block px-2 py-0.5 rounded text-[11px] font-semibold capitalize mt-0.5 ${priorityClasses(selectedLead.priority)}`}>
+                        {selectedLead.priority}
+                      </span>
+                    </div>
+                  )}
 
-                {selectedLead?.priority && (
-                  <div className="col-md-6 col-12 mb-4">
-                    <span className="text-xs text-slate-500 mb-1 block">Priority</span>
-                    <span className={`inline-block px-2 py-0.5 rounded text-[11px] font-semibold capitalize ${priorityClasses(selectedLead.priority)}`}>
-                      {selectedLead.priority}
-                    </span>
-                  </div>
-                )}
-
-                {selectedLead?.status && (
-                  <div className="col-md-6 col-12 mb-4">
-                    <span className="text-xs text-slate-500 mb-1 block">Status</span>
-                    <span className={`inline-block px-2 py-0.5 rounded text-[11px] font-semibold capitalize ${statusClasses(selectedLead.status)}`}>
-                      {selectedLead.status}
-                    </span>
-                  </div>
-                )}
-
-                {selectedLead?.createdAt && (
-                  <div className="col-md-6 col-12 mb-4">
-                    <span className="text-xs text-slate-500 mb-1 block">Created Date</span>
-                    <span className="text-slate-900 font-medium text-[14.5px] block">
-                      {new Date(selectedLead.createdAt).toLocaleDateString(
-                        "en-GB",
-                        {
-                          day: "2-digit",
-                          month: "short",
-                          year: "numeric",
-                        },
-                      )}
-                    </span>
-                  </div>
-                )}
+                  {selectedLead.createdAt && (
+                    <div className="bg-[#faf9fe] rounded-xl p-3 border border-[#f1eff9] col-span-2">
+                      <div className="text-[10px] text-slate-400 mb-0.5 font-medium uppercase tracking-wider">Created Date</div>
+                      <div className="text-xs font-semibold text-slate-700">
+                        {new Date(selectedLead.createdAt).toLocaleDateString(
+                          "en-GB",
+                          {
+                            day: "2-digit",
+                            month: "short",
+                            year: "numeric",
+                          },
+                        )}
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
 
               {/* Description */}
-              {selectedLead?.description && (
+              {selectedLead.description && (
                 <div>
-                  <div className="font-semibold text-slate-800 mt-4 mb-1.5 text-[13.5px]">Description</div>
-                  <div className="bg-[#fafafa] border border-[#eee] rounded-md p-3 text-[13px] leading-relaxed text-slate-600">
+                  <div style={{ fontSize: "10px", fontWeight: 700, color: "#8059ca", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "8px" }}>
+                    Description
+                  </div>
+                  <div className="bg-[#fafafa] border border-[#eee] rounded-xl p-3.5 text-xs leading-relaxed text-slate-600">
                     {selectedLead.description}
                   </div>
                 </div>
               )}
 
-              {/* Divider */}
-              {selectedLead?.userId && <div className="border-t border-[#f1f1f1] my-4"></div>}
-
               {/* User Details */}
-              {selectedLead?.userId && (
-                <div className="row">
-                  {selectedLead.userId.first_name && (
-                    <div className="col-md-4 col-12 mb-4">
-                      <span className="text-xs text-slate-500 mb-1 block">User Name</span>
-                      <span className="text-slate-900 font-medium text-[14.5px] block">
-                        {selectedLead.userId.first_name} {selectedLead.userId.last_name || ""}
-                      </span>
-                    </div>
-                  )}
+              {selectedLead.userId && (
+                <div>
+                  <div style={{ fontSize: "10px", fontWeight: 700, color: "#8059ca", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "12px" }}>
+                    Reporter Information
+                  </div>
+                  <div className="bg-[#faf9fe] border border-[#f1eff9] rounded-xl p-3.5 space-y-2.5">
+                    {selectedLead.userId.first_name && (
+                      <div className="flex justify-between items-center text-xs">
+                        <span className="text-slate-500">Name</span>
+                        <span className="font-semibold text-slate-700 capitalize">
+                          {selectedLead.userId.first_name} {selectedLead.userId.last_name || ""}
+                        </span>
+                      </div>
+                    )}
 
-                  {selectedLead.userId.email && (
-                    <div className="col-md-4 col-12 mb-4">
-                      <span className="text-xs text-slate-500 mb-1 block">Email</span>
-                      <span className="text-slate-900 font-medium text-[14.5px] block break-all">
-                        {selectedLead.userId.email}
-                      </span>
-                    </div>
-                  )}
+                    {selectedLead.userId.email && (
+                      <div className="flex justify-between items-center text-xs">
+                        <span className="text-slate-500">Email</span>
+                        <span className="font-semibold text-slate-700 break-all">
+                          {selectedLead.userId.email}
+                        </span>
+                      </div>
+                    )}
 
-                  {selectedLead.userId.phone && (
-                    <div className="col-md-4 col-12 mb-4">
-                      <span className="text-xs text-slate-500 mb-1 block">Phone</span>
-                      <span className="text-slate-900 font-medium text-[14.5px] block">{selectedLead.userId.phone}</span>
-                    </div>
-                  )}
+                    {selectedLead.userId.phone && (
+                      <div className="flex justify-between items-center text-xs">
+                        <span className="text-slate-500">Phone</span>
+                        <span className="font-semibold text-slate-700">{selectedLead.userId.phone}</span>
+                      </div>
+                    )}
+                  </div>
                 </div>
               )}
 
               {/* Attachments */}
-              {selectedLead?.attachments && selectedLead.attachments.length > 0 && (
-                <div>
-                  <div className="border-t border-[#f1f1f1] my-4"></div>
-                  <div className="font-semibold text-slate-800 mb-1.5 text-[13.5px] mt-0">Attachments</div>
-                  <div className="flex flex-wrap gap-2">
+              {selectedLead.attachments && selectedLead.attachments.length > 0 && (
+                <div className="pb-2">
+                  <div style={{ fontSize: "10px", fontWeight: 700, color: "#8059ca", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "8px" }}>
+                    Attachments
+                  </div>
+                  <div className="flex flex-wrap gap-2.5">
                     {selectedLead.attachments.map((attachment, index) => (
                       <div
-                        className="cursor-pointer rounded-md overflow-hidden border border-[#ddd] w-[60px] h-[60px] transition-opacity hover:opacity-80"
+                        className="cursor-pointer rounded-lg overflow-hidden border border-[#ddd] w-[60px] h-[60px] transition-opacity hover:opacity-80 flex items-center justify-center bg-[#fff]"
                         key={index}
                         onClick={() => window.open(attachment, '_blank')}
                         title="Click to view file"
@@ -602,8 +607,8 @@ const TicketIssues = ({ HomeNavigate, BackButton }) => {
               )}
             </div>
           )}
-        </Modal.Body>
-      </Modal>
+        </BaseModal>
+      )}
 
       {/* Chat Offcanvas */}
       <Offcanvas
