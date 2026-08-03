@@ -290,9 +290,9 @@ const ProductDescriptionTabs = ({
                   setShowMorePrecautions(false);
                 }}
                 className={`flex-1 text-center whitespace-nowrap !text-[13px] !font-bold py-2.5 px-3 !border-b-2 md:border-l-0 md:border-b-2 transition-all duration-200 ${activeTab === tab.id
-                  ? "!border-[#8059ca] !text-[#8059ca] bg-purple-50/30"
+                  ? "!border-[#321961] !text-[#321961] bg-purple-50/30"
                   : tab.has
-                    ? "!border-transparent !text-[#012047] hover:text-[#8059ca] hover:bg-gray-50/50"
+                    ? "!border-transparent !text-[#012047] hover:text-[#321961] hover:bg-gray-50/50"
                     : "!border-transparent !text-gray-300 cursor-not-allowed"
                   }`}
               >
@@ -333,7 +333,7 @@ const ProductDescriptionTabs = ({
                         {productContent && hasMoreThanNWords(sanitizedContent, 50) && (
                           <div className="mt-3">
                             <span
-                              className="text-xs font-semibold text-[#8059ca] hover:underline cursor-pointer"
+                              className="text-xs font-semibold text-[#321961] hover:underline cursor-pointer"
                               onClick={() => {
                                 const wasExpanded = showMoreProductInfo;
                                 setShowMoreProductInfo(!showMoreProductInfo);
@@ -370,7 +370,7 @@ const ProductDescriptionTabs = ({
                         {directionsContent && hasMoreThanNWords(sanitizedContent, 50) && (
                           <div className="mt-3">
                             <span
-                              className="text-xs font-semibold text-[#8059ca] hover:underline cursor-pointer"
+                              className="text-xs font-semibold text-[#321961] hover:underline cursor-pointer"
                               onClick={() => {
                                 const wasExpanded = showMoreDirections;
                                 setShowMoreDirections(!showMoreDirections);
@@ -404,7 +404,7 @@ const ProductDescriptionTabs = ({
                   {tablet?.sideeffects && hasMoreThanNWords(sanitizeHTML(tablet?.sideeffects || ""), 50) && (
                     <div className="mt-3 mb-4">
                       <span
-                        className="text-xs font-semibold text-[#8059ca] hover:underline cursor-pointer"
+                        className="text-xs font-semibold text-[#321961] hover:underline cursor-pointer"
                         onClick={() => {
                           const wasExpanded = showMoreSideEffects;
                           setShowMoreSideEffects(!showMoreSideEffects);
@@ -423,7 +423,7 @@ const ProductDescriptionTabs = ({
                       >
                         <div className="flex items-center gap-2.5 font-semibold text-sm text-gray-800">
                           <span>Test Parameters</span>
-                          <span className="bg-[#8059ca] text-white px-2 py-0.5 rounded-full text-xs font-bold">
+                          <span className="bg-[#321961] text-white px-2 py-0.5 rounded-full text-xs font-bold">
                             {tablet.parameterss.length}
                           </span>
                         </div>
@@ -433,7 +433,7 @@ const ProductDescriptionTabs = ({
                         <div className="p-4">
                           <div className="flex flex-wrap gap-2 mb-3">
                             {tablet.parameterss.map((param, idx) => (
-                              <span key={idx} className="bg-purple-50 text-[#8059ca] px-3 py-1 rounded-md text-xs font-medium border border-purple-100">
+                              <span key={idx} className="bg-purple-50 text-[#321961] px-3 py-1 rounded-md text-xs font-medium border border-purple-100">
                                 {param.name}
                               </span>
                             ))}
@@ -490,7 +490,7 @@ const ProductDescriptionTabs = ({
                   {tablet?.precaution && hasMoreThanNWords(sanitizeHTML(tablet?.precaution || ""), 50) && (
                     <div className="mt-3">
                       <span
-                        className="text-xs font-semibold text-[#8059ca] hover:underline cursor-pointer"
+                        className="text-xs font-semibold text-[#321961] hover:underline cursor-pointer"
                         onClick={() => {
                           const wasExpanded = showMorePrecautions;
                           setShowMorePrecautions(!showMorePrecautions);

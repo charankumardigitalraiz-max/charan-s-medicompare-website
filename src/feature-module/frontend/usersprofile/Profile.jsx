@@ -226,7 +226,7 @@ const Profile = ({ HomeNavigate, BackButton }) => {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pb-2 mb-2 border-b border-slate-100 mt-2">
         <div className="flex items-center gap-3.5">
           {HomeNavigate && <HomeNavigate />}
-          <div className="w-11 h-11 rounded-xl bg-purple-50 text-[#8059ca] flex items-center justify-center text-[20px] shrink-0 border border-purple-100/50 shadow-sm">
+          <div className="w-11 h-11 rounded-xl bg-purple-50 text-[#321961] flex items-center justify-center text-[20px] shrink-0 border border-purple-100/50 shadow-sm">
             <i className="fa-solid fa-user-gear" />
           </div>
 
@@ -260,7 +260,7 @@ const Profile = ({ HomeNavigate, BackButton }) => {
             <button
               type="button"
               onClick={handleEditClick}
-              className="bg-[#8059ca] hover:bg-[#6b1fe6] text-white border-none py-2.5 px-6 !rounded-lg !text-sm !font-semibold inline-flex items-center gap-2 cursor-pointer transition-all duration-300 shadow-[0_4px_15px_rgba(125,46,255,0.3)] hover:shadow-[0_6px_20px_rgba(125,46,255,0.4)] hover:-translate-y-0.5"
+              className="bg-[#321961] hover:bg-[#6b1fe6] text-white border-none py-2.5 px-6 !rounded-lg !text-sm !font-semibold inline-flex items-center gap-2 cursor-pointer transition-all duration-300 shadow-[0_4px_15px_rgba(125,46,255,0.3)] hover:shadow-[0_6px_20px_rgba(125,46,255,0.4)] hover:-translate-y-0.5"
             >
               <i className="fa-solid fa-pen"></i>
               Edit Profile
@@ -273,7 +273,7 @@ const Profile = ({ HomeNavigate, BackButton }) => {
             <div className="col-12 mb-3">
               <div className={rowWrapClass}>
                 <span className={rowLabelClass}>
-                  <i className="fa-solid fa-user text-[12px] text-[#8059ca]"></i>
+                  <i className="fa-solid fa-user text-[12px] text-[#321961]"></i>
                   Customer ID:
                 </span>
                 <span className={rowValueClass}>
@@ -285,7 +285,7 @@ const Profile = ({ HomeNavigate, BackButton }) => {
             <div className="col-12 mb-3">
               <div className={rowWrapClass}>
                 <span className={rowLabelClass}>
-                  <i className="fa-solid fa-user text-[12px] text-[#8059ca]"></i>
+                  <i className="fa-solid fa-user text-[12px] text-[#321961]"></i>
                   First Name:
                 </span>
                 <span className={rowValueClass}>
@@ -297,7 +297,7 @@ const Profile = ({ HomeNavigate, BackButton }) => {
             <div className="col-12 mb-3">
               <div className={rowWrapClass}>
                 <span className={rowLabelClass}>
-                  <i className="fa-solid fa-user text-[12px] text-[#8059ca]"></i>
+                  <i className="fa-solid fa-user text-[12px] text-[#321961]"></i>
                   Last Name:
                 </span>
                 <span className={rowValueClass}>
@@ -309,7 +309,7 @@ const Profile = ({ HomeNavigate, BackButton }) => {
             <div className="col-12 mb-3">
               <div className={rowWrapClass}>
                 <span className={rowLabelClass}>
-                  <i className="fa-solid fa-phone text-[12px] text-[#8059ca]"></i>
+                  <i className="fa-solid fa-phone text-[12px] text-[#321961]"></i>
                   Mobile Number:
                 </span>
                 <span
@@ -334,7 +334,7 @@ const Profile = ({ HomeNavigate, BackButton }) => {
             <div className="col-12 mb-3">
               <div className={rowWrapClass}>
                 <span className={rowLabelClass}>
-                  <i className="fa-solid fa-envelope text-[12px] text-[#8059ca]"></i>
+                  <i className="fa-solid fa-envelope text-[12px] text-[#321961]"></i>
                   Email:
                 </span>
                 <span
@@ -373,7 +373,7 @@ const Profile = ({ HomeNavigate, BackButton }) => {
             <div className="col-12 mb-3">
               <div className={rowWrapClass}>
                 <span className={rowLabelClass}>
-                  <i className="fa-solid fa-venus-mars text-[12px] text-[#8059ca]"></i>
+                  <i className="fa-solid fa-venus-mars text-[12px] text-[#321961]"></i>
                   Gender:
                 </span>
                 <span className={`${rowValueClass} capitalize`}>
@@ -385,7 +385,7 @@ const Profile = ({ HomeNavigate, BackButton }) => {
             <div className="col-12 mb-3">
               <div className={rowWrapClass}>
                 <span className={rowLabelClass}>
-                  <i className="fa-solid fa-cake-candles text-[12px] text-[#8059ca]"></i>
+                  <i className="fa-solid fa-cake-candles text-[12px] text-[#321961]"></i>
                   Age:
                 </span>
                 <span className={rowValueClass}>
@@ -397,7 +397,7 @@ const Profile = ({ HomeNavigate, BackButton }) => {
             <div className="col-12 mb-3">
               <div className={`flex gap-2 py-3 px-4 text-[15px] text-slate-800 ${isMobile ? "flex-col items-start" : "flex-row items-start"}`}>
                 <span className={`${rowLabelClass} pt-0.5`}>
-                  <i className="fa-solid fa-file-medical text-[12px] text-[#8059ca]"></i>
+                  <i className="fa-solid fa-file-medical text-[12px] text-[#321961]"></i>
                   Medical Conditions:
                 </span>
                 <span className={`${rowValueClass} whitespace-pre-wrap break-words`}>
@@ -415,12 +415,12 @@ const Profile = ({ HomeNavigate, BackButton }) => {
               <div className="col-lg-4 col-md-6 mb-4">
                 <div className="form-wrap">
                   <label className="text-sm font-semibold text-slate-600 mb-2 flex items-center gap-1.5">
-                    <i className="fa-solid fa-user text-[12px] text-[#8059ca]"></i>
+                    <i className="fa-solid fa-user text-[12px] text-[#321961]"></i>
                     First Name
                   </label>
                   <input
                     type="text"
-                    className="form-control rounded-lg border border-slate-200 py-3 px-[15px] text-sm transition-all duration-300 focus:border-[#8059ca] outline-none"
+                    className="form-control rounded-lg border border-slate-200 py-3 px-[15px] text-sm transition-all duration-300 focus:border-[#321961] outline-none"
                     name="first_name"
                     value={profiles.first_name || ""}
                     onChange={handleProfiles}
@@ -431,12 +431,12 @@ const Profile = ({ HomeNavigate, BackButton }) => {
               <div className="col-lg-4 col-md-6 mb-4">
                 <div className="form-wrap">
                   <label className="text-sm font-semibold text-slate-600 mb-2 flex items-center gap-1.5">
-                    <i className="fa-solid fa-user text-[12px] text-[#8059ca]"></i>
+                    <i className="fa-solid fa-user text-[12px] text-[#321961]"></i>
                     Last Name
                   </label>
                   <input
                     type="text"
-                    className="form-control rounded-lg border border-slate-200 py-3 px-[15px] text-sm transition-all duration-300 focus:border-[#8059ca] outline-none"
+                    className="form-control rounded-lg border border-slate-200 py-3 px-[15px] text-sm transition-all duration-300 focus:border-[#321961] outline-none"
                     name="last_name"
                     value={profiles.last_name || ""}
                     onChange={handleProfiles}
@@ -447,14 +447,14 @@ const Profile = ({ HomeNavigate, BackButton }) => {
               <div className="col-lg-4 col-md-6 mb-4">
                 <div className="form-wrap">
                   <label className="text-sm font-semibold text-slate-600 mb-2 flex items-center gap-1.5">
-                    <i className="fa-solid fa-phone text-[12px] text-[#8059ca]"></i>
+                    <i className="fa-solid fa-phone text-[12px] text-[#321961]"></i>
                     Mobile Number
                   </label>
                   <input
                     type="tel"
                     className={`form-control rounded-lg border border-slate-200 py-3 px-[15px] text-sm transition-all duration-300 outline-none ${profiles.mobile_verified === true
                       ? "bg-slate-100 cursor-not-allowed opacity-70"
-                      : "bg-white cursor-text focus:border-[#8059ca]"
+                      : "bg-white cursor-text focus:border-[#321961]"
                       }`}
                     name="phone"
                     value={profiles.phone || ""}
@@ -481,12 +481,12 @@ const Profile = ({ HomeNavigate, BackButton }) => {
               <div className="col-lg-4 col-md-6 mb-4">
                 <div className="form-wrap">
                   <label className="text-sm font-semibold text-slate-600 mb-2 flex items-center gap-1.5">
-                    <i className="fa-solid fa-envelope text-[12px] text-[#8059ca]"></i>
+                    <i className="fa-solid fa-envelope text-[12px] text-[#321961]"></i>
                     Email
                   </label>
                   <input
                     type="email"
-                    className="form-control rounded-lg border border-slate-200 py-3 px-[15px] text-sm transition-all duration-300 focus:border-[#8059ca] outline-none"
+                    className="form-control rounded-lg border border-slate-200 py-3 px-[15px] text-sm transition-all duration-300 focus:border-[#321961] outline-none"
                     name="email"
                     value={profiles.email || ""}
                     onChange={handleProfiles}
@@ -497,11 +497,11 @@ const Profile = ({ HomeNavigate, BackButton }) => {
               <div className="col-lg-4 col-md-6 mb-4">
                 <div className="form-wrap">
                   <label className="text-sm font-semibold text-slate-600 mb-2 flex items-center gap-1.5">
-                    <i className="fa-solid fa-venus-mars text-[12px] text-[#8059ca]"></i>
+                    <i className="fa-solid fa-venus-mars text-[12px] text-[#321961]"></i>
                     Gender
                   </label>
                   <select
-                    className="form-control rounded-lg border border-slate-200 py-3 px-[15px] text-sm bg-white transition-all duration-300 appearance-none focus:border-[#8059ca] outline-none bg-no-repeat"
+                    className="form-control rounded-lg border border-slate-200 py-3 px-[15px] text-sm bg-white transition-all duration-300 appearance-none focus:border-[#321961] outline-none bg-no-repeat"
                     name="gender"
                     value={profiles.gender || ""}
                     onChange={handleProfiles}
@@ -522,7 +522,7 @@ const Profile = ({ HomeNavigate, BackButton }) => {
               <div className="col-lg-4 col-md-6 mb-4">
                 <div className="form-wrap">
                   <label className="text-sm font-semibold text-slate-600 mb-2 flex items-center gap-1.5">
-                    <i className="fa-solid fa-calendar-days text-[12px] text-[#8059ca]"></i>
+                    <i className="fa-solid fa-calendar-days text-[12px] text-[#321961]"></i>
                     Date of Birth
                   </label>
                   <DatePicker
@@ -535,7 +535,7 @@ const Profile = ({ HomeNavigate, BackButton }) => {
                     cleanable
                   />
                   {profiles.age && (
-                    <div className="mt-1.5 text-xs text-[#8059ca] flex items-center gap-1 font-medium">
+                    <div className="mt-1.5 text-xs text-[#321961] flex items-center gap-1 font-medium">
                       <i className="fa-solid fa-cake-candles text-[10px]"></i>
                       Age: {profiles.age} years
                     </div>
@@ -552,11 +552,11 @@ const Profile = ({ HomeNavigate, BackButton }) => {
               <div className="col-lg-12 mb-4">
                 <div className="form-wrap">
                   <label className="text-sm font-semibold text-slate-600 mb-2 flex items-center gap-1.5">
-                    <i className="fa-solid fa-file-medical text-[12px] text-[#8059ca]"></i>
+                    <i className="fa-solid fa-file-medical text-[12px] text-[#321961]"></i>
                     Medical Conditions / Diseases
                   </label>
                   <textarea
-                    className="form-control rounded-lg border border-slate-200 py-3 px-[15px] text-sm resize-y min-h-[100px] transition-all duration-300 focus:border-[#8059ca] outline-none"
+                    className="form-control rounded-lg border border-slate-200 py-3 px-[15px] text-sm resize-y min-h-[100px] transition-all duration-300 focus:border-[#321961] outline-none"
                     name="medical_conditions"
                     value={profiles.medical_conditions || ""}
                     onChange={handleProfiles}
@@ -584,7 +584,7 @@ const Profile = ({ HomeNavigate, BackButton }) => {
             </button>
             <button
               type="submit"
-              className="bg-[#8059ca] hover:bg-[#6b1fe6] text-white border-none py-2.5 px-6 !rounded-lg !text-sm !font-semibold inline-flex items-center gap-2 cursor-pointer transition-all duration-300 shadow-[0_4px_15px_rgba(125,46,255,0.3)] hover:shadow-[0_6px_20px_rgba(125,46,255,0.4)] hover:-translate-y-0.5"
+              className="bg-[#321961] hover:bg-[#6b1fe6] text-white border-none py-2.5 px-6 !rounded-lg !text-sm !font-semibold inline-flex items-center gap-2 cursor-pointer transition-all duration-300 shadow-[0_4px_15px_rgba(125,46,255,0.3)] hover:shadow-[0_6px_20px_rgba(125,46,255,0.4)] hover:-translate-y-0.5"
             >
               <i className="fas fa-check-circle"></i>
               Update Profile
@@ -617,7 +617,7 @@ const Profile = ({ HomeNavigate, BackButton }) => {
                   setOtp("");
                   setOtpError("");
                 }}
-                className="bg-[#f5f3ff] border-none rounded-full w-7 h-7 flex items-center justify-center cursor-pointer text-[#8059ca] text-base"
+                className="bg-[#f5f3ff] border-none rounded-full w-7 h-7 flex items-center justify-center cursor-pointer text-[#321961] text-base"
               >
                 &times;
               </button>
@@ -644,7 +644,7 @@ const Profile = ({ HomeNavigate, BackButton }) => {
 
             <button
               type="button"
-              className="btn btn-primary h-11 rounded-[10px] font-semibold text-sm bg-[#8059ca] border-none text-white"
+              className="btn btn-primary h-11 rounded-[10px] font-semibold text-sm bg-[#321961] border-none text-white"
               onClick={handleVerifyOtp}
               disabled={isVerifyingOtp}
             >
@@ -657,7 +657,7 @@ const Profile = ({ HomeNavigate, BackButton }) => {
                 type="button"
                 onClick={handleSendOtp}
                 disabled={isSendingOtp}
-                className="bg-transparent border-none p-0 text-[#8059ca] font-semibold cursor-pointer"
+                className="bg-transparent border-none p-0 text-[#321961] font-semibold cursor-pointer"
               >
                 {isSendingOtp ? "Sending..." : "Resend OTP"}
               </button>

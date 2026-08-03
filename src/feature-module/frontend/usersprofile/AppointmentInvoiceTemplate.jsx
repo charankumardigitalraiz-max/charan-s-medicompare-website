@@ -58,7 +58,7 @@ const AppointmentInvoiceTemplate = forwardRef(({ order }, ref) => {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "flex-start",
-          borderBottom: "2px solid #8059ca",
+          borderBottom: "2px solid #321961",
           paddingBottom: "20px",
           marginBottom: "20px",
         }}
@@ -79,7 +79,7 @@ const AppointmentInvoiceTemplate = forwardRef(({ order }, ref) => {
           </div>
         </div>
         <div style={{ textAlign: "right" }}>
-          <h2 style={{ margin: "0 0 8px 0", color: "#8059ca", fontWeight: "700", fontSize: "24px" }}>
+          <h2 style={{ margin: "0 0 8px 0", color: "#321961", fontWeight: "700", fontSize: "24px" }}>
             INVOICE
           </h2>
           <div style={{ fontSize: "13px", color: "#555", lineHeight: "1.5" }}>
@@ -115,7 +115,7 @@ const AppointmentInvoiceTemplate = forwardRef(({ order }, ref) => {
             padding: "15px",
           }}
         >
-          <h4 style={{ margin: "0 0 10px 0", color: "#8059ca", fontSize: "14px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.5px" }}>
+          <h4 style={{ margin: "0 0 10px 0", color: "#321961", fontSize: "14px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.5px" }}>
             Bill To (Account Holder)
           </h4>
           <div style={{ lineHeight: "1.6" }}>
@@ -135,7 +135,7 @@ const AppointmentInvoiceTemplate = forwardRef(({ order }, ref) => {
             padding: "15px",
           }}
         >
-          <h4 style={{ margin: "0 0 10px 0", color: "#8059ca", fontSize: "14px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.5px" }}>
+          <h4 style={{ margin: "0 0 10px 0", color: "#321961", fontSize: "14px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.5px" }}>
             Referred By
           </h4>
           <div style={{ lineHeight: "1.6" }}>
@@ -152,7 +152,7 @@ const AppointmentInvoiceTemplate = forwardRef(({ order }, ref) => {
 
       {/* FAMILY MEMBER WISE ITEMS */}
       <div style={{ marginBottom: "25px" }}>
-        <h4 style={{ margin: "0 0 15px 0", color: "#8059ca", fontSize: "15px", fontWeight: "700", textTransform: "uppercase", borderBottom: "1px solid #e9ddff", paddingBottom: "5px" }}>
+        <h4 style={{ margin: "0 0 15px 0", color: "#321961", fontSize: "15px", fontWeight: "700", textTransform: "uppercase", borderBottom: "1px solid #e9ddff", paddingBottom: "5px" }}>
           Patient & Test Details
         </h4>
 
@@ -178,7 +178,7 @@ const AppointmentInvoiceTemplate = forwardRef(({ order }, ref) => {
                   Patient {groupIndex + 1}: {patientName} ({relationship})
                 </span>
                 {group.totalTests != null && (
-                  <span style={{ fontSize: "11.5px", fontWeight: "600", color: "#8059ca", background: "#fff", padding: "2px 8px", borderRadius: "6px", border: "1px solid #dcd3ff" }}>
+                  <span style={{ fontSize: "11.5px", fontWeight: "600", color: "#321961", background: "#fff", padding: "2px 8px", borderRadius: "6px", border: "1px solid #dcd3ff" }}>
                     {group.totalTests} Test{group.totalTests !== 1 ? "s" : ""}
                   </span>
                 )}
@@ -187,7 +187,7 @@ const AppointmentInvoiceTemplate = forwardRef(({ order }, ref) => {
               {/* Member Items Table */}
               <table style={{ width: "100%", borderCollapse: "collapse" }}>
                 <thead>
-                  <tr style={{ backgroundColor: "#8059ca", color: "#fff" }}>
+                  <tr style={{ backgroundColor: "#321961", color: "#fff" }}>
                     <th style={{ padding: "8px 12px", textAlign: "center", width: "50px", fontSize: "12px", fontWeight: "600" }}>S.No</th>
                     <th style={{ padding: "8px 12px", textAlign: "left", fontSize: "12px", fontWeight: "600" }}>Test / Package Name</th>
                     <th style={{ padding: "8px 12px", textAlign: "left", fontSize: "12px", fontWeight: "600" }}>Provider</th>
@@ -250,7 +250,7 @@ const AppointmentInvoiceTemplate = forwardRef(({ order }, ref) => {
                   Patient {groupIndex + 1}: {patientName} ({relationship})
                 </span>
                 {group.totalTests != null && (
-                  <span style={{ fontSize: "11.5px", fontWeight: "600", color: "#8059ca", background: "#fff", padding: "2px 8px", borderRadius: "6px", border: "1px solid #dcd3ff" }}>
+                  <span style={{ fontSize: "11.5px", fontWeight: "600", color: "#321961", background: "#fff", padding: "2px 8px", borderRadius: "6px", border: "1px solid #dcd3ff" }}>
                     {group.totalTests} Test{group.totalTests !== 1 ? "s" : ""}
                   </span>
                 )}
@@ -259,7 +259,7 @@ const AppointmentInvoiceTemplate = forwardRef(({ order }, ref) => {
           {/* Member Items Table */}
           <table style={{ width: "100%", borderCollapse: "collapse" }}>
             <thead>
-              <tr style={{ backgroundColor: "#8059ca", color: "#fff" }}>
+              <tr style={{ backgroundColor: "#321961", color: "#fff" }}>
                 {/* <th style={{ padding: "8px 12px", textAlign: "center", width: "50px", fontSize: "12px", fontWeight: "600" }}>S.No</th> */}
                 <th style={{ padding: "8px 12px", textAlign: "left", fontSize: "12px", fontWeight: "600" }}>Test / Package Name</th>
                 <th style={{ padding: "8px 12px", textAlign: "left", fontSize: "12px", fontWeight: "600" }}>Provider</th>
@@ -333,9 +333,9 @@ const AppointmentInvoiceTemplate = forwardRef(({ order }, ref) => {
                 <td style={{ padding: "6px 10px", textAlign: "right", color: "#28a745", fontWeight: "500" }}>-₹{(discount || 0).toFixed(2)}</td>
               </tr>
             )}
-            <tr style={{ borderTop: "2px solid #8059ca", borderBottom: "2px solid #8059ca" }}>
-              <td style={{ padding: "10px", fontWeight: "700", fontSize: "15px", color: "#8059ca" }}>Grand Total</td>
-              <td style={{ padding: "10px", textAlign: "right", fontWeight: "700", fontSize: "15px", color: "#8059ca" }}>₹{(total || 0).toFixed(2)}</td>
+            <tr style={{ borderTop: "2px solid #321961", borderBottom: "2px solid #321961" }}>
+              <td style={{ padding: "10px", fontWeight: "700", fontSize: "15px", color: "#321961" }}>Grand Total</td>
+              <td style={{ padding: "10px", textAlign: "right", fontWeight: "700", fontSize: "15px", color: "#321961" }}>₹{(total || 0).toFixed(2)}</td>
             </tr>
           </tbody>
         </table>

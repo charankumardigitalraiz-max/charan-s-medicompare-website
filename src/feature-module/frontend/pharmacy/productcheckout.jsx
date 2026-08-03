@@ -39,10 +39,10 @@ import BaseModal from "../../../components/ui/BaseModal.jsx";
 const customSelectStyles = {
   control: (provided, state) => ({
     ...provided,
-    borderColor: state.isFocused ? "#8059ca" : "#e9ecef",
+    borderColor: state.isFocused ? "#321961" : "#e9ecef",
     boxShadow: state.isFocused ? "0 0 0 3px rgba(128, 89, 202, 0.15)" : null,
     "&:hover": {
-      borderColor: "#8059ca"
+      borderColor: "#321961"
     },
     borderRadius: "8px",
     padding: "2px 6px",
@@ -54,7 +54,7 @@ const customSelectStyles = {
   option: (provided, state) => ({
     ...provided,
     backgroundColor: state.isSelected
-      ? "#8059ca"
+      ? "#321961"
       : state.isFocused
         ? "#f3effa"
         : "#fff",
@@ -63,7 +63,7 @@ const customSelectStyles = {
     fontSize: "14px",
     padding: "10px 14px",
     "&:active": {
-      backgroundColor: "#8059ca"
+      backgroundColor: "#321961"
     }
   }),
   placeholder: (provided) => ({
@@ -963,7 +963,7 @@ export const Cart = () => {
           <div className="pt-0 mb-[15px]">
             <Link
               to="/"
-              className="inline-flex items-center gap-2 text-[#8059ca] border border-[#e9d5ff] rounded-[30px] px-[18px] py-[6px] no-underline text-[13px] font-semibold bg-[#fdfaff] transition-all duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)] shadow-[0_2px_5px_rgba(128,89,202,0.05)] hover:text-white hover:bg-gradient-to-br hover:from-[#8059ca] hover:to-[#6f42c1] hover:border-[#8059ca] hover:shadow-[0_4px_12px_rgba(128,89,202,0.2)]"
+              className="inline-flex items-center gap-2 text-[#321961] border border-[#e9d5ff] rounded-[30px] px-[18px] py-[6px] no-underline text-[13px] font-semibold bg-[#fdfaff] transition-all duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)] shadow-[0_2px_5px_rgba(128,89,202,0.05)] hover:text-white hover:bg-gradient-to-br hover:from-[#321961] hover:to-[#6f42c1] hover:border-[#321961] hover:shadow-[0_4px_12px_rgba(128,89,202,0.2)]"
             >
               <i className="fas fa-arrow-left text-[11px]" />
               Back to Home
@@ -976,12 +976,12 @@ export const Cart = () => {
                   <div className="rounded-md overflow-hidden border border-[#e9ecef] shadow-[0_10px_25px_-5px_rgba(0,0,0,0.05),0_8px_10px_-6px_rgba(0,0,0,0.05)] bg-white">
                     <div className="flex justify-between items-center px-3 py-4 bg-[#faf8ff] border-b border-[#f3e8ff]">
                       <div className="text-[13px] font-bold text-[#5b21b6] flex items-center gap-2">
-                        <i className="fas fa-map-marker-alt text-[#8059ca]"></i>
+                        <i className="fas fa-map-marker-alt text-[#321961]"></i>
                         <span>{getAddressTypeLabel()}</span>
                       </div>
                       <div>
                         <button
-                          className="text-white bg-gradient-to-br from-[#8059ca] to-[#6f42c1] border-0 !font-semibold cursor-pointer !text-[11px] px-4 py-1.5 !rounded-[5px] shadow-[0_2px_4px_rgba(0,0,0,0.1)]"
+                          className="text-white bg-gradient-to-br from-[#321961] to-[#6f42c1] border-0 !font-semibold cursor-pointer !text-[11px] px-4 py-1.5 !rounded-[5px] shadow-[0_2px_4px_rgba(0,0,0,0.1)]"
                           onClick={() => {
                             const token =
                               localStorage.getItem("medicomparestoken");
@@ -1047,7 +1047,7 @@ export const Cart = () => {
                             <div className="flex flex-1">
                               <label
                                 className={`flex w-full items-center justify-center !gap-2 !rounded-sm border !px-3 !py-1 shadow-sm transition-all duration-200 ${personType === "self"
-                                  ? "!border-[#8059ca] !bg-[#8059ca] text-white"
+                                  ? "!border-[#321961] !bg-[#321961] text-white"
                                   : "!border-slate-300 !bg-white hover:bg-white/50"
                                   }`}
                               >
@@ -1071,7 +1071,7 @@ export const Cart = () => {
                             <div className="flex flex-1">
                               <label
                                 className={`flex w-full !items-center !justify-center !gap-2 !rounded-sm !border !px-3 !py-1 shadow-sm transition-all duration-200 ${personType === "forWhom"
-                                  ? "!border-[#8059ca] !bg-[#8059ca] text-white"
+                                  ? "!border-[#321961] !bg-[#321961] text-white"
                                   : "!border-slate-300 !bg-white hover:bg-white/50"
                                   }`}
                               >
@@ -1234,7 +1234,7 @@ export const Cart = () => {
                   <p className="text-slate-400 mb-4">Change pincode</p>
                   <Link
                     to="/"
-                    className="inline-flex items-center justify-center w-[150px] bg-[#8059ca] hover:bg-[#6d3fc7] text-white font-semibold py-2.5 rounded-full text-sm transition-colors duration-200 border-none"
+                    className="inline-flex items-center justify-center w-[150px] bg-[#321961] hover:bg-[#6d3fc7] text-white font-semibold py-2.5 rounded-full text-sm transition-colors duration-200 border-none"
                   >
                     Go Back
                   </Link>
@@ -1297,9 +1297,9 @@ export const Cart = () => {
                                   className="w-3.5 h-3.5 rounded-[3px] object-cover"
                                 />
                               ) : (
-                                <i className="fas fa-store text-[8px] text-[#8059ca]" />
+                                <i className="fas fa-store text-[8px] text-[#321961]" />
                               )}
-                              <span className="text-[10.5px] text-[#8059ca] font-semibold capitalize">
+                              <span className="text-[10.5px] text-[#321961] font-semibold capitalize">
                                 {item.vendorName}
                               </span>
                             </div>
@@ -1339,7 +1339,7 @@ export const Cart = () => {
                           <div
                             className="flex items-center gap-1 text-[10px] text-[#64748b] mt-2 pt-2 border-t border-dashed border-[#f1f5f9]"
                           >
-                            <i className="fas fa-undo-alt text-[8px] text-[#8059ca]" />
+                            <i className="fas fa-undo-alt text-[8px] text-[#321961]" />
                             <span>{formatReturnablePeriod(item.returnDetails)}</span>
                           </div>
                         )}
@@ -1378,7 +1378,7 @@ export const Cart = () => {
                           <div className="inline-flex items-center !border-[1.5px] !border-[#e9d5ff] !rounded-md overflow-hidden bg-white">
                             <button
                               onClick={() => decrementQuantity(item.cartKey)}
-                              className="w-7 h-7 flex items-center justify-center !text-[#8059ca] hover:bg-purple-50 transition"
+                              className="w-7 h-7 flex items-center justify-center !text-[#321961] hover:bg-purple-50 transition"
                             >
                               <i className="fas fa-minus !text-[8px]"></i>
                             </button>
@@ -1389,7 +1389,7 @@ export const Cart = () => {
 
                             <button
                               onClick={() => incrementQuantity(item.cartKey)}
-                              className="w-7 h-7 flex items-center justify-center !text-[#8059ca] hover:bg-purple-50 transition"
+                              className="w-7 h-7 flex items-center justify-center !text-[#321961] hover:bg-purple-50 transition"
                             >
                               <i className="fas fa-plus !text-[8px]"></i>
                             </button>
@@ -1460,7 +1460,7 @@ export const Cart = () => {
                           <div className="flex-1 min-w-0">
                             <div
                               onClick={() => handleProductClick(item)}
-                              className="text-[14.5px] font-semibold text-[#1e293b] cursor-pointer leading-[1.3] mb-1 text-ellipsis overflow-hidden whitespace-nowrap capitalize hover:text-[#8059ca]"
+                              className="text-[14.5px] font-semibold text-[#1e293b] cursor-pointer leading-[1.3] mb-1 text-ellipsis overflow-hidden whitespace-nowrap capitalize hover:text-[#321961]"
                             >
                               {item.name || "Product Name"}
                             </div>
@@ -1489,9 +1489,9 @@ export const Cart = () => {
                                     }}
                                   />
                                 ) : (
-                                  <i className="fas fa-store text-[9px] text-[#8059ca]" />
+                                  <i className="fas fa-store text-[9px] text-[#321961]" />
                                 )}
-                                <span className="text-[#8059ca] font-semibold capitalize">{item.vendorName}</span>
+                                <span className="text-[#321961] font-semibold capitalize">{item.vendorName}</span>
                               </div>
                               {formatReturnablePeriod(item.returnDetails) && (
                                 <>
@@ -1566,7 +1566,7 @@ export const Cart = () => {
                             className="inline-flex !border-[1.5px] !border-[#e9d5ff] rounded-lg bg-white !shadow-[0_1px_4px_rgba(128,89,202,0.04)] overflow-hidden"
                           >
                             <button
-                              className="btn btn-sm w-7 h-7 bg-transparent border-0 text-[#8059ca] text-[11px] p-0 flex items-center justify-center transition-colors duration-200 ease-in-out hover:bg-[#fdfaff]"
+                              className="btn btn-sm w-7 h-7 bg-transparent border-0 text-[#321961] text-[11px] p-0 flex items-center justify-center transition-colors duration-200 ease-in-out hover:bg-[#fdfaff]"
                               onClick={() =>
                                 decrementQuantity(item.cartKey)
                               }
@@ -1581,7 +1581,7 @@ export const Cart = () => {
                               {item.quantity}
                             </span>
                             <button
-                              className="btn btn-sm w-7 h-7 bg-transparent border-0 text-[#8059ca] text-[11px] p-0 flex items-center justify-center transition-colors duration-200 ease-in-out hover:bg-[#fdfaff]"
+                              className="btn btn-sm w-7 h-7 bg-transparent border-0 text-[#321961] text-[11px] p-0 flex items-center justify-center transition-colors duration-200 ease-in-out hover:bg-[#fdfaff]"
                               onClick={() =>
                                 incrementQuantity(item.cartKey)
                               }
@@ -1641,7 +1641,7 @@ export const Cart = () => {
                 <div
                   className="text-[15.5px] font-semibold mb-3 text-[#1e293b] flex items-center gap-2"
                 >
-                  <i className="fas fa-percentage text-[#8059ca]"></i>
+                  <i className="fas fa-percentage text-[#321961]"></i>
                   Offers & Discounts
                 </div>
 
@@ -1669,7 +1669,7 @@ export const Cart = () => {
                   <div
                     className={`w-[42px] h-[42px] rounded-xl flex items-center justify-center text-white text-lg shadow-md ${appliedCoupon
                       ? "bg-gradient-to-br from-[#22c55e] to-[#15803d]"
-                      : "bg-gradient-to-br from-[#8059ca] to-[#6d28d9]"
+                      : "bg-gradient-to-br from-[#321961] to-[#6d28d9]"
                       }`}
                   >
                     <i className="fas fa-tags"></i>
@@ -1729,7 +1729,7 @@ export const Cart = () => {
                     placeholder="Enter Coupon Code"
                     value={couponInputText}
                     onChange={(e) => setCouponInputText(e.target.value)}
-                    className="flex-1 border border-[#cbd5e1] rounded-lg px-3 py-2 text-[13px] outline-none transition-colors duration-200 focus:border-[#8059ca]"
+                    className="flex-1 border border-[#cbd5e1] rounded-lg px-3 py-2 text-[13px] outline-none transition-colors duration-200 focus:border-[#321961]"
                   />
                   <button
                     type="button"
@@ -1737,7 +1737,7 @@ export const Cart = () => {
                       e.preventDefault();
                       handleManualCouponApply();
                     }}
-                    className="bg-[#8059ca] text-white border-0 rounded-lg px-4 py-2 text-[13px] font-semibold cursor-pointer transition-colors duration-200 hover:bg-[#6f42c1]"
+                    className="bg-[#321961] text-white border-0 rounded-lg px-4 py-2 text-[13px] font-semibold cursor-pointer transition-colors duration-200 hover:bg-[#6f42c1]"
                   >
                     Apply
                   </button>
@@ -1758,7 +1758,7 @@ export const Cart = () => {
                       placeholder="Enter Coupon Code"
                       value={couponInputText}
                       onChange={(e) => setCouponInputText(e.target.value)}
-                      className="flex-1 min-w-0 border border-slate-300 rounded-l-lg px-3 py-2 text-sm bg-[#f8fafc] outline-none transition-colors focus:border-[#8059ca]"
+                      className="flex-1 min-w-0 border border-slate-300 rounded-l-lg px-3 py-2 text-sm bg-[#f8fafc] outline-none transition-colors focus:border-[#321961]"
                     />
 
                     <button
@@ -1767,7 +1767,7 @@ export const Cart = () => {
                         e.preventDefault();
                         handleManualCouponApply();
                       }}
-                      className="px-4 py-2 bg-gradient-to-r from-[#8059ca] to-[#6d28d9] hover:from-[#7148c5] hover:to-[#5b21b6] text-white !text-sm !font-semibold !rounded-r-lg !border-none transition-all duration-200 shrink-0"
+                      className="px-4 py-2 bg-gradient-to-r from-[#321961] to-[#6d28d9] hover:from-[#7148c5] hover:to-[#5b21b6] text-white !text-sm !font-semibold !rounded-r-lg !border-none transition-all duration-200 shrink-0"
                     >
                       Apply
                     </button>
@@ -1858,10 +1858,10 @@ export const Cart = () => {
                   <hr className="my-3.5 border-2 border-[#c4b5fd]" />
 
                   <div
-                    className="flex justify-between text-[15px] font-semibold text-[#8059ca]"
+                    className="flex justify-between text-[15px] font-semibold text-[#321961]"
                   >
                     <span>Amount To Pay</span>
-                    <span className="text-[#8059ca] text-[17.5px]">
+                    <span className="text-[#321961] text-[17.5px]">
                       ₹
                       {(amountToPay || 0).toFixed(2)}
                     </span>
@@ -1906,17 +1906,17 @@ export const Cart = () => {
                 >
                   {/* COD Option */}
                   <div
-                    className={`flex-1 min-w-0 !rounded-md px-3 py-2.5 flex items-center gap-2 cursor-pointer transition-all duration-200 ease-in-out !box-border ${selectedPayment === "cod" ? "!border-2 !border-[#8059ca] !bg-[#fdfaff] shadow-[0_4px_12px_rgba(128,89,202,0.08)]" : "!border-[1.5px] !border-[#e2e8f0] bg-white hover:border-[#cbd5e1] hover:bg-[#fafbfc]"}`}
+                    className={`flex-1 min-w-0 !rounded-md px-3 py-2.5 flex items-center gap-2 cursor-pointer transition-all duration-200 ease-in-out !box-border ${selectedPayment === "cod" ? "!border-2 !border-[#321961] !bg-[#fdfaff] shadow-[0_4px_12px_rgba(128,89,202,0.08)]" : "!border-[1.5px] !border-[#e2e8f0] bg-white hover:border-[#cbd5e1] hover:bg-[#fafbfc]"}`}
                     onClick={() => setSelectedPayment("cod")}
                   >
                     <div
-                      className={`w-7 h-7 !rounded-lg flex items-center justify-center text-xs transition-all duration-200 ease-in-out shrink-0 ${selectedPayment === "cod" ? "bg-[#8059ca] text-white" : "!bg-[#f1f5f9] !text-[#64748b]"}`}
+                      className={`w-7 h-7 !rounded-lg flex items-center justify-center text-xs transition-all duration-200 ease-in-out shrink-0 ${selectedPayment === "cod" ? "bg-[#321961] text-white" : "!bg-[#f1f5f9] !text-[#64748b]"}`}
                     >
                       <i className="fas fa-money-bill-wave" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <div
-                        className={`text-xs font-bold mb-[1px] whitespace-nowrap overflow-hidden text-ellipsis ${selectedPayment === "cod" ? "!text-[#8059ca]" : "!text-[#1e293b]"}`}
+                        className={`text-xs font-bold mb-[1px] whitespace-nowrap overflow-hidden text-ellipsis ${selectedPayment === "cod" ? "!text-[#321961]" : "!text-[#1e293b]"}`}
                       >
                         Cash on Delivery
                       </div>
@@ -1925,23 +1925,23 @@ export const Cart = () => {
                       </div>
                     </div>
                     <div
-                      className={`w-3.5 h-3.5 rounded-full bg-white transition-all duration-200 ease-in-out shrink-0 ${selectedPayment === "cod" ? "border-4 border-[#8059ca]" : "border-2 border-[#cbd5e1]"}`}
+                      className={`w-3.5 h-3.5 rounded-full bg-white transition-all duration-200 ease-in-out shrink-0 ${selectedPayment === "cod" ? "border-4 border-[#321961]" : "border-2 border-[#cbd5e1]"}`}
                     />
                   </div>
 
                   {/* Online Option */}
                   <div
-                    className={`flex-1 min-w-0 !rounded-md px-3 py-2.5 flex items-center gap-2 cursor-pointer transition-all duration-200 ease-in-out !box-border ${selectedPayment === "online" ? "!border-2 !border-[#8059ca] !bg-[#fdfaff] shadow-[0_4px_12px_rgba(128,89,202,0.08)]" : "!border-[1.5px] !border-[#e2e8f0] !bg-white hover:border-[#cbd5e1] hover:bg-[#fafbfc]"}`}
+                    className={`flex-1 min-w-0 !rounded-md px-3 py-2.5 flex items-center gap-2 cursor-pointer transition-all duration-200 ease-in-out !box-border ${selectedPayment === "online" ? "!border-2 !border-[#321961] !bg-[#fdfaff] shadow-[0_4px_12px_rgba(128,89,202,0.08)]" : "!border-[1.5px] !border-[#e2e8f0] !bg-white hover:border-[#cbd5e1] hover:bg-[#fafbfc]"}`}
                     onClick={() => setSelectedPayment("online")}
                   >
                     <div
-                      className={`w-7 h-7 !rounded-lg flex items-center justify-center text-xs transition-all duration-200 ease-in-out shrink-0 ${selectedPayment === "online" ? "!bg-[#8059ca] !text-white" : "!bg-[#f1f5f9] !text-[#64748b]"}`}
+                      className={`w-7 h-7 !rounded-lg flex items-center justify-center text-xs transition-all duration-200 ease-in-out shrink-0 ${selectedPayment === "online" ? "!bg-[#321961] !text-white" : "!bg-[#f1f5f9] !text-[#64748b]"}`}
                     >
                       <i className="fas fa-credit-card" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <div
-                        className={`text-xs font-bold mb-[1px] whitespace-nowrap overflow-hidden text-ellipsis ${selectedPayment === "online" ? "text-[#8059ca]" : "text-[#1e293b]"}`}
+                        className={`text-xs font-bold mb-[1px] whitespace-nowrap overflow-hidden text-ellipsis ${selectedPayment === "online" ? "text-[#321961]" : "text-[#1e293b]"}`}
                       >
                         Online Payment
                       </div>
@@ -1950,7 +1950,7 @@ export const Cart = () => {
                       </div>
                     </div>
                     <div
-                      className={`w-3.5 h-3.5 rounded-full bg-white transition-all duration-200 ease-in-out shrink-0 ${selectedPayment === "online" ? "border-4 border-[#8059ca]" : "border-2 border-[#cbd5e1]"}`}
+                      className={`w-3.5 h-3.5 rounded-full bg-white transition-all duration-200 ease-in-out shrink-0 ${selectedPayment === "online" ? "border-4 border-[#321961]" : "border-2 border-[#cbd5e1]"}`}
                     />
                   </div>
                 </div>
@@ -1985,7 +1985,7 @@ export const Cart = () => {
                     type="button"
                     onClick={handleSubmit}
                     disabled={cartItems.length === 0 || isSubmitting}
-                    className={`flex-1 px-3 py-2 !text-white border-0 !rounded-[10px] !text-[14.5px] !font-semibold min-w-[140px] flex items-center justify-center gap-2 transition-all duration-200 ease-in-out ${isSubmitting ? "!bg-[#cbd5e1] cursor-not-allowed shadow-none" : "!bg-gradient-to-br from-[#8059ca] to-[#6f42c1] cursor-pointer shadow-[0_4px_14px_rgba(128,89,202,0.25)] hover:-translate-y-px hover:shadow-[0_6px_18px_rgba(128,89,202,0.35)]"}`}
+                    className={`flex-1 px-3 py-2 !text-white border-0 !rounded-[10px] !text-[14.5px] !font-semibold min-w-[140px] flex items-center justify-center gap-2 transition-all duration-200 ease-in-out ${isSubmitting ? "!bg-[#cbd5e1] cursor-not-allowed shadow-none" : "!bg-gradient-to-br from-[#321961] to-[#6f42c1] cursor-pointer shadow-[0_4px_14px_rgba(128,89,202,0.25)] hover:-translate-y-px hover:shadow-[0_6px_18px_rgba(128,89,202,0.35)]"}`}
                   >
                     {isSubmitting ? (
                       <>

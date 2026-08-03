@@ -35,7 +35,8 @@ import Manufactures from "../feature-module/frontend/pharmacy/products-component
 import RentalBookingProcess from "../feature-module/frontend/pharmacy/RentalBookingProcess";
 import Compositions from "../feature-module/frontend/pharmacy/products-components/Compositions";
 import LabTestPackageDetails from "../feature-module/frontend/pharmacy/LabTestPackageDetails";
-
+import RelatedProductsView from "../feature-module/frontend/pharmacy/RelatedProductsView";
+import BlogList from "../feature-module/frontend/home/home-4/BlogList";
 export const publicRoutes = [
   {
     path: "/",
@@ -212,6 +213,11 @@ export const publicRoutes = [
     element: <ProfileSidebar />,
     route: Route,
   },
+  {
+    path: "/blogs",
+    element: <BlogList />,
+    route: Route,
+  },
   // {
   //   path: "/labtest",
   //   element: <ProfileSidebar />,
@@ -338,6 +344,11 @@ export const publicRoutes = [
   {
     path: "/blog-details/:slug",
     element: <BlogDetails />,
+    route: Route,
+  },
+  {
+    path: "/relatedProducts/:slug",
+    element: <RelatedProductsView />,
     route: Route,
   },
 

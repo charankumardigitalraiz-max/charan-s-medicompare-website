@@ -165,7 +165,7 @@ const AmbulanceBooking = ({ HomeNavigate, BackButton }) => {
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pb-2 mb-2 border-b border-slate-100 mt-2">
           <div className="flex items-center gap-3.5">
             {HomeNavigate && <HomeNavigate />}
-            <div className="w-11 h-11 rounded-xl bg-purple-50 text-[#8059ca] flex items-center justify-center text-[20px] shrink-0 border border-purple-100/50 shadow-sm">
+            <div className="w-11 h-11 rounded-xl bg-purple-50 text-[#321961] flex items-center justify-center text-[20px] shrink-0 border border-purple-100/50 shadow-sm">
               <i className="fa-solid fa-truck-medical" />
             </div>
             <div className="flex flex-col gap-1">
@@ -187,7 +187,7 @@ const AmbulanceBooking = ({ HomeNavigate, BackButton }) => {
                   setSearchTerm(e.target.value);
                   setCurrentPage(1);
                 }}
-                className="h-[42px] rounded-sm border border-[#e0e0e0] pl-10 pr-4 text-sm w-full outline-none focus:border-[#8059ca] transition-colors"
+                className="h-[42px] rounded-sm border border-[#e0e0e0] pl-10 pr-4 text-sm w-full outline-none focus:border-[#321961] transition-colors"
               />
               <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[#999] pointer-events-none">
                 <i className="fa-solid fa-search" />
@@ -202,7 +202,7 @@ const AmbulanceBooking = ({ HomeNavigate, BackButton }) => {
             {isMobile ? (
               <select
                 value={activeTab}
-                className="w-full h-[38px] rounded-lg border border-slate-200 px-3 text-[13px] outline-none bg-slate-50 focus:bg-white focus:border-[#8059ca] transition-all duration-200"
+                className="w-full h-[38px] rounded-lg border border-slate-200 px-3 text-[13px] outline-none bg-slate-50 focus:bg-white focus:border-[#321961] transition-all duration-200"
                 onChange={(e) => handleTabChange(e.target.value)}
               >
                 {STATUS_TABS.map((tab) => {
@@ -221,7 +221,7 @@ const AmbulanceBooking = ({ HomeNavigate, BackButton }) => {
                   return (
                     <li className="nav-item" key={tab.id}>
                       <button
-                        className={`py-2.5 px-4 text-[13px] font-semibold !border-b-2 -mb-[1px] transition-all duration-200 flex items-center gap-1.5 ${isActive ? "!border-[#8059ca] !text-[#8059ca]" : "border-transparent text-slate-500 hover:text-slate-700"}`}
+                        className={`py-2.5 px-4 text-[13px] font-semibold !border-b-2 -mb-[1px] transition-all duration-200 flex items-center gap-1.5 ${isActive ? "!border-[#321961] !text-[#321961]" : "border-transparent text-slate-500 hover:text-slate-700"}`}
                         onClick={() => handleTabChange(tab.id)}
                       >
                         <i className={`fas ${tab.icon}`}></i>
@@ -238,7 +238,7 @@ const AmbulanceBooking = ({ HomeNavigate, BackButton }) => {
         <div className="w-full py-4">
           {loading ? (
             <div className="text-center py-10 flex justify-center items-center">
-              <div className="animate-spin inline-block w-8 h-8 border-4 border-[#8059ca] border-t-transparent rounded-full" role="status">
+              <div className="animate-spin inline-block w-8 h-8 border-4 border-[#321961] border-t-transparent rounded-full" role="status">
                 <span className="sr-only">Loading...</span>
               </div>
             </div>
@@ -270,14 +270,14 @@ const AmbulanceBooking = ({ HomeNavigate, BackButton }) => {
                               </span>
                             </div>
                             <div className="text-[11px] text-[#64748b] mt-0.5">
-                              <i className="fas fa-calendar-alt mr-1 text-[#8059ca]"></i>
+                              <i className="fas fa-calendar-alt mr-1 text-[#321961]"></i>
                               {new Date(lead.createdAt).toLocaleDateString("en-US", { day: "2-digit", month: "short", year: "numeric" })}
                             </div>
                           </div>
 
                           <div className="text-end">
                             <div className="text-[10px] text-[#94a3b8] font-semibold uppercase">Total Fare</div>
-                            <div className="text-[16px] font-extrabold text-[#8059ca]">
+                            <div className="text-[16px] font-extrabold text-[#321961]">
                               ₹{lead.fare?.toLocaleString() || "0"}
                             </div>
                           </div>
@@ -298,7 +298,7 @@ const AmbulanceBooking = ({ HomeNavigate, BackButton }) => {
                               }}
                             />
                           ) : null}
-                          <div className={`w-10 h-10 rounded-lg bg-[#f3eeff] border border-[#d6c6f7] text-[#8059ca] ${lead.productdetails?.tabletdetails?.files?.[0] ? "hidden" : "flex"} items-center justify-center text-[18px] shrink-0`}>
+                          <div className={`w-10 h-10 rounded-lg bg-[#f3eeff] border border-[#d6c6f7] text-[#321961] ${lead.productdetails?.tabletdetails?.files?.[0] ? "hidden" : "flex"} items-center justify-center text-[18px] shrink-0`}>
                             <i className="fas fa-ambulance"></i>
                           </div>
                           <div className="flex-1 min-w-0">
@@ -310,7 +310,7 @@ const AmbulanceBooking = ({ HomeNavigate, BackButton }) => {
                             </div>
                             <div className="flex items-center gap-2 mt-1 text-[11px]">
                               <span className="text-[#64748b]">
-                                <i className="fas fa-truck-medical mr-1 text-[#8059ca]"></i>
+                                <i className="fas fa-truck-medical mr-1 text-[#321961]"></i>
                                 {lead.emergencyType ? (lead.emergencyType.toLowerCase() === "nonemergency" ? "Non-Emergency" : lead.emergencyType) : "Standard"}
                               </span>
                               <span className="text-[#cbd5e1]">•</span>
@@ -389,7 +389,7 @@ const AmbulanceBooking = ({ HomeNavigate, BackButton }) => {
                       {/* Card Footer Actions */}
                       <div className="flex gap-2 pt-2.5 border-t border-[#f1f5f9]">
                         <button
-                          className="inline-flex items-center justify-center gap-1.5 !rounded-md !text-[11px] !font-medium p-[4px_8px] min-w-fit whitespace-nowrap leading-tight bg-[#8059ca] text-white border border-[#8059ca] transition-all duration-200 no-underline shadow-none hover:bg-[#6f42c1] hover:border-[#6f42c1] focus:bg-[#6f42c1] focus:border-[#6f42c1]"
+                          className="inline-flex items-center justify-center gap-1.5 !rounded-md !text-[11px] !font-medium p-[4px_8px] min-w-fit whitespace-nowrap leading-tight bg-[#321961] text-white border border-[#321961] transition-all duration-200 no-underline shadow-none hover:bg-[#6f42c1] hover:border-[#6f42c1] focus:bg-[#6f42c1] focus:border-[#6f42c1]"
                           onClick={() => setSelectedLead(lead)}
                         >
                           <i className="fas fa-eye text-[11px]" /> View Details
@@ -470,7 +470,7 @@ const AmbulanceBooking = ({ HomeNavigate, BackButton }) => {
                       "Ambulance Service"}
                   </div>
                   {selectedLead.bookingDateTime && (
-                    <div className="text-[11.5px] text-[#8059ca] font-semibold mt-1">
+                    <div className="text-[11.5px] text-[#321961] font-semibold mt-1">
                       <i className="fas fa-calendar-alt mr-1.5"></i>
                       {new Date(selectedLead.bookingDateTime).toLocaleString("en-US", { day: "2-digit", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" })}
                     </div>
@@ -480,7 +480,7 @@ const AmbulanceBooking = ({ HomeNavigate, BackButton }) => {
 
               {/* Route Timeline */}
               <div>
-                <div style={{ fontSize: "10px", fontWeight: 700, color: "#8059ca", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "12px" }}>
+                <div style={{ fontSize: "10px", fontWeight: 700, color: "#321961", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "12px" }}>
                   Route Details
                 </div>
                 <div className="bg-[#faf9fe] border border-[#f1eff9] rounded-xl p-4 relative">
@@ -541,7 +541,7 @@ const AmbulanceBooking = ({ HomeNavigate, BackButton }) => {
 
               {/* Booking Info Grid */}
               <div>
-                <div style={{ fontSize: "10px", fontWeight: 700, color: "#8059ca", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "12px" }}>
+                <div style={{ fontSize: "10px", fontWeight: 700, color: "#321961", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "12px" }}>
                   Booking Information
                 </div>
                 <div className="grid grid-cols-2 gap-3">
@@ -554,7 +554,7 @@ const AmbulanceBooking = ({ HomeNavigate, BackButton }) => {
                           : selectedLead.emergencyType.charAt(0).toUpperCase() + selectedLead.emergencyType.slice(1).toLowerCase()
                         : "Standard",
                       icon: "fa-ambulance",
-                      iconColor: "#8059ca",
+                      iconColor: "#321961",
                     },
                     {
                       label: "Distance",
@@ -593,12 +593,12 @@ const AmbulanceBooking = ({ HomeNavigate, BackButton }) => {
               {/* Service Provider */}
               {selectedLead.vendordetails && (selectedLead.vendordetails.firstName || selectedLead.vendordetails.email || selectedLead.vendordetails.mobile) && (
                 <div>
-                  <div style={{ fontSize: "10px", fontWeight: 700, color: "#8059ca", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "12px" }}>
+                  <div style={{ fontSize: "10px", fontWeight: 700, color: "#321961", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "12px" }}>
                     Service Provider
                   </div>
                   <div className="bg-[#faf9fe] border border-[#f1eff9] rounded-xl p-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full bg-[#efe7ff] text-[#8059ca] flex items-center justify-center font-bold text-sm shrink-0 border border-[#f1eaff]">
+                      <div className="w-10 h-10 rounded-full bg-[#efe7ff] text-[#321961] flex items-center justify-center font-bold text-sm shrink-0 border border-[#f1eaff]">
                         <i className="fas fa-store"></i>
                       </div>
                       <div>
@@ -606,7 +606,7 @@ const AmbulanceBooking = ({ HomeNavigate, BackButton }) => {
                           {selectedLead.vendordetails.firstName || ""} {selectedLead.vendordetails.lastName || ""}
                         </div>
                         {selectedLead.vendordetails.mobile && (
-                          <div className="text-[11px] text-[#8059ca] font-semibold mt-0.5">
+                          <div className="text-[11px] text-[#321961] font-semibold mt-0.5">
                             <i className="fas fa-phone mr-1.5"></i>
                             {selectedLead.vendordetails.mobile}
                           </div>
@@ -615,7 +615,7 @@ const AmbulanceBooking = ({ HomeNavigate, BackButton }) => {
                     </div>
                     {selectedLead.vendordetails.email && (
                       <div className="pt-2.5 mt-2.5 border-t border-dashed border-[#e2e8f0] text-[11px] text-slate-500 flex items-center gap-1.5">
-                        <i className="fas fa-envelope text-[#8059ca]"></i>
+                        <i className="fas fa-envelope text-[#321961]"></i>
                         <span>{selectedLead.vendordetails.email}</span>
                       </div>
                     )}
@@ -625,7 +625,7 @@ const AmbulanceBooking = ({ HomeNavigate, BackButton }) => {
 
               {/* Billing Summary */}
               <div className="pb-2">
-                <div style={{ fontSize: "10px", fontWeight: 700, color: "#8059ca", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "12px" }}>
+                <div style={{ fontSize: "10px", fontWeight: 700, color: "#321961", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "12px" }}>
                   Fare Details
                 </div>
                 <div className="bg-[#faf9fe] rounded-xl p-4 border border-[#f1eff9]">

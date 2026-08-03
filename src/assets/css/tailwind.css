@@ -36,9 +36,18 @@
   font-style: normal;
 }
 
+/* ============================================================
+   BRAND TOKEN — change ONLY this one value to retheme the
+   entire site. All other primary-color references below
+   inherit from --color-primary automatically.
+   ============================================================ */
+:root {
+  --color-primary: #321961;
+}
+
 @theme {
   --font-sans: 'Inter', sans-serif;
-  --color-primary: #8059ca;
+  --color-primary: var(--color-primary, #321961);
   --color-primary-dark: #6d48b8;
   --color-primary-bg: #f8f4ff;
   --color-secondary: #822bd4;
@@ -46,13 +55,13 @@
   --color-info: #110efd;
   --color-warning: #ffca18;
   --color-danger: #ff0000;
-  --color-dark: #8059ca;
+  --color-dark: var(--color-primary, #321961);
   --color-light: #e2edff;
   --color-pink: #dd2590;
   --color-purple: #331962;
   --color-indigo: #3538cd;
 
-  --color-profile-primary: #8059ca;
+  --color-profile-primary: var(--color-primary, #321961);
   --color-profile-secondary: #6a4ab0;
   --color-profile-bg: #f8fafc;
   --color-profile-card: #ffffff;
@@ -135,21 +144,58 @@ button,
 }
 
 .btn-profile-primary {
-  @apply h-[38px] inline-flex items-center justify-center gap-1.5 bg-[#8059ca] hover:bg-[#6a4ab0] text-white px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 border-none cursor-pointer hover:-translate-y-px shadow-[0_2px_8px_rgba(128,89,202,0.25)];
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+  background-color: var(--color-primary);
   color: #ffffff !important;
+  padding: 0.5rem 1rem;
+  border-radius: 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.2s;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(50, 25, 97, 0.25);
 }
 
 .btn-profile-primary:hover {
-  @apply shadow-[0_4px_14px_rgba(128,89,202,0.4)];
+  background-color: var(--color-primary-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(50, 25, 97, 0.4);
 }
 
 .btn-profile-secondary {
-  @apply h-[38px] inline-flex items-center justify-center gap-1.5 bg-purple-50 hover:bg-purple-100 text-[#8059ca] px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 border border-purple-200/60 cursor-pointer hover:-translate-y-px;
-  color: #8059ca !important;
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+  background-color: #f3e8ff;
+  color: var(--color-primary) !important;
+  padding: 0.5rem 1rem;
+  border-radius: 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.2s;
+  border: 1px solid rgba(167, 139, 250, 0.4);
+  cursor: pointer;
+}
+
+.btn-profile-secondary:hover {
+  background-color: #ede9fe;
+  transform: translateY(-1px);
 }
 
 .btn-profile-icon {
-  @apply w-8 h-8 rounded-full bg-slate-100 inline-flex items-center justify-center cursor-pointer hover:bg-purple-50 hover:text-[#8059ca] transition-colors duration-150 border-0;
+  @apply w-8 h-8 rounded-full bg-slate-100 inline-flex items-center justify-center cursor-pointer transition-colors duration-150 border-0;
+}
+
+.btn-profile-icon:hover {
+  background-color: #ede9fe;
+  color: var(--color-primary);
 }
 
 .btn-profile-danger-icon {
@@ -164,28 +210,38 @@ button,
   color: inherit;
 }
 
-/* Primary — purple brand */
+/* Primary — brand color (inherits from --color-primary) */
 .btn-primary {
-  @apply bg-[#8059ca] border-[#8059ca] text-white shadow-[0_2px_8px_rgba(128,89,202,0.25)];
+  background-color: var(--color-primary) !important;
+  border-color: var(--color-primary) !important;
   color: #ffffff !important;
+  box-shadow: 0 2px 8px rgba(50, 25, 97, 0.25);
 }
 
 .btn-primary:hover,
 .btn-primary:focus {
-  @apply bg-[#6a4ab0] border-[#6a4ab0] -translate-y-px shadow-[0_4px_14px_rgba(128,89,202,0.4)];
+  background-color: var(--color-primary-dark) !important;
+  border-color: var(--color-primary-dark) !important;
   color: #ffffff !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(50, 25, 97, 0.4);
 }
 
 /* Outline Primary */
 .btn-outline-primary {
-  @apply border-[1.5px] border-[#8059ca] text-[#8059ca] hover:bg-[#8059ca] hover:border-[#8059ca] hover:text-white transition-all duration-200 bg-transparent;
-  color: #8059ca !important;
+  border: 1.5px solid var(--color-primary) !important;
+  color: var(--color-primary) !important;
+  background-color: transparent;
+  transition: all 0.2s;
 }
 
 .btn-outline-primary:hover,
 .btn-outline-primary:focus {
-  @apply bg-[#8059ca] border-[#8059ca] text-white -translate-y-px shadow-[0_4px_14px_rgba(128,89,202,0.3)];
+  background-color: var(--color-primary) !important;
+  border-color: var(--color-primary) !important;
   color: #ffffff !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(50, 25, 97, 0.3);
 }
 
 /* Light / Gray */
@@ -229,7 +285,9 @@ button,
 }
 
 .profile-card:hover {
-  @apply -translate-y-1 !border-[#8059ca] shadow-[0_8px_24px_rgba(0,0,0,0.08)];
+  transform: translateY(-4px);
+  border-color: var(--color-primary) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
 }
 
 .profile-card-add {
@@ -237,11 +295,21 @@ button,
 }
 
 .profile-card-add:hover {
-  @apply -translate-y-1 !border-[#8059ca] bg-[#faf8ff];
+  transform: translateY(-4px);
+  border-color: var(--color-primary) !important;
+  background-color: #faf8ff;
 }
 
 .profile-card-badge {
-  @apply font-semibold text-[15px] inline-flex items-center bg-[#faf8ff] text-[#8059ca] py-1 px-3 rounded-[20px] border border-[#f3effc];
+  font-weight: 600;
+  font-size: 15px;
+  display: inline-flex;
+  align-items: center;
+  background-color: #faf8ff;
+  color: var(--color-primary);
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  border: 1px solid #f3effc;
 }
 
 /* Global Tooltip */
@@ -252,7 +320,7 @@ button,
   padding: 4px 10px !important;
   border-radius: 4px !important;
   color: #fff !important;
-  background-color: #8059ca !important;
+  background-color: var(--color-primary) !important;
 }
 
 /* Recovered styles for Top Vendor Badge and Hover links */
@@ -262,11 +330,11 @@ button,
   background: linear-gradient(135deg, rgba(125, 46, 255, 0.1) 0%, rgba(59, 130, 246, 0.1) 100%) !important;
   border-radius: 50px;
   font-size: 14px !important;
-  color: #8059ca !important;
+  color: var(--color-primary) !important;
 }
 
 .service-link-hover:hover {
-  background: #8059ca !important;
+  background: var(--color-primary) !important;
   color: #ffffff !important;
 }
 
@@ -281,7 +349,7 @@ button,
   border-radius: 50%;
   border: none;
   background: #ffffff;
-  color: #8059ca;
+  color: var(--color-primary);
   box-shadow: 0 4px 16px rgba(125, 46, 255, 0.22);
   display: flex;
   align-items: center;
@@ -293,7 +361,7 @@ button,
 }
 
 .meq-arrow-btn:hover {
-  background: #8059ca;
+  background: var(--color-primary);
   color: #ffffff;
   box-shadow: 0 6px 22px rgba(125, 46, 255, 0.45);
   transform: translateY(-50%) scale(1.08);
@@ -347,11 +415,11 @@ button,
 
 .custom-arrow i {
   font-size: 14px;
-  color: #8059ca;
+  color: var(--color-primary);
 }
 
 .custom-arrow:hover {
-  background: #8059ca;
+  background: var(--color-primary);
   box-shadow: 0 6px 22px rgba(125, 46, 255, 0.45);
   transform: translateY(-50%) scale(1.08);
 }
@@ -389,7 +457,7 @@ button,
   right: -0.01rem;
   height: 1rem;
   width: 1rem;
-  background-color: #8059ca;
+  background-color: var(--color-primary);
   color: #fff;
   border-radius: 50%;
   font-size: 0.6rem;
@@ -417,7 +485,7 @@ button,
 
 /* Primary gradient button (Login/Sign Up) */
 .btn.btn-primary-gradient {
-  background-color: #8059ca;
+  background-color: var(--color-primary);
   color: #fff;
   border: 0;
   position: relative;
@@ -428,7 +496,7 @@ button,
 .btn.btn-primary-gradient::before {
   content: "";
   position: absolute;
-  background: #8059ca;
+  background: var(--color-primary);
   transform: scaleX(0);
   transform-origin: right center;
   transition: transform 0.24s ease-in-out;
@@ -442,7 +510,7 @@ button,
 .btn.btn-primary-gradient:hover,
 .btn.btn-primary-gradient:focus,
 .btn.btn-primary-gradient:active {
-  background: #6d48b8;
+  background: var(--color-primary-dark);
 }
 
 .btn.btn-primary-gradient:hover::before,
@@ -564,13 +632,13 @@ button,
   color: #ffffff !important;
 }
 
-[class*="text-[#8059ca]"],
-[class*="!text-[#8059ca]"] {
-  color: #8059ca !important;
+[class*="text-[#321961]"],
+[class*="!text-[#321961]"] {
+  color: var(--color-primary) !important;
 }
 
-a[class*="bg-[#8059ca]"],
-a[class*="!bg-[#8059ca]"],
+a[class*="bg-[#321961]"],
+a[class*="!bg-[#321961]"],
 a.btn-primary,
 button.btn-primary {
   color: #ffffff !important;
@@ -582,7 +650,7 @@ button.btn-primary {
 a.btn,
 .btn,
 [class*="btn-"],
-a[class*="bg-[#8059ca]"],
-a[class*="!bg-[#8059ca]"] {
+a[class*="bg-[#321961]"],
+a[class*="!bg-[#321961]"] {
   text-decoration: none !important;
 }

@@ -283,7 +283,7 @@ const Reviews = ({ reviews = [] }) => {
 
         .cr-section-count {
           background: #f3f0fa;
-          color: #8059ca;
+          color: #321961;
           font-size: 12px;
           font-weight: 600;
           padding: 4px 10px;
@@ -326,7 +326,7 @@ const Reviews = ({ reviews = [] }) => {
         .cr-summary-number {
           font-size: 32px;
           font-weight: 500;
-          color: #8059ca;
+          color: #321961;
           line-height: 1;
           margin-bottom: 6px;
         }
@@ -364,7 +364,7 @@ const Reviews = ({ reviews = [] }) => {
 
         .cr-bar-star {
           font-size: 10px;
-          color: #8059ca;
+          color: #321961;
         }
 
         .cr-bar-track {
@@ -377,7 +377,7 @@ const Reviews = ({ reviews = [] }) => {
 
         .cr-bar-fill {
           height: 100%;
-          background: linear-gradient(90deg, #8059ca 0%, #9b7ad4 100%);
+          background: linear-gradient(90deg, #321961 0%, #9b7ad4 100%);
           border-radius: 999px;
           transition: width 0.3s ease;
         }
@@ -405,7 +405,7 @@ const Reviews = ({ reviews = [] }) => {
         }
 
         .cr-star-filled {
-          color: #8059ca;
+          color: #321961;
         }
 
         .cr-star-empty {
@@ -458,7 +458,7 @@ const Reviews = ({ reviews = [] }) => {
           width: 40px;
           height: 40px;
           border-radius: 50%;
-          background: linear-gradient(135deg, #8059ca 0%, #6d48b8 100%);
+          background: linear-gradient(135deg, #321961 0%, #6d48b8 100%);
           color: #fff;
           font-size: 14px;
           font-weight: 500;
@@ -505,7 +505,7 @@ const Reviews = ({ reviews = [] }) => {
           gap: 5px;
           font-size: 11px;
           font-weight: 500;
-          color: #8059ca;
+          color: #321961;
           background: #f3f0fa;
           border-radius: 20px;
           padding: 4px 10px;
@@ -545,8 +545,8 @@ const Reviews = ({ reviews = [] }) => {
           align-items: center;
           gap: 8px;
           background: #fff;
-          color: #8059ca;
-          border: 1.5px solid #8059ca;
+          color: #321961;
+          border: 1.5px solid #321961;
           border-radius: 8px;
           padding: 9px 18px;
           font-size: 13px;
@@ -556,7 +556,7 @@ const Reviews = ({ reviews = [] }) => {
         }
 
         .cr-load-more-btn:hover {
-          background: #8059ca;
+          background: #321961;
           color: #fff;
         }
 
@@ -584,7 +584,7 @@ const Reviews = ({ reviews = [] }) => {
           display: flex;
           align-items: center;
           justify-content: center;
-          color: #8059ca;
+          color: #321961;
           font-size: 22px;
           margin-bottom: 14px;
         }
@@ -695,7 +695,7 @@ const Reviews = ({ reviews = [] }) => {
         }
 
         .cr-side-card--primary {
-          background: linear-gradient(135deg, #8059ca 0%, #6d48b8 100%);
+          background: linear-gradient(135deg, #321961 0%, #6d48b8 100%);
           border: none;
           color: #fff;
         }
@@ -720,7 +720,7 @@ const Reviews = ({ reviews = [] }) => {
 
         .cr-side-card-icon--muted {
           background: #f3f0fa;
-          color: #8059ca;
+          color: #321961;
         }
 
         .cr-side-card-title {
@@ -748,7 +748,7 @@ const Reviews = ({ reviews = [] }) => {
           font-size: 13px;
           font-weight: 600;
           text-decoration: none;
-          background: #8059ca;
+          background: #321961;
           color: #fff !important;
           border: none;
           transition: background 0.2s ease;
@@ -761,7 +761,7 @@ const Reviews = ({ reviews = [] }) => {
 
         .cr-side-card-btn--light {
           background: #fff;
-          color: #8059ca !important;
+          color: #321961 !important;
         }
 
         .cr-side-card-btn--light:hover {

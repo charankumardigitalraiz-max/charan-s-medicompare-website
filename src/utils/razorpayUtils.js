@@ -48,7 +48,7 @@ export const openRazorpayCheckout = ({
       contact: prefill.contact || "",
       email: prefill.email || "",
     },
-    theme: { color: "#8059ca" },
+    theme: { color: "#321961" },
     modal: {
       ondismiss: async function () {
         if (setIsSubmitting) setIsSubmitting(false);

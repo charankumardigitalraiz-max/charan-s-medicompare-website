@@ -464,7 +464,7 @@ const NursingCare = ({
     navigate(`/${categorySlug}/${subcategorySlug}/${productSlug}`);
   };
 
-  const PRIMARY_COLOR = "#8059ca";
+  const PRIMARY_COLOR = "#321961";
   const PRIMARY_SECTION_BG = "#f8f4ff";
   const PRIMARY_DARK = "#6d48b8";
 
@@ -646,12 +646,12 @@ const NursingCare = ({
                                     )}
                                   </div>
                                   <div className="!flex !items-center !gap-1 !text-[#6b7280] !text-[11px] !overflow-hidden">
-                                    <i className="fa-solid fa-location-dot !text-[11px] !text-[#8059ca]"></i>
+                                    <i className="fa-solid fa-location-dot !text-[11px] !text-[#321961]"></i>
                                     <span className="!truncate">{vendor.address}</span>
                                   </div>
                                   {treatment?.distanceInKm && (
                                     <div className="!flex !items-center !gap-1 !text-[#6b7280] !text-[11px]">
-                                      <i className="fas fa-map-marker-alt !text-[10px] !text-[#8059ca]"></i>
+                                      <i className="fas fa-map-marker-alt !text-[10px] !text-[#321961]"></i>
                                       <span className="!truncate">{parseFloat(treatment.distanceInKm).toFixed(1)} km away</span>
                                     </div>
                                   )}
@@ -734,7 +734,7 @@ const NursingCare = ({
       >
         <div className="!max-w-7xl !mx-auto !px-4">
           <div className="!text-center !mb-8">
-            <h2 className="!m-0 !text-[36px] !font-semibold !bg-gradient-to-r !from-[#8059ca] !to-[#6d48b8] !bg-clip-text !text-transparent !tracking-tight">
+            <h2 className="!m-0 !text-[36px] !font-semibold !bg-gradient-to-r !from-[#321961] !to-[#6d48b8] !bg-clip-text !text-transparent !tracking-tight">
               How It Works
             </h2>
             <p className="!text-[#666] !text-[15px] !max-w-[700px] !mx-auto !mt-2">
@@ -750,7 +750,7 @@ const NursingCare = ({
               <div className="!flex !flex-col !items-center">
                 <div
                   style={{ boxShadow: "0 6px 20px rgba(128, 89, 202, 0.3)" }}
-                  className="!w-[90px] !h-[90px] !rounded-full !bg-[#8059ca] !flex !items-center !justify-center !relative !border-[4px] !border-[rgba(128,89,202,0.2)] !transition-all !duration-300 hover:!-translate-y-1 hover:!shadow-[0_10px_30px_rgba(128,89,202,0.4)]"
+                  className="!w-[90px] !h-[90px] !rounded-full !bg-[#321961] !flex !items-center !justify-center !relative !border-[4px] !border-[rgba(128,89,202,0.2)] !transition-all !duration-300 hover:!-translate-y-1 hover:!shadow-[0_10px_30px_rgba(128,89,202,0.4)]"
                 >
                   <i className="fa fa-calendar-check !text-white !text-[36px]"></i>
                   <div
@@ -760,7 +760,7 @@ const NursingCare = ({
                     1
                   </div>
                 </div>
-                <h5 className="!mt-4 !mb-2 !text-[16px] !font-bold !text-[#8059ca]">
+                <h5 className="!mt-4 !mb-2 !text-[16px] !font-bold !text-[#321961]">
                   Book Nursing Care Service
                 </h5>
                 <p className="!m-0 !text-[13px] !text-[#666] !leading-relaxed">
@@ -771,7 +771,7 @@ const NursingCare = ({
 
             {/* Arrow 1 */}
             <div className="!hidden md:!flex !items-center !justify-center">
-              <i className="fa fa-arrow-right !text-[24px] !text-[#8059ca] !opacity-30"></i>
+              <i className="fa fa-arrow-right !text-[24px] !text-[#321961] !opacity-30"></i>
             </div>
 
             {/* Step 2 */}
@@ -779,7 +779,7 @@ const NursingCare = ({
               <div className="!flex !flex-col !items-center">
                 <div
                   style={{ boxShadow: "0 6px 20px rgba(128, 89, 202, 0.3)" }}
-                  className="!w-[90px] !h-[90px] !rounded-full !bg-[#8059ca] !flex !items-center !justify-center !relative !border-[4px] !border-[rgba(128,89,202,0.2)] !transition-all !duration-300 hover:!-translate-y-1 hover:!shadow-[0_10px_30px_rgba(128,89,202,0.4)]"
+                  className="!w-[90px] !h-[90px] !rounded-full !bg-[#321961] !flex !items-center !justify-center !relative !border-[4px] !border-[rgba(128,89,202,0.2)] !transition-all !duration-300 hover:!-translate-y-1 hover:!shadow-[0_10px_30px_rgba(128,89,202,0.4)]"
                 >
                   <i className="fa fa-phone-alt !text-white !text-[36px]"></i>
                   <div
@@ -789,7 +789,7 @@ const NursingCare = ({
                     2
                   </div>
                 </div>
-                <h5 className="!mt-4 !mb-2 !text-[16px] !font-bold !text-[#8059ca]">
+                <h5 className="!mt-4 !mb-2 !text-[16px] !font-bold !text-[#321961]">
                   MediCompares Nursing Expert
                 </h5>
                 <p className="!m-0 !text-[13px] !text-[#666] !leading-relaxed">
@@ -800,7 +800,7 @@ const NursingCare = ({
 
             {/* Arrow 2 */}
             <div className="!hidden md:!flex !items-center !justify-center">
-              <i className="fa fa-arrow-right !text-[24px] !text-[#8059ca] !opacity-30"></i>
+              <i className="fa fa-arrow-right !text-[24px] !text-[#321961] !opacity-30"></i>
             </div>
 
             {/* Step 3 */}
@@ -808,7 +808,7 @@ const NursingCare = ({
               <div className="!flex !flex-col !items-center">
                 <div
                   style={{ boxShadow: "0 6px 20px rgba(128, 89, 202, 0.3)" }}
-                  className="!w-[90px] !h-[90px] !rounded-full !bg-[#8059ca] !flex !items-center !justify-center !relative !border-[4px] !border-[rgba(128,89,202,0.2)] !transition-all !duration-300 hover:!-translate-y-1 hover:!shadow-[0_10px_30px_rgba(128,89,202,0.4)]"
+                  className="!w-[90px] !h-[90px] !rounded-full !bg-[#321961] !flex !items-center !justify-center !relative !border-[4px] !border-[rgba(128,89,202,0.2)] !transition-all !duration-300 hover:!-translate-y-1 hover:!shadow-[0_10px_30px_rgba(128,89,202,0.4)]"
                 >
                   <i className="fa fa-heartbeat !text-white !text-[36px]"></i>
                   <div
@@ -818,7 +818,7 @@ const NursingCare = ({
                     3
                   </div>
                 </div>
-                <h5 className="!mt-4 !mb-2 !text-[16px] !font-bold !text-[#8059ca]">
+                <h5 className="!mt-4 !mb-2 !text-[16px] !font-bold !text-[#321961]">
                   Nursing Professional Arrives
                 </h5>
                 <p className="!m-0 !text-[13px] !text-[#666] !leading-relaxed">
@@ -829,7 +829,7 @@ const NursingCare = ({
 
             {/* Arrow 3 */}
             <div className="!hidden md:!flex !items-center !justify-center">
-              <i className="fa fa-arrow-right !text-[24px] !text-[#8059ca] !opacity-30"></i>
+              <i className="fa fa-arrow-right !text-[24px] !text-[#321961] !opacity-30"></i>
             </div>
 
             {/* Step 4 */}
@@ -837,7 +837,7 @@ const NursingCare = ({
               <div className="!flex !flex-col !items-center">
                 <div
                   style={{ boxShadow: "0 6px 20px rgba(128, 89, 202, 0.3)" }}
-                  className="!w-[90px] !h-[90px] !rounded-full !bg-[#8059ca] !flex !items-center !justify-center !relative !border-[4px] !border-[rgba(128,89,202,0.2)] !transition-all !duration-300 hover:!-translate-y-1 hover:!shadow-[0_10px_30px_rgba(128,89,202,0.4)]"
+                  className="!w-[90px] !h-[90px] !rounded-full !bg-[#321961] !flex !items-center !justify-center !relative !border-[4px] !border-[rgba(128,89,202,0.2)] !transition-all !duration-300 hover:!-translate-y-1 hover:!shadow-[0_10px_30px_rgba(128,89,202,0.4)]"
                 >
                   <i className="fa fa-star !text-white !text-[36px]"></i>
                   <div
@@ -847,7 +847,7 @@ const NursingCare = ({
                     4
                   </div>
                 </div>
-                <h5 className="!mt-4 !mb-2 !text-[16px] !font-bold !text-[#8059ca]">
+                <h5 className="!mt-4 !mb-2 !text-[16px] !font-bold !text-[#321961]">
                   Quality Care Delivered
                 </h5>
                 <p className="!m-0 !text-[13px] !text-[#666] !leading-relaxed">
@@ -882,7 +882,7 @@ const NursingCare = ({
                 return (
                   <div key={ind} className="!w-full">
                     <div
-                      className="!relative !h-[220px] !rounded-[16px] !overflow-hidden !cursor-pointer !border !border-[rgba(128,89,202,0.08)] !shadow-[0_4px_20px_rgba(128,89,202,0.06)] !transition-all !duration-300 hover:!-translate-y-1 hover:!shadow-[0_12px_30px_rgba(128,89,202,0.25)] hover:!border-[#8059ca]"
+                      className="!relative !h-[220px] !rounded-[16px] !overflow-hidden !cursor-pointer !border !border-[rgba(128,89,202,0.08)] !shadow-[0_4px_20px_rgba(128,89,202,0.06)] !transition-all !duration-300 hover:!-translate-y-1 hover:!shadow-[0_12px_30px_rgba(128,89,202,0.25)] hover:!border-[#321961]"
                       onClick={() => handleProductClick(ele)}
                     >
                       {/* Full Background Image */}
@@ -934,7 +934,7 @@ const NursingCare = ({
       >
         <div className="!max-w-7xl !mx-auto !px-4">
           <div className="!text-center !mb-10">
-            <h2 className="!m-0 !text-[36px] !font-semibold !bg-gradient-to-r !from-[#8059ca] !to-[#6d48b8] !bg-clip-text !text-transparent !tracking-tight">
+            <h2 className="!m-0 !text-[36px] !font-semibold !bg-gradient-to-r !from-[#321961] !to-[#6d48b8] !bg-clip-text !text-transparent !tracking-tight">
               What Our Customers Say
             </h2>
             <p className="!text-[#666] !text-[15px] !max-w-[700px] !mx-auto !mt-2">
@@ -969,7 +969,7 @@ const NursingCare = ({
             ].map((testimonial, index) => (
               <div key={index} className="!w-full !flex">
                 <div
-                  className="!flex !flex-col !w-full !p-6 !bg-white !rounded-[16px] !shadow-[0_6px_16px_rgba(128,89,202,0.06)] !border !border-[rgba(128,89,202,0.1)] !transition-all !duration-300 hover:!-translate-y-1 hover:!shadow-[0_12px_24px_rgba(128,89,202,0.12)] hover:!border-[#8059ca]"
+                  className="!flex !flex-col !w-full !p-6 !bg-white !rounded-[16px] !shadow-[0_6px_16px_rgba(128,89,202,0.06)] !border !border-[rgba(128,89,202,0.1)] !transition-all !duration-300 hover:!-translate-y-1 hover:!shadow-[0_12px_24px_rgba(128,89,202,0.12)] hover:!border-[#321961]"
                 >
                   {/* Top content wrapper */}
                   <div className="!flex !justify-between !items-start !mb-4">
@@ -978,14 +978,14 @@ const NursingCare = ({
                       {Array.from({ length: testimonial.stars }).map((_, starIdx) => (
                         <i
                           key={starIdx}
-                          className="fa fa-star !text-[#8059ca] !text-[13px]"
+                          className="fa fa-star !text-[#321961] !text-[13px]"
                         ></i>
                       ))}
                     </div>
 
                     {/* Quote Icon */}
                     <div className="!w-8 !h-8 !rounded-full !bg-[#f8f4ff] !flex !items-center !justify-center !opacity-80">
-                      <i className="fa fa-quote-right !text-[#8059ca] !text-[14px]"></i>
+                      <i className="fa fa-quote-right !text-[#321961] !text-[14px]"></i>
                     </div>
                   </div>
 
@@ -996,7 +996,7 @@ const NursingCare = ({
 
                   {/* Patient Info */}
                   <div className="!flex !items-center !gap-3 !mt-auto">
-                    <div className="!w-11 !h-11 !rounded-full !bg-[#8059ca] !flex !items-center !justify-center !text-white !text-[15px] !font-bold !shrink-0">
+                    <div className="!w-11 !h-11 !rounded-full !bg-[#321961] !flex !items-center !justify-center !text-white !text-[15px] !font-bold !shrink-0">
                       {testimonial.initials}
                     </div>
                     <div>
@@ -1018,7 +1018,7 @@ const NursingCare = ({
               { value: "24/7", label: "Support Available" }
             ].map((stat, idx) => (
               <div key={idx} className="!text-center">
-                <div className="!text-[36px] !font-bold !text-[#8059ca] !mb-1 !tracking-tight">
+                <div className="!text-[36px] !font-bold !text-[#321961] !mb-1 !tracking-tight">
                   {stat.value}
                 </div>
                 <p className="!m-0 !text-[14px] !font-semibold !text-[#5c626a]">

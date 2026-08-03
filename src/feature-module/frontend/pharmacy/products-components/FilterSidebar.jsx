@@ -221,7 +221,7 @@ const FilterSidebar = () => {
               justifyContent: "center",
               fontSize: "12px",
               fontWeight: "600",
-              color: "#8059ca",
+              color: "#321961",
               cursor: "pointer",
               transition: "all 0.2s ease",
             }}
@@ -238,27 +238,27 @@ const FilterSidebar = () => {
               width: "28px",
               height: "28px",
               borderRadius: "50%",
-              border: `1px solid ${activeAlphabetLetter === alphaItem.value ? "#8059ca" : "#ccc"}`,
-              backgroundColor: activeAlphabetLetter === alphaItem.value ? "#8059ca" : "#fff",
+              border: `1px solid ${activeAlphabetLetter === alphaItem.value ? "#321961" : "#ccc"}`,
+              backgroundColor: activeAlphabetLetter === alphaItem.value ? "#321961" : "#fff",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               fontSize: "12px",
               fontWeight: "600",
-              color: activeAlphabetLetter === alphaItem.value ? "#fff" : "#8059ca",
+              color: activeAlphabetLetter === alphaItem.value ? "#fff" : "#321961",
               cursor: "pointer",
               transition: "all 0.2s ease",
             }}
             onMouseEnter={(e) => {
               if (activeAlphabetLetter !== alphaItem.value) {
                 e.target.style.backgroundColor = "#e0e0e0";
-                e.target.style.color = "#8059ca";
+                e.target.style.color = "#321961";
               }
             }}
             onMouseLeave={(e) => {
               if (activeAlphabetLetter !== alphaItem.value) {
                 e.target.style.backgroundColor = "#fff";
-                e.target.style.color = "#8059ca";
+                e.target.style.color = "#321961";
               }
             }}
           >
@@ -283,7 +283,7 @@ const FilterSidebar = () => {
               justifyContent: "center",
               fontSize: "12px",
               fontWeight: "600",
-              color: "#8059ca",
+              color: "#321961",
               cursor: "pointer",
               transition: "all 0.2s ease",
             }}
@@ -323,7 +323,7 @@ const FilterSidebar = () => {
               {onClearFilters && (
                 <button
                   type="button"
-                  className="text-[#8059ca] !no-underline !font-[500] text-[12px] transition-all duration-300 p-[4px_10px] rounded-[6px] bg-[rgba(125,46,255,0.1)] hover:bg-[rgba(125,46,255,0.2)] hover:-translate-y-[1px] border-none outline-none"
+                  className="text-[#321961] !no-underline !font-[500] text-[12px] transition-all duration-300 p-[4px_10px] rounded-[6px] bg-[rgba(125,46,255,0.1)] hover:bg-[rgba(125,46,255,0.2)] hover:-translate-y-[1px] border-none outline-none"
                   onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
@@ -393,7 +393,7 @@ const FilterSidebar = () => {
                       return (
                         <div
                           key={cat.slug}
-                          className={`flex items-center justify-between rounded-[8px] transition-all duration-200 cursor-pointer text-[13px] gap-[2px] p-[6px_14px] mb-[8px] ${isActive ? "bg-[#8059ca] text-white" : "hover:bg-[rgba(125,46,255,0.08)] text-[#333]"}`}
+                          className={`flex items-center justify-between rounded-[8px] transition-all duration-200 cursor-pointer text-[13px] gap-[2px] p-[6px_14px] mb-[8px] ${isActive ? "bg-[#321961] text-white" : "hover:bg-[rgba(125,46,255,0.08)] text-[#333]"}`}
                           onClick={() =>
                             onCategoryToggle(cat.slug)
                           }
@@ -409,7 +409,7 @@ const FilterSidebar = () => {
                               type="checkbox"
                               checked={isActive}
                               disabled={isDefaultCategory}
-                              className="w-[18px] h-[18px] rounded-[4px] cursor-pointer accent-[#8059ca]"
+                              className="w-[18px] h-[18px] rounded-[4px] cursor-pointer accent-[#321961]"
                               readOnly
                             />
 
@@ -454,7 +454,7 @@ const FilterSidebar = () => {
                             }
                           }}
                           disabled={categoryLoading}
-                          className="bg-transparent text-[#8059ca] border border-solid border-[#8059ca] p-[6px_12px] rounded-[8px] text-[12px] font-[600] cursor-pointer transition-all duration-300 w-full text-center mt-[5px] hover:bg-[#8059ca] hover:text-white hover:shadow-[0_4px_12px_rgba(128,89,202,0.2)] disabled:border-[#ccc] disabled:text-[#999] disabled:cursor-not-allowed"
+                          className="bg-transparent text-[#321961] border border-solid border-[#321961] p-[6px_12px] rounded-[8px] text-[12px] font-[600] cursor-pointer transition-all duration-300 w-full text-center mt-[5px] hover:bg-[#321961] hover:text-white hover:shadow-[0_4px_12px_rgba(128,89,202,0.2)] disabled:border-[#ccc] disabled:text-[#999] disabled:cursor-not-allowed"
                         >
                           {categoryLoading
                             ? "Loading..."
@@ -498,7 +498,7 @@ const FilterSidebar = () => {
                       return (
                         <div
                           key={brand.slug}
-                          className={`flex items-center justify-between rounded-[8px] transition-all duration-200 cursor-pointer text-[13px] gap-[2px] p-[6px_14px] mb-[8px] ${isActive ? "bg-[#8059ca] text-white" : "hover:bg-[rgba(125,46,255,0.08)] text-[#333]"} `}
+                          className={`flex items-center justify-between rounded-[8px] transition-all duration-200 cursor-pointer text-[13px] gap-[2px] p-[6px_14px] mb-[8px] ${isActive ? "bg-[#321961] text-white" : "hover:bg-[rgba(125,46,255,0.08)] text-[#333]"} `}
                           onClick={() => onBrandToggle(brand.slug)}
                           style={{ marginLeft: "10px" }}
                         >
@@ -512,7 +512,7 @@ const FilterSidebar = () => {
                             <input
                               type="checkbox"
                               checked={isActive}
-                              className="w-[18px] h-[18px] rounded-[4px] cursor-pointer accent-[#8059ca]"
+                              className="w-[18px] h-[18px] rounded-[4px] cursor-pointer accent-[#321961]"
                               readOnly
                             />
                             <span style={{ fontSize: "12px", fontWeight: "500" }}>
@@ -556,7 +556,7 @@ const FilterSidebar = () => {
                           }
                         }}
                         disabled={brandLoading}
-                        className="bg-transparent text-[#8059ca] border border-solid border-[#8059ca] p-[6px_12px] rounded-[8px] text-[12px] font-[600] cursor-pointer transition-all duration-300 w-full text-center mt-[5px] hover:bg-[#8059ca] hover:text-white hover:shadow-[0_4px_12px_rgba(128,89,202,0.2)] disabled:border-[#ccc] disabled:text-[#999] disabled:cursor-not-allowed"
+                        className="bg-transparent text-[#321961] border border-solid border-[#321961] p-[6px_12px] rounded-[8px] text-[12px] font-[600] cursor-pointer transition-all duration-300 w-full text-center mt-[5px] hover:bg-[#321961] hover:text-white hover:shadow-[0_4px_12px_rgba(128,89,202,0.2)] disabled:border-[#ccc] disabled:text-[#999] disabled:cursor-not-allowed"
                       >
                         {
                           brandLoading
@@ -600,7 +600,7 @@ const FilterSidebar = () => {
                 return (
                   <div
                     key={form.value}
-                    className={`flex items-center justify-between rounded-[8px] transition-all duration-200 cursor-pointer text-[13px] gap-[2px] p-[6px_14px] mb-[8px] ${isActive ? "bg-[#8059ca] text-white" : "hover:bg-[rgba(125,46,255,0.08)] text-[#333]"} `}
+                    className={`flex items-center justify-between rounded-[8px] transition-all duration-200 cursor-pointer text-[13px] gap-[2px] p-[6px_14px] mb-[8px] ${isActive ? "bg-[#321961] text-white" : "hover:bg-[rgba(125,46,255,0.08)] text-[#333]"} `}
                     onClick={() => toggle(form.value)}
                     style={{ marginLeft: "10px" }}
                   >
@@ -614,7 +614,7 @@ const FilterSidebar = () => {
                       <input
                         type="checkbox"
                         checked={isActive}
-                        className="w-[18px] h-[18px] rounded-[4px] cursor-pointer accent-[#8059ca]"
+                        className="w-[18px] h-[18px] rounded-[4px] cursor-pointer accent-[#321961]"
                         readOnly
                       />
                       <span style={{ fontSize: "12px", fontWeight: "500" }}>
@@ -654,7 +654,7 @@ const FilterSidebar = () => {
                   return (
                     <div
                       key={g.value}
-                      className={`flex items-center justify-between rounded-[8px] transition-all duration-200 cursor-pointer text-[13px] gap-[2px] p-[6px_14px] mb-[8px] ${isActive ? "bg-[#8059ca] text-white" : "hover:bg-[rgba(125,46,255,0.08)] text-[#333]"} `}
+                      className={`flex items-center justify-between rounded-[8px] transition-all duration-200 cursor-pointer text-[13px] gap-[2px] p-[6px_14px] mb-[8px] ${isActive ? "bg-[#321961] text-white" : "hover:bg-[rgba(125,46,255,0.08)] text-[#333]"} `}
                       onClick={() => toggle(g.value)}
                       style={{ marginLeft: "10px" }}
                     >
@@ -662,7 +662,7 @@ const FilterSidebar = () => {
                         <input
                           type="checkbox"
                           checked={isActive}
-                          className="w-[18px] h-[18px] rounded-[4px] cursor-pointer accent-[#8059ca]"
+                          className="w-[18px] h-[18px] rounded-[4px] cursor-pointer accent-[#321961]"
                           readOnly
                         />
                         <span style={{ fontSize: "12px", fontWeight: "500" }}>{g.label}</span>
@@ -700,7 +700,7 @@ const FilterSidebar = () => {
                   return (
                     <div
                       key={s.value}
-                      className={`flex items-center justify-between rounded-[8px] transition-all duration-200 cursor-pointer text-[13px] gap-[2px] p-[6px_14px] mb-[8px] ${isActive ? "bg-[#8059ca] text-white" : "hover:bg-[rgba(125,46,255,0.08)] text-[#333]"} `}
+                      className={`flex items-center justify-between rounded-[8px] transition-all duration-200 cursor-pointer text-[13px] gap-[2px] p-[6px_14px] mb-[8px] ${isActive ? "bg-[#321961] text-white" : "hover:bg-[rgba(125,46,255,0.08)] text-[#333]"} `}
                       onClick={() => toggle(s.value)}
                       style={{ marginLeft: "10px" }}
                     >
@@ -708,7 +708,7 @@ const FilterSidebar = () => {
                         <input
                           type="checkbox"
                           checked={isActive}
-                          className="w-[18px] h-[18px] rounded-[4px] cursor-pointer accent-[#8059ca]"
+                          className="w-[18px] h-[18px] rounded-[4px] cursor-pointer accent-[#321961]"
                           readOnly
                         />
                         <span style={{ fontSize: "12px", fontWeight: "500" }}>{s.label}</span>
@@ -751,7 +751,7 @@ const FilterSidebar = () => {
                       return (
                         <div
                           key={c.value}
-                          className={`flex items-center justify-between rounded-[8px] transition-all duration-200 cursor-pointer text-[13px] gap-[2px] p-[6px_14px] mb-[8px] ${isActive ? "bg-[#8059ca] text-white" : "hover:bg-[rgba(125,46,255,0.08)] text-[#333]"} `}
+                          className={`flex items-center justify-between rounded-[8px] transition-all duration-200 cursor-pointer text-[13px] gap-[2px] p-[6px_14px] mb-[8px] ${isActive ? "bg-[#321961] text-white" : "hover:bg-[rgba(125,46,255,0.08)] text-[#333]"} `}
                           onClick={() => toggle(c.value)}
                           style={{ marginLeft: "10px" }}
                         >
@@ -759,7 +759,7 @@ const FilterSidebar = () => {
                             <input
                               type="checkbox"
                               checked={isActive}
-                              className="w-[18px] h-[18px] rounded-[4px] cursor-pointer accent-[#8059ca]"
+                              className="w-[18px] h-[18px] rounded-[4px] cursor-pointer accent-[#321961]"
                               readOnly
                             />
                             <span style={{ fontSize: "12px", fontWeight: "500" }}>{c.label}</span>
@@ -803,7 +803,7 @@ const FilterSidebar = () => {
                     return (
                       <div
                         key={type.value}
-                        className={`flex items-center justify-between rounded-[8px] transition-all duration-200 cursor-pointer text-[13px] gap-[2px] p-[6px_14px] mb-[8px] ${isActive ? "bg-[#8059ca] text-white" : "hover:bg-[rgba(125,46,255,0.08)] text-[#333]"} `}
+                        className={`flex items-center justify-between rounded-[8px] transition-all duration-200 cursor-pointer text-[13px] gap-[2px] p-[6px_14px] mb-[8px] ${isActive ? "bg-[#321961] text-white" : "hover:bg-[rgba(125,46,255,0.08)] text-[#333]"} `}
                         onClick={() => onTypeToggle(type.value)}
                         style={{ marginLeft: "10px" }}
                       >
@@ -817,7 +817,7 @@ const FilterSidebar = () => {
                           <input
                             type="checkbox"
                             checked={isActive}
-                            className="w-[18px] h-[18px] rounded-[4px] cursor-pointer accent-[#8059ca]"
+                            className="w-[18px] h-[18px] rounded-[4px] cursor-pointer accent-[#321961]"
                             readOnly
                           />
                           <span style={{ fontSize: "12px", fontWeight: "500" }}>
@@ -861,7 +861,7 @@ const FilterSidebar = () => {
                     return (
                       <div
                         key={form.value}
-                        className={`flex items-center justify-between rounded-[8px] transition-all duration-200 cursor-pointer text-[13px] gap-[2px] p-[6px_14px] mb-[8px] ${isActive ? "bg-[#8059ca] text-white" : "hover:bg-[rgba(125,46,255,0.08)] text-[#333]"} `}
+                        className={`flex items-center justify-between rounded-[8px] transition-all duration-200 cursor-pointer text-[13px] gap-[2px] p-[6px_14px] mb-[8px] ${isActive ? "bg-[#321961] text-white" : "hover:bg-[rgba(125,46,255,0.08)] text-[#333]"} `}
                         onClick={() => onFormToggle(form.value)}
                         style={{ marginLeft: "10px" }}
                       >
@@ -875,7 +875,7 @@ const FilterSidebar = () => {
                           <input
                             type="checkbox"
                             checked={isActive}
-                            className="w-[18px] h-[18px] rounded-[4px] cursor-pointer accent-[#8059ca]"
+                            className="w-[18px] h-[18px] rounded-[4px] cursor-pointer accent-[#321961]"
                             readOnly
                           />
                           <span style={{ fontSize: "12px", fontWeight: "500" }}>
@@ -934,7 +934,7 @@ const FilterSidebar = () => {
                       return (
                         <div
                           key={composition.slug}
-                          className={`flex items-center justify-between rounded-[8px] transition-all duration-200 cursor-pointer text-[13px] gap-[2px] p-[6px_14px] mb-[8px] ${isActive ? "bg-[#8059ca] text-white" : "hover:bg-[rgba(125,46,255,0.08)] text-[#333]"} `}
+                          className={`flex items-center justify-between rounded-[8px] transition-all duration-200 cursor-pointer text-[13px] gap-[2px] p-[6px_14px] mb-[8px] ${isActive ? "bg-[#321961] text-white" : "hover:bg-[rgba(125,46,255,0.08)] text-[#333]"} `}
                           onClick={() => onCompositionToggle(composition.slug)}
                           style={{ marginLeft: "10px" }}
                         >
@@ -948,7 +948,7 @@ const FilterSidebar = () => {
                             <input
                               type="checkbox"
                               checked={isActive}
-                              className="w-[18px] h-[18px] rounded-[4px] cursor-pointer accent-[#8059ca]"
+                              className="w-[18px] h-[18px] rounded-[4px] cursor-pointer accent-[#321961]"
                               readOnly
                             />
                             <span style={{ fontSize: "12px", fontWeight: "500" }}>
@@ -990,7 +990,7 @@ const FilterSidebar = () => {
                           }
                         }}
                         disabled={compositionLoading}
-                        className="bg-transparent text-[#8059ca] border border-solid border-[#8059ca] p-[6px_12px] rounded-[8px] text-[12px] font-[600] cursor-pointer transition-all duration-300 w-full text-center mt-[5px] hover:bg-[#8059ca] hover:text-white hover:shadow-[0_4px_12px_rgba(128,89,202,0.2)] disabled:border-[#ccc] disabled:text-[#999] disabled:cursor-not-allowed"
+                        className="bg-transparent text-[#321961] border border-solid border-[#321961] p-[6px_12px] rounded-[8px] text-[12px] font-[600] cursor-pointer transition-all duration-300 w-full text-center mt-[5px] hover:bg-[#321961] hover:text-white hover:shadow-[0_4px_12px_rgba(128,89,202,0.2)] disabled:border-[#ccc] disabled:text-[#999] disabled:cursor-not-allowed"
                       >
                         {
                           compositionLoading

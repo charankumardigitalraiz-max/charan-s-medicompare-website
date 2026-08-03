@@ -147,7 +147,7 @@ const RentalInvoiceTemplate = forwardRef(({ order, vendor }, ref) => {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "flex-start",
-          borderBottom: "3px solid #8059ca",
+          borderBottom: "3px solid #321961",
           paddingBottom: "18px",
           marginBottom: "24px",
         }}
@@ -169,7 +169,7 @@ const RentalInvoiceTemplate = forwardRef(({ order, vendor }, ref) => {
         </div>
 
         <div style={{ textAlign: "right" }}>
-          <h2 style={{ margin: "0 0 8px", color: "#8059ca", fontWeight: "700", fontSize: "26px" }}>
+          <h2 style={{ margin: "0 0 8px", color: "#321961", fontWeight: "700", fontSize: "26px" }}>
             INVOICE
           </h2>
           <div style={{ fontSize: "13px", color: "#555", lineHeight: "1.6" }}>
@@ -207,7 +207,7 @@ const RentalInvoiceTemplate = forwardRef(({ order, vendor }, ref) => {
             backgroundColor: "#fcfaff",
           }}
         >
-          <h4 style={{ margin: "0 0 10px", color: "#8059ca", fontSize: "14px", letterSpacing: "0.6px", textTransform: "uppercase" }}>
+          <h4 style={{ margin: "0 0 10px", color: "#321961", fontSize: "14px", letterSpacing: "0.6px", textTransform: "uppercase" }}>
             Bill To Customer
           </h4>
           <div style={{ lineHeight: "1.7", color: "#444" }}>
@@ -228,7 +228,7 @@ const RentalInvoiceTemplate = forwardRef(({ order, vendor }, ref) => {
             backgroundColor: "#fcfaff",
           }}
         >
-          <h4 style={{ margin: "0 0 10px", color: "#8059ca", fontSize: "14px", letterSpacing: "0.6px", textTransform: "uppercase" }}>
+          <h4 style={{ margin: "0 0 10px", color: "#321961", fontSize: "14px", letterSpacing: "0.6px", textTransform: "uppercase" }}>
             Provider Details
           </h4>
           {currentVendor ? (
@@ -275,7 +275,7 @@ const RentalInvoiceTemplate = forwardRef(({ order, vendor }, ref) => {
                   border: "1px solid #dcd3ff",
                 }}
               >
-                <div style={{ fontWeight: "700", color: "#8059ca", textTransform: "capitalize" }}>
+                <div style={{ fontWeight: "700", color: "#321961", textTransform: "capitalize" }}>
                   Provider: {groupVendor?.name || "Other Provider"}
                 </div>
                 {groupVendor?.phone && (
@@ -285,7 +285,7 @@ const RentalInvoiceTemplate = forwardRef(({ order, vendor }, ref) => {
 
               <table style={{ width: "100%", borderCollapse: "collapse", border: "1px solid #dcd3ff" }}>
                 <thead>
-                  <tr style={{ backgroundColor: "#8059ca", color: "#fff" }}>
+                  <tr style={{ backgroundColor: "#321961", color: "#fff" }}>
                     <th style={{ padding: "10px", textAlign: "center", width: "45px", fontSize: "12px" }}>#</th>
                     <th style={{ padding: "10px", textAlign: "left", fontSize: "12px" }}>Item</th>
                     <th style={{ padding: "10px", textAlign: "right", width: "80px", fontSize: "12px" }}>Total Days</th>
@@ -317,7 +317,7 @@ const RentalInvoiceTemplate = forwardRef(({ order, vendor }, ref) => {
                       <td colSpan="4" style={{ padding: "10px", textAlign: "right", border: "1px solid #eaeaea", fontSize: "12px" }}>
                         Provider subtotal:
                       </td>
-                      <td style={{ padding: "10px", textAlign: "right", border: "1px solid #eaeaea", fontSize: "12px", color: "#8059ca" }}>
+                      <td style={{ padding: "10px", textAlign: "right", border: "1px solid #eaeaea", fontSize: "12px", color: "#321961" }}>
                         ₹{groupSubtotal.toFixed(2)}
                       </td>
                     </tr>
@@ -331,7 +331,7 @@ const RentalInvoiceTemplate = forwardRef(({ order, vendor }, ref) => {
 
       {/* RENTAL DETAILS */}
       <div style={{ marginBottom: "24px", border: "1px solid #dcd3ff", borderRadius: "10px", overflow: "hidden" }}>
-        <div style={{ backgroundColor: "#f5f0ff", padding: "12px 16px", color: "#8059ca", fontWeight: "700" }}>
+        <div style={{ backgroundColor: "#f5f0ff", padding: "12px 16px", color: "#321961", fontWeight: "700" }}>
           Rental Details
         </div>
         <table style={{ width: "100%", borderCollapse: "collapse" }}>
@@ -394,7 +394,7 @@ const RentalInvoiceTemplate = forwardRef(({ order, vendor }, ref) => {
 
       {/* INSTALLMENT DETAILS */}
       <div style={{ marginBottom: "24px", border: "1px solid #dcd3ff", borderRadius: "10px", overflow: "hidden" }}>
-        <div style={{ backgroundColor: "#f5f0ff", padding: "12px 16px", color: "#8059ca", fontWeight: "700" }}>
+        <div style={{ backgroundColor: "#f5f0ff", padding: "12px 16px", color: "#321961", fontWeight: "700" }}>
           Installment Details
         </div>
         <table style={{ width: "100%", borderCollapse: "collapse" }}>
@@ -453,13 +453,13 @@ const RentalInvoiceTemplate = forwardRef(({ order, vendor }, ref) => {
               </tr>
             )}
 
-            <tr style={{ borderTop: "2px solid #8059ca", borderBottom: paidAmount > 0 ? "none" : "2px solid #8059ca" }}>
-              <td style={{ padding: "10px", fontWeight: "800", fontSize: "15px", color: "#8059ca" }}>Total Amount</td>
-              <td style={{ padding: "10px", textAlign: "right", fontWeight: "800", fontSize: "15px", color: "#8059ca" }}>₹{total.toFixed(2)}</td>
+            <tr style={{ borderTop: "2px solid #321961", borderBottom: paidAmount > 0 ? "none" : "2px solid #321961" }}>
+              <td style={{ padding: "10px", fontWeight: "800", fontSize: "15px", color: "#321961" }}>Total Amount</td>
+              <td style={{ padding: "10px", textAlign: "right", fontWeight: "800", fontSize: "15px", color: "#321961" }}>₹{total.toFixed(2)}</td>
             </tr>
 
             {paidAmount > 0 && (
-              <tr style={{ borderBottom: "2px solid #8059ca" }}>
+              <tr style={{ borderBottom: "2px solid #321961" }}>
                 <td style={{ padding: "10px", fontWeight: "700", fontSize: "13px", color: "#047857" }}>First Installment (Paid)</td>
                 <td style={{ padding: "10px", textAlign: "right", fontWeight: "700", fontSize: "13px", color: "#047857" }}>₹{paidAmount.toFixed(2)}</td>
               </tr>

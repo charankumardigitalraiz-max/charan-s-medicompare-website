@@ -747,7 +747,7 @@ const LocationOffcanvas = ({
         .pac-item-query { font-weight: 500 !important; color: #0f172a !important; }
         .pac-icon { margin-right: 6px !important; }
         .loc-search-input::placeholder { color: #94a3b8; font-size: 13px; }
-        .loc-search-input:focus { outline: none; border-color: #8059ca !important; }
+        .loc-search-input:focus { outline: none; border-color: #321961 !important; }
       `}</style>
 
       {/* Overlay */}
@@ -782,7 +782,7 @@ const LocationOffcanvas = ({
           {/* ── HEADER ── */}
           <div
             style={{
-              background: "linear-gradient(135deg, #8059ca 0%, #a07de0 100%)",
+              background: "linear-gradient(135deg, #321961 0%, #a07de0 100%)",
               padding: "18px 20px 16px",
               display: "flex",
               alignItems: "center",
@@ -901,7 +901,7 @@ const LocationOffcanvas = ({
                 style={{
                   display: "flex", alignItems: "center", gap: "6px",
                   padding: "0 14px",
-                  background: "linear-gradient(135deg, #8059ca 0%, #9d72e8 100%)",
+                  background: "linear-gradient(135deg, #321961 0%, #9d72e8 100%)",
                   border: "none",
                   color: "#fff",
                   fontSize: "12px",
@@ -941,7 +941,7 @@ const LocationOffcanvas = ({
               <div
                 style={{
                   width: "22px", height: "22px", borderRadius: "6px",
-                  background: "#8059ca",
+                  background: "#321961",
                   display: "flex", alignItems: "center", justifyContent: "center",
                   flexShrink: 0, marginTop: "1px",
                 }}
@@ -949,7 +949,7 @@ const LocationOffcanvas = ({
                 <i className="fas fa-location-arrow" style={{ color: "#fff", fontSize: "9px" }} />
               </div>
               <div>
-                <div style={{ fontSize: "10px", color: "#8059ca", fontWeight: 600, marginBottom: "1px" }}>
+                <div style={{ fontSize: "10px", color: "#321961", fontWeight: 600, marginBottom: "1px" }}>
                   Current GPS Location
                 </div>
                 <div style={{ fontSize: "12px", color: "#475569", fontWeight: 500, lineHeight: 1.4 }}>
@@ -970,12 +970,12 @@ const LocationOffcanvas = ({
             }}
           >
             <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-              <i className="fas fa-bookmark" style={{ color: "#8059ca", fontSize: "12px" }} />
+              <i className="fas fa-bookmark" style={{ color: "#321961", fontSize: "12px" }} />
               <span style={{ fontSize: "13px", fontWeight: 700, color: "#1e293b" }}>Saved Addresses</span>
               <span
                 style={{
                   fontSize: "11px", fontWeight: 700,
-                  color: "#8059ca",
+                  color: "#321961",
                   background: "#f0e8ff",
                   border: "1.5px solid #d4b8f8",
                   borderRadius: "999px",
@@ -995,7 +995,7 @@ const LocationOffcanvas = ({
                   style={{
                     width: "36px", height: "36px",
                     border: "3px solid #f0e8ff",
-                    borderTop: "3px solid #8059ca",
+                    borderTop: "3px solid #321961",
                     borderRadius: "50%",
                     animation: "spin 0.8s linear infinite",
                   }}
@@ -1028,7 +1028,7 @@ const LocationOffcanvas = ({
                   style={{
                     marginTop: "8px",
                     padding: "10px 24px",
-                    background: "linear-gradient(135deg, #8059ca 0%, #9d72e8 100%)",
+                    background: "linear-gradient(135deg, #321961 0%, #9d72e8 100%)",
                     color: "#fff",
                     fontSize: "13px",
                     fontWeight: 600,
@@ -1060,7 +1060,7 @@ const LocationOffcanvas = ({
                         overflow: "hidden",
                         cursor: hasLocation ? "pointer" : "default",
                         border: "1.5px solid",
-                        borderColor: isSelected ? "#8059ca" : "#e2e8f0",
+                        borderColor: isSelected ? "#321961" : "#e2e8f0",
                         background: "#fff",
                         boxShadow: isSelected
                           ? "0 4px 20px rgba(128,89,202,0.12)"
@@ -1101,7 +1101,7 @@ const LocationOffcanvas = ({
                               checked={isSelected}
                               onChange={() => handleAddressSelect(address._id, true)}
                               onClick={(e) => e.stopPropagation()}
-                              className="accent-[#8059ca]"
+                              className="accent-[#321961]"
                               style={{ width: "14px", height: "14px", cursor: "pointer", flexShrink: 0 }}
                             />
                           )}
@@ -1114,7 +1114,7 @@ const LocationOffcanvas = ({
                               display: "flex",
                               alignItems: "center",
                               justifyContent: "center",
-                              background: isSelected ? "#8059ca" : "#f1f5f9",
+                              background: isSelected ? "#321961" : "#f1f5f9",
                               flexShrink: 0,
                             }}
                           >
@@ -1127,7 +1127,7 @@ const LocationOffcanvas = ({
                             style={{
                               fontSize: "13px",
                               fontWeight: 600,
-                              color: isSelected ? "#8059ca" : "#334155",
+                              color: isSelected ? "#321961" : "#334155",
                               textTransform: "capitalize",
                             }}
                           >
@@ -1191,7 +1191,7 @@ const LocationOffcanvas = ({
                             }}
                             onMouseEnter={(e) => {
                               e.currentTarget.style.background = "#f5f3ff";
-                              e.currentTarget.style.color = "#8059ca";
+                              e.currentTarget.style.color = "#321961";
                               e.currentTarget.style.borderColor = "#c4a8f0";
                             }}
                             onMouseLeave={(e) => {
@@ -1246,7 +1246,7 @@ const LocationOffcanvas = ({
                         )}
                         {hasLocation && address.location?.address && (
                           <p style={{ margin: "6px 0 0", fontSize: "11px", color: "#64748b", display: "flex", alignItems: "center", gap: "4px" }}>
-                            <i className="fas fa-map-pin" style={{ fontSize: "9px", color: "#8059ca" }} />
+                            <i className="fas fa-map-pin" style={{ fontSize: "9px", color: "#321961" }} />
                             {address.location.address}
                           </p>
                         )}
@@ -1268,7 +1268,7 @@ const LocationOffcanvas = ({
                       style={{
                         fontSize: "12px",
                         fontWeight: 600,
-                        color: "#8059ca",
+                        color: "#321961",
                         background: "#f5f0ff",
                         border: "1.5px solid #ddd0f8",
                         borderRadius: "8px",
@@ -1287,7 +1287,7 @@ const LocationOffcanvas = ({
                   style={{
                     width: "100%",
                     padding: "11px",
-                    background: "linear-gradient(135deg, #8059ca 0%, #9d72e8 100%)",
+                    background: "linear-gradient(135deg, #321961 0%, #9d72e8 100%)",
                     color: "#fff",
                     fontSize: "13px",
                     fontWeight: 600,

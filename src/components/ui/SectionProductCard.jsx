@@ -396,13 +396,13 @@ const SectionProductCard = ({
       <div className="flex flex-col flex-1">
         {/* Manufacturer / Subtitle */}
         {manufacturerName && (
-          <span className="text-[10px] uppercase tracking-wider font-bold text-[#8059ca] mb-1">
+          <span className="text-[10px] uppercase tracking-wider font-bold text-[#321961] mb-1">
             {truncateText(manufacturerName, 20)}
           </span>
         )}
 
         {/* Product Title */}
-        <h4 className="!text-sm !font-bold !text-gray-800 !leading-snug group-hover:text-[#8059ca] transition-colors line-clamp-2 min-h-[40px] !m-0 !mb-2 !capitalize">
+        <h4 className="!text-sm !font-bold !text-gray-800 !leading-snug group-hover:text-[#321961] transition-colors line-clamp-2 min-h-[40px] !m-0 !mb-2 !capitalize">
           {truncateText(productName, titleMaxLength)}
         </h4>
 
@@ -429,11 +429,11 @@ const SectionProductCard = ({
         {/* Pricing Area */}
         {effectivePrice > 0 && (
           <div className="flex items-baseline gap-1.5 mt-auto mb-2">
-            <span className="text-lg font-black text-gray-900 leading-none">
+            <span className="!text-lg font-[600]  text-gray-900 leading-none">
               ₹{formatCurrency(effectivePrice)}
             </span>
             {itemDiscountprice && discount > 0 && (
-              <span className="text-xs text-gray-400 line-through font-medium">
+              <span className="!text-xs text-gray-400 !line-through !font-medium">
                 ₹{formatCurrency(itemPrice)}
               </span>
             )}
@@ -449,7 +449,7 @@ const SectionProductCard = ({
             e.stopPropagation();
             onProductClick(item);
           }}
-          className="!w-full !mt-1.5 !flex !items-center !justify-center !gap-2 !py-2 !px-4 !rounded-sm !text-xs !font-bold !text-white !bg-[#8059ca] hover:!bg-[#6d4db8] !transition-all !duration-300 !shadow-[0_4px_12px_rgba(128,89,202,0.15)] hover:!shadow-[0_6px_20px_rgba(128,89,202,0.25)] !border-none !cursor-pointer"
+          className="!w-full !mt-1.5 !flex !items-center !justify-center !gap-2 !py-2 !px-4 !rounded-sm !text-xs !font-bold !text-white !bg-[#321961] hover:!bg-[#6d4db8] !transition-all !duration-300 !shadow-[0_4px_12px_rgba(128,89,202,0.15)] hover:!shadow-[0_6px_20px_rgba(128,89,202,0.25)] !border-none !cursor-pointer"
         >
           <i className={`fas ${ctaConfig.icon} text-[10px]`} />
           <span>{ctaConfig.label}</span>

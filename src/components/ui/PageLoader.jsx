@@ -6,7 +6,7 @@ export const PAGE_LOADER_IMAGE = "/MediCompares_Logo.png";
 const CATEGORY_THEMES = {
   medicine: {
     image: "/assets/img/loaders/medicine_loader.png",
-    color: "#8059ca",
+    color: "#321961",
     label: "Rx Medicines",
     bg: "from-[#f6f2ff] to-[#fbfaff]",
     subtext: "Comparing prescription medicine prices...",
@@ -155,8 +155,8 @@ const PageLoader = () => {
           width={180}
           style={{ height: "auto" }}
         />
-        <div className="w-12 h-1 rounded-full bg-[#8059ca]/25 overflow-hidden mt-6 relative">
-          <div className="absolute top-0 left-0 h-full bg-[#8059ca] w-1/2 rounded-full animate-[loadingBar_1.5s_infinite_ease-in-out]" />
+        <div className="w-12 h-1 rounded-full bg-[#321961]/25 overflow-hidden mt-6 relative">
+          <div className="absolute top-0 left-0 h-full bg-[#321961] w-1/2 rounded-full animate-[loadingBar_1.5s_infinite_ease-in-out]" />
         </div>
         <style>{`
           @keyframes loadingBar {

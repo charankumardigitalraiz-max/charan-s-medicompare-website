@@ -35,10 +35,10 @@ import {
 const customSelectStyles = {
   control: (provided, state) => ({
     ...provided,
-    borderColor: state.isFocused ? "#8059ca" : "#e9ecef",
+    borderColor: state.isFocused ? "#321961" : "#e9ecef",
     boxShadow: state.isFocused ? "0 0 0 3px rgba(128, 89, 202, 0.15)" : null,
     "&:hover": {
-      borderColor: "#8059ca"
+      borderColor: "#321961"
     },
     borderRadius: "8px",
     padding: "2px 6px",
@@ -50,7 +50,7 @@ const customSelectStyles = {
   option: (provided, state) => ({
     ...provided,
     backgroundColor: state.isSelected
-      ? "#8059ca"
+      ? "#321961"
       : state.isFocused
         ? "#f3effa"
         : "#fff",
@@ -59,7 +59,7 @@ const customSelectStyles = {
     fontSize: "14px",
     padding: "10px 14px",
     "&:active": {
-      backgroundColor: "#8059ca"
+      backgroundColor: "#321961"
     }
   }),
   placeholder: (provided) => ({
@@ -1065,7 +1065,7 @@ export const LabTestCheckout = () => {
           <div className="pt-0 mb-[15px]">
             <Link
               to="/"
-              className="inline-flex items-center gap-2 !text-[#8059ca] !border !border-[#e9d5ff] !rounded-[30px] px-[18px] py-1.5 no-underline !text-[13px] !font-semibold !bg-[#fdfaff] transition-all duration-200 !hover:!text-white !hover:bg-gradient-to-r !hover:from-[#8059ca] !hover:to-[#6f42c1] !hover:border-[#8059ca] !hover:shadow-[0_4px_12px_rgba(128,89,202,0.2)] !shadow-[0_2px_5px_rgba(128,89,202,0.05)]"
+              className="inline-flex items-center gap-2 !text-[#321961] !border !border-[#e9d5ff] !rounded-[30px] px-[18px] py-1.5 no-underline !text-[13px] !font-semibold !bg-[#fdfaff] transition-all duration-200 !hover:!text-white !hover:bg-gradient-to-r !hover:from-[#321961] !hover:to-[#6f42c1] !hover:border-[#321961] !hover:shadow-[0_4px_12px_rgba(128,89,202,0.2)] !shadow-[0_2px_5px_rgba(128,89,202,0.05)]"
             >
               <i className="fas fa-arrow-left text-[11px]" />
               Back to Home
@@ -1074,14 +1074,14 @@ export const LabTestCheckout = () => {
 
           {labTestItems.length === 0 ? (
             <div className="text-center py-8">
-              <i className="fas fa-microscope text-slate-400 mb-3 text-[48px] !text-[#8059ca]" />
+              <i className="fas fa-microscope text-slate-400 mb-3 text-[48px] !text-[#321961]" />
               <h5 className="text-slate-500 font-bold mb-1">
                 Your Lab Cart is Empty
               </h5>
               <p className="text-slate-400 mb-5">No lab tests added to your cart yet</p>
               <Link
                 to="/"
-                className="inline-flex items-center justify-center w-[180px] bg-[#8059ca] hover:bg-[#6d3fc7] text-white font-semibold py-2.5 rounded-full shadow-sm text-sm border-none transition-colors duration-200"
+                className="inline-flex items-center justify-center w-[180px] bg-[#321961] hover:bg-[#6d3fc7] text-white font-semibold py-2.5 rounded-full shadow-sm text-sm border-none transition-colors duration-200"
               >
                 Browse Lab Tests
               </Link>
@@ -1105,7 +1105,7 @@ export const LabTestCheckout = () => {
                           className="w-full h-full object-cover"
                         />
                       ) : (
-                        <i className="fas fa-microscope text-[22px] text-[#8059ca]" />
+                        <i className="fas fa-microscope text-[22px] text-[#321961]" />
                       )}
                     </div>
 
@@ -1123,7 +1123,7 @@ export const LabTestCheckout = () => {
                           labTestItems[0].vendorDetails?.mobile ||
                           labTestItems[0].vendorDetails?.phone) && (
                             <span className="flex items-center gap-1">
-                              <i className="fas fa-phone text-[#8059ca] text-[10px]" />
+                              <i className="fas fa-phone text-[#321961] text-[10px]" />
                               {labTestItems[0].vendorDetails?.businessProfile?.mobile ||
                                 labTestItems[0].vendorDetails?.mobile ||
                                 labTestItems[0].vendorDetails?.phone}
@@ -1135,7 +1135,7 @@ export const LabTestCheckout = () => {
                             <span
                               className="flex items-center gap-1 overflow-hidden text-ellipsis whitespace-nowrap"
                             >
-                              <i className="fas fa-map-marker-alt text-[#8059ca] text-[10px]" />
+                              <i className="fas fa-map-marker-alt text-[#321961] text-[10px]" />
                               <span className="overflow-hidden text-ellipsis whitespace-nowrap max-w-[260px]">
                                 {vendorLocation?.address ||
                                   labTestItems[0].vendorDetails?.businessProfile?.location?.address ||
@@ -1169,13 +1169,13 @@ export const LabTestCheckout = () => {
                     <div
                       className="text-[13px] font-bold text-[#5b21b6] flex items-center gap-2"
                     >
-                      <i className="fas fa-map-marker-alt text-[#8059ca]"></i>
+                      <i className="fas fa-map-marker-alt text-[#321961]"></i>
                       <span>{getAddressTypeLabel()}</span>
                     </div>
                     <div>
                       {collectionMethod === "home" && (
                         <button
-                          className="text-white bg-gradient-to-r from-[#8059ca] to-[#6f42c1] border-none !font-semibold cursor-pointer !text-[11px] px-4 py-1.5 !rounded-[20px] shadow-[0_2px_4px_rgba(0,0,0,0.1)] hover:-translate-y-px transition-all duration-200"
+                          className="text-white bg-gradient-to-r from-[#321961] to-[#6f42c1] border-none !font-semibold cursor-pointer !text-[11px] px-4 py-1.5 !rounded-[20px] shadow-[0_2px_4px_rgba(0,0,0,0.1)] hover:-translate-y-px transition-all duration-200"
                           onClick={() => {
                             const token = localStorage.getItem("medicomparestoken");
                             if (!token) {
@@ -1258,7 +1258,7 @@ export const LabTestCheckout = () => {
                   className="rounded-md border border-[#e9ecef] shadow-[0_10px_25px_-5px_rgba(0,0,0,0.05)] bg-white p-3"
                 >
                   <div className="text-[15px] font-[500] text-[#0f172a] mb-3 flex items-center gap-2">
-                    <i className="fa-solid fa-user-doctor text-[#8059ca] "></i>
+                    <i className="fa-solid fa-user-doctor text-[#321961] "></i>
                     Referred Doctor
                   </div>
                   <Select
@@ -1305,7 +1305,7 @@ export const LabTestCheckout = () => {
                 >
                   {/* Section header — Vendor details (highlighted) */}
                   <div
-                    className="border-[1.5px] border-l-4 border-[#c4b5fd] border-l-[#8059ca] rounded-xl px-4 py-3.5 mb-5 flex items-center gap-3 bg-gradient-to-br from-[#f5f0ff] to-[#ede9ff] shadow-[0_4px_14px_rgba(128,89,202,0.12)]"
+                    className="border-[1.5px] border-l-4 border-[#c4b5fd] border-l-[#321961] rounded-xl px-4 py-3.5 mb-5 flex items-center gap-3 bg-gradient-to-br from-[#f5f0ff] to-[#ede9ff] shadow-[0_4px_14px_rgba(128,89,202,0.12)]"
                   >
                     <div className="flex items-center gap-3 w-full">
                       {/* Vendor icon */}
@@ -1319,7 +1319,7 @@ export const LabTestCheckout = () => {
                             className="w-full h-full object-cover"
                           />
                         ) : (
-                          <i className="fas fa-microscope text-[18px] text-[#8059ca]" />
+                          <i className="fas fa-microscope text-[18px] text-[#321961]" />
                         )}
                       </div>
 
@@ -1334,13 +1334,13 @@ export const LabTestCheckout = () => {
                         <div className="flex flex-wrap gap-3">
                           {(labTestItems[0]?.vendorDetails?.businessProfile?.mobile || labTestItems[0]?.vendorDetails?.mobile || labTestItems[0]?.vendorDetails?.phone) && (
                             <span className="text-[11.5px] text-[#6d28d9] flex items-center gap-1 font-semibold">
-                              <i className="fas fa-phone text-[#8059ca] text-[9px]" />
+                              <i className="fas fa-phone text-[#321961] text-[9px]" />
                               {labTestItems[0]?.vendorDetails?.businessProfile?.mobile || labTestItems[0]?.vendorDetails?.mobile || labTestItems[0]?.vendorDetails?.phone}
                             </span>
                           )}
                           {(vendorLocation?.address || labTestItems[0]?.vendorDetails?.businessProfile?.location?.address || labTestItems[0]?.vendorDetails?.residentaladdress) && (
                             <span className="text-[11.5px] text-[#6d28d9] flex items-center gap-1 overflow-hidden text-ellipsis whitespace-nowrap max-w-[300px] font-medium">
-                              <i className="fas fa-map-marker-alt text-[#8059ca] text-[9px]" />
+                              <i className="fas fa-map-marker-alt text-[#321961] text-[9px]" />
                               {vendorLocation?.address || labTestItems[0]?.vendorDetails?.businessProfile?.location?.address || labTestItems[0]?.vendorDetails?.residentaladdress}
                             </span>
                           )}
@@ -1349,7 +1349,7 @@ export const LabTestCheckout = () => {
 
                       {/* Test count badge */}
                       <div
-                        className="bg-[#8059ca] rounded-lg px-3 py-1.5 text-xs font-bold text-white whitespace-nowrap shrink-0 shadow-[0_2px_6px_rgba(128,89,202,0.3)]"
+                        className="bg-[#321961] rounded-lg px-3 py-1.5 text-xs font-bold text-white whitespace-nowrap shrink-0 shadow-[0_2px_6px_rgba(128,89,202,0.3)]"
                       >
                         {labTestItems.length} test{labTestItems.length !== 1 ? "s" : ""}
                       </div>
@@ -1378,7 +1378,7 @@ export const LabTestCheckout = () => {
                           {/* Patient header */}
                           <div className={`px-4 py-3.5 flex items-center gap-3 ${displayItems.length > 0 ? "border-b border-[#f1f5f9]" : "border-b-0"}`}>
                             {/* Avatar */}
-                            <div className="w-[38px] h-[38px] rounded-full bg-[#8059ca] flex items-center justify-center shrink-0 text-white text-xs font-extrabold tracking-wide">
+                            <div className="w-[38px] h-[38px] rounded-full bg-[#321961] flex items-center justify-center shrink-0 text-white text-xs font-extrabold tracking-wide">
                               {initials}
                             </div>
                             {/* Name & count */}
@@ -1428,7 +1428,7 @@ export const LabTestCheckout = () => {
                                       {resolveImage(item) ? (
                                         <img src={resolveImage(item)} alt={name} className="w-full h-full object-cover" />
                                       ) : (
-                                        <i className="fa-solid fa-flask text-[16px] text-[#8059ca]" />
+                                        <i className="fa-solid fa-flask text-[16px] text-[#321961]" />
                                       )}
                                     </div>
 
@@ -1541,7 +1541,7 @@ export const LabTestCheckout = () => {
             <div className="mb-6 bg-white rounded-md border border-[#e5e7eb] shadow-[0_8px_24px_rgba(15,23,42,0.06)] p-3">
               {/* Heading */}
               <div className="flex items-center gap-2 text-[17px] font-[600] text-[#1f2937] mb-2">
-                <i className="fas fa-percentage text-[#8059ca] text-[18px]"></i>
+                <i className="fas fa-percentage text-[#321961] text-[18px]"></i>
                 <span>Offers & Discounts</span>
               </div>
 
@@ -1549,7 +1549,7 @@ export const LabTestCheckout = () => {
               <div
                 className={`group flex items-center gap-4 p-3 rounded-md cursor-pointer transition-all duration-300 border ${appliedCoupon
                   ? "bg-gradient-to-r from-[#f0fdf4] to-[#ecfdf5] border-[#86efac] shadow-[0_8px_20px_rgba(34,197,94,0.12)]"
-                  : "bg-gradient-to-r from-[#faf5ff] to-[#ffffff] border-[#d8b4fe] hover:border-[#8059ca] "
+                  : "bg-gradient-to-r from-[#faf5ff] to-[#ffffff] border-[#d8b4fe] hover:border-[#321961] "
                   }`}
                 onClick={() => {
                   const token = localStorage.getItem("medicomparestoken");
@@ -1567,7 +1567,7 @@ export const LabTestCheckout = () => {
                 <div
                   className={`w-[42px] h-[42px] rounded-xl flex items-center justify-center text-white text-lg shadow-md ${appliedCoupon
                     ? "bg-gradient-to-br from-[#22c55e] to-[#15803d]"
-                    : "bg-gradient-to-br from-[#8059ca] to-[#6d28d9]"
+                    : "bg-gradient-to-br from-[#321961] to-[#6d28d9]"
                     }`}
                 >
                   <i className="fas fa-tags"></i>
@@ -1630,7 +1630,7 @@ export const LabTestCheckout = () => {
                     placeholder="Enter Coupon Code"
                     value={couponInputText}
                     onChange={(e) => setCouponInputText(e.target.value)}
-                    className="flex-1 min-w-0 border border-slate-300 rounded-l-lg px-3 py-2 text-sm bg-[#f8fafc] outline-none transition-colors focus:border-[#8059ca]"
+                    className="flex-1 min-w-0 border border-slate-300 rounded-l-lg px-3 py-2 text-sm bg-[#f8fafc] outline-none transition-colors focus:border-[#321961]"
                   />
 
                   <button
@@ -1639,7 +1639,7 @@ export const LabTestCheckout = () => {
                       e.preventDefault();
                       handleManualCouponApply();
                     }}
-                    className="px-4 py-2 bg-gradient-to-r from-[#8059ca] to-[#6d28d9] hover:from-[#7148c5] hover:to-[#5b21b6] !text-white !text-sm !font-semibold !rounded-r-lg border-none transition-all duration-200 shrink-0"
+                    className="px-4 py-2 bg-gradient-to-r from-[#321961] to-[#6d28d9] hover:from-[#7148c5] hover:to-[#5b21b6] !text-white !text-sm !font-semibold !rounded-r-lg border-none transition-all duration-200 shrink-0"
                   >
                     Apply
                   </button>
@@ -1659,7 +1659,7 @@ export const LabTestCheckout = () => {
               <div
                 className="text-[15.5px] font-semibold mb-3 text-[#1e293b] flex items-center gap-2"
               >
-                <Calendar size={16} className="text-[#8059ca]" />
+                <Calendar size={16} className="text-[#321961]" />
                 Collection Schedule & Method
               </div>
 
@@ -1673,7 +1673,7 @@ export const LabTestCheckout = () => {
                     <div
                       onClick={() => setCollectionMethod("home")}
                       className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-3.5 rounded-sm cursor-pointer transition-all duration-200 text-[13px] font-semibold ${collectionMethod === "home"
-                        ? "bg-white text-[#8059ca] shadow-[0_2px_6px_rgba(0,0,0,0.08)]"
+                        ? "bg-white text-[#321961] shadow-[0_2px_6px_rgba(0,0,0,0.08)]"
                         : "bg-transparent text-[#64748b]"
                         }`}
                     >
@@ -1685,7 +1685,7 @@ export const LabTestCheckout = () => {
                     <div
                       onClick={() => setCollectionMethod("lab")}
                       className={`flex-1 flex items-center justify-center gap-2 py-2.5 px-3.5 rounded-sm cursor-pointer transition-all duration-200 text-[13px] font-semibold ${collectionMethod === "lab"
-                        ? "bg-white text-[#8059ca] shadow-[0_2px_6px_rgba(0,0,0,0.08)]"
+                        ? "bg-white text-[#321961] shadow-[0_2px_6px_rgba(0,0,0,0.08)]"
                         : "bg-transparent text-[#64748b]"
                         }`}
                     >
@@ -1695,7 +1695,7 @@ export const LabTestCheckout = () => {
                   </div>
                 ) : visitType === "home" ? (
                   <div className="mb-[12px]">
-                    <div className="flex items-center gap-2 px-4 py-3 rounded-[10px] bg-[#fdfaff] text-[#8059ca] font-bold text-[13.5px] border-[1.5px] border-[#e9d5ff]">
+                    <div className="flex items-center gap-2 px-4 py-3 rounded-[10px] bg-[#fdfaff] text-[#321961] font-bold text-[13.5px] border-[1.5px] border-[#e9d5ff]">
                       <i className="fas fa-house-medical text-[15px]" />
                       <span>Home Collection Only</span>
                     </div>
@@ -1725,7 +1725,7 @@ export const LabTestCheckout = () => {
                 <div>
                   <div className="flex justify-between items-center mb-2.5">
                     <div className="flex items-center gap-1.5">
-                      <Clock size={13} className="text-[#8059ca]" />
+                      <Clock size={13} className="text-[#321961]" />
                       <label className="text-[11px] font-bold text-[#475569] m-0 tracking-[0.5px]">
                         APPOINTMENT SLOT
                       </label>
@@ -1733,7 +1733,7 @@ export const LabTestCheckout = () => {
                     <button
                       type="button"
                       onClick={() => setShowSlotPicker(true)}
-                      className="bg-gradient-to-r from-[#8059ca] to-[#6d3fc7] border-none !text-white !rounded-sm px-3.5 py-[7px] !text-xs !font-bold cursor-pointer flex items-center gap-1.5 shadow-[0_2px_6px_rgba(128,89,202,0.35)] tracking-[0.3px] hover:-translate-y-px transition-all duration-200"
+                      className="bg-gradient-to-r from-[#321961] to-[#6d3fc7] border-none !text-white !rounded-sm px-3.5 py-[7px] !text-xs !font-bold cursor-pointer flex items-center gap-1.5 shadow-[0_2px_6px_rgba(128,89,202,0.35)] tracking-[0.3px] hover:-translate-y-px transition-all duration-200"
                     >
                       <Calendar size={12} />
                       {selectedDate && selectedTimeSlot ? "CHANGE SLOT" : "PICK SLOT"}
@@ -1744,7 +1744,7 @@ export const LabTestCheckout = () => {
                     <div
                       className="bg-gradient-to-br from-[#f5f0ff] to-[#ede9ff] rounded-[10px] px-3.5 py-3 border border-[#c4b5fd] flex items-center gap-2.5"
                     >
-                      <span className="w-9 h-9 rounded-[10px] bg-[#8059ca] flex items-center justify-center shrink-0">
+                      <span className="w-9 h-9 rounded-[10px] bg-[#321961] flex items-center justify-center shrink-0">
                         <Calendar size={16} color="#fff" />
                       </span>
                       <div className="flex-1">
@@ -1817,10 +1817,10 @@ export const LabTestCheckout = () => {
                 {homeVisitFee > 0 && (
                   <div className="flex justify-between items-center text-[13px] text-[#475569] mb-3.5 bg-[#fdf8ff] px-3 py-2 rounded-lg border border-dashed border-[#e9d5ff]">
                     <span className="font-semibold flex items-center gap-1.5">
-                      <i className="fas fa-house-medical text-[#8059ca] text-[11px]" />
+                      <i className="fas fa-house-medical text-[#321961] text-[11px]" />
                       Home Visit Fee
                     </span>
-                    <span className="font-bold text-[#8059ca] shrink-0">+ ₹{(serviceDetails?.homeVisitFee || 0).toFixed(2)}</span>
+                    <span className="font-bold text-[#321961] shrink-0">+ ₹{(serviceDetails?.homeVisitFee || 0).toFixed(2)}</span>
                   </div>
                 )}
                 {(walletUsed > 0 && selectedPayment === "online") && (
@@ -1837,9 +1837,9 @@ export const LabTestCheckout = () => {
                 )}
                 <hr className="my-2 border-t-2 border-[#c4b5fd]" />
 
-                <div className="flex justify-between items-center text-[15px] font-semibold text-[#8059ca]">
+                <div className="flex justify-between items-center text-[15px] font-semibold text-[#321961]">
                   <span>Amount To Pay</span>
-                  <span className="text-[#8059ca] text-[17.5px] leading-none">₹{amountToPay.toFixed(2)}</span>
+                  <span className="text-[#321961] text-[17.5px] leading-none">₹{amountToPay.toFixed(2)}</span>
                 </div>
 
                 <div
@@ -1868,31 +1868,31 @@ export const LabTestCheckout = () => {
                 {/* Online Option */}
                 <div
                   className={`flex-1 min-w-0 !border !rounded-md px-3.5 py-2 flex items-center gap-2.5 cursor-pointer transition-all duration-200 ${selectedPayment === "online"
-                    ? "!border-[#8059ca] bg-[#fdfaff] shadow-[0_4px_12px_rgba(128,89,202,0.08)]"
+                    ? "!border-[#321961] bg-[#fdfaff] shadow-[0_4px_12px_rgba(128,89,202,0.08)]"
                     : "!border-[#e2e8f0] bg-white hover:!border-[#cbd5e1] hover:bg-[#fafbfc]"
                     }`}
                   onClick={() => setSelectedPayment("online")}
                   title="Online Payment"
                 >
-                  <div className={`w-7 h-7 rounded-lg flex items-center justify-center text-xs transition-all duration-200 shrink-0 ${selectedPayment === "online" ? "bg-[#8059ca] text-white" : "bg-[#f1f5f9] text-[#64748b]"
+                  <div className={`w-7 h-7 rounded-lg flex items-center justify-center text-xs transition-all duration-200 shrink-0 ${selectedPayment === "online" ? "bg-[#321961] text-white" : "bg-[#f1f5f9] text-[#64748b]"
                     }`}>
                     <i className="fas fa-credit-card" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className={`text-xs font-bold mb-0.5 whitespace-nowrap overflow-hidden text-ellipsis ${selectedPayment === "online" ? "text-[#8059ca]" : "text-[#1e293b]"
+                    <div className={`text-xs font-bold mb-0.5 whitespace-nowrap overflow-hidden text-ellipsis ${selectedPayment === "online" ? "text-[#321961]" : "text-[#1e293b]"
                       }`}>
                       Online Payment
                     </div>
                     <div className="text-[10px] text-[#64748b] whitespace-nowrap overflow-hidden text-ellipsis">UPI, Cards, NetBanking</div>
                   </div>
-                  <div className={`w-3.5 h-3.5 rounded-full border bg-white transition-all duration-200 shrink-0 ${selectedPayment === "online" ? "!border-4 !border-[#8059ca]" : "!border-2 !border-[#cbd5e1]"
+                  <div className={`w-3.5 h-3.5 rounded-full border bg-white transition-all duration-200 shrink-0 ${selectedPayment === "online" ? "!border-4 !border-[#321961]" : "!border-2 !border-[#cbd5e1]"
                     }`} />
                 </div>
 
                 {/* COD Option */}
                 <div
                   className={`flex-1 min-w-0 !border !rounded-md px-3.5 py-2 flex items-center gap-2.5 cursor-pointer transition-all duration-200 ${selectedPayment === "cod"
-                    ? "!border-[#8059ca] bg-[#fdfaff] shadow-[0_4px_12px_rgba(128,89,202,0.08)]"
+                    ? "!border-[#321961] bg-[#fdfaff] shadow-[0_4px_12px_rgba(128,89,202,0.08)]"
                     : "!border-[#e2e8f0] bg-white hover:!border-[#cbd5e1] hover:bg-[#fafbfc]"
                     }`}
                   onClick={() => {
@@ -1901,18 +1901,18 @@ export const LabTestCheckout = () => {
                   }}
                   title="Pay at Sample Collection"
                 >
-                  <div className={`w-7 h-7 rounded-lg flex items-center justify-center text-xs transition-all duration-200 shrink-0 ${selectedPayment === "cod" ? "bg-[#8059ca] text-white" : "bg-[#f1f5f9] text-[#64748b]"
+                  <div className={`w-7 h-7 rounded-lg flex items-center justify-center text-xs transition-all duration-200 shrink-0 ${selectedPayment === "cod" ? "bg-[#321961] text-white" : "bg-[#f1f5f9] text-[#64748b]"
                     }`}>
                     <i className="fas fa-money-bill-wave" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className={`text-xs font-bold mb-0.5 whitespace-nowrap overflow-hidden text-ellipsis ${selectedPayment === "cod" ? "text-[#8059ca]" : "text-[#1e293b]"
+                    <div className={`text-xs font-bold mb-0.5 whitespace-nowrap overflow-hidden text-ellipsis ${selectedPayment === "cod" ? "text-[#321961]" : "text-[#1e293b]"
                       }`}>
                       Pay at Sample Collection
                     </div>
                     <div className="text-[10px] text-[#64748b] whitespace-nowrap overflow-hidden text-ellipsis">Pay at sample collection</div>
                   </div>
-                  <div className={`w-3.5 h-3.5 rounded-full border bg-white transition-all duration-200 shrink-0 ${selectedPayment === "cod" ? "!border-4 !border-[#8059ca]" : "!border-2 !border-[#cbd5e1]"
+                  <div className={`w-3.5 h-3.5 rounded-full border bg-white transition-all duration-200 shrink-0 ${selectedPayment === "cod" ? "!border-4 !border-[#321961]" : "!border-2 !border-[#cbd5e1]"
                     }`} />
                 </div>
               </div>
@@ -1931,7 +1931,7 @@ export const LabTestCheckout = () => {
                   disabled={isSubmitting}
                   className={`flex-1 min-w-0 flex items-center justify-center py-2.5 px-3 !text-white border-none !rounded-[20px] !text-[14.5px] !font-semibold transition-all duration-200 ${isSubmitting
                     ? "bg-slate-350 cursor-not-allowed"
-                    : "bg-gradient-to-r from-[#8059ca] to-[#6f42c1] cursor-pointer shadow-[0_4px_14px_rgba(128,89,202,0.25)] hover:-translate-y-px"
+                    : "bg-gradient-to-r from-[#321961] to-[#6f42c1] cursor-pointer shadow-[0_4px_14px_rgba(128,89,202,0.25)] hover:-translate-y-px"
                     }`}
                 >
                   {isSubmitting ? "Processing..." : "Pay Now"}

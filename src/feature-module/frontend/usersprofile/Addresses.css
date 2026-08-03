@@ -11,7 +11,7 @@
 .address-card:hover {
     transform: translateY(-4px);
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-    border-color: #8059ca !important;
+    border-color: #321961 !important;
 }
 
 .address-title {
@@ -20,7 +20,7 @@
     display: inline-flex;
     align-items: center;
     background: #faf8ff;
-    color: #8059ca;
+    color: #321961;
     padding: 4px 12px;
     border-radius: 20px;
     border: 1px solid #f3effc;
@@ -87,7 +87,7 @@
 
 .add-card:hover {
     transform: translateY(-4px);
-    border: 1.5px dashed #8059ca !important;
+    border: 1.5px dashed #321961 !important;
     background: #faf8ff;
 }
 
@@ -100,7 +100,7 @@
 .map-link {
     background: #faf8ff;
     border: 1px solid #e1d5f5;
-    color: #8059ca;
+    color: #321961;
     text-decoration: none;
     font-weight: 600;
     font-size: 12px;
@@ -114,8 +114,8 @@
 }
 
 .map-link:hover {
-    background: #8059ca;
+    background: #321961;
     color: #fff;
-    border-color: #8059ca;
+    border-color: #321961;
     text-decoration: none;
 }

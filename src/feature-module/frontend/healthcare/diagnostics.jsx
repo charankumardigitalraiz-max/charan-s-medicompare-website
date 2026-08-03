@@ -528,7 +528,7 @@ const diagnostics = ({
 
                             {medicine?.reportsDuration && (
                               <p className="!m-0 !flex !items-center !gap-[5px] !text-[10px] !text-[#444]">
-                                <i className="fa-regular fa-file-lines !text-[#8059ca]"></i>
+                                <i className="fa-regular fa-file-lines !text-[#321961]"></i>
                                 Reports in <strong>{medicine?.reportsDuration}</strong>
                               </p>
                             )}
@@ -609,12 +609,12 @@ const diagnostics = ({
                                       </div>
                                     )}
                                     <div className="!flex !items-center !gap-[4px] !text-[10px] !text-[#444] !mt-[1px]">
-                                      <i className="fa-solid fa-location-dot !text-[#8059ca] !text-[10px]"></i>
+                                      <i className="fa-solid fa-location-dot !text-[#321961] !text-[10px]"></i>
                                       <span className="!truncate">{vendor.address?.length > 22 ? vendor.address.slice(0, 22) + "..." : vendor.address || "Address not available"}</span>
                                     </div>
                                     {test?.distanceInKm && (
                                       <div className="!flex !items-center !gap-[3px] !text-[10px] !text-[#666] !mt-[1px]">
-                                        <i className="isax isax-route-square !text-[#8059ca] !text-[10px]"></i>
+                                        <i className="isax isax-route-square !text-[#321961] !text-[10px]"></i>
                                         <span>{parseFloat(test.distanceInKm).toFixed(1)} km away</span>
                                       </div>
                                     )}
@@ -645,7 +645,7 @@ const diagnostics = ({
           {/* Upload and Book */}
           <div className="!flex !items-center !gap-4 !p-4 !rounded-[14px] !bg-gradient-to-br !from-[#F8F5FE] !to-[#F2EDFE] !border !border-[rgba(125,46,255,0.12)] !cursor-pointer !transition-all !duration-300 hover:!-translate-y-[3px] hover:!shadow-[0_6px_20px_rgba(125,46,255,0.15)] hover:!border-[rgba(125,46,255,0.3)]">
             {/* Icon */}
-            <div className="!relative !shrink-0 !w-[70px] !h-[70px] !bg-gradient-to-br !from-[#8059ca] !to-[#822BD4] !rounded-[16px] !shadow-[0_4px_12px_rgba(125,46,255,0.3)] !flex !items-center !justify-center">
+            <div className="!relative !shrink-0 !w-[70px] !h-[70px] !bg-gradient-to-br !from-[#321961] !to-[#822BD4] !rounded-[16px] !shadow-[0_4px_12px_rgba(125,46,255,0.3)] !flex !items-center !justify-center">
               <i className="fa-solid fa-cloud-arrow-up" style={{ fontSize: "30px", color: "#fff", position: "relative", zIndex: 2, animation: "upload-bounce 2s ease-in-out infinite" }}></i>
               {/* Badge */}
               <div style={{ position: "absolute", top: "-4px", right: "-4px", width: "22px", height: "22px", background: "#FFCA18", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 2px 8px rgba(255,202,24,0.4)", animation: "pulse-badge 1.5s ease-in-out infinite", zIndex: 3 }}>
@@ -662,7 +662,7 @@ const diagnostics = ({
               <p className="!m-0 !mt-1 !text-[13px] !text-[#666] !leading-[1.4]">Upload prescription &amp; place booking</p>
             </div>
             {/* Arrow */}
-            <div className="!shrink-0 !w-[44px] !h-[44px] !rounded-[12px] !flex !items-center !justify-center !transition-all !duration-300 hover:!scale-110" style={{ background: "linear-gradient(135deg, #8059ca 0%, #822BD4 100%)", boxShadow: "0 3px 10px rgba(125,46,255,0.3)" }}>
+            <div className="!shrink-0 !w-[44px] !h-[44px] !rounded-[12px] !flex !items-center !justify-center !transition-all !duration-300 hover:!scale-110" style={{ background: "linear-gradient(135deg, #321961 0%, #822BD4 100%)", boxShadow: "0 3px 10px rgba(125,46,255,0.3)" }}>
               <i className="fa-solid fa-cloud-arrow-up" style={{ color: "#fff", fontSize: "20px" }}></i>
             </div>
           </div>
@@ -705,7 +705,7 @@ const diagnostics = ({
               <h3 className="!m-0 !text-[26px] !font-bold !leading-[1.3] !text-[#1a1a1a]">
                 How to book<br />
                 a Diagnostic test<br />
-                <span className="!text-[#8059ca]">in 3 simple steps</span>
+                <span className="!text-[#321961]">in 3 simple steps</span>
               </h3>
             </div>
 
@@ -714,9 +714,9 @@ const diagnostics = ({
 
               {/* Step 1 */}
               <div className="!relative !flex !flex-col !items-center !text-center">
-                <span className="!inline-block !mb-3 !px-[20px] !py-[7px] !rounded-full !text-[11px] !font-semibold !text-white !tracking-wide" style={{ background: "linear-gradient(135deg, #8059ca 0%, #822BD4 100%)", boxShadow: "0 4px 12px rgba(125,46,255,0.3)" }}>STEP 1</span>
+                <span className="!inline-block !mb-3 !px-[20px] !py-[7px] !rounded-full !text-[11px] !font-semibold !text-white !tracking-wide" style={{ background: "linear-gradient(135deg, #321961 0%, #822BD4 100%)", boxShadow: "0 4px 12px rgba(125,46,255,0.3)" }}>STEP 1</span>
                 <div className="!w-[110px] !h-[110px] !mb-3 !flex !items-center !justify-center !relative !rounded-[24px] !transition-all !duration-300 hover:!-translate-y-[5px] hover:!shadow-[0_12px_32px_rgba(125,46,255,0.3)]" style={{ background: "linear-gradient(135deg, #F8F5FE 0%, #F2EDFE 100%)", boxShadow: "0 8px 24px rgba(125,46,255,0.2)" }}>
-                  <i className="isax isax-mobile" style={{ fontSize: "50px", background: "linear-gradient(135deg,#8059ca,#822BD4)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}></i>
+                  <i className="isax isax-mobile" style={{ fontSize: "50px", background: "linear-gradient(135deg,#321961,#822BD4)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}></i>
                   <div className="!absolute !bottom-[12px] !right-[12px] !flex !items-center !justify-center !rounded-[8px] !border-[2px] !border-white" style={{ width: "45px", height: "32px", background: "linear-gradient(135deg, #FFCA18 0%, #FFB300 100%)", boxShadow: "0 4px 12px rgba(255,202,24,0.4)" }}>
                     <span className="!text-[9px] !font-bold !text-[#1a1a1a]">BOOK</span>
                   </div>
@@ -724,7 +724,7 @@ const diagnostics = ({
                 <h5 className="!mb-1 !text-[18px] !font-semibold !text-[#1a1a1a]">Book Appointment</h5>
                 <p className="!m-0 !text-[12px] !text-[#666] !leading-[1.6]">Select a Test/Package and book an appointment on our platform</p>
                 {/* Connector */}
-                <div className="!hidden md:!block !absolute !top-[52px] !right-[-28px] !w-[52px] !h-[3px] !rounded-[2px] !z-10" style={{ background: "linear-gradient(90deg, #8059ca, #04BD6C)" }}>
+                <div className="!hidden md:!block !absolute !top-[52px] !right-[-28px] !w-[52px] !h-[3px] !rounded-[2px] !z-10" style={{ background: "linear-gradient(90deg, #321961, #04BD6C)" }}>
                   <div style={{ position: "absolute", right: "-6px", top: "50%", transform: "translateY(-50%)", borderLeft: "8px solid #04BD6C", borderTop: "6px solid transparent", borderBottom: "6px solid transparent" }}></div>
                 </div>
               </div>
@@ -832,7 +832,7 @@ const diagnostics = ({
           <div className="!grid !grid-cols-2 md:!grid-cols-3 lg:!grid-cols-5 !gap-4">
 
             {/* Card 1 – 100% Safe & Secure */}
-            <div className="!group !flex !flex-col !items-center !text-center !p-6 !bg-white !rounded-[16px] !border !border-[#e9ecef] !shadow-[0_2px_8px_rgba(0,0,0,0.05)] !cursor-pointer !transition-all !duration-300 hover:!-translate-y-[5px] hover:!shadow-[0_8px_20px_rgba(125,46,255,0.15)] hover:!border-[#8059ca]">
+            <div className="!group !flex !flex-col !items-center !text-center !p-6 !bg-white !rounded-[16px] !border !border-[#e9ecef] !shadow-[0_2px_8px_rgba(0,0,0,0.05)] !cursor-pointer !transition-all !duration-300 hover:!-translate-y-[5px] hover:!shadow-[0_8px_20px_rgba(125,46,255,0.15)] hover:!border-[#321961]">
               <div className="!w-[90px] !h-[90px] !mb-4 !flex !items-center !justify-center !bg-white !rounded-full !border-[2px] !border-[#110EFD] !shadow-[0_2px_8px_rgba(17,14,253,0.15)] !relative !shrink-0">
                 <div className="!relative !w-[60px] !h-[60px]">
                   <i className="fa-solid fa-shield-halved" style={{ fontSize: "48px", color: "#110EFD", position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)" }}></i>
@@ -889,13 +889,13 @@ const diagnostics = ({
             </div>
 
             {/* Card 5 – Competitive Prices */}
-            <div className="!group !col-span-2 md:!col-span-1 !flex !flex-col !items-center !text-center !p-6 !bg-white !rounded-[16px] !border !border-[#e9ecef] !shadow-[0_2px_8px_rgba(0,0,0,0.05)] !cursor-pointer !transition-all !duration-300 hover:!-translate-y-[5px] hover:!shadow-[0_8px_20px_rgba(125,46,255,0.15)] hover:!border-[#8059ca]">
-              <div className="!w-[90px] !h-[90px] !mb-4 !flex !items-center !justify-center !bg-white !rounded-full !border-[2px] !border-[#8059ca] !shadow-[0_2px_8px_rgba(125,46,255,0.15)] !relative !shrink-0">
+            <div className="!group !col-span-2 md:!col-span-1 !flex !flex-col !items-center !text-center !p-6 !bg-white !rounded-[16px] !border !border-[#e9ecef] !shadow-[0_2px_8px_rgba(0,0,0,0.05)] !cursor-pointer !transition-all !duration-300 hover:!-translate-y-[5px] hover:!shadow-[0_8px_20px_rgba(125,46,255,0.15)] hover:!border-[#321961]">
+              <div className="!w-[90px] !h-[90px] !mb-4 !flex !items-center !justify-center !bg-white !rounded-full !border-[2px] !border-[#321961] !shadow-[0_2px_8px_rgba(125,46,255,0.15)] !relative !shrink-0">
                 <div className="!relative !w-[60px] !h-[60px]">
-                  <div style={{ width: "52px", height: "52px", background: "#8059ca", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", boxShadow: "0 2px 8px rgba(125,46,255,0.3)" }}>
+                  <div style={{ width: "52px", height: "52px", background: "#321961", borderRadius: "50%", display: "flex", alignItems: "center", justifyContent: "center", position: "absolute", top: "50%", left: "50%", transform: "translate(-50%,-50%)", boxShadow: "0 2px 8px rgba(125,46,255,0.3)" }}>
                     <span style={{ fontSize: "26px", fontWeight: "700", color: "#fff" }}>%</span>
                   </div>
-                  <div style={{ position: "absolute", top: "-5px", left: "-5px", width: "70px", height: "70px", border: "2px solid #8059ca", borderRadius: "50%", opacity: 0.35 }}></div>
+                  <div style={{ position: "absolute", top: "-5px", left: "-5px", width: "70px", height: "70px", border: "2px solid #321961", borderRadius: "50%", opacity: 0.35 }}></div>
                 </div>
               </div>
               <h5 className="!m-0 !mb-2 !text-[15px] !font-semibold !text-[#1a1a1a]">Competitive Prices</h5>

@@ -2200,7 +2200,7 @@ const ProductDescription = () => {
                   width: "100%",
                   gap: "4px",
                   borderRadius: "10px",
-                  border: "1px solid #8059ca",
+                  border: "1px solid #321961",
                   background: "#fdfaff",
                   boxShadow: "0 2px 5px rgba(125, 46, 255, 0.1)",
                 }}
@@ -2253,7 +2253,7 @@ const ProductDescription = () => {
               disabled={!isInStock || !vendor?.perDayRent}
               style={{
                 width: "100%",
-                background: "linear-gradient(135deg, #8059ca 0%, #822BD4 100%)",
+                background: "linear-gradient(135deg, #321961 0%, #822BD4 100%)",
                 border: "none",
                 fontWeight: 400,
                 opacity: vendor?.perDayRent ? 1 : 0.6,
@@ -2675,7 +2675,7 @@ const ProductDescription = () => {
                           className="pd-vendor-price-old "
                           style={{
                             fontFamily: '"Poppins", sans-serif',
-                            color: "#8059ca",
+                            color: "#321961",
                           }}
                         >
                           ₹{price.toFixed(2)}
@@ -2686,7 +2686,7 @@ const ProductDescription = () => {
                         className="pd-vendor-price-new color-primary"
                         style={{
                           fontFamily: '"Poppins", sans-serif',
-                          color: "#8059ca",
+                          color: "#321961",
                           fontWeight: "600",
                         }}
                       >
@@ -2772,7 +2772,7 @@ const ProductDescription = () => {
                         fontWeight: "600",
                         fontFamily: '"Poppins", sans-serif',
                         whiteSpace: "nowrap",
-                        color: "#8059ca",
+                        color: "#321961",
                       }}
                     >
                       <i
@@ -2802,7 +2802,7 @@ const ProductDescription = () => {
                       style={{
                         fontSize: "9px",
                         marginRight: "4px",
-                        color: "#8059ca",
+                        color: "#321961",
                       }}
                     ></i>
                     {vendor.bussinessdetails.address.slice(0, 26)}
@@ -3000,7 +3000,7 @@ const ProductDescription = () => {
                         className="pd-vendor-price-old "
                         style={{
                           fontFamily: '"Poppins", sans-serif',
-                          color: "#8059ca",
+                          color: "#321961",
                         }}
                       >
                         ₹{price.toFixed(2)}
@@ -3011,7 +3011,7 @@ const ProductDescription = () => {
                       className="pd-vendor-price-new color-primary"
                       style={{
                         fontFamily: '"Poppins", sans-serif',
-                        color: "#8059ca",
+                        color: "#321961",
                         fontWeight: "600",
                       }}
                     >
@@ -3073,7 +3073,7 @@ const ProductDescription = () => {
                     style={{
                       fontSize: "9px",
                       marginRight: "4px",
-                      color: "#8059ca",
+                      color: "#321961",
                     }}
                   ></i>
                   {vendor.bussinessdetails.address.slice(0, 26)}
@@ -3958,7 +3958,7 @@ const ProductDescription = () => {
                                 >
                                   <i
                                     className="fa fa-cogs fa-sm"
-                                    style={{ color: "#8059ca" }}
+                                    style={{ color: "#321961" }}
                                   ></i>{" "}
                                   <strong>Parameters:</strong>{" "}
                                   {tablet.parameterss.length}
@@ -3969,7 +3969,7 @@ const ProductDescription = () => {
                                 <p style={{ fontSize: "12px" }}>
                                   <i
                                     className="fa fa-venus-mars fa-sm"
-                                    style={{ color: "#8059ca" }}
+                                    style={{ color: "#321961" }}
                                   ></i>{" "}
                                   <strong>Gender:</strong> {tablet.gender}
                                 </p>
@@ -3979,7 +3979,7 @@ const ProductDescription = () => {
                                 <p style={{ fontSize: "12px" }}>
                                   <i
                                     className="fa fa-flask fa-sm"
-                                    style={{ color: "#8059ca" }}
+                                    style={{ color: "#321961" }}
                                   ></i>{" "}
                                   <strong>Sample Type:</strong>{" "}
                                   {tablet.smapletype}
@@ -3990,7 +3990,7 @@ const ProductDescription = () => {
                                 <p style={{ fontSize: "12px" }}>
                                   <i
                                     className="fa fa-moon fa-sm"
-                                    style={{ color: "#8059ca" }}
+                                    style={{ color: "#321961" }}
                                   ></i>{" "}
                                   <strong>Fasting:</strong>{" "}
                                   {tablet.isFasting?.charAt(0)?.toUpperCase() +
@@ -4002,7 +4002,7 @@ const ProductDescription = () => {
                                 <p style={{ fontSize: "12px" }}>
                                   <i
                                     className="fa fa-clock fa-sm mt-3"
-                                    style={{ color: "#8059ca" }}
+                                    style={{ color: "#321961" }}
                                   ></i>{" "}
                                   <strong>Duration:</strong> {tablet.duration}
                                 </p>
@@ -4017,7 +4017,7 @@ const ProductDescription = () => {
                                 >
                                   <i
                                     className="fas fa-person fa-sm"
-                                    style={{ color: "#8059ca" }}
+                                    style={{ color: "#321961" }}
                                   ></i>{" "}
                                   <strong>Body Part:</strong> {tablet.bodypart}
                                 </p>
@@ -4032,7 +4032,7 @@ const ProductDescription = () => {
                                 >
                                   <i
                                     className="fas fa-adjust fa-sm"
-                                    style={{ color: "#8059ca" }}
+                                    style={{ color: "#321961" }}
                                   ></i>{" "}
                                   <strong>Contrast:</strong> {tablet.iscontrast}
                                 </p>
@@ -4047,7 +4047,7 @@ const ProductDescription = () => {
                                 >
                                   <i
                                     className="fas fa-microchip fa-sm"
-                                    style={{ color: "#8059ca" }}
+                                    style={{ color: "#321961" }}
                                   ></i>{" "}
                                   <strong>Modal:</strong> {tablet.model}
                                 </p>
@@ -4061,7 +4061,7 @@ const ProductDescription = () => {
                                 >
                                   <i
                                     className="fas fa-toolbox fa-sm"
-                                    style={{ color: "#8059ca" }}
+                                    style={{ color: "#321961" }}
                                   ></i>{" "}
                                   <strong>Machine Type:</strong>{" "}
                                   {tablet.machineType}
@@ -4077,7 +4077,7 @@ const ProductDescription = () => {
                                 >
                                   <i
                                     className="fas fa-file-alt fa-sm"
-                                    style={{ color: "#8059ca" }}
+                                    style={{ color: "#321961" }}
                                   ></i>{" "}
                                   <strong>Reports:</strong>{" "}
                                   {tablet.reportsDuration}
@@ -4095,7 +4095,7 @@ const ProductDescription = () => {
                                           ? "fa-exclamation-circle"
                                           : "fa-question-circle"
                                       } fa-sm`}
-                                    style={{ color: "#8059ca" }}
+                                    style={{ color: "#321961" }}
                                   ></i>{" "}
                                   <strong>Complexity:</strong>{" "}
                                   <span
@@ -4121,7 +4121,7 @@ const ProductDescription = () => {
                                 <p style={{ fontSize: "12px" }}>
                                   <i
                                     className="fa fa-tooth"
-                                    style={{ color: "#8059ca" }}
+                                    style={{ color: "#321961" }}
                                   ></i>{" "}
                                   <strong>Treatment Type:</strong>{" "}
                                   {tablet.treatmenttype}
@@ -4131,7 +4131,7 @@ const ProductDescription = () => {
                                 <p style={{ fontSize: "12px" }}>
                                   <i
                                     className="fa fa-stethoscope fa-sm"
-                                    style={{ color: "#8059ca" }}
+                                    style={{ color: "#321961" }}
                                   ></i>{" "}
                                   <strong>Procedure Type:</strong>{" "}
                                   {tablet.procedureType}
@@ -4142,7 +4142,7 @@ const ProductDescription = () => {
                                 <p style={{ fontSize: "12px" }}>
                                   <i
                                     className="fa fa-clock fa-sm"
-                                    style={{ color: "#8059ca" }}
+                                    style={{ color: "#321961" }}
                                   ></i>{" "}
                                   <strong>Recovery Time:</strong>{" "}
                                   {tablet.recoveryTime}
@@ -4153,7 +4153,7 @@ const ProductDescription = () => {
                                 <p style={{ fontSize: "12px" }}>
                                   <i
                                     className="fas fa-circle-check fa-sm"
-                                    style={{ color: "#8059ca" }}
+                                    style={{ color: "#321961" }}
                                   ></i>{" "}
                                   <strong>Condition:</strong> {tablet.condition}
                                 </p>
@@ -4162,7 +4162,7 @@ const ProductDescription = () => {
                                 <p style={{ fontSize: "12px" }}>
                                   <i
                                     className="fas fa-clock fa-sm"
-                                    style={{ color: "#8059ca" }}
+                                    style={{ color: "#321961" }}
                                   ></i>{" "}
                                   <strong>Shift:</strong>
                                   {tablet.shiftType?.replace(/_/g, " ")}
@@ -4172,7 +4172,7 @@ const ProductDescription = () => {
                                 <p style={{ fontSize: "12px" }}>
                                   <i
                                     className="fas fa-house-user fa-sm"
-                                    style={{ color: "#8059ca" }}
+                                    style={{ color: "#321961" }}
                                   ></i>{" "}
                                   <strong>Type:</strong>{" "}
                                   {tablet.nursecareType?.replace(/_/g, " ")}
@@ -4182,7 +4182,7 @@ const ProductDescription = () => {
                                 <p style={{ fontSize: "12px" }}>
                                   <i
                                     className="fas fa-house-user fa-sm"
-                                    style={{ color: "#8059ca" }}
+                                    style={{ color: "#321961" }}
                                   ></i>{" "}
                                   <strong>Mode:</strong> {tablet.homecareMode}
                                 </p>
@@ -4192,7 +4192,7 @@ const ProductDescription = () => {
                                 <p style={{ fontSize: "12px" }}>
                                   <i
                                     className="fa fa-calendar fa-sm"
-                                    style={{ color: "#8059ca" }}
+                                    style={{ color: "#321961" }}
                                   ></i>{" "}
                                   <strong>Reports in:</strong>{" "}
                                   {tablet.reportDuration}
@@ -4243,7 +4243,7 @@ const ProductDescription = () => {
                                 >
                                   <i
                                     className="fa fa-info-circle fa-sm"
-                                    style={{ color: "#8059ca" }}
+                                    style={{ color: "#321961" }}
                                   ></i>{" "}
                                   Interactions
                                 </h6>
@@ -4306,7 +4306,7 @@ const ProductDescription = () => {
                                   style={{
                                     width: "200px",
                                     background:
-                                      "linear-gradient(135deg, #a878f1, #8059ca, #7541a8)",
+                                      "linear-gradient(135deg, #a878f1, #321961, #7541a8)",
                                     color: "white",
                                     padding: "5px",
                                     textAlign: "center",
@@ -4860,7 +4860,7 @@ const ProductDescription = () => {
           >
             <i
               className="fas fa-times"
-              style={{ fontSize: "24px", color: "#8059ca" }}
+              style={{ fontSize: "24px", color: "#321961" }}
             ></i>
           </div>
 

@@ -91,7 +91,7 @@ const PaymentSuccess = () => {
           <div className="bg-white rounded-[24px] shadow-[0_20px_60px_rgba(128,89,202,0.15)] overflow-hidden">
 
             {/* Top accent strip */}
-            <div className="h-[6px] bg-gradient-to-r from-[#8059ca] to-[#04BD6C]" />
+            <div className="h-[6px] bg-gradient-to-r from-[#321961] to-[#04BD6C]" />
 
             <div className="p-6 md:p-10">
               {/* Success Icon */}
@@ -117,25 +117,25 @@ const PaymentSuccess = () => {
               {/* Order Details Card */}
               <div className="bg-[#f8f5fe] rounded-[16px] p-3 md:p-6 mb-6 border border-[#e8d5ff]">
                 <div className="flex items-center gap-2 mb-4 pb-3 border-b border-[#e0c8ff]">
-                  <i className="fas fa-receipt text-[#8059ca]" />
+                  <i className="fas fa-receipt text-[#321961]" />
                   <h3 className="!text-sm md:!text-base !font-semibold !text-[#333] mb-0">Order Details</h3>
                 </div>
                 <div className="space-y-3.5">
                   <div className="flex justify-between items-center gap-4">
                     <span className="flex items-center gap-2 text-[13px] md:text-sm text-[#666] shrink-0">
-                      <i className="fas fa-hashtag text-[#8059ca]" /> Order ID
+                      <i className="fas fa-hashtag text-[#321961]" /> Order ID
                     </span>
                     <span className="text-[13px] md:text-sm font-semibold text-[#333] break-all text-right">{orderId}</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="flex items-center gap-2 text-[13px] md:text-sm text-[#666]">
-                      <i className="fas fa-calendar-alt text-[#8059ca]" /> Order Date
+                      <i className="fas fa-calendar-alt text-[#321961]" /> Order Date
                     </span>
                     <span className="text-[13px] md:text-sm font-semibold text-[#333]">{currentDate}</span>
                   </div>
                   <div className="flex justify-between items-center">
                     <span className="flex items-center gap-2 text-[13px] md:text-sm text-[#666]">
-                      <i className="fas fa-check-circle text-[#8059ca]" /> Status
+                      <i className="fas fa-check-circle text-[#321961]" /> Status
                     </span>
                     <span className="text-[12px] md:text-[13px] font-semibold text-[#04BD6C] bg-[#e8faf2] px-3 py-1 rounded-full">
                       Confirmed
@@ -166,14 +166,14 @@ const PaymentSuccess = () => {
               <div className="flex flex-col sm:flex-row gap-3 justify-center max-w-md mx-auto">
                 <Link
                   to={viewOrdersLink}
-                  className="flex-1 flex items-center justify-center gap-2 !bg-[#8059ca] hover:!bg-[#6b44b8] !text-white !text-[13px] md:!text-[15px] !font-semibold py-2 px-4 !rounded-[10px] transition-all duration-200 !no-underline whitespace-nowrap"
+                  className="flex-1 flex items-center justify-center gap-2 !bg-[#321961] hover:!bg-[#6b44b8] !text-white !text-[13px] md:!text-[15px] !font-semibold py-2 px-4 !rounded-[10px] transition-all duration-200 !no-underline whitespace-nowrap"
                 >
                   <i className="fas fa-list-alt" />
                   {viewOrdersLabel}
                 </Link>
                 <Link
                   to="/"
-                  className="flex-1 flex items-center justify-center gap-2 !bg-white hover:!bg-[#f5f0ff] !text-[#8059ca] border border-[#8059ca] !text-[13px] md:!text-[15px] !font-semibold py-2 px-4 !rounded-[10px] transition-all duration-200 !no-underline whitespace-nowrap"
+                  className="flex-1 flex items-center justify-center gap-2 !bg-white hover:!bg-[#f5f0ff] !text-[#321961] border border-[#321961] !text-[13px] md:!text-[15px] !font-semibold py-2 px-4 !rounded-[10px] transition-all duration-200 !no-underline whitespace-nowrap"
                 >
                   <i className="fas fa-home" />
                   Back to Home

@@ -635,7 +635,7 @@ const RentalBooking = ({ HomeNavigate, ServiceTabs }) => {
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pb-2 mb-2 border-b border-slate-100 mt-2">
           <div className="flex items-center gap-3.5">
             {HomeNavigate && <HomeNavigate />}
-            <div className="w-11 h-11 rounded-xl bg-purple-50 text-[#8059ca] flex items-center justify-center text-[20px] shrink-0 border border-purple-100/50 shadow-sm">
+            <div className="w-11 h-11 rounded-xl bg-purple-50 text-[#321961] flex items-center justify-center text-[20px] shrink-0 border border-purple-100/50 shadow-sm">
               <i className="fa-solid fa-calendar-days" />
             </div>
 
@@ -669,7 +669,7 @@ const RentalBooking = ({ HomeNavigate, ServiceTabs }) => {
                   setSearchTerm(e.target.value);
                   setCurrentPage(1);
                 }}
-                className="h-[42px] rounded-sm border border-[#e0e0e0] pl-10 pr-4 text-sm w-full outline-none focus:border-[#8059ca] transition-colors"
+                className="h-[42px] rounded-sm border border-[#e0e0e0] pl-10 pr-4 text-sm w-full outline-none focus:border-[#321961] transition-colors"
               />
               <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[#999] pointer-events-none">
                 <i className="fa-solid fa-search" />
@@ -698,10 +698,10 @@ const RentalBooking = ({ HomeNavigate, ServiceTabs }) => {
                 padding: "10px 18px",
                 borderRadius: "10px",
                 border: selectedTabType === service?.fixedType
-                  ? "1px solid #8059ca"
+                  ? "1px solid #321961"
                   : "1px solid #e5e7eb",
                 backgroundColor:
-                  selectedTabType === service?.fixedType ? "#8059ca" : "#ffffff",
+                  selectedTabType === service?.fixedType ? "#321961" : "#ffffff",
                 color: selectedTabType === service?.fixedType ? "#ffffff" : "#374151",
                 fontSize: "14px",
                 fontWeight: "600",
@@ -716,8 +716,8 @@ const RentalBooking = ({ HomeNavigate, ServiceTabs }) => {
               onMouseEnter={(e) => {
                 if (selectedTabType !== service?.fixedType) {
                   e.currentTarget.style.backgroundColor = "#f8f5ff";
-                  e.currentTarget.style.borderColor = "#8059ca";
-                  e.currentTarget.style.color = "#8059ca";
+                  e.currentTarget.style.borderColor = "#321961";
+                  e.currentTarget.style.color = "#321961";
                 }
               }}
               onMouseLeave={(e) => {
@@ -746,7 +746,7 @@ const RentalBooking = ({ HomeNavigate, ServiceTabs }) => {
             {isMobile ? (
               <select
                 value={selectedTab}
-                className="w-full h-[38px] rounded-lg border border-slate-200 px-3 text-[13px] outline-none bg-slate-50 focus:bg-white focus:border-[#8059ca] transition-all duration-200"
+                className="w-full h-[38px] rounded-lg border border-slate-200 px-3 text-[13px] outline-none bg-slate-50 focus:bg-white focus:border-[#321961] transition-all duration-200"
                 onChange={(e) => {
                   setSelectedTab(e.target.value);
                   setCurrentPage(1);
@@ -791,7 +791,7 @@ const RentalBooking = ({ HomeNavigate, ServiceTabs }) => {
                   return (
                     <li className="nav-item" key={tab.id}>
                       <button
-                        className={`py-2.5 px-4 text-[13px] font-semibold !border-b-2 transition-all duration-200 flex items-center gap-1.5 ${isActive ? "!border-[#8059ca] !text-[#8059ca]" : "border-transparent text-slate-500 hover:text-slate-700"}`}
+                        className={`py-2.5 px-4 text-[13px] font-semibold !border-b-2 transition-all duration-200 flex items-center gap-1.5 ${isActive ? "!border-[#321961] !text-[#321961]" : "border-transparent text-slate-500 hover:text-slate-700"}`}
                         onClick={() => {
                           setSelectedTab(tab.id);
                           setCurrentPage(1);
@@ -811,7 +811,7 @@ const RentalBooking = ({ HomeNavigate, ServiceTabs }) => {
         <div className="w-full py-4">
           {loading ? (
             <div className="text-center py-10 flex justify-center items-center">
-              <div className="animate-spin inline-block w-8 h-8 border-4 border-[#8059ca] border-t-transparent rounded-full" role="status">
+              <div className="animate-spin inline-block w-8 h-8 border-4 border-[#321961] border-t-transparent rounded-full" role="status">
                 <span className="sr-only">Loading...</span>
               </div>
             </div>
@@ -850,7 +850,7 @@ const RentalBooking = ({ HomeNavigate, ServiceTabs }) => {
                                         className="w-[18px] h-[18px] rounded-full object-cover"
                                         onError={(e) => { e.currentTarget.src = "/medicine.jpg"; }}
                                       />
-                                      <span className="text-[12px] text-[#8059ca] font-semibold capitalize">
+                                      <span className="text-[12px] text-[#321961] font-semibold capitalize">
                                         {allVendors[0].name}
                                       </span>
                                     </div>
@@ -879,7 +879,7 @@ const RentalBooking = ({ HomeNavigate, ServiceTabs }) => {
                                 onError={(e) => { e.currentTarget.src = "/medicine.jpg"; }}
                               />
                               {order.items && order.items.length > 1 && (
-                                <div className="absolute bottom-0 left-0 right-0 bg-[#8059ca]/85 text-white text-[10px] font-bold text-center py-0.5">
+                                <div className="absolute bottom-0 left-0 right-0 bg-[#321961]/85 text-white text-[10px] font-bold text-center py-0.5">
                                   +{order.items.length - 1} more
                                 </div>
                               )}
@@ -946,7 +946,7 @@ const RentalBooking = ({ HomeNavigate, ServiceTabs }) => {
                           <div className="w-full sm:w-auto flex gap-2 justify-start sm:justify-end flex-wrap">
                             <button
                               type="button"
-                              className="inline-flex items-center justify-center gap-1.5 !rounded-md !text-[11px] !font-medium p-[4px_8px] min-w-fit whitespace-nowrap leading-tight bg-[#8059ca] text-white border border-[#8059ca] transition-all duration-200 no-underline shadow-none hover:bg-[#6f42c1] hover:border-[#6f42c1] focus:bg-[#6f42c1] focus:border-[#6f42c1]"
+                              className="inline-flex items-center justify-center gap-1.5 !rounded-md !text-[11px] !font-medium p-[4px_8px] min-w-fit whitespace-nowrap leading-tight bg-[#321961] text-white border border-[#321961] transition-all duration-200 no-underline shadow-none hover:bg-[#6f42c1] hover:border-[#6f42c1] focus:bg-[#6f42c1] focus:border-[#6f42c1]"
                               onClick={() => handleView(order)}
                             >
                               <i className="fa-solid fa-eye text-[12px] w-3.5 text-center shrink-0"></i> Details
@@ -954,7 +954,7 @@ const RentalBooking = ({ HomeNavigate, ServiceTabs }) => {
                             {order?.paymentStatus !== "pending" &&
                               order?.paymentStatus !== "cancelled" && order?.orderStatus !== "cancelled" && order?.orderStatus !== "failed" && (
                                 <button
-                                  className="inline-flex items-center justify-center gap-1.5 rounded-lg text-[11px] font-medium p-[4px_8px] min-w-fit whitespace-nowrap leading-tight bg-[#8059ca] text-white border border-[#8059ca] transition-all duration-200 no-underline shadow-none hover:bg-[#6f42c1] hover:border-[#6f42c1] focus:bg-[#6f42c1] focus:border-[#6f42c1]"
+                                  className="inline-flex items-center justify-center gap-1.5 rounded-lg text-[11px] font-medium p-[4px_8px] min-w-fit whitespace-nowrap leading-tight bg-[#321961] text-white border border-[#321961] transition-all duration-200 no-underline shadow-none hover:bg-[#6f42c1] hover:border-[#6f42c1] focus:bg-[#6f42c1] focus:border-[#6f42c1]"
                                   onClick={() => {
                                     setSelectedOrder(order);
                                     setTimeout(() => downloadInvoice(), 100);
@@ -966,7 +966,7 @@ const RentalBooking = ({ HomeNavigate, ServiceTabs }) => {
                             {order?.isRated !== true && order?.paymentStatus !== "pending" &&
                               order?.paymentStatus !== "cancelled" && order?.orderStatus !== "cancelled" && order?.orderStatus !== "failed" && (
                                 <button
-                                  className="inline-flex items-center justify-center gap-1.5 rounded-lg text-[11px] font-medium p-[4px_8px] min-w-fit whitespace-nowrap leading-tight bg-[#8059ca] text-white border border-[#8059ca] transition-all duration-200 no-underline shadow-none hover:bg-[#6f42c1] hover:border-[#6f42c1] focus:bg-[#6f42c1] focus:border-[#6f42c1]"
+                                  className="inline-flex items-center justify-center gap-1.5 rounded-lg text-[11px] font-medium p-[4px_8px] min-w-fit whitespace-nowrap leading-tight bg-[#321961] text-white border border-[#321961] transition-all duration-200 no-underline shadow-none hover:bg-[#6f42c1] hover:border-[#6f42c1] focus:bg-[#6f42c1] focus:border-[#6f42c1]"
                                   onClick={() => handleReview(order)}
                                 >
                                   <i className="fa-solid fa-star text-[12px] w-3.5 text-center shrink-0"></i> Review
@@ -975,7 +975,7 @@ const RentalBooking = ({ HomeNavigate, ServiceTabs }) => {
                             {order?.paymentStatus !== "pending" &&
                               order?.paymentStatus !== "cancelled" && order?.orderStatus !== "cancelled" && order?.orderStatus !== "failed" && order?.orderStatus !== "returned" && order?.orderStatus !== "return_requested" && (
                                 <button
-                                  className="inline-flex items-center justify-center gap-1.5 rounded-lg text-[11px] font-medium p-[4px_8px] min-w-fit whitespace-nowrap leading-tight bg-[#8059ca] text-white border border-[#8059ca] transition-all duration-200 no-underline shadow-none hover:bg-[#6f42c1] hover:border-[#6f42c1] focus:bg-[#6f42c1] focus:border-[#6f42c1]"
+                                  className="inline-flex items-center justify-center gap-1.5 rounded-lg text-[11px] font-medium p-[4px_8px] min-w-fit whitespace-nowrap leading-tight bg-[#321961] text-white border border-[#321961] transition-all duration-200 no-underline shadow-none hover:bg-[#6f42c1] hover:border-[#6f42c1] focus:bg-[#6f42c1] focus:border-[#6f42c1]"
                                   onClick={() => handleReturnClick(order)}
                                 >
                                   <i className="fa-solid fa-rotate-left text-[12px] w-3.5 text-center shrink-0"></i> Return
@@ -985,7 +985,7 @@ const RentalBooking = ({ HomeNavigate, ServiceTabs }) => {
                             {order?.isRaiseTicket !== true && order?.paymentStatus !== "pending" &&
                               order?.paymentStatus !== "cancelled" && order?.orderStatus !== "cancelled" && order?.orderStatus !== "failed" && (
                                 <button
-                                  className="inline-flex items-center justify-center gap-1.5 rounded-lg text-[11px] font-medium p-[4px_8px] min-w-fit whitespace-nowrap leading-tight bg-[#8059ca] text-white border border-[#8059ca] transition-all duration-200 no-underline shadow-none hover:bg-[#6f42c1] hover:border-[#6f42c1] focus:bg-[#6f42c1] focus:border-[#6f42c1]"
+                                  className="inline-flex items-center justify-center gap-1.5 rounded-lg text-[11px] font-medium p-[4px_8px] min-w-fit whitespace-nowrap leading-tight bg-[#321961] text-white border border-[#321961] transition-all duration-200 no-underline shadow-none hover:bg-[#6f42c1] hover:border-[#6f42c1] focus:bg-[#6f42c1] focus:border-[#6f42c1]"
                                   onClick={() => handleReportIssue(order)}
                                 >
                                   <i className="fa-solid fa-star text-[12px] w-3.5 text-center shrink-0"></i> Report Issue
@@ -1086,7 +1086,7 @@ const RentalBooking = ({ HomeNavigate, ServiceTabs }) => {
                   <button onClick={() => setShowModel(false)} style={{
                     background: "#f5f3ff", border: "none", borderRadius: "50%",
                     width: "30px", height: "30px", display: "flex", alignItems: "center",
-                    justifyContent: "center", cursor: "pointer", color: "#8059ca", fontSize: "18px", flexShrink: 0,
+                    justifyContent: "center", cursor: "pointer", color: "#321961", fontSize: "18px", flexShrink: 0,
                   }}>&times;</button>
                 </div> */}
 
@@ -1150,7 +1150,7 @@ const RentalBooking = ({ HomeNavigate, ServiceTabs }) => {
                               </div>
                               {vendorName && (
                                 <div className="flex items-center gap-1"
-                                  style={{ fontSize: "11px", color: "#8059ca", marginBottom: "4px" }}>
+                                  style={{ fontSize: "11px", color: "#321961", marginBottom: "4px" }}>
                                   {vendorImg && (
                                     <img src={vendorImg} alt={vendorName}
                                       onError={(e) => { e.currentTarget.src = "/assets/default.png"; }}
@@ -1161,7 +1161,7 @@ const RentalBooking = ({ HomeNavigate, ServiceTabs }) => {
                               )}
                               <div className="flex flex-wrap gap-2 items-center">
                                 {orderItem?.rentalDetails?.rentalPlan && (
-                                  <span style={{ fontSize: "10px", background: "#f3e8ff", color: "#8059ca", padding: "2px 8px", borderRadius: "6px", fontWeight: 600 }}>
+                                  <span style={{ fontSize: "10px", background: "#f3e8ff", color: "#321961", padding: "2px 8px", borderRadius: "6px", fontWeight: 600 }}>
                                     {orderItem.rentalDetails.rentalPlan} plan
                                   </span>
                                 )}
@@ -1179,7 +1179,7 @@ const RentalBooking = ({ HomeNavigate, ServiceTabs }) => {
                           </div>
                           <div style={{ textAlign: "right", flexShrink: 0 }}>
                             <div style={{ fontSize: "10.5px", color: "#94a3b8", marginBottom: "2px", fontWeight: "500" }}>Total</div>
-                            <div style={{ fontWeight: 800, fontSize: "14px", color: "#8059ca" }}>
+                            <div style={{ fontWeight: 800, fontSize: "14px", color: "#321961" }}>
                               ₹{(Number(orderItem?.totalPrice ?? selectedOrder?.billingSummary?.subtotal ?? selectedOrder?.subtotal ?? 0)).toFixed(2)}
                             </div>
                           </div>
@@ -1192,7 +1192,7 @@ const RentalBooking = ({ HomeNavigate, ServiceTabs }) => {
 
               {/* RENTAL PERIOD */}
               <div style={{ padding: "14px 20px 0", borderBottom: "1px solid #f5f5f5" }}>
-                <div style={{ fontSize: "10px", fontWeight: 700, color: "#8059ca", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "10px" }}>
+                <div style={{ fontSize: "10px", fontWeight: 700, color: "#321961", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "10px" }}>
                   Rental Period
                 </div>
                 <div className="grid grid-cols-2 gap-2" style={{ marginBottom: "14px" }}>
@@ -1214,7 +1214,7 @@ const RentalBooking = ({ HomeNavigate, ServiceTabs }) => {
 
               {/* ORDER INFO */}
               <div style={{ padding: "14px 20px 0", borderBottom: "1px solid #f5f5f5" }}>
-                <div style={{ fontSize: "10px", fontWeight: 700, color: "#8059ca", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "10px" }}>
+                <div style={{ fontSize: "10px", fontWeight: 700, color: "#321961", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "10px" }}>
                   Order Info
                 </div>
                 <div className="grid grid-cols-2 gap-2" style={{ marginBottom: "14px" }}>
@@ -1236,7 +1236,7 @@ const RentalBooking = ({ HomeNavigate, ServiceTabs }) => {
 
               {/* BILLING SUMMARY */}
               <div style={{ padding: "14px 20px 20px" }}>
-                <div style={{ fontSize: "10px", fontWeight: 700, color: "#8059ca", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "12px" }}>
+                <div style={{ fontSize: "10px", fontWeight: 700, color: "#321961", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "12px" }}>
                   Billing Summary
                 </div>
                 {(() => {
@@ -1301,7 +1301,7 @@ const RentalBooking = ({ HomeNavigate, ServiceTabs }) => {
 
                 {selectedOrder?.installments?.length > 0 && (
                   <div style={{ marginTop: "18px", paddingTop: "14px", borderTop: "1px dashed #eaeaea" }}>
-                    <div style={{ fontSize: "10.5px", fontWeight: 700, color: "#8059ca", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "10px" }}>
+                    <div style={{ fontSize: "10.5px", fontWeight: 700, color: "#321961", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "10px" }}>
                       Installment Details
                     </div>
                     <div style={{ maxHeight: "200px", overflowY: "auto", border: "1px solid #f0f0f0", borderRadius: "10px", background: "#fcfcfd" }}>
@@ -1371,7 +1371,7 @@ const RentalBooking = ({ HomeNavigate, ServiceTabs }) => {
                     <img
                       src={vendor.imageUrl}
                       alt={vendor.name}
-                      className="w-12 h-12 rounded-full object-cover border-2 border-[#8059ca] shrink-0"
+                      className="w-12 h-12 rounded-full object-cover border-2 border-[#321961] shrink-0"
                       onError={(e) => {
                         e.currentTarget.src = "/assets/default.png";
                       }}
@@ -1389,19 +1389,19 @@ const RentalBooking = ({ HomeNavigate, ServiceTabs }) => {
                   <div className="pt-2 border-t border-dashed border-slate-100">
                     {vendor.phone && (
                       <div className="d-flex align-items-center gap-2 mb-2 text-xs text-slate-600">
-                        <i className="fa-solid fa-phone text-[#8059ca] w-4" />
+                        <i className="fa-solid fa-phone text-[#321961] w-4" />
                         <span>{vendor.phone}</span>
                       </div>
                     )}
                     {vendor.email && (
                       <div className="d-flex align-items-center gap-2 mb-2 text-xs text-slate-600">
-                        <i className="fa-solid fa-envelope text-[#8059ca] w-4" />
+                        <i className="fa-solid fa-envelope text-[#321961] w-4" />
                         <span className="break-all">{vendor.email}</span>
                       </div>
                     )}
                     {vendor.address && (
                       <div className="d-flex align-items-start gap-2 mb-2 text-xs text-slate-600">
-                        <i className="fa-solid fa-location-dot text-[#8059ca] w-4 mt-0.5" />
+                        <i className="fa-solid fa-location-dot text-[#321961] w-4 mt-0.5" />
                         <span>{vendor.address}</span>
                       </div>
                     )}
@@ -1435,7 +1435,7 @@ const RentalBooking = ({ HomeNavigate, ServiceTabs }) => {
                 </span>
                 <button
                   onClick={exportInstallmentsPDF}
-                  className="w-8 h-8 rounded-lg bg-purple-50 text-[#8059ca] flex items-center justify-center border border-purple-100/50 hover:bg-[#8059ca] hover:text-white transition-colors"
+                  className="w-8 h-8 rounded-lg bg-purple-50 text-[#321961] flex items-center justify-center border border-purple-100/50 hover:bg-[#321961] hover:text-white transition-colors"
                 >
                   <i className="fa-solid fa-download"></i>
                 </button>
@@ -1888,7 +1888,7 @@ const RentalBooking = ({ HomeNavigate, ServiceTabs }) => {
                     alignItems: "center",
                     justifyContent: "center",
                     cursor: "pointer",
-                    color: "#8059ca",
+                    color: "#321961",
                     fontSize: "18px",
                     flexShrink: 0,
                   }}
@@ -1902,7 +1902,7 @@ const RentalBooking = ({ HomeNavigate, ServiceTabs }) => {
                 <form onSubmit={handleReturnSubmit}>
                   {/* Items Section */}
                   <div style={{ marginBottom: "20px" }}>
-                    <div style={{ fontSize: "11px", fontWeight: 700, color: "#8059ca", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "12px" }}>
+                    <div style={{ fontSize: "11px", fontWeight: 700, color: "#321961", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "12px" }}>
                       Item(s) to Return
                     </div>
                     <div
@@ -1940,7 +1940,7 @@ const RentalBooking = ({ HomeNavigate, ServiceTabs }) => {
                               style={{
                                 width: "16px",
                                 height: "16px",
-                                accentColor: "#8059ca",
+                                accentColor: "#321961",
                                 cursor: "pointer"
                               }}
                             />
@@ -2098,7 +2098,7 @@ const RentalBooking = ({ HomeNavigate, ServiceTabs }) => {
                         padding: "12px",
                         borderRadius: "10px",
                         border: "none",
-                        background: "#8059ca",
+                        background: "#321961",
                         color: "#fff",
                         fontWeight: "600",
                         fontSize: "14px",

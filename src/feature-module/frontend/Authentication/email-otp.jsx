@@ -207,7 +207,7 @@ const LoginWithOtp = () => {
                             outline: "none",
                             color: "#333"
                           }}
-                          className="border border-[#d1d5db] focus:border-[#8059ca] focus:ring-1 focus:ring-[#8059ca] rounded-[8px]"
+                          className="border border-[#d1d5db] focus:border-[#321961] focus:ring-1 focus:ring-[#321961] rounded-[8px]"
                         />
                       )}
                     />
@@ -243,20 +243,20 @@ const LoginWithOtp = () => {
                   fontSize: "13px",
                   padding: "7px 14px",
                   background: "#f3f0fa",
-                  border: "1.5px solid #8059ca",
+                  border: "1.5px solid #321961",
                   borderRadius: "6px",
-                  color: "#8059ca",
+                  color: "#321961",
                   cursor: "pointer",
                   fontWeight: "500",
                   transition: "all 0.2s ease",
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.background = "#8059ca";
+                  e.currentTarget.style.background = "#321961";
                   e.currentTarget.style.color = "#ffffff";
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.background = "#f3f0fa";
-                  e.currentTarget.style.color = "#8059ca";
+                  e.currentTarget.style.color = "#321961";
                 }}
               >
                 Resend OTP
@@ -299,7 +299,7 @@ const LoginWithOtp = () => {
                 href="/policies/privacy-policy"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[12px] text-[#8059ca] no-underline font-medium"
+                className="text-[12px] text-[#321961] no-underline font-medium"
               >
                 Privacy Policy
               </a>
@@ -308,7 +308,7 @@ const LoginWithOtp = () => {
                 href="/policies/terms-and-conditions"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[12px] text-[#8059ca] no-underline font-medium"
+                className="text-[12px] text-[#321961] no-underline font-medium"
               >
                 Terms and Conditions
               </a>

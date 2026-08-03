@@ -92,7 +92,7 @@ const Referral = ({ HomeNavigate, BackButton, profile }) => {
               <div className="!flex !flex-col sm:!flex-row !justify-between !items-start sm:!items-center !gap-3 !pb-3 !mb-2 !border-b !border-slate-100 !mt-2">
                 <div className="!flex !items-center !gap-3.5">
                   {HomeNavigate && <HomeNavigate />}
-                  <div className="!w-11 !h-11 !rounded-xl !bg-purple-50 !text-[#8059ca] !flex !items-center !justify-center !text-[20px] !shrink-0 !border !border-purple-100/50 !shadow-sm">
+                  <div className="!w-11 !h-11 !rounded-xl !bg-purple-50 !text-[#321961] !flex !items-center !justify-center !text-[20px] !shrink-0 !border !border-purple-100/50 !shadow-sm">
                     <i className="fa-solid fa-user-plus" />
                   </div>
 
@@ -109,7 +109,7 @@ const Referral = ({ HomeNavigate, BackButton, profile }) => {
             </div>
 
             {/* Referral Card */}
-            <div className="!bg-gradient-to-br !from-[#8059ca] !to-[#5a0fd6] !text-white !rounded-[9px] !p-6 !text-center !shadow-md">
+            <div className="!bg-gradient-to-br !from-[#321961] !to-[#5a0fd6] !text-white !rounded-[9px] !p-6 !text-center !shadow-md">
               <FaUserPlus size={40} className="!mb-4 !inline-block" />
               <h3 className="!text-white !m-0 !mb-2.5 !text-xl !font-bold">Invite Friends & Earn Rewards</h3>
               <p className="!text-white !m-0 !mb-5 !opacity-90 !text-sm">
@@ -119,12 +119,12 @@ const Referral = ({ HomeNavigate, BackButton, profile }) => {
               <div className="!bg-white/15 !p-4 !rounded-lg !mb-4">
                 <p className="!m-0 !mb-2.5 !text-xs !text-white !font-medium !uppercase !tracking-wider">Your Referral Code</p>
                 <div className="!flex !justify-center !items-center !gap-3">
-                  <div className="!bg-white !text-[#8059ca] !py-2 !px-4 !rounded-md !font-bold !text-lg !tracking-wider !shadow-sm">
+                  <div className="!bg-white !text-[#321961] !py-2 !px-4 !rounded-md !font-bold !text-lg !tracking-wider !shadow-sm">
                     {profile?.refferalcode}
                   </div>
                   <button
                     onClick={handleCopyLink}
-                    className="!bg-white !text-[#8059ca] !border-0 !py-2.5 !px-4 !rounded-md !font-bold !cursor-pointer !flex !items-center !gap-1.5 !shadow-sm !transition-all !duration-200 hover:!bg-purple-50"
+                    className="!bg-white !text-[#321961] !border-0 !py-2.5 !px-4 !rounded-md !font-bold !cursor-pointer !flex !items-center !gap-1.5 !shadow-sm !transition-all !duration-200 hover:!bg-purple-50"
                   >
                     {isCopied ? <FaCheck /> : <FaCopy />}
                     {isCopied ? "Copied!" : "Copy"}
@@ -134,7 +134,7 @@ const Referral = ({ HomeNavigate, BackButton, profile }) => {
 
               <button
                 onClick={handleShare}
-                className="!bg-white !text-[#8059ca] !border-0 !py-3 !px-6 !rounded-[30px] !font-bold !cursor-pointer !inline-flex !items-center !gap-2 !text-sm !shadow-md !transition-all !duration-300 hover:!-translate-y-0.5 hover:!shadow-lg"
+                className="!bg-white !text-[#321961] !border-0 !py-3 !px-6 !rounded-[30px] !font-bold !cursor-pointer !inline-flex !items-center !gap-2 !text-sm !shadow-md !transition-all !duration-300 hover:!-translate-y-0.5 hover:!shadow-lg"
               >
                 <FaShareAlt /> Share Referral Link
               </button>
@@ -162,7 +162,7 @@ const Referral = ({ HomeNavigate, BackButton, profile }) => {
                   }
                 ].map((item, index) => (
                   <div key={index} className="!flex !gap-4 !items-start">
-                    <div className="!bg-purple-50 !text-[#8059ca] !w-8 !h-8 !rounded-full !flex !items-center !justify-center !shrink-0 !font-bold !text-sm !border !border-purple-100/50">
+                    <div className="!bg-purple-50 !text-[#321961] !w-8 !h-8 !rounded-full !flex !items-center !justify-center !shrink-0 !font-bold !text-sm !border !border-purple-100/50">
                       {item.step}
                     </div>
                     <div>

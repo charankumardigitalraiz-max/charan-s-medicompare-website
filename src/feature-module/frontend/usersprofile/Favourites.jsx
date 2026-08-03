@@ -375,7 +375,7 @@ const Favourites = ({ HomeNavigate, BackButton }) => {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-2 mb-2 border-b border-slate-100 mt-2">
         <div className="flex items-center gap-3.5">
           {HomeNavigate && <HomeNavigate />}
-          <div className="w-11 h-11 rounded-xl bg-purple-50 text-[#8059ca] flex items-center justify-center text-[20px] shrink-0 border border-purple-100/50 shadow-sm">
+          <div className="w-11 h-11 rounded-xl bg-purple-50 text-[#321961] flex items-center justify-center text-[20px] shrink-0 border border-purple-100/50 shadow-sm">
             <i className="fa-solid fa-heart" />
           </div>
 
@@ -396,7 +396,7 @@ const Favourites = ({ HomeNavigate, BackButton }) => {
               placeholder="Search favourites..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="h-[42px] rounded-sm border border-[#e0e0e0] pl-10 pr-4 text-sm w-full outline-none focus:border-[#8059ca] transition-colors"
+              className="h-[42px] rounded-sm border border-[#e0e0e0] pl-10 pr-4 text-sm w-full outline-none focus:border-[#321961] transition-colors"
             />
             <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[#999] pointer-events-none">
               <i className="fa-solid fa-search" />
@@ -575,7 +575,7 @@ const Favourites = ({ HomeNavigate, BackButton }) => {
                     <div className="flex items-center justify-between gap-1 min-w-0">
                       {(item?.brands?.name || item?.brand?.name || item?.manufacture?.name) && (
                         <span
-                          className="text-[10.5px] text-[#8059ca] overflow-hidden text-ellipsis whitespace-nowrap tracking-[0.02em] bg-[#f5f3ff] px-2 py-0.5 rounded-md border border-[#7d2eff]/10 inline-block max-w-full"
+                          className="text-[10.5px] text-[#321961] overflow-hidden text-ellipsis whitespace-nowrap tracking-[0.02em] bg-[#f5f3ff] px-2 py-0.5 rounded-md border border-[#7d2eff]/10 inline-block max-w-full"
                           title={item?.brands?.name || item?.brand?.name || item?.manufacture?.name}
                         >
                           By {item?.brands?.name || item?.brand?.name || item?.manufacture?.name}
@@ -617,7 +617,7 @@ const Favourites = ({ HomeNavigate, BackButton }) => {
                     {/* View Details Button */}
                     <button
                       onClick={(e) => handleProductClick(item, e)}
-                      className="block w-full text-center py-[4px] px-4 bg-[#8059ca] text-white !rounded-md border-none !text-[12px] !font-medium transition-all duration-300 cursor-pointer mt-auto hover:bg-[#6b1fe6] hover:-translate-y-px hover:shadow-[0_4px_12px_rgba(125,46,255,0.3)]"
+                      className="block w-full text-center py-[4px] px-4 bg-[#321961] text-white !rounded-md border-none !text-[12px] !font-medium transition-all duration-300 cursor-pointer mt-auto hover:bg-[#6b1fe6] hover:-translate-y-px hover:shadow-[0_4px_12px_rgba(125,46,255,0.3)]"
                     >
                       View Details
                     </button>

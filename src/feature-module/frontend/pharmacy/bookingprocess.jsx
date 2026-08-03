@@ -43,7 +43,7 @@ import { Calendar, Clock, Check } from "react-feather";
 
 const TOKEN_STORAGE_KEY = "medicomparestoken";
 const SUPPORT_WHATSAPP_NUMBER = "919010357778";
-const PRIMARY_COLOR = "#8059ca";
+const PRIMARY_COLOR = "#321961";
 const PRIMARY_SECTION_BG = "#f8f4ff";
 
 // react-select is styled through its own `styles` prop API (JS objects, not
@@ -52,10 +52,10 @@ const PRIMARY_SECTION_BG = "#f8f4ff";
 const customSelectStyles = {
   control: (provided, state) => ({
     ...provided,
-    borderColor: state.isFocused ? "#8059ca" : "#e9ecef",
+    borderColor: state.isFocused ? "#321961" : "#e9ecef",
     boxShadow: state.isFocused ? "0 0 0 3px rgba(128, 89, 202, 0.15)" : null,
     "&:hover": {
-      borderColor: "#8059ca"
+      borderColor: "#321961"
     },
     borderRadius: "8px",
     padding: "2px 6px",
@@ -67,7 +67,7 @@ const customSelectStyles = {
   option: (provided, state) => ({
     ...provided,
     backgroundColor: state.isSelected
-      ? "#8059ca"
+      ? "#321961"
       : state.isFocused
         ? "#f3effa"
         : "#fff",
@@ -76,7 +76,7 @@ const customSelectStyles = {
     fontSize: "14px",
     padding: "10px 14px",
     "&:active": {
-      backgroundColor: "#8059ca"
+      backgroundColor: "#321961"
     }
   }),
   placeholder: (provided) => ({
@@ -1376,7 +1376,7 @@ const BookingProcess = () => {
         <div className="!mb-3">
           <button
             onClick={() => navigate(-1)}
-            className="!flex !items-center !gap-[6px] !p-[4px_10px] !border !border-[#e0e0e0] !bg-white !text-[#333] !font-[500] !text-[12px] !rounded-[6px] !shadow-sm !cursor-pointer !transition-all !duration-300 hover:!border-[#8059ca] hover:!text-[#8059ca] hover:!bg-[#f8f5ff] hover:!shadow-[0_4px_8px_rgba(125,46,255,0.15)] hover:!-translate-y-px"
+            className="!flex !items-center !gap-[6px] !p-[4px_10px] !border !border-[#e0e0e0] !bg-white !text-[#333] !font-[500] !text-[12px] !rounded-[6px] !shadow-sm !cursor-pointer !transition-all !duration-300 hover:!border-[#321961] hover:!text-[#321961] hover:!bg-[#f8f5ff] hover:!shadow-[0_4px_8px_rgba(125,46,255,0.15)] hover:!-translate-y-px"
           >
             <i className="fas fa-arrow-left text-[11px]"></i>
             <span className="text-[12px] font-medium">Back</span>
@@ -1419,7 +1419,7 @@ const BookingProcess = () => {
                           <div className="border border-[#e0e0e0] rounded-[10px] p-4 bg-white text-sm text-[#333] shadow-[0_2px_8px_rgba(0,0,0,0.05)]">
                             <div className="font-bold mb-2 flex items-center justify-between gap-2">
                               <div className="flex items-center gap-[5px]">
-                                <i className="fas fa-hospital text-[#8059ca]"></i>
+                                <i className="fas fa-hospital text-[#321961]"></i>
                                 <span className="text-sm font-semibold text-black m-0">Provider Address</span>
                               </div>
                               {data?.businessDetails?.location?.coordinates &&
@@ -1429,7 +1429,7 @@ const BookingProcess = () => {
                                       href={`https://www.google.com/maps/search/?api=1&query=${data.businessDetails.location.coordinates[1]},${data.businessDetails.location.coordinates[0]}`}
                                       target="_blank"
                                       rel="noopener noreferrer"
-                                      className="inline-flex items-center gap-2 py-[5px] px-2.5 !bg-[#8059ca] text-white !text-sm !font-medium no-underline !rounded-sm border border-[#6d46b5] shadow-[0_3px_8px_rgba(128,89,202,0.25)] transition-all duration-[250ms] ease cursor-pointer hover:bg-[#6d46b5] hover:-translate-y-0.5 hover:shadow-[0_6px_14px_rgba(128,89,202,0.35)]"
+                                      className="inline-flex items-center gap-2 py-[5px] px-2.5 !bg-[#321961] text-white !text-sm !font-medium no-underline !rounded-sm border border-[#6d46b5] shadow-[0_3px_8px_rgba(128,89,202,0.25)] transition-all duration-[250ms] ease cursor-pointer hover:bg-[#6d46b5] hover:-translate-y-0.5 hover:shadow-[0_6px_14px_rgba(128,89,202,0.35)]"
                                     >
                                       <i className="fas fa-map-marked-alt"></i>
                                       View on Map
@@ -1460,12 +1460,12 @@ const BookingProcess = () => {
                             <div className="rounded-md overflow-hidden border border-[#e9ecef] shadow-[0_10px_25px_-5px_rgba(0,0,0,0.05),0_8px_10px_-6px_rgba(0,0,0,0.05)] bg-white">
                               <div className="flex justify-between items-center px-3 py-4 bg-[#faf8ff] border-b border-[#f3e8ff]">
                                 <div className="text-[13px] font-bold text-[#5b21b6] flex items-center gap-2">
-                                  <i className="fas fa-map-marker-alt text-[#8059ca]"></i>
+                                  <i className="fas fa-map-marker-alt text-[#321961]"></i>
                                   <span>{getAddressTypeLabel()}</span>
                                 </div>
                                 <div>
                                   <button
-                                    className="text-white bg-gradient-to-br from-[#8059ca] to-[#6f42c1] border-0 !font-semibold cursor-pointer !text-[11px] px-4 py-1.5 !rounded-[5px] shadow-[0_2px_4px_rgba(0,0,0,0.1)]"
+                                    className="text-white bg-gradient-to-br from-[#321961] to-[#6f42c1] border-0 !font-semibold cursor-pointer !text-[11px] px-4 py-1.5 !rounded-[5px] shadow-[0_2px_4px_rgba(0,0,0,0.1)]"
                                     onClick={() => {
                                       const token =
                                         localStorage.getItem("medicomparestoken");
@@ -1534,7 +1534,7 @@ const BookingProcess = () => {
                             <div className="flex flex-1">
                               <label
                                 className={`flex w-full items-center justify-center !gap-2 rounded-sm border px-3 py-1 shadow-sm transition-all duration-200 ${personType === "self"
-                                  ? "!border-[#8059ca] bg-[#8059ca] text-white"
+                                  ? "!border-[#321961] bg-[#321961] text-white"
                                   : "!border-slate-300 bg-white hover:bg-white/50"
                                   }`}
                               >
@@ -1569,7 +1569,7 @@ const BookingProcess = () => {
                             <div className="flex flex-1">
                               <label
                                 className={`flex w-full !items-center !justify-center !gap-2 !rounded-sm !border px-3 py-1 shadow-sm transition-all duration-200 ${personType === "forWhom"
-                                  ? "!border-[#8059ca] !bg-[#8059ca] text-white"
+                                  ? "!border-[#321961] !bg-[#321961] text-white"
                                   : "!border-slate-300 !bg-white hover:bg-white/50"
                                   }`}
                               >
@@ -1803,78 +1803,78 @@ const BookingProcess = () => {
                           <ul className="list-none p-0 mt-0 mb-3">
                             {data?.medicineDetails?.form && (
                               <li className="text-[13px] text-gray-600 mb-1.5 flex items-center gap-2">
-                                <i className="fas fa-capsules text-[#8059ca] text-xs"></i>
+                                <i className="fas fa-capsules text-[#321961] text-xs"></i>
                                 Form : {data?.medicineDetails?.form}
                               </li>
                             )}
 
                             {data?.medicineDetails?.strength && (
                               <li className="text-[13px] text-gray-600 mb-1.5 flex items-center gap-2">
-                                <i className="fas fa-bolt text-[#8059ca] text-xs"></i>
+                                <i className="fas fa-bolt text-[#321961] text-xs"></i>
                                 Strength : {data?.medicineDetails?.strength}
                               </li>
                             )}
 
                             {data?.medicineDetails?.duration && (
                               <li className="text-[13px] text-gray-600 mb-1.5 flex items-center gap-2">
-                                <i className="fas fa-clock text-[#8059ca] text-xs"></i>
+                                <i className="fas fa-clock text-[#321961] text-xs"></i>
                                 Duration : {data?.medicineDetails?.duration}
                               </li>
                             )}
                             {data?.medicineDetails?.shiftType && (
                               <li className="text-[13px] text-gray-600 mb-1.5 flex items-center gap-2">
-                                <i className="fas fa-clock text-[#8059ca] text-xs"></i>
+                                <i className="fas fa-clock text-[#321961] text-xs"></i>
                                 Shift Type : {data?.medicineDetails?.shiftType}
                               </li>
                             )}
                             {data?.medicineDetails?.nursecareType && (
                               <li className="text-[13px] text-gray-600 mb-1.5 flex items-center gap-2">
-                                <i className="fas fa-clock text-[#8059ca] text-xs"></i>
+                                <i className="fas fa-clock text-[#321961] text-xs"></i>
                                 Type : {data?.medicineDetails?.nursecareType}
                               </li>
                             )}
                             {data?.medicineDetails?.gender && (
                               <li className="text-[13px] text-gray-600 mb-1.5 flex items-center gap-2">
-                                <i className="fas fa-venus-mars text-[#8059ca] text-xs"></i>
+                                <i className="fas fa-venus-mars text-[#321961] text-xs"></i>
                                 Gender : {data?.medicineDetails?.gender}
                               </li>
                             )}
                             {data?.medicineDetails?.complexity && (
                               <li className="text-[13px] text-gray-600 mb-1.5 flex items-center gap-2">
-                                <i className="fas fa-layer-group text-[#8059ca] text-xs"></i>
+                                <i className="fas fa-layer-group text-[#321961] text-xs"></i>
                                 Complexity : {data?.medicineDetails?.complexity}
                               </li>
                             )}
 
                             {data?.medicineDetails?.model && (
                               <li className="text-[13px] text-gray-600 mb-1.5 flex items-center gap-2">
-                                <i className="fas fa-cube text-[#8059ca] text-xs"></i>
+                                <i className="fas fa-cube text-[#321961] text-xs"></i>
                                 Model : {data?.medicineDetails?.model}
                               </li>
                             )}
                             {data?.medicineDetails?.condition && (
                               <li className="!text-[13px] !text-gray-600 mb-1.5 flex items-center gap-2">
-                                <i className="fas fa-info-circle !text-[#8059ca] !text-xs"></i>
+                                <i className="fas fa-info-circle !text-[#321961] !text-xs"></i>
                                 Condition : {data?.medicineDetails?.condition}
                               </li>
                             )}
                             {data?.medicineDetails?.machineType && (
                               <li className="!text-[13px] !text-gray-600 mb-1.5 flex items-center gap-2">
-                                <i className="fas fa-cogs !text-[#8059ca] !text-xs"></i>
+                                <i className="fas fa-cogs !text-[#321961] !text-xs"></i>
                                 Machine Type : {data?.medicineDetails?.machineType}
                               </li>
                             )}
 
                             {data?.medicineDetails?.compositionDetails?.name && (
                               <li className="!text-[13px] !text-gray-600 mb-1.5 flex items-center gap-2">
-                                <i className="fas fa-mortar-pestle !text-[#8059ca] !text-xs"></i>
+                                <i className="fas fa-mortar-pestle !text-[#321961] !text-xs"></i>
                                 Composition : {data?.medicineDetails?.compositionDetails?.name}
                               </li>
                             )}
 
                             {data?.medicineDetails?.reportsDuration && (
                               <li className="!text-[13px] !text-gray-600 mb-1.5 flex items-center gap-2">
-                                <i className="fas fa-clock !text-[#8059ca] !text-xs"></i>
+                                <i className="fas fa-clock !text-[#321961] !text-xs"></i>
                                 {data?.medicineDetails?.reportsDuration.slice(0, 40) ||
                                   data?.reportsDuration ||
                                   "24"}
@@ -1882,7 +1882,7 @@ const BookingProcess = () => {
                             )}
                             {testsCount && (
                               <li className="!text-[13px] !text-gray-600 mb-1.5 flex items-center gap-2">
-                                <i className="fas fa-vial !text-[#8059ca] !text-xs"></i>
+                                <i className="fas fa-vial !text-[#321961] !text-xs"></i>
                                 Includes {testsCount} parameters
                               </li>
                             )}
@@ -1957,7 +1957,7 @@ const BookingProcess = () => {
                       {/* Visit Type Option */}
                       {serviceDetails?.visitType && (
                         <div className="!mb-4 !pb-1">
-                          <h6 className="!text-[11px] !font-semibold !text-[#8059ca] !uppercase !tracking-wide !mb-2.5">
+                          <h6 className="!text-[11px] !font-semibold !text-[#321961] !uppercase !tracking-wide !mb-2.5">
                             Visit Type
                           </h6>
                           {serviceDetails.visitType.toLowerCase() === "both" ? (
@@ -1965,14 +1965,14 @@ const BookingProcess = () => {
                               <button
                                 type="button"
                                 onClick={() => setSelectedVisitType("home")}
-                                className={`!flex-1 !py-2 !px-3 !rounded-lg !font-semibold !text-xs !cursor-pointer !transition-all !duration-200 !flex !items-center !justify-center !gap-1.5 ${selectedVisitType === "home" ? "!border-2 !border-[#8059ca] !bg-[#f8f4ff] !text-[#8059ca]" : "!border !border-[#e2e8f0] !bg-white !text-[#333]"}`}
+                                className={`!flex-1 !py-2 !px-3 !rounded-lg !font-semibold !text-xs !cursor-pointer !transition-all !duration-200 !flex !items-center !justify-center !gap-1.5 ${selectedVisitType === "home" ? "!border-2 !border-[#321961] !bg-[#f8f4ff] !text-[#321961]" : "!border !border-[#e2e8f0] !bg-white !text-[#333]"}`}
                               >
                                 <i className="fas fa-home"></i> Home Visit
                               </button>
                               <button
                                 type="button"
                                 onClick={() => setSelectedVisitType("center")}
-                                className={`!flex-1 !py-2 !px-3 !rounded-lg !font-semibold !text-xs !cursor-pointer !transition-all !duration-200 !flex !items-center !justify-center !gap-1.5 ${selectedVisitType === "center" ? "!border-2 !border-[#8059ca] !bg-[#f8f4ff] !text-[#8059ca]" : "!border !border-[#e2e8f0] !bg-white !text-[#333]"}`}
+                                className={`!flex-1 !py-2 !px-3 !rounded-lg !font-semibold !text-xs !cursor-pointer !transition-all !duration-200 !flex !items-center !justify-center !gap-1.5 ${selectedVisitType === "center" ? "!border-2 !border-[#321961] !bg-[#f8f4ff] !text-[#321961]" : "!border !border-[#e2e8f0] !bg-white !text-[#333]"}`}
                               >
                                 <i className="fas fa-building"></i> Visit Center
                               </button>
@@ -1993,7 +1993,7 @@ const BookingProcess = () => {
 
                       <div className="flex justify-between items-center mb-2.5">
                         <div className="flex items-center gap-1.5">
-                          <Clock size={13} className="text-[#8059ca]" />
+                          <Clock size={13} className="text-[#321961]" />
                           <label className="text-[11px] font-bold text-[#475569] m-0 tracking-[0.5px]">
                             APPOINTMENT SLOT
                           </label>
@@ -2001,7 +2001,7 @@ const BookingProcess = () => {
                         <button
                           type="button"
                           onClick={() => setShowSlotPicker(true)}
-                          className="bg-gradient-to-r from-[#8059ca] to-[#6d3fc7] border-none !text-white !rounded-sm px-3.5 py-[7px] !text-xs !font-bold cursor-pointer flex items-center gap-1.5 shadow-[0_2px_6px_rgba(128,89,202,0.35)] tracking-[0.3px] hover:-translate-y-px transition-all duration-200"
+                          className="bg-gradient-to-r from-[#321961] to-[#6d3fc7] border-none !text-white !rounded-sm px-3.5 py-[7px] !text-xs !font-bold cursor-pointer flex items-center gap-1.5 shadow-[0_2px_6px_rgba(128,89,202,0.35)] tracking-[0.3px] hover:-translate-y-px transition-all duration-200"
                         >
                           <Calendar size={12} />
                           {selectedDate && selectedTimeSlot ? "CHANGE SLOT" : "PICK SLOT"}
@@ -2012,7 +2012,7 @@ const BookingProcess = () => {
                         <div
                           className="bg-gradient-to-br from-[#f5f0ff] to-[#ede9ff] rounded-[10px] px-3.5 py-3 border border-[#c4b5fd] flex items-center gap-2.5"
                         >
-                          <span className="w-9 h-9 rounded-[10px] bg-[#8059ca] flex items-center justify-center shrink-0">
+                          <span className="w-9 h-9 rounded-[10px] bg-[#321961] flex items-center justify-center shrink-0">
                             <Calendar size={16} color="#fff" />
                           </span>
                           <div className="flex-1">
@@ -2074,7 +2074,7 @@ const BookingProcess = () => {
                             <div
                               className={`group !flex !items-center !gap-3.5 !rounded-xl !border !p-3 !cursor-pointer !transition-all !duration-300 ${appliedCoupon
                                 ? "!bg-gradient-to-r !from-[#f0fdf4] !to-[#ecfdf5] !border-[#86efac] !shadow-[0_4px_12px_rgba(34,197,94,0.06)]"
-                                : "!bg-gradient-to-r !from-[#fbf9ff] !to-[#ffffff] !border-[#e2d5f8] hover:!border-[#8059ca]"
+                                : "!bg-gradient-to-r !from-[#fbf9ff] !to-[#ffffff] !border-[#e2d5f8] hover:!border-[#321961]"
                                 }`}
                               onClick={(e) => {
                                 e.preventDefault();
@@ -2094,7 +2094,7 @@ const BookingProcess = () => {
                               <div
                                 className={`!flex !h-10 !w-10 !items-center !justify-center !rounded-xl !text-base !text-white !shadow-sm ${appliedCoupon
                                   ? "!bg-gradient-to-br !from-[#22c55e] !to-[#15803d]"
-                                  : "!bg-gradient-to-br !from-[#8059ca] !to-[#6d28d9]"
+                                  : "!bg-gradient-to-br !from-[#321961] !to-[#6d28d9]"
                                   }`}
                               >
                                 <i className="fas fa-tags"></i>
@@ -2154,7 +2154,7 @@ const BookingProcess = () => {
                                 placeholder="Enter Coupon Code"
                                 value={couponInputText}
                                 onChange={(e) => setCouponInputText(e.target.value)}
-                                className="!flex-1 !min-w-0 !border !border-slate-200 !rounded-l-xl !py-2 !px-3 !text-[12.5px] !outline-none !transition-colors !duration-200 focus:!border-[#8059ca] !bg-white"
+                                className="!flex-1 !min-w-0 !border !border-slate-200 !rounded-l-xl !py-2 !px-3 !text-[12.5px] !outline-none !transition-colors !duration-200 focus:!border-[#321961] !bg-white"
                               />
                               <button
                                 type="button"
@@ -2162,7 +2162,7 @@ const BookingProcess = () => {
                                   e.preventDefault();
                                   handleManualCouponApply();
                                 }}
-                                className="!bg-[#8059ca] !text-white !border-0 !rounded-r-xl !py-2 !px-4 !text-[12.5px] !font-semibold !cursor-pointer !transition-colors !duration-200 hover:!bg-[#6f42c1] !shrink-0"
+                                className="!bg-[#321961] !text-white !border-0 !rounded-r-xl !py-2 !px-4 !text-[12.5px] !font-semibold !cursor-pointer !transition-colors !duration-200 hover:!bg-[#6f42c1] !shrink-0"
                               >
                                 Apply
                               </button>
@@ -2223,7 +2223,7 @@ const BookingProcess = () => {
                           <span className="!text-[13.5px] !font-semibold !text-slate-800">
                             Amount to Pay
                           </span>
-                          <span className="!text-base !font-semibold !text-[#8059ca]">
+                          <span className="!text-base !font-semibold !text-[#321961]">
                             ₹{amountToPay.toFixed(2)}
                           </span>
                         </div>
@@ -2250,27 +2250,27 @@ const BookingProcess = () => {
                       {/* Online Option */}
                       <div
                         className={`!flex-1 !min-w-0 !border !rounded-xl !px-3.5 !py-3 !flex !items-center !gap-2.5 !cursor-pointer !transition-all !duration-200 ${paymentMethod === "online"
-                          ? "!border-[#8059ca] !bg-[#fdfaff] !shadow-[0_4px_12px_rgba(128,89,202,0.06)]"
+                          ? "!border-[#321961] !bg-[#fdfaff] !shadow-[0_4px_12px_rgba(128,89,202,0.06)]"
                           : "!border-[#e2e8f0] !bg-white hover:!border-[#cbd5e1] hover:!bg-[#fafbfc]"
                           }`}
                         onClick={() => setPaymentMethod("online")}
                       >
-                        <div className={`!w-7.5 !h-7.5 !rounded-lg !flex !items-center !justify-center !text-xs !transition-all !duration-200 !shrink-0 ${paymentMethod === "online" ? "!bg-[#8059ca] !text-white" : "!bg-slate-100 !text-slate-500"}`}>
+                        <div className={`!w-7.5 !h-7.5 !rounded-lg !flex !items-center !justify-center !text-xs !transition-all !duration-200 !shrink-0 ${paymentMethod === "online" ? "!bg-[#321961] !text-white" : "!bg-slate-100 !text-slate-500"}`}>
                           <i className="fas fa-credit-card" />
                         </div>
                         <div className="!flex-1 !min-w-0">
-                          <div className={`!text-xs !font-semibold !mb-0.5 !whitespace-nowrap !overflow-hidden !text-ellipsis ${paymentMethod === "online" ? "!text-[#8059ca]" : "!text-slate-800"}`}>
+                          <div className={`!text-xs !font-semibold !mb-0.5 !whitespace-nowrap !overflow-hidden !text-ellipsis ${paymentMethod === "online" ? "!text-[#321961]" : "!text-slate-800"}`}>
                             Online Payment
                           </div>
                           <div className="!text-[10px] !text-slate-500 !whitespace-nowrap !overflow-hidden !text-ellipsis">UPI, Cards, NetBanking</div>
                         </div>
-                        <div className={`!w-3.5 !h-3.5 !rounded-full !bg-white !transition-all !duration-200 !shrink-0 ${paymentMethod === "online" ? "!border-4 !border-[#8059ca]" : "!border-2 !border-slate-300"}`} />
+                        <div className={`!w-3.5 !h-3.5 !rounded-full !bg-white !transition-all !duration-200 !shrink-0 ${paymentMethod === "online" ? "!border-4 !border-[#321961]" : "!border-2 !border-slate-300"}`} />
                       </div>
 
                       {/* COD Option */}
                       <div
                         className={`!flex-1 !min-w-0 !border !rounded-xl !px-3.5 !py-3 !flex !items-center !gap-2.5 !cursor-pointer !transition-all !duration-200 ${paymentMethod === "cod"
-                          ? "!border-[#8059ca] !bg-[#fdfaff] !shadow-[0_4px_12px_rgba(128,89,202,0.06)]"
+                          ? "!border-[#321961] !bg-[#fdfaff] !shadow-[0_4px_12px_rgba(128,89,202,0.06)]"
                           : "!border-[#e2e8f0] !bg-white hover:!border-[#cbd5e1] hover:!bg-[#fafbfc]"
                           }`}
                         onClick={() => {
@@ -2278,16 +2278,16 @@ const BookingProcess = () => {
                           setAppliedCoupon(null);
                         }}
                       >
-                        <div className={`!w-7.5 !h-7.5 !rounded-lg !flex !items-center !justify-center !text-xs !transition-all !duration-200 !shrink-0 ${paymentMethod === "cod" ? "!bg-[#8059ca] !text-white" : "!bg-slate-100 !text-slate-500"}`}>
+                        <div className={`!w-7.5 !h-7.5 !rounded-lg !flex !items-center !justify-center !text-xs !transition-all !duration-200 !shrink-0 ${paymentMethod === "cod" ? "!bg-[#321961] !text-white" : "!bg-slate-100 !text-slate-500"}`}>
                           <i className="fas fa-money-bill-wave" />
                         </div>
                         <div className="!flex-1 !min-w-0">
-                          <div className={`!text-xs !font-semibold !mb-0.5 !whitespace-nowrap !overflow-hidden !text-ellipsis ${paymentMethod === "cod" ? "!text-[#8059ca]" : "!text-slate-800"}`}>
+                          <div className={`!text-xs !font-semibold !mb-0.5 !whitespace-nowrap !overflow-hidden !text-ellipsis ${paymentMethod === "cod" ? "!text-[#321961]" : "!text-slate-800"}`}>
                             Pay After Service
                           </div>
                           <div className="!text-[10px] !text-slate-500 !whitespace-nowrap !overflow-hidden !text-ellipsis">Pay at the time of delivery</div>
                         </div>
-                        <div className={`!w-3.5 !h-3.5 !rounded-full !bg-white !transition-all !duration-200 !shrink-0 ${paymentMethod === "cod" ? "!border-4 !border-[#8059ca]" : "!border-2 !border-slate-300"}`} />
+                        <div className={`!w-3.5 !h-3.5 !rounded-full !bg-white !transition-all !duration-200 !shrink-0 ${paymentMethod === "cod" ? "!border-4 !border-[#321961]" : "!border-2 !border-slate-300"}`} />
                       </div>
                     </div>
 
@@ -2302,7 +2302,7 @@ const BookingProcess = () => {
                       <button
                         type="submit"
                         disabled={isSubmitting || (isSlotCategory && !hasSelectedSlot)}
-                        className={`!w-full !text-white !rounded-xl !border-0 !py-2.5 !px-4 !mb-3 !transition-all !duration-300 !flex !items-center !justify-center !gap-2 !font-bold !text-xs ${isSubmitting || (isSlotCategory && !hasSelectedSlot) ? "!bg-gray-400 !cursor-not-allowed" : "!bg-gradient-to-r !from-[#8059ca] !to-[#822BD4] hover:!shadow-md active:!scale-[0.98] !cursor-pointer"}`}
+                        className={`!w-full !text-white !rounded-xl !border-0 !py-2.5 !px-4 !mb-3 !transition-all !duration-300 !flex !items-center !justify-center !gap-2 !font-bold !text-xs ${isSubmitting || (isSlotCategory && !hasSelectedSlot) ? "!bg-gray-400 !cursor-not-allowed" : "!bg-gradient-to-r !from-[#321961] !to-[#822BD4] hover:!shadow-md active:!scale-[0.98] !cursor-pointer"}`}
                       >
                         {isSubmitting ? (
                           <>

@@ -179,11 +179,11 @@ const CollapsibleVendorList = ({
         }}
         className="flex items-center justify-between py-2 px-3 !bg-purple-50/40 hover:!bg-purple-50 !border !border-purple-100 !rounded-sm cursor-pointer select-none transition-all duration-200"
       >
-        <span className="text-xs font-bold text-[#8059ca]">
+        <span className="text-xs font-bold text-[#321961]">
           {vendorCount} {vendorCount === 1 ? "Vendor" : "Vendors"} Available
         </span>
         <i
-          className={`fas fa-chevron-${isOpen ? "up" : "down"} text-[10px] text-[#8059ca] transition-transform duration-200`}
+          className={`fas fa-chevron-${isOpen ? "up" : "down"} text-[10px] text-[#321961] transition-transform duration-200`}
         ></i>
       </div>
 
@@ -248,7 +248,7 @@ const CollapsibleVendorList = ({
                           {vendorName}
                         </div>
                         <div className="text-[9px] text-slate-400 flex items-center gap-0.5 mt-0.5 truncate">
-                          <i className="fas fa-map-marker-alt text-[8px] text-[#8059ca] shrink-0"></i>
+                          <i className="fas fa-map-marker-alt text-[8px] text-[#321961] shrink-0"></i>
                           <span className="truncate">{vendorAddress}</span>
                         </div>
 
@@ -386,32 +386,22 @@ const AlternateProducts = ({
   const hasValidImage = (product) => {
     const tablet = product?.tablet || {};
 
-    if (
-      tablet.imageUrl &&
-      Array.isArray(tablet.imageUrl) &&
-      tablet.imageUrl.length > 0
-    ) {
-      return true;
-    }
+    if (Array.isArray(tablet.files) && tablet.files.length > 0) return true;
+    if (Array.isArray(tablet.imageUrl) && tablet.imageUrl.length > 0) return true;
 
-    if (tablet.variant && Array.isArray(tablet.variant)) {
-      for (const variant of tablet.variant) {
-        if (
-          variant.imageUrl &&
-          Array.isArray(variant.imageUrl) &&
-          variant.imageUrl.length > 0
-        ) {
-          return true;
-        }
+    // Check variant-level images — files, frontImage, and imageUrl
+    if (Array.isArray(tablet.variant)) {
+      for (const v of tablet.variant) {
+        if (Array.isArray(v?.files) && v.files.length > 0) return true;
+        if (Array.isArray(v?.frontImage) && v.frontImage.length > 0) return true;
+        if (Array.isArray(v?.imageUrl) && v.imageUrl.length > 0) return true;
       }
     }
 
     return false;
   };
 
-  const validProducts = relatedproducts.filter((product) =>
-    hasValidImage(product),
-  );
+  const validProducts = relatedproducts.filter((product) => hasValidImage(product));
 
   if (!validProducts || validProducts.length === 0) {
     return null;
@@ -421,30 +411,39 @@ const AlternateProducts = ({
     <div className={isMobile ? "mt-0" : "mt-5"}>
       <div className="flex justify-between items-center gap-3 mb-4 pb-3.5 border-b border-[#ede9f5]">
         <div className="flex items-center gap-3 min-w-0">
-          <span className="w-1.5 h-7 rounded-full bg-gradient-to-b from-[#8059ca] to-[#5a3a9c] shrink-0" aria-hidden="true" />
+          <span className="w-1.5 h-7 rounded-full bg-gradient-to-b from-[#321961] to-[#5a3a9c] shrink-0" aria-hidden="true" />
           <div className="text-[20px] !font-[500] text-slate-800 margin-0">
             Alternate Products
           </div>
-          <div className="bg-[#8059ca]/10 text-[#8059ca] text-[11px] font-bold px-2 py-0.5 rounded-full shrink-0 leading-none">
+          <div className="bg-[#321961]/10 text-[#321961] text-[11px] font-bold px-2 py-0.5 rounded-full shrink-0 leading-none">
             {validProducts.length}
           </div>
         </div>
 
         <button
           type="button"
-          className="text-xs font-bold text-white bg-gradient-to-r from-[#8059ca] to-[#6d48b8] hover:shadow-md hover:shadow-purple-500/20 active:scale-[0.98] py-1.5 px-3.5 !rounded-md inline-flex items-center gap-1.5 transition-all duration-300 cursor-pointer border-none"
+          className="text-xs font-bold text-white bg-gradient-to-r from-[#321961] to-[#6d48b8] hover:shadow-md hover:shadow-purple-500/20 active:scale-[0.98] py-1.5 px-3.5 !rounded-md inline-flex items-center gap-1.5 transition-all duration-300 cursor-pointer border-none"
           onClick={() => {
-            const firstProduct = relatedproducts[0];
-            const firstProductComp = firstProduct?.tablet?.compositions || firstProduct?.tablet?.composition;
-            const compSlug = composition || (firstProductComp?._id && firstProductComp?.name
-              ? `${firstProductComp.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "")}-${firstProductComp._id}`
-              : firstProductComp);
+            // const firstProduct = relatedproducts[0];
+            // if (firstProduct?.tablet?.compositions?._id && firstProduct?.tablet?.compositions?.name) {
+            //   const createSlug = (name) => {
+            //     return name
+            //       .toLowerCase()
+            //       .replace(/[^a-z0-9]+/g, "-")
+            //       .replace(/^-+|-+$/g, "");
+            //   };
+            if (!composition) return;
+            // const isId = /^[0-9a-fA-F]{24}$/.test(composition);
+            // if (isId) {
+            //   navigate(`/composition/${composition}`);
+            // } else {
+            //   const formatComposition = (name) => {
+            //     return encodeURIComponent(String(name).replace(/\s+/g, "_"));
+            //   };
+            //   navigate(`/composition/${formatComposition(composition)}`);
+            // }
+            navigate(`/composition/${composition}`);
 
-            if (compSlug && compSlug !== "N/A") {
-              navigate(`/composition/${compSlug}`);
-            } else {
-              toast.error("Composition page not found");
-            }
           }}
         >
           View All
@@ -457,7 +456,7 @@ const AlternateProducts = ({
         <button
           type="button"
           onClick={scrollLeft}
-          className="absolute left-2 top-1/2 -translate-y-1/2 z-10 w-9 h-9 !rounded-full bg-white border border-purple-200/50 shadow-md text-[#8059ca] flex items-center justify-center cursor-pointer transition-all hover:bg-[#8059ca] hover:text-white"
+          className="absolute left-2 top-1/2 -translate-y-1/2 z-10 w-9 h-9 !rounded-full bg-white border border-purple-200/50 shadow-md text-[#321961] flex items-center justify-center cursor-pointer transition-all hover:bg-[#321961] hover:text-white"
         >
           <i className="fa-solid fa-chevron-left text-[14px]"></i>
         </button>
@@ -466,7 +465,7 @@ const AlternateProducts = ({
         <button
           type="button"
           onClick={scrollRight}
-          className="absolute right-2 top-1/2 -translate-y-1/2 z-10 w-9 h-9 !rounded-full bg-white border border-purple-200/50 shadow-md text-[#8059ca] flex items-center justify-center cursor-pointer transition-all hover:bg-[#8059ca] hover:text-white"
+          className="absolute right-2 top-1/2 -translate-y-1/2 z-10 w-9 h-9 !rounded-full bg-white border border-purple-200/50 shadow-md text-[#321961] flex items-center justify-center cursor-pointer transition-all hover:bg-[#321961] hover:text-white"
         >
           <i className="fa-solid fa-chevron-right text-[14px]"></i>
         </button>
@@ -480,8 +479,7 @@ const AlternateProducts = ({
             WebkitOverflowScrolling: "touch",
           }}
         >
-          {relatedproducts
-            .filter((product) => hasValidImage(product))
+          {validProducts
             .map((product, index) => {
               const firstVariant = product?.tablet?.variant?.[0];
               const firstVendor = product?.vendors?.[0];
@@ -1046,7 +1044,7 @@ const AlternateProducts = ({
                       {product?.tablet?.manufacture?.name && (
                         <div className="flex">
                           <span
-                            className="text-[9px] text-[#8059ca] bg-[#8059ca]/10 border border-[#8059ca]/15 px-1.5 py-0.5 !rounded-md font-bold tracking-wide truncate max-w-full"
+                            className="text-[9px] text-[#321961] bg-[#321961]/10 border border-[#321961]/15 px-1.5 py-0.5 !rounded-md font-bold tracking-wide truncate max-w-full"
                             title={product.tablet.manufacture.name}
                           >
                             By {product.tablet.manufacture.name}
@@ -1054,7 +1052,7 @@ const AlternateProducts = ({
                         </div>
                       )}
                       <h6
-                        className="!text-[13px] !font-semibold text-slate-800 margin-0 leading-normal line-clamp-2 overflow-hidden text-ellipsis h-5 hover:text-[#8059ca] transition-colors"
+                        className="!text-[13px] !font-semibold text-slate-800 margin-0 leading-normal line-clamp-2 overflow-hidden text-ellipsis h-5 hover:text-[#321961] transition-colors"
                         onClick={handleProductClick}
                       >
                         {(() => {
@@ -1067,7 +1065,7 @@ const AlternateProducts = ({
 
                     {typeof finalPrice === "number" && finalPrice > 0 && (
                       <div className="flex items-baseline gap-1.5 mb-2.5 flex-wrap">
-                        <span className="text-[14px] font-extrabold text-[#8059ca]">
+                        <span className="text-[14px] font-extrabold text-[#321961]">
                           ₹{finalPrice.toFixed(2)}
                         </span>
                         {originalPrice && originalPrice > finalPrice && (
@@ -1088,7 +1086,7 @@ const AlternateProducts = ({
                     {(product?.tablet?.reportsDuration ||
                       product?.tablet?.reportDuration) && (
                         <div className="flex items-center gap-1.5 mb-3 text-[11px] text-slate-500">
-                          <i className="fas fa-file-alt text-[#8059ca] text-[11px] shrink-0"></i>
+                          <i className="fas fa-file-alt text-[#321961] text-[11px] shrink-0"></i>
                           <span>
                             Reports in{" "}
                             <strong>
@@ -1190,7 +1188,7 @@ const AlternateProducts = ({
                               className="flex items-center gap-1.5"
                             >
                               <i
-                                className={`${key.icon} text-[#8059ca] text-[9.5px] w-3 shrink-0`}
+                                className={`${key.icon} text-[#321961] text-[9.5px] w-3 shrink-0`}
                               ></i>
                               <span className="flex items-center gap-1 flex-wrap">
                                 <strong>{key.label}:</strong>

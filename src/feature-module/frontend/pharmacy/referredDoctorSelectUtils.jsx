@@ -49,7 +49,7 @@ export const ReferredDoctorMenuList = (props) => {
           cursor: "pointer",
           fontSize: "14px",
           color: isSelected ? "#fff" : "#333",
-          backgroundColor: isSelected ? "#8059ca" : "#fff",
+          backgroundColor: isSelected ? "#321961" : "#fff",
           borderBottom: "1px solid #eee",
         }}
         onMouseEnter={(event) => {

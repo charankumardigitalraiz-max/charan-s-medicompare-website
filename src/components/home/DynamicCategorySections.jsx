@@ -132,12 +132,13 @@ const DynamicCategorySections = ({
     if (slug.includes("medicine")) {
       return {
         bgClass: "!bg-gradient-to-br !from-[#f6f2ff] !to-[#fbfaff] !border-[#e8dbff] !shadow-[0_15px_40px_rgba(128,89,202,0.05)]",
-        bannerBg: "from-[#8059ca] to-[#6d4db8]",
-        iconClass: "fas fa-pills text-[#8059ca] animate-pulse-glow",
-        bubbleColor: "text-[#8059ca]/35",
+        bannerBg: "from-[#321961] to-[#6d4db8]",
+        iconClass: "fas fa-pills text-[#321961] animate-pulse-glow",
+        bubbleColor: "text-[#321961]/35",
         animationType: "medicine",
         badge: "💊 Best Prices",
         description: "Compare & buy prescription medicines from top verified pharmacies near you.",
+        coverImage: "/medicine_service_cover_1785758500493.png",
       };
     } else if (slug.includes("labtest")) {
       return {
@@ -148,6 +149,7 @@ const DynamicCategorySections = ({
         animationType: "diagnostics",
         badge: "🧪 Lab Offers",
         description: "Book NABL-certified lab tests at home with fast results and expert review.",
+        coverImage: "/labtest_service_cover_1785758513250.png",
       };
     } else if (slug.includes("diagnostic")) {
       return {
@@ -158,6 +160,7 @@ const DynamicCategorySections = ({
         animationType: "diagnostics",
         badge: "🔬 Scan & Save",
         description: "MRI, CT, X-Ray & ultrasound comparisons from accredited diagnostic centres.",
+        coverImage: "/diagnostic_service_cover_1785758526170.png",
       };
     } else if (slug.includes("homecare")) {
       return {
@@ -168,6 +171,7 @@ const DynamicCategorySections = ({
         animationType: "homecare",
         badge: "🏠 Home Visit",
         description: "Professional healthcare at your doorstep — physiotherapy, nursing & more.",
+        coverImage: "/homecare_service_cover_1785758536803.png",
       };
     } else if (slug.includes("nursingcare")) {
       return {
@@ -178,6 +182,7 @@ const DynamicCategorySections = ({
         animationType: "homecare",
         badge: "👩‍⚕️ Verified Nurses",
         description: "Trained nursing staff & clinic services for personalised recovery care.",
+        coverImage: "/homecare_service_cover_1785758536803.png",
       };
     } else if (slug.includes("dental")) {
       return {
@@ -188,6 +193,7 @@ const DynamicCategorySections = ({
         animationType: "homecare",
         badge: "🦷 Dental Deals",
         description: "Whitening, braces, implants & more — compare trusted dental clinics.",
+        coverImage: "/homecare_service_cover_1785758536803.png",
       };
     } else if (slug.includes("equipment")) {
       return {
@@ -198,6 +204,7 @@ const DynamicCategorySections = ({
         animationType: "medicine",
         badge: "🏥 Rent or Buy",
         description: "Hospital-grade equipment for home use — beds, wheelchairs, oxygen & more.",
+        coverImage: "/equipment_service_cover_1785758548596.png",
       };
     } else if (slug.includes("treatment")) {
       return {
@@ -208,6 +215,7 @@ const DynamicCategorySections = ({
         animationType: "homecare",
         badge: "💜 Certified Plans",
         description: "Explore treatment packages from certified healthcare specialists.",
+        coverImage: "/homecare_service_cover_1785758536803.png",
       };
     } else if (slug.includes("surgeries") || slug.includes("surgery")) {
       return {
@@ -218,6 +226,7 @@ const DynamicCategorySections = ({
         animationType: "homecare",
         badge: "🔴 Expert Surgeons",
         description: "Compare surgery costs & connect with top surgeons across specialities.",
+        coverImage: "/surgeries_service_cover_1785758560588.png",
       };
     } else if (slug.includes("ambulance")) {
       return {
@@ -228,18 +237,20 @@ const DynamicCategorySections = ({
         animationType: "homecare",
         badge: "🚑 24/7 Emergency",
         description: "Book verified ambulance services instantly for emergency transport.",
+        coverImage: "/ambulance_service_cover_1785758575010.png",
       };
     } else {
       // Fallbacks based on themeIndex
       if (themeIndex === 0) {
         return {
           bgClass: "!bg-gradient-to-br !from-[#f6f2ff] !to-[#fbfaff] !border-[#e8dbff] !shadow-[0_15px_40px_rgba(128,89,202,0.05)]",
-          bannerBg: "from-[#8059ca] to-[#6d4db8]",
-          iconClass: "fas fa-heartbeat text-[#8059ca]",
-          bubbleColor: "text-[#8059ca]/35",
+          bannerBg: "from-[#321961] to-[#6d4db8]",
+          iconClass: "fas fa-heartbeat text-[#321961]",
+          bubbleColor: "text-[#321961]/35",
           animationType: "medicine",
           badge: "⭐ Top Picks",
           description: "Discover the best healthcare options compared in one place.",
+          coverImage: "/medicine_service_cover_1785758500493.png",
         };
       } else if (themeIndex === 1) {
         return {
@@ -248,18 +259,20 @@ const DynamicCategorySections = ({
           iconClass: "fas fa-laptop-medical text-[#3b82f6]",
           bubbleColor: "text-[#3b82f6]/35",
           animationType: "diagnostics",
-          badge: "✅ Verified Brands",
-          description: "Quality-checked medical services from trusted providers near you.",
+          badge: "🧪 Top Diagnost",
+          description: "NABL tests and radiology comparisons from leading centers.",
+          coverImage: "/diagnostic_service_cover_1785758526170.png",
         };
       } else {
         return {
           bgClass: "!bg-gradient-to-br !from-[#fff6ed] !to-[#fffcf8] !border-[#ffe3cc] !shadow-[0_15px_40px_rgba(249,115,22,0.05)]",
           bannerBg: "from-[#f97316] to-[#ea580c]",
-          iconClass: "fas fa-prescription-bottle-alt text-[#f97316]",
+          iconClass: "fas fa-stethoscope text-[#f97316]",
           bubbleColor: "text-[#f97316]/35",
           animationType: "homecare",
-          badge: "🔥 Flash Deal",
-          description: "Limited-time offers on premium healthcare — grab them before they go!",
+          badge: "🏠 Quality Care",
+          description: "Verified doctors, nurses and care coordinators at your disposal.",
+          coverImage: "/homecare_service_cover_1785758536803.png",
         };
       }
     }
@@ -405,17 +418,22 @@ const DynamicCategorySections = ({
           position: relative !important;
           padding: 0 10px !important;
         }
+        /* Style adjustments for custom slider arrows of react-slick to ensure they stand out */
+        .dynamic-equal-slider {
+          position: relative !important;
+          padding: 0 10px !important;
+        }
         .dynamic-equal-slider .slick-prev,
         .dynamic-equal-slider .slick-next {
           width: 36px !important;
           height: 36px !important;
-          background: #8059ca !important;
+          background: var(--color-primary, #321961) !important;
           border-radius: 50% !important;
           z-index: 50 !important;
           display: flex !important;
           align-items: center !important;
           justify-content: center !important;
-          box-shadow: 0 4px 12px rgba(128,89,202,0.2) !important;
+          box-shadow: 0 4px 12px rgba(50,25,97,0.2) !important;
           transition: all 0.2s ease-in-out !important;
           top: 50% !important;
           transform: translateY(-50%) !important;
@@ -425,8 +443,8 @@ const DynamicCategorySections = ({
         }
         .dynamic-equal-slider .slick-prev:hover,
         .dynamic-equal-slider .slick-next:hover {
-          background: #6d4db8 !important;
-          box-shadow: 0 6px 16px rgba(128,89,202,0.3) !important;
+          background: #231145 !important;
+          box-shadow: 0 6px 16px rgba(50,25,97,0.35) !important;
           transform: translateY(-50%) scale(1.1) !important;
         }
         .dynamic-equal-slider .slick-prev {
@@ -468,51 +486,59 @@ const DynamicCategorySections = ({
           const serviceSlug = currentService || serviceId?.slug || section.serviceType || "";
           const serviceTheme = getServiceTheme(serviceSlug, index);
           const categoryFixedType = section?.serviceId?.fixedType || "";
-
           return (
-            <section
+            <div
               key={section._id || index}
-              className={`w-full px-5 py-10 relative overflow-hidden ${serviceTheme.bgClass}`}
+              className="w-full py-12 border-b border-slate-100/50 relative overflow-hidden"
+              style={{
+                backgroundImage: "url('/medicompare_bg4_instant_healthcare.png')",
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                backgroundRepeat: "no-repeat"
+              }}
             >
-              {/* Floating Service-Specific Glass Badges */}
-              {renderFloatingIcons(serviceTheme.animationType, serviceTheme.bubbleColor)}
+              {/* Dot Matrix Pattern (Top Left) - Matching Mockup */}
+              <div className="absolute top-8 left-8 w-24 h-24 opacity-[0.07] pointer-events-none hidden md:block" style={{
+                backgroundImage: "radial-gradient(var(--color-primary, #321961) 2px, transparent 2px)",
+                backgroundSize: "12px 12px"
+              }} />
 
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 relative z-10">
-                {/* Left/Right Alternating Column: Glass Banner Card */}
-                <div className={`lg:col-span-3 ${index % 2 === 0 ? "lg:order-first" : "lg:order-last"} order-first flex flex-col justify-between bg-gradient-to-br ${serviceTheme.bannerBg} text-white p-7 rounded-[24px] shadow-lg relative overflow-hidden min-h-[260px] lg:min-h-full animate-gradient-bg`}>
-                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.15),transparent)]" />
+              {/* Medical Shield Icon (Top Right) - Matching Mockup */}
+              <div className="absolute top-6 right-8 w-24 h-28 opacity-[0.06] pointer-events-none hidden md:block">
+                <svg viewBox="0 0 100 120" className="w-full h-full fill-current text-[var(--color-primary,#321961)]">
+                  <path d="M50 0 L90 20 V60 C90 85 70 108 50 115 C30 108 10 85 10 60 V20 Z" />
+                  <path d="M42 35 H58 V51 H74 V67 H58 V83 H42 V67 H26 V51 H42 Z" fill="white" />
+                </svg>
+              </div>
 
-                  <div className="relative z-10">
-                    <div className="flex items-center gap-2 mb-4">
-                      <span className="bg-white/20 text-white text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-md shadow-sm">
-                        {serviceTheme.badge || "⭐ Top Picks"}
+              <div className="max-w-7xl mx-auto px-4 md:px-6 relative z-10">
+                
+                {/* Rounded Inner Container Box matching mockup style */}
+                <div className="bg-white rounded-[24px] p-6 md:p-8 shadow-[0_4px_20px_rgba(0,0,0,0.02)] border border-slate-100/80">
+                  
+                  {/* Category Title Top Header Panel */}
+                  <div className="flex items-center justify-between mb-8 pb-3 border-b border-slate-100/50">
+                    <div className="flex items-center gap-3">
+                      {/* Badge tag styling matching mockup yellow/orange pill */}
+                      <span className="inline-flex items-center gap-2 bg-[#f28e00] text-white text-[12px] md:text-[14px] font-extrabold px-5 py-2.5 rounded-full shadow-sm">
+                        <i className={`${serviceTheme.iconClass || "fas fa-tag"} mr-1`} />
+                        <span>{title}</span>
                       </span>
                     </div>
-
-                    <h3 className="!text-2xl !font-black !text-white !m-0 !leading-tight tracking-wide">
-                      {title}
-                    </h3>
-
-                    <p className="!text-[12px] !text-white/90 !mt-2.5 !leading-relaxed !m-0">
-                      {serviceTheme.description || "Explore premium items with comparison features and instant delivery."}
-                    </p>
+                    <div>
+                      {/* View All link matching mockup style */}
+                      <Link
+                        to={`/${currentService || serviceId?.slug || "medicine"}/all`}
+                        className="inline-flex items-center gap-1.5 text-[12px] md:text-[14px] font-bold text-[#008f5d] hover:text-[#006f47] transition-all !no-underline hover:translate-x-1 duration-200"
+                      >
+                        <span>View All</span>
+                        <i className="fas fa-arrow-right text-[10px] md:text-[11px]" />
+                      </Link>
+                    </div>
                   </div>
 
-                  <div className="relative z-10 mt-6 lg:mt-0">
-                    <Link
-                      to={`/${currentService || serviceId?.slug || "medicine"}/all`}
-                      className="inline-flex items-center gap-2 !bg-white !text-[#8059ca] hover:!bg-gray-50 px-5 py-2.5 !rounded-xl !text-xs font-bold transition-all shadow-md hover:shadow-lg !no-underline animate-pulse-glow"
-                    >
-                      <span>Explore Shop</span>
-                      <i className="fas fa-chevron-right text-[9px]" />
-                    </Link>
-                  </div>
-                </div>
-
-                {/* Right/Left Alternating Column: Products Content Area */}
-                <div className={`lg:col-span-9 ${index % 2 === 0 ? "lg:order-last" : "lg:order-first"} order-last`}>
-                  {/* Carousel slider (All sections render as a carousel slider on both desktop and mobile) */}
-                  <div className="h-full">
+                  {/* Horizontal Products List Slider */}
+                  <div className="relative">
                     <style>{`
                       .dynamic-equal-slider .slick-track { display: flex !important; align-items: stretch !important; }
                       .dynamic-equal-slider .slick-slide { height: auto !important; display: flex !important; flex-direction: column !important; }
@@ -545,9 +571,10 @@ const DynamicCategorySections = ({
                       })}
                     </Slider>
                   </div>
+
                 </div>
               </div>
-            </section>
+            </div>
           );
         })}
     </>

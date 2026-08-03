@@ -418,7 +418,7 @@ const Home2Footer = ({ categories: propCategories }) => {
                         href="https://vendor.medicompares.com/register"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center bg-[linear-gradient(135deg,#8059ca_0%,#822BD4_100%)] !text-white py-2 px-2.5 rounded-[25px] no-underline !text-[12px] font-semibold transition-all duration-300 border-none gap-2 whitespace-nowrap hover:opacity-90"
+                        className="inline-flex items-center bg-[linear-gradient(135deg,#321961_0%,#822BD4_100%)] !text-white py-2 px-2.5 rounded-[25px] no-underline !text-[12px] font-semibold transition-all duration-300 border-none gap-2 whitespace-nowrap hover:opacity-90"
                       >
                         <i className="fas fa-handshake !text-[14px]" />
                         Partner with Us
@@ -426,7 +426,7 @@ const Home2Footer = ({ categories: propCategories }) => {
 
                       <Link
                         to="/partners"
-                        className="inline-flex items-center bg-[linear-gradient(135deg,#8059ca_0%,#822BD4_100%)] !text-white py-2 px-2.5 rounded-[25px] no-underline !text-[12px] font-semibold transition-all duration-300 border-none gap-2 whitespace-nowrap hover:opacity-90"
+                        className="inline-flex items-center bg-[linear-gradient(135deg,#321961_0%,#822BD4_100%)] !text-white py-2 px-2.5 rounded-[25px] no-underline !text-[12px] font-semibold transition-all duration-300 border-none gap-2 whitespace-nowrap hover:opacity-90"
                       >
                         <i className="fas fa-users !text-[14px]" />
                         Explore Partners
@@ -452,7 +452,7 @@ const Home2Footer = ({ categories: propCategories }) => {
                           required
                         />
                         <button
-                          className="bg-[linear-gradient(135deg,#8059ca_0%,#822BD4_100%)] border-none !rounded-r-[8px] !text-white !font-semibold py-2 px-5 transition-all duration-300 hover:opacity-90"
+                          className="bg-[linear-gradient(135deg,#321961_0%,#822BD4_100%)] border-none !rounded-r-[8px] !text-white !font-semibold py-2 px-5 transition-all duration-300 hover:opacity-90"
                           type="submit"
                         >
                           Subscribe

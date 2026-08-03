@@ -17,9 +17,15 @@ const ViewAllPartners = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [partners, setPartners] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [selectedServices, setSelectedServices] = useState([]);
+  const [selectedServices, setSelectedServices] = useState(() => {
+    const servicesParam = searchParams.get("services");
+    return servicesParam ? servicesParam.split(",").filter(Boolean) : [];
+  });
   const [isLoading, setIsLoading] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(() => {
+    const pageParam = searchParams.get("page");
+    return pageParam ? parseInt(pageParam, 10) : 1;
+  });
   const [totalPages, setTotalPages] = useState(1);
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
   const itemsPerPage = 12;
@@ -27,12 +33,13 @@ const ViewAllPartners = () => {
   const fetchVendors = async () => {
     setIsLoading(true);
     try {
-      const params = new URLSearchParams();
+      const params = {
+        page: currentPage,
+        limit: itemsPerPage,
+      };
       if (selectedServices.length > 0) {
-        params.append("services", selectedServices.join(","));
+        params.services = selectedServices.join(",");
       }
-      params.append("page", currentPage);
-      params.append("limit", itemsPerPage);
 
       const response = await axiosCommonInstance.get("vendor/list", { params });
       const data = response.data?.data || {};
@@ -130,7 +137,7 @@ const ViewAllPartners = () => {
           <li key={cat._id || cat.slug} className="py-2 border-b border-gray-100 last:border-0">
             <div className="flex flex-row items-center gap-2">
               <input
-                className="!w-3 !h-3 accent-[#8059ca] cursor-pointer shrink-0"
+                className="!w-3 !h-3 accent-[#321961] cursor-pointer shrink-0"
                 type="checkbox"
                 id={`${idPrefix}-${cat.slug}`}
                 checked={selectedServices.includes(cat.slug)}
@@ -216,7 +223,7 @@ const ViewAllPartners = () => {
             <div className="flex items-center justify-between lg:hidden mb-4">
               <button
                 type="button"
-                className="flex items-center gap-2 text-[13px] font-medium bg-[#8059ca] !text-white !rounded-full px-4 py-2 border-none cursor-pointer"
+                className="flex items-center gap-2 text-[13px] font-medium bg-[#321961] !text-white !rounded-full px-4 py-2 border-none cursor-pointer"
                 onClick={() => setIsMobileFilterOpen(true)}
               >
                 <i className="fas fa-filter text-[11px]" />
@@ -242,7 +249,7 @@ const ViewAllPartners = () => {
             {/* Content */}
             {isLoading ? (
               <div className="flex justify-center items-center min-h-[400px]">
-                <div className="w-10 h-10 border-4 border-[#8059ca] border-t-transparent rounded-full animate-spin" />
+                <div className="w-10 h-10 border-4 border-[#321961] border-t-transparent rounded-full animate-spin" />
               </div>
             ) : partners.length === 0 ? (
               <div className="text-center py-16 min-h-[300px]">
@@ -299,7 +306,7 @@ const ViewAllPartners = () => {
                                 {name}
                               </div>
                               <small className="text-gray-500 text-[12px] flex items-center gap-1 mt-0.5">
-                                <i className="fas fa-map-marker-alt text-[#8059ca] text-[10px] shrink-0" />
+                                <i className="fas fa-map-marker-alt text-[#321961] text-[10px] shrink-0" />
                                 <span className="truncate">{address}</span>
                               </small>
                             </div>
@@ -311,7 +318,7 @@ const ViewAllPartners = () => {
                             style={{ backgroundColor: "#a36ff92e" }}
                             onClick={(e) => { e.stopPropagation(); handlePartnerClick(partner); }}
                           >
-                            <strong className="text-[#8059ca] font-bold">{ProductsCount}</strong>{" "}
+                            <strong className="text-[#321961] font-bold">{ProductsCount}</strong>{" "}
                             <span className="text-gray-700">Products</span>
                           </button>
                         </div>
@@ -344,7 +351,7 @@ const ViewAllPartners = () => {
           <div className="relative w-[280px] max-w-full bg-white h-full flex flex-col shadow-2xl z-10 animate-[slideIn_0.2s_ease-out]">
             <div className="flex items-center justify-between border-b border-gray-100 p-4">
               <h5 className="text-[16px] font-bold text-gray-800 flex items-center gap-2 m-0">
-                <i className="fas fa-filter text-[#8059ca]" /> Filters
+                <i className="fas fa-filter text-[#321961]" /> Filters
               </h5>
               <button
                 onClick={() => setIsMobileFilterOpen(false)}
@@ -370,7 +377,7 @@ const ViewAllPartners = () => {
             </div>
             <div className="p-4 border-t border-gray-100">
               <button
-                className="w-full py-3 !rounded-sm bg-[#8059ca] !text-white !font-semibold !text-[14px] border-none cursor-pointer hover:bg-[#6d48b8] transition-colors"
+                className="w-full py-3 !rounded-sm bg-[#321961] !text-white !font-semibold !text-[14px] border-none cursor-pointer hover:bg-[#6d48b8] transition-colors"
                 onClick={() => setIsMobileFilterOpen(false)}
               >
                 Apply & Close

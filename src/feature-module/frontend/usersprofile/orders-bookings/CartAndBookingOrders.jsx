@@ -783,7 +783,7 @@ const MedicineBookings = ({ HomeNavigate, ServiceTabs }) => {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pb-2 mb-2 border-b border-slate-100 mt-2">
         <div className="flex items-center gap-3.5">
           {HomeNavigate && <HomeNavigate />}
-          <div className="w-11 h-11 rounded-xl bg-purple-50 text-[#8059ca] flex items-center justify-center text-[20px] shrink-0 border border-purple-100/50 shadow-sm">
+          <div className="w-11 h-11 rounded-xl bg-purple-50 text-[#321961] flex items-center justify-center text-[20px] shrink-0 border border-purple-100/50 shadow-sm">
             <i className="fa-solid fa-pills" />
           </div>
 
@@ -817,7 +817,7 @@ const MedicineBookings = ({ HomeNavigate, ServiceTabs }) => {
                 setSearchTerm(e.target.value);
                 setCurrentPage(1);
               }}
-              className="h-[42px] rounded-sm border border-[#e0e0e0] pl-10 pr-4 text-sm w-full outline-none focus:border-[#8059ca] transition-colors"
+              className="h-[42px] rounded-sm border border-[#e0e0e0] pl-10 pr-4 text-sm w-full outline-none focus:border-[#321961] transition-colors"
             />
             <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[#999] pointer-events-none">
               <i className="fa-solid fa-search" />
@@ -850,7 +850,7 @@ const MedicineBookings = ({ HomeNavigate, ServiceTabs }) => {
           {isMobile ? (
             <select
               value={selectedTab}
-              className="w-full h-[38px] rounded-lg border border-slate-200 px-3 text-[13px] outline-none bg-slate-50 focus:bg-white focus:border-[#8059ca] transition-all duration-200"
+              className="w-full h-[38px] rounded-lg border border-slate-200 px-3 text-[13px] outline-none bg-slate-50 focus:bg-white focus:border-[#321961] transition-all duration-200"
               onChange={(e) => {
                 setSelectedTab(e.target.value);
                 setCurrentPage(1);
@@ -883,7 +883,7 @@ const MedicineBookings = ({ HomeNavigate, ServiceTabs }) => {
                 return (
                   <li className="nav-item" key={tab.id}>
                     <button
-                      className={`py-2.5 px-4 text-[13px] font-semibold !border-b-2 transition-all duration-200 flex items-center gap-1.5 ${isActive ? "!border-[#8059ca] !text-[#8059ca]" : "border-transparent text-slate-500 hover:text-slate-700"}`}
+                      className={`py-2.5 px-4 text-[13px] font-semibold !border-b-2 transition-all duration-200 flex items-center gap-1.5 ${isActive ? "!border-[#321961] !text-[#321961]" : "border-transparent text-slate-500 hover:text-slate-700"}`}
                       onClick={() => {
                         setSelectedTab(tab.id);
                         setCurrentPage(1);
@@ -903,7 +903,7 @@ const MedicineBookings = ({ HomeNavigate, ServiceTabs }) => {
       <div className="w-full py-4">
         {loading ? (
           <div className="text-center py-10 flex justify-center items-center">
-            <div className="animate-spin inline-block w-8 h-8 border-4 border-[#8059ca] border-t-transparent rounded-full" role="status">
+            <div className="animate-spin inline-block w-8 h-8 border-4 border-[#321961] border-t-transparent rounded-full" role="status">
               <span className="sr-only">Loading...</span>
             </div>
           </div>
@@ -946,7 +946,7 @@ const MedicineBookings = ({ HomeNavigate, ServiceTabs }) => {
         ) : (
           <div className="text-center py-5">
             <div className="empty-state">
-              <i className="fa-solid fa-calendar-times fa-3x text-muted mb-3" style={{ color: "#8059ca" }}></i>
+              <i className="fa-solid fa-calendar-times fa-3x text-muted mb-3" style={{ color: "#321961" }}></i>
               <h5 className="text-muted">No Order found</h5>
               <p className="text-muted">
                 You haven't Ordered any thing yet.
@@ -1040,7 +1040,7 @@ const MedicineBookings = ({ HomeNavigate, ServiceTabs }) => {
                           </div>
                           {vendorName && (
                             <div className="flex items-center gap-1"
-                              style={{ fontSize: "11px", color: "#8059ca", marginBottom: "4px" }}>
+                              style={{ fontSize: "11px", color: "#321961", marginBottom: "4px" }}>
                               {vendorImg && (
                                 <img src={vendorImg} alt={vendorName}
                                   onError={(e) => { e.currentTarget.src = "/assets/default.png"; }}
@@ -1060,7 +1060,7 @@ const MedicineBookings = ({ HomeNavigate, ServiceTabs }) => {
                       </div>
                       <div style={{ textAlign: "right", flexShrink: 0 }}>
                         <div style={{ fontSize: "10.5px", color: "#94a3b8", marginBottom: "2px", fontWeight: "500" }}>Total</div>
-                        <div style={{ fontWeight: 800, fontSize: "14px", color: "#8059ca" }}>₹{totalAmountProduct}</div>
+                        <div style={{ fontWeight: 800, fontSize: "14px", color: "#321961" }}>₹{totalAmountProduct}</div>
                       </div>
                     </div>
                   );
@@ -1070,7 +1070,7 @@ const MedicineBookings = ({ HomeNavigate, ServiceTabs }) => {
 
             {/* ORDER INFO */}
             <div style={{ padding: "14px 20px 0", borderBottom: "1px solid #f5f5f5" }}>
-              <div style={{ fontSize: "10px", fontWeight: 700, color: "#8059ca", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "10px" }}>
+              <div style={{ fontSize: "10px", fontWeight: 700, color: "#321961", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "10px" }}>
                 Order Info
               </div>
               <div className="grid grid-cols-2 gap-2" style={{ marginBottom: "14px" }}>
@@ -1093,15 +1093,15 @@ const MedicineBookings = ({ HomeNavigate, ServiceTabs }) => {
             {/* PATIENT / DOCTOR */}
             {selectedOrder?.groups && selectedOrder.groups.length > 0 && (
               <div style={{ padding: "14px 20px 0", borderBottom: "1px solid #f5f5f5" }}>
-                <div style={{ fontSize: "10px", fontWeight: 700, color: "#8059ca", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "10px" }}>Patients</div>
+                <div style={{ fontSize: "10px", fontWeight: 700, color: "#321961", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "10px" }}>Patients</div>
                 <div className="flex flex-col gap-2" style={{ marginBottom: "14px" }}>
                   {selectedOrder.groups.map((group, gIdx) => (
                     <div key={gIdx} style={{ background: "#faf9fe", borderRadius: "8px", padding: "8px 12px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                       <span style={{ fontSize: "12px", fontWeight: 600, color: "#333", textTransform: "capitalize" }}>
-                        <span style={{ color: "#8059ca", marginRight: "6px" }}>{gIdx + 1}.</span>
+                        <span style={{ color: "#321961", marginRight: "6px" }}>{gIdx + 1}.</span>
                         {getPatientName(group, selectedOrder)}
                       </span>
-                      {group.totalTests && <span style={{ fontSize: "11px", fontWeight: 600, color: "#8059ca", background: "#f3e8ff", padding: "2px 8px", borderRadius: "6px" }}>{group.totalTests} Test{group.totalTests !== 1 ? "s" : ""}</span>}
+                      {group.totalTests && <span style={{ fontSize: "11px", fontWeight: 600, color: "#321961", background: "#f3e8ff", padding: "2px 8px", borderRadius: "6px" }}>{group.totalTests} Test{group.totalTests !== 1 ? "s" : ""}</span>}
                     </div>
                   ))}
                 </div>
@@ -1110,7 +1110,7 @@ const MedicineBookings = ({ HomeNavigate, ServiceTabs }) => {
 
             {selectedOrder?.doctorName && (
               <div style={{ padding: "14px 20px 0", borderBottom: "1px solid #f5f5f5" }}>
-                <div style={{ fontSize: "10px", fontWeight: 700, color: "#8059ca", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "10px" }}>Doctor</div>
+                <div style={{ fontSize: "10px", fontWeight: 700, color: "#321961", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "10px" }}>Doctor</div>
                 <div style={{ background: "#faf9fe", borderRadius: "8px", padding: "8px 12px", marginBottom: "14px" }}>
                   <div style={{ fontSize: "12px", fontWeight: 600, color: "#333", textTransform: "capitalize" }}>
                     {selectedOrder.doctorId ? selectedOrder.doctorName : "Self Referral"}
@@ -1121,7 +1121,7 @@ const MedicineBookings = ({ HomeNavigate, ServiceTabs }) => {
 
             {/* BILLING SUMMARY */}
             <div style={{ padding: "14px 20px 20px" }}>
-              <div style={{ fontSize: "10px", fontWeight: 700, color: "#8059ca", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "12px" }}>
+              <div style={{ fontSize: "10px", fontWeight: 700, color: "#321961", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "12px" }}>
                 Billing Summary
               </div>
               {(() => {
@@ -1205,7 +1205,7 @@ const MedicineBookings = ({ HomeNavigate, ServiceTabs }) => {
                                   <span>Without Coupon & With Wallet</span>
                                   <span style={{ fontWeight: 600 }}>₹{valWithoutCouponAndWithWallet.toFixed(2)}</span>
                                 </div>
-                                <div style={{ display: "flex", justifyContent: "space-between", fontSize: "11.5px", color: "#8059ca", fontWeight: 600 }}>
+                                <div style={{ display: "flex", justifyContent: "space-between", fontSize: "11.5px", color: "#321961", fontWeight: 600 }}>
                                   <span>With Coupon & With Wallet (Paid)</span>
                                   <span style={{ fontWeight: 700 }}>₹{valWithCouponAndWithWallet.toFixed(2)}</span>
                                 </div>
@@ -1242,7 +1242,7 @@ const MedicineBookings = ({ HomeNavigate, ServiceTabs }) => {
                   <img
                     src={vendor.imageUrl}
                     alt={vendor.name}
-                    className="w-12 h-12 rounded-full object-cover border-2 border-[#8059ca] shrink-0"
+                    className="w-12 h-12 rounded-full object-cover border-2 border-[#321961] shrink-0"
                     onError={(e) => {
                       e.currentTarget.src = "/assets/default.png";
                     }}
@@ -1260,19 +1260,19 @@ const MedicineBookings = ({ HomeNavigate, ServiceTabs }) => {
                 <div className="pt-2 border-t border-dashed border-slate-100">
                   {vendor.phone && (
                     <div className="d-flex align-items-center gap-2 mb-2 text-xs text-slate-600">
-                      <i className="fa-solid fa-phone text-[#8059ca] w-4" />
+                      <i className="fa-solid fa-phone text-[#321961] w-4" />
                       <span>{vendor.phone}</span>
                     </div>
                   )}
                   {vendor.email && (
                     <div className="d-flex align-items-center gap-2 mb-2 text-xs text-slate-600">
-                      <i className="fa-solid fa-envelope text-[#8059ca] w-4" />
+                      <i className="fa-solid fa-envelope text-[#321961] w-4" />
                       <span className="break-all">{vendor.email}</span>
                     </div>
                   )}
                   {vendor.address && (
                     <div className="d-flex align-items-start gap-2 mb-2 text-xs text-slate-600">
-                      <i className="fa-solid fa-location-dot text-[#8059ca] w-4 mt-0.5" />
+                      <i className="fa-solid fa-location-dot text-[#321961] w-4 mt-0.5" />
                       <span>{vendor.address}</span>
                     </div>
                   )}
@@ -1291,8 +1291,8 @@ const MedicineBookings = ({ HomeNavigate, ServiceTabs }) => {
                           fontSize: "12px",
                           padding: "6px 12px",
                           borderRadius: "8px",
-                          borderColor: "#8059ca",
-                          color: "#8059ca",
+                          borderColor: "#321961",
+                          color: "#321961",
                           fontWeight: "600",
                           backgroundColor: "transparent",
                         }}
@@ -1376,7 +1376,7 @@ const MedicineBookings = ({ HomeNavigate, ServiceTabs }) => {
                   <div
                     style={{
                       fontSize: "12px",
-                      color: "#8059ca",
+                      color: "#321961",
                       fontWeight: 600,
                       textTransform: "uppercase",
                       letterSpacing: "0.4px",

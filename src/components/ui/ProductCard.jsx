@@ -550,7 +550,7 @@ const ProductCard = ({
                   {vendorImage ? (
                     <img src={vendorImage} alt={vendorName} className="!w-full !h-full !object-contain !p-[3px]" />
                   ) : (
-                    <div className="!w-full !h-full !bg-gradient-to-br !from-[#8059ca] !to-[#8059ca] !text-white !flex !items-center !justify-center !font-bold !text-[12px]">
+                    <div className="!w-full !h-full !bg-gradient-to-br !from-[#321961] !to-[#321961] !text-white !flex !items-center !justify-center !font-bold !text-[12px]">
                       {vendorName.charAt(0)} /assets/img/logo.png
                     </div>
                   )}
@@ -627,7 +627,7 @@ const ProductCard = ({
               e.stopPropagation();
               onProductClick(item);
             }}
-            className="w-full flex items-center justify-center gap-2 py-0.5 px-2 !rounded-md !text-[13px] !font-semibold !text-white bg-[#8059ca] shadow-sm shadow-[#8059ca]/20 hover:shadow-md transition-all duration-300 cursor-pointer border-none"
+            className="w-full flex items-center justify-center gap-2 py-0.5 px-2 !rounded-md !text-[13px] !font-semibold !text-white bg-[#321961] shadow-sm shadow-[#321961]/20 hover:shadow-md transition-all duration-300 cursor-pointer border-none"
           >
 
             {BookNowButtons.includes(currentService?.toLowerCase()) ? 'Book Now' : 'Order Now'}

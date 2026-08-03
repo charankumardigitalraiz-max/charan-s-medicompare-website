@@ -749,7 +749,7 @@ const Home2Header = () => {
               e.preventDefault();
               setShowCartChoiceModal(true);
             }}
-            className="w-[32px] h-[32px] !rounded-full border !border-solid !border-[#e5e7eb] hover:!border-[#8059ca] flex items-center justify-center !text-[#8059ca] bg-white hover:bg-[#f0ebff] cursor-pointer transition-all duration-200 no-underline relative"
+            className="w-[32px] h-[32px] !rounded-full border !border-solid !border-[#e5e7eb] hover:!border-[#321961] flex items-center justify-center !text-[#321961] bg-white hover:bg-[#f0ebff] cursor-pointer transition-all duration-200 no-underline relative"
           >
             <i className="fas fa-shopping-cart"></i>
             {cartCount > 0 && (
@@ -778,7 +778,7 @@ const Home2Header = () => {
           {isLoggedIn && (
             <Link
               to="/notifications"
-              className="w-[32px] h-[32px] !rounded-full !border !border-solid !border-[#e5e7eb] hover:!border-[#8059ca] !flex !items-center !justify-center !text-[#8059ca] !bg-white hover:!bg-[#f0ebff] !cursor-pointer !transition-all !duration-200 no-underline relative"
+              className="w-[32px] h-[32px] !rounded-full !border !border-solid !border-[#e5e7eb] hover:!border-[#321961] !flex !items-center !justify-center !text-[#321961] !bg-white hover:!bg-[#f0ebff] !cursor-pointer !transition-all !duration-200 no-underline relative"
               title="Notifications"
             >
               <i
@@ -793,7 +793,7 @@ const Home2Header = () => {
                     position: "absolute",
                     top: "-4px",
                     right: "-4px",
-                    background: "#8059ca",
+                    background: "#321961",
                     color: "#fff",
                     borderRadius: "50%",
                     width: "16px",
@@ -978,7 +978,7 @@ const Home2Header = () => {
               >
                 <div className="flex items-center">
                   <div className="w-[30px] h-[30px] rounded-[10px] flex items-center justify-center shrink-0">
-                    <i className="fas fa-map-marker-alt text-[#8059ca] text-[18px]"></i>
+                    <i className="fas fa-map-marker-alt text-[#321961] text-[18px]"></i>
                   </div>
                   <div
                     className="flex flex-col justify-center min-w-[180px] cursor-pointer tooltip-wrappers"
@@ -1098,7 +1098,7 @@ const Home2Header = () => {
                     e.preventDefault();
                     setShowCartChoiceModal(true);
                   }}
-                  className="w-9 h-9 flex items-center justify-center !rounded-full bg-gray-50 !border !border-gray-200 !text-[#8059ca] hover:bg-[#f0ebff] hover:!border-[#8059ca] transition-all relative cursor-pointer !no-underline"
+                  className="w-9 h-9 flex items-center justify-center !rounded-full bg-gray-50 !border !border-gray-200 !text-[#321961] hover:bg-[#f0ebff] hover:!border-[#321961] transition-all relative cursor-pointer !no-underline"
                   title={`${cartCount} product${cartCount !== 1 ? "s" : ""} in cart`}
                 >
                   <i className="isax isax-shopping-cart text-[18px]" />
@@ -1115,12 +1115,12 @@ const Home2Header = () => {
                 <li className="relative">
                   <Link
                     to="/notifications"
-                    className="w-9 h-9 flex items-center justify-center !rounded-full bg-gray-50 !border !border-gray-200 !text-[#8059ca] hover:bg-[#f0ebff] hover:!border-[#8059ca] transition-all relative cursor-pointer !no-underline"
+                    className="w-9 h-9 flex items-center justify-center !rounded-full bg-gray-50 !border !border-gray-200 !text-[#321961] hover:bg-[#f0ebff] hover:!border-[#321961] transition-all relative cursor-pointer !no-underline"
                     title="Notifications"
                   >
                     <i className="fas fa-bell text-[16px]"></i>
                     {unreadCount > 0 && (
-                      <span className="absolute -top-1 -right-1 bg-[#8059ca] text-white rounded-full min-w-[16px] h-4 flex items-center justify-center text-[9px] font-bold px-1">
+                      <span className="absolute -top-1 -right-1 bg-[#321961] text-white rounded-full min-w-[16px] h-4 flex items-center justify-center text-[9px] font-bold px-1">
                         {unreadCount > 99 ? "99+" : unreadCount}
                       </span>
                     )}
@@ -1133,7 +1133,7 @@ const Home2Header = () => {
                   <ul className="flex items-center list-none m-0 p-0">
                     <li>
                       <Link
-                        className="!bg-[linear-gradient(135deg,#8059ca_0%,#822BD4_100%)] hover:opacity-90 !text-white !font-semibold !text-[13px] !px-4 !py-2 !rounded-full inline-flex items-center !border-none shadow-sm !transition-all"
+                        className="!bg-[linear-gradient(135deg,#321961_0%,#822BD4_100%)] hover:opacity-90 !text-white !font-semibold !text-[13px] !px-4 !py-2 !rounded-full inline-flex items-center !border-none shadow-sm !transition-all"
                         to="/login"
                       >
                         <i className="isax isax-lock-1 mr-1" />
@@ -1159,7 +1159,7 @@ const Home2Header = () => {
                           title={profiles?.first_name}
                         />
                       ) : (
-                        <div className="w-full h-full bg-[#8059ca] text-white flex items-center justify-center text-[15px] font-semibold uppercase">
+                        <div className="w-full h-full bg-[#321961] text-white flex items-center justify-center text-[15px] font-semibold uppercase">
                           {profiles?.first_name?.charAt(0)}
                         </div>
                       )}
@@ -1303,10 +1303,10 @@ const Home2Header = () => {
                       setShowCartChoiceModal(false);
                       navigate("/labtest-checkout?carttype=labtests");
                     }}
-                    className="group/card border-[1.5px] border-[#f1f5f9] rounded-[12px] sm:rounded-[16px] p-3 sm:p-5 text-center cursor-pointer bg-[#fcfaff] transition-all duration-200 flex flex-col items-center gap-2 sm:gap-3 hover:border-[#8059ca] hover:shadow-[0_10px_15px_-3px_rgba(128,89,202,0.15)] relative"
+                    className="group/card border-[1.5px] border-[#f1f5f9] rounded-[12px] sm:rounded-[16px] p-3 sm:p-5 text-center cursor-pointer bg-[#fcfaff] transition-all duration-200 flex flex-col items-center gap-2 sm:gap-3 hover:border-[#321961] hover:shadow-[0_10px_15px_-3px_rgba(128,89,202,0.15)] relative"
                   >
-                    <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-xl bg-[#f3eefc] flex items-center justify-center transition-colors group-hover/card:bg-[#8059ca]/10">
-                      <i className="fa-solid fa-microscope text-lg sm:text-2xl text-[#8059ca]"></i>
+                    <div className="w-10 h-10 sm:w-14 sm:h-14 rounded-xl bg-[#f3eefc] flex items-center justify-center transition-colors group-hover/card:bg-[#321961]/10">
+                      <i className="fa-solid fa-microscope text-lg sm:text-2xl text-[#321961]"></i>
                     </div>
                     <div>
                       <h6 className="text-[12px] sm:text-[15px] font-bold text-[#0f172a] mb-0.5">
@@ -1316,7 +1316,7 @@ const Home2Header = () => {
                         Health packages
                       </span>
                     </div>
-                    <span className="text-[9px] sm:text-[11px] font-semibold text-[#8059ca] bg-[#f3eefc] py-0.5 px-1.5 sm:px-2.5 rounded-full border border-[#ddd6fe]">
+                    <span className="text-[9px] sm:text-[11px] font-semibold text-[#321961] bg-[#f3eefc] py-0.5 px-1.5 sm:px-2.5 rounded-full border border-[#ddd6fe]">
                       {ServiceCartCount?.labtests || 0}
                     </span>
                   </div>

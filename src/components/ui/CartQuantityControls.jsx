@@ -620,7 +620,7 @@ const CartQuantityControls = ({
         <div className="w-full flex-1">
           <button
             type="button"
-            className="w-full flex items-center justify-center gap-1.5 py-1 px-2.5 !rounded-md text-xs font-bold !text-white bg-gradient-to-r from-[#8059ca] to-[#822BD4] hover:shadow-md active:scale-[0.98] transition-all cursor-pointer border-none"
+            className="w-full flex items-center justify-center gap-1.5 py-1 px-2.5 !rounded-md text-xs font-bold !text-white bg-[var(--color-primary)] hover:shadow-md active:scale-[0.98] transition-all cursor-pointer border-none"
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
@@ -635,7 +635,7 @@ const CartQuantityControls = ({
         <div className="w-full flex-1">
           <button
             type="button"
-            className="w-full flex items-center justify-center gap-1.5 py-1 px-2.5 !rounded-md text-xs font-bold !text-white bg-gradient-to-r from-[#8059ca] to-[#822BD4] hover:shadow-md active:scale-[0.98] transition-all cursor-pointer border-none"
+            className="w-full flex items-center justify-center gap-1.5 py-1 px-2.5 !rounded-md text-xs font-bold !text-white bg-[var(--color-primary)] hover:shadow-md active:scale-[0.98] transition-all cursor-pointer border-none"
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
@@ -650,7 +650,7 @@ const CartQuantityControls = ({
         <div className="w-full flex-1">
           <button
             type="button"
-            className="w-full flex items-center justify-center gap-1.5 py-1 px-2.5 !rounded-md text-xs font-bold !text-white bg-gradient-to-r from-[#8059ca] to-[#822BD4] hover:shadow-md active:scale-[0.98] transition-all cursor-pointer border-none"
+            className="w-full flex items-center justify-center gap-1.5 py-1 px-2.5 !rounded-md text-xs font-bold !text-white bg-[var(--color-primary)] hover:shadow-md active:scale-[0.98] transition-all cursor-pointer border-none"
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
@@ -672,7 +672,7 @@ const CartQuantityControls = ({
             }}
             disabled={!item?.perDayRent}
             className={`w-full flex items-center justify-center gap-1.5 py-1 px-2.5 !rounded-md text-xs font-bold text-white transition-all border-none ${item?.perDayRent
-              ? "bg-gradient-to-r from-[#8059ca] to-[#822BD4] hover:shadow-md active:scale-[0.98] cursor-pointer"
+              ? "bg-[var(--color-primary)] hover:shadow-md active:scale-[0.98] cursor-pointer"
               : "bg-slate-300 opacity-60 cursor-not-allowed"
               }`}
           >
@@ -684,7 +684,7 @@ const CartQuantityControls = ({
         <div className="w-full flex-1">
           <button
             type="button"
-            className="w-full flex items-center justify-center gap-1.5 py-1 px-2.5 !rounded-md text-xs font-bold text-white bg-gradient-to-r from-[#8059ca] to-[#822BD4] hover:shadow-md active:scale-[0.98] transition-all cursor-pointer border-none"
+            className="w-full flex items-center justify-center gap-1.5 py-1 px-2.5 !rounded-md text-xs font-bold text-white bg-[var(--color-primary)] hover:shadow-md active:scale-[0.98] transition-all cursor-pointer border-none"
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
@@ -699,7 +699,7 @@ const CartQuantityControls = ({
         <div className="w-full flex-1">
           <button
             type="button"
-            className="w-full flex items-center justify-center gap-1.5 py-1 px-2.5 !rounded-md text-xs font-bold text-white bg-gradient-to-r from-[#8059ca] to-[#822BD4] hover:shadow-md active:scale-[0.98] transition-all cursor-pointer border-none"
+            className="w-full flex items-center justify-center gap-1.5 py-1 px-2.5 !rounded-md text-xs font-bold text-white bg-[var(--color-primary)] hover:shadow-md active:scale-[0.98] transition-all cursor-pointer border-none"
             onClick={(e) => {
               e.preventDefault();
               e.stopPropagation();
@@ -716,17 +716,17 @@ const CartQuantityControls = ({
           {inStock ? (
             quantity > 0 ? (
               <div className="flex flex-col items-center gap-1 w-full">
-                <div className="flex items-center justify-between border border-[#8059ca] bg-[#fdfaff] !rounded-lg px-2.5 py-1 w-full shadow-sm">
+                <div className="flex items-center justify-between border border-[#321961] bg-[#fdfaff] !rounded-lg px-2.5 py-1 w-full shadow-sm">
                   <button
-                    className="text-[#8059ca] hover:bg-[#8059ca]/10 disabled:opacity-50 w-5 h-5 rounded flex items-center justify-center cursor-pointer border-none bg-transparent"
+                    className="text-[#321961] hover:bg-[var(--color-primary)]/10 disabled:opacity-50 w-5 h-5 rounded flex items-center justify-center cursor-pointer border-none bg-transparent"
                     onClick={handleDecrement}
                     disabled={isLoading || quantity <= 0}
                   >
                     <i className="fas fa-minus text-[10px]"></i>
                   </button>
-                  <span className="text-xs font-bold text-[#8059ca] px-2">{quantity}</span>
+                  <span className="text-xs font-bold text-[#321961] px-2">{quantity}</span>
                   <button
-                    className="text-[#8059ca] hover:bg-[#8059ca]/10 w-5 h-5 rounded flex items-center justify-center cursor-pointer border-none bg-transparent"
+                    className="text-[#321961] hover:bg-[var(--color-primary)]/10 w-5 h-5 rounded flex items-center justify-center cursor-pointer border-none bg-transparent"
                     onClick={handleIncrement}
                     disabled={isLoading}
                   >
@@ -743,7 +743,7 @@ const CartQuantityControls = ({
               <button
                 onClick={handleAdd}
                 disabled={isLoading}
-                className="w-full flex items-center justify-center gap-1.5 py-1 px-2.5 !rounded-md text-xs !font-bold !text-white bg-gradient-to-r from-[#8059ca] to-[#822BD4] hover:shadow-md active:scale-[0.98] transition-all cursor-pointer border-none"
+                className="w-full flex items-center justify-center gap-1.5 py-1 px-2.5 !rounded-md text-xs !font-bold !text-white bg-[var(--color-primary)] hover:shadow-md active:scale-[0.98] transition-all cursor-pointer border-none"
               >
                 <i className="fas fa-shopping-cart"></i>Add
               </button>
@@ -762,7 +762,7 @@ const CartQuantityControls = ({
             }}
             disabled={!item?.perDayRent}
             className={`w-full flex items-center justify-center gap-1.5 py-1 px-2.5 !rounded-md text-xs font-bold !text-white transition-all border-none ${item?.perDayRent
-              ? "bg-gradient-to-r from-[#8059ca] to-[#822BD4] hover:shadow-md active:scale-[0.98] cursor-pointer"
+              ? "bg-[var(--color-primary)] hover:shadow-md active:scale-[0.98] cursor-pointer"
               : "bg-slate-300 opacity-60 cursor-not-allowed"
               }`}
           >
@@ -786,17 +786,17 @@ const CartQuantityControls = ({
       {bookingType === "cart" && inStock &&
         (quantity > 0 ? (
           <div className="w-full flex flex-col items-center gap-1">
-            <div className="flex items-center justify-between border border-[#8059ca] bg-[#fdfaff] !rounded-lg px-2.5 py-1 w-full shadow-sm">
+            <div className="flex items-center justify-between border border-[#321961] bg-[#fdfaff] !rounded-lg px-2.5 py-1 w-full shadow-sm">
               <button
-                className="text-[#8059ca] hover:bg-[#8059ca]/10 disabled:opacity-50 w-5 h-5 rounded flex items-center justify-center cursor-pointer border-none bg-transparent"
+                className="text-[#321961] hover:bg-[var(--color-primary)]/10 disabled:opacity-50 w-5 h-5 rounded flex items-center justify-center cursor-pointer border-none bg-transparent"
                 onClick={handleDecrement}
                 disabled={isLoading || quantity <= 0}
               >
                 <i className="fas fa-minus text-[10px]"></i>
               </button>
-              <span className="text-xs font-bold text-[#8059ca] px-2">{quantity}</span>
+              <span className="text-xs font-bold text-[#321961] px-2">{quantity}</span>
               <button
-                className="text-[#8059ca] hover:bg-[#8059ca]/10 w-5 h-5 rounded flex items-center justify-center cursor-pointer border-none bg-transparent"
+                className="text-[#321961] hover:bg-[var(--color-primary)]/10 w-5 h-5 rounded flex items-center justify-center cursor-pointer border-none bg-transparent"
                 onClick={handleIncrement}
               >
                 <i className="fas fa-plus text-[10px]"></i>
@@ -808,7 +808,7 @@ const CartQuantityControls = ({
             <button
               onClick={handleAdd}
               disabled={isLoading}
-              className="w-full flex items-center justify-center gap-1.5 py-1 px-2.5 !rounded-lg text-xs !font-bold !text-white bg-gradient-to-r from-[#8059ca] to-[#822BD4] hover:shadow-md active:scale-[0.98] transition-all cursor-pointer border-none"
+              className="w-full flex items-center justify-center gap-1.5 py-0.5 px-2.5 !rounded-lg text-xs !font-semibold !text-white bg-[var(--color-primary)] hover:shadow-md active:scale-[0.98] transition-all cursor-pointer border-none"
             >
               <i className="fas fa-shopping-cart"></i>Add
             </button>
@@ -837,7 +837,7 @@ const CartQuantityControls = ({
           <button
             onClick={handleAdd}
             disabled={isLoading}
-            className="w-full flex items-center justify-center gap-1.5 py-1 px-2.5 !rounded-md text-xs !font-bold !text-white bg-gradient-to-r from-[#8059ca] to-[#822BD4] hover:shadow-md active:scale-[0.98] transition-all cursor-pointer border-none"
+            className="w-full flex items-center justify-center gap-1.5 py-1 px-2.5 !rounded-md text-xs !font-bold !text-white bg-[var(--color-primary)] hover:shadow-md active:scale-[0.98] transition-all cursor-pointer border-none"
           >
             <i className="fas fa-shopping-cart"></i>Add
           </button>

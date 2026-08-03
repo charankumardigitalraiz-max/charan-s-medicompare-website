@@ -562,7 +562,7 @@ const MobileSearchDropdown = ({
                 top: "50%",
                 transform: "translateY(-50%)",
                 cursor: "pointer",
-                color: mobileSearchIsListening ? "#8059ca" : "#6b7280",
+                color: mobileSearchIsListening ? "#321961" : "#6b7280",
                 transition: "color 0.2s ease",
                 fontSize: "18px",
                 zIndex: 4,
@@ -713,7 +713,7 @@ const MobileSearchDropdown = ({
                       padding: "12px",
                       border: "none",
                       background: "#f9fafb",
-                      color: isMoreLoading ? "#9ca3af" : "#8059ca",
+                      color: isMoreLoading ? "#9ca3af" : "#321961",
                       fontWeight: "600",
                       textAlign: "center",
                       cursor: isMoreLoading ? "not-allowed" : "pointer",
@@ -747,7 +747,7 @@ const MobileSearchDropdown = ({
                       <div
                         key={tablet?._id || index}
                         onClick={() => handleMobileProductClick(item)}
-                        className="bg-white rounded-sm p-3 border border-gray-200 shadow-sm cursor-pointer min-w-[130px] max-w-[130px] flex-shrink-0 flex flex-col hover:border-[#8059ca] transition-all"
+                        className="bg-white rounded-sm p-3 border border-gray-200 shadow-sm cursor-pointer min-w-[130px] max-w-[130px] flex-shrink-0 flex flex-col hover:border-[#321961] transition-all"
                       >
                         <div className="w-full h-20 bg-gray-50 rounded-lg flex items-center justify-center overflow-hidden mb-2">
                           <img
@@ -768,7 +768,7 @@ const MobileSearchDropdown = ({
                         <p className="text-[12px] font-bold text-gray-800 truncate m-0 leading-tight">
                           {tablet?.name || "Unknown"}
                         </p>
-                        <div className="text-[11px] font-bold text-[#8059ca] mt-1.5 flex items-center flex-wrap gap-1">
+                        <div className="text-[11px] font-bold text-[#321961] mt-1.5 flex items-center flex-wrap gap-1">
                           {item?.vendors && item?.vendors.length > 0 ? (
                             item?.vendors?.[0]?.discountprice ? (
                               <>
@@ -979,7 +979,7 @@ const MobileSearchDropdown = ({
                     padding: "14px",
                     border: "none",
                     borderRadius: "8px",
-                    backgroundColor: "#8059ca",
+                    backgroundColor: "#321961",
                     color: "#000",
                     fontSize: "16px",
                     fontWeight: "600",

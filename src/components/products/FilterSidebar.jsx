@@ -139,8 +139,8 @@ const FilterSidebar = ({
       <div className="flex items-center gap-2.5">
         <div
           className={`w-3.5 h-3.5 rounded-[3px] flex items-center justify-center shrink-0 transition-all duration-150 ${isActive
-            ? "!border-1 !border-solid !border-[#8059ca] !bg-[#8059ca]"
-            : "!border-1 !border-solid !border-[#64748b] !bg-white group-hover:!border-[#8059ca]"
+            ? "!border-1 !border-solid !border-[#321961] !bg-[#321961]"
+            : "!border-1 !border-solid !border-[#64748b] !bg-white group-hover:!border-[#321961]"
             }`}
         >
           {isActive && (
@@ -150,7 +150,7 @@ const FilterSidebar = ({
           )}
         </div>
         <span
-          className={`text-[13px] font-medium transition-colors leading-tight ${isActive ? "text-[#8059ca]" : "text-slate-600 group-hover:text-slate-800"
+          className={`text-[13px] font-medium transition-colors leading-tight ${isActive ? "text-[#321961]" : "text-slate-600 group-hover:text-slate-800"
             }`}
         >
           {label}
@@ -219,7 +219,7 @@ const FilterSidebar = ({
               const newActiveLetter = alphabetData[Math.max(0, start - 3)]?.value;
               scrollToLetter(newActiveLetter);
             }}
-            className="w-7 h-7 shrink-0 rounded-full border border-solid border-slate-300 bg-white flex items-center justify-center text-xs font-semibold text-[#8059ca] cursor-pointer hover:bg-slate-100 transition-all duration-200"
+            className="w-7 h-7 shrink-0 rounded-full border border-solid border-slate-300 bg-white flex items-center justify-center text-xs font-semibold text-[#321961] cursor-pointer hover:bg-slate-100 transition-all duration-200"
           >
             ...
           </div>
@@ -232,8 +232,8 @@ const FilterSidebar = ({
               key={alphaItem.value}
               onClick={() => scrollToLetter(alphaItem.value)}
               className={`w-7 h-7 shrink-0 rounded-full border-2 border-solid flex items-center justify-center text-xs font-semibold cursor-pointer transition-all duration-200 ${isActive
-                ? "!border-[#8059ca] !bg-[#8059ca] text-white shadow-sm"
-                : "!border-[#64748b] bg-white text-[#8059ca] hover:!bg-purple-50 hover:!border-[#8059ca]"
+                ? "!border-[#321961] !bg-[#321961] text-white shadow-sm"
+                : "!border-[#64748b] bg-white text-[#321961] hover:!bg-purple-50 hover:!border-[#321961]"
                 }`}
             >
               {alphaItem.label}
@@ -247,7 +247,7 @@ const FilterSidebar = ({
               const newActiveLetter = alphabetData[Math.min(alphabetData.length - 1, end + 3)]?.value;
               scrollToLetter(newActiveLetter);
             }}
-            className="w-7 h-7 shrink-0 rounded-full border border-solid border-slate-300 bg-white flex items-center justify-center text-xs font-semibold text-[#8059ca] cursor-pointer hover:bg-slate-100 transition-all duration-200"
+            className="w-7 h-7 shrink-0 rounded-full border border-solid border-slate-300 bg-white flex items-center justify-center text-xs font-semibold text-[#321961] cursor-pointer hover:bg-slate-100 transition-all duration-200"
           >
             ...
           </div>
@@ -275,7 +275,7 @@ const FilterSidebar = ({
               {onClearFilters && (
                 <button
                   type="button"
-                  className="!text-slate-400 hover:!text-[#8059ca] !font-medium !text-[11px] !py-0.5 !px-2 !rounded !border !border-solid !border-slate-200 hover:!border-[#8059ca] !bg-transparent hover:!bg-purple-50/50 !transition-all !duration-150 flex items-center gap-1 cursor-pointer"
+                  className="!text-slate-400 hover:!text-[#321961] !font-medium !text-[11px] !py-0.5 !px-2 !rounded !border !border-solid !border-slate-200 hover:!border-[#321961] !bg-transparent hover:!bg-purple-50/50 !transition-all !duration-150 flex items-center gap-1 cursor-pointer"
                   onClick={(e) => {
                     e.preventDefault();
                     e.stopPropagation();
@@ -345,7 +345,7 @@ const FilterSidebar = ({
                             }
                           }}
                           disabled={categoryLoading}
-                          className="w-full text-center py-1.5 px-3 !rounded-lg !border !border-[#8059ca] !text-[#8059ca] hover:!bg-[#8059ca] hover:!text-white transition-all !text-xs !font-semibold !cursor-pointer !bg-transparent !mt-2"
+                          className="w-full text-center py-1.5 px-3 !rounded-lg !border !border-[#321961] !text-[#321961] hover:!bg-[#321961] hover:!text-white transition-all !text-xs !font-semibold !cursor-pointer !bg-transparent !mt-2"
                         >
                           {categoryLoading ? "Loading..." : "View More"}
                         </button>
@@ -395,7 +395,7 @@ const FilterSidebar = ({
                         allowCross={false}
                         styles={{
                           track: {
-                            backgroundColor: "#8059ca",
+                            backgroundColor: "#321961",
                             height: 4,
                           },
                           rail: {
@@ -403,7 +403,7 @@ const FilterSidebar = ({
                             height: 4,
                           },
                           handle: {
-                            borderColor: "#8059ca",
+                            borderColor: "#321961",
                             backgroundColor: "#fff",
                             width: 18,
                             height: 18,
@@ -436,7 +436,7 @@ const FilterSidebar = ({
                           style={{
                             fontSize: "14px",
                             fontWeight: "600",
-                            color: "#8059ca",
+                            color: "#321961",
                           }}
                         >
                           {formatPrice(defaultPriceRangeProp[0])}
@@ -466,7 +466,7 @@ const FilterSidebar = ({
                           style={{
                             fontSize: "14px",
                             fontWeight: "600",
-                            color: "#8059ca",
+                            color: "#321961",
                           }}
                         >
                           {formatPrice(defaultPriceRangeProp[1])}
@@ -522,7 +522,7 @@ const FilterSidebar = ({
                           }
                         }}
                         disabled={brandLoading}
-                        className="w-full text-center py-1.5 px-3 !rounded-lg !border !border-[#8059ca] !text-[#8059ca] hover:!bg-[#8059ca] hover:!text-white transition-all !text-xs !font-semibold !cursor-pointer !bg-transparent !mt-2"
+                        className="w-full text-center py-1.5 px-3 !rounded-lg !border !border-[#321961] !text-[#321961] hover:!bg-[#321961] hover:!text-white transition-all !text-xs !font-semibold !cursor-pointer !bg-transparent !mt-2"
                       >
                         {brandLoading ? "Loading..." : "View More"}
                       </button>
@@ -771,7 +771,7 @@ const FilterSidebar = ({
                           }
                         }}
                         disabled={compositionLoading}
-                        className="w-full text-center py-1.5 px-3 !rounded-lg !border !border-[#8059ca] !text-[#8059ca] hover:!bg-[#8059ca] hover:!text-white transition-all !text-xs !font-semibold !cursor-pointer !bg-transparent !mt-2"
+                        className="w-full text-center py-1.5 px-3 !rounded-lg !border !border-[#321961] !text-[#321961] hover:!bg-[#321961] hover:!text-white transition-all !text-xs !font-semibold !cursor-pointer !bg-transparent !mt-2"
                       >
                         {compositionLoading ? "Loading..." : "View More"}
                       </button>

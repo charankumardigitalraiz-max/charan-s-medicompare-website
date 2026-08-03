@@ -239,7 +239,7 @@ const VendorCalendarSlotPicker = ({
           transition: color 0.2s;
         }
         .vc-month-nav button:hover:not(:disabled) {
-          color: #8059ca;
+          color: #321961;
         }
         .vc-month-nav button:disabled {
           opacity: 0.3;
@@ -296,8 +296,8 @@ const VendorCalendarSlotPicker = ({
         }
         .calendar-day-cell.selected {
           background: #f3effa !important;
-          border-color: #8059ca !important;
-          color: #8059ca !important;
+          border-color: #321961 !important;
+          color: #321961 !important;
           font-weight: 700 !important;
         }
         .day-dot-indicator {
@@ -328,13 +328,13 @@ const VendorCalendarSlotPicker = ({
           color: #475569;
         }
         .time-slot-pill:hover {
-          border-color: #8059ca;
-          color: #8059ca;
+          border-color: #321961;
+          color: #321961;
           background: #fdfaff;
         }
         .time-slot-pill.selected {
-          background: #8059ca;
-          border-color: #8059ca;
+          background: #321961;
+          border-color: #321961;
           color: #fff;
         }
         .slots-action-bar {
@@ -345,7 +345,7 @@ const VendorCalendarSlotPicker = ({
         }
         .book-btn-purple {
           width: 100%;
-          background: #8059ca;
+          background: #321961;
           color: #fff;
           border: none;
           padding: 10px;
@@ -446,7 +446,7 @@ const VendorCalendarSlotPicker = ({
               className="flex items-center justify-center"
               style={{ minHeight: "150px" }}
             >
-              <div className="spinner-border spinner-border-sm text-[#8059ca]" role="status">
+              <div className="spinner-border spinner-border-sm text-[#321961]" role="status">
                 <span className="visually-hidden">Loading...</span>
               </div>
             </div>
@@ -508,7 +508,7 @@ const VendorCalendarSlotPicker = ({
               }}
             >
               <span style={{ color: "#64748b" }}>Selection</span>
-              <span style={{ fontWeight: 600, color: "#8059ca" }}>
+              <span style={{ fontWeight: 600, color: "#321961" }}>
                 {selectedTimeSlot
                   ? `${format(selectedDate, "dd MMM")} at ${selectedTimeSlot}`
                   : "Pick a time"}

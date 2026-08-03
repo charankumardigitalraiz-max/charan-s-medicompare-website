@@ -8,7 +8,7 @@ import { axiosCommonInstance } from "../../../Apiservice.jsx";
 import { getImageUrl } from "../../../utils/index";
 
 const colorSchemes = [
-  { iconColor: "#8059ca", bg: "linear-gradient(135deg, #F8F5FE 0%, #E8D5FF 100%)" },
+  { iconColor: "#321961", bg: "linear-gradient(135deg, #F8F5FE 0%, #E8D5FF 100%)" },
   { iconColor: "#110EFD", bg: "linear-gradient(135deg, #EAF3FF 0%, #D4E8FF 100%)" },
   { iconColor: "#04BD6C", bg: "linear-gradient(135deg, #F1FAF3 0%, #D4F4E0 100%)" },
   { iconColor: "#FF6B6B", bg: "linear-gradient(135deg, #FFF5F5 0%, #FFE5E5 100%)" },

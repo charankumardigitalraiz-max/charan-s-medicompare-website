@@ -545,7 +545,7 @@ const TrendingProducts = ({
                             }}
                             data-tooltip-id="global-tooltip"
                             data-tooltip-content="Quick View"
-                            className="!absolute !top-2 !left-2 !p-[6px_10px] !rounded-full !shadow-[0_2px_8px_rgba(0,0,0,0.15)] !text-[13px] !cursor-pointer !bg-[#8059ca] !text-white !transition-all hover:!scale-110 !z-10"
+                            className="!absolute !top-2 !left-2 !p-[6px_10px] !rounded-full !shadow-[0_2px_8px_rgba(0,0,0,0.15)] !text-[13px] !cursor-pointer !bg-[#321961] !text-white !transition-all hover:!scale-110 !z-10"
                           >
                             <i className="fas fa-eye"></i>
                           </div>
@@ -735,7 +735,7 @@ const TrendingProducts = ({
                                   <i className="fas fa-truck-fast"></i>
                                   <span>Free Delivery Available</span>
                                 </div>
-                                <div className="!flex !items-center !gap-[6px] !text-[11px] !text-[#8059ca] !mt-[4px] !font-medium">
+                                <div className="!flex !items-center !gap-[6px] !text-[11px] !text-[#321961] !mt-[4px] !font-medium">
                                   <i className="fas fa-calendar-day"></i>
                                   <span>Per Day Rent:</span>
                                   <strong>₹{item.perDayRent}</strong>

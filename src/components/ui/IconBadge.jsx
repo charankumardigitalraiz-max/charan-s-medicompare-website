@@ -9,7 +9,7 @@ const IconBadge = ({
   onClick,
 }) => {
   const variantStyles = {
-    primary: { backgroundColor: "#8059ca", color: "white" },
+    primary: { backgroundColor: "#321961", color: "white" },
     success: { backgroundColor: "#28a745", color: "white" },
     danger: { backgroundColor: "#dc3545", color: "white" },
     warning: { backgroundColor: "#ffc107", color: "black" },

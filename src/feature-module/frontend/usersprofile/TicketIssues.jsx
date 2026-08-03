@@ -291,7 +291,7 @@ const TicketIssues = ({ HomeNavigate, BackButton }) => {
       key: "ticketNo",
       label: "Ticket No",
       render: (value) => (
-        <span className="font-semibold text-[#8059ca]">
+        <span className="font-semibold text-[#321961]">
           {value}
         </span>
       )
@@ -342,7 +342,7 @@ const TicketIssues = ({ HomeNavigate, BackButton }) => {
       className: "text-center",
       render: (_, row) => (
         <button
-          className={`rounded-full w-8 h-8 p-0 inline-flex items-center justify-center text-white cursor-pointer border ${row.status === "closed" ? "bg-[#ff6b6b] border-[#ff6b6b]" : "bg-[#8059ca] border-[#8059ca]"}`}
+          className={`rounded-full w-8 h-8 p-0 inline-flex items-center justify-center text-white cursor-pointer border ${row.status === "closed" ? "bg-[#ff6b6b] border-[#ff6b6b]" : "bg-[#321961] border-[#321961]"}`}
           title={row.status === "closed" ? "View chat history (closed ticket)" : "Chat with Support"}
           onClick={() => openChat(row)}
         >
@@ -381,7 +381,7 @@ const TicketIssues = ({ HomeNavigate, BackButton }) => {
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pb-2 mb-2 border-b border-slate-100 mt-2">
                 <div className="flex items-center gap-3.5">
                   {HomeNavigate && <HomeNavigate />}
-                  <div className="w-11 h-11 rounded-xl bg-purple-50 text-[#8059ca] flex items-center justify-center text-[20px] shrink-0 border border-purple-100/50 shadow-sm">
+                  <div className="w-11 h-11 rounded-xl bg-purple-50 text-[#321961] flex items-center justify-center text-[20px] shrink-0 border border-purple-100/50 shadow-sm">
                     <i className="fa-solid fa-ticket" />
                   </div>
 
@@ -419,7 +419,7 @@ const TicketIssues = ({ HomeNavigate, BackButton }) => {
                         setSearchTerm(e.target.value);
                         setCurrentPage(1);
                       }}
-                      className="h-[42px] rounded-sm border border-[#e0e0e0] pl-10 pr-4 text-sm w-full outline-none focus:border-[#8059ca] transition-colors"
+                      className="h-[42px] rounded-sm border border-[#e0e0e0] pl-10 pr-4 text-sm w-full outline-none focus:border-[#321961] transition-colors"
                     />
                     <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[#999] pointer-events-none">
                       <i className="fa-solid fa-search" />
@@ -481,7 +481,7 @@ const TicketIssues = ({ HomeNavigate, BackButton }) => {
             <div className="p-5 space-y-5 overflow-y-auto">
               {/* Ticket Information */}
               <div>
-                <div style={{ fontSize: "10px", fontWeight: 700, color: "#8059ca", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "12px" }}>
+                <div style={{ fontSize: "10px", fontWeight: 700, color: "#321961", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "12px" }}>
                   Ticket Information
                 </div>
                 <div className="grid grid-cols-2 gap-3">
@@ -529,7 +529,7 @@ const TicketIssues = ({ HomeNavigate, BackButton }) => {
               {/* Description */}
               {selectedLead.description && (
                 <div>
-                  <div style={{ fontSize: "10px", fontWeight: 700, color: "#8059ca", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "8px" }}>
+                  <div style={{ fontSize: "10px", fontWeight: 700, color: "#321961", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "8px" }}>
                     Description
                   </div>
                   <div className="bg-[#fafafa] border border-[#eee] rounded-xl p-3.5 text-xs leading-relaxed text-slate-600">
@@ -541,7 +541,7 @@ const TicketIssues = ({ HomeNavigate, BackButton }) => {
               {/* User Details */}
               {selectedLead.userId && (
                 <div>
-                  <div style={{ fontSize: "10px", fontWeight: 700, color: "#8059ca", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "12px" }}>
+                  <div style={{ fontSize: "10px", fontWeight: 700, color: "#321961", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "12px" }}>
                     Reporter Information
                   </div>
                   <div className="bg-[#faf9fe] border border-[#f1eff9] rounded-xl p-3.5 space-y-2.5">
@@ -576,7 +576,7 @@ const TicketIssues = ({ HomeNavigate, BackButton }) => {
               {/* Attachments */}
               {selectedLead.attachments && selectedLead.attachments.length > 0 && (
                 <div className="pb-2">
-                  <div style={{ fontSize: "10px", fontWeight: 700, color: "#8059ca", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "8px" }}>
+                  <div style={{ fontSize: "10px", fontWeight: 700, color: "#321961", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "8px" }}>
                     Attachments
                   </div>
                   <div className="flex flex-wrap gap-2.5">
@@ -597,7 +597,7 @@ const TicketIssues = ({ HomeNavigate, BackButton }) => {
                             if (fallback) fallback.style.display = 'flex';
                           }}
                         />
-                        <div className="fallback-icon hidden w-full h-full items-center justify-center bg-slate-50 text-[#8059ca]">
+                        <div className="fallback-icon hidden w-full h-full items-center justify-center bg-slate-50 text-[#321961]">
                           <i className="fas fa-file-alt"></i>
                         </div>
                       </div>
@@ -620,7 +620,7 @@ const TicketIssues = ({ HomeNavigate, BackButton }) => {
         <Offcanvas.Header closeButton onHide={closeChat}>
           <Offcanvas.Title>
             <div className="flex items-center gap-2">
-              <div className="w-10 h-10 rounded-full bg-[#8059ca] text-white flex items-center justify-center text-lg">
+              <div className="w-10 h-10 rounded-full bg-[#321961] text-white flex items-center justify-center text-lg">
                 <i className="fas fa-headset"></i>
               </div>
               <div>
@@ -641,7 +641,7 @@ const TicketIssues = ({ HomeNavigate, BackButton }) => {
                   <div className="bg-[#f0f2f5] rounded-[18px_18px_18px_0] h-5 w-[120px] animate-pulse" />
                 </div>
                 <div className="self-end max-w-[85%]">
-                  <div className="bg-[#8059ca]/40 rounded-[18px_18px_0_18px] h-5 w-[150px] animate-pulse" />
+                  <div className="bg-[#321961]/40 rounded-[18px_18px_0_18px] h-5 w-[150px] animate-pulse" />
                 </div>
                 <div className="self-start max-w-[85%]">
                   <div className="bg-[#f0f2f5] rounded-[18px_18px_18px_0] h-5 w-[100px] animate-pulse" />
@@ -664,7 +664,7 @@ const TicketIssues = ({ HomeNavigate, BackButton }) => {
                       <div className={`flex items-end gap-2 ${chat.sender === "user" ? "flex-row-reverse" : "flex-row"}`}>
                         {/* Icon */}
                         <div
-                          className={`w-8 h-8 rounded-full flex items-center justify-center text-sm shrink-0 ${chat.sender === "user" ? "bg-[#8059ca] text-white" : "bg-[#f0f2f5] text-slate-500"
+                          className={`w-8 h-8 rounded-full flex items-center justify-center text-sm shrink-0 ${chat.sender === "user" ? "bg-[#321961] text-white" : "bg-[#f0f2f5] text-slate-500"
                             }`}
                         >
                           {chat.sender === "user" ? (
@@ -677,7 +677,7 @@ const TicketIssues = ({ HomeNavigate, BackButton }) => {
                         {/* Message bubble */}
                         <div
                           className={`px-4 py-2.5 text-sm leading-relaxed max-w-[200px] shadow-[0_2px_5px_rgba(0,0,0,0.05)] ${chat.sender === "user"
-                            ? "bg-[#8059ca] text-white rounded-[18px_18px_0_18px]"
+                            ? "bg-[#321961] text-white rounded-[18px_18px_0_18px]"
                             : "bg-[#f0f2f5] text-slate-800 rounded-[18px_18px_18px_0]"
                             }`}
                         >
@@ -711,11 +711,11 @@ const TicketIssues = ({ HomeNavigate, BackButton }) => {
                   placeholder="Type your message here..."
                   value={chatMessage}
                   onChange={(e) => setChatMessage(e.target.value)}
-                  className="flex-grow h-[45px] rounded-[22px] border border-[#e0e0e0] px-5 text-sm outline-none focus:border-[#8059ca]"
+                  className="flex-grow h-[45px] rounded-[22px] border border-[#e0e0e0] px-5 text-sm outline-none focus:border-[#321961]"
                 />
                 <button
                   type="submit"
-                  className="w-[45px] h-[45px] rounded-full bg-[#8059ca] text-white border-none flex items-center justify-center cursor-pointer transition-transform shadow-[0_4px_10px_rgba(128,89,202,0.3)] hover:scale-105"
+                  className="w-[45px] h-[45px] rounded-full bg-[#321961] text-white border-none flex items-center justify-center cursor-pointer transition-transform shadow-[0_4px_10px_rgba(128,89,202,0.3)] hover:scale-105"
                 >
                   <i className="fas fa-paper-plane"></i>
                 </button>

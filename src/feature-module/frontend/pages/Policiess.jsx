@@ -59,7 +59,7 @@ const Terms = () => {
         <div className="max-w-[960px] mx-auto">
           <div className="bg-white rounded-[16px] border border-gray-200 shadow-[0_4px_20px_rgba(15,23,42,0.03)] p-6 md:p-10">
             <div
-              className="text-gray-600 leading-relaxed !text-[14px] prose max-w-none prose-slate prose-headings:!text-[#0f172a] prose-headings:!font-semibold prose-h1:!text-[18px] prose-h1:!font-bold prose-h2:!text-[19px] prose-h2:!font-bold prose-h3:!text-[14px] prose-a:text-[#8059ca] hover:prose-a:text-[#6d4db8] prose-a:no-underline hover:prose-a:underline prose-p:my-0.5 prose-p:leading-normal prose-li:my-0.5 prose-ul:list-disc prose-ol:list-decimal [&_h2_*]:!text-[19px] [&_h2_*]:!font-bold [&_h1_*]:!text-[18px] [&_h1_*]:!font-bold [&_h3_*]:!text-[14px]"
+              className="text-gray-600 leading-relaxed !text-[14px] prose max-w-none prose-slate prose-headings:!text-[#0f172a] prose-headings:!font-semibold prose-h1:!text-[18px] prose-h1:!font-bold prose-h2:!text-[19px] prose-h2:!font-bold prose-h3:!text-[14px] prose-a:text-[#321961] hover:prose-a:text-[#6d4db8] prose-a:no-underline hover:prose-a:underline prose-p:my-0.5 prose-p:leading-normal prose-li:my-0.5 prose-ul:list-disc prose-ol:list-decimal [&_h2_*]:!text-[19px] [&_h2_*]:!font-bold [&_h1_*]:!text-[18px] [&_h1_*]:!font-bold [&_h3_*]:!text-[14px]"
               dangerouslySetInnerHTML={{ __html: pageData?.content || "No content available." }}
             />
           </div>

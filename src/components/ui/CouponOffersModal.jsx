@@ -61,10 +61,10 @@ const CouponOffersModal = ({
     },
     mega: {
       label: "Mega Save",
-      accent: "!text-[#8059ca]",
+      accent: "!text-[#321961]",
       accentBg: "!from-purple-50 !to-purple-100",
-      badgeText: "!text-[#8059ca]",
-      btnBg: "!bg-[#8059ca] hover:!bg-[#6c48b0] !text-white",
+      badgeText: "!text-[#321961]",
+      btnBg: "!bg-[#321961] hover:!bg-[#6c48b0] !text-white",
       border: "!border-purple-200",
       cutoutBorder: "!border-purple-200",
     },

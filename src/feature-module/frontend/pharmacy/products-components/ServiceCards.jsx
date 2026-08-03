@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Slider from "react-slick";
 
-const PRIMARY_COLOR = "#8059ca";
+const PRIMARY_COLOR = "#321961";
 const PRIMARY_SECTION_BG = "#f8f4ff";
 const PRIMARY_CARD_BG = "rgba(159, 100, 255, 0.16)";
 

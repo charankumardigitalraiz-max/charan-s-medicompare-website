@@ -167,7 +167,7 @@ const Consultation = ({ HomeNavigate, BackButton }) => {
             <div className="col-12">
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-2 mt-2">
                 <div className="flex items-center gap-3">
-                  <i className="fa-solid fa-users text-[#8059ca] text-[20px] shrink-0" />
+                  <i className="fa-solid fa-users text-[#321961] text-[20px] shrink-0" />
 
                   {/* <div className="flex flex-col gap-0.5">
                     <h4 className="m-0 text-slate-800 font-bold text-[16px] md:text-[18px] tracking-tight leading-none">
@@ -201,7 +201,7 @@ const Consultation = ({ HomeNavigate, BackButton }) => {
                         setSearchTerm(e.target.value);
                         setCurrentPage(1);
                       }}
-                      className="h-[42px] rounded-sm border border-[#e0e0e0] pl-10 pr-4 text-sm w-full outline-none focus:border-[#8059ca] transition-colors"
+                      className="h-[42px] rounded-sm border border-[#e0e0e0] pl-10 pr-4 text-sm w-full outline-none focus:border-[#321961] transition-colors"
                     />
                     <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[#999] pointer-events-none">
                       <i className="fa-solid fa-search" />

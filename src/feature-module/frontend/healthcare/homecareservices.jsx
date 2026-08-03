@@ -462,7 +462,7 @@ const HomeCareServices = ({
     navigate(`/${categorySlug}/${subcategorySlug}/${productSlug}`);
   };
 
-  const PRIMARY_COLOR = "#8059ca";
+  const PRIMARY_COLOR = "#321961";
   const PRIMARY_SECTION_BG = "#f8f4ff";
   const PRIMARY_DARK = "#6d48b8";
 
@@ -507,7 +507,7 @@ const HomeCareServices = ({
               </h3>
               <Link
                 to={`/${currentService}/all`}
-                className="!inline-flex !items-center !justify-center !font-semibold !text-[12px] !text-[#8059ca] hover:!bg-[#8059ca] hover:!text-white !transition-all !duration-300 !bg-gradient-to-br !from-[rgba(125,46,255,0.1)] !to-[rgba(59,130,246,0.1)] !p-[8px] !rounded-full !w-[36px] !h-[36px] md:!py-[8px] md:!px-[20px] md:!rounded-[50px] md:!w-auto md:!h-auto"
+                className="!inline-flex !items-center !justify-center !font-semibold !text-[12px] !text-[#321961] hover:!bg-[#321961] hover:!text-white !transition-all !duration-300 !bg-gradient-to-br !from-[rgba(125,46,255,0.1)] !to-[rgba(59,130,246,0.1)] !p-[8px] !rounded-full !w-[36px] !h-[36px] md:!py-[8px] md:!px-[20px] md:!rounded-[50px] md:!w-auto md:!h-auto"
               >
                 <span className="!hidden md:!inline">View All</span>
                 <i className="isax isax-arrow-right-1 md:!ms-1"></i>
@@ -698,12 +698,12 @@ const HomeCareServices = ({
                                   })()}
                                 </div>
                                 <div className="!flex !items-center !gap-1 !text-[#6b7280] !text-[10px] !overflow-hidden">
-                                  <i className="fa-solid fa-location-dot !text-[10px] !text-[#8059ca]"></i>
+                                  <i className="fa-solid fa-location-dot !text-[10px] !text-[#321961]"></i>
                                   <span className="!truncate">{vendor.address}</span>
                                 </div>
                                 {treatment?.distanceInKm && (
                                   <div className="!flex !items-center !gap-1 !text-[#6b7280] !text-[10px]">
-                                    <i className="fas fa-map-marker-alt !text-[9px] !text-[#8059ca]"></i>
+                                    <i className="fas fa-map-marker-alt !text-[9px] !text-[#321961]"></i>
                                     <span>{parseFloat(treatment.distanceInKm).toFixed(1)} km away</span>
                                   </div>
                                 )}
@@ -742,9 +742,9 @@ const HomeCareServices = ({
 
             {/* Left Column Header Info */}
             <div className="lg:!w-5/12 !text-center lg:!text-left">
-              <span className="!text-[12px] !font-semibold !text-[#8059ca] !tracking-wider !uppercase">Simple booking process</span>
+              <span className="!text-[12px] !font-semibold !text-[#321961] !tracking-wider !uppercase">Simple booking process</span>
               <h2 className="!mt-2 !text-[32px] !font-bold !text-[#1a1a1a] !leading-tight">
-                How it <span className="!text-[#8059ca]">Works &amp; Booking</span>
+                How it <span className="!text-[#321961]">Works &amp; Booking</span>
               </h2>
               <p className="!text-[#666] !text-[14px] !leading-[1.6] !mt-3">
                 Book professional home care services in just a few simple
@@ -764,7 +764,7 @@ const HomeCareServices = ({
                     <img src="assets/img/icons/flow-chart-icon-01.svg" alt="Img" className="!w-[28px] !h-[28px]" />
                   </div>
                   <h6 className="!m-0 !text-[13px] !font-semibold !text-[#1a1a1a]">Select Service</h6>
-                  <span className="!absolute !bottom-2 !right-3 !text-[11px] !font-bold !text-[#8059ca] !opacity-30">01</span>
+                  <span className="!absolute !bottom-2 !right-3 !text-[11px] !font-bold !text-[#321961] !opacity-30">01</span>
                 </div>
 
                 {/* Step 2 */}
@@ -773,7 +773,7 @@ const HomeCareServices = ({
                     <img src="assets/img/icons/flow-chart-icon-02.svg" alt="Img" className="!w-[28px] !h-[28px]" />
                   </div>
                   <h6 className="!m-0 !text-[13px] !font-semibold !text-[#1a1a1a]">Book Appointment</h6>
-                  <span className="!absolute !bottom-2 !right-3 !text-[11px] !font-bold !text-[#8059ca] !opacity-30">02</span>
+                  <span className="!absolute !bottom-2 !right-3 !text-[11px] !font-bold !text-[#321961] !opacity-30">02</span>
                 </div>
 
                 {/* Step 3 */}
@@ -782,7 +782,7 @@ const HomeCareServices = ({
                     <img src="assets/img/icons/flow-chart-icon-03.svg" alt="Img" className="!w-[28px] !h-[28px]" />
                   </div>
                   <h6 className="!m-0 !text-[13px] !font-semibold !text-[#1a1a1a]">Caregiver Arrives</h6>
-                  <span className="!absolute !bottom-2 !right-3 !text-[11px] !font-bold !text-[#8059ca] !opacity-30">03</span>
+                  <span className="!absolute !bottom-2 !right-3 !text-[11px] !font-bold !text-[#321961] !opacity-30">03</span>
                 </div>
 
                 {/* Step 4 */}
@@ -791,7 +791,7 @@ const HomeCareServices = ({
                     <img src="assets/img/icons/flow-chart-icon-04.svg" alt="Img" className="!w-[28px] !h-[28px]" />
                   </div>
                   <h6 className="!m-0 !text-[13px] !font-semibold !text-[#1a1a1a]">Receive Care</h6>
-                  <span className="!absolute !bottom-2 !right-3 !text-[11px] !font-bold !text-[#8059ca] !opacity-30">04</span>
+                  <span className="!absolute !bottom-2 !right-3 !text-[11px] !font-bold !text-[#321961] !opacity-30">04</span>
                 </div>
 
               </div>
@@ -800,11 +800,11 @@ const HomeCareServices = ({
               <div className="md:!hidden !flex !flex-col !gap-3 !mt-4">
                 {MOBILE_BOOKING_STEPS.map((item) => (
                   <div key={item.step} className="!flex !items-center !gap-4 !p-4 !bg-white !rounded-[14px] !shadow-[0_2px_8px_rgba(0,0,0,0.05)] !border !border-[rgba(128,89,202,0.1)]">
-                    <div className="!w-[44px] !h-[44px] !rounded-[10px] !bg-[#f8f6fc] !flex !items-center !justify-center !shrink-0 !border !border-[#8059ca]">
+                    <div className="!w-[44px] !h-[44px] !rounded-[10px] !bg-[#f8f6fc] !flex !items-center !justify-center !shrink-0 !border !border-[#321961]">
                       <img src={item.icon} alt="" className="!w-[22px] !h-[22px]" />
                     </div>
                     <div className="!grow">
-                      <span className="!text-[10px] !font-bold !text-[#8059ca] !uppercase">Step {item.step}</span>
+                      <span className="!text-[10px] !font-bold !text-[#321961] !uppercase">Step {item.step}</span>
                       <h6 className="!m-0 !text-[14px] !font-semibold !text-[#1a1a1a]">{item.title}</h6>
                     </div>
                   </div>
@@ -863,7 +863,7 @@ const HomeCareServices = ({
         <div className="!max-w-7xl !mx-auto !px-4">
           {/* Header */}
           <div className="!text-center !mb-8">
-            <h2 className="!text-[38px] !font-semibold !bg-gradient-to-r !from-[#8059ca] !to-[#5d3ebc] !bg-clip-text !text-transparent !tracking-tight">
+            <h2 className="!text-[38px] !font-semibold !bg-gradient-to-r !from-[#321961] !to-[#5d3ebc] !bg-clip-text !text-transparent !tracking-tight">
               How do we Deliver Fastest Recovery?
             </h2>
             <p className="!text-[#666] !mx-auto !mt-2 !max-w-[600px] !text-[15px] !leading-relaxed">
@@ -949,7 +949,7 @@ const HomeCareServices = ({
                       <i className={card.icon}></i>
                     </div>
                     <div>
-                      <span className="!block !text-[10px] !font-bold !text-[#8059ca] !uppercase !tracking-wider">
+                      <span className="!block !text-[10px] !font-bold !text-[#321961] !uppercase !tracking-wider">
                         {card.phase}
                       </span>
                       <h5 className="!m-0 !text-[16px] !font-semibold !text-[#1a1a1a]">
@@ -1148,7 +1148,7 @@ const HomeCareServices = ({
               return (
                 <div key={index} className="!w-full">
                   <div
-                    className="!group !relative !p-5 !bg-white !rounded-[12px] !border !border-[#f0f0f0] !h-full !overflow-hidden !transition-all !duration-300 hover:!-translate-y-[4px] hover:!shadow-[0_12px_24px_rgba(0,0,0,0.1)] hover:!border-[#8059ca]"
+                    className="!group !relative !p-5 !bg-white !rounded-[12px] !border !border-[#f0f0f0] !h-full !overflow-hidden !transition-all !duration-300 hover:!-translate-y-[4px] hover:!shadow-[0_12px_24px_rgba(0,0,0,0.1)] hover:!border-[#321961]"
                   >
                     {/* Diagonal accent line */}
                     <div
@@ -1285,7 +1285,7 @@ const HomeCareServices = ({
                       }}
                     >
                       <span>{faq.question}</span>
-                      <i className={`fas fa-chevron-${isOpen ? "up" : "down"} !text-[12px] !text-[#8059ca]`}></i>
+                      <i className={`fas fa-chevron-${isOpen ? "up" : "down"} !text-[12px] !text-[#321961]`}></i>
                     </button>
                   </h2>
 

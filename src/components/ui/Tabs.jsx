@@ -17,8 +17,8 @@ const Tabs = ({ tabs = [], activeTab, onChange }) => {
             type="button"
             onClick={() => onChange(tab.fixedType)}
             className={`!px-4 !py-1.5 !rounded-sm !text-[13px] !font-semibold !whitespace-nowrap !transition-all !duration-250 !cursor-pointer !shadow-sm !border ${isActive
-              ? "!bg-[#8059ca] !border-[#8059ca] !text-white !shadow-[#8059ca]/15 !shadow-sm"
-              : "!bg-white !border-slate-200 !text-slate-700 hover:!bg-purple-50/50 hover:!border-[#8059ca] hover:!text-[#8059ca]"
+              ? "!bg-[#321961] !border-[#321961] !text-white !shadow-[#321961]/15 !shadow-sm"
+              : "!bg-white !border-slate-200 !text-slate-700 hover:!bg-purple-50/50 hover:!border-[#321961] hover:!text-[#321961]"
               }`}
           >
             {tab.name}

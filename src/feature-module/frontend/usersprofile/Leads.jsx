@@ -173,7 +173,7 @@ const Enquiries = ({ HomeNavigate, BackButton }) => {
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pb-2 mb-2 border-b border-slate-100 mt-2">
                 <div className="flex items-center gap-3.5">
                   {HomeNavigate && <HomeNavigate />}
-                  <div className="w-11 h-11 rounded-xl bg-purple-50 text-[#8059ca] flex items-center justify-center text-[20px] shrink-0 border border-purple-100/50 shadow-sm">
+                  <div className="w-11 h-11 rounded-xl bg-purple-50 text-[#321961] flex items-center justify-center text-[20px] shrink-0 border border-purple-100/50 shadow-sm">
                     <i className="fa-solid fa-users" />
                   </div>
 
@@ -214,7 +214,7 @@ const Enquiries = ({ HomeNavigate, BackButton }) => {
                         setSearchTerm(e.target.value);
                         setCurrentPage(1);
                       }}
-                      className="h-[42px] rounded-sm border border-[#e0e0e0] pl-10 pr-4 text-sm w-full outline-none focus:border-[#8059ca] transition-colors"
+                      className="h-[42px] rounded-sm border border-[#e0e0e0] pl-10 pr-4 text-sm w-full outline-none focus:border-[#321961] transition-colors"
                     />
                     <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[#999] pointer-events-none">
                       <i className="fa-solid fa-search" />
@@ -301,7 +301,7 @@ const Enquiries = ({ HomeNavigate, BackButton }) => {
                           display: "flex",
                           alignItems: "center",
                           justifyContent: "center",
-                          color: "#8059ca",
+                          color: "#321961",
                           fontSize: "16px",
                           flexShrink: 0,
                         }}
@@ -319,7 +319,7 @@ const Enquiries = ({ HomeNavigate, BackButton }) => {
                           display: "flex",
                           alignItems: "center",
                           justifyContent: "center",
-                          color: "#8059ca",
+                          color: "#321961",
                           fontSize: "16px",
                           flexShrink: 0,
                         }}
@@ -337,7 +337,7 @@ const Enquiries = ({ HomeNavigate, BackButton }) => {
                           display: "flex",
                           alignItems: "center",
                           justifyContent: "center",
-                          color: "#8059ca",
+                          color: "#321961",
                           fontSize: "16px",
                           flexShrink: 0,
                         }}
@@ -361,7 +361,7 @@ const Enquiries = ({ HomeNavigate, BackButton }) => {
                         padding: "3px 10px",
                         borderRadius: "20px",
                         background: "#ffffff",
-                        color: "#8059ca",
+                        color: "#321961",
                         border: "1px solid #e9d5ff",
                         textTransform: "capitalize",
                       }}
@@ -376,7 +376,7 @@ const Enquiries = ({ HomeNavigate, BackButton }) => {
               <div className="row g-4">
                 {/* PERSONAL INFO */}
                 <div className="col-md-6 col-12">
-                  <h6 style={{ fontSize: "13px", fontWeight: "700", color: "#8059ca", marginBottom: "12px" }}>
+                  <h6 style={{ fontSize: "13px", fontWeight: "700", color: "#321961", marginBottom: "12px" }}>
                     Personal Information
                   </h6>
                   <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
@@ -398,7 +398,7 @@ const Enquiries = ({ HomeNavigate, BackButton }) => {
 
                 {/* SERVICE DETAILS */}
                 <div className="col-md-6 col-12">
-                  <h6 style={{ fontSize: "13px", fontWeight: "700", color: "#8059ca", marginBottom: "12px" }}>
+                  <h6 style={{ fontSize: "13px", fontWeight: "700", color: "#321961", marginBottom: "12px" }}>
                     Service Information
                   </h6>
                   <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
@@ -457,7 +457,7 @@ const Enquiries = ({ HomeNavigate, BackButton }) => {
                 {/* VARIANT DETAILS */}
                 {selectedLead?.variantDetails && Object.keys(selectedLead.variantDetails).length > 0 && (
                   <div className="col-12">
-                    <h6 style={{ fontSize: "13px", fontWeight: "700", color: "#8059ca", marginBottom: "12px" }}>
+                    <h6 style={{ fontSize: "13px", fontWeight: "700", color: "#321961", marginBottom: "12px" }}>
                       Variant Details
                     </h6>
                     <div style={{ display: "flex", gap: "24px", flexWrap: "wrap", background: "#f8fafc", padding: "12px 16px", borderRadius: "10px" }}>
@@ -480,7 +480,7 @@ const Enquiries = ({ HomeNavigate, BackButton }) => {
                 {/* ADDITIONAL NOTES */}
                 {(selectedLead.problemDescription || selectedLead.preferredTimeline || selectedLead.policyNumber) && (
                   <div className="col-12">
-                    <h6 style={{ fontSize: "13px", fontWeight: "700", color: "#8059ca", marginBottom: "12px" }}>
+                    <h6 style={{ fontSize: "13px", fontWeight: "700", color: "#321961", marginBottom: "12px" }}>
                       Additional Notes
                     </h6>
                     <div style={{ background: "#f8fafc", padding: "14px 16px", borderRadius: "10px", display: "flex", flexDirection: "column", gap: "8px" }}>

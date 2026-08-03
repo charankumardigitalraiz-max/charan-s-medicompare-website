@@ -550,7 +550,13 @@ const ProductDescription = () => {
         }
         return;
       }
-      setComposittionForViewAll(fetchedProduct?.tablet?.composition || fetchedProduct?.tablet?.points?.[0]?.KeyIngredients)
+      if (fetchedProduct?.tablet?.compositions?._id) {
+        setComposittionForViewAll(fetchedProduct.tablet.compositions._id);
+      } else {
+        setComposittionForViewAll(
+          fetchedProduct.tablet?.slug || ""
+        );
+      }
       setFixedtypeSlug(fetchedProduct?.tablet?.category?.fixedType)
       setProduct(fetchedProduct);
       setProductDetailsID(fetchedProduct?._id);
@@ -2464,7 +2470,7 @@ const ProductDescription = () => {
       <div
         key={vendor._id || vendor.vendorId || index}
         onClick={() => handleVendorClick(vendor)}
-        className="p-[10px_12px] !border !border-[#e5e7eb] !rounded-sm mb-2 bg-white transition-all duration-200 flex flex-wrap items-start gap-2 w-full last:mb-0 hover:border-[#8059ca] hover:shadow-sm cursor-pointer"
+        className="p-[10px_12px] !border !border-[#e5e7eb] !rounded-sm mb-2 bg-white transition-all duration-200 flex flex-wrap items-start gap-2 w-full last:mb-0 hover:border-[#321961] hover:shadow-sm cursor-pointer"
       >
         {bookingType === "rentals_addtocarts" ? (
           <div
@@ -2489,7 +2495,7 @@ const ProductDescription = () => {
                   className="flex items-center justify-between gap-1 flex-wrap"
                 >
                   <div
-                    className="!text-[14px] !font-semibold !text-[#1a1d26] cursor-pointer overflow-hidden text-ellipsis whitespace-nowrap hover:text-[#8059ca] transition-colors duration-200 font-sans max-w-full"
+                    className="!text-[14px] !font-semibold !text-[#1a1d26] cursor-pointer overflow-hidden text-ellipsis whitespace-nowrap hover:text-[#321961] transition-colors duration-200 font-sans max-w-full"
                     onClick={(e) => {
                       e.stopPropagation();
                       handleVendorClick(vendor);
@@ -2510,7 +2516,7 @@ const ProductDescription = () => {
                       calculatedDiscountPrice !== price ? (
                       <>
                         <span
-                          className="text-[13px] font-[500] text-[#8059ca]"
+                          className="text-[13px] font-[500] text-[#321961]"
                           style={{ fontFamily: '"Poppins", sans-serif' }}
                         >
                           ₹{calculatedDiscountPrice.toFixed(2)}
@@ -2519,7 +2525,7 @@ const ProductDescription = () => {
                           className="text-[11px] text-[#6b7280] line-through"
                           style={{
                             fontFamily: '"Poppins", sans-serif',
-                            color: "#8059ca",
+                            color: "#321961",
                           }}
                         >
                           ₹{price.toFixed(2)}
@@ -2527,10 +2533,10 @@ const ProductDescription = () => {
                       </>
                     ) : (
                       <span
-                        className="text-[13px] font-[500] text-[#8059ca]"
+                        className="text-[13px] font-[500] text-[#321961]"
                         style={{
                           fontFamily: '"Poppins", sans-serif',
-                          color: "#8059ca",
+                          color: "#321961",
                           fontWeight: "600",
                         }}
                       >
@@ -2579,7 +2585,7 @@ const ProductDescription = () => {
                   )}
                   {Number(fullVendor?.perDayRent || vendor?.perDayRent || 0) > 0 && (
                     <small
-                      className="text-[10px] font-semibold font-sans whitespace-nowrap text-[#8059ca]"
+                      className="text-[10px] font-semibold font-sans whitespace-nowrap text-[#321961]"
                     >
                       <i
                         className="fas fa-calendar-day mr-0.5 text-[8px]"
@@ -2594,7 +2600,7 @@ const ProductDescription = () => {
                     className="text-[11px] text-[#666] overflow-hidden text-ellipsis whitespace-nowrap max-w-full font-sans"
                   >
                     <i
-                      className="fas fa-map-marker-alt text-[9px] mr-1 text-[#8059ca]"
+                      className="fas fa-map-marker-alt text-[9px] mr-1 text-[#321961]"
                     ></i>
                     {vendor.bussinessdetails.address.slice(0, 26)}
                   </div>
@@ -2662,7 +2668,7 @@ const ProductDescription = () => {
                 className="flex items-center justify-between gap-1 flex-wrap"
               >
                 <div
-                  className="text-[11px] font-semibold text-[#1a1d26] cursor-pointer overflow-hidden text-ellipsis whitespace-nowrap hover:text-[#8059ca] transition-colors duration-200 font-sans max-w-full"
+                  className="text-[11px] font-semibold text-[#1a1d26] cursor-pointer overflow-hidden text-ellipsis whitespace-nowrap hover:text-[#321961] transition-colors duration-200 font-sans max-w-full"
                   onClick={(e) => {
                     e.stopPropagation();
                     handleVendorClick(vendor);
@@ -2688,7 +2694,7 @@ const ProductDescription = () => {
                     calculatedDiscountPrice !== price ? (
                     <>
                       <span
-                        className="text-[13px] font-[500] text-[#8059ca]"
+                        className="text-[13px] font-[500] text-[#321961]"
                         style={{ fontFamily: '"Poppins", sans-serif' }}
                       >
                         ₹{calculatedDiscountPrice.toFixed(2)}
@@ -2697,7 +2703,7 @@ const ProductDescription = () => {
                         className="text-[11px] text-[#6b7280] line-through"
                         style={{
                           fontFamily: '"Poppins", sans-serif',
-                          color: "#8059ca",
+                          color: "#321961",
                         }}
                       >
                         ₹{price.toFixed(2)}
@@ -2705,10 +2711,10 @@ const ProductDescription = () => {
                     </>
                   ) : (
                     <span
-                      className="text-[13px] font-[500] text-[#8059ca]"
+                      className="text-[13px] font-[500] text-[#321961]"
                       style={{
                         fontFamily: '"Poppins", sans-serif',
-                        color: "#8059ca",
+                        color: "#321961",
                         fontWeight: "600",
                       }}
                     >
@@ -2740,7 +2746,7 @@ const ProductDescription = () => {
                   className="text-[11px] text-[#666] overflow-hidden text-ellipsis whitespace-nowrap max-w-full font-sans"
                 >
                   <i
-                    className="fas fa-map-marker-alt text-[9px] mr-1 text-[#8059ca]"
+                    className="fas fa-map-marker-alt text-[9px] mr-1 text-[#321961]"
                   ></i>
                   {vendor.bussinessdetails.address.slice(0, 26)}
                 </div>
@@ -2802,7 +2808,7 @@ const ProductDescription = () => {
                   <div className="error-content">
                     <h5 className="mb-2">Oops! That Page Can’t Be Found.</h5>
                     <p>The page you are looking for was never existed.</p>
-                    <Link to="/" className="inline-flex items-center gap-1 px-4 py-2 bg-[#8059ca] text-white rounded-lg text-sm font-medium hover:bg-[#6d46b8] transition-colors">
+                    <Link to="/" className="inline-flex items-center gap-1 px-4 py-2 bg-[#321961] text-white rounded-lg text-sm font-medium hover:bg-[#6d46b8] transition-colors">
                       <i className="fas fa-home mr-1"></i> Back to Home
                     </Link>
                   </div>
@@ -2952,7 +2958,7 @@ const ProductDescription = () => {
             <div className="lg:mt-1 md:mt-1">
               <div className="mb-2">
                 <button
-                  className="flex items-center gap-[6px] p-[4px_10px] border border-[#e0e0e0] bg-white text-[#333] font-[500] text-[12px] !rounded-[6px] shadow-sm cursor-pointer transition-all duration-300 hover:border-[#8059ca] hover:text-[#8059ca] hover:bg-[#f8f5ff] hover:shadow-[0_4px_8px_rgba(125,46,255,0.15)] hover:-translate-y-px"
+                  className="flex items-center gap-[6px] p-[4px_10px] border border-[#e0e0e0] bg-white text-[#333] font-[500] text-[12px] !rounded-[6px] shadow-sm cursor-pointer transition-all duration-300 hover:border-[#321961] hover:text-[#321961] hover:bg-[#f8f5ff] hover:shadow-[0_4px_8px_rgba(125,46,255,0.15)] hover:-translate-y-px"
                   onClick={async (e) => {
                     e.preventDefault();
                     e.stopPropagation();
@@ -3232,7 +3238,7 @@ const ProductDescription = () => {
                                         <button
                                           onClick={handlePrevThumbnails}
                                           disabled={thumbnailStartIndex === 0}
-                                          className={`flex items-center justify-center rounded-full border border-slate-200 text-slate-600 hover:border-[#8059ca] hover:text-[#8059ca] hover:bg-slate-50 transition-all duration-200 bg-white w-7 h-7 p-0 shadow-sm ${thumbnailStartIndex === 0
+                                          className={`flex items-center justify-center rounded-full border border-slate-200 text-slate-600 hover:border-[#321961] hover:text-[#321961] hover:bg-slate-50 transition-all duration-200 bg-white w-7 h-7 p-0 shadow-sm ${thumbnailStartIndex === 0
                                             ? "opacity-40 cursor-not-allowed"
                                             : "opacity-100 cursor-pointer"
                                             }`}
@@ -3257,7 +3263,7 @@ const ProductDescription = () => {
                                                 src={getImageUrl(img)}
                                                 alt={`${tablet?.name} ${actualIndex + 1}`}
                                                 title={`${tablet?.name} ${actualIndex + 1}`}
-                                                className={`w-[50px] h-[50px] sm:w-[56px] sm:h-[56px] object-contain border rounded-xl p-1 bg-white cursor-pointer transition-all duration-200 hover:scale-105 ${selectedImageIndex === actualIndex ? "border-[#8059ca] ring-2 ring-[#8059ca]/20 shadow-sm" : "border-slate-200 hover:border-slate-350"}`}
+                                                className={`w-[50px] h-[50px] sm:w-[56px] sm:h-[56px] object-contain border rounded-xl p-1 bg-white cursor-pointer transition-all duration-200 hover:scale-105 ${selectedImageIndex === actualIndex ? "border-[#321961] ring-2 ring-[#321961]/20 shadow-sm" : "border-slate-200 hover:border-slate-350"}`}
                                                 onClick={() =>
                                                   setSelectedImageIndex(
                                                     actualIndex,
@@ -3280,7 +3286,7 @@ const ProductDescription = () => {
                                             thumbnailStartIndex >=
                                             maxThumbnails - visibleThumbnails
                                           }
-                                          className={`flex items-center justify-center rounded-full border border-slate-200 text-slate-600 hover:border-[#8059ca] hover:text-[#8059ca] hover:bg-slate-50 transition-all duration-200 bg-white w-7 h-7 p-0 shadow-sm ${thumbnailStartIndex >=
+                                          className={`flex items-center justify-center rounded-full border border-slate-200 text-slate-600 hover:border-[#321961] hover:text-[#321961] hover:bg-slate-50 transition-all duration-200 bg-white w-7 h-7 p-0 shadow-sm ${thumbnailStartIndex >=
                                             maxThumbnails - visibleThumbnails
                                             ? "opacity-40 cursor-not-allowed"
                                             : "opacity-100 cursor-pointer"
@@ -3293,7 +3299,7 @@ const ProductDescription = () => {
                                   )}
 
                                   <button
-                                    className="inline-flex items-center gap-1.5 px-4 py-1.5 !text-xs !font-semibold !border !border-[#8059ca] !text-[#8059ca] rounded-full hover:!bg-[#8059ca] hover:!text-white transition-all duration-200 ease-in-out cursor-pointer mt-6 shadow-sm hover:shadow"
+                                    className="inline-flex items-center gap-1.5 px-4 py-1.5 !text-xs !font-semibold !border !border-[#321961] !text-[#321961] rounded-full hover:!bg-[#321961] hover:!text-white transition-all duration-200 ease-in-out cursor-pointer mt-6 shadow-sm hover:shadow"
                                     onClick={(e) => {
                                       e.preventDefault();
                                       e.stopPropagation();
@@ -3330,7 +3336,7 @@ const ProductDescription = () => {
                             {tablet?.medicineType && (
                               <div className="mb-1">
                                 <span
-                                  className="inline-block bg-[#8059ca] text-white text-xs px-2 py-0.5 rounded-full capitalize"
+                                  className="inline-block bg-[#321961] text-white text-xs px-2 py-0.5 rounded-full capitalize"
                                   style={{ textTransform: "capitalize" }}
                                 >
                                   {tablet?.medicineType}
@@ -3347,7 +3353,7 @@ const ProductDescription = () => {
                                   Select Variant
                                 </label>
                                 <select
-                                  className="w-full text-xs border border-gray-200 rounded px-2 py-1 outline-none focus:border-[#8059ca]"
+                                  className="w-full text-xs border border-gray-200 rounded px-2 py-1 outline-none focus:border-[#321961]"
                                   style={{
                                     width: "100%",
                                     fontSize: "12px",
@@ -3382,7 +3388,7 @@ const ProductDescription = () => {
                                 style={{ fontSize: "16px" }}
                               >
                                 <span className="text-gray-500 mr-1">MRP</span>
-                                <span className="font-bold text-[#8059ca]">
+                                <span className="font-bold text-[#321961]">
                                   ₹
                                   {(
                                     selectedVariant?.price || tablet?.price
@@ -3444,7 +3450,7 @@ const ProductDescription = () => {
 
                                     return (
                                       <div className="flex items-start gap-1" style={{ fontSize: "12px" }}>
-                                        <i className={`${finalIconClass} fa-xs mt-1`} style={{ width: "14px", flexShrink: 0, color: isComplexity ? undefined : "#8059ca" }}></i>
+                                        <i className={`${finalIconClass} fa-xs mt-1`} style={{ width: "14px", flexShrink: 0, color: isComplexity ? undefined : "#321961" }}></i>
                                         <span style={{ wordBreak: "break-word" }}>
                                           <span className="text-gray-500 font-normal mr-1" style={{ fontSize: "12px" }}>{label}:</span>
                                           <span className="font-semibold" style={{ fontSize: "12px", color: '#495057', textTransform: isComplexity ? "capitalize" : "none" }}>{formatDynamicFieldValue(value)}</span>
@@ -3462,7 +3468,7 @@ const ProductDescription = () => {
                                         transition: "all 0.2s ease"
                                       }}
                                     >
-                                      <i className={`${iconClass} fa-sm`} style={{ color: "#8059ca", flexShrink: 0, width: "14px", textAlign: "center" }}></i>
+                                      <i className={`${iconClass} fa-sm`} style={{ color: "#321961", flexShrink: 0, width: "14px", textAlign: "center" }}></i>
                                       <span style={{ fontSize: "12px", wordBreak: "break-word", lineHeight: "1.3" }}>
                                         <span className="text-gray-500 font-normal mr-1" style={{ fontSize: "12px" }}>{label}:</span>
                                         {isLink ? (
@@ -3486,7 +3492,7 @@ const ProductDescription = () => {
                                     {(tablet?.category?.name || tablet?.subcategorys?.category?.name || tablet?.subcategory?.category?.name) && (
                                       <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
                                         <div className="flex items-center gap-1 text-gray-500 font-normal">
-                                          <i className="fa fa-folder fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
+                                          <i className="fa fa-folder fa-xs" style={{ width: "14px", flexShrink: 0, color: "#321961" }}></i>
                                           <span>Category:</span>
                                         </div>
                                         <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
@@ -3508,7 +3514,7 @@ const ProductDescription = () => {
                                     {tablet?.duration && (
                                       <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
                                         <div className="flex items-center gap-1 text-gray-500 font-normal">
-                                          <i className="fa fa-clock fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
+                                          <i className="fa fa-clock fa-xs" style={{ width: "14px", flexShrink: 0, color: "#321961" }}></i>
                                           <span>Duration:</span>
                                         </div>
                                         <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
@@ -3519,7 +3525,7 @@ const ProductDescription = () => {
                                     {tablet?.procedureType && (
                                       <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
                                         <div className="flex items-center gap-1 text-gray-500 font-normal">
-                                          <i className="fa fa-stethoscope fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
+                                          <i className="fa fa-stethoscope fa-xs" style={{ width: "14px", flexShrink: 0, color: "#321961" }}></i>
                                           <span>Procedure Type:</span>
                                         </div>
                                         <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
@@ -3530,7 +3536,7 @@ const ProductDescription = () => {
                                     {tablet?.recoveryTime && (
                                       <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
                                         <div className="flex items-center gap-1 text-gray-500 font-normal">
-                                          <i className="fa fa-clock fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
+                                          <i className="fa fa-clock fa-xs" style={{ width: "14px", flexShrink: 0, color: "#321961" }}></i>
                                           <span>Recovery Time:</span>
                                         </div>
                                         <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
@@ -3541,7 +3547,7 @@ const ProductDescription = () => {
                                     {tablet?.dynamicFields?.map((field) => (
                                       <div key={field.label} style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
                                         <div className="flex items-center gap-1 text-gray-500 font-normal">
-                                          <i className="fas fa-info-circle fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
+                                          <i className="fas fa-info-circle fa-xs" style={{ width: "14px", flexShrink: 0, color: "#321961" }}></i>
                                           <span>{field.label}:</span>
                                         </div>
                                         <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
@@ -3557,7 +3563,7 @@ const ProductDescription = () => {
                                     {(tablet?.subcategorys?.name || tablet?.subcategorys?.category?.name || tablet?.subcategory?.category?.name) && (
                                       <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
                                         <div className="flex items-center gap-1 text-gray-500 font-normal">
-                                          <i className="fa fa-folder fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
+                                          <i className="fa fa-folder fa-xs" style={{ width: "14px", flexShrink: 0, color: "#321961" }}></i>
                                           <span>Category:</span>
                                         </div>
                                         <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
@@ -3568,7 +3574,7 @@ const ProductDescription = () => {
                                     {tablet?.manufacture?.name && (
                                       <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
                                         <div className="flex items-center gap-1 text-gray-500 font-normal">
-                                          <i className="fas fa-industry fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
+                                          <i className="fas fa-industry fa-xs" style={{ width: "14px", flexShrink: 0, color: "#321961" }}></i>
                                           <span>Manufacturer:</span>
                                         </div>
                                         <span
@@ -3583,7 +3589,7 @@ const ProductDescription = () => {
                                     {tablet?.form && (
                                       <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
                                         <div className="flex items-center gap-1 text-gray-500 font-normal">
-                                          <i className="fas fa-tablets fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
+                                          <i className="fas fa-tablets fa-xs" style={{ width: "14px", flexShrink: 0, color: "#321961" }}></i>
                                           <span>Form:</span>
                                         </div>
                                         <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
@@ -3594,7 +3600,7 @@ const ProductDescription = () => {
                                     {tablet?.packagingDetails && (
                                       <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
                                         <div className="flex items-center gap-1 text-gray-500 font-normal">
-                                          <i className="fas fa-box fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
+                                          <i className="fas fa-box fa-xs" style={{ width: "14px", flexShrink: 0, color: "#321961" }}></i>
                                           <span>Pack Size:</span>
                                         </div>
                                         <span className="font-semibold capitalize" style={{ color: '#495057', wordBreak: "break-word" }}>
@@ -3605,7 +3611,7 @@ const ProductDescription = () => {
                                     {tablet?.strength && (
                                       <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
                                         <div className="flex items-center gap-1 text-gray-500 font-normal">
-                                          <i className="fas fa-prescription-bottle fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
+                                          <i className="fas fa-prescription-bottle fa-xs" style={{ width: "14px", flexShrink: 0, color: "#321961" }}></i>
                                           <span>Storage:</span>
                                         </div>
                                         <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
@@ -3616,7 +3622,7 @@ const ProductDescription = () => {
                                     {tablet?.dynamicFields?.map((field) => (
                                       <div key={field.label} style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
                                         <div className="flex items-center gap-1 text-gray-500 font-normal">
-                                          <i className="fas fa-info-circle fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
+                                          <i className="fas fa-info-circle fa-xs" style={{ width: "14px", flexShrink: 0, color: "#321961" }}></i>
                                           <span>{field.label}:</span>
                                         </div>
                                         <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
@@ -3632,7 +3638,7 @@ const ProductDescription = () => {
                                     {(tablet?.subcategorys?.name) && (
                                       <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
                                         <div className="flex items-center gap-1 text-gray-500 font-normal">
-                                          <i className="fa fa-folder fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
+                                          <i className="fa fa-folder fa-xs" style={{ width: "14px", flexShrink: 0, color: "#321961" }}></i>
                                           <span>Category:</span>
                                         </div>
                                         <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
@@ -3643,7 +3649,7 @@ const ProductDescription = () => {
                                     {(tablet?.smapletype || tablet?.sampleType || tablet?.sampletype) && (
                                       <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
                                         <div className="flex items-center gap-1 text-gray-500 font-normal">
-                                          <i className="fa fa-flask fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
+                                          <i className="fa fa-flask fa-xs" style={{ width: "14px", flexShrink: 0, color: "#321961" }}></i>
                                           <span>Sample Type:</span>
                                         </div>
                                         <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
@@ -3654,7 +3660,7 @@ const ProductDescription = () => {
                                     {tablet?.gender && (
                                       <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
                                         <div className="flex items-center gap-1 text-gray-500 font-normal">
-                                          <i className="fa fa-venus-mars fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
+                                          <i className="fa fa-venus-mars fa-xs" style={{ width: "14px", flexShrink: 0, color: "#321961" }}></i>
                                           <span>Gender:</span>
                                         </div>
                                         <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
@@ -3665,7 +3671,7 @@ const ProductDescription = () => {
                                     {(tablet?.reportsDuration || tablet?.reportDuration || tablet?.reportduration) && (
                                       <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
                                         <div className="flex items-center gap-1 text-gray-500 font-normal">
-                                          <i className="fas fa-file-alt fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
+                                          <i className="fas fa-file-alt fa-xs" style={{ width: "14px", flexShrink: 0, color: "#321961" }}></i>
                                           <span>Report Duration:</span>
                                         </div>
                                         <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
@@ -3677,7 +3683,7 @@ const ProductDescription = () => {
                                     {(tablet?.isFasting || tablet?.isFasting || tablet?.isFasting) && (
                                       <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
                                         <div className="flex items-center gap-1 text-gray-500 font-normal">
-                                          <i className="fas fa-file-alt fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
+                                          <i className="fas fa-file-alt fa-xs" style={{ width: "14px", flexShrink: 0, color: "#321961" }}></i>
                                           <span>Fasting:</span>
                                         </div>
                                         <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
@@ -3688,7 +3694,7 @@ const ProductDescription = () => {
                                     {tablet?.parameterss?.length > 0 && (
                                       <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
                                         <div className="flex items-center gap-1 text-gray-500 font-normal">
-                                          <i className="fa fa-cogs fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
+                                          <i className="fa fa-cogs fa-xs" style={{ width: "14px", flexShrink: 0, color: "#321961" }}></i>
                                           <span>Parameters:</span>
                                         </div>
                                         <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
@@ -3699,7 +3705,7 @@ const ProductDescription = () => {
                                     {(tablet?.keywords || tablet?.keyword) && (
                                       <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
                                         <div className="flex items-center gap-1 text-gray-500 font-normal">
-                                          <i className="fa fa-tags fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
+                                          <i className="fa fa-tags fa-xs" style={{ width: "14px", flexShrink: 0, color: "#321961" }}></i>
                                           <span>Keywords:</span>
                                         </div>
                                         <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
@@ -3710,7 +3716,7 @@ const ProductDescription = () => {
                                     {tablet?.dynamicFields?.map((field) => (
                                       <div key={field.label} style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
                                         <div className="flex items-center gap-1 text-gray-500 font-normal">
-                                          <i className="fas fa-info-circle fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
+                                          <i className="fas fa-info-circle fa-xs" style={{ width: "14px", flexShrink: 0, color: "#321961" }}></i>
                                           <span>{field.label}:</span>
                                         </div>
                                         <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
@@ -3726,7 +3732,7 @@ const ProductDescription = () => {
                                     {(tablet?.subcategorys?.name || tablet?.subcategorys?.category?.name || tablet?.subcategory?.category?.name) && (
                                       <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
                                         <div className="flex items-center gap-1 text-gray-500 font-normal">
-                                          <i className="fa fa-folder fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
+                                          <i className="fa fa-folder fa-xs" style={{ width: "14px", flexShrink: 0, color: "#321961" }}></i>
                                           <span>Category:</span>
                                         </div>
                                         <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
@@ -3737,7 +3743,7 @@ const ProductDescription = () => {
                                     {tablet?.bodypart && (
                                       <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
                                         <div className="flex items-center gap-1 text-gray-500 font-normal">
-                                          <i className="fas fa-person fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
+                                          <i className="fas fa-person fa-xs" style={{ width: "14px", flexShrink: 0, color: "#321961" }}></i>
                                           <span>Body Part:</span>
                                         </div>
                                         <span className="font-semibold capitalize" style={{ color: '#495057', wordBreak: "break-word" }}>
@@ -3748,7 +3754,7 @@ const ProductDescription = () => {
                                     {tablet?.iscontrast && (
                                       <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
                                         <div className="flex items-center gap-1 text-gray-500 font-normal">
-                                          <i className="fas fa-adjust fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
+                                          <i className="fas fa-adjust fa-xs" style={{ width: "14px", flexShrink: 0, color: "#321961" }}></i>
                                           <span>Contrast:</span>
                                         </div>
                                         <span className="font-semibold capitalize" style={{ color: '#495057', wordBreak: "break-word" }}>
@@ -3759,7 +3765,7 @@ const ProductDescription = () => {
                                     {(tablet?.reportsDuration || tablet?.reportDuration || tablet?.reportduration) && (
                                       <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
                                         <div className="flex items-center gap-1 text-gray-500 font-normal">
-                                          <i className="fas fa-file-alt fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
+                                          <i className="fas fa-file-alt fa-xs" style={{ width: "14px", flexShrink: 0, color: "#321961" }}></i>
                                           <span>Report Duration:</span>
                                         </div>
                                         <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
@@ -3770,7 +3776,7 @@ const ProductDescription = () => {
                                     {(tablet?.keywords || tablet?.keyword) && (
                                       <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
                                         <div className="flex items-center gap-1 text-gray-500 font-normal">
-                                          <i className="fa fa-tags fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
+                                          <i className="fa fa-tags fa-xs" style={{ width: "14px", flexShrink: 0, color: "#321961" }}></i>
                                           <span>Keywords:</span>
                                         </div>
                                         <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
@@ -3781,7 +3787,7 @@ const ProductDescription = () => {
                                     {tablet?.dynamicFields?.map((field) => (
                                       <div key={field.label} style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
                                         <div className="flex items-center gap-1 text-gray-500 font-normal">
-                                          <i className="fas fa-info-circle fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
+                                          <i className="fas fa-info-circle fa-xs" style={{ width: "14px", flexShrink: 0, color: "#321961" }}></i>
                                           <span>{field.label}:</span>
                                         </div>
                                         <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
@@ -3797,7 +3803,7 @@ const ProductDescription = () => {
                                     {tablet?.subcategorys?.name && (
                                       <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
                                         <div className="flex items-center gap-1 text-gray-500 font-normal">
-                                          <i className="fa fa-folder fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
+                                          <i className="fa fa-folder fa-xs" style={{ width: "14px", flexShrink: 0, color: "#321961" }}></i>
                                           <span>Category:</span>
                                         </div>
                                         <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
@@ -3808,7 +3814,7 @@ const ProductDescription = () => {
                                     {tablet?.nursecareType && (
                                       <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
                                         <div className="flex items-center gap-1 text-gray-500 font-normal">
-                                          <i className="fas fa-house-user fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
+                                          <i className="fas fa-house-user fa-xs" style={{ width: "14px", flexShrink: 0, color: "#321961" }}></i>
                                           <span>Care Type:</span>
                                         </div>
                                         <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
@@ -3819,7 +3825,7 @@ const ProductDescription = () => {
                                     {tablet?.duration && (
                                       <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
                                         <div className="flex items-center gap-1 text-gray-500 font-normal">
-                                          <i className="fa fa-clock fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
+                                          <i className="fa fa-clock fa-xs" style={{ width: "14px", flexShrink: 0, color: "#321961" }}></i>
                                           <span>Duration:</span>
                                         </div>
                                         <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
@@ -3830,7 +3836,7 @@ const ProductDescription = () => {
                                     {tablet?.shiftType && (
                                       <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
                                         <div className="flex items-center gap-1 text-gray-500 font-normal">
-                                          <i className="fas fa-clock fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
+                                          <i className="fas fa-clock fa-xs" style={{ width: "14px", flexShrink: 0, color: "#321961" }}></i>
                                           <span>Shift Type:</span>
                                         </div>
                                         <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
@@ -3841,7 +3847,7 @@ const ProductDescription = () => {
                                     {(tablet?.keywords || tablet?.keyword) && (
                                       <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
                                         <div className="flex items-center gap-1 text-gray-500 font-normal">
-                                          <i className="fa fa-tags fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
+                                          <i className="fa fa-tags fa-xs" style={{ width: "14px", flexShrink: 0, color: "#321961" }}></i>
                                           <span>Keywords:</span>
                                         </div>
                                         <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
@@ -3852,7 +3858,7 @@ const ProductDescription = () => {
                                     {tablet?.dynamicFields?.map((field) => (
                                       <div key={field.label} style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
                                         <div className="flex items-center gap-1 text-gray-500 font-normal">
-                                          <i className="fas fa-info-circle fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
+                                          <i className="fas fa-info-circle fa-xs" style={{ width: "14px", flexShrink: 0, color: "#321961" }}></i>
                                           <span>{field.label}:</span>
                                         </div>
                                         <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
@@ -3870,7 +3876,7 @@ const ProductDescription = () => {
                                       {brandName && (
                                         <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
                                           <div className="flex items-center gap-1 text-gray-500 font-normal">
-                                            <i className="fas fa-copyright fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
+                                            <i className="fas fa-copyright fa-xs" style={{ width: "14px", flexShrink: 0, color: "#321961" }}></i>
                                             <span>Brand:</span>
                                           </div>
                                           <span className="font-semibold capitalize" style={{ color: '#495057', wordBreak: "break-word" }}>
@@ -3881,7 +3887,7 @@ const ProductDescription = () => {
                                       {(tablet?.subcategorys?.name) && (
                                         <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
                                           <div className="flex items-center gap-1 text-gray-500 font-normal">
-                                            <i className="fa fa-folder fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
+                                            <i className="fa fa-folder fa-xs" style={{ width: "14px", flexShrink: 0, color: "#321961" }}></i>
                                             <span>Category:</span>
                                           </div>
                                           <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
@@ -3892,7 +3898,7 @@ const ProductDescription = () => {
                                       {tablet?.model && (
                                         <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
                                           <div className="flex items-center gap-1 text-gray-500 font-normal">
-                                            <i className="fas fa-microchip fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
+                                            <i className="fas fa-microchip fa-xs" style={{ width: "14px", flexShrink: 0, color: "#321961" }}></i>
                                             <span>Model:</span>
                                           </div>
                                           <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
@@ -3903,7 +3909,7 @@ const ProductDescription = () => {
                                       {tablet?.condition && (
                                         <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
                                           <div className="flex items-center gap-1 text-gray-500 font-normal">
-                                            <i className="fas fa-circle-check fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
+                                            <i className="fas fa-circle-check fa-xs" style={{ width: "14px", flexShrink: 0, color: "#321961" }}></i>
                                             <span>Condition:</span>
                                           </div>
                                           <span className="font-semibold capitalize" style={{ color: '#495057', wordBreak: "break-word" }}>
@@ -3914,7 +3920,7 @@ const ProductDescription = () => {
                                       {tablet?.machineType && (
                                         <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
                                           <div className="flex items-center gap-1 text-gray-500 font-normal">
-                                            <i className="fas fa-toolbox fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
+                                            <i className="fas fa-toolbox fa-xs" style={{ width: "14px", flexShrink: 0, color: "#321961" }}></i>
                                             <span>Machine Type:</span>
                                           </div>
                                           <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
@@ -3925,7 +3931,7 @@ const ProductDescription = () => {
                                       {(tablet?.keywords || tablet?.keyword) && (
                                         <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
                                           <div className="flex items-center gap-1 text-gray-500 font-normal">
-                                            <i className="fa fa-tags fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
+                                            <i className="fa fa-tags fa-xs" style={{ width: "14px", flexShrink: 0, color: "#321961" }}></i>
                                             <span>Keywords:</span>
                                           </div>
                                           <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
@@ -3936,7 +3942,7 @@ const ProductDescription = () => {
                                       {tablet?.dynamicFields?.map((field) => (
                                         <div key={field.label} style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
                                           <div className="flex items-center gap-1 text-gray-500 font-normal">
-                                            <i className="fas fa-info-circle fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
+                                            <i className="fas fa-info-circle fa-xs" style={{ width: "14px", flexShrink: 0, color: "#321961" }}></i>
                                             <span>{field.label}:</span>
                                           </div>
                                           <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
@@ -3954,7 +3960,7 @@ const ProductDescription = () => {
                                       {tablet?.subcategorys?.name && (
                                         <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
                                           <div className="flex items-center gap-1 text-gray-500 font-normal">
-                                            <i className="fa fa-folder fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
+                                            <i className="fa fa-folder fa-xs" style={{ width: "14px", flexShrink: 0, color: "#321961" }}></i>
                                             <span>Category:</span>
                                           </div>
                                           <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
@@ -3965,7 +3971,7 @@ const ProductDescription = () => {
                                       {tablet?.duration && (
                                         <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
                                           <div className="flex items-center gap-1 text-gray-500 font-normal">
-                                            <i className="fa fa-clock fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
+                                            <i className="fa fa-clock fa-xs" style={{ width: "14px", flexShrink: 0, color: "#321961" }}></i>
                                             <span>Duration:</span>
                                           </div>
                                           <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
@@ -3976,7 +3982,7 @@ const ProductDescription = () => {
                                       {tablet?.homecareMode && (
                                         <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
                                           <div className="flex items-center gap-1 text-gray-500 font-normal">
-                                            <i className="fas fa-house-user fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
+                                            <i className="fas fa-house-user fa-xs" style={{ width: "14px", flexShrink: 0, color: "#321961" }}></i>
                                             <span>Homecare Mode:</span>
                                           </div>
                                           <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
@@ -3987,7 +3993,7 @@ const ProductDescription = () => {
                                       {(tablet?.keywords || tablet?.keyword) && (
                                         <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
                                           <div className="flex items-center gap-1 text-gray-500 font-normal">
-                                            <i className="fa fa-tags fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
+                                            <i className="fa fa-tags fa-xs" style={{ width: "14px", flexShrink: 0, color: "#321961" }}></i>
                                             <span>Keywords:</span>
                                           </div>
                                           <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
@@ -3998,7 +4004,7 @@ const ProductDescription = () => {
                                       {tablet?.dynamicFields?.map((field) => (
                                         <div key={field.label} style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
                                           <div className="flex items-center gap-1 text-gray-500 font-normal">
-                                            <i className="fas fa-info-circle fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
+                                            <i className="fas fa-info-circle fa-xs" style={{ width: "14px", flexShrink: 0, color: "#321961" }}></i>
                                             <span>{field.label}:</span>
                                           </div>
                                           <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
@@ -4016,7 +4022,7 @@ const ProductDescription = () => {
                                       {tablet?.subcategorys?.name && (
                                         <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
                                           <div className="flex items-center gap-1 text-gray-500 font-normal">
-                                            <i className="fa fa-folder fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
+                                            <i className="fa fa-folder fa-xs" style={{ width: "14px", flexShrink: 0, color: "#321961" }}></i>
                                             <span>Category:</span>
                                           </div>
                                           <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
@@ -4027,7 +4033,7 @@ const ProductDescription = () => {
                                       {tablet?.duration && (
                                         <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
                                           <div className="flex items-center gap-1 text-gray-500 font-normal">
-                                            <i className="fa fa-clock fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
+                                            <i className="fa fa-clock fa-xs" style={{ width: "14px", flexShrink: 0, color: "#321961" }}></i>
                                             <span>Duration:</span>
                                           </div>
                                           <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
@@ -4038,7 +4044,7 @@ const ProductDescription = () => {
                                       {tablet?.gender && (
                                         <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
                                           <div className="flex items-center gap-1 text-gray-500 font-normal">
-                                            <i className="fa fa-venus-mars fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
+                                            <i className="fa fa-venus-mars fa-xs" style={{ width: "14px", flexShrink: 0, color: "#321961" }}></i>
                                             <span>Gender:</span>
                                           </div>
                                           <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
@@ -4060,7 +4066,7 @@ const ProductDescription = () => {
                                       {(tablet?.keywords || tablet?.keyword) && (
                                         <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
                                           <div className="flex items-center gap-1 text-gray-500 font-normal">
-                                            <i className="fa fa-tags fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
+                                            <i className="fa fa-tags fa-xs" style={{ width: "14px", flexShrink: 0, color: "#321961" }}></i>
                                             <span>Keywords:</span>
                                           </div>
                                           <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
@@ -4071,7 +4077,7 @@ const ProductDescription = () => {
                                       {tablet?.dynamicFields?.map((field) => (
                                         <div key={field.label} style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
                                           <div className="flex items-center gap-1 text-gray-500 font-normal">
-                                            <i className="fas fa-info-circle fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
+                                            <i className="fas fa-info-circle fa-xs" style={{ width: "14px", flexShrink: 0, color: "#321961" }}></i>
                                             <span>{field.label}:</span>
                                           </div>
                                           <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
@@ -4089,7 +4095,7 @@ const ProductDescription = () => {
                                       {(tablet?.subcategorys?.name || tablet?.subcategorys?.category?.name || tablet?.subcategory?.category?.name) && (
                                         <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
                                           <div className="flex items-center gap-1 text-gray-500 font-normal">
-                                            <i className="fa fa-folder fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
+                                            <i className="fa fa-folder fa-xs" style={{ width: "14px", flexShrink: 0, color: "#321961" }}></i>
                                             <span>Category:</span>
                                           </div>
                                           <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
@@ -4100,7 +4106,7 @@ const ProductDescription = () => {
                                       {tablet?.treatmenttype && (
                                         <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
                                           <div className="flex items-center gap-1 text-gray-500 font-normal">
-                                            <i className="fa fa-tooth fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
+                                            <i className="fa fa-tooth fa-xs" style={{ width: "14px", flexShrink: 0, color: "#321961" }}></i>
                                             <span>Treatment Type:</span>
                                           </div>
                                           <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
@@ -4122,7 +4128,7 @@ const ProductDescription = () => {
                                       {(tablet?.keywords || tablet?.keyword) && (
                                         <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
                                           <div className="flex items-center gap-1 text-gray-500 font-normal">
-                                            <i className="fa fa-tags fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
+                                            <i className="fa fa-tags fa-xs" style={{ width: "14px", flexShrink: 0, color: "#321961" }}></i>
                                             <span>Keywords:</span>
                                           </div>
                                           <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
@@ -4133,7 +4139,7 @@ const ProductDescription = () => {
                                       {tablet?.dynamicFields?.map((field) => (
                                         <div key={field.label} style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
                                           <div className="flex items-center gap-1 text-gray-500 font-normal">
-                                            <i className="fas fa-info-circle fa-xs" style={{ width: "14px", flexShrink: 0, color: "#8059ca" }}></i>
+                                            <i className="fas fa-info-circle fa-xs" style={{ width: "14px", flexShrink: 0, color: "#321961" }}></i>
                                             <span>{field.label}:</span>
                                           </div>
                                           <span className="font-semibold" style={{ color: '#495057', wordBreak: "break-word" }}>
@@ -4260,7 +4266,8 @@ const ProductDescription = () => {
                                   }}
                                   onClick={() =>
                                     navigate(
-                                      `/composition/${createSlug(tablet.compositions.name)}-${tablet.compositions._id}`,
+                                      // `/composition/${createSlug(tablet.compositions.name)}-${tablet.compositions._id}`,
+                                      `/composition/${tablet.compositions._id}`
                                     )
                                   }
                                 >
@@ -4277,7 +4284,7 @@ const ProductDescription = () => {
                                 <div className="flex justify-center mt-4">
                                   <a
                                     href="#related-products-section"
-                                    className="w-[200px] flex items-center rounded-md justify-center gap-1 bg-gradient-to-br from-[#a878f1] via-[#8059ca] to-[#7541a8] text-white text-[14px] font-medium py-[5px] px-3 rounded-lg hover:opacity-90 transition-opacity duration-200"
+                                    className="w-[200px] flex items-center rounded-md justify-center gap-1 bg-gradient-to-br from-[#a878f1] via-[#321961] to-[#7541a8] text-white text-[14px] font-medium py-[5px] px-3 rounded-lg hover:opacity-90 transition-opacity duration-200"
                                   >
                                     <span className="mx-1 text-[14px]">Smarter Substitutes</span>
                                     <i className="fa-solid fa-arrow-right text-[12px]"></i>
@@ -4354,7 +4361,7 @@ const ProductDescription = () => {
                                           handlePincodeCheck(e);
                                         }
                                       }}
-                                      className={`form-control h-[38px] w-full border border-[#c9c9c9ad] rounded-[6px] text-[14px] pl-3 focus:outline-none focus:ring-1 focus:ring-[#8059ca] focus:border-[#8059ca] ${searchQuery.trim() !== "" ? "pr-8" : "pr-3"
+                                      className={`form-control h-[38px] w-full border border-[#c9c9c9ad] rounded-[6px] text-[14px] pl-3 focus:outline-none focus:ring-1 focus:ring-[#321961] focus:border-[#321961] ${searchQuery.trim() !== "" ? "pr-8" : "pr-3"
                                         }`}
                                     />
                                   </Autocomplete>
@@ -4389,8 +4396,8 @@ const ProductDescription = () => {
                                 style={{
                                   padding: "8px 16px",
                                   borderRadius: "6px",
-                                  backgroundColor: "#8059ca",
-                                  borderColor: "#8059ca"
+                                  backgroundColor: "#321961",
+                                  borderColor: "#321961"
                                 }}
                                 disabled={loadingVendors}
                               >
@@ -4404,7 +4411,7 @@ const ProductDescription = () => {
                             {loadingVendors && (
                               <div className="absolute inset-0 flex items-center justify-center bg-white/80 z-10 rounded-lg">
                                 <div
-                                  className="animate-spin rounded-full h-8 w-8 border-2 border-t-transparent border-[#8059ca]"
+                                  className="animate-spin rounded-full h-8 w-8 border-2 border-t-transparent border-[#321961]"
                                   role="status"
                                 >
                                   <span className="sr-only">
@@ -4454,7 +4461,7 @@ const ProductDescription = () => {
 
                 {tablet?.points && tablet.points.length > 0 && (
                   <div className="bg-white !rounded-sm shadow-sm mb-4 mt-4 p-3" style={{ background: "#fcfaff", border: "1px solid #f2ebfa" }}>
-                    <h5 className="font-bold mb-3 flex items-center gap-2" style={{ fontSize: "15px", color: "#8059ca" }}>
+                    <h5 className="font-bold mb-3 flex items-center gap-2" style={{ fontSize: "15px", color: "#321961" }}>
                       <i className="fas fa-handshake-alt"></i>Interactions
                     </h5>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mt-2">
@@ -4500,7 +4507,7 @@ const ProductDescription = () => {
                               </div>
                               {value && value.length > 90 && (
                                 <span
-                                  className="font-semibold text-[#8059ca] mt-2 d-inline-block"
+                                  className="font-semibold text-[#321961] mt-2 d-inline-block"
                                   style={{ cursor: "pointer", fontSize: "11px", textDecoration: "underline", alignSelf: "flex-start" }}
                                   onClick={() => setSelectedInteraction({
                                     label: label?.replace(/_/g, " "),
@@ -4729,6 +4736,7 @@ const ProductDescription = () => {
             <RelatedProducts
               relatedproducts={relatedproducts}
               service={service === "dental" ? 'dentalservice' : service === "rx-medicines" ? 'medicine' : service}
+              slug={tablet?.subcategorys?.slug || tablet?.subcategorys?.category?.slug || tablet?.subcategory?.category?.slug}
               isMobile={isMobile}
               isLoggedIn={isLoggedIn}
               userProfile={userProfile}
@@ -5066,7 +5074,7 @@ const ProductDescription = () => {
           >
             <i
               className="fas fa-times"
-              style={{ fontSize: "24px", color: "#8059ca" }}
+              style={{ fontSize: "24px", color: "#321961" }}
             ></i>
           </div>
 
@@ -5167,7 +5175,7 @@ const ProductDescription = () => {
           <div className="modal-dialog modal-dialog-centered">
             <div className="modal-content" style={{ borderRadius: "12px", border: "none", boxShadow: "0 10px 30px rgba(0,0,0,0.15)" }}>
               <div className="modal-header border-0 pb-0" style={{ padding: "20px 20px 10px 20px" }}>
-                <h5 className="modal-title font-bold capitalize" style={{ fontSize: "16px", color: "#8059ca" }}>
+                <h5 className="modal-title font-bold capitalize" style={{ fontSize: "16px", color: "#321961" }}>
                   {selectedInteraction.label}
                 </h5>
                 <button type="button" className="btn-close" onClick={() => setSelectedInteraction(null)} aria-label="Close"></button>
@@ -5178,7 +5186,7 @@ const ProductDescription = () => {
                 </p>
               </div>
               <div className="modal-footer border-0 pt-0" style={{ padding: "0 20px 20px 20px" }}>
-                <button type="button" className="px-4 py-[6px] bg-[#8059ca] text-white rounded-[6px] text-sm border-0 cursor-pointer hover:bg-[#6d46b8] transition-colors" onClick={() => setSelectedInteraction(null)}>
+                <button type="button" className="px-4 py-[6px] bg-[#321961] text-white rounded-[6px] text-sm border-0 cursor-pointer hover:bg-[#6d46b8] transition-colors" onClick={() => setSelectedInteraction(null)}>
                   Close
                 </button>
               </div>

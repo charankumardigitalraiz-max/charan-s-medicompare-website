@@ -1,4 +1,4 @@
-﻿import React, { useState } from "react";
+import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { imgUrl } from "../../Apiservice.jsx";
 import VendorsSection from "./VendorsSection.jsx";
@@ -15,22 +15,24 @@ const DetailRow = ({ label, value, title }) => {
     <div
       className={`detail-item-compact ${isExpanded ? "is-expanded" : ""}`}
       onClick={(e) => {
+        if (value.length <= 25) return;
         e.stopPropagation();
         setIsExpanded(!isExpanded);
       }}
       style={{
         cursor: value.length > 25 ? "pointer" : "default",
         display: "flex",
+        flexDirection: "row",
         alignItems: "center",
         justifyContent: "space-between",
         padding: "4px 8px",
-        // borderBottom: "1px solid #f1f5f9",
-        width: "100%"
+        width: "100%",
+        gap: "8px"
       }}
       title={title || value}
     >
-      <span className="detail-label" style={{ fontSize: "11px", fontWeight: "500", color: "#6b7280", textTransform: "capitalize", letterSpacing: "0.02em" }}>{label}</span>
-      <span className="detail-value" style={{ fontSize: "11.5px", fontWeight: "500", color: "#1f2937", textAlign: "right" }}>{value}</span>
+      <span className="detail-label" style={{ fontSize: "11px", fontWeight: "500", color: "#6b7280", textTransform: "capitalize", letterSpacing: "0.02em", whiteSpace: "nowrap" }}>{label}</span>
+      <span className="detail-value" style={{ fontSize: "11.5px", fontWeight: "500", color: "#1f2937", textAlign: "right", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: isExpanded ? "normal" : "nowrap" }}>{value}</span>
     </div>
   );
 };
@@ -363,14 +365,14 @@ const ProductCard = ({
               {currentPrice && (
                 <div className="text-dark">
                   <span>MRP</span>
-                  <span className="text-[#8059ca] ml-1">₹{formatCurrency(currentPrice)}</span>
+                  <span className="text-[#321961] ml-1">₹{formatCurrency(currentPrice)}</span>
                   <small className="ml-4" style={{ fontSize: "11px" }}>
                     {" "}
                     (Inclusive of all Taxes)
                   </small>
                   {/* <small className="ms-2">
                     <i
-                      className="fas fa-users text-[#8059ca] ms-3 me-1"
+                      className="fas fa-users text-[#321961] ms-3 me-1"
                     ></i>
                     {tablet?.ratingCount > 0 ? `${tablet.ratingCount}+ ratings` : "0 ratings"}
                   </small> */}
@@ -948,7 +950,7 @@ const ProductCard = ({
           <div className="flex items-center justify-between gap-1 mt-1 min-w-0">
             {tablet?.manufacture?.name && (
               <span
-                className="text-[10px] text-[#8059ca] bg-purple-50/50 border border-purple-100 px-2 py-0.5 rounded-md font-medium tracking-wide truncate max-w-full inline-block"
+                className="text-[10px] text-[#321961] bg-purple-50/50 border border-purple-100 px-2 py-0.5 rounded-md font-medium tracking-wide truncate max-w-full inline-block"
                 title={tablet.manufacture.name}
               >
                 By {tablet.manufacture.name}
@@ -989,11 +991,19 @@ const ProductCard = ({
                   <div
                     key={idx}
                     className="flex justify-between items-center bg-slate-50/50 px-2 py-1 rounded-lg"
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      width: "100%",
+                      gap: "8px"
+                    }}
                   >
-                    <span className="text-[10px] text-slate-400 font-medium uppercase tracking-wider">
+                    <span className="text-[10px] text-slate-400 font-medium uppercase tracking-wider" style={{ whiteSpace: "nowrap" }}>
                       {field.label}
                     </span>
-                    <span className="text-[11px] font-semibold text-slate-700 truncate max-w-[150px]" title={field.value}>
+                    <span className="text-[11px] font-semibold text-slate-700 truncate max-w-[120px]" title={field.value} style={{ textAlign: "right", textTransform: "capitalize" }}>
                       {field.value}
                     </span>
                   </div>
@@ -1005,7 +1015,7 @@ const ProductCard = ({
               tablet.variant.length > 0 && (
                 <div className="col-span-2 mt-1">
                   <select
-                    className="w-full h-7 px-2 py-0.5 border border-slate-200 rounded-lg text-[11px] bg-white outline-none focus:border-[#8059ca]"
+                    className="w-full h-7 px-2 py-0.5 border border-slate-200 rounded-lg text-[11px] bg-white outline-none focus:border-[#321961]"
                     value={String(selectedVariantId)}
                     onChange={(e) => {
                       e.stopPropagation();

@@ -43,7 +43,7 @@ const CookieConsent = () => {
             <div className="fixed bottom-[30px] left-1/2 -translate-x-1/2 w-[90%] max-w-[800px] z-[9999] pointer-events-none cookie-animate">
                 <div className="pointer-events-auto bg-white/85 backdrop-blur-[15px] border border-white/30 rounded-md shadow-[0_15px_35px_rgba(0,0,0,0.1)] flex flex-col md:flex-row items-start md:items-center justify-between p-6 md:p-[25px_40px_25px_25px] gap-5 md:gap-[30px] relative" data-aos="fade-up">
                     <div className="flex items-center gap-5">
-                        <div className="w-[50px] h-[50px] bg-gradient-to-br from-[#8059ca] to-[#8059ca] rounded-[12px] flex items-center justify-center shrink-0">
+                        <div className="w-[50px] h-[50px] bg-gradient-to-br from-[#321961] to-[#321961] rounded-[12px] flex items-center justify-center shrink-0">
                             <i className="fas fa-cookie-bite text-white text-2xl"></i>
                         </div>
                         <div className="text-left">
@@ -57,7 +57,7 @@ const CookieConsent = () => {
                         <button onClick={handleDecline} className="py-3 px-6 !rounded-xl !text-sm !font-semibold cursor-pointer !transition-all !duration-300 !border-none flex-1 md:flex-none !text-center !bg-black/5 !text-[#333] hover:bg-black/10 hover:-translate-y-0.5">
                             Decline Optional
                         </button>
-                        <button onClick={handleAccept} className="py-3 px-6 !rounded-xl !text-sm !font-semibold cursor-pointer !transition-all !duration-300 !border-none flex-1 md:flex-none !text-center !bg-[#8059ca] !text-white !shadow-[0_4px_15px_rgba(13,110,253,0.3)] hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(13,110,253,0.4)]">
+                        <button onClick={handleAccept} className="py-3 px-6 !rounded-xl !text-sm !font-semibold cursor-pointer !transition-all !duration-300 !border-none flex-1 md:flex-none !text-center !bg-[#321961] !text-white !shadow-[0_4px_15px_rgba(13,110,253,0.3)] hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(13,110,253,0.4)]">
                             Accept All
                         </button>
                     </div>

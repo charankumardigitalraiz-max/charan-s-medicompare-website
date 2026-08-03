@@ -536,7 +536,7 @@ const Manufactures = () => {
                   fontSize: "12px",
                   border: "none",
                   background: "transparent",
-                  color: "#8059ca",
+                  color: "#321961",
                   cursor: "pointer"
                 }}
               >
@@ -578,7 +578,7 @@ const Manufactures = () => {
                 }}
                 styles={{
                   track: {
-                    backgroundColor: "#8059ca",
+                    backgroundColor: "#321961",
                     height: 6,
                   },
                   rail: {
@@ -586,7 +586,7 @@ const Manufactures = () => {
                     height: 6,
                   },
                   handle: {
-                    borderColor: "#8059ca",
+                    borderColor: "#321961",
                     backgroundColor: "#fff",
                     width: 22,
                     height: 22,
@@ -768,8 +768,8 @@ const Manufactures = () => {
                 disabled={compositionLoading}
                 className="view-more-btn"
                 style={{
-                  border: "1px solid #8059ca",
-                  background: "#8059ca",
+                  border: "1px solid #321961",
+                  background: "#321961",
                   color: "#fff",
                   fontSize: "12px",
                   padding: "6px 12px",
@@ -912,7 +912,7 @@ const Manufactures = () => {
                     width: "40px",
                     height: "40px",
                     borderRadius: "10px",
-                    backgroundColor: "#8059ca",
+                    backgroundColor: "#321961",
                     color: "#ffffff",
                     display: "flex",
                     alignItems: "center",
@@ -925,7 +925,7 @@ const Manufactures = () => {
                   {displayManufacturerName ? displayManufacturerName.charAt(0) : ""}
                 </div>
                 <div style={{ flex: 1, minWidth: 0 }}>
-                  <span style={{ fontSize: "9px", fontWeight: "600", color: "#8059ca", textTransform: "uppercase", letterSpacing: "0.5px", display: "block" }}>
+                  <span style={{ fontSize: "9px", fontWeight: "600", color: "#321961", textTransform: "uppercase", letterSpacing: "0.5px", display: "block" }}>
                     Verified Manufacturer
                   </span>
                   <div style={{ fontSize: "15px", fontWeight: "700", color: "#1e1b4b", textTransform: "capitalize", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
@@ -933,7 +933,7 @@ const Manufactures = () => {
                   </div>
                   <div style={{ display: "flex", gap: "8px", alignItems: "center", marginTop: "2px" }}>
                     <span style={{ fontSize: "11px", color: "#6b7280", display: "inline-flex", alignItems: "center", gap: "3px" }}>
-                      <i className="fas fa-microscope" style={{ color: "#8059ca", fontSize: "10px" }} />
+                      <i className="fas fa-microscope" style={{ color: "#321961", fontSize: "10px" }} />
                       <strong>{compositions.length}</strong> Compositions
                     </span>
                     <span style={{ width: "3px", height: "3px", backgroundColor: "#d1d5db", borderRadius: "50%", flexShrink: 0 }} />
@@ -947,7 +947,7 @@ const Manufactures = () => {
                   <div style={{ fontSize: "9px", color: "#9ca3af", textTransform: "uppercase", fontWeight: "600", letterSpacing: "0.5px" }}>
                     Products
                   </div>
-                  <div style={{ fontSize: "20px", fontWeight: "800", color: "#8059ca", lineHeight: "1.2" }}>
+                  <div style={{ fontSize: "20px", fontWeight: "800", color: "#321961", lineHeight: "1.2" }}>
                     {productCount}
                   </div>
                 </div>

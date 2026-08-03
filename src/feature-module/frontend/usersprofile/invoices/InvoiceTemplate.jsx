@@ -154,7 +154,7 @@ const InvoiceTemplate = forwardRef(({ order, vendor }, ref) => {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "flex-start",
-          borderBottom: "2px solid #8059ca",
+          borderBottom: "2px solid #321961",
           paddingBottom: "20px",
           marginBottom: "20px",
         }}
@@ -175,7 +175,7 @@ const InvoiceTemplate = forwardRef(({ order, vendor }, ref) => {
           </div>
         </div>
         <div style={{ textAlign: "right" }}>
-          <h2 style={{ margin: "0 0 8px 0", color: "#8059ca", fontWeight: "700", fontSize: "24px" }}>
+          <h2 style={{ margin: "0 0 8px 0", color: "#321961", fontWeight: "700", fontSize: "24px" }}>
             INVOICE
           </h2>
           <div style={{ fontSize: "13px", color: "#555", lineHeight: "1.5" }}>
@@ -211,7 +211,7 @@ const InvoiceTemplate = forwardRef(({ order, vendor }, ref) => {
             padding: "15px",
           }}
         >
-          <h4 style={{ margin: "0 0 10px 0", color: "#8059ca", fontSize: "14px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.5px" }}>
+          <h4 style={{ margin: "0 0 10px 0", color: "#321961", fontSize: "14px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.5px" }}>
             Bill To (Patient)
           </h4>
           <div style={{ lineHeight: "1.6" }}>
@@ -236,7 +236,7 @@ const InvoiceTemplate = forwardRef(({ order, vendor }, ref) => {
             padding: "15px",
           }}
         >
-          <h4 style={{ margin: "0 0 10px 0", color: "#8059ca", fontSize: "14px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.5px" }}>
+          <h4 style={{ margin: "0 0 10px 0", color: "#321961", fontSize: "14px", fontWeight: "700", textTransform: "uppercase", letterSpacing: "0.5px" }}>
             Service Provider / Vendor
           </h4>
           {currentVendor ? (
@@ -306,7 +306,7 @@ const InvoiceTemplate = forwardRef(({ order, vendor }, ref) => {
                   alignItems: "center",
                 }}
               >
-                <span style={{ fontWeight: "700", color: "#8059ca", fontSize: "13px" }}>
+                <span style={{ fontWeight: "700", color: "#321961", fontSize: "13px" }}>
                   PROVIDER: {groupVendor?.name || "Other Provider"}
                 </span>
                 {groupVendor?.phone && (
@@ -325,13 +325,13 @@ const InvoiceTemplate = forwardRef(({ order, vendor }, ref) => {
                 }}
               >
                 <thead>
-                  <tr style={{ backgroundColor: "#8059ca", color: "#fff" }}>
-                    <th style={{ padding: "8px 10px", textAlign: "center", border: "1px solid #8059ca", width: "40px", fontSize: "12px", fontWeight: "600" }}>S.No</th>
-                    <th style={{ padding: "8px 10px", textAlign: "left", border: "1px solid #8059ca", fontSize: "12px", fontWeight: "600" }}>Description / Item Name</th>
-                    <th style={{ padding: "8px 10px", textAlign: "left", border: "1px solid #8059ca", width: "130px", fontSize: "12px", fontWeight: "600" }}>Provider</th>
-                    <th style={{ padding: "8px 10px", textAlign: "center", border: "1px solid #8059ca", width: "70px", fontSize: "12px", fontWeight: "600" }}>Qty</th>
-                    <th style={{ padding: "8px 10px", textAlign: "right", border: "1px solid #8059ca", width: "110px", fontSize: "12px", fontWeight: "600" }}>Unit Price (₹)</th>
-                    <th style={{ padding: "8px 10px", textAlign: "right", border: "1px solid #8059ca", width: "110px", fontSize: "12px", fontWeight: "600" }}>Total (₹)</th>
+                  <tr style={{ backgroundColor: "#321961", color: "#fff" }}>
+                    <th style={{ padding: "8px 10px", textAlign: "center", border: "1px solid #321961", width: "40px", fontSize: "12px", fontWeight: "600" }}>S.No</th>
+                    <th style={{ padding: "8px 10px", textAlign: "left", border: "1px solid #321961", fontSize: "12px", fontWeight: "600" }}>Description / Item Name</th>
+                    <th style={{ padding: "8px 10px", textAlign: "left", border: "1px solid #321961", width: "130px", fontSize: "12px", fontWeight: "600" }}>Provider</th>
+                    <th style={{ padding: "8px 10px", textAlign: "center", border: "1px solid #321961", width: "70px", fontSize: "12px", fontWeight: "600" }}>Qty</th>
+                    <th style={{ padding: "8px 10px", textAlign: "right", border: "1px solid #321961", width: "110px", fontSize: "12px", fontWeight: "600" }}>Unit Price (₹)</th>
+                    <th style={{ padding: "8px 10px", textAlign: "right", border: "1px solid #321961", width: "110px", fontSize: "12px", fontWeight: "600" }}>Total (₹)</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -387,7 +387,7 @@ const InvoiceTemplate = forwardRef(({ order, vendor }, ref) => {
                       <td colSpan="4" style={{ padding: "8px 10px", textAlign: "right", border: "1px solid #eaeaea", fontSize: "12px", color: "#555" }}>
                         Subtotal for {groupVendor?.name || "this provider"}:
                       </td>
-                      <td style={{ padding: "8px 10px", textAlign: "right", border: "1px solid #eaeaea", fontSize: "12px", color: "#8059ca" }}>
+                      <td style={{ padding: "8px 10px", textAlign: "right", border: "1px solid #eaeaea", fontSize: "12px", color: "#321961" }}>
                         ₹{(groupSubtotal || 0).toFixed(2)}
                       </td>
                     </tr>
@@ -402,7 +402,7 @@ const InvoiceTemplate = forwardRef(({ order, vendor }, ref) => {
       {/* RENTAL DETAILS (IF APPLICABLE) */}
       {order?.orderType === "rental" && (
         <div style={{ marginBottom: "25px", border: "1px solid #e9ddff", borderRadius: "8px", overflow: "hidden" }}>
-          <div style={{ backgroundColor: "#f5f0ff", padding: "8px 15px", fontWeight: "700", color: "#8059ca" }}>
+          <div style={{ backgroundColor: "#f5f0ff", padding: "8px 15px", fontWeight: "700", color: "#321961" }}>
             Rental Agreement Details
           </div>
           <table style={{ width: "100%", borderCollapse: "collapse" }}>
@@ -484,9 +484,9 @@ const InvoiceTemplate = forwardRef(({ order, vendor }, ref) => {
                 <td style={{ padding: "6px 10px", textAlign: "right", color: "#28a745", fontWeight: "500" }}>-₹{(wallet || 0).toFixed(2)}</td>
               </tr>
             )}
-            <tr style={{ borderTop: "2px solid #8059ca", borderBottom: "2px solid #8059ca" }}>
-              <td style={{ padding: "10px", fontWeight: "700", fontSize: "15px", color: "#8059ca" }}>Grand Total</td>
-              <td style={{ padding: "10px", textAlign: "right", fontWeight: "700", fontSize: "15px", color: "#8059ca" }}>₹{(total || 0).toFixed(2)}</td>
+            <tr style={{ borderTop: "2px solid #321961", borderBottom: "2px solid #321961" }}>
+              <td style={{ padding: "10px", fontWeight: "700", fontSize: "15px", color: "#321961" }}>Grand Total</td>
+              <td style={{ padding: "10px", textAlign: "right", fontWeight: "700", fontSize: "15px", color: "#321961" }}>₹{(total || 0).toFixed(2)}</td>
             </tr>
           </tbody>
         </table>

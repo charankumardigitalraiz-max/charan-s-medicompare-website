@@ -486,7 +486,7 @@ const labtests = ({
               >
                 <Link
                   to="/view-all-packages"
-                  className={`inline-flex items-center justify-center !font-semibold !text-[12px] !text-[#8059ca] hover:!bg-[#8059ca] hover:!text-white transition-all duration-300 !rounded-[50px] !w-auto !h-auto bg-gradient-to-br from-[rgba(125,46,255,0.1)] to-[rgba(59,130,246,0.1)] ${isMobile ? "!py-[6px] !px-[18px]" : "!py-[8px] !px-[20px]"
+                  className={`inline-flex items-center justify-center !font-semibold !text-[12px] !text-[#321961] hover:!bg-[#321961] hover:!text-white transition-all duration-300 !rounded-[50px] !w-auto !h-auto bg-gradient-to-br from-[rgba(125,46,255,0.1)] to-[rgba(59,130,246,0.1)] ${isMobile ? "!py-[6px] !px-[18px]" : "!py-[8px] !px-[20px]"
                     }`}
                   onClick={(e) => {
                     if (!isLoggedIn) {
@@ -504,7 +504,7 @@ const labtests = ({
 
             {packages && packages.length > 0 && compareItems.length > 0 && (
               <div
-                className={`!relative !mx-auto !my-[16px] !bg-[#8059ca] !rounded-[12px] !shadow-[0_6px_20px_rgba(128,89,202,0.3)] !z-10 !mb-4 ${isMobile
+                className={`!relative !mx-auto !my-[16px] !bg-[#321961] !rounded-[12px] !shadow-[0_6px_20px_rgba(128,89,202,0.3)] !z-10 !mb-4 ${isMobile
                   ? "!w-[95%] !py-[12px] !pr-[48px] !pl-[16px]"
                   : "!w-[80%] !py-[10px] !px-[15px]"
                   }`}
@@ -642,13 +642,13 @@ const labtests = ({
                                   className="!absolute !top-0 !left-0 !w-full !h-full !flex !flex-col !items-center !justify-center bg-gradient-to-br from-[#F8F5FE] to-[#F2EDFE]"
                                 >
                                   <div
-                                    className="!w-[70px] !h-[70px] !border-2 !border-solid !border-[#8059ca] !rounded-[10px] !flex !flex-col !items-center !justify-center !bg-white !p-[12px]"
+                                    className="!w-[70px] !h-[70px] !border-2 !border-solid !border-[#321961] !rounded-[10px] !flex !flex-col !items-center !justify-center !bg-white !p-[12px]"
                                   >
                                     <i
-                                      className="isax isax-health !text-[35px] !text-[#8059ca]"
+                                      className="isax isax-health !text-[35px] !text-[#321961]"
                                     ></i>
                                     <span
-                                      className="!text-[9px] !text-[#8059ca] !font-semibold !mt-[6px] !tracking-[0.5px]"
+                                      className="!text-[9px] !text-[#321961] !font-semibold !mt-[6px] !tracking-[0.5px]"
                                     >
                                       PACKAGE
                                     </span>
@@ -669,10 +669,10 @@ const labtests = ({
                                 className="!flex !gap-1 !mb-1 !flex-nowrap !overflow-hidden"
                               >
                                 <div
-                                  className="!flex !items-center !gap-1 !shrink-0 !bg-[#F8F5FE] !py-[3px] !px-[6px] !rounded-[5px] !border !border-solid !border-[#8059ca]/20"
+                                  className="!flex !items-center !gap-1 !shrink-0 !bg-[#F8F5FE] !py-[3px] !px-[6px] !rounded-[5px] !border !border-solid !border-[#321961]/20"
                                 >
                                   <i
-                                    className="isax isax-profile-2user !text-[12px] !text-[#8059ca]"
+                                    className="isax isax-profile-2user !text-[12px] !text-[#321961]"
                                   ></i>
                                   <span
                                     className="!text-[10px] !text-[#333] !font-semibold !whiteSpace-nowrap"
@@ -922,7 +922,7 @@ const labtests = ({
                                             }
                                           >
                                             <i
-                                              className="isax isax-location !text-[12px] !text-[#8059ca]"
+                                              className="isax isax-location !text-[12px] !text-[#321961]"
                                             ></i>
                                             <span
                                               className="!text-dark !overflow-hidden !text-ellipsis !whitespace-nowrap"
@@ -941,7 +941,7 @@ const labtests = ({
                                           title={pkg?.vendor?.distanceInKm}
                                         >
                                           <i
-                                            className="fas fa-map-marker-alt !text-[#8059ca] !text-[10px] !mr-[4px]"
+                                            className="fas fa-map-marker-alt !text-[#321961] !text-[10px] !mr-[4px]"
                                           ></i>
                                           <span
                                             className="!text-dark !overflow-hidden !text-ellipsis !whiteSpace-nowrap"
@@ -1191,7 +1191,7 @@ const labtests = ({
                                 className="!text-[11px] !my-[4px] !text-[#666]"
                               >
                                 <i
-                                  className="fa-regular fa-file-lines !text-[#8059ca] !text-[10.5px] !mr-1"
+                                  className="fa-regular fa-file-lines !text-[#321961] !text-[10.5px] !mr-1"
                                 />{" "}
                                 Reports in
                                 <strong
@@ -1371,7 +1371,7 @@ const labtests = ({
                                         className="!flex !items-center !gap-1 !text-[#6b7280] !text-[11px] !overflow-hidden"
                                       >
                                         <i
-                                          className="fa-solid fa-location-dot !text-[11px] !text-[#8059ca]"
+                                          className="fa-solid fa-location-dot !text-[11px] !text-[#321961]"
                                         ></i>
                                         <span
                                           className="!overflow-hidden !text-ellipsis !whitespace-nowrap"
@@ -1383,7 +1383,7 @@ const labtests = ({
                                         className="!flex !items-center !gap-1 !text-[#6b7280] !text-[11px] !overflow-hidden"
                                       >
                                         <i
-                                          className="fas fa-map-marker-alt !text-[10px] !text-[#8059ca] !mr-[4px]"
+                                          className="fas fa-map-marker-alt !text-[10px] !text-[#321961] !mr-[4px]"
                                         ></i>
 
                                         <span
@@ -1425,7 +1425,7 @@ const labtests = ({
       >
         <div className="container-fluid !px-4 md:!px-6 lg:!px-8 !py-4 lg:!py-10">
           <div className="!text-center !rounded-[20px] !p-[10px_12px_12px] !mt-[10px]">
-            <div className="!inline-flex !items-center !gap-2 !mb-[12px] !mx-auto !px-4 !py-[6px] !rounded-full !bg-[rgba(128,89,202,0.12)] !text-[#8059ca] !text-[12px] !font-semibold !tracking-wide !border !border-[rgba(128,89,202,0.25)]">
+            <div className="!inline-flex !items-center !gap-2 !mb-[12px] !mx-auto !px-4 !py-[6px] !rounded-full !bg-[rgba(128,89,202,0.12)] !text-[#321961] !text-[12px] !font-semibold !tracking-wide !border !border-[rgba(128,89,202,0.25)]">
               <i className="fa-solid fa-hand-pointer" />
               How to Book a Lab Test
             </div>
@@ -1475,14 +1475,14 @@ const labtests = ({
                         className="!text-center !w-full !relative !p-[32px_16px_24px] !bg-white !rounded-[16px] !border !border-solid !border-[#e2e8f0] !shadow-[0_4px_12px_rgba(128, 89, 202, 0.02)] !flex !flex-col !items-center !h-full"
                       >
                         <span
-                          className="!absolute !top-[16px] !right-[16px] !bg-[rgba(128,89,202,0.08)] !text-[#8059ca] !py-[4px] !px-[10px] !rounded-[20px] !text-[11px] !font-bold !tracking-[0.05em]"
+                          className="!absolute !top-[16px] !right-[16px] !bg-[rgba(128,89,202,0.08)] !text-[#321961] !py-[4px] !px-[10px] !rounded-[20px] !text-[11px] !font-bold !tracking-[0.05em]"
                         >
                           {item.step}
                         </span>
                         <div
                           className="!w-[60px] !h-[60px] !mx-auto !mb-[20px] !flex !items-center !justify-center !bg-[rgba(128,89,202,0.06)] !rounded-[16px]"
                         >
-                          <i className={item.icon} style={{ fontSize: "26px", color: "#8059ca" }} />
+                          <i className={item.icon} style={{ fontSize: "26px", color: "#321961" }} />
                         </div>
                         <h5
                           className="!text-[16px] !font-semibold !text-[#1c1e21] !mb-[10px] !tracking-[-0.01em]"
@@ -1523,17 +1523,17 @@ const labtests = ({
                 ].map((item, index) => (
                   <div key={index} className="w-full">
                     <div
-                      className="!text-center !h-full !relative !p-[32px_20px_24px] !bg-white !rounded-[16px] !border !border-solid !border-[#e2e8f0] !shadow-[0_4px_12px_rgba(128, 89, 202, 0.02)] transition-all duration-300 ease-out !cursor-pointer hover:!-translate-y-[6px] hover:!shadow-[0_12px_24px_rgba(128, 89, 202, 0.08)] hover:!border-[#8059ca]"
+                      className="!text-center !h-full !relative !p-[32px_20px_24px] !bg-white !rounded-[16px] !border !border-solid !border-[#e2e8f0] !shadow-[0_4px_12px_rgba(128, 89, 202, 0.02)] transition-all duration-300 ease-out !cursor-pointer hover:!-translate-y-[6px] hover:!shadow-[0_12px_24px_rgba(128, 89, 202, 0.08)] hover:!border-[#321961]"
                     >
                       <span
-                        className="!absolute !top-[16px] !right-[16px] !bg-[rgba(128,89,202,0.08)] !text-[#8059ca] !py-[4px] !px-[10px] !rounded-[20px] !text-[11px] !font-bold !tracking-[0.05em]"
+                        className="!absolute !top-[16px] !right-[16px] !bg-[rgba(128,89,202,0.08)] !text-[#321961] !py-[4px] !px-[10px] !rounded-[20px] !text-[11px] !font-bold !tracking-[0.05em]"
                       >
                         {item.step}
                       </span>
                       <div
                         className="!w-[60px] !h-[60px] !mx-auto !mb-[20px] !flex !items-center !justify-center !bg-[rgba(128,89,202,0.06)] !rounded-[16px] transition-all duration-300"
                       >
-                        <i className={item.icon} style={{ fontSize: "26px", color: "#8059ca" }} />
+                        <i className={item.icon} style={{ fontSize: "26px", color: "#321961" }} />
                       </div>
                       <h5
                         className="!text-[18px] !font-semibold !text-[#1c1e21] !mb-[10px] !tracking-[-0.01em]"
@@ -1634,10 +1634,10 @@ const labtests = ({
                 ].map((feature, index) => (
                   <SwiperSlide key={index} style={{ height: "auto", display: "flex" }}>
                     <div
-                      className="!bg-white !rounded-[16px] !p-[24px_16px] !h-full !border !border-solid !border-[#8059ca]/12 !flex !flex-col !shadow-[0_4px_15px_rgba(128, 89, 202, 0.03)] !w-full"
+                      className="!bg-white !rounded-[16px] !p-[24px_16px] !h-full !border !border-solid !border-[#321961]/12 !flex !flex-col !shadow-[0_4px_15px_rgba(128, 89, 202, 0.03)] !w-full"
                     >
                       <div
-                        className="!w-[48px] !h-[48px] !rounded-full !bg-[#f3effa] !flex !items-center !justify-center !mb-[16px] !text-[#8059ca] !text-[20px]"
+                        className="!w-[48px] !h-[48px] !rounded-full !bg-[#f3effa] !flex !items-center !justify-center !mb-[16px] !text-[#321961] !text-[20px]"
                       >
                         <i className={feature.icon}></i>
                       </div>
@@ -1705,10 +1705,10 @@ const labtests = ({
                   data-aos-delay={index * 100}
                 >
                   <div
-                    className="!bg-white !rounded-[16px] !p-[24px] !h-full !border !border-solid !border-[#8059ca]/12 transition-all duration-300 ease-out !cursor-pointer !flex !flex-col !shadow-[0_4px_15px_rgba(128,89,202,0.03)] hover:!-translate-y-[6px] hover:!shadow-[0_10px_25px_rgba(128,89,202,0.08)] hover:!border-[#8059ca]"
+                    className="!bg-white !rounded-[16px] !p-[24px] !h-full !border !border-solid !border-[#321961]/12 transition-all duration-300 ease-out !cursor-pointer !flex !flex-col !shadow-[0_4px_15px_rgba(128,89,202,0.03)] hover:!-translate-y-[6px] hover:!shadow-[0_10px_25px_rgba(128,89,202,0.08)] hover:!border-[#321961]"
                   >
                     <div
-                      className="!w-[48px] !h-[48px] !rounded-full !bg-[#f3effa] !flex !items-center !justify-center !mb-[16px] !text-[#8059ca] !text-[20px]"
+                      className="!w-[48px] !h-[48px] !rounded-full !bg-[#f3effa] !flex !items-center !justify-center !mb-[16px] !text-[#321961] !text-[20px]"
                     >
                       <i className={feature.icon}></i>
                     </div>
@@ -1786,27 +1786,27 @@ const labtests = ({
                   {
                     title: "100% Safe & Secure",
                     desc: "We take all safety and hygiene measures to keep our customers safe",
-                    icon: <i className="fa-solid fa-shield-halved" style={{ fontSize: "24px", color: "#8059ca" }}></i>
+                    icon: <i className="fa-solid fa-shield-halved" style={{ fontSize: "24px", color: "#321961" }}></i>
                   },
                   {
                     title: "Online Reports",
                     desc: "You can download your reports online",
-                    icon: <i className="fa-solid fa-file-invoice" style={{ fontSize: "24px", color: "#8059ca" }}></i>
+                    icon: <i className="fa-solid fa-file-invoice" style={{ fontSize: "24px", color: "#321961" }}></i>
                   },
                   {
                     title: "Home Sample Collection",
                     desc: "Our expert phlebotomists will come and collect your sample",
-                    icon: <i className="fa-solid fa-house-chimney-medical" style={{ fontSize: "24px", color: "#8059ca" }}></i>
+                    icon: <i className="fa-solid fa-house-chimney-medical" style={{ fontSize: "24px", color: "#321961" }}></i>
                   },
                   {
                     title: "MediCompares Advantage",
                     desc: "Enjoy upto 75% discount on diagnostic tests and health packages",
-                    icon: <i className="fa-solid fa-award" style={{ fontSize: "24px", color: "#8059ca" }}></i>
+                    icon: <i className="fa-solid fa-award" style={{ fontSize: "24px", color: "#321961" }}></i>
                   },
                   {
                     title: "Competitive Prices",
                     desc: "We offer best prices on our diagnostic tests and health packages",
-                    icon: <i className="fa-solid fa-tags" style={{ fontSize: "24px", color: "#8059ca" }}></i>
+                    icon: <i className="fa-solid fa-tags" style={{ fontSize: "24px", color: "#321961" }}></i>
                   }
                 ].map((practice, index) => (
                   <SwiperSlide key={index} style={{ height: "auto", display: "flex" }}>
@@ -1841,27 +1841,27 @@ const labtests = ({
                 {
                   title: "100% Safe & Secure",
                   desc: "We take all safety and hygiene measures to keep our customers safe",
-                  icon: <i className="fa-solid fa-shield-halved" style={{ fontSize: "24px", color: "#8059ca" }}></i>
+                  icon: <i className="fa-solid fa-shield-halved" style={{ fontSize: "24px", color: "#321961" }}></i>
                 },
                 {
                   title: "Online Reports",
                   desc: "You can download your reports online",
-                  icon: <i className="fa-solid fa-file-invoice" style={{ fontSize: "24px", color: "#8059ca" }}></i>
+                  icon: <i className="fa-solid fa-file-invoice" style={{ fontSize: "24px", color: "#321961" }}></i>
                 },
                 {
                   title: "Home Sample Collection",
                   desc: "Our expert phlebotomists will come and collect your sample",
-                  icon: <i className="fa-solid fa-house-chimney-medical" style={{ fontSize: "24px", color: "#8059ca" }}></i>
+                  icon: <i className="fa-solid fa-house-chimney-medical" style={{ fontSize: "24px", color: "#321961" }}></i>
                 },
                 {
                   title: "MediCompares Advantage",
                   desc: "Enjoy upto 75% discount on diagnostic tests and health packages",
-                  icon: <i className="fa-solid fa-award" style={{ fontSize: "24px", color: "#8059ca" }}></i>
+                  icon: <i className="fa-solid fa-award" style={{ fontSize: "24px", color: "#321961" }}></i>
                 },
                 {
                   title: "Competitive Prices",
                   desc: "We offer best prices on our diagnostic tests and health packages",
-                  icon: <i className="fa-solid fa-tags" style={{ fontSize: "24px", color: "#8059ca" }}></i>
+                  icon: <i className="fa-solid fa-tags" style={{ fontSize: "24px", color: "#321961" }}></i>
                 }
               ].map((practice, index) => (
                 <div
@@ -1869,7 +1869,7 @@ const labtests = ({
                   className="!flex-[1_1_200px] !max-w-[220px] !min-w-[200px]"
                 >
                   <div
-                    className="!text-center !h-full !p-[24px_16px] !bg-white !rounded-[16px] !border !border-solid !border-[#e2e8f0] !shadow-[0_4px_12px_rgba(128, 89, 202, 0.02)] transition-all duration-300 ease-out !cursor-pointer hover:!-translate-y-[6px] hover:!shadow-[0_12px_24px_rgba(128, 89, 202, 0.08)] hover:!border-[#8059ca]"
+                    className="!text-center !h-full !p-[24px_16px] !bg-white !rounded-[16px] !border !border-solid !border-[#e2e8f0] !shadow-[0_4px_12px_rgba(128, 89, 202, 0.02)] transition-all duration-300 ease-out !cursor-pointer hover:!-translate-y-[6px] hover:!shadow-[0_12px_24px_rgba(128, 89, 202, 0.08)] hover:!border-[#321961]"
                   >
                     <div
                       className="!w-[56px] !h-[56px] !mx-auto !mb-[16px] !flex !items-center !justify-center !bg-[rgba(128,89,202,0.06)] !rounded-[14px] transition-all duration-300"
@@ -1930,7 +1930,7 @@ const labtests = ({
             <div
               style={{
                 background:
-                  "linear-gradient(135deg, #8059ca 0%, #822BD4 50%, #A855F7 100%)",
+                  "linear-gradient(135deg, #321961 0%, #822BD4 50%, #A855F7 100%)",
                 borderRadius: "18px",
                 padding: "20px",
                 boxShadow: "0 10px 40px rgba(125, 46, 255, 0.4)",
@@ -2211,7 +2211,7 @@ const labtests = ({
                     padding: "12px",
                     fontSize: "15px",
                     fontWeight: "700",
-                    color: "#8059ca",
+                    color: "#321961",
                     cursor: "pointer",
                     transition: "all 0.3s ease",
                     boxShadow: "0 4px 12px rgba(0, 0, 0, 0.2)",

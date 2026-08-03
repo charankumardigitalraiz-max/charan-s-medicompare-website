@@ -131,7 +131,7 @@ const Transactions = ({ HomeNavigate, BackButton }) => {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pb-2 mb-2 border-b border-slate-100 mt-2">
         <div className="flex items-center gap-3.5">
           {HomeNavigate && <HomeNavigate />}
-          <div className="w-11 h-11 rounded-xl bg-purple-50 text-[#8059ca] flex items-center justify-center text-[20px] shrink-0 border border-purple-100/50 shadow-sm">
+          <div className="w-11 h-11 rounded-xl bg-purple-50 text-[#321961] flex items-center justify-center text-[20px] shrink-0 border border-purple-100/50 shadow-sm">
             <i className="fa-solid fa-credit-card" />
           </div>
 
@@ -154,7 +154,7 @@ const Transactions = ({ HomeNavigate, BackButton }) => {
                 setSearchTerm(e.target.value);
                 setCurrentPage(1);
               }}
-              className="h-[42px] rounded-sm border border-[#e0e0e0] pl-10 pr-4 text-sm w-full outline-none focus:border-[#8059ca] transition-colors"
+              className="h-[42px] rounded-sm border border-[#e0e0e0] pl-10 pr-4 text-sm w-full outline-none focus:border-[#321961] transition-colors"
             />
             <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[#999] pointer-events-none">
               <i className="fa-solid fa-search" />
@@ -166,7 +166,7 @@ const Transactions = ({ HomeNavigate, BackButton }) => {
       {/* Transactions List / Cards */}
       {loading ? (
         <div className="flex justify-center py-12">
-          <div className="animate-spin inline-block w-8 h-8 border-4 border-[#8059ca] border-t-transparent rounded-full" role="status">
+          <div className="animate-spin inline-block w-8 h-8 border-4 border-[#321961] border-t-transparent rounded-full" role="status">
             <span className="sr-only">Loading transactions...</span>
           </div>
         </div>
@@ -181,11 +181,11 @@ const Transactions = ({ HomeNavigate, BackButton }) => {
                   {/* Card Header */}
                   <div className="flex justify-between items-start gap-2">
                     <div className="flex items-center gap-3 min-w-0">
-                      <div className="w-10 h-10 rounded-xl bg-[#f3e8ff] text-[#8059ca] flex items-center justify-center text-base shrink-0">
+                      <div className="w-10 h-10 rounded-xl bg-[#f3e8ff] text-[#321961] flex items-center justify-center text-base shrink-0">
                         <i className="fa-solid fa-receipt" />
                       </div>
                       <div className="min-w-0">
-                        <span className="text-sm font-bold text-[#8059ca] block truncate">
+                        <span className="text-sm font-bold text-[#321961] block truncate">
                           {tx.orderId || tx.id}
                         </span>
                         <span className="text-[12px] text-slate-500 flex items-center gap-1">

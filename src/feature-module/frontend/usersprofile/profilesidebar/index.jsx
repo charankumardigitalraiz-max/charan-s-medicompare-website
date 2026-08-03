@@ -230,7 +230,7 @@ const ProfileSideBar = () => {
                     width: isMobile ? "64px" : "72px",
                     height: isMobile ? "64px" : "72px",
                     objectFit: "cover",
-                    border: "2.5px solid #8059ca",
+                    border: "2.5px solid #321961",
                     boxShadow: "0 4px 15px rgba(128,89,202,0.12)",
                   }}
                 />
@@ -240,12 +240,12 @@ const ProfileSideBar = () => {
                   style={{
                     width: isMobile ? "64px" : "72px",
                     height: isMobile ? "64px" : "72px",
-                    background: "linear-gradient(135deg, #8059ca 0%, #9b5dff 100%)",
+                    background: "linear-gradient(135deg, #321961 0%, #9b5dff 100%)",
                     color: "#ffffff",
                     fontWeight: "700",
                     fontSize: isMobile ? "24px" : "28px",
                     textTransform: "uppercase",
-                    border: "2.5px solid #8059ca",
+                    border: "2.5px solid #321961",
                     boxShadow: "0 4px 15px rgba(128,89,202,0.12)",
                   }}
                   title={profile?.first_name}
@@ -265,9 +265,9 @@ const ProfileSideBar = () => {
                 width: "22px",
                 height: "22px",
                 backgroundColor: "white",
-                color: "#8059ca",
+                color: "#321961",
                 fontSize: "10px",
-                border: "1.5px solid #8059ca",
+                border: "1.5px solid #321961",
                 boxShadow: "0 3px 8px rgba(0,0,0,0.2)",
               }}
               title="Update profile picture"
@@ -313,7 +313,7 @@ const ProfileSideBar = () => {
                 className="inline-flex items-center px-2 py-0.5 rounded-[18px] max-w-full"
                 style={{
                   backgroundColor: "rgba(128,89,202,0.06)",
-                  color: "#8059ca",
+                  color: "#321961",
                   fontWeight: "500",
                   fontSize: isMobile ? "11px" : "12px",
                   border: "1px solid rgba(128,89,202,0.12)",
@@ -378,13 +378,13 @@ const ProfileSideBar = () => {
                     }}
                     className="flex items-center py-2.5 px-3.5 no-underline rounded-xl transition-all duration-200 group"
                     style={{
-                      color: isActive ? "#8059ca" : "#4a5568",
+                      color: isActive ? "#321961" : "#4a5568",
                       backgroundColor: isActive ? "rgba(128,89,202,0.08)" : "transparent",
                     }}
                     onMouseEnter={(e) => {
                       if (!isActive) {
                         e.currentTarget.style.backgroundColor = "rgba(128,89,202,0.04)";
-                        e.currentTarget.style.color = "#8059ca";
+                        e.currentTarget.style.color = "#321961";
                       }
                     }}
                     onMouseLeave={(e) => {
@@ -395,7 +395,7 @@ const ProfileSideBar = () => {
                     }}
                   >
                     <i
-                      className={`${item.icon} mr-3 transition-colors duration-200 ${isActive ? "!text-[#8059ca]" : "!text-slate-400 group-hover:!text-[#8059ca]"}`}
+                      className={`${item.icon} mr-3 transition-colors duration-200 ${isActive ? "!text-[#321961]" : "!text-slate-400 group-hover:!text-[#321961]"}`}
                       style={{ fontSize: "18px", width: "22px" }}
                     />
                     <span
@@ -456,7 +456,7 @@ const ProfileSideBar = () => {
         <div
           className="flex items-center justify-between px-4 py-3 sticky top-0 z-10"
           style={{
-            background: "linear-gradient(135deg, #8059ca 0%, #9b5dff 100%)",
+            background: "linear-gradient(135deg, #321961 0%, #9b5dff 100%)",
             borderBottom: "1px solid rgba(255,255,255,0.15)",
           }}
         >
@@ -578,7 +578,7 @@ const ProfileSideBar = () => {
       {/* Mobile Floating Menu Button */}
       <button
         onClick={() => setIsMobileDrawerOpen(true)}
-        className="lg:hidden fixed bottom-20 right-6 w-12 h-12 !rounded-[20px] bg-gradient-to-br from-[#8059ca] to-[#9b5dff] text-white border border-white/20 flex items-center justify-center cursor-pointer shadow-[0_8px_20px_rgba(128,89,202,0.35)] transition-all duration-300 z-[99999] hover:scale-105 active:scale-95"
+        className="lg:hidden fixed bottom-20 right-6 w-12 h-12 !rounded-[20px] bg-gradient-to-br from-[#321961] to-[#9b5dff] text-white border border-white/20 flex items-center justify-center cursor-pointer shadow-[0_8px_20px_rgba(128,89,202,0.35)] transition-all duration-300 z-[99999] hover:scale-105 active:scale-95"
         aria-label="Open menu"
       >
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">

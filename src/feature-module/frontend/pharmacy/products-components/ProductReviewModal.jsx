@@ -238,7 +238,7 @@ const ProductReviewModal = ({ show, onClose, product, position = "right", onRevi
                         type="button"
                         onClick={() => setSelectedTag(tag)}
                         className={`px-2.5 py-1 rounded-full text-xs cursor-pointer flex items-center gap-1 transition-all duration-200 ${selectedTag === tag
-                          ? "bg-[#8059ca] text-white border-none"
+                          ? "bg-[#321961] text-white border-none"
                           : "border border-gray-300 bg-white text-gray-700"
                           }`}
                       >
@@ -254,7 +254,7 @@ const ProductReviewModal = ({ show, onClose, product, position = "right", onRevi
                   Write Your Review
                 </h6>
                 <textarea
-                  className="w-full rounded-lg border border-gray-200 text-[10px] resize-none bg-gray-50 p-2.5 outline-none focus:border-[#8059ca] focus:bg-white transition-all duration-200"
+                  className="w-full rounded-lg border border-gray-200 text-[10px] resize-none bg-gray-50 p-2.5 outline-none focus:border-[#321961] focus:bg-white transition-all duration-200"
                   rows="4"
                   placeholder=" Write Your Review..."
                   value={reviewText}
@@ -268,7 +268,7 @@ const ProductReviewModal = ({ show, onClose, product, position = "right", onRevi
             <div className="p-5 border-t border-gray-100">
               <button
                 type="button"
-                className="w-full font-bold bg-[#8059ca] hover:bg-[#6a45b3] text-white rounded-lg text-base border-none py-3 shadow-md hover:shadow-lg transition-all duration-200 cursor-pointer"
+                className="w-full font-bold bg-[#321961] hover:bg-[#6a45b3] text-white rounded-lg text-base border-none py-3 shadow-md hover:shadow-lg transition-all duration-200 cursor-pointer"
                 onClick={handleSubmit}
               >
                 {isSubmitting ? "Submitting..." : "Submit Review"}
@@ -389,7 +389,7 @@ const ProductReviewModal = ({ show, onClose, product, position = "right", onRevi
                       type="button"
                       onClick={() => setSelectedTag(tag)}
                       className={`px-3 py-1 !rounded-full !text-xs flex items-center gap-0.5 cursor-pointer transition-all duration-200 ${selectedTag === tag
-                        ? "!bg-[#8059ca] !text-white !border-none !font-medium"
+                        ? "!bg-[#321961] !text-white !border-none !font-medium"
                         : "!border !border-gray-300 !bg-white !text-gray-700 !font-normal"
                         }`}
                     >
@@ -405,7 +405,7 @@ const ProductReviewModal = ({ show, onClose, product, position = "right", onRevi
                 Write Your Review
               </h6>
               <textarea
-                className="!w-full !rounded-lg !border !border-gray-200 !text-xs !resize-none !bg-gray-50 !p-2.5 !outline-none !focus:border-[#8059ca] !focus:bg-white !transition-all !duration-200"
+                className="!w-full !rounded-lg !border !border-gray-200 !text-xs !resize-none !bg-gray-50 !p-2.5 !outline-none !focus:border-[#321961] !focus:bg-white !transition-all !duration-200"
                 rows="4"
                 placeholder=" Write Your Review..."
                 value={reviewText}
@@ -419,7 +419,7 @@ const ProductReviewModal = ({ show, onClose, product, position = "right", onRevi
           <div className="p-5 border-t border-gray-100">
             <button
               type="button"
-              className="w-full !font-bold !bg-[#8059ca] hover:!bg-[#6a45b3] text-white !rounded-lg !py-2 !text-sm !border-none !shadow-md hover:!shadow-lg !transition-all !duration-200 !cursor-pointer"
+              className="w-full !font-bold !bg-[#321961] hover:!bg-[#6a45b3] text-white !rounded-lg !py-2 !text-sm !border-none !shadow-md hover:!shadow-lg !transition-all !duration-200 !cursor-pointer"
               onClick={handleSubmit}
             >
               {isSubmitting ? "Submitting..." : "Submit Review"}

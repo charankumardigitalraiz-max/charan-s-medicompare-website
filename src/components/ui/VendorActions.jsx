@@ -88,7 +88,7 @@ const VendorActions = ({
             width: "100%",
             gap: "4px",
             borderRadius: "10px",
-            border: "1px solid #8059ca",
+            border: "1px solid #321961",
             background: "#fdfaff",
             boxShadow: "0 2px 5px rgba(125, 46, 255, 0.1)",
           }}
@@ -133,7 +133,7 @@ const VendorActions = ({
           }}
           className={`w-full flex-1 flex items-center justify-center gap-1.5 !py-1 !px-2.5 !rounded-md !text-xs !font-bold !text-white transition-all cursor-pointer border-none ${perDayRent === 0 || !perDayRent
             ? "bg-slate-300 opacity-60 cursor-not-allowed"
-            : "bg-gradient-to-r from-[#8059ca] to-[#822BD4] hover:shadow-md active:scale-[0.98]"
+            : "bg-[var(--color-primary)] hover:shadow-md active:scale-[0.98]"
             }`}
         >
           <i className="fa-solid fa-clipboard-check"></i>
@@ -167,7 +167,7 @@ const VendorActions = ({
               );
             }
           }}
-          className="w-full flex-1 flex items-center justify-center gap-1.5 !py-1 px-3 !rounded-lg !text-xs !font-bold !text-white bg-gradient-to-r from-[#8059ca] to-[#822BD4] hover:shadow-md active:scale-[0.98] transition-all cursor-pointer border-none"
+          className="w-full flex-1 flex items-center justify-center gap-1.5 !py-1 px-3 !rounded-lg !text-xs !font-bold !text-white bg-[var(--color-primary)] hover:shadow-md active:scale-[0.98] transition-all cursor-pointer border-none"
         >
           <i
             className={
@@ -198,7 +198,7 @@ const VendorActions = ({
               });
             }
           }}
-          className="w-full flex-1 flex items-center justify-center gap-1.5 py-1.5 px-3 !rounded-lg text-xs font-bold !text-white bg-gradient-to-r from-[#8059ca] to-[#822BD4] hover:shadow-md active:scale-[0.98] transition-all cursor-pointer border-none"
+          className="w-full flex-1 flex items-center justify-center gap-1.5 py-1.5 px-3 !rounded-lg text-xs font-bold !text-white bg-[var(--color-primary)] hover:shadow-md active:scale-[0.98] transition-all cursor-pointer border-none"
         >
           <i className="fas fa-file-invoice-dollar"></i>
           Get An Enquiry
@@ -227,7 +227,7 @@ const VendorActions = ({
               );
             }
           }}
-          className="w-full flex-1 flex items-center justify-center gap-1.5 py-1.5 px-3 !rounded-lg text-xs font-bold !text-white bg-gradient-to-r from-[#8059ca] to-[#822BD4] hover:shadow-md active:scale-[0.98] transition-all cursor-pointer border-none"
+          className="w-full flex-1 flex items-center justify-center gap-1.5 py-1.5 px-3 !rounded-lg text-xs font-bold !text-white bg-[var(--color-primary)] hover:shadow-md active:scale-[0.98] transition-all cursor-pointer border-none"
         >
           <i className="fa-solid fa-clipboard-check"></i>
           Rent
@@ -254,7 +254,7 @@ const VendorActions = ({
               );
             }
           }}
-          className="w-full flex-1 flex items-center justify-center gap-1.5 py-1.5 px-3 !rounded-lg text-xs font-bold !text-white bg-gradient-to-r from-[#8059ca] to-[#822BD4] hover:shadow-md active:scale-[0.98] transition-all cursor-pointer border-none"
+          className="w-full flex-1 flex items-center justify-center gap-1.5 py-1.5 px-3 !rounded-lg text-xs font-bold !text-white bg-[var(--color-primary)] hover:shadow-md active:scale-[0.98] transition-all cursor-pointer border-none"
         >
           <i className="fa-solid fa-comments"></i>
           Consultation
@@ -281,7 +281,7 @@ const VendorActions = ({
               );
             }
           }}
-          className="w-full flex-1 flex items-center justify-center gap-1.5 py-1.5 px-3 !rounded-lg text-xs font-bold !text-white bg-gradient-to-r from-[#8059ca] to-[#822BD4] hover:shadow-md active:scale-[0.98] transition-all cursor-pointer border-none"
+          className="w-full flex-1 flex items-center justify-center gap-1.5 py-1.5 px-3 !rounded-lg text-xs font-bold !text-white bg-[var(--color-primary)] hover:shadow-md active:scale-[0.98] transition-all cursor-pointer border-none"
         >
           <i className="fa-solid fa-calendar-check"></i>
           Appointment
@@ -308,7 +308,7 @@ const VendorActions = ({
               );
             }
           }}
-          className="w-full flex-1 flex items-center justify-center gap-1.5 py-1.5 px-3 !rounded-lg text-xs font-bold !text-white bg-gradient-to-r from-[#8059ca] to-[#822BD4] hover:shadow-md active:scale-[0.98] transition-all cursor-pointer border-none"
+          className="w-full flex-1 flex items-center justify-center gap-1.5 py-1.5 px-3 !rounded-lg text-xs font-bold !text-white bg-[var(--color-primary)] hover:shadow-md active:scale-[0.98] transition-all cursor-pointer border-none"
         >
           <i className="fas fa-car"></i>
           Add Ride
@@ -359,7 +359,7 @@ const VendorActions = ({
             width: "100%",
             gap: "4px",
             borderRadius: "10px",
-            border: "1px solid #8059ca",
+            border: "1px solid #321961",
             background: "#fdfaff",
             boxShadow: "0 2px 5px rgba(125, 46, 255, 0.1)",
           }}
@@ -413,7 +413,7 @@ const VendorActions = ({
             width: "100%",
             gap: "4px",
             borderRadius: "10px",
-            border: "1px solid #8059ca",
+            border: "1px solid #321961",
             background: "#fdfaff",
             boxShadow: "0 2px 5px rgba(125, 46, 255, 0.1)",
           }}
@@ -442,7 +442,7 @@ const VendorActions = ({
               );
             }
           }}
-          className="w-full flex-1 flex items-center justify-center gap-1.5 py-1.5 px-3 !rounded-lg !text-xs !font-bold !text-white bg-gradient-to-r from-[#8059ca] to-[#822BD4] hover:shadow-md active:scale-[0.98] transition-all cursor-pointer border-none"
+          className="w-full flex-1 flex items-center justify-center gap-1.5 py-1.5 px-3 !rounded-lg !text-xs !font-bold !text-white bg-[var(--color-primary)] hover:shadow-md active:scale-[0.98] transition-all cursor-pointer border-none"
         >
           Book Now
         </button>
@@ -477,7 +477,7 @@ const VendorActions = ({
             }
           }
         }}
-        className="w-full flex-1 flex items-center justify-center gap-1.5 py-1.5 px-3 !rounded-lg text-xs font-bold text-white bg-gradient-to-r from-[#8059ca] to-[#822BD4] hover:shadow-md active:scale-[0.98] transition-all cursor-pointer border-none"
+        className="w-full flex-1 flex items-center justify-center gap-1.5 py-1.5 px-3 !rounded-lg text-xs font-bold text-white bg-[var(--color-primary)] hover:shadow-md active:scale-[0.98] transition-all cursor-pointer border-none"
       >
         Add to Cart
       </button>

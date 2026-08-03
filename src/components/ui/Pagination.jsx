@@ -66,7 +66,7 @@ const Pagination = ({ page = 1, totalPages = 0, onPageChange }) => {
           key={pageNum}
           onClick={() => onPageChange(pageNum)}
           className={`flex h-9 w-9 items-center justify-center !rounded-full border text-sm font-semibold transition-all duration-200 cursor-pointer ${pageNum === page
-              ? "bg-[#8059ca] border-[#8059ca] text-white shadow-md shadow-[#8059ca]/15"
+              ? "bg-[#321961] border-[#321961] text-white shadow-md shadow-[#321961]/15"
               : "border-slate-200 bg-white text-slate-600 hover:bg-slate-50 hover:text-slate-800"
             }`}
         >

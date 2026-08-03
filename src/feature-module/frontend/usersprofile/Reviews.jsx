@@ -80,7 +80,7 @@ const Reviews = ({ HomeNavigate, BackButton }) => {
               {userAvatar ? (
                 <img src={userAvatar} className="w-10 h-10 rounded-full object-cover" alt="User" />
               ) : (
-                <div className="w-10 h-10 rounded-full bg-[#8059ca] text-white flex items-center justify-center text-xl uppercase shrink-0">
+                <div className="w-10 h-10 rounded-full bg-[#321961] text-white flex items-center justify-center text-xl uppercase shrink-0">
                   {userName?.charAt(0)?.toUpperCase()}
                 </div>
               )}
@@ -151,7 +151,7 @@ const Reviews = ({ HomeNavigate, BackButton }) => {
           <p>{error}</p>
           <button
             onClick={() => window.location.reload()}
-            className="py-2 px-4 rounded-md bg-[#8059ca] hover:bg-[#6b1fe6] text-white border-none cursor-pointer text-[13px] font-medium transition-colors duration-200"
+            className="py-2 px-4 rounded-md bg-[#321961] hover:bg-[#6b1fe6] text-white border-none cursor-pointer text-[13px] font-medium transition-colors duration-200"
           >
             Try Again
           </button>
@@ -183,7 +183,7 @@ const Reviews = ({ HomeNavigate, BackButton }) => {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pb-2 mb-2 border-b border-slate-100 mt-2">
         <div className="flex items-center gap-3.5">
           {HomeNavigate && <HomeNavigate />}
-          <div className="w-11 h-11 rounded-xl bg-purple-50 text-[#8059ca] flex items-center justify-center text-[20px] shrink-0 border border-purple-100/50 shadow-sm">
+          <div className="w-11 h-11 rounded-xl bg-purple-50 text-[#321961] flex items-center justify-center text-[20px] shrink-0 border border-purple-100/50 shadow-sm">
             <i className="fa-solid fa-comment-alt" />
           </div>
 

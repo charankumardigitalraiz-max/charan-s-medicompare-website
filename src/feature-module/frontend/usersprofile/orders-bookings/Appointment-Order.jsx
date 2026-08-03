@@ -771,7 +771,7 @@ const AppoitmentsOrders = ({ HomeNavigate, ServiceTabs }) => {
         : status.toLowerCase() === "cancelled" || status.toLowerCase() === "canceled"
           ? { bg: "#fee2e2", color: "#991b1b" }
           : status.toLowerCase() === "sample_collected"
-            ? { bg: "#f3effa", color: "#8059ca" }
+            ? { bg: "#f3effa", color: "#321961" }
             : status.toLowerCase() === "sample_not_collected"
               ? { bg: "#fef3c7", color: "#92400e" }
               : { bg: "#fef3c7", color: "#92400e" };
@@ -890,7 +890,7 @@ const AppoitmentsOrders = ({ HomeNavigate, ServiceTabs }) => {
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pb-2 mb-2 border-b border-slate-100 mt-2">
           <div className="flex items-center gap-3.5">
             {HomeNavigate && <HomeNavigate />}
-            <div className="w-11 h-11 rounded-xl bg-purple-50 text-[#8059ca] flex items-center justify-center text-[20px] shrink-0 border border-purple-100/50 shadow-sm">
+            <div className="w-11 h-11 rounded-xl bg-purple-50 text-[#321961] flex items-center justify-center text-[20px] shrink-0 border border-purple-100/50 shadow-sm">
               <i className="fa-solid fa-calendar-check" />
             </div>
 
@@ -925,7 +925,7 @@ const AppoitmentsOrders = ({ HomeNavigate, ServiceTabs }) => {
                   setSearchTerm(e.target.value);
                   setCurrentPage(1);
                 }}
-                className="h-[42px] rounded-sm border border-[#e0e0e0] pl-10 pr-4 text-sm w-full outline-none focus:border-[#8059ca] transition-colors"
+                className="h-[42px] rounded-sm border border-[#e0e0e0] pl-10 pr-4 text-sm w-full outline-none focus:border-[#321961] transition-colors"
               />
               <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[#999] pointer-events-none">
                 <i className="fa-solid fa-search" />
@@ -960,7 +960,7 @@ const AppoitmentsOrders = ({ HomeNavigate, ServiceTabs }) => {
             {isMobile ? (
               <select
                 value={selectedTab}
-                className="w-full h-[38px] rounded-lg border border-slate-200 px-3 text-[13px] outline-none bg-slate-50 focus:bg-white focus:border-[#8059ca] transition-all duration-200"
+                className="w-full h-[38px] rounded-lg border border-slate-200 px-3 text-[13px] outline-none bg-slate-50 focus:bg-white focus:border-[#321961] transition-all duration-200"
                 onChange={(e) => {
                   setSelectedTab(e.target.value);
                   setCurrentPage(1);
@@ -1008,7 +1008,7 @@ const AppoitmentsOrders = ({ HomeNavigate, ServiceTabs }) => {
                   return (
                     <li className="nav-item" key={tab.id}>
                       <button
-                        className={`py-2.5 px-4 text-[13px] font-semibold !border-b-2 -mb-[1px] transition-all duration-200 flex items-center gap-1.5 ${isActive ? "!border-[#8059ca] !text-[#8059ca]" : "border-transparent text-slate-500 hover:text-slate-700"}`}
+                        className={`py-2.5 px-4 text-[13px] font-semibold !border-b-2 -mb-[1px] transition-all duration-200 flex items-center gap-1.5 ${isActive ? "!border-[#321961] !text-[#321961]" : "border-transparent text-slate-500 hover:text-slate-700"}`}
                         onClick={() => {
                           setSelectedTab(tab.id);
                           setCurrentPage(1);
@@ -1028,7 +1028,7 @@ const AppoitmentsOrders = ({ HomeNavigate, ServiceTabs }) => {
         <div className="w-full py-4">
           {loading ? (
             <div className="text-center py-10 flex justify-center items-center">
-              <div className="animate-spin inline-block w-8 h-8 border-4 border-[#8059ca] border-t-transparent rounded-full" role="status">
+              <div className="animate-spin inline-block w-8 h-8 border-4 border-[#321961] border-t-transparent rounded-full" role="status">
                 <span className="sr-only">Loading...</span>
               </div>
             </div>
@@ -1069,7 +1069,7 @@ const AppoitmentsOrders = ({ HomeNavigate, ServiceTabs }) => {
               <div className="empty-state">
                 <i
                   className="fa-solid fa-calendar-times fa-3x text-muted mb-3"
-                  style={{ color: "#8059ca" }}
+                  style={{ color: "#321961" }}
                 ></i>
                 <h5 className="text-muted">No appointments found</h5>
                 {/* <p className="text-muted">
@@ -1164,7 +1164,7 @@ const AppoitmentsOrders = ({ HomeNavigate, ServiceTabs }) => {
                       style={{
                         background: "#f5f3ff", border: "none", borderRadius: "8px",
                         padding: "6px 12px", display: "flex", alignItems: "center",
-                        gap: "6px", cursor: "pointer", color: "#8059ca", fontSize: "12px",
+                        gap: "6px", cursor: "pointer", color: "#321961", fontSize: "12px",
                         fontWeight: 600,
                       }}
                     >
@@ -1173,7 +1173,7 @@ const AppoitmentsOrders = ({ HomeNavigate, ServiceTabs }) => {
                     <button onClick={() => setShowModel(false)} style={{
                       background: "#f5f3ff", border: "none", borderRadius: "50%",
                       width: "30px", height: "30px", display: "flex", alignItems: "center",
-                      justifyContent: "center", cursor: "pointer", color: "#8059ca", fontSize: "18px", flexShrink: 0,
+                      justifyContent: "center", cursor: "pointer", color: "#321961", fontSize: "18px", flexShrink: 0,
                     }}>&times;</button>
                   </div>
                 </div> */}
@@ -1184,7 +1184,7 @@ const AppoitmentsOrders = ({ HomeNavigate, ServiceTabs }) => {
               {/* ITEMS */}
               {selectedOrder?.groupDetails?.length > 0 && (
                 <div style={{ marginBottom: "20px" }}>
-                  <div style={{ fontSize: "10px", fontWeight: 700, color: "#8059ca", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "10px" }}>
+                  <div style={{ fontSize: "10px", fontWeight: 700, color: "#321961", textTransform: "uppercase", letterSpacing: "0.6px", marginBottom: "10px" }}>
                     Patients & Tests
                   </div>
                   {selectedOrder.groupDetails.map((group, groupIndex) => {
@@ -1199,20 +1199,20 @@ const AppoitmentsOrders = ({ HomeNavigate, ServiceTabs }) => {
                       <div key={group._id || groupIndex} className="bg-[#faf9fe] border border-[#f1eff9] rounded-xl p-3 mb-3">
                         <div className="flex justify-between items-center mb-2 flex-wrap gap-2">
                           <div className="flex items-center gap-2">
-                            <div className="w-7 h-7 rounded-full bg-[#efe7ff] text-[#8059ca] flex items-center justify-center font-bold text-xs">
+                            <div className="w-7 h-7 rounded-full bg-[#efe7ff] text-[#321961] flex items-center justify-center font-bold text-xs">
                               {(patientName || "P").charAt(0).toUpperCase()}
                             </div>
                             <div>
                               <span className="text-xs font-semibold text-slate-700 capitalize">{patientName}</span>
                               {patientRelationship && (
-                                <span className="!text-[10px] !text-[#8059ca] bg-[#f5f3ff] px-1.5 py-0.5 rounded-full ml-1.5 !font-medium capitalize">
+                                <span className="!text-[10px] !text-[#321961] bg-[#f5f3ff] px-1.5 py-0.5 rounded-full ml-1.5 !font-medium capitalize">
                                   {patientRelationship}
                                 </span>
                               )}
                             </div>
                           </div>
                           {group.totalTests != null && (
-                            <span className="text-[11px] font-semibold text-[#8059ca] bg-[#f5f3ff] px-2 py-0.5 rounded-md">
+                            <span className="text-[11px] font-semibold text-[#321961] bg-[#f5f3ff] px-2 py-0.5 rounded-md">
                               {group.totalTests} {group.totalTests === 1 ? "Test" : "Tests"}
                             </span>
                           )}
@@ -1253,7 +1253,7 @@ const AppoitmentsOrders = ({ HomeNavigate, ServiceTabs }) => {
 
               {/* DOCTOR DETAILS */}
               <div className="mb-5">
-                <div className="text-[10px] font-bold text-[#8059ca] uppercase tracking-wider mb-2.5">
+                <div className="text-[10px] font-bold text-[#321961] uppercase tracking-wider mb-2.5">
                   Referral Details
                 </div>
                 <div className="bg-[#faf9fe] rounded-xl p-3 border border-[#f1eff9]">
@@ -1267,7 +1267,7 @@ const AppoitmentsOrders = ({ HomeNavigate, ServiceTabs }) => {
               {/* APPOINTMENT SCHEDULE */}
               {selectedOrder?.selectedDate && selectedOrder?.selectedTimeSlot && (
                 <div className="mb-5">
-                  <div className="text-[10px] font-bold text-[#8059ca] uppercase tracking-wider mb-2.5">
+                  <div className="text-[10px] font-bold text-[#321961] uppercase tracking-wider mb-2.5">
                     Appointment Schedule
                   </div>
                   <div className="grid grid-cols-2 gap-2">
@@ -1300,7 +1300,7 @@ const AppoitmentsOrders = ({ HomeNavigate, ServiceTabs }) => {
 
               {/* BILL SUMMARY */}
               <div>
-                <div className="text-[10px] font-bold text-[#8059ca] uppercase tracking-wider mb-2.5">
+                <div className="text-[10px] font-bold text-[#321961] uppercase tracking-wider mb-2.5">
                   Bill Summary
                 </div>
                 {(() => {
@@ -1375,7 +1375,7 @@ const AppoitmentsOrders = ({ HomeNavigate, ServiceTabs }) => {
                   <img
                     src={vendor.imageUrl}
                     alt={vendor.name}
-                    className="w-12 h-12 rounded-full object-cover shrink-0 border-2 border-[#8059ca]"
+                    className="w-12 h-12 rounded-full object-cover shrink-0 border-2 border-[#321961]"
                     onError={(e) => {
                       e.currentTarget.src = "/assets/default.png";
                     }}
@@ -1393,19 +1393,19 @@ const AppoitmentsOrders = ({ HomeNavigate, ServiceTabs }) => {
                 <div className="pt-2 border-t border-dashed border-slate-200">
                   {vendor.phone && (
                     <div className="flex items-center gap-2 mb-2 text-xs text-slate-600">
-                      <i className="fa-solid fa-phone text-[#8059ca] w-4" />
+                      <i className="fa-solid fa-phone text-[#321961] w-4" />
                       <span>{vendor.phone}</span>
                     </div>
                   )}
                   {vendor.email && (
                     <div className="flex items-center gap-2 mb-2 text-xs text-slate-600">
-                      <i className="fa-solid fa-envelope text-[#8059ca] w-4" />
+                      <i className="fa-solid fa-envelope text-[#321961] w-4" />
                       <span className="break-all">{vendor.email}</span>
                     </div>
                   )}
                   {vendor.address && (
                     <div className="flex items-start gap-2 mb-2 text-xs text-slate-600">
-                      <i className="fa-solid fa-location-dot text-[#8059ca] w-4 mt-0.5" />
+                      <i className="fa-solid fa-location-dot text-[#321961] w-4 mt-0.5" />
                       <span>{vendor.address}</span>
                     </div>
                   )}
@@ -1419,7 +1419,7 @@ const AppoitmentsOrders = ({ HomeNavigate, ServiceTabs }) => {
                         }
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="w-full flex items-center justify-center gap-2 text-xs font-semibold text-[#8059ca] border border-[#8059ca] rounded-lg py-1.5 hover:bg-purple-50 transition-colors"
+                        className="w-full flex items-center justify-center gap-2 text-xs font-semibold text-[#321961] border border-[#321961] rounded-lg py-1.5 hover:bg-purple-50 transition-colors"
                       >
                         <i className="fa-solid fa-map-location-dot"></i>
                         Show Maps
@@ -1468,7 +1468,7 @@ const AppoitmentsOrders = ({ HomeNavigate, ServiceTabs }) => {
             Order #{rescheduleOrder?.orderId}
           </div>
           <div className="mb-4 p-4 rounded-xl bg-purple-50/50 border border-purple-100">
-            <div className="text-[11px] text-[#8059ca] font-semibold uppercase tracking-wider">
+            <div className="text-[11px] text-[#321961] font-semibold uppercase tracking-wider">
               Current Appointment
             </div>
             <div className="text-[15px] font-semibold text-slate-700 mt-1">
@@ -1496,7 +1496,7 @@ const AppoitmentsOrders = ({ HomeNavigate, ServiceTabs }) => {
             />
             {isRescheduling && (
               <div className="absolute inset-0 bg-white/70 flex items-center justify-center z-30 rounded-xl">
-                <div className="animate-spin inline-block w-8 h-8 border-4 border-[#8059ca] border-t-transparent rounded-full" role="status">
+                <div className="animate-spin inline-block w-8 h-8 border-4 border-[#321961] border-t-transparent rounded-full" role="status">
                   <span className="sr-only">Rescheduling...</span>
                 </div>
               </div>
@@ -1574,7 +1574,7 @@ const AppoitmentsOrders = ({ HomeNavigate, ServiceTabs }) => {
                                   type="checkbox"
                                   checked={isChecked}
                                   onChange={() => { }}
-                                  className="w-4 h-4 text-[#8059ca] border-slate-300 rounded focus:ring-[#8059ca] cursor-pointer"
+                                  className="w-4 h-4 text-[#321961] border-slate-300 rounded focus:ring-[#321961] cursor-pointer"
                                 />
                                 <span className="text-sm text-slate-700">{displayName}</span>
                               </div>
@@ -1595,7 +1595,7 @@ const AppoitmentsOrders = ({ HomeNavigate, ServiceTabs }) => {
                   required
                   value={formData.category || ""}
                   onChange={onFormChange}
-                  className="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8059ca] focus:border-transparent bg-white"
+                  className="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#321961] focus:border-transparent bg-white"
                 >
                   <option value="">Select Category</option>
                   <option value="service_delayed">
@@ -1630,7 +1630,7 @@ const AppoitmentsOrders = ({ HomeNavigate, ServiceTabs }) => {
                   required
                   value={formData.subject || ""}
                   onChange={onFormChange}
-                  className="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8059ca] focus:border-transparent bg-white"
+                  className="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#321961] focus:border-transparent bg-white"
                 />
               </div>
 
@@ -1644,7 +1644,7 @@ const AppoitmentsOrders = ({ HomeNavigate, ServiceTabs }) => {
                   required
                   value={formData.description || ""}
                   onChange={onFormChange}
-                  className="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8059ca] focus:border-transparent bg-white resize-vertical"
+                  className="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#321961] focus:border-transparent bg-white resize-vertical"
                 ></textarea>
               </div>
 
@@ -1679,7 +1679,7 @@ const AppoitmentsOrders = ({ HomeNavigate, ServiceTabs }) => {
 
                     e.target.value = "";
                   }}
-                  className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#8059ca] focus:border-transparent bg-white file:mr-4 file:py-1.5 file:px-4 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-slate-100 file:text-slate-700 hover:file:bg-slate-200 file:cursor-pointer"
+                  className="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#321961] focus:border-transparent bg-white file:mr-4 file:py-1.5 file:px-4 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-slate-100 file:text-slate-700 hover:file:bg-slate-200 file:cursor-pointer"
                 />
                 <div className="text-slate-400 mt-1 text-[11px]">
                   Max file size: 5MB. Multiple files allowed.
@@ -1729,7 +1729,7 @@ const AppoitmentsOrders = ({ HomeNavigate, ServiceTabs }) => {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full py-2.5 bg-[#8059ca] hover:bg-[#6a4ab0] text-white font-bold rounded-lg transition-colors cursor-pointer disabled:opacity-50"
+                className="w-full py-2.5 bg-[#321961] hover:bg-[#6a4ab0] text-white font-bold rounded-lg transition-colors cursor-pointer disabled:opacity-50"
               >
                 {isSubmitting ? "Submitting..." : "Submit Issue"}
               </button>

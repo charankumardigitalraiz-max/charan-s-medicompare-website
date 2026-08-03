@@ -131,7 +131,7 @@ const BlogDetailsj = () => {
                         </div>
                       </div>
                       <div
-                        className="text-gray-700 leading-relaxed text-[15px] prose max-w-none prose-slate prose-headings:font-bold prose-a:text-[#8059ca]"
+                        className="text-gray-700 leading-relaxed text-[15px] prose max-w-none prose-slate prose-headings:font-bold prose-a:text-[#321961]"
                         dangerouslySetInnerHTML={{
                           __html: blogs?.description || "Blog content loading..."
                         }}

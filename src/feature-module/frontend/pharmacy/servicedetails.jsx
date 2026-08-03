@@ -45,7 +45,7 @@ const getSearchItemId = (item) => item?.tablet?._id || item?._id || null;
 const ServiceCategoryCard = memo(({ cat, index, onClick }) => (
   <div className="w-1/2 sm:w-1/2 md:w-1/4 lg:w-1/6 xl:w-1/6 px-2 mb-4 flex">
     <div
-      className="group flex-1 cursor-pointer bg-white !border !border-[#eef1f6] !shadow-[0_8px_30px_rgb(0,0,0,0.03)] hover:!shadow-[0_20px_40px_rgba(128,89,202,0.12)] !rounded-2xl w-full text-center p-5 hover:!border-[#8059ca]/40 hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-center items-center"
+      className="group flex-1 cursor-pointer bg-white !border !border-[#eef1f6] !shadow-[0_8px_30px_rgb(0,0,0,0.03)] hover:!shadow-[0_20px_40px_rgba(128,89,202,0.12)] !rounded-2xl w-full text-center p-5 hover:!border-[#321961]/40 hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-center items-center"
       onClick={() => onClick(cat)}
       role="button"
       tabIndex={0}
@@ -64,7 +64,7 @@ const ServiceCategoryCard = memo(({ cat, index, onClick }) => (
           decoding="async"
         />
       </span>
-      <h4 className="!font-semibold !text-[13.5px] !text-slate-700 group-hover:!text-[#8059ca] transition-colors duration-200 mb-0 line-clamp-2 text-center leading-snug">
+      <h4 className="!font-semibold !text-[13.5px] !text-slate-700 group-hover:!text-[#321961] transition-colors duration-200 mb-0 line-clamp-2 text-center leading-snug">
         {cat?.name || "No Category"}
       </h4>
     </div>
@@ -793,7 +793,7 @@ const ServiceDetails = () => {
     ]
   };
 
-  const PRIMARY_COLOR = "#8059ca";
+  const PRIMARY_COLOR = "#321961";
   const PRIMARY_SECTION_BG = "#f8f4ff";
 
   const displayCategories = useMemo(
@@ -1381,7 +1381,7 @@ const ServiceDetails = () => {
                                       setSuggestionsLimit(nextLimit);
                                       fetchSearchResults(query, nextLimit, true);
                                     }}
-                                    className={`w-full p-[10px] border-none font-semibold text-center text-[13px] border-t border-solid border-[#f3f4f6] transition-colors duration-200 ${isMoreLoading ? "text-[#9ca3af] cursor-not-allowed bg-[#f9fafb]" : "text-[#8059ca] cursor-pointer bg-[#f9fafb] hover:bg-[#f1f5f9]"}`}
+                                    className={`w-full p-[10px] border-none font-semibold text-center text-[13px] border-t border-solid border-[#f3f4f6] transition-colors duration-200 ${isMoreLoading ? "text-[#9ca3af] cursor-not-allowed bg-[#f9fafb]" : "text-[#321961] cursor-pointer bg-[#f9fafb] hover:bg-[#f1f5f9]"}`}
                                   >
                                     {isMoreLoading ? "Loading..." : "Load More"}
                                   </button>
@@ -1479,7 +1479,7 @@ const ServiceDetails = () => {
               <div className="flex items-center flex-wrap gap-3">
                 <Link
                   to={`/view-all-categories/${service}`}
-                  className={`top-vendor-badge service-link-hover border border-solid border-[#8059ca] bg-white text-[#8059ca] font-semibold flex items-center justify-center transition-all duration-300 ${isMobile ? "!p-0 !flex rounded-full text-[10px] w-[36px] h-[36px] shrink-0 grow-0 self-center" : "py-[8px] px-[20px] rounded-[50px] text-[14px] w-auto h-auto"}`}
+                  className={`top-vendor-badge service-link-hover border border-solid border-[#321961] bg-white text-[#321961] font-semibold flex items-center justify-center transition-all duration-300 ${isMobile ? "!p-0 !flex rounded-full text-[10px] w-[36px] h-[36px] shrink-0 grow-0 self-center" : "py-[8px] px-[20px] rounded-[50px] text-[14px] w-auto h-auto"}`}
                 >
                   {isMobile ? "" : "View All"}
                   <i className={isMobile ? "isax isax-arrow-right-1" : "isax isax-arrow-right-1 ml-1"}></i>

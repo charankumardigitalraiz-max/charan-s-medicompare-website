@@ -166,7 +166,7 @@ const Notifications = ({ HomeNavigate, BackButton }) => {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pb-2 mb-4 border-b border-slate-100 mt-2">
         <div className="flex items-center gap-3.5">
           {HomeNavigate && <HomeNavigate />}
-          <div className="w-11 h-11 rounded-xl bg-purple-50 text-[#8059ca] flex items-center justify-center text-[20px] shrink-0 border border-purple-100/50 shadow-sm">
+          <div className="w-11 h-11 rounded-xl bg-purple-50 text-[#321961] flex items-center justify-center text-[20px] shrink-0 border border-purple-100/50 shadow-sm">
             <i className="fa-solid fa-bell" />
           </div>
 

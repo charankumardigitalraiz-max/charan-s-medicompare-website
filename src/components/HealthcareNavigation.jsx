@@ -208,7 +208,7 @@ const HealthcareNavigation = ({ categories: propCategories, isLoading: propLoadi
       {/* Left scroll arrow */}
       <button
         type="button"
-        className={`absolute left-[2px] top-1/2 -translate-y-1/2 bg-white border border-solid border-[#e8e8e8] text-[#555] text-[11px] w-[28px] h-[28px] flex items-center justify-center p-0 rounded-full rounded-circle shadow-[0_2px_8px_rgba(0,0,0,0.12)] cursor-pointer z-10 transition-all duration-200 hover:bg-[#f0ebff] hover:text-[#8059ca] hover:border-[#c9b5f5] hover:shadow-[0_3px_10px_rgba(128,89,202,0.2)] transition-opacity duration-200 ${canScrollLeft ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
+        className={`absolute left-[2px] top-1/2 -translate-y-1/2 bg-white border border-solid border-[#e8e8e8] text-[#555] text-[11px] w-[28px] h-[28px] flex items-center justify-center p-0 rounded-full rounded-circle shadow-[0_2px_8px_rgba(0,0,0,0.12)] cursor-pointer z-10 transition-all duration-200 hover:bg-[#f0ebff] hover:text-[#321961] hover:border-[#c9b5f5] hover:shadow-[0_3px_10px_rgba(128,89,202,0.2)] transition-opacity duration-200 ${canScrollLeft ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
         style={{ borderRadius: "50%" }}
         onClick={scrollLeft}
         aria-label="Scroll categories left"
@@ -244,10 +244,10 @@ const HealthcareNavigation = ({ categories: propCategories, isLoading: propLoadi
               {categories.map((item) => (
                 <li key={item._id} className="nav-item text-center">
                   <div
-                    className={`flex items-center justify-center gap-[4px] rounded-[8px] text-[#374151] font-semibold text-[13px] px-[16px] pt-[8px] pb-[4px] border-b-[3px] border-solid border-transparent cursor-pointer transition-all duration-200 no-underline hover:bg-[#f0ebff] hover:text-[#8059ca] whitespace-nowrap ${location.pathname.startsWith(`/${item.slug}`) ||
+                    className={`flex items-center justify-center gap-[4px] rounded-[8px] text-[#374151] font-semibold text-[13px] px-[16px] pt-[8px] pb-[4px] border-b-[3px] border-solid border-transparent cursor-pointer transition-all duration-200 no-underline hover:bg-[#f0ebff] hover:text-[#321961] whitespace-nowrap ${location.pathname.startsWith(`/${item.slug}`) ||
                       (location.pathname.startsWith('/view-all-categories/') &&
                         location.pathname.split('/')[2] === item.slug)
-                      ? "!border-b-[3px] !border-b-primary !text-[#8059ca] !rounded-none"
+                      ? "!border-b-[3px] !border-b-primary !text-[#321961] !rounded-none"
                       : ""
                       }`}
                     onClick={() => handleCategoryClick(item)}
@@ -276,7 +276,7 @@ const HealthcareNavigation = ({ categories: propCategories, isLoading: propLoadi
       {/* Right scroll arrow */}
       <button
         type="button"
-        className={`absolute right-[2px] top-1/2 -translate-y-1/2 bg-white border border-solid border-[#e8e8e8] text-[#555] text-[11px] w-[28px] h-[28px] flex items-center justify-center p-0 rounded-full rounded-circle shadow-[0_2px_8px_rgba(0,0,0,0.12)] cursor-pointer z-10 transition-all duration-200 hover:bg-[#f0ebff] hover:text-[#8059ca] hover:border-[#c9b5f5] hover:shadow-[0_3px_10px_rgba(128,89,202,0.2)] transition-opacity duration-200 ${canScrollRight ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
+        className={`absolute right-[2px] top-1/2 -translate-y-1/2 bg-white border border-solid border-[#e8e8e8] text-[#555] text-[11px] w-[28px] h-[28px] flex items-center justify-center p-0 rounded-full rounded-circle shadow-[0_2px_8px_rgba(0,0,0,0.12)] cursor-pointer z-10 transition-all duration-200 hover:bg-[#f0ebff] hover:text-[#321961] hover:border-[#c9b5f5] hover:shadow-[0_3px_10px_rgba(128,89,202,0.2)] transition-opacity duration-200 ${canScrollRight ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
         style={{ borderRadius: "50%" }}
         onClick={scrollRight}
         aria-label="Scroll categories right"

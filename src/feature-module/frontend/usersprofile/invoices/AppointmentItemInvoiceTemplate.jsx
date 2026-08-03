@@ -78,7 +78,7 @@ const AppointmentItemInvoiceTemplate = forwardRef(({ order }, ref) => {
           display: "flex",
           justifyContent: "space-between",
           alignItems: "flex-start",
-          borderBottom: "3px solid #8059ca",
+          borderBottom: "3px solid #321961",
           paddingBottom: "20px",
           marginBottom: "24px",
         }}
@@ -100,7 +100,7 @@ const AppointmentItemInvoiceTemplate = forwardRef(({ order }, ref) => {
         </div>
 
         <div style={{ textAlign: "right" }}>
-          <h2 style={{ margin: "0 0 8px", color: "#8059ca", fontWeight: "700", fontSize: "26px" }}>
+          <h2 style={{ margin: "0 0 8px", color: "#321961", fontWeight: "700", fontSize: "26px" }}>
             INVOICE
           </h2>
           <div style={{ fontSize: "13px", color: "#555", lineHeight: "1.6" }}>
@@ -129,7 +129,7 @@ const AppointmentItemInvoiceTemplate = forwardRef(({ order }, ref) => {
         }}
       >
         <div style={{ border: "1px solid #e9ddff", borderRadius: "10px", padding: "16px", backgroundColor: "#fcfaff" }}>
-          <h4 style={{ margin: "0 0 10px", color: "#8059ca", fontSize: "14px", letterSpacing: "0.6px", textTransform: "uppercase" }}>
+          <h4 style={{ margin: "0 0 10px", color: "#321961", fontSize: "14px", letterSpacing: "0.6px", textTransform: "uppercase" }}>
             Bill To
           </h4>
           <div style={{ lineHeight: "1.7", color: "#444" }}>
@@ -141,7 +141,7 @@ const AppointmentItemInvoiceTemplate = forwardRef(({ order }, ref) => {
         </div>
 
         <div style={{ border: "1px solid #e9ddff", borderRadius: "10px", padding: "16px", backgroundColor: "#fcfaff" }}>
-          <h4 style={{ margin: "0 0 10px", color: "#8059ca", fontSize: "14px", letterSpacing: "0.6px", textTransform: "uppercase" }}>
+          <h4 style={{ margin: "0 0 10px", color: "#321961", fontSize: "14px", letterSpacing: "0.6px", textTransform: "uppercase" }}>
             Appointment Details
           </h4>
           <div style={{ lineHeight: "1.7", color: "#444" }}>
@@ -157,13 +157,13 @@ const AppointmentItemInvoiceTemplate = forwardRef(({ order }, ref) => {
       </div>
 
       <div style={{ marginBottom: "26px", border: "1px solid #dcd3ff", borderRadius: "10px", overflow: "hidden" }}>
-        <div style={{ backgroundColor: "#f5f0ff", padding: "12px 16px", fontWeight: "700", color: "#8059ca" }}>
+        <div style={{ backgroundColor: "#f5f0ff", padding: "12px 16px", fontWeight: "700", color: "#321961" }}>
           Item Wise Invoice Detail
         </div>
 
         <table style={{ width: "100%", borderCollapse: "collapse" }}>
           <thead>
-            <tr style={{ backgroundColor: "#8059ca", color: "#fff" }}>
+            <tr style={{ backgroundColor: "#321961", color: "#fff" }}>
               <th style={{ padding: "10px", textAlign: "center", width: "50px", fontSize: "12px", fontWeight: "600" }}>#</th>
               <th style={{ padding: "10px", textAlign: "left", fontSize: "12px", fontWeight: "600" }}>Service</th>
               <th style={{ padding: "10px", textAlign: "left", fontSize: "12px", fontWeight: "600" }}>Provider</th>
@@ -238,9 +238,9 @@ const AppointmentItemInvoiceTemplate = forwardRef(({ order }, ref) => {
                 </tr>
               )
             }
-            <tr style={{ borderTop: "2px solid #8059ca", borderBottom: "2px solid #8059ca" }}>
-              <td style={{ padding: "10px", fontWeight: "800", fontSize: "15px", color: "#8059ca" }}>Grand Total</td>
-              <td style={{ padding: "10px", textAlign: "right", fontWeight: "800", fontSize: "15px", color: "#8059ca" }}>₹{(total || 0).toFixed(2)}</td>
+            <tr style={{ borderTop: "2px solid #321961", borderBottom: "2px solid #321961" }}>
+              <td style={{ padding: "10px", fontWeight: "800", fontSize: "15px", color: "#321961" }}>Grand Total</td>
+              <td style={{ padding: "10px", textAlign: "right", fontWeight: "800", fontSize: "15px", color: "#321961" }}>₹{(total || 0).toFixed(2)}</td>
             </tr>
           </tbody>
         </table>

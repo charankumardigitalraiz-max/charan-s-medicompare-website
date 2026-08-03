@@ -830,7 +830,7 @@ const VendorsSection = ({
                         <div
                           style={{
                             fontSize: "10px",
-                            color: "#8059ca",
+                            color: "#321961",
                             fontWeight: "500",
                             display: "flex",
                             alignItems: "center",
@@ -1003,7 +1003,7 @@ const VendorsSection = ({
                               ? "pointer"
                               : "not-allowed",
                             backgroundColor: "#f3effa",
-                            color: "#8059ca",
+                            color: "#321961",
                             border: "1px solid rgba(128, 89, 202, 0.2)",
                             fontWeight: "600"
                           }}

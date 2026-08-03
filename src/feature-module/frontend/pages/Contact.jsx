@@ -55,7 +55,7 @@ const Contact = () => {
             <BackButton className="z-20" />
           </div>
           <div className="text-center max-w-[600px] mx-auto pt-6">
-            <span className="inline-block !text-[10px] !font-bold tracking-wider uppercase text-[#8059ca] bg-[#8059ca]/10 px-3 py-1 rounded-full mb-3">
+            <span className="inline-block !text-[10px] !font-bold tracking-wider uppercase text-[#321961] bg-[#321961]/10 px-3 py-1 rounded-full mb-3">
               We&apos;re here to help
             </span>
             <h2 className="!text-2xl md:!text-3xl !font-bold !text-gray-900 leading-snug m-0">
@@ -76,7 +76,7 @@ const Contact = () => {
             {/* Left Column: Contact details */}
             <div className="lg:col-span-5 flex flex-col justify-start">
               <div className="mb-6">
-                <span className="inline-block !text-[10px] !font-bold tracking-wider uppercase text-[#8059ca] bg-[#8059ca]/10 px-3 py-1 rounded-full mb-2">
+                <span className="inline-block !text-[10px] !font-bold tracking-wider uppercase text-[#321961] bg-[#321961]/10 px-3 py-1 rounded-full mb-2">
                   Get in touch
                 </span>
                 <h2 className="!text-xl md:!text-2xl !font-bold !text-gray-900 m-0">
@@ -115,9 +115,9 @@ const Contact = () => {
               ].map((item) => (
                 <div
                   key={item.title}
-                  className="flex items-start gap-4 p-5 mb-4 bg-white rounded-sm border border-gray-100 shadow-[0_4px_16px_rgba(15,23,42,0.04)] hover:border-[#8059ca]/30 hover:shadow-[0_8px_24px_rgba(128,89,202,0.08)] transition-all duration-200"
+                  className="flex items-start gap-4 p-5 mb-4 bg-white rounded-sm border border-gray-100 shadow-[0_4px_16px_rgba(15,23,42,0.04)] hover:border-[#321961]/30 hover:shadow-[0_8px_24px_rgba(128,89,202,0.08)] transition-all duration-200"
                 >
-                  <div className="w-12 h-12 rounded-xl bg-[#8059ca]/10 text-[#8059ca] flex items-center justify-center text-xl shrink-0">
+                  <div className="w-12 h-12 rounded-xl bg-[#321961]/10 text-[#321961] flex items-center justify-center text-xl shrink-0">
                     <i className={`isax ${item.icon}`} />
                   </div>
                   <div className="min-w-0 flex-1">
@@ -136,7 +136,7 @@ const Contact = () => {
                       <p key={link.href} className="m-0 mt-0.5">
                         <a
                           href={link.href}
-                          className="!text-[13px] !font-semibold text-[#8059ca] hover:text-[#6d4db8] transition-colors"
+                          className="!text-[13px] !font-semibold text-[#321961] hover:text-[#6d4db8] transition-colors"
                         >
                           {link.label}
                         </a>
@@ -176,7 +176,7 @@ const Contact = () => {
                           onChange={onChange}
                           placeholder={field.placeholder}
                           required={field.required}
-                          className="w-full px-3.5 py-2.5 !text-[13px] text-gray-900 bg-gray-50 border border-gray-200 rounded-[10px] outline-none focus:border-[#8059ca] focus:ring-1 focus:ring-[#8059ca] focus:bg-white transition-all placeholder-gray-400"
+                          className="w-full px-3.5 py-2.5 !text-[13px] text-gray-900 bg-gray-50 border border-gray-200 rounded-[10px] outline-none focus:border-[#321961] focus:ring-1 focus:ring-[#321961] focus:bg-white transition-all placeholder-gray-400"
                         />
                       </div>
                     ))}
@@ -191,7 +191,7 @@ const Contact = () => {
                         onChange={onChange}
                         placeholder="Write your message here"
                         required
-                        className="w-full px-3.5 py-2.5 !text-[13px] text-gray-900 bg-gray-50 border border-gray-200 rounded-[10px] outline-none focus:border-[#8059ca] focus:ring-1 focus:ring-[#8059ca] focus:bg-white transition-all placeholder-gray-400 resize-none min-h-[110px]"
+                        className="w-full px-3.5 py-2.5 !text-[13px] text-gray-900 bg-gray-50 border border-gray-200 rounded-[10px] outline-none focus:border-[#321961] focus:ring-1 focus:ring-[#321961] focus:bg-white transition-all placeholder-gray-400 resize-none min-h-[110px]"
                       />
                     </div>
                     <div className="col-span-1 md:col-span-2">
@@ -200,7 +200,7 @@ const Contact = () => {
                         disabled={isSubmitting}
                         className="px-6 py-3 !text-[13px] !font-bold !text-white !rounded-[10px] border-none cursor-pointer shadow-sm transition-all duration-200 hover:-translate-y-[1px]"
                         style={{
-                          backgroundColor: isSubmitting ? "#a78bfa" : "#8059ca",
+                          backgroundColor: isSubmitting ? "#a78bfa" : "#321961",
                           boxShadow: "0 4px 12px rgba(128, 89, 202, 0.15)",
                         }}
                       >

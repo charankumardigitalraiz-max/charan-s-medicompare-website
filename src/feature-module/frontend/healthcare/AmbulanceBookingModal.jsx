@@ -508,7 +508,7 @@ const AmbulanceBookingModal = ({
               <button
                 type="submit"
                 disabled={isSearching || !isLoaded}
-                className={`w-full h-full min-h-[42px] p-[10px] text-white border-none !rounded-[8px] text-[13px] font-semibold flex items-center justify-center gap-[8px] ${isSearching ? "bg-[#9ca3af] cursor-not-allowed" : "bg-[#8059ca] cursor-pointer"}`}
+                className={`w-full h-full min-h-[42px] p-[10px] text-white border-none !rounded-[8px] text-[13px] font-semibold flex items-center justify-center gap-[8px] ${isSearching ? "bg-[#9ca3af] cursor-not-allowed" : "bg-[#321961] cursor-pointer"}`}
               >
                 <i className="fas fa-search"></i> Search
               </button>
@@ -543,7 +543,7 @@ const AmbulanceBookingModal = ({
 
         {isSearching ? (
           <div className="text-center py-[60px]">
-            <div className="inline-block w-10 h-10 border-4 border-[#8059ca] border-t-transparent rounded-full animate-spin" role="status"></div>
+            <div className="inline-block w-10 h-10 border-4 border-[#321961] border-t-transparent rounded-full animate-spin" role="status"></div>
             <p className="mt-4 text-[#555]">Searching for ambulances...</p>
           </div>
         ) : ambulanceData.length > 0 ? (
@@ -644,7 +644,7 @@ const AmbulanceBookingModal = ({
 
                       <button
                         type="submit"
-                        className="py-[5px] px-[10px] bg-[#8059ca] text-white border-none !rounded-[4px] text-[12px] font-semibold cursor-pointer whitespace-nowrap"
+                        className="py-[5px] px-[10px] bg-[#321961] text-white border-none !rounded-[4px] text-[12px] font-semibold cursor-pointer whitespace-nowrap"
                         onClick={() => handleClick(vendorItem)}
                       >
                         Book Now

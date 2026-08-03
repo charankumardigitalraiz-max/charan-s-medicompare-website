@@ -38,7 +38,7 @@ const AppointmentOrderCard = ({
     confirmed: "bg-[#e8f4fd] text-[#0d6efd]",
     cancelled: "bg-[#ffe0e0] text-[#dc3545]",
     failed: "bg-[#f8d7da] text-[#842029]",
-    "sample-collected": "bg-[#f3effa] text-[#8059ca]",
+    "sample-collected": "bg-[#f3effa] text-[#321961]",
     "sample-not-collected": "bg-[#fef3c7] text-[#92400e]",
     processing: "bg-[#ffe9d6] text-[#ff7a00]",
     "in-progress": "bg-[#ffe9d6] text-[#ff7a00]"
@@ -76,12 +76,12 @@ const AppointmentOrderCard = ({
                   if (selectedFilterTab !== "upcoming" || order?.isRescheduled || order?.orderStatus === "completed" || order?.orderStatus === "sample_collected") return;
                   onReschedule(order);
                 }}
-                className={`bg-[#f5f3ff] p-[6px_10px] rounded-md border border-dashed border-[#8059ca] text-left flex flex-col items-start transition-colors duration-200 ${order?.isRescheduled ? "cursor-default" : "cursor-pointer"
+                className={`bg-[#f5f3ff] p-[6px_10px] rounded-md border border-dashed border-[#321961] text-left flex flex-col items-start transition-colors duration-200 ${order?.isRescheduled ? "cursor-default" : "cursor-pointer"
                   }`}
                 title={order?.isRescheduled ? "" : "Click to reschedule"}
               >
-                <span className="text-[10px] color-[#8059ca] font-semibold flex items-center gap-1">
-                  <i className="fa-solid fa-calendar-days text-[#8059ca]" />
+                <span className="text-[10px] color-[#321961] font-semibold flex items-center gap-1">
+                  <i className="fa-solid fa-calendar-days text-[#321961]" />
                   Appointment:
                 </span>
                 <div className="text-[11px] font-semibold text-[#333] mt-0.5 whitespace-nowrap">
@@ -123,7 +123,7 @@ const AppointmentOrderCard = ({
               }}
             />
             {orderItems.length > 1 && (
-              <div className="absolute bottom-[-20px] left-1/2 -translate-x-1/2 text-[#8059ca] text-[12px] font-semibold underline whitespace-nowrap">
+              <div className="absolute bottom-[-20px] left-1/2 -translate-x-1/2 text-[#321961] text-[12px] font-semibold underline whitespace-nowrap">
                 +{orderItems.length - 1} more items
               </div>
             )}
@@ -201,7 +201,7 @@ const AppointmentOrderCard = ({
             {/* View Details */}
             <button
               type="button"
-              className="inline-flex items-center justify-center gap-1.5 !rounded-md !text-[11px] !font-medium p-[4px_8px] min-w-fit whitespace-nowrap leading-tight bg-[#8059ca] text-white border border-[#8059ca] transition-all duration-200 no-underline shadow-none hover:bg-[#6f42c1] hover:border-[#6f42c1] focus:bg-[#6f42c1] focus:border-[#6f42c1]"
+              className="inline-flex items-center justify-center gap-1.5 !rounded-md !text-[11px] !font-medium p-[4px_8px] min-w-fit whitespace-nowrap leading-tight bg-[#321961] text-white border border-[#321961] transition-all duration-200 no-underline shadow-none hover:bg-[#6f42c1] hover:border-[#6f42c1] focus:bg-[#6f42c1] focus:border-[#6f42c1]"
               onClick={() => onView(order)}
             >
               <i className="fas fa-eye text-[12px] w-3.5 text-center shrink-0" />
@@ -215,7 +215,7 @@ const AppointmentOrderCard = ({
                 download={`Report_${order.orderId}.pdf`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-1.5 !rounded-md !text-[11px] !font-medium p-[4px_8px] min-w-fit whitespace-nowrap leading-tight bg-[#8059ca] text-white border border-[#8059ca] transition-all duration-200 no-underline shadow-none hover:bg-[#6f42c1] hover:border-[#6f42c1] focus:bg-[#6f42c1] focus:border-[#6f42c1]"
+                className="inline-flex items-center justify-center gap-1.5 !rounded-md !text-[11px] !font-medium p-[4px_8px] min-w-fit whitespace-nowrap leading-tight bg-[#321961] text-white border border-[#321961] transition-all duration-200 no-underline shadow-none hover:bg-[#6f42c1] hover:border-[#6f42c1] focus:bg-[#6f42c1] focus:border-[#6f42c1]"
               >
                 <i className="fas fa-file-medical text-[12px] w-3.5 text-center shrink-0" />
                 Report
@@ -227,7 +227,7 @@ const AppointmentOrderCard = ({
               order?.paymentStatus !== "cancelled" && order?.orderStatus !== "cancelled" && order?.orderStatus !== "failed" && (
                 <button
                   type="button"
-                  className="inline-flex items-center justify-center gap-1.5 !rounded-md !text-[11px] !font-medium p-[4px_8px] min-w-fit whitespace-nowrap leading-tight bg-[#8059ca] text-white border border-[#8059ca] transition-all duration-200 no-underline shadow-none hover:bg-[#6f42c1] hover:border-[#6f42c1] focus:bg-[#6f42c1] focus:border-[#6f42c1]"
+                  className="inline-flex items-center justify-center gap-1.5 !rounded-md !text-[11px] !font-medium p-[4px_8px] min-w-fit whitespace-nowrap leading-tight bg-[#321961] text-white border border-[#321961] transition-all duration-200 no-underline shadow-none hover:bg-[#6f42c1] hover:border-[#6f42c1] focus:bg-[#6f42c1] focus:border-[#6f42c1]"
                   onClick={() => onInvoice(order)}
                 >
                   <i className="fas fa-receipt text-[12px] w-3.5 text-center shrink-0" />
@@ -241,7 +241,7 @@ const AppointmentOrderCard = ({
               order?.paymentStatus !== "cancelled" && order?.orderStatus !== "cancelled" && order?.orderStatus !== "failed" && selectedFilterTab === "upcoming" && order?.orderStatus !== "sample_collected" && order?.orderStatus !== "completed" && (
                 <button
                   type="button"
-                  className="inline-flex items-center justify-center gap-1.5 !rounded-md !text-[11px] !font-medium p-[4px_8px] min-w-fit whitespace-nowrap leading-tight bg-[#8059ca] text-white border border-[#8059ca] transition-all duration-200 no-underline shadow-none hover:bg-[#6f42c1] hover:border-[#6f42c1] focus:bg-[#6f42c1] focus:border-[#6f42c1]"
+                  className="inline-flex items-center justify-center gap-1.5 !rounded-md !text-[11px] !font-medium p-[4px_8px] min-w-fit whitespace-nowrap leading-tight bg-[#321961] text-white border border-[#321961] transition-all duration-200 no-underline shadow-none hover:bg-[#6f42c1] hover:border-[#6f42c1] focus:bg-[#6f42c1] focus:border-[#6f42c1]"
                   onClick={() => onReschedule(order)}
                 >
                   <i className="fas fa-calendar-check text-[12px] w-3.5 text-center shrink-0" />
@@ -255,7 +255,7 @@ const AppointmentOrderCard = ({
               order?.paymentStatus !== "cancelled" && order?.orderStatus !== "cancelled" && order?.orderStatus !== "failed" && (
                 <button
                   type="button"
-                  className="inline-flex items-center justify-center gap-1.5 !rounded-md !text-[11px] !font-medium p-[4px_8px] min-w-fit whitespace-nowrap leading-tight bg-[#8059ca] text-white border border-[#8059ca] transition-all duration-200 no-underline shadow-none hover:bg-[#6f42c1] hover:border-[#6f42c1] focus:bg-[#6f42c1] focus:border-[#6f42c1]"
+                  className="inline-flex items-center justify-center gap-1.5 !rounded-md !text-[11px] !font-medium p-[4px_8px] min-w-fit whitespace-nowrap leading-tight bg-[#321961] text-white border border-[#321961] transition-all duration-200 no-underline shadow-none hover:bg-[#6f42c1] hover:border-[#6f42c1] focus:bg-[#6f42c1] focus:border-[#6f42c1]"
                   onClick={() => onReview(order)}
                 >
                   <i className="fas fa-star text-[12px] w-3.5 text-center shrink-0" />
@@ -268,7 +268,7 @@ const AppointmentOrderCard = ({
               order?.paymentStatus !== "cancelled" && order?.orderStatus !== "cancelled" && order?.orderStatus !== "failed" && order?.orderStatus !== "completed" && (
                 <button
                   type="button"
-                  className="inline-flex items-center justify-center gap-1.5 !rounded-md !text-[11px] !font-medium p-[4px_8px] min-w-fit whitespace-nowrap leading-tight bg-[#8059ca] text-white border border-[#8059ca] transition-all duration-200 no-underline shadow-none hover:bg-[#6f42c1] hover:border-[#6f42c1] focus:bg-[#6f42c1] focus:border-[#6f42c1]"
+                  className="inline-flex items-center justify-center gap-1.5 !rounded-md !text-[11px] !font-medium p-[4px_8px] min-w-fit whitespace-nowrap leading-tight bg-[#321961] text-white border border-[#321961] transition-all duration-200 no-underline shadow-none hover:bg-[#6f42c1] hover:border-[#6f42c1] focus:bg-[#6f42c1] focus:border-[#6f42c1]"
                   onClick={() => onReportIssue(order)}
                 >
                   <i className="fas fa-headset text-[12px] w-3.5 text-center shrink-0" />
@@ -322,7 +322,7 @@ const AppointmentOrderCard = ({
                     }
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-1 text-decoration-none text-[10px] color-[#8059ca] font-semibold p-[2px_6px] border border-[#8059ca] rounded bg-white"
+                    className="flex items-center gap-1 text-decoration-none text-[10px] color-[#321961] font-semibold p-[2px_6px] border border-[#321961] rounded bg-white"
                   >
                     <i className="fa-solid fa-map-location-dot" />
                     Show Maps

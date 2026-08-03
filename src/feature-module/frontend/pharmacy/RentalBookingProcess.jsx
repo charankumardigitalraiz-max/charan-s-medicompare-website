@@ -1441,7 +1441,7 @@ const RentalBookingProcess = () => {
           <div className="!mb-3">
             <button
               onClick={() => navigate(-1)}
-              className="!flex !items-center !gap-[6px] !p-[4px_10px] !border !border-[#e0e0e0] !bg-white !text-[#333] !font-[500] !text-[12px] !rounded-[6px] !shadow-sm !cursor-pointer !transition-all !duration-300 hover:!border-[#8059ca] hover:!text-[#8059ca] hover:!bg-[#f8f5ff] hover:!shadow-[0_4px_8px_rgba(125,46,255,0.15)] hover:!-translate-y-px"
+              className="!flex !items-center !gap-[6px] !p-[4px_10px] !border !border-[#e0e0e0] !bg-white !text-[#333] !font-[500] !text-[12px] !rounded-[6px] !shadow-sm !cursor-pointer !transition-all !duration-300 hover:!border-[#321961] hover:!text-[#321961] hover:!bg-[#f8f5ff] hover:!shadow-[0_4px_8px_rgba(125,46,255,0.15)] hover:!-translate-y-px"
             >
               <i className="fas fa-arrow-left text-[11px]"></i>
               <span className="text-[12px] font-medium">Back</span>
@@ -1458,7 +1458,7 @@ const RentalBookingProcess = () => {
                     <div className="rounded-md overflow-hidden border border-[#e9ecef] shadow-[0_10px_25px_-5px_rgba(0,0,0,0.05),0_8px_10px_-6px_rgba(0,0,0,0.05)] bg-white h-full flex flex-col">
                       <div className="flex justify-between items-center px-3 py-4 bg-[#faf8ff] border-b border-[#f3e8ff]">
                         <div className="text-[13px] font-semibold text-[#5b21b6] flex items-center gap-2">
-                          <i className="fas fa-map-marker-alt text-[#8059ca]"></i>{" "}
+                          <i className="fas fa-map-marker-alt text-[#321961]"></i>{" "}
                           <span className="text-[13px]">
                             {getAddressTypeLabel()}
                           </span>
@@ -1466,7 +1466,7 @@ const RentalBookingProcess = () => {
 
                         <div>
                           <button
-                            className="text-white bg-gradient-to-br from-[#8059ca] to-[#6f42c1] border-0 !font-semibold cursor-pointer !text-[11px] px-4 py-1.5 !rounded-[5px] shadow-[0_2px_4px_rgba(0,0,0,0.1)]"
+                            className="text-white bg-gradient-to-br from-[#321961] to-[#6f42c1] border-0 !font-semibold cursor-pointer !text-[11px] px-4 py-1.5 !rounded-[5px] shadow-[0_2px_4px_rgba(0,0,0,0.1)]"
                             onClick={() => {
                               const token =
                                 localStorage.getItem("medicomparestoken");
@@ -1548,7 +1548,7 @@ const RentalBookingProcess = () => {
                               type="date"
                               value={startDate}
                               onChange={(e) => setStartDate(e.target.value)}
-                              className="!w-full !py-1 !px-2.5 !border !border-slate-200 !rounded-sm !text-[13px] !text-slate-800 !bg-slate-50/55 focus:!border-[#8059ca] focus:!bg-white focus:!ring-1 focus:!ring-[#8059ca] !transition-all !outline-none"
+                              className="!w-full !py-1 !px-2.5 !border !border-slate-200 !rounded-sm !text-[13px] !text-slate-800 !bg-slate-50/55 focus:!border-[#321961] focus:!bg-white focus:!ring-1 focus:!ring-[#321961] !transition-all !outline-none"
                               min={new Date().toISOString().split("T")[0]}
                             />
                           </div>
@@ -1560,7 +1560,7 @@ const RentalBookingProcess = () => {
                             <select
                               value={rentalPlan}
                               onChange={(e) => setRentalPlan(e.target.value)}
-                              className="!w-full !py-1 !px-2.5 !border !border-slate-200 !rounded-sm !text-[13px] !text-slate-800 !bg-slate-50/55 focus:!border-[#8059ca] focus:!bg-white focus:!ring-1 focus:!ring-[#8059ca] !transition-all !outline-none"
+                              className="!w-full !py-1 !px-2.5 !border !border-slate-200 !rounded-sm !text-[13px] !text-slate-800 !bg-slate-50/55 focus:!border-[#321961] focus:!bg-white focus:!ring-1 focus:!ring-[#321961] !transition-all !outline-none"
                             >
                               <option value="">Select Plan</option>
                               <option value="weekly">Weekly</option>
@@ -1578,7 +1578,7 @@ const RentalBookingProcess = () => {
                             <select
                               value={rentalDuration}
                               onChange={(e) => setRentalDuration(e.target.value)}
-                              className="!w-full !py-1 !px-2.5 !border !border-slate-200 !rounded-sm !text-[13px] !text-slate-800 !bg-slate-50/55 focus:!border-[#8059ca] focus:!bg-white focus:!ring-1 focus:!ring-[#8059ca] !transition-all !outline-none"
+                              className="!w-full !py-1 !px-2.5 !border !border-slate-200 !rounded-sm !text-[13px] !text-slate-800 !bg-slate-50/55 focus:!border-[#321961] focus:!bg-white focus:!ring-1 focus:!ring-[#321961] !transition-all !outline-none"
                             >
                               <option value="">Select duration</option>
                               {rentalPlan === "weekly" && (
@@ -1624,7 +1624,7 @@ const RentalBookingProcess = () => {
                             <select
                               value={paymentType}
                               onChange={(e) => setPaymentType(e.target.value)}
-                              className="!w-full !py-1 !px-2.5 !border !border-slate-200 !rounded-sm !text-[13px] !text-slate-800 !bg-slate-50/55 focus:!border-[#8059ca] focus:!bg-white focus:!ring-1 focus:!ring-[#8059ca] !transition-all !outline-none"
+                              className="!w-full !py-1 !px-2.5 !border !border-slate-200 !rounded-sm !text-[13px] !text-slate-800 !bg-slate-50/55 focus:!border-[#321961] focus:!bg-white focus:!ring-1 focus:!ring-[#321961] !transition-all !outline-none"
                             >
                               <option value="">Select Type</option>
                               <option value="onetimepayment">One Time Payment</option>
@@ -1642,7 +1642,7 @@ const RentalBookingProcess = () => {
                               <select
                                 value={numberOfInstallments}
                                 onChange={(e) => setNumberOfInstallments(e.target.value)}
-                                className="!w-full !py-1 !px-2.5 !border !border-slate-200 !rounded-sm !text-[13px] !text-slate-800 !bg-slate-50/55 focus:!border-[#8059ca] focus:!bg-white focus:!ring-1 focus:!ring-[#8059ca] !transition-all !outline-none"
+                                className="!w-full !py-1 !px-2.5 !border !border-slate-200 !rounded-sm !text-[13px] !text-slate-800 !bg-slate-50/55 focus:!border-[#321961] focus:!bg-white focus:!ring-1 focus:!ring-[#321961] !transition-all !outline-none"
                               >
                                 <option value="">Select installments</option>
                                 {calculatedTotalAmount > 0 &&
@@ -1723,84 +1723,84 @@ const RentalBookingProcess = () => {
                           <ul className="list-none p-0 mt-0 mb-3">
                             {data?.tabletDetails?.form && (
                               <li className="text-[13px] text-gray-600 mb-1.5 flex items-center gap-2">
-                                <i className="fas fa-capsules text-[#8059ca] text-xs"></i>
+                                <i className="fas fa-capsules text-[#321961] text-xs"></i>
                                 Form : {data?.tabletDetails?.form}
                               </li>
                             )}
 
                             {data?.tabletDetails?.strength && (
                               <li className="text-[13px] text-gray-600 mb-1.5 flex items-center gap-2">
-                                <i className="fas fa-bolt text-[#8059ca] text-xs"></i>
+                                <i className="fas fa-bolt text-[#321961] text-xs"></i>
                                 Strength : {data?.tabletDetails?.strength}
                               </li>
                             )}
 
                             {data?.tabletDetails?.duration && (
                               <li className="text-[13px] text-gray-600 mb-1.5 flex items-center gap-2">
-                                <i className="fas fa-clock text-[#8059ca] text-xs"></i>
+                                <i className="fas fa-clock text-[#321961] text-xs"></i>
                                 Duration : {data?.tabletDetails?.duration}
                               </li>
                             )}
 
                             {data?.tabletDetails?.shiftType && (
                               <li className="text-[13px] text-gray-600 mb-1.5 flex items-center gap-2">
-                                <i className="fas fa-clock text-[#8059ca] text-xs"></i>
+                                <i className="fas fa-clock text-[#321961] text-xs"></i>
                                 Shift Type : {data?.tabletDetails?.shiftType}
                               </li>
                             )}
 
                             {data?.tabletDetails?.nursecareType && (
                               <li className="text-[13px] text-gray-600 mb-1.5 flex items-center gap-2">
-                                <i className="fas fa-clock text-[#8059ca] text-xs"></i>
+                                <i className="fas fa-clock text-[#321961] text-xs"></i>
                                 Type : {data?.tabletDetails?.nursecareType}
                               </li>
                             )}
 
                             {data?.tabletDetails?.gender && (
                               <li className="text-[13px] text-gray-600 mb-1.5 flex items-center gap-2">
-                                <i className="fas fa-venus-mars text-[#8059ca] text-xs"></i>
+                                <i className="fas fa-venus-mars text-[#321961] text-xs"></i>
                                 Gender : {data?.tabletDetails?.gender}
                               </li>
                             )}
 
                             {data?.tabletDetails?.complexity && (
                               <li className="text-[13px] text-gray-600 mb-1.5 flex items-center gap-2">
-                                <i className="fas fa-layer-group text-[#8059ca] text-xs"></i>
+                                <i className="fas fa-layer-group text-[#321961] text-xs"></i>
                                 Complexity : {data?.tabletDetails?.complexity}
                               </li>
                             )}
 
                             {data?.tabletDetails?.model && (
                               <li className="text-[13px] text-gray-600 mb-1.5 flex items-center gap-2">
-                                <i className="fas fa-cube text-[#8059ca] text-xs"></i>
+                                <i className="fas fa-cube text-[#321961] text-xs"></i>
                                 Model : {data?.tabletDetails?.model}
                               </li>
                             )}
 
                             {data?.tabletDetails?.condition && (
                               <li className="!text-[13px] !text-gray-600 mb-1.5 flex items-center gap-2">
-                                <i className="fas fa-info-circle !text-[#8059ca] !text-xs"></i>
+                                <i className="fas fa-info-circle !text-[#321961] !text-xs"></i>
                                 Condition : {data?.tabletDetails?.condition}
                               </li>
                             )}
 
                             {data?.tabletDetails?.machineType && (
                               <li className="!text-[13px] !text-gray-600 mb-1.5 flex items-center gap-2">
-                                <i className="fas fa-cogs !text-[#8059ca] !text-xs"></i>
+                                <i className="fas fa-cogs !text-[#321961] !text-xs"></i>
                                 Machine Type : {data?.tabletDetails?.machineType}
                               </li>
                             )}
 
                             {data?.tabletDetails?.compositionDetails?.name && (
                               <li className="!text-[13px] !text-gray-600 mb-1.5 flex items-center gap-2">
-                                <i className="fas fa-mortar-pestle !text-[#8059ca] !text-xs"></i>
+                                <i className="fas fa-mortar-pestle !text-[#321961] !text-xs"></i>
                                 Composition : {data?.tabletDetails?.compositionDetails?.name}
                               </li>
                             )}
 
                             {data?.tabletDetails?.reportsDuration && (
                               <li className="!text-[13px] !text-gray-600 mb-1.5 flex items-center gap-2">
-                                <i className="fas fa-clock !text-[#8059ca] !text-xs"></i>
+                                <i className="fas fa-clock !text-[#321961] !text-xs"></i>
                                 {data?.tabletDetails?.reportsDuration.slice(
                                   0,
 
@@ -1813,7 +1813,7 @@ const RentalBookingProcess = () => {
 
                             {testsCount && (
                               <li className="!text-[13px] !text-gray-600 mb-1.5 flex items-center gap-2">
-                                <i className="fas fa-vial !text-[#8059ca] !text-xs"></i>
+                                <i className="fas fa-vial !text-[#321961] !text-xs"></i>
                                 Includes {testsCount} parameters
                               </li>
                             )}
@@ -1927,7 +1927,7 @@ const RentalBookingProcess = () => {
                             </div>
 
                             <button
-                              className="btn btn-primary btn-sm w-full text-white bg-[#8059ca] border-0 hover:bg-[#6f42c1] !rounded-sm py-1.5 px-3 text-xs mt-2"
+                              className="btn btn-primary btn-sm w-full text-white bg-[#321961] border-0 hover:bg-[#6f42c1] !rounded-sm py-1.5 px-3 text-xs mt-2"
                               onClick={() => {
                                 handleRentRelatedProduct(product);
                                 window.scrollTo({
@@ -1987,7 +1987,7 @@ const RentalBookingProcess = () => {
                               <div
                                 className={`group !flex !items-center !gap-3.5 !rounded-xl !border !p-3 !cursor-pointer !transition-all !duration-300 ${appliedCoupon
                                   ? "!bg-gradient-to-r !from-[#f0fdf4] !to-[#ecfdf5] !border-[#86efac] !shadow-[0_4px_12px_rgba(34,197,94,0.06)]"
-                                  : "!bg-gradient-to-r !from-[#fbf9ff] !to-[#ffffff] !border-[#e2d5f8] hover:!border-[#8059ca]"
+                                  : "!bg-gradient-to-r !from-[#fbf9ff] !to-[#ffffff] !border-[#e2d5f8] hover:!border-[#321961]"
                                   }`}
                                 onClick={(e) => {
                                   e.preventDefault();
@@ -2004,7 +2004,7 @@ const RentalBookingProcess = () => {
                                 <div
                                   className={`!flex !h-10 !w-10 !items-center !justify-center !rounded-xl !text-base !text-white !shadow-sm ${appliedCoupon
                                     ? "!bg-gradient-to-br !from-[#22c55e] !to-[#15803d]"
-                                    : "!bg-gradient-to-br !from-[#8059ca] !to-[#6d28d9]"
+                                    : "!bg-gradient-to-br !from-[#321961] !to-[#6d28d9]"
                                     }`}
                                 >
                                   <i className="fas fa-tags"></i>
@@ -2063,7 +2063,7 @@ const RentalBookingProcess = () => {
                                   placeholder="Enter Coupon Code"
                                   value={couponInputText}
                                   onChange={(e) => setCouponInputText(e.target.value)}
-                                  className="!flex-1 !min-w-0 !border !border-slate-200 !rounded-l-xl !py-2 !px-3 !text-[12.5px] !outline-none !transition-colors !duration-200 focus:!border-[#8059ca] !bg-white"
+                                  className="!flex-1 !min-w-0 !border !border-slate-200 !rounded-l-xl !py-2 !px-3 !text-[12.5px] !outline-none !transition-colors !duration-200 focus:!border-[#321961] !bg-white"
                                 />
                                 <button
                                   type="button"
@@ -2071,7 +2071,7 @@ const RentalBookingProcess = () => {
                                     e.preventDefault();
                                     handleManualCouponApply();
                                   }}
-                                  className="!bg-[#8059ca] !text-white !border-0 !rounded-r-xl !py-2 !px-4 !text-[12.5px] !font-semibold !cursor-pointer !transition-colors !duration-200 hover:!bg-[#6f42c1] !shrink-0"
+                                  className="!bg-[#321961] !text-white !border-0 !rounded-r-xl !py-2 !px-4 !text-[12.5px] !font-semibold !cursor-pointer !transition-colors !duration-200 hover:!bg-[#6f42c1] !shrink-0"
                                 >
                                   Apply
                                 </button>
@@ -2178,7 +2178,7 @@ const RentalBookingProcess = () => {
                             <span className="!text-[13.5px] !font-semibold !text-slate-800">
                               Amount to Pay
                             </span>
-                            <span className="!text-base !font-semibold !text-[#8059ca]">
+                            <span className="!text-base !font-semibold !text-[#321961]">
                               ₹{amountToPay.toFixed(2)}
                             </span>
                           </div>
@@ -2197,7 +2197,7 @@ const RentalBookingProcess = () => {
                                       {getInstallmentFrequencyText()}
                                     </span>
                                   </div>
-                                  <span className="!text-sm !font-semibold !text-[#8059ca]">
+                                  <span className="!text-sm !font-semibold !text-[#321961]">
                                     ₹{installmentAmount.toFixed(2)}
                                   </span>
                                 </div>
@@ -2227,7 +2227,7 @@ const RentalBookingProcess = () => {
                         <button
                           type="submit"
                           disabled={isSubmitting}
-                          className={`!w-full !text-white !rounded-xl !border-0 !py-2.5 !px-4 !mb-3 !transition-all !duration-300 !flex !items-center !justify-center !gap-2 !font-semibold !text-xs ${isSubmitting ? "!bg-gray-400 !cursor-not-allowed" : "!bg-gradient-to-r !from-[#8059ca] !to-[#822BD4] hover:!shadow-md active:!scale-[0.98] !cursor-pointer"}`}
+                          className={`!w-full !text-white !rounded-xl !border-0 !py-2.5 !px-4 !mb-3 !transition-all !duration-300 !flex !items-center !justify-center !gap-2 !font-semibold !text-xs ${isSubmitting ? "!bg-gray-400 !cursor-not-allowed" : "!bg-gradient-to-r !from-[#321961] !to-[#822BD4] hover:!shadow-md active:!scale-[0.98] !cursor-pointer"}`}
                         >
                           {isSubmitting ? (
                             <>

@@ -109,8 +109,8 @@
 }
 
 .medic-v2-bg-meds .top-vendor-badge:hover {
-    background: #8059ca !important;
-    border-color: #8059ca !important;
+    background: #321961 !important;
+    border-color: #321961 !important;
 }
 
 .medic-v2-bg-supps .top-vendor-badge:hover {
@@ -374,7 +374,7 @@
 .vendor-avatar-placeholder {
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, #8059ca 0%, #8059ca 100%);
+    background: linear-gradient(135deg, #321961 0%, #321961 100%);
     color: white;
     display: flex;
     align-items: center;
@@ -820,11 +820,11 @@ html.home-lite .home-deferred-mount:empty {
 .home-dynamic-section-badge {
     display: inline-block;
     padding: 4px 10px;
-    background: linear-gradient(135deg, #8059ca20 0%, #8059ca40 100%);
+    background: linear-gradient(135deg, #32196120 0%, #32196140 100%);
     border-radius: 50px;
     font-size: 14px;
     font-weight: 600;
-    color: #8059ca;
+    color: #321961;
 }
 
 .home-products-scroll-row {
@@ -862,7 +862,7 @@ html.home-lite .home-deferred-mount:empty {
     border: none;
     border-radius: 50%;
     background: #ffffff;
-    color: #8059ca;
+    color: #321961;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     display: inline-flex;
     align-items: center;
@@ -880,7 +880,7 @@ html.home-lite .home-deferred-mount:empty {
 }
 
 .home-product-carousel__nav:hover:not(:disabled) {
-    background: #8059ca;
+    background: #321961;
     color: #ffffff;
     transform: translateY(-50%) scale(1.05);
 }

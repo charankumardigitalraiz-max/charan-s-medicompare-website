@@ -158,7 +158,7 @@ const Branded = ({
           style={{
             fontSize: "14px",
             fontWeight: "500",
-            color: "#8059ca",
+            color: "#321961",
             cursor: "pointer",
           }}
           onClick={() => {
@@ -178,7 +178,7 @@ const Branded = ({
           gap: "16px",
           paddingBottom: "8px",
           scrollbarWidth: "thin",
-          scrollbarColor: "#8059ca #f0f0f0",
+          scrollbarColor: "#321961 #f0f0f0",
           WebkitOverflowScrolling: "touch",
           alignItems: "stretch",
         }}
@@ -682,8 +682,8 @@ const Branded = ({
                       }}
                         style={{
                           minWidth: "120px",
-                          color: "#8059ca",
-                          border: "1px solid #8059ca",
+                          color: "#321961",
+                          border: "1px solid #321961",
                           backgroundColor: "#f8f4ff",
                         }}
                         className="btn btn-primary w-100"
@@ -730,7 +730,7 @@ const Branded = ({
                       padding: "10px 16px",
                       border: "none",
                       cursor: isInStock ? "pointer" : "not-allowed",
-                      backgroundColor: isInStock ? "#8059ca" : "#ccc",
+                      backgroundColor: isInStock ? "#321961" : "#ccc",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
@@ -751,7 +751,7 @@ const Branded = ({
                     }}
                     onMouseLeave={(e) => {
                       if (isInStock) {
-                        e.currentTarget.style.backgroundColor = "#8059ca";
+                        e.currentTarget.style.backgroundColor = "#321961";
                         e.currentTarget.style.transform = "translateY(0)";
                       }
                     }}
@@ -777,7 +777,7 @@ const Branded = ({
                     justifyContent: "center",
                     gap: "4px",
                     width: "100%",
-                    border: "1px solid #8059ca",
+                    border: "1px solid #321961",
                     borderRadius: "6px",
                     backgroundColor: "#f8f4ff",
                     padding: "4px",
@@ -792,7 +792,7 @@ const Branded = ({
                       borderRadius: "4px",
                       border: "none",
                       backgroundColor: "transparent",
-                      color: "#8059ca",
+                      color: "#321961",
                       cursor: "pointer",
                       display: "flex",
                       alignItems: "center",
@@ -840,7 +840,7 @@ const Branded = ({
                       borderRadius: "4px",
                       border: "none",
                       backgroundColor: "transparent",
-                      color: "#8059ca",
+                      color: "#321961",
                       cursor:
                         maxStock > 0 && quantity >= maxStock
                           ? "not-allowed"
@@ -890,7 +890,7 @@ const Branded = ({
                     padding: "10px 16px",
                     border: "none",
                     cursor: isInStock ? "pointer" : "not-allowed",
-                    backgroundColor: isInStock ? "#8059ca" : "#ccc",
+                    backgroundColor: isInStock ? "#321961" : "#ccc",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
@@ -913,7 +913,7 @@ const Branded = ({
                   }}
                   onMouseLeave={(e) => {
                     if (isInStock) {
-                      e.currentTarget.style.backgroundColor = "#8059ca";
+                      e.currentTarget.style.backgroundColor = "#321961";
                       e.currentTarget.style.transform = "translateY(0)";
                       e.currentTarget.style.boxShadow = "none";
                     }
@@ -952,7 +952,7 @@ const Branded = ({
                     padding: "10px 16px",
                     border: "none",
                     cursor: "pointer",
-                    backgroundColor: "#8059ca",
+                    backgroundColor: "#321961",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
@@ -969,7 +969,7 @@ const Branded = ({
                     e.currentTarget.style.transform = "translateY(-1px)";
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.backgroundColor = "#8059ca";
+                    e.currentTarget.style.backgroundColor = "#321961";
                     e.currentTarget.style.transform = "translateY(0)";
                   }}
                 >
@@ -1003,7 +1003,7 @@ const Branded = ({
                     padding: "10px 16px",
                     border: "none",
                     cursor: isInStock ? "pointer" : "not-allowed",
-                    backgroundColor: isInStock ? "#8059ca" : "#ccc",
+                    backgroundColor: isInStock ? "#321961" : "#ccc",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
@@ -1024,7 +1024,7 @@ const Branded = ({
                   }}
                   onMouseLeave={(e) => {
                     if (isInStock) {
-                      e.currentTarget.style.backgroundColor = "#8059ca";
+                      e.currentTarget.style.backgroundColor = "#321961";
                       e.currentTarget.style.transform = "translateY(0)";
                     }
                   }}
@@ -1055,7 +1055,7 @@ const Branded = ({
                     padding: "10px 16px",
                     border: "none",
                     cursor: isInStock ? "pointer" : "not-allowed",
-                    backgroundColor: isInStock ? "#8059ca" : "#ccc",
+                    backgroundColor: isInStock ? "#321961" : "#ccc",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
@@ -1076,7 +1076,7 @@ const Branded = ({
                   }}
                   onMouseLeave={(e) => {
                     if (isInStock) {
-                      e.currentTarget.style.backgroundColor = "#8059ca";
+                      e.currentTarget.style.backgroundColor = "#321961";
                       e.currentTarget.style.transform = "translateY(0)";
                     }
                   }}
@@ -1108,7 +1108,7 @@ const Branded = ({
                     padding: "10px 16px",
                     border: "none",
                     cursor: isInStock ? "pointer" : "not-allowed",
-                    backgroundColor: isInStock ? "#8059ca" : "#ccc",
+                    backgroundColor: isInStock ? "#321961" : "#ccc",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
@@ -1129,7 +1129,7 @@ const Branded = ({
                   }}
                   onMouseLeave={(e) => {
                     if (isInStock) {
-                      e.currentTarget.style.backgroundColor = "#8059ca";
+                      e.currentTarget.style.backgroundColor = "#321961";
                       e.currentTarget.style.transform = "translateY(0)";
                     }
                   }}
@@ -1175,8 +1175,8 @@ const Branded = ({
                       options={{ bookingType: "cart", type: "normal" }}
                         style={{
                           minWidth: "120px",
-                          color: "#8059ca",
-                          border: "1px solid #8059ca",
+                          color: "#321961",
+                          border: "1px solid #321961",
                           backgroundColor: "#f8f4ff",
                         }}
                         className="btn btn-primary w-100"
@@ -1221,7 +1221,7 @@ const Branded = ({
                   padding: "10px 16px",
                   border: "none",
                   cursor: isInStock ? "pointer" : "not-allowed",
-                  backgroundColor: isInStock ? "#8059ca" : "#ccc",
+                  backgroundColor: isInStock ? "#321961" : "#ccc",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -1249,7 +1249,7 @@ const Branded = ({
                 }}
                 onMouseLeave={(e) => {
                   if (isInStock) {
-                    e.currentTarget.style.backgroundColor = "#8059ca";
+                    e.currentTarget.style.backgroundColor = "#321961";
                     e.currentTarget.style.transform = "translateY(0)";
                     e.currentTarget.style.boxShadow = "none";
                   }
@@ -1416,7 +1416,7 @@ const Branded = ({
                         onShareClick(product);
                       }}
                       onMouseEnter={(e) => {
-                        e.currentTarget.style.borderColor = "#8059ca";
+                        e.currentTarget.style.borderColor = "#321961";
                         e.currentTarget.style.backgroundColor = "#f8f5ff";
                       }}
                       onMouseLeave={(e) => {
@@ -1444,7 +1444,7 @@ const Branded = ({
                         onFavoriteToggle(productId, isFavorite, index);
                       }}
                       onMouseEnter={(e) => {
-                        e.currentTarget.style.borderColor = "#8059ca";
+                        e.currentTarget.style.borderColor = "#321961";
                         e.currentTarget.style.backgroundColor = "#f8f5ff";
                       }}
                       onMouseLeave={(e) => {
@@ -1481,7 +1481,7 @@ const Branded = ({
                     <i
                       className="fas fa-file-alt"
                       style={{
-                        color: "#8059ca",
+                        color: "#321961",
                         fontSize: "12px",
                         flexShrink: 0,
                       }}
@@ -1656,7 +1656,7 @@ const Branded = ({
                           <i
                             className={key.icon}
                             style={{
-                              color: "#8059ca",
+                              color: "#321961",
                               fontSize: "10px",
                               minWidth: "14px",
                               flexShrink: 0,
@@ -1770,7 +1770,7 @@ const Branded = ({
                             className="fas fa-map-marker-alt"
                             style={{
                               fontSize: "10px",
-                              color: "#8059ca",
+                              color: "#321961",
                               flexShrink: 0,
                             }}
                           ></i>

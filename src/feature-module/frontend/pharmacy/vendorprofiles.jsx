@@ -61,7 +61,7 @@ const DetailRow = ({ label, value, title }) => {
   return (
     <div
       className={`group rounded-[6px] transition-all duration-200 min-h-[22px] min-w-0 relative flex px-2 py-1 w-full hover:bg-[#f5f3ff] hover:border-purple-200 ${isExpanded
-        ? "bg-[#f5f3ff] border border-[#8059ca] flex-col items-start gap-1 z-20 shadow-md"
+        ? "bg-[#f5f3ff] border border-[#321961] flex-col items-start gap-1 z-20 shadow-md"
         : "flex-row items-center justify-between gap-[6px]"
         } ${isClickable ? "cursor-pointer" : "cursor-default"}`}
       onClick={(e) => {
@@ -72,7 +72,7 @@ const DetailRow = ({ label, value, title }) => {
       title={title || value}
     >
       <span
-        className={`text-[11px] font-[500] capitalize tracking-[0.04em] whitespace-nowrap shrink-0 transition-colors ${isExpanded ? "text-[#8059ca]" : "text-[#6b7280]"
+        className={`text-[11px] font-[500] capitalize tracking-[0.04em] whitespace-nowrap shrink-0 transition-colors ${isExpanded ? "text-[#321961]" : "text-[#6b7280]"
           }`}
       >
         {label}
@@ -681,7 +681,7 @@ const VendorProfile = () => {
                                 checked={selectedSubcategories.includes(
                                   sub.slug,
                                 )}
-                                className="mr-2 rounded border-gray-300 text-[#8059ca] focus:ring-[#8059ca]"
+                                className="mr-2 rounded border-gray-300 text-[#321961] focus:ring-[#321961]"
                                 onChange={() =>
                                   handleSubcategoryToggle(sub.slug)
                                 }
@@ -706,7 +706,7 @@ const VendorProfile = () => {
           {categories.length > categoriesToShow && (
             <div className="text-center mt-2">
               <span
-                className="text-[#8059ca] cursor-pointer text-[12px] underline hover:text-[#6d28d9] transition-colors"
+                className="text-[#321961] cursor-pointer text-[12px] underline hover:text-[#6d28d9] transition-colors"
                 onClick={() =>
                   setCategoriesToShow(
                     categoriesToShow === 6 ? categories.length : 6,
@@ -758,7 +758,7 @@ const VendorProfile = () => {
                       <input
                         type="checkbox"
                         id={`brand-${brand.slug}`}
-                        className="mr-2 rounded border-gray-300 text-[#8059ca] focus:ring-[#8059ca] cursor-pointer"
+                        className="mr-2 rounded border-gray-300 text-[#321961] focus:ring-[#321961] cursor-pointer"
                         checked={selectedBrands.includes(brand.slug)}
                         onChange={() => handleBrandToggle(brand.slug)}
                         onClick={(e) => e.stopPropagation()}
@@ -777,7 +777,7 @@ const VendorProfile = () => {
           {Brands.length > brandsToShow && (
             <div className="text-center mt-3">
               <button
-                className="inline-flex items-center gap-1.5 px-4 py-1.5 !text-[12px] !font-semibold !text-[#8059ca] hover:!text-white !bg-[#8059ca]/10 !hover:!bg-[#8059ca] !border border-[#8059ca]/20 !hover:border-transparent !rounded-full !shadow-sm transition-all duration-250 cursor-pointer"
+                className="inline-flex items-center gap-1.5 px-4 py-1.5 !text-[12px] !font-semibold !text-[#321961] hover:!text-white !bg-[#321961]/10 !hover:!bg-[#321961] !border border-[#321961]/20 !hover:border-transparent !rounded-full !shadow-sm transition-all duration-250 cursor-pointer"
                 onClick={() =>
                   setBrandsToShow(brandsToShow === 6 ? Brands.length : 6)
                 }
@@ -847,7 +847,7 @@ const VendorProfile = () => {
                   </span>
                 </div>
 
-                <div className="bg-[#8059ca]/10 text-[#8059ca] text-[12px] font-bold px-3 py-1 rounded-full border border-[#8059ca]/20 shadow-sm">
+                <div className="bg-[#321961]/10 text-[#321961] text-[12px] font-bold px-3 py-1 rounded-full border border-[#321961]/20 shadow-sm">
                   {data?.totalOrders ? `${data.totalOrders}+ Orders` : "100+ Orders"}
                 </div>
               </div>
@@ -855,7 +855,7 @@ const VendorProfile = () => {
               {/* Vendor address if available */}
               {data?.bussinessdetails?.address && (
                 <p className="!text-[14px] !text-gray-600 !font-medium !flex !items-center !justify-center lg:!justify-start !gap-1.5 m-0 max-w-[500px]">
-                  <i className="fas fa-map-marker-alt text-[#8059ca] text-[13px]" />
+                  <i className="fas fa-map-marker-alt text-[#321961] text-[13px]" />
                   <span>{data.bussinessdetails.address}</span>
                 </p>
               )}
@@ -883,7 +883,7 @@ const VendorProfile = () => {
         <div className="flex items-center justify-between lg:hidden mb-3 mobile-filter-buttons-container">
           <button
             type="button"
-            className="inline-flex items-center gap-1 !text-xs !font-semibold px-2.5 py-1.5 !rounded bg-[#8059ca] !text-white hover:bg-[#6d28d9] transition-colors"
+            className="inline-flex items-center gap-1 !text-xs !font-semibold px-2.5 py-1.5 !rounded bg-[#321961] !text-white hover:bg-[#6d28d9] transition-colors"
             onClick={() => setShowFilterCanvas(true)}
           >
             <i className="fas fa-filter"></i>
@@ -892,7 +892,7 @@ const VendorProfile = () => {
 
           <button
             type="button"
-            className="inline-flex items-center gap-1 !text-xs !font-semibold px-2.5 py-1.5 !rounded bg-[#8059ca] !text-white hover:bg-[#6d28d9] transition-colors"
+            className="inline-flex items-center gap-1 !text-xs !font-semibold px-2.5 py-1.5 !rounded bg-[#321961] !text-white hover:bg-[#6d28d9] transition-colors"
           >
             <i className="fas fa-redo"></i>
             <span>Clear</span>
@@ -1121,7 +1121,7 @@ const VendorProfile = () => {
                                   <div className="flex items-center justify-between gap-1 min-w-0">
                                     {(tablet?.brands?.name || tablet?.brand?.name || tablet?.manufacture?.name) && (
                                       <span
-                                        className="text-[10.5px] text-[#8059ca] overflow-hidden text-ellipsis whitespace-nowrap tracking-[0.02em] bg-[#f5f3ff] px-2 py-0.5 rounded-[6px] border border-[rgba(125,46,255,0.1)] inline-block max-w-full"
+                                        className="text-[10.5px] text-[#321961] overflow-hidden text-ellipsis whitespace-nowrap tracking-[0.02em] bg-[#f5f3ff] px-2 py-0.5 rounded-[6px] border border-[rgba(125,46,255,0.1)] inline-block max-w-full"
                                         title={tablet?.brands?.name || tablet?.brand?.name || tablet?.manufacture?.name}
                                       >
                                         By {tablet?.brands?.name || tablet?.brand?.name || tablet?.manufacture?.name}

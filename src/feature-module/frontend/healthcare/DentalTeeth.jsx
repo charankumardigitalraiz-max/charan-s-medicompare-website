@@ -587,23 +587,23 @@ const DentalTeeth = ({
                             {/* Meta info */}
                             <div className="!flex !flex-col !gap-[3px]">
                               <p className="!m-0 !flex !items-center !gap-[5px] !text-[10px] !text-[#444] !capitalize">
-                                <i className="fas fa-procedures !text-[#8059ca] !w-[12px]"></i>
+                                <i className="fas fa-procedures !text-[#321961] !w-[12px]"></i>
                                 <span>Treatment:</span>
                                 <strong>{medicine?.treatmenttype}</strong>
                               </p>
                               <p className="!m-0 !flex !items-center !gap-[5px] !text-[10px] !text-[#444]">
-                                <i className="fas fa-clock !text-[#8059ca] !w-[12px]"></i>
+                                <i className="fas fa-clock !text-[#321961] !w-[12px]"></i>
                                 <span>Duration:</span>
                                 <strong>30–90 mins</strong>
                               </p>
                               <p className="!m-0 !flex !items-center !gap-[5px] !text-[10px] !text-[#444]">
-                                <i className="fas fa-user-md !text-[#8059ca] !w-[12px]"></i>
+                                <i className="fas fa-user-md !text-[#321961] !w-[12px]"></i>
                                 <span>Specialist:</span>
                                 <strong>Dentist</strong>
                               </p>
                               {medicine?.reportsDuration && (
                                 <p className="!m-0 !flex !items-center !gap-[5px] !text-[10px] !text-[#444]">
-                                  <i className="fa-regular fa-file-lines !text-[#8059ca]"></i>
+                                  <i className="fa-regular fa-file-lines !text-[#321961]"></i>
                                   Reports in <strong>{medicine?.reportsDuration}</strong>
                                 </p>
                               )}
@@ -684,12 +684,12 @@ const DentalTeeth = ({
                                       </div>
                                     )}
                                     <div className="!flex !items-center !gap-[4px] !text-[10px] !text-[#444] !mt-[1px]">
-                                      <i className="fa-solid fa-location-dot !text-[#8059ca] !text-[10px]"></i>
+                                      <i className="fa-solid fa-location-dot !text-[#321961] !text-[10px]"></i>
                                       <span className="!truncate">{vendor.address?.length > 22 ? vendor.address.slice(0, 22) + "..." : vendor.address || "Address not available"}</span>
                                     </div>
                                     {test?.distanceInKm && (
                                       <div className="!flex !items-center !gap-[3px] !text-[10px] !text-[#666] !mt-[1px]">
-                                        <i className="isax isax-route-square !text-[#8059ca] !text-[10px]"></i>
+                                        <i className="isax isax-route-square !text-[#321961] !text-[10px]"></i>
                                         <span>{parseFloat(test.distanceInKm).toFixed(1)} km away</span>
                                       </div>
                                     )}
@@ -832,7 +832,7 @@ const DentalTeeth = ({
               >
                 <div
                   className="!flex !items-center !justify-center !shrink-0 !w-[52px] !h-[52px] !rounded-[12px]"
-                  style={{ background: "linear-gradient(135deg, #8059ca, #a07dd8)" }}
+                  style={{ background: "linear-gradient(135deg, #321961, #a07dd8)" }}
                 >
                   <i
                     className={`fa-solid ${stat.iconClass}`}
@@ -840,7 +840,7 @@ const DentalTeeth = ({
                   ></i>
                 </div>
                 <div>
-                  <h3 className="!m-0 !font-bold !text-[24px] !leading-none !text-[#8059ca]">
+                  <h3 className="!m-0 !font-bold !text-[24px] !leading-none !text-[#321961]">
                     {stat.value.split("+")[0]}<span>+</span>
                   </h3>
                   <p className="!mt-[4px] !mb-0 !text-[12px] !font-medium !text-[#666] !leading-tight">{stat.label}</p>
