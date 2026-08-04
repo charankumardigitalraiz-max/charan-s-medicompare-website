@@ -233,6 +233,10 @@ const ViewAllPackages = () => {
   };
 
 
+  if (loading) {
+    return <PageLoader />;
+  }
+
   return (
     <>
       <Home2Header />
@@ -240,14 +244,11 @@ const ViewAllPackages = () => {
 
       <section className="w-full py-8 pb-10 bg-[#f8f9fa]">
         <div className="w-full px-4 md:px-6 lg:px-8">
-          {loading ? (
-            <PageLoader />
-          ) : (
-            <>
-              {/* Header Row */}
-              <div className="flex items-center justify-between flex-wrap gap-3 mb-4">
-                <h3 className="top-vendor-badge mb-2 text-2xl font-bold text-gray-900">
-                  All Packages
+          <>
+            {/* Header Row */}
+            <div className="flex items-center justify-between flex-wrap gap-3 mb-4">
+              <h3 className="top-vendor-badge mb-2 text-2xl font-bold text-gray-900">
+                All Packages
                   <i className="fas fa-bolt text-yellow-400 ml-2"></i>
                 </h3>
 
@@ -645,7 +646,6 @@ const ViewAllPackages = () => {
                 onPageChange={handlePageChange}
               />
             </>
-          )}
         </div>
       </section>
       <Footer />

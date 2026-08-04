@@ -137,7 +137,7 @@ const PageLoader = () => {
   if (!theme) {
     return (
       <div
-        className="flex flex-col justify-center items-center h-screen w-screen bg-slate-50/50"
+        className="fixed inset-0 z-[99999] flex flex-col justify-center items-center bg-slate-50/50"
       >
         <style>{`
           @keyframes bouncePulse {
@@ -170,13 +170,13 @@ const PageLoader = () => {
 
   return (
     <div
-      className={`flex flex-col justify-center items-center h-screen w-screen bg-gradient-to-br ${theme.bg} relative overflow-hidden`}
+      className="fixed inset-0 z-[99999] flex flex-col justify-center items-center bg-gradient-to-br from-white to-slate-50 overflow-hidden"
     >
       {/* Floating dynamic backdrop glows matching category color */}
       <div
         className="absolute w-[300px] h-[300px] rounded-full blur-[100px] opacity-10 animate-pulse pointer-events-none"
         style={{
-          backgroundColor: theme.color,
+          backgroundColor: "#321961",
           top: "20%",
           left: "20%"
         }}
@@ -184,7 +184,7 @@ const PageLoader = () => {
       <div
         className="absolute w-[300px] h-[300px] rounded-full blur-[100px] opacity-10 animate-pulse pointer-events-none"
         style={{
-          backgroundColor: theme.color,
+          backgroundColor: "#321961",
           bottom: "20%",
           right: "20%",
           animationDelay: "1s"
@@ -216,7 +216,7 @@ const PageLoader = () => {
       <div className="relative flex items-center justify-center w-36 h-36 mb-8">
         <div
           className="absolute inset-0 rounded-full border-[3.5px] border-t-transparent animate-custom-rotate"
-          style={{ borderColor: `${theme.color}20`, borderTopColor: theme.color }}
+          style={{ borderColor: "#32196120", borderTopColor: "#321961" }}
         />
         <div
           className="absolute w-28 h-28 rounded-full bg-white shadow-lg flex items-center justify-center overflow-hidden animate-custom-pulse border border-white/60"
@@ -232,7 +232,7 @@ const PageLoader = () => {
       {/* Typography */}
       <h3
         className="text-lg font-black tracking-wide mb-1.5 uppercase text-slate-800"
-        style={{ color: theme.color }}
+        style={{ color: "#321961" }}
       >
         {theme.label}
       </h3>
@@ -245,7 +245,7 @@ const PageLoader = () => {
         <div
           className="absolute top-0 h-full rounded-full"
           style={{
-            backgroundColor: theme.color,
+            backgroundColor: "#321961",
             width: "30%",
             animation: "customProgress 1.6s infinite ease-in-out"
           }}
