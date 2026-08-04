@@ -58,7 +58,7 @@ const DynamicCategorySections = ({
       { breakpoint: 1200, settings: { slidesToShow: 3.5, arrows: true } },
       { breakpoint: 992, settings: { slidesToShow: 2.5, arrows: true } },
       { breakpoint: 768, settings: { slidesToShow: 2, arrows: true } },
-      { breakpoint: 480, settings: { slidesToShow: 1.5, arrows: true } },
+      { breakpoint: 480, settings: { slidesToShow: 1.2, arrows: true } },
     ],
   };
 
