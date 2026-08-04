@@ -377,7 +377,7 @@ const ServiceCards = ({ serviceType, liteMode = false }) => {
   const renderCard = (card, idx) => (
     <div
       key={idx}
-      className={isMobile ? "px-2" : "w-full md:w-1/3 sm:w-1/2 px-2.5 mb-4"}
+      className={isMobile ? "w-full px-2" : "w-full md:w-1/3 sm:w-1/2 px-2.5 mb-4"}
     >
       <div
         className={`group relative flex justify-between items-center cursor-pointer mb-2.5 py-3 pr-4 pl-2.5 rounded-[14px] shadow-[0px_4px_14px_0px_rgba(226,237,255,0.08)] transition-all duration-500 bg-[rgba(159,100,255,0.12)] hover:-translate-y-2.5`}
@@ -445,9 +445,9 @@ const ServiceCards = ({ serviceType, liteMode = false }) => {
       <div className="max-w-[1440px] mx-auto px-4 md:px-6 lg:px-8">
         <div className="medical-descriptions">
           {isMobile ? (
-            <Slider {...sliderSettings}>
+            <div className="flex flex-col gap-3">
               {cards.map((card, idx) => renderCard(card, idx))}
-            </Slider>
+            </div>
           ) : (
             <div className="flex flex-wrap -mx-2.5">
               {cards.map((card, idx) => renderCard(card, idx))}
