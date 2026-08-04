@@ -1787,7 +1787,7 @@ const ServiceDetails = () => {
                           className={
                             isMobile
                               ? "cursor-pointer bg-white rounded-full w-[80px] h-[80px] p-[10px] flex flex-col justify-center items-center overflow-hidden border border-[#eef0f6] shadow-[0_4px_10px_rgba(0,0,0,0.04)] transition-all duration-200"
-                              : "cursor-pointer bg-white rounded-[12px] p-3 flex flex-col justify-start items-center overflow-hidden border border-[#eef0f6] shadow-[0_4px_10px_rgba(0,0,0,0.04)] min-h-[155px] w-full transition-all duration-200 hover:shadow-[0_8px_20px_rgba(128,89,202,0.12)] hover:-translate-y-[2px]"
+                              : "cursor-pointer bg-white rounded-[12px] p-3 flex flex-col justify-start items-center overflow-hidden border border-[#eef0f6] shadow-[0_4px_10px_rgba(0,0,0,0.04)] h-[170px] w-full transition-all duration-200 hover:shadow-[0_8px_20px_rgba(128,89,202,0.12)] hover:-translate-y-[2px]"
                           }
                         >
                           {!isMobile ? (
