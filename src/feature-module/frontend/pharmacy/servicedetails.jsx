@@ -43,9 +43,9 @@ import "../../../components/home/home-enhanced.css";
 const getSearchItemId = (item) => item?.tablet?._id || item?._id || null;
 
 const ServiceCategoryCard = memo(({ cat, index, onClick }) => (
-  <div className="w-1/2 sm:w-1/2 md:w-1/4 lg:w-1/6 xl:w-1/6 px-2 mb-4 flex">
+  <div className="w-1/3 sm:w-1/2 md:w-1/4 lg:w-1/6 xl:w-1/6 px-1.5 sm:px-2 mb-4 flex">
     <div
-      className="group flex-1 cursor-pointer bg-white !border !border-[#eef1f6] !shadow-[0_8px_30px_rgb(0,0,0,0.03)] hover:!shadow-[0_20px_40px_rgba(128,89,202,0.12)] !rounded-2xl w-full text-center p-5 hover:!border-[#321961]/40 hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-center items-center"
+      className="group flex-1 cursor-pointer bg-white !border !border-[#eef1f6] !shadow-[0_8px_30px_rgb(0,0,0,0.03)] hover:!shadow-[0_20px_40px_rgba(128,89,202,0.12)] !rounded-2xl w-full text-center p-5 max-sm:p-2.5 hover:!border-[#321961]/40 hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-center items-center"
       onClick={() => onClick(cat)}
       role="button"
       tabIndex={0}
@@ -53,18 +53,18 @@ const ServiceCategoryCard = memo(({ cat, index, onClick }) => (
         if (e.key === "Enter" || e.key === " ") onClick(cat);
       }}
     >
-      <span className="w-[72px] h-[72px] rounded-full mx-auto mb-3 flex items-center justify-center bg-gradient-to-br from-[#f8f4ff] to-[#f3ebff] border border-[#f3effc] transition-all duration-300 group-hover:scale-105">
+      <span className="w-[72px] h-[72px] max-sm:w-[50px] max-sm:h-[50px] rounded-full mx-auto mb-3 max-sm:mb-2 flex items-center justify-center bg-gradient-to-br from-[#f8f4ff] to-[#f3ebff] border border-[#f3effc] transition-all duration-300 group-hover:scale-105">
         <img
           src={getImageUrl(cat?.files?.[0]) || "/assets/default.png"}
           alt={cat?.name || "Category"}
           title={cat?.name}
-          className="h-[46px] w-[46px] object-contain transition-transform duration-[700ms] ease-in-out group-hover:[transform:rotateY(360deg)]"
+          className="h-[46px] w-[46px] max-sm:h-[30px] max-sm:w-[30px] object-contain transition-transform duration-[700ms] ease-in-out group-hover:[transform:rotateY(360deg)]"
           loading={index < 8 ? "eager" : "lazy"}
           fetchPriority={index < 4 ? "high" : "auto"}
           decoding="async"
         />
       </span>
-      <h4 className="!font-semibold !text-[13.5px] !text-slate-700 group-hover:!text-[#321961] transition-colors duration-200 mb-0 line-clamp-2 text-center leading-snug">
+      <h4 className="!font-semibold !text-[13.5px] max-sm:!text-[10px] !text-slate-700 group-hover:!text-[#321961] transition-colors duration-200 mb-0 line-clamp-2 text-center leading-snug max-sm:leading-tight">
         {cat?.name || "No Category"}
       </h4>
     </div>

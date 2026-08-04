@@ -512,10 +512,10 @@ const DynamicCategorySections = ({
               </div>
 
               <div className="max-w-7xl mx-auto px-4 md:px-6 relative z-10">
-                
+
                 {/* Rounded Inner Container Box matching mockup style */}
                 <div className="bg-white rounded-[24px] p-6 md:p-8 shadow-[0_4px_20px_rgba(0,0,0,0.02)] border border-slate-100/80">
-                  
+
                   {/* Category Title Top Header Panel */}
                   <div className="flex items-center justify-between mb-8 pb-3 border-b border-slate-100/50">
                     <div className="flex items-center gap-3">
@@ -529,10 +529,10 @@ const DynamicCategorySections = ({
                       {/* View All link matching mockup style */}
                       <Link
                         to={`/${currentService || serviceId?.slug || "medicine"}/all`}
-                        className="inline-flex items-center gap-1.5 text-[12px] md:text-[14px] font-bold text-[#008f5d] hover:text-[#006f47] transition-all !no-underline hover:translate-x-1 duration-200"
+                        className="inline-flex items-center gap-1.5 text-[11px] md:text-[13px] font-bold !text-[#008f5d] hover:text-white bg-[#008f5d]/5 hover:bg-[#008f5d] border border-[#008f5d]/20 hover:border-[#008f5d] px-4 py-1.5 rounded-full transition-all duration-300 !no-underline shadow-sm hover:shadow active:scale-[0.98]"
                       >
                         <span>View All</span>
-                        <i className="fas fa-arrow-right text-[10px] md:text-[11px]" />
+                        <i className="fas fa-arrow-right text-[10px]" />
                       </Link>
                     </div>
                   </div>

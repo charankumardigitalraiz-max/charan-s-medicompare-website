@@ -244,10 +244,10 @@ const HealthcareNavigation = ({ categories: propCategories, isLoading: propLoadi
               {categories.map((item) => (
                 <li key={item._id} className="nav-item text-center">
                   <div
-                    className={`flex items-center justify-center gap-[4px] rounded-[8px] text-[#374151] font-semibold text-[13px] px-[16px] pt-[8px] pb-[4px] border-b-[3px] border-solid border-transparent cursor-pointer transition-all duration-200 no-underline hover:bg-[#f0ebff] hover:text-[#321961] whitespace-nowrap ${location.pathname.startsWith(`/${item.slug}`) ||
+                    className={`flex items-center justify-center gap-[6px] !rounded-sm text-[#374151] font-medium text-[13px] px-[14px] py-[6px] !border !border-solid !border-slate-100 cursor-pointer transition-all duration-200 no-underline hover:bg-slate-50 hover:text-[#321961] hover:border-slate-200 hover:shadow-sm shadow-[0_2px_6px_rgba(0,0,0,0.02)] whitespace-nowrap ${location.pathname.startsWith(`/${item.slug}`) ||
                       (location.pathname.startsWith('/view-all-categories/') &&
                         location.pathname.split('/')[2] === item.slug)
-                      ? "!border-b-[3px] !border-b-primary !text-[#321961] !rounded-none"
+                      ? "!border-[var(--color-primary,#321961)] !text-white !bg-primary !shadow-[0_3px_10px_rgba(50,25,97,0.04)]"
                       : ""
                       }`}
                     onClick={() => handleCategoryClick(item)}

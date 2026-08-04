@@ -82,6 +82,7 @@ const Home2Header = () => {
   const [placeholderIndex, setPlaceholderIndex] = useState(0);
   const [unreadCount, setUnreadCount] = useState(0);
   const profileButtonRef = useRef(null);
+  const mobileProfileButtonRef = useRef(null);
   const dropdownRef = useRef(null);
 
   const [mobileHeaderHeight, setMobileHeaderHeight] = useState(62);
@@ -612,10 +613,10 @@ const Home2Header = () => {
     const handleClickOutside = (event) => {
       if (
         showDropdown &&
-        profileButtonRef.current &&
         dropdownRef.current &&
-        !profileButtonRef.current.contains(event.target) &&
-        !dropdownRef.current.contains(event.target)
+        !dropdownRef.current.contains(event.target) &&
+        (!profileButtonRef.current || !profileButtonRef.current.contains(event.target)) &&
+        (!mobileProfileButtonRef.current || !mobileProfileButtonRef.current.contains(event.target))
       ) {
         setShowDropdown(false);
       }
@@ -820,11 +821,11 @@ const Home2Header = () => {
             </Link>
           ) : (
             <div
-              ref={profileButtonRef}
+              ref={mobileProfileButtonRef}
               className="mobile-profile-button w-[32px] h-[32px] rounded-full border border-solid border-[#e5e7eb] flex items-center justify-center text-[#374151] bg-white cursor-pointer transition-all duration-200 relative"
               onClick={(e) => {
                 e.preventDefault();
-                navigate("/my-orders");
+                setShowDropdown(!showDropdown);
               }}
             >
               {profiles?.files && profiles.files.length > 0 ? (
@@ -857,6 +858,57 @@ const Home2Header = () => {
                   }}
                 >
                   {profiles?.first_name?.charAt(0)}
+                </div>
+              )}
+              {showDropdown && (
+                <div
+                  ref={dropdownRef}
+                  className="absolute right-0 top-full mt-2 p-0 w-[260px] rounded-[12px] border border-[#eee] bg-white shadow-[0_8px_24px_rgba(0,0,0,0.08)] overflow-hidden z-50"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  {/* Header */}
+                  <div className="flex items-center gap-2 px-3 py-2 bg-[#F8F9FA]">
+                    {profiles?.files && profiles.files.length > 0 ? (
+                      <img
+                        src={getImageUrl(profiles.files[0])}
+                        alt={profiles?.first_name}
+                        loading="lazy"
+                        className="w-11 h-11 rounded-full object-cover border-2 border-[#E6E6FF]"
+                      />
+                    ) : (
+                      <div className="flex items-center justify-center w-11 h-11 rounded-full bg-[#6F42C1] text-white text-[20px] font-semibold uppercase">
+                        {profiles?.first_name?.charAt(0)}
+                      </div>
+                    )}
+                    <div className="min-w-0 flex-1">
+                      <div className="text-[13px] font-semibold text-[#222] capitalize whitespace-nowrap overflow-hidden text-ellipsis text-left">
+                        {profiles?.first_name}
+                      </div>
+                      <div className="text-[11px] text-[#888] whitespace-nowrap overflow-hidden text-ellipsis text-left">
+                        {profiles?.email}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="border-t border-[#eee]" />
+                  {/* Items */}
+                  <Link
+                    to="/my-orders"
+                    className="flex items-center gap-2 px-3 py-2 text-[12px] !text-[#555] hover:bg-gray-100 w-full text-left no-underline"
+                    onClick={() => setShowDropdown(false)}
+                  >
+                    <i className="fas fa-user-circle"></i>
+                    My Account
+                  </Link>
+                  <button
+                    className="flex items-center gap-2 px-3 py-2 !text-[12px] !text-red-500 hover:bg-gray-100 w-full text-left border-none bg-transparent cursor-pointer"
+                    onClick={() => {
+                      setShowDropdown(false);
+                      confirmLogout();
+                    }}
+                  >
+                    <i className="fas fa-sign-out-alt"></i>
+                    Logout
+                  </button>
                 </div>
               )}
             </div>
@@ -1167,7 +1219,7 @@ const Home2Header = () => {
                     {showDropdown && (
                       <div
                         ref={dropdownRef}
-                        className="absolute right-0 mt-2 p-0 w-[260px] rounded-[12px] border border-[#eee] bg-white shadow-[0_8px_24px_rgba(0,0,0,0.08)] overflow-hidden z-50"
+                        className="absolute right-0 top-full mt-2 p-0 w-[260px] rounded-[12px] border border-[#eee] bg-white shadow-[0_8px_24px_rgba(0,0,0,0.08)] overflow-hidden z-50"
                       >
                         {/* Header */}
                         <div className="flex items-center gap-2 px-3 py-2 bg-[#F8F9FA]">
@@ -1196,7 +1248,7 @@ const Home2Header = () => {
                         {/* Items */}
                         <Link
                           to="/my-orders"
-                          className="flex items-center gap-2 px-3 py-2 text-[12px] text-[#555] hover:bg-gray-100 w-full text-left no-underline"
+                          className="flex items-center gap-2 px-3 py-2 text-[12px] !text-[#555] hover:bg-gray-100 w-full text-left no-underline"
                         >
                           <i className="fas fa-user-circle"></i>
                           My Account

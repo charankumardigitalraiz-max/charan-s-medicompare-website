@@ -320,21 +320,21 @@ const SectionProductCard = ({
   const SERVICE_BUTTON_MAP = {
     medicine: { label: "Compare & Buy", icon: "fa-pills" },
     "rx-medicines": { label: "Compare & Buy", icon: "fa-pills" },
-    labtests: { label: "Book Lab Test", icon: "fa-flask" },
-    "lab-tests": { label: "Book Lab Test", icon: "fa-flask" },
-    diagnostics: { label: "Book Scan", icon: "fa-microscope" },
-    homecare: { label: "Book Home Visit", icon: "fa-home" },
-    "home-care": { label: "Book Home Visit", icon: "fa-home" },
-    nursingcare: { label: "Book Nurse", icon: "fa-user-nurse" },
-    "clinics-and-rehabs": { label: "Book Appointment", icon: "fa-clinic-medical" },
-    dentalservice: { label: "Book Dental", icon: "fa-tooth" },
-    "dental-care": { label: "Book Dental", icon: "fa-tooth" },
+    labtests: { label: "Book a Lab Test", icon: "fa-flask" },
+    "lab-tests": { label: "Book a Lab Test", icon: "fa-flask" },
+    diagnostics: { label: "Book a Scan", icon: "fa-microscope" },
+    homecare: { label: "Book a Home Visit", icon: "fa-home" },
+    "home-care": { label: "Book a Home Visit", icon: "fa-home" },
+    nursingcare: { label: "Book a Nurse", icon: "fa-user-nurse" },
+    "clinics-and-rehabs": { label: "Book a Appointment", icon: "fa-clinic-medical" },
+    dentalservice: { label: "Book a Dental", icon: "fa-tooth" },
+    "dental-care": { label: "Book a Dental", icon: "fa-tooth" },
     medicalequipment: { label: "Rent / Buy", icon: "fa-wheelchair" },
-    medicaltreatment: { label: "Book Treatment", icon: "fa-procedures" },
-    treatments: { label: "Book Treatment", icon: "fa-procedures" },
-    surgeries: { label: "Book Surgery", icon: "fa-syringe" },
-    ambulanceservice: { label: "Book Ambulance", icon: "fa-ambulance" },
-    ambulance: { label: "Book Ambulance", icon: "fa-ambulance" },
+    medicaltreatment: { label: "Book a Treatment", icon: "fa-procedures" },
+    treatments: { label: "Book a Treatment", icon: "fa-procedures" },
+    surgeries: { label: "Book a Surgery", icon: "fa-syringe" },
+    ambulanceservice: { label: "Book a Ambulance", icon: "fa-ambulance" },
+    ambulance: { label: "Book a Ambulance", icon: "fa-ambulance" },
   };
 
   const getButtonConfig = (service) => {
@@ -355,8 +355,9 @@ const SectionProductCard = ({
     >
       {/* Product Image Section */}
       <div className="relative w-full h-[140px] flex items-center justify-center p-3 bg-slate-50/50 rounded-2xl overflow-hidden mb-3">
+
         <img
-          className="max-w-full max-h-full object-contain group-hover:scale-105 transition-transform duration-300"
+          className="w-[115px] h-[115px] rounded-full object-contain p-2 bg-white border border-slate-200/80 shadow-sm group-hover:scale-105 transition-transform duration-300 relative z-10"
           src={displayImage}
           alt={productName}
           title={productName}
@@ -365,9 +366,35 @@ const SectionProductCard = ({
           decoding="async"
         />
 
+        {/* Dynamic Water Wave Flow Effect at the Bottom Side */}
+        {/* <div className="absolute bottom-0 left-0 w-[150%] h-[20px] pointer-events-none z-0 overflow-hidden flex items-end">
+          <svg
+            className="w-full h-[14px] opacity-35 absolute bottom-0 left-0"
+            viewBox="0 0 1200 120"
+            preserveAspectRatio="none"
+            style={{
+              animation: "waveMove 6s ease-in-out infinite",
+              fill: "rgba(109, 77, 184, 0.1)",
+            }}
+          >
+            <path d="M0,60 C150,100 350,20 500,60 C650,100 850,20 1000,60 C1150,100 1350,20 1500,60 L1500,120 L0,120 Z" />
+          </svg>
+          <svg
+            className="w-full h-[18px] opacity-55 absolute bottom-0 left-0"
+            viewBox="0 0 1200 120"
+            preserveAspectRatio="none"
+            style={{
+              animation: "waveMove 9s ease-in-out infinite alternate",
+              fill: "rgba(109, 77, 184, 0.15)",
+            }}
+          >
+            <path d="M0,50 C100,80 200,20 300,50 C400,80 500,20 600,50 C700,80 800,20 900,50 C1000,80 1100,20 1200,50 L1200,120 L0,120 Z" />
+          </svg>
+        </div> */}
+
         {/* Prescription Badge */}
         {isPrescriptionRequired && (
-          <span className="absolute top-2.5 left-2.5 bg-amber-500/10 backdrop-blur-md text-amber-700 text-[9px] font-extrabold px-2.5 py-0.5 rounded-full border border-amber-500/20 flex items-center gap-1 shadow-sm">
+          <span className="absolute top-2.5 left-2.5 bg-amber-500/10 backdrop-blur-md text-amber-700 text-[9px] font-extrabold px-2.5 py-0.5 rounded-full border border-amber-500/20 flex items-center gap-1 shadow-sm z-10">
             <i className="fas fa-prescription text-[8px]" />
             Rx Required
           </span>
