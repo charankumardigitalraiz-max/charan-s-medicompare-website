@@ -1465,7 +1465,7 @@ const BookingProcess = () => {
                                 </div>
                                 <div>
                                   <button
-                                    className="text-white bg-gradient-to-br from-[#321961] to-[#6f42c1] border-0 !font-semibold cursor-pointer !text-[11px] px-4 py-1.5 !rounded-[5px] shadow-[0_2px_4px_rgba(0,0,0,0.1)]"
+                                    className="text-white bg-primary border-0 !font-semibold cursor-pointer !text-[11px] px-4 py-1.5 !rounded-[5px] shadow-[0_2px_4px_rgba(0,0,0,0.1)]"
                                     onClick={() => {
                                       const token =
                                         localStorage.getItem("medicomparestoken");
@@ -2001,7 +2001,7 @@ const BookingProcess = () => {
                         <button
                           type="button"
                           onClick={() => setShowSlotPicker(true)}
-                          className="bg-gradient-to-r from-[#321961] to-[#6d3fc7] border-none !text-white !rounded-sm px-3.5 py-[7px] !text-xs !font-bold cursor-pointer flex items-center gap-1.5 shadow-[0_2px_6px_rgba(128,89,202,0.35)] tracking-[0.3px] hover:-translate-y-px transition-all duration-200"
+                          className="bg-primary border-none !text-white !rounded-sm px-3.5 py-[7px] !text-xs !font-bold cursor-pointer flex items-center gap-1.5 shadow-[0_2px_6px_rgba(128,89,202,0.35)] tracking-[0.3px] hover:-translate-y-px transition-all duration-200"
                         >
                           <Calendar size={12} />
                           {selectedDate && selectedTimeSlot ? "CHANGE SLOT" : "PICK SLOT"}
@@ -2094,7 +2094,7 @@ const BookingProcess = () => {
                               <div
                                 className={`!flex !h-10 !w-10 !items-center !justify-center !rounded-xl !text-base !text-white !shadow-sm ${appliedCoupon
                                   ? "!bg-gradient-to-br !from-[#22c55e] !to-[#15803d]"
-                                  : "!bg-gradient-to-br !from-[#321961] !to-[#6d28d9]"
+                                  : "!bg-primary"
                                   }`}
                               >
                                 <i className="fas fa-tags"></i>
@@ -2302,7 +2302,7 @@ const BookingProcess = () => {
                       <button
                         type="submit"
                         disabled={isSubmitting || (isSlotCategory && !hasSelectedSlot)}
-                        className={`!w-full !text-white !rounded-xl !border-0 !py-2.5 !px-4 !mb-3 !transition-all !duration-300 !flex !items-center !justify-center !gap-2 !font-bold !text-xs ${isSubmitting || (isSlotCategory && !hasSelectedSlot) ? "!bg-gray-400 !cursor-not-allowed" : "!bg-gradient-to-r !from-[#321961] !to-[#822BD4] hover:!shadow-md active:!scale-[0.98] !cursor-pointer"}`}
+                        className={`!w-full !text-white !rounded-xl !border-0 !py-2.5 !px-4 !mb-3 !transition-all !duration-300 !flex !items-center !justify-center !gap-2 !font-bold !text-xs ${isSubmitting || (isSlotCategory && !hasSelectedSlot) ? "!bg-gray-400 !cursor-not-allowed" : "!bg-primary hover:!shadow-md active:!scale-[0.98] !cursor-pointer"}`}
                       >
                         {isSubmitting ? (
                           <>

@@ -1466,7 +1466,7 @@ const RentalBookingProcess = () => {
 
                         <div>
                           <button
-                            className="text-white bg-gradient-to-br from-[#321961] to-[#6f42c1] border-0 !font-semibold cursor-pointer !text-[11px] px-4 py-1.5 !rounded-[5px] shadow-[0_2px_4px_rgba(0,0,0,0.1)]"
+                            className="text-white bg-primary border-0 !font-semibold cursor-pointer !text-[11px] px-4 py-1.5 !rounded-[5px] shadow-[0_2px_4px_rgba(0,0,0,0.1)]"
                             onClick={() => {
                               const token =
                                 localStorage.getItem("medicomparestoken");
@@ -2227,7 +2227,7 @@ const RentalBookingProcess = () => {
                         <button
                           type="submit"
                           disabled={isSubmitting}
-                          className={`!w-full !text-white !rounded-xl !border-0 !py-2.5 !px-4 !mb-3 !transition-all !duration-300 !flex !items-center !justify-center !gap-2 !font-semibold !text-xs ${isSubmitting ? "!bg-gray-400 !cursor-not-allowed" : "!bg-gradient-to-r !from-[#321961] !to-[#822BD4] hover:!shadow-md active:!scale-[0.98] !cursor-pointer"}`}
+                          className={`!w-full !text-white !rounded-xl !border-0 !py-2.5 !px-4 !mb-3 !transition-all !duration-300 !flex !items-center !justify-center !gap-2 !font-semibold !text-xs ${isSubmitting ? "!bg-gray-400 !cursor-not-allowed" : "!bg-primary hover:!shadow-md active:!scale-[0.98] !cursor-pointer"}`}
                         >
                           {isSubmitting ? (
                             <>

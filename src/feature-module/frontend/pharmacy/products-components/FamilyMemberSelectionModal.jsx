@@ -377,7 +377,7 @@ const FamilyMemberSelectionModal = ({
           <button
             type="button"
             onClick={() => onProceed(selectedPatients, familyMembersData)}
-            className="px-6 py-2 !text-sm !font-medium !rounded-full !bg-[#321961] hover:bg-[#6f42c1] text-white border-none transition-colors"
+            className="px-6 py-2 !text-sm !font-medium !rounded-full !bg-primary hover:bg-[#6f42c1] text-white border-none transition-colors"
           >
             Proceed
           </button>
@@ -392,8 +392,8 @@ const FamilyMemberSelectionModal = ({
               multiple).
             </p>
 
-            <div className="d-flex flex-column gap-2 max-h-[280px] overflow-y-auto pr-1">
-              <div className="text-[11px] font-bold text-[#321961] uppercase tracking-[0.5px] mt-1 mb-0.5">
+            <div className="flex flex-col gap-3.5 max-h-[280px] overflow-y-auto pr-1">
+              <div className="text-[11px] font-bold text-primary uppercase tracking-[0.5px] mt-1 mb-0.5">
                 Self
               </div>
               {/* Self Checkbox Option */}
@@ -407,8 +407,8 @@ const FamilyMemberSelectionModal = ({
                     setSelectedPatients([...selectedPatients, "self"]);
                   }
                 }}
-                className={`px-3.5 py-2.5 !rounded-lg !border-[1.5px] cursor-pointer flex items-center gap-2.5 transition-all duration-150 ${selectedPatients.includes("self")
-                  ? "!border-[#321961] bg-[#fdfaff]"
+                className={`px-3.5 py-2.5 !rounded-md !border-[1.5px] cursor-pointer flex items-center gap-2.5 transition-all duration-150 ${selectedPatients.includes("self")
+                  ? "!border-primary bg-[#fdfaff]"
                   : "!border-slate-200 bg-white"
                   }`}
               >
@@ -416,7 +416,7 @@ const FamilyMemberSelectionModal = ({
                   type="checkbox"
                   checked={selectedPatients.includes("self")}
                   onChange={() => { }}
-                  className="accent-[#321961] w-4 h-4 cursor-pointer"
+                  className="accent-primary w-4 h-4 cursor-pointer"
                 />
                 <div>
                   <span className="text-[13.5px] font-semibold text-slate-900">
@@ -432,7 +432,7 @@ const FamilyMemberSelectionModal = ({
                 </div>
               </div>
 
-              <div className="text-[11px] font-bold text-[#321961] uppercase tracking-[0.5px] mt-3 mb-0.5">
+              <div className="text-[11px] font-bold text-primary uppercase tracking-[0.5px] mt-3 mb-0.5">
                 Family Members
               </div>
               {/* Family Members Checkbox Options */}
@@ -470,8 +470,8 @@ const FamilyMemberSelectionModal = ({
                           ]);
                         }
                       }}
-                      className={`px-3.5 py-2.5 !rounded-lg !border-[1.5px] cursor-pointer flex items-center gap-2.5 transition-all duration-150 ${isSelected
-                        ? "!border-[#321961] bg-[#fdfaff]"
+                      className={`px-3.5 py-2.5 !rounded-md !border-[1.5px] m-2cursor-pointer flex items-center gap-2.5 transition-all duration-150 ${isSelected
+                        ? "!border-primary bg-[#fdfaff]"
                         : "!border-slate-200 bg-white"
                         }`}
                     >
@@ -479,7 +479,7 @@ const FamilyMemberSelectionModal = ({
                         type="checkbox"
                         checked={isSelected}
                         onChange={() => { }}
-                        className="accent-[#321961] w-4 h-4 cursor-pointer"
+                        className="accent-primary w-4 h-4 cursor-pointer"
                       />
                       <div>
                         <span className="text-[13.5px] font-semibold text-slate-900">
@@ -503,10 +503,10 @@ const FamilyMemberSelectionModal = ({
                 onClick={() => {
                   setIsAddingFamilyMember(true);
                 }}
-                className="px-3.5 py-2.5 !rounded-lg !border-[1.5px] !border-dashed !border-[#321961] !bg-white hover:bg-[#fdfaff] cursor-pointer flex items-center justify-center gap-2 transition-all duration-150 mt-2"
+                className="px-3.5 py-2.5 !rounded-lg !border-[1.5px] !border-dashed !border-primary !bg-white hover:bg-[#fdfaff] cursor-pointer flex items-center justify-center gap-2 transition-all duration-150 mt-2"
               >
-                <i className="fas fa-plus text-[#321961] text-sm"></i>
-                <span className="!text-[13.5px] !font-semibold text-[#321961]">
+                <i className="fas fa-plus text-primary text-sm"></i>
+                <span className="!text-[13.5px] !font-semibold text-primary">
                   Add Family Member
                 </span>
               </div>
@@ -613,6 +613,9 @@ const FamilyMemberSelectionModal = ({
                   name="referedByDoctor"
                   value={(() => {
                     if (!formData.referedByDoctor) return null;
+                    if (formData.referedByDoctor === "self_referral") {
+                      return { value: "self_referral", label: "Self Referral" };
+                    }
                     const doctorId = String(formData.referedByDoctor);
                     let selectedDoctor = filteredDoctors.find(
                       (doctor) => String(doctor._id) === doctorId,
@@ -660,6 +663,7 @@ const FamilyMemberSelectionModal = ({
                         : "none",
                       "&:hover": { borderColor: "#321961" },
                       fontSize: "13.5px",
+                      borderRadius: "20px !important"
                     }),
                     menu: (baseStyles) => ({
                       ...baseStyles,

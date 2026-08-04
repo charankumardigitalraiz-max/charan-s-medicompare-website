@@ -1065,7 +1065,7 @@ export const LabTestCheckout = () => {
           <div className="pt-0 mb-[15px]">
             <Link
               to="/"
-              className="inline-flex items-center gap-2 !text-[#321961] !border !border-[#e9d5ff] !rounded-[30px] px-[18px] py-1.5 no-underline !text-[13px] !font-semibold !bg-[#fdfaff] transition-all duration-200 !hover:!text-white !hover:bg-gradient-to-r !hover:from-[#321961] !hover:to-[#6f42c1] !hover:border-[#321961] !hover:shadow-[0_4px_12px_rgba(128,89,202,0.2)] !shadow-[0_2px_5px_rgba(128,89,202,0.05)]"
+              className="inline-flex items-center gap-2 !text-[#321961] !border !border-[#e9d5ff] !rounded-[30px] px-[18px] py-1.5 no-underline !text-[13px] !font-semibold !bg-[#fdfaff] transition-all duration-200 !hover:!text-white !hover:bg-primary !hover:border-[#321961] !hover:shadow-[0_4px_12px_rgba(128,89,202,0.2)] !shadow-[0_2px_5px_rgba(128,89,202,0.05)]"
             >
               <i className="fas fa-arrow-left text-[11px]" />
               Back to Home
@@ -1175,7 +1175,7 @@ export const LabTestCheckout = () => {
                     <div>
                       {collectionMethod === "home" && (
                         <button
-                          className="text-white bg-gradient-to-r from-[#321961] to-[#6f42c1] border-none !font-semibold cursor-pointer !text-[11px] px-4 py-1.5 !rounded-[20px] shadow-[0_2px_4px_rgba(0,0,0,0.1)] hover:-translate-y-px transition-all duration-200"
+                          className="text-white bg-primary border-none !font-semibold cursor-pointer !text-[11px] px-4 py-1.5 !rounded-[20px] shadow-[0_2px_4px_rgba(0,0,0,0.1)] hover:-translate-y-px transition-all duration-200"
                           onClick={() => {
                             const token = localStorage.getItem("medicomparestoken");
                             if (!token) {
@@ -1567,7 +1567,7 @@ export const LabTestCheckout = () => {
                 <div
                   className={`w-[42px] h-[42px] rounded-xl flex items-center justify-center text-white text-lg shadow-md ${appliedCoupon
                     ? "bg-gradient-to-br from-[#22c55e] to-[#15803d]"
-                    : "bg-gradient-to-br from-[#321961] to-[#6d28d9]"
+                    : "bg-primary"
                     }`}
                 >
                   <i className="fas fa-tags"></i>
@@ -1639,7 +1639,7 @@ export const LabTestCheckout = () => {
                       e.preventDefault();
                       handleManualCouponApply();
                     }}
-                    className="px-4 py-2 bg-gradient-to-r from-[#321961] to-[#6d28d9] hover:from-[#7148c5] hover:to-[#5b21b6] !text-white !text-sm !font-semibold !rounded-r-lg border-none transition-all duration-200 shrink-0"
+                    className="px-4 py-2 bg-primary hover:bg-[#7148c5] !text-white !text-sm !font-semibold !rounded-r-lg border-none transition-all duration-200 shrink-0"
                   >
                     Apply
                   </button>
@@ -1733,7 +1733,7 @@ export const LabTestCheckout = () => {
                     <button
                       type="button"
                       onClick={() => setShowSlotPicker(true)}
-                      className="bg-gradient-to-r from-[#321961] to-[#6d3fc7] border-none !text-white !rounded-sm px-3.5 py-[7px] !text-xs !font-bold cursor-pointer flex items-center gap-1.5 shadow-[0_2px_6px_rgba(128,89,202,0.35)] tracking-[0.3px] hover:-translate-y-px transition-all duration-200"
+                      className="bg-primary border-none !text-white !rounded-sm px-3.5 py-[7px] !text-xs !font-bold cursor-pointer flex items-center gap-1.5 shadow-[0_2px_6px_rgba(128,89,202,0.35)] tracking-[0.3px] hover:-translate-y-px transition-all duration-200"
                     >
                       <Calendar size={12} />
                       {selectedDate && selectedTimeSlot ? "CHANGE SLOT" : "PICK SLOT"}
@@ -1931,7 +1931,7 @@ export const LabTestCheckout = () => {
                   disabled={isSubmitting}
                   className={`flex-1 min-w-0 flex items-center justify-center py-2.5 px-3 !text-white border-none !rounded-[20px] !text-[14.5px] !font-semibold transition-all duration-200 ${isSubmitting
                     ? "bg-slate-350 cursor-not-allowed"
-                    : "bg-gradient-to-r from-[#321961] to-[#6f42c1] cursor-pointer shadow-[0_4px_14px_rgba(128,89,202,0.25)] hover:-translate-y-px"
+                    : "bg-primary cursor-pointer shadow-[0_4px_14px_rgba(128,89,202,0.25)] hover:-translate-y-px"
                     }`}
                 >
                   {isSubmitting ? "Processing..." : "Pay Now"}

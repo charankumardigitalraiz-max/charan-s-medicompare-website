@@ -963,7 +963,7 @@ export const Cart = () => {
           <div className="pt-0 mb-[15px]">
             <Link
               to="/"
-              className="inline-flex items-center gap-2 text-[#321961] border border-[#e9d5ff] rounded-[30px] px-[18px] py-[6px] no-underline text-[13px] font-semibold bg-[#fdfaff] transition-all duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)] shadow-[0_2px_5px_rgba(128,89,202,0.05)] hover:text-white hover:bg-gradient-to-br hover:from-[#321961] hover:to-[#6f42c1] hover:border-[#321961] hover:shadow-[0_4px_12px_rgba(128,89,202,0.2)]"
+              className="inline-flex items-center gap-2 text-[#321961] border border-[#e9d5ff] rounded-[30px] px-[18px] py-[6px] no-underline text-[13px] font-semibold bg-[#fdfaff] transition-all duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)] shadow-[0_2px_5px_rgba(128,89,202,0.05)] hover:text-white hover:bg-primary hover:border-[#321961] hover:shadow-[0_4px_12px_rgba(128,89,202,0.2)]"
             >
               <i className="fas fa-arrow-left text-[11px]" />
               Back to Home
@@ -981,7 +981,7 @@ export const Cart = () => {
                       </div>
                       <div>
                         <button
-                          className="text-white bg-gradient-to-br from-[#321961] to-[#6f42c1] border-0 !font-semibold cursor-pointer !text-[11px] px-4 py-1.5 !rounded-[5px] shadow-[0_2px_4px_rgba(0,0,0,0.1)]"
+                          className="text-white bg-primary border-0 !font-semibold cursor-pointer !text-[11px] px-4 py-1.5 !rounded-[5px] shadow-[0_2px_4px_rgba(0,0,0,0.1)]"
                           onClick={() => {
                             const token =
                               localStorage.getItem("medicomparestoken");
@@ -1669,7 +1669,7 @@ export const Cart = () => {
                   <div
                     className={`w-[42px] h-[42px] rounded-xl flex items-center justify-center text-white text-lg shadow-md ${appliedCoupon
                       ? "bg-gradient-to-br from-[#22c55e] to-[#15803d]"
-                      : "bg-gradient-to-br from-[#321961] to-[#6d28d9]"
+                      : "bg-primary"
                       }`}
                   >
                     <i className="fas fa-tags"></i>
@@ -1767,7 +1767,7 @@ export const Cart = () => {
                         e.preventDefault();
                         handleManualCouponApply();
                       }}
-                      className="px-4 py-2 bg-gradient-to-r from-[#321961] to-[#6d28d9] hover:from-[#7148c5] hover:to-[#5b21b6] text-white !text-sm !font-semibold !rounded-r-lg !border-none transition-all duration-200 shrink-0"
+                      className="px-4 py-2 bg-primary hover:bg-[#7148c5] text-white !text-sm !font-semibold !rounded-r-lg !border-none transition-all duration-200 shrink-0"
                     >
                       Apply
                     </button>
@@ -1985,7 +1985,7 @@ export const Cart = () => {
                     type="button"
                     onClick={handleSubmit}
                     disabled={cartItems.length === 0 || isSubmitting}
-                    className={`flex-1 px-3 py-2 !text-white border-0 !rounded-[10px] !text-[14.5px] !font-semibold min-w-[140px] flex items-center justify-center gap-2 transition-all duration-200 ease-in-out ${isSubmitting ? "!bg-[#cbd5e1] cursor-not-allowed shadow-none" : "!bg-gradient-to-br from-[#321961] to-[#6f42c1] cursor-pointer shadow-[0_4px_14px_rgba(128,89,202,0.25)] hover:-translate-y-px hover:shadow-[0_6px_18px_rgba(128,89,202,0.35)]"}`}
+                    className={`flex-1 px-3 py-2 !text-white border-0 !rounded-[10px] !text-[14.5px] !font-semibold min-w-[140px] flex items-center justify-center gap-2 transition-all duration-200 ease-in-out ${isSubmitting ? "!bg-[#cbd5e1] cursor-not-allowed shadow-none" : "!bg-primary cursor-pointer shadow-[0_4px_14px_rgba(128,89,202,0.25)] hover:-translate-y-px hover:shadow-[0_6px_18px_rgba(128,89,202,0.35)]"}`}
                   >
                     {isSubmitting ? (
                       <>
