@@ -23,8 +23,8 @@ const DynamicCategorySections = ({
   } = useResponsive();
   const isMobile = isMobileProp !== undefined ? isMobileProp : isMobileLocal;
 
-  // Since products now render on the right (lg:col-span-9), we scale slidesToShow down slightly
-  const slidesToShow = isMobile ? 2 : isTablet ? 2 : isSmallLaptop ? 3 : 4;
+  // Scale slidesToShow up to 5 on large screens
+  const slidesToShow = isMobile ? 2 : isTablet ? 3 : isSmallLaptop ? 4 : 5;
 
   // React State for a Live Countdown Timer
   const [timeLeft, setTimeLeft] = useState({ hours: 4, minutes: 12, seconds: 48 });
@@ -54,8 +54,9 @@ const DynamicCategorySections = ({
     slidesToShow: slidesToShow,
     slidesToScroll: 1,
     responsive: [
-      { breakpoint: 1200, settings: { slidesToShow: 3, arrows: true } },
-      { breakpoint: 992, settings: { slidesToShow: 2, arrows: true } },
+      { breakpoint: 1400, settings: { slidesToShow: 4, arrows: true } },
+      { breakpoint: 1200, settings: { slidesToShow: 3.5, arrows: true } },
+      { breakpoint: 992, settings: { slidesToShow: 2.5, arrows: true } },
       { breakpoint: 768, settings: { slidesToShow: 2, arrows: true } },
       { breakpoint: 480, settings: { slidesToShow: 1.5, arrows: true } },
     ],
@@ -485,11 +486,13 @@ const DynamicCategorySections = ({
 
           const serviceSlug = currentService || serviceId?.slug || section.serviceType || "";
           const serviceTheme = getServiceTheme(serviceSlug, index);
+          const colorMatch = serviceTheme.iconClass?.match(/text-\[(\#[a-fA-F0-9]+)\]/);
+          const themeColor = colorMatch ? colorMatch[1] : '#321961';
           const categoryFixedType = section?.serviceId?.fixedType || "";
           return (
             <div
               key={section._id || index}
-              className="w-full py-12 border-b border-slate-100/50 relative overflow-hidden"
+              className="w-full py-6 border-b border-slate-100/50 relative overflow-hidden"
               style={{
                 backgroundImage: "url('/medicompare_bg4_instant_healthcare.png')",
                 backgroundSize: "cover",
@@ -511,25 +514,39 @@ const DynamicCategorySections = ({
                 </svg>
               </div>
 
-              <div className="max-w-7xl mx-auto px-4 md:px-6 relative z-10">
+              <div className="max-w-full mx-auto px-4 md:px-12 relative z-10">
 
                 {/* Rounded Inner Container Box matching mockup style */}
-                <div className="bg-white rounded-[24px] p-6 md:p-8 shadow-[0_4px_20px_rgba(0,0,0,0.02)] border border-slate-100/80">
+                <div className="py-2 px-2 md:py-3 md:px-4">
 
                   {/* Category Title Top Header Panel */}
-                  <div className="flex items-center justify-between mb-8 pb-3 border-b border-slate-100/50">
+                  <div className="flex items-center justify-between mb-5 pb-3 border-b border-slate-100/50">
                     <div className="flex items-center gap-3">
-                      {/* Badge tag styling matching mockup yellow/orange pill */}
-                      <span className="inline-flex items-center gap-2 bg-[#f28e00] text-white text-[12px] md:text-[14px] font-extrabold px-5 py-2.5 rounded-full shadow-sm">
-                        <i className={`${serviceTheme.iconClass || "fas fa-tag"} mr-1`} />
-                        <span>{title}</span>
-                      </span>
+                      <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-white shadow-sm border border-slate-100/80">
+                        <i className={`${serviceTheme.iconClass || "fas fa-tag"} text-lg`} />
+                      </div>
+                      <h3 className="!text-lg md:!text-xl !font-semibold !text-slate-800 tracking-tight">
+                        {title}
+                      </h3>
                     </div>
                     <div>
                       {/* View All link matching mockup style */}
                       <Link
                         to={`/${currentService || serviceId?.slug || "medicine"}/all`}
-                        className="inline-flex items-center gap-1.5 text-[11px] md:text-[13px] font-bold !text-[#008f5d] hover:text-white bg-[#008f5d]/5 hover:bg-[#008f5d] border border-[#008f5d]/20 hover:border-[#008f5d] px-4 py-1.5 rounded-full transition-all duration-300 !no-underline shadow-sm hover:shadow active:scale-[0.98]"
+                        className="inline-flex items-center gap-1.5 text-[11px] md:text-[13px] !bg-primary !text-white font-bold px-4 py-1.5 rounded-full transition-all duration-300 !no-underline shadow-sm hover:shadow active:scale-[0.98]"
+                        style={{
+                          color: '#321961',
+                          backgroundColor: 'rgba(50, 25, 97, 0.08)',
+                          border: '1.5px solid rgba(50, 25, 97, 0.15)',
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.backgroundColor = '#321961';
+                          e.currentTarget.style.color = '#ffffff';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.backgroundColor = 'rgba(50, 25, 97, 0.08)';
+                          e.currentTarget.style.color = '#321961';
+                        }}
                       >
                         <span>View All</span>
                         <i className="fas fa-arrow-right text-[10px]" />

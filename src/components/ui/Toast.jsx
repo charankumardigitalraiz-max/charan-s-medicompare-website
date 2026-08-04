@@ -72,7 +72,8 @@ export const Toaster = () => {
         left: '50%',
         transform: 'translateX(-50%)',
         zIndex: 2147483647,
-        width: '380px',
+        width: 'calc(100% - 32px)',
+        maxWidth: '340px',
         minHeight: '80px',
         pointerEvents: total > 0 ? 'auto' : 'none',
       }}
