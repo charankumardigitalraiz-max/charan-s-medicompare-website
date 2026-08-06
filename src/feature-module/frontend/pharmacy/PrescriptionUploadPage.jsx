@@ -376,8 +376,11 @@ const PrescriptionUploadPage = () => {
         }
 
         if (!data.success) {
+          const errMsg = data.data?.validationNotes
+            ? `Invalid Prescription: ${data.data.validationNotes}`
+            : (data.message || "Could not read matching medicines from this prescription.");
           setSearchResults([]);
-          setValidationError(data.message || "Could not read matching medicines from this prescription.");
+          setValidationError(errMsg);
           setHasSearched(true);
           return;
         }
@@ -435,7 +438,10 @@ const PrescriptionUploadPage = () => {
         }
 
         if (!data.success) {
-          setValidationError(data.message || "Your prescription doesn't contain this medicine");
+          const errMsg = data.data?.validationNotes
+            ? `Invalid Prescription: ${data.data.validationNotes}`
+            : (data.message || "Your prescription doesn't contain this medicine");
+          setValidationError(errMsg);
           setHasSearched(true);
           return;
         }
@@ -449,7 +455,17 @@ const PrescriptionUploadPage = () => {
         }
       }
     } catch (error) {
-      toast.error(error.message || "An error occurred during verification.");
+      const responseData = error.response?.data;
+      if (responseData && responseData.success === false) {
+        const errMsg = responseData.data?.validationNotes
+          ? `Invalid Prescription: ${responseData.data.validationNotes}`
+          : (responseData.message || "Invalid medical prescription.");
+        setSearchResults([]);
+        setValidationError(errMsg);
+        setHasSearched(true);
+      } else {
+        toast.error(error.message || "An error occurred during verification.");
+      }
     } finally {
       setIsUploading(false);
     }
@@ -570,7 +586,7 @@ const PrescriptionUploadPage = () => {
                             fileInputRef.current?.click();
                           }, 100);
                         }}
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 !rounded-md !bg-primary hover:opacity-90 text-white font-semibold text-xs transition-all border-0 shadow-sm"
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 !rounded-md !bg-primary hover:opacity-90 text-white !font-semibold !text-xs transition-all border-0 shadow-sm"
                         title="Reupload Prescription"
                       >
                         <i className="fa-solid fa-arrow-up-from-bracket text-[10px]"></i>
@@ -587,7 +603,7 @@ const PrescriptionUploadPage = () => {
                           setAnalysisData(null);
                           if (fileInputRef.current) fileInputRef.current.value = "";
                         }}
-                        className="inline-flex items-center gap-1 px-3 py-1.5 !rounded-md bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs transition-all border-0 shadow-sm"
+                        className="inline-flex items-center gap-1 px-3 py-1.5 !rounded-md bg-red-50 hover:bg-red-100/80 text-red-600 hover:text-red-700 !font-semibold !text-xs transition-all border border-red-100 shadow-sm"
                         title="Clear and Close"
                       >
                         <i className="fa-solid fa-xmark text-[10px]"></i>
@@ -684,7 +700,7 @@ const PrescriptionUploadPage = () => {
                               <i className="fa-solid fa-capsules text-[11px]"></i>
                             </div>
                             <div className="flex-1 min-w-0">
-                              <span className="font-bold text-slate-800 text-xs truncate block leading-tight">{med.name}</span>
+                              <span className="font-bold text-slate-800 text-xs truncate block leading-tight">{med.name} {med?.strength}</span>
                               {med.genericName && (
                                 <span className="text-[10px] text-slate-400 font-medium truncate block mt-1" title={med.genericName}>
                                   {med.genericName}
@@ -859,7 +875,7 @@ const PrescriptionUploadPage = () => {
           <div className={`${hasSearched && searchResults.some(r => !r.isDbProduct) ? "lg:col-span-9" : "lg:col-span-12"} bg-white rounded-md border border-slate-200 p-6 min-h-[400px] flex flex-col shadow-sm`}>
             <h2 className="!text-base !font-semibold text-slate-800 mb-4 pb-3 border-b border-slate-100 flex items-center gap-2">
               <i className="fa-solid fa-list-check text-purple-600"></i>
-              {hasSearched ? `Matching Medicines (${searchResults.length})` : "Analysis Results"}
+              {hasSearched ? `Matching Medicines ` : "Analysis Results"}
             </h2>
 
             {isUploading ? (
@@ -887,10 +903,10 @@ const PrescriptionUploadPage = () => {
             ) : searchResults.length === 0 ? (
               <div className="flex-1 flex flex-col items-center justify-center text-center p-8 text-slate-400">
                 <div className="w-16 h-16 rounded-full bg-red-50 text-red-500 flex items-center justify-center mb-4">
-                  <i className="fa-solid fa-face-frown text-3xl"></i>
+                  <i className={`fa-solid ${validationError?.includes("Invalid Prescription") ? "fa-circle-xmark" : "fa-face-frown"} text-3xl`}></i>
                 </div>
                 <h3 className="text-slate-700 font-semibold text-base mb-1">
-                  No Matching Medicines Found
+                  {validationError?.includes("Invalid Prescription") ? "Invalid Prescription" : "No Matching Medicines Found"}
                 </h3>
                 <p className="text-slate-400 text-xs max-w-sm leading-relaxed">
                   {validationError || "We couldn't read or match any medicines in this prescription. Please make sure the image is clear and try again."}

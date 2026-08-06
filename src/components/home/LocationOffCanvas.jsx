@@ -1,11 +1,12 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { createPortal } from "react-dom";
 import toast from "react-hot-toast";
 import { axiosCommonInstance } from "../../Apiservice";
 import LocationModal from "../LocationModal";
 import { useNavigate } from "react-router";
-import { Autocomplete, useJsApiLoader } from "@react-google-maps/api";
+import { useJsApiLoader } from "@react-google-maps/api";
 import { useLocation } from "../../context/LocationContext";
+import { GOOGLE_MAPS_API_KEY } from "../../utils";
 
 const libraries = ["places"];
 
@@ -83,13 +84,65 @@ const LocationOffcanvas = ({
   const [showAllAddresses, setShowAllAddresses] = useState(false);
   const navigate = useNavigate();
   const autocompleteRef = useRef(null);
+  const autocompleteServiceRef = useRef(null);
+  const placesServiceRef = useRef(null);
+  const searchTimeoutRef = useRef(null);
+  const [predictions, setPredictions] = useState([]);
+  const [showPredictions, setShowPredictions] = useState(false);
 
-  const GOOGLE_MAPS_API_KEY = "AIzaSyBW_ML0ppoU2o_tsOmT5eMveCwCFP3AXHU";
+  // const GOOGLE_MAPS_API_KEY = "AIzaSyBW_ML0ppoU2o_tsOmT5eMveCwCFP3AXHU";
 
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: GOOGLE_MAPS_API_KEY,
     libraries,
   });
+
+  // Initialize AutocompleteService once Maps API is loaded
+  useEffect(() => {
+    if (isLoaded && window.google?.maps?.places) {
+      autocompleteServiceRef.current = new window.google.maps.places.AutocompleteService();
+      // PlacesService needs a DOM element (a hidden div is fine)
+      const mapDiv = document.createElement("div");
+      placesServiceRef.current = new window.google.maps.places.PlacesService(mapDiv);
+    }
+  }, [isLoaded]);
+
+  // Fetch predictions when searchQuery changes
+  const fetchPredictions = useCallback((value) => {
+    if (!autocompleteServiceRef.current || !value || value.trim().length < 2) {
+      setPredictions([]);
+      setShowPredictions(false);
+      return;
+    }
+    autocompleteServiceRef.current.getPlacePredictions(
+      { input: value, componentRestrictions: { country: "in" } },
+      (results, status) => {
+        if (status === window.google.maps.places.PlacesServiceStatus.OK && results) {
+          setPredictions(results);
+          setShowPredictions(true);
+        } else {
+          setPredictions([]);
+          setShowPredictions(false);
+        }
+      }
+    );
+  }, []);
+
+  // Resolve a prediction placeId into full place details
+  const handlePredictionSelect = useCallback((prediction) => {
+    setShowPredictions(false);
+    setPredictions([]);
+    setSearchQuery(prediction.description);
+    if (!placesServiceRef.current) return;
+    placesServiceRef.current.getDetails(
+      { placeId: prediction.place_id, fields: ["formatted_address", "geometry", "name", "place_id", "address_components"] },
+      (place, status) => {
+        if (status === window.google.maps.places.PlacesServiceStatus.OK && place) {
+          handlePlaceSelect(place);
+        }
+      }
+    );
+  }, []);
 
   useEffect(() => {
     const handleFocus = () => {
@@ -149,12 +202,10 @@ const LocationOffcanvas = ({
     window.addEventListener("addressSaved", handleAddressSaved);
     window.addEventListener("addressDeleted", handleAddressDeleted);
 
-    // Close autocomplete on scroll to prevent detached dropdown
+    // Close autocomplete on scroll — but NOT when scrolling inside our custom predictions dropdown
     const handleScroll = (e) => {
-      const isPacContainer = e.target?.classList?.contains && e.target.classList.contains("pac-container");
-      const isPacItem = e.target?.closest && e.target.closest(".pac-container");
-
-      if (isPacContainer || isPacItem) {
+      // Skip if scrolling inside the predictions dropdown itself
+      if (e.target?.closest && e.target.closest(".loc-predictions-dropdown")) {
         return;
       }
 
@@ -716,36 +767,6 @@ const LocationOffcanvas = ({
   return (
     <>
       <style>{`
-        .pac-container {
-          z-index: 99999999999999999 !important;
-          max-height: 120px !important;
-          overflow-y: auto !important;
-          overflow-x: hidden !important;
-          border: 1px solid #e2e8f0 !important;
-          border-radius: 10px !important;
-          box-shadow: 0 8px 24px rgba(0,0,0,0.12) !important;
-        }
-        @media (max-width: 768px) {
-          .pac-container {
-            left: 12px !important;
-            right: 12px !important;
-            transform: none !important;
-            width: auto !important;
-            max-height: 180px !important;
-          }
-        }
-        .pac-item {
-          padding: 8px 12px !important;
-          cursor: pointer !important;
-          font-size: 13px !important;
-          white-space: nowrap !important;
-          border-top: 1px solid #f1f5f9 !important;
-          display: flex !important;
-          align-items: center !important;
-        }
-        .pac-item:hover { background-color: #f8fafc !important; }
-        .pac-item-query { font-weight: 500 !important; color: #0f172a !important; }
-        .pac-icon { margin-right: 6px !important; }
         .loc-search-input::placeholder { color: #94a3b8; font-size: 13px; }
         .loc-search-input:focus { outline: none; border-color: #321961 !important; }
       `}</style>
@@ -785,58 +806,40 @@ const LocationOffcanvas = ({
 
           {/* ── SEARCH SECTION ── */}
           <div className="p-[14px] px-4 bg-white border-b border-[#ede9f8] shrink-0">
-            {/* Search bar */}
-            <div className="flex rounded-[10px] overflow-hidden border-[1.5px] border-[#e0d8f8] bg-white">
+            {/* Search bar with custom autocomplete dropdown */}
+            <div className="flex rounded-[10px] overflow-hidden border-[1.5px] border-[#e0d8f8] bg-white" style={{ position: "relative" }}>
               <div className="flex-1 flex items-center pl-2.5 gap-2">
                 <i className="fas fa-search text-[#c4a8f0] text-[12px] shrink-0" />
-                {isLoaded ? (
-                  <Autocomplete
-                    onLoad={(autocomplete) => (autocompleteRef.current = autocomplete)}
-                    onPlaceChanged={() => {
-                      const place = autocompleteRef.current?.getPlace();
-                      if (place) handlePlaceSelect(place);
-                    }}
-                    options={{
-                      componentRestrictions: { country: "in" },
-                      fields: ["formatted_address", "geometry", "name", "place_id", "address_components"],
-                    }}
-                  >
-                    <input
-                      type="text"
-                      placeholder="Search area, street name..."
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      className="loc-search-input"
-                      style={{
-                        width: "100%",
-                        border: "none",
-                        outline: "none",
-                        fontSize: "13px",
-                        color: "#1e293b",
-                        background: "transparent",
-                        padding: "10px 0",
-                        fontFamily: "inherit",
-                      }}
-                    />
-                  </Autocomplete>
-                ) : (
-                  <input
-                    type="text"
-                    placeholder="Loading places..."
-                    disabled
-                    style={{
-                      width: "100%", border: "none", outline: "none",
-                      fontSize: "13px", color: "#94a3b8",
-                      background: "transparent", padding: "10px 0",
-                    }}
-                  />
-                )}
+                <input
+                  type="text"
+                  placeholder="Search area, street name..."
+                  value={searchQuery}
+                  onChange={(e) => {
+                    setSearchQuery(e.target.value);
+                    if (searchTimeoutRef.current) clearTimeout(searchTimeoutRef.current);
+                    searchTimeoutRef.current = setTimeout(() => fetchPredictions(e.target.value), 300);
+                  }}
+                  onBlur={() => setTimeout(() => setShowPredictions(false), 200)}
+                  onFocus={() => { if (predictions.length > 0) setShowPredictions(true); }}
+                  className="loc-search-input"
+                  autoComplete="off"
+                  style={{
+                    width: "100%",
+                    border: "none",
+                    outline: "none",
+                    fontSize: "13px",
+                    color: "#1e293b",
+                    background: "transparent",
+                    padding: "10px 0",
+                    fontFamily: "inherit",
+                  }}
+                />
               </div>
               <button
                 type="button"
                 onClick={handleLocateButtonClick}
                 title="Use current GPS location"
-                className="flex items-center gap-1.5 px-3.5 bg-primary text-white text-[12px] font-semibold cursor-pointer shrink-0 transition-all duration-200 min-w-[80px] justify-center"
+                className="flex items-center gap-1.5 px-3.5 bg-primary text-white text-[12px] font-semibold !rou-r-md cursor-pointer shrink-0 transition-all duration-200 min-w-[80px] justify-center"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
                   <g transform="translate(-8921 -11863)">
@@ -849,6 +852,35 @@ const LocationOffcanvas = ({
                 Locate
               </button>
             </div>
+
+            {/* Custom predictions dropdown */}
+            {showPredictions && predictions.length > 0 && (
+              <div
+                className="loc-predictions-dropdown mt-1.5 rounded-[10px] border border-slate-200 bg-white shadow-lg overflow-y-auto"
+                style={{ zIndex: 9999, maxHeight: "240px" }}
+              >
+                {predictions.map((pred) => (
+                  <button
+                    key={pred.place_id}
+                    type="button"
+                    onMouseDown={() => handlePredictionSelect(pred)}
+                    className="w-full text-left px-3.5 py-2.5 flex items-start gap-2.5 hover:bg-purple-50/60 border-b border-slate-100 last:border-0 transition-colors"
+                  >
+                    <i className="fas fa-map-marker-alt text-[#c4a8f0] text-[11px] mt-1 shrink-0" />
+                    <div className="min-w-0">
+                      <div className="text-[13px] font-medium text-slate-800 truncate">
+                        {pred.structured_formatting?.main_text || pred.description}
+                      </div>
+                      {pred.structured_formatting?.secondary_text && (
+                        <div className="text-[11px] text-slate-400 truncate">
+                          {pred.structured_formatting.secondary_text}
+                        </div>
+                      )}
+                    </div>
+                  </button>
+                ))}
+              </div>
+            )}
 
             {/* Current location chip */}
             <div className="mt-2.5 flex items-start gap-1.5 p-2 px-2.5 bg-[#f5f0ff] rounded-lg border border-[#ede5ff]">
@@ -1015,7 +1047,7 @@ const LocationOffcanvas = ({
 
                 <button
                   onClick={() => setShowLocationModal(true)}
-                  className="w-full py-2.5 bg-primary text-white text-[13px] font-semibold border-none rounded-xl cursor-pointer flex items-center justify-center gap-1.5 shadow-[0_4px_14px_rgba(128,89,202,0.35)] mt-1 transition-all duration-200"
+                  className="w-full py-2.5 bg-primary text-white text-[13px] font-semibold border-none !rounded-xl cursor-pointer flex items-center justify-center gap-1.5 shadow-[0_4px_14px_rgba(128,89,202,0.35)] mt-1 transition-all duration-200"
                 >
                   <i className="fas fa-plus text-[11px]" />
                   Add New Address

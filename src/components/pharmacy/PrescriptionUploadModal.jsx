@@ -386,7 +386,7 @@ const PrescriptionUploadModal = ({
 
         if (!data.success) {
           setSearchResults([]);
-          setValidationError(data.message || "Could not read matching medicines from this prescription.");
+          setValidationError(errMsg);
           setHasSearched(true);
           return;
         }
@@ -432,7 +432,10 @@ const PrescriptionUploadModal = ({
         }
 
         if (!data.success) {
-          setValidationError(data.message || "Your prescription doesn't contain this medicine");
+          const errMsg = data.data?.validationNotes
+            ? `Invalid Prescription: ${data.data.validationNotes}`
+            : (data.message || "Your prescription doesn't contain this medicine");
+          setValidationError(errMsg);
           setHasSearched(true);
           return;
         }
@@ -446,7 +449,7 @@ const PrescriptionUploadModal = ({
         }
       }
     } catch (error) {
-      toast.error(error.message || "An error occurred during verification.");
+      toast.error("An error occurred during verification.");
     } finally {
       setIsUploading(false);
     }
