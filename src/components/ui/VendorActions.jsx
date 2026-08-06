@@ -19,6 +19,7 @@ const VendorActions = ({
   effectivePriceForCart = null,
   selectedVariant = null,
   maxStock = 999,
+  prescription,
   IsPackage,
   // Handlers
   handleRentalBookinProcess,
@@ -344,6 +345,7 @@ const VendorActions = ({
                 : price,
             discountprice: calculatedDiscountPrice,
           }}
+          prescription={prescription}
           service={service}
           variant={variantForCart}
           options={{ bookingType: "cart", type: "normal" }}

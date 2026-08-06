@@ -357,7 +357,7 @@ const SectionProductCard = ({
       <div className="relative w-full h-[140px] flex items-center justify-center p-3 bg-slate-50/50 rounded-2xl overflow-hidden mb-3">
 
         <img
-          className="w-[115px] h-[115px] rounded-full object-contain p-2 bg-white border border-slate-200/80 shadow-sm group-hover:scale-105 transition-transform duration-300 relative z-10"
+          className="w-[115px] h-[115px] rounded-full object-cover bg-white border border-slate-200/80 shadow-sm group-hover:scale-105 transition-transform duration-300 relative z-10"
           src={displayImage}
           alt={productName}
           title={productName}
@@ -413,7 +413,7 @@ const SectionProductCard = ({
 
         {/* Discount Tag */}
         {discount > 0 && (
-          <span className="absolute bottom-2.5 left-2.5 bg-red-500 text-white text-[10px] font-extrabold px-2 py-0.5 rounded-lg shadow-sm">
+          <span className="absolute bottom-2.5 left-2.5 z-20 bg-red-500 text-white text-[10px] font-extrabold px-2 py-0.5 rounded-lg shadow-sm">
             {discount}% OFF
           </span>
         )}

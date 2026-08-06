@@ -46,6 +46,24 @@ const DynamicCategorySections = ({
     return () => clearInterval(timer);
   }, []);
 
+  const NextArrow = ({ onClick }) => (
+    <button
+      onClick={onClick}
+      className="absolute right-[2px] md:right-[-15px] top-1/2 -translate-y-1/2 w-10 h-10 !rounded-full bg-white border border-slate-200 text-[#321961] shadow-md hover:bg-slate-50 hover:scale-105 transition-all z-10 flex items-center justify-center cursor-pointer"
+    >
+      <i className="fa-solid fa-chevron-right text-xs"></i>
+    </button>
+  );
+
+  const PrevArrow = ({ onClick }) => (
+    <button
+      onClick={onClick}
+      className="absolute left-[2px] md:left-[-15px] top-1/2 -translate-y-1/2 w-10 h-10 !rounded-full bg-white border border-slate-200 text-[#321961] shadow-md hover:bg-slate-50 hover:scale-105 transition-all z-10 flex items-center justify-center cursor-pointer"
+    >
+      <i className="fa-solid fa-chevron-left text-xs"></i>
+    </button>
+  );
+
   const dynamicSettings = {
     dots: false,
     arrows: true,
@@ -53,10 +71,12 @@ const DynamicCategorySections = ({
     speed: 500,
     slidesToShow: slidesToShow,
     slidesToScroll: 1,
+    nextArrow: <NextArrow />,
+    prevArrow: <PrevArrow />,
     responsive: [
-      { breakpoint: 1400, settings: { slidesToShow: 4, arrows: true } },
-      { breakpoint: 1200, settings: { slidesToShow: 3.5, arrows: true } },
-      { breakpoint: 992, settings: { slidesToShow: 2.5, arrows: true } },
+      { breakpoint: 1400, settings: { slidesToShow: 4 } },
+      { breakpoint: 1200, settings: { slidesToShow: 3.5 } },
+      { breakpoint: 992, settings: { slidesToShow: 2.5 } },
       { breakpoint: 768, settings: { slidesToShow: 2, arrows: true } },
       { breakpoint: 480, settings: { slidesToShow: 1.2, arrows: true } },
     ],
@@ -418,61 +438,6 @@ const DynamicCategorySections = ({
         .dynamic-equal-slider {
           position: relative !important;
           padding: 0 10px !important;
-        }
-        /* Style adjustments for custom slider arrows of react-slick to ensure they stand out */
-        .dynamic-equal-slider {
-          position: relative !important;
-          padding: 0 10px !important;
-        }
-        .dynamic-equal-slider .slick-prev,
-        .dynamic-equal-slider .slick-next {
-          width: 36px !important;
-          height: 36px !important;
-          background: var(--color-primary, #321961) !important;
-          border-radius: 50% !important;
-          z-index: 50 !important;
-          display: flex !important;
-          align-items: center !important;
-          justify-content: center !important;
-          box-shadow: 0 4px 12px rgba(50,25,97,0.2) !important;
-          transition: all 0.2s ease-in-out !important;
-          top: 50% !important;
-          transform: translateY(-50%) !important;
-          border: none !important;
-          outline: none !important;
-          padding: 0 !important;
-        }
-        .dynamic-equal-slider .slick-prev:hover,
-        .dynamic-equal-slider .slick-next:hover {
-          background: #231145 !important;
-          box-shadow: 0 6px 16px rgba(50,25,97,0.35) !important;
-          transform: translateY(-50%) scale(1.1) !important;
-        }
-        .dynamic-equal-slider .slick-prev {
-          left: -12px !important;
-        }
-        .dynamic-equal-slider .slick-next {
-          right: -12px !important;
-        }
-        .dynamic-equal-slider .slick-prev::before {
-          content: "←" !important;
-          color: white !important;
-          font-size: 16px !important;
-          font-weight: bold !important;
-          display: block !important;
-          line-height: 1 !important;
-          opacity: 1 !important;
-          font-family: inherit !important;
-        }
-        .dynamic-equal-slider .slick-next::before {
-          content: "→" !important;
-          color: white !important;
-          font-size: 16px !important;
-          font-weight: bold !important;
-          display: block !important;
-          line-height: 1 !important;
-          opacity: 1 !important;
-          font-family: inherit !important;
         }
       `}</style>
 

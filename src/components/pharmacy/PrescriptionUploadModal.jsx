@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import toast from "react-hot-toast";
-import { axiosCommonInstance, axiosUserInstance } from "../../Apiservice";
+import { axiosCommonInstance, axiosUserInstance, imgUrl } from "../../Apiservice";
+
 import { useNavigate } from "react-router-dom";
 import { getImageUrl } from "../../utils";
 import VendorActions from "../ui/VendorActions.jsx";
@@ -456,7 +457,7 @@ const PrescriptionUploadModal = ({
         if (lat) formData.append("lat", lat);
         if (lng) formData.append("lng", lng);
 
-        const response = await axiosCommonInstance.post("prescription/read", formData);
+        const response = await axiosCommonInstance.post(`${imgUrl}/api/testing/analyze`, formData);
         const data = response?.data;
 
         if (!data) {
@@ -470,7 +471,32 @@ const PrescriptionUploadModal = ({
           return;
         }
 
-        setSearchResults(data.data || []);
+        const extractedMedicines = data.data?.analysis?.medicines || [];
+        const mappedResults = extractedMedicines.map(med => {
+          if (med.dbTablet) {
+            const mappedVendors = (med.dbTablet.vendors || []).map(v => ({
+              ...v,
+              businessDetails: {
+                name: v.vendor?.name || v.businessDetails?.name || "Vendor",
+                address: v.vendor?.address || v.businessDetails?.address || "",
+                distance: v.businessDetails?.distance
+              }
+            }));
+            return {
+              ...med.dbTablet,
+              name: med.dbTablet.name || med.name,
+              strength: med.dbTablet.strength || med.strength,
+              vendors: mappedVendors
+            };
+          }
+          return {
+            _id: Math.random().toString(),
+            name: med.name,
+            strength: med.strength || med.genericName,
+            vendors: []
+          };
+        });
+        setSearchResults(mappedResults);
         setValidationError("");
         setHasSearched(true);
         toast.success("Prescription parsed successfully!");
@@ -478,7 +504,7 @@ const PrescriptionUploadModal = ({
         formData.append("name", medicineData?.name || "");
         formData.append("composition", medicineData?.compositions?.name || "");
 
-        const response = await axiosCommonInstance.post("prescription/analyze", formData);
+        const response = await axiosCommonInstance.post(`${imgUrl}/api/testing/analyze`, formData);
         const data = response?.data;
 
         if (!data) {
@@ -606,8 +632,24 @@ const PrescriptionUploadModal = ({
                         {item.vendors && item.vendors.length > 0 ? (
                           <div className="!flex !flex-col !gap-2.5 !border-t !border-dashed !border-slate-200 !pt-3">
                             {item.vendors.map((v) => {
-                              const price = v.discountprice ?? v.price;
-                              const hasDiscount = v.discountprice && v.discountprice < v.price;
+                              const originalPrice = parseFloat(v.price) || 0;
+                              const discountVal = parseFloat(v.discountprice) || 0;
+                              let price = originalPrice;
+                              let hasDiscount = false;
+
+                              if (discountVal > 0) {
+                                const type = v.discountType?.trim().toLowerCase();
+                                if (type === "percentage") {
+                                  price = Number((originalPrice - (originalPrice * discountVal) / 100).toFixed(2));
+                                  hasDiscount = true;
+                                } else if (type === "price") {
+                                  price = Number((originalPrice - discountVal).toFixed(2));
+                                  hasDiscount = true;
+                                } else if (discountVal < originalPrice) {
+                                  price = discountVal;
+                                  hasDiscount = true;
+                                }
+                              }
                               const serviceType = item.category?.fixedType || "medicine";
                               const bookingType = item.category?.categoryType || (serviceType === "medicine" ? "cart" : "leads");
                               return (
@@ -619,12 +661,12 @@ const PrescriptionUploadModal = ({
                                   <div className="!flex !justify-between !items-start !gap-2">
                                     <div className="!min-w-0">
                                       <span className="!block !text-slate-900 !truncate !text-[13px] !font-bold">
-                                        {v.businessDetails?.name || "Vendor"}
+                                        {v.vendor?.name || v.businessDetails?.name || "Vendor"}
                                       </span>
-                                      {v.businessDetails?.distance !== undefined && (
+                                      {(v.vendor?.distance !== undefined || v.businessDetails?.distance !== undefined) && (
                                         <span className="!text-slate-400 !text-[10px]">
                                           <i className="fa-solid fa-location-dot !mr-1"></i>
-                                          {v.businessDetails.distance} km away
+                                          {v.vendor?.distance || v.businessDetails.distance} km away
                                         </span>
                                       )}
                                     </div>
@@ -632,7 +674,7 @@ const PrescriptionUploadModal = ({
                                     <div className="!text-end !shrink-0 !min-w-[60px]">
                                       {hasDiscount && (
                                         <span className="!text-slate-400 !line-through !block !text-[10px] !leading-none">
-                                          ₹{v.price}
+                                          ₹{originalPrice}
                                         </span>
                                       )}
                                       <span className="!text-purple-600 !block !text-[14px] !font-bold">
@@ -653,7 +695,7 @@ const PrescriptionUploadModal = ({
                                       effectiveVariantId={item.variants?.[0]?._id || null}
                                       price={price}
                                       service={serviceType}
-                                      calculatedDiscountPrice={v.discountprice}
+                                      calculatedDiscountPrice={hasDiscount ? price : null}
                                       handleRentalBookinProcess={handleRentalBookingProcess}
                                       handleNavigateToBooking={handleNavigateToBooking}
                                       handleAddLead={handleAddLead}

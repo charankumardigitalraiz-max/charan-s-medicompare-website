@@ -31,6 +31,7 @@ const CartQuantityControls = ({
   rentAndCartButtonStyles,
   contailerStyles,
   individualStyleForCart,
+  prescription,
   inStock = true,
   className = "",
   style = {},
@@ -284,10 +285,13 @@ const CartQuantityControls = ({
     e?.preventDefault();
     if (isLoading) return;
 
+    if (prescription === true && tabletdetails) {
+      tabletdetails.prescriptionRequire = true;
+    }
     // Check if prescription is required for this tablet/medicine
     const rxRequired = tabletdetails?.prescriptionRequired === true || item?.tabletdetails?.prescriptionRequired === true;
     if (rxRequired) {
-      const hasActivePrescriptionPayment = userDetails?.hasActivePrescriptionPayment;
+      const hasActivePrescriptionPayment = userDetails?.hasActivePrescriptionPayment || (prescription === true);
 
       if (hasActivePrescriptionPayment) {
         const existingPrescriptionItem = cartItems.find(
@@ -786,7 +790,7 @@ const CartQuantityControls = ({
       {bookingType === "cart" && inStock &&
         (quantity > 0 ? (
           <div className="w-full flex flex-col items-center gap-1">
-            <div className="flex items-center justify-between border border-[#321961] bg-[#fdfaff] !rounded-sm px-2.5 py-1 w-full shadow-sm">
+            <div className="flex items-center justify-between bg-[#fdfaff] !rounded-sm px-2.5 py-1 w-full !shadow-[0_0_8px_rgba(50,25,97,0.18)] transition-shadow duration-200">
               <button
                 className="text-[#321961] hover:bg-[var(--color-primary)]/10 disabled:opacity-50 w-5 h-5 rounded flex items-center justify-center cursor-pointer border-none bg-transparent"
                 onClick={handleDecrement}
@@ -808,7 +812,7 @@ const CartQuantityControls = ({
             <button
               onClick={handleAdd}
               disabled={isLoading}
-              className="w-full flex items-center justify-center gap-1.5 py-0.5 px-2.5 !rounded-sm !text-[11px] !font-semibold !text-white bg-[var(--color-primary)] hover:shadow-md active:scale-[0.98] transition-all cursor-pointer border-none"
+              className="w-full flex-1 flex items-center !bg-primary justify-center gap-1.5 !py-1 !px-2.5 !rounded-sm !text-[11px] !font-semibold !text-white transition-all cursor-pointer border-none"
             >
               <i className="fas fa-shopping-cart"></i>Add
             </button>

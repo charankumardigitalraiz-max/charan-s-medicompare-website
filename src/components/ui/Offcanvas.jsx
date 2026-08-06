@@ -1,5 +1,7 @@
-import React from "react";
+import React, { createContext, useContext } from "react";
 import { createPortal } from "react-dom";
+
+const OffcanvasContext = createContext(null);
 
 /**
  * Tailwind-based Offcanvas panel — drop-in replacement for react-bootstrap Offcanvas.
@@ -14,7 +16,7 @@ const Offcanvas = ({ show, onHide, placement = "end", className = "", children }
   };
 
   const panel = (
-    <>
+    <OffcanvasContext.Provider value={{ onHide }}>
       {/* Backdrop */}
       <div
         className={`fixed inset-0 bg-black/50 z-[99999998] transition-opacity duration-300 ${show ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
@@ -30,28 +32,33 @@ const Offcanvas = ({ show, onHide, placement = "end", className = "", children }
       >
         {children}
       </div>
-    </>
+    </OffcanvasContext.Provider>
   );
 
   return createPortal(panel, document.body);
 };
 
 /** Header with optional close button */
-const OffcanvasHeader = ({ children, closeButton, className = "", onHide }) => (
-  <div className={`flex items-center justify-between px-4 py-3 border-b border-slate-100 ${className}`}>
-    <div className="font-semibold text-slate-800 text-[15px]">{children}</div>
-    {closeButton && (
-      <button
-        type="button"
-        aria-label="Close"
-        onClick={onHide}
-        className="w-7 h-7 flex items-center justify-center rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-800 transition-colors border-0 cursor-pointer text-lg leading-none"
-      >
-        &times;
-      </button>
-    )}
-  </div>
-);
+const OffcanvasHeader = ({ children, closeButton, className = "", onHide }) => {
+  const context = useContext(OffcanvasContext);
+  const handleHide = onHide || context?.onHide;
+
+  return (
+    <div className={`flex items-center justify-between px-4 py-3 border-b border-slate-100 ${className}`}>
+      <div className="font-semibold text-slate-800 text-[15px]">{children}</div>
+      {closeButton && (
+        <button
+          type="button"
+          aria-label="Close"
+          onClick={handleHide}
+          className="w-7 h-7 flex items-center justify-center rounded-full bg-slate-100 hover:bg-slate-200 text-slate-500 hover:text-slate-800 transition-colors border-0 cursor-pointer text-lg leading-none"
+        >
+          &times;
+        </button>
+      )}
+    </div>
+  );
+};
 
 /** Body — scrollable area */
 const OffcanvasBody = ({ children, className = "" }) => (

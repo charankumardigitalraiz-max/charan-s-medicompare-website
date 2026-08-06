@@ -37,10 +37,17 @@ import Compositions from "../feature-module/frontend/pharmacy/products-component
 import LabTestPackageDetails from "../feature-module/frontend/pharmacy/LabTestPackageDetails";
 import RelatedProductsView from "../feature-module/frontend/pharmacy/RelatedProductsView";
 import BlogList from "../feature-module/frontend/home/home-4/BlogList";
+import PrescriptionUploadPage from "../feature-module/frontend/pharmacy/PrescriptionUploadPage";
+
 export const publicRoutes = [
   {
     path: "/",
     element: <Home2 />, // Main Home
+    route: Route,
+  },
+  {
+    path: "/prescription-upload",
+    element: <PrescriptionUploadPage />,
     route: Route,
   },
 

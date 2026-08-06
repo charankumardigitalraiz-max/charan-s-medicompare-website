@@ -940,40 +940,40 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                                         <span className="dott green" />
                                       </div>
                                     )}
-                                    {/* 
-                                <button
-                                  type="button"
-                                  title="Upload prescription"
-                                  onClick={() => setShowPrescriptionModal(true)}
-                                  style={{
-                                    background: "transparent",
-                                    color: "rgb(107, 114, 128)",
-                                    border: "1.5px solid rgb(229, 231, 235)",
-                                    borderRadius: "6px",
-                                    padding: "2px",
-                                    width: "25px",
-                                    height: "25px",
-                                    display: "flex",
-                                    alignItems: "center",
-                                    justifyContent: "center",
-                                    cursor: "pointer",
-                                    transition: "0.2s cubic-bezier(0.4, 0, 0.2, 1)",
-                                    flexShrink: 0,
-                                    marginRight: "4px",
-                                  }}
-                                  onMouseEnter={(e) => {
-                                    e.currentTarget.style.color = "#7c3aed";
-                                    e.currentTarget.style.borderColor = "#7c3aed";
-                                    e.currentTarget.style.backgroundColor = "#f5f3ff";
-                                  }}
-                                  onMouseLeave={(e) => {
-                                    e.currentTarget.style.color = "rgb(107, 114, 128)";
-                                    e.currentTarget.style.borderColor = "rgb(229, 231, 235)";
-                                    e.currentTarget.style.backgroundColor = "transparent";
-                                  }}
-                                >
-                                  <i className="fa-solid fa-file-medical" style={{ fontSize: "12px" }}></i>
-                                </button> */}
+
+                                    <button
+                                      type="button"
+                                      title="Upload prescription"
+                                      onClick={() => navigate("/prescription-upload", { state: { mode: "search", pincode: selectedPincode, lat: latitude, lng: longitude } })}
+                                      style={{
+                                        background: "transparent",
+                                        color: "rgb(107, 114, 128)",
+                                        border: "1.5px solid rgb(229, 231, 235)",
+                                        borderRadius: "6px",
+                                        padding: "2px",
+                                        width: "25px",
+                                        height: "25px",
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        cursor: "pointer",
+                                        transition: "0.2s cubic-bezier(0.4, 0, 0.2, 1)",
+                                        flexShrink: 0,
+                                        marginRight: "4px",
+                                      }}
+                                      onMouseEnter={(e) => {
+                                        e.currentTarget.style.color = "#7c3aed";
+                                        e.currentTarget.style.borderColor = "#7c3aed";
+                                        e.currentTarget.style.backgroundColor = "#f5f3ff";
+                                      }}
+                                      onMouseLeave={(e) => {
+                                        e.currentTarget.style.color = "rgb(107, 114, 128)";
+                                        e.currentTarget.style.borderColor = "rgb(229, 231, 235)";
+                                        e.currentTarget.style.backgroundColor = "transparent";
+                                      }}
+                                    >
+                                      <i className="fa-solid fa-file-medical" style={{ fontSize: "12px" }}></i>
+                                    </button>
 
                                     <button
                                       type="button"
@@ -1259,10 +1259,10 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                   {categories.map((item, categoryIndex) => (
                     <div className="w-1/2 sm:w-1/2 md:w-1/6 lg:w-1/6 xl:w-1/6 2xl:w-[14.285%] px-2 mb-4 flex" key={item._id}>
                       <div
-                        className="group flex-1 cursor-pointer bg-white !border !border-[#eef1f6] !shadow-[0_8px_30px_rgb(0,0,0,0.03)] hover:!shadow-[0_20px_40px_rgba(128,89,202,0.12)] !rounded-2xl w-full text-center p-5 hover:!border-[#321961]/40 hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-center items-center"
+                        className="group flex-1 cursor-pointer bg-white !border !border-[#e5e7eb] hover:!border-[#321961]/40 !shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:!shadow-[0_8px_20px_rgba(128,89,202,0.08)] !rounded-md w-full text-center p-4 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-center items-center"
                         onClick={() => handleCategoryClick(item)}
                       >
-                        <span className="w-[72px] h-[72px] rounded-full mx-auto mb-3 flex items-center justify-center bg-gradient-to-br from-[#f8f4ff] to-[#f3ebff] border border-[#f3effc] transition-all duration-300 group-hover:scale-105">
+                        <span className="w-[68px] h-[68px] rounded-full mx-auto mb-3 flex items-center justify-center bg-slate-50 border border-slate-100 transition-all duration-300 group-hover:scale-105">
                           <img
                             src={
                               item?.files
@@ -1277,7 +1277,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                             decoding="async"
                           />
                         </span>
-                        <h4 className="!font-semibold !text-[13.5px] !text-slate-700 group-hover:!text-[#321961] transition-colors duration-200 mb-0">{item.name}</h4>
+                        <h4 className="!font-semibold !text-[13px] !text-slate-700 group-hover:!text-[#321961] transition-colors duration-200 mb-0">{item.name}</h4>
                       </div>
                     </div>
                   ))}
@@ -1378,6 +1378,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
               imgUrl={imgUrl}
             />
           )}
+
           <DynamicCategorySections
             sections={sections.filter(sec => sec.title?.toLowerCase() !== "top most medicines" && sec.title?.toLowerCase() !== "top sales medicines")}
             onProductClick={handleProductClick}

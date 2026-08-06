@@ -1,25 +1,26 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
 import { createPortal } from "react-dom";
 import {
   imgUrl,
   axiosCommonInstance,
   axiosUserInstance,
-} from "../../Apiservice.jsx";
-import { CartQuantityControls, VendorActions } from "../ui";
-import { getImageUrl } from "../../utils/index.js";
+} from "../../../../Apiservice.jsx";
+import { CartQuantityControls, VendorActions } from "../../../../components/ui";
+import { getImageUrl } from "../../../../utils/index.js";
 import toast from "react-hot-toast";
-import ShareModal from "../../feature-module/frontend/pharmacy/products-components/ShareModal.jsx";
-import LeadModal from "../../feature-module/frontend/pharmacy/products-components/LeadModal.jsx";
-import RentModal from "../../feature-module/frontend/pharmacy/products-components/RentModal.jsx";
-import ConsultationModal from "../../feature-module/frontend/pharmacy/products-components/ConsultationModal.jsx";
+import ShareModal from "./ShareModal.jsx";
+import LeadModal from "./LeadModal.jsx";
+import RentModal from "./RentModal.jsx";
+import ConsultationModal from "./ConsultationModal.jsx";
 import {
   getShareUrl,
   copyToClipboard,
-} from "../../feature-module/frontend/pharmacy/utils/shareUtils.js";
-import AppointmentModal from "../../feature-module/frontend/pharmacy/products-components/AppointmentModal.jsx";
-import { useProfile } from "../../context/ProfileContext";
-import { redirectToLoginWithPendingBooking } from "../../utils/pendingBookingUtils";
-import FamilyMemberSelectionModal from "../../feature-module/frontend/pharmacy/products-components/FamilyMemberSelectionModal.jsx";
+} from "../utils/shareUtils.js";
+import AppointmentModal from "./AppointmentModal.jsx";
+import { useProfile } from "../../../../context/ProfileContext";
+import { redirectToLoginWithPendingBooking } from "../../../../utils/pendingBookingUtils";
+import FamilyMemberSelectionModal from "./FamilyMemberSelectionModal.jsx";
+import { ProductsDataContext } from "./ProductsDataContext.jsx";
 
 const INITIAL_LEAD_FORM = {
   date: "",
@@ -34,23 +35,28 @@ const INITIAL_LEAD_FORM = {
 const VendorsSection = ({
   vendors,
   tablet,
-  selectedVariants,
-  selectedVendors,
-  expandedVendors,
-  onToggleExpand,
-  onVendorAction,
-  getVendorPrice,
-  getQuantityForVariant,
-  rentAndCartButtonStyles,
-  contailerStyles,
-  prescription,
-  service,
-  id,
-  navigate,
   allVendorsCount = 0,
   showAllVendors = false,
 }) => {
-  // console.log("Vendor Card", vendors, "products", tablet)
+  const context = useContext(ProductsDataContext);
+  if (!context) return null;
+
+  const {
+    selectedVariants,
+    selectedVendors,
+    expandedVendors,
+    onToggleExpand,
+    onVendorAction,
+    getVendorPrice,
+    getQuantityForVariant,
+    rentAndCartButtonStyles,
+    contailerStyles,
+    individualStyleForCart,
+    service,
+    id,
+    navigate,
+  } = context;
+
   // Modal states
   const [showShareModal, setShowShareModal] = useState(false);
   const [showLeadModal, setShowLeadModal] = useState(false);
@@ -130,23 +136,28 @@ const VendorsSection = ({
     }
   };
 
-  // if (!vendors || vendors.length === 0) return null;
   if (!vendors || vendors.length === 0) {
     return (
-      <div className="relative">
-        {/* Toggle Bar with 0 offers */}
+      <div className="product-vendors-section-full" style={{ position: "relative" }}>
         {!showAllVendors && (
           <div style={{ position: "relative", marginTop: "4px" }}>
             <div
-              className="flex justify-between items-center bg-[#fafafa] border border-dashed border-slate-300 rounded-sm py-1.5 px-3 cursor-default"
+              className="vendors-section-header d-flex justify-content-between align-items-center"
+              style={{
+                background: "#fafafa",
+                border: "1px dashed #cbd5e1",
+                borderRadius: "10px",
+                padding: "6px 12px",
+                cursor: "default"
+              }}
             >
-              <div className="flex items-center">
-                <i className="fa-solid fa-right-left mr-2 style-vendor-icon" style={{ color: "#a3a3a3", fontSize: "10px" }}></i>
-                <span className="text-[11px] font-medium text-[#8c8c8c] tracking-wide">
+              <div className="vendors-header-left d-flex align-items-center">
+                <i className="fa-solid fa-right-left me-2" style={{ color: "#a3a3a3", fontSize: "10px" }}></i>
+                <span style={{ fontSize: "11px", fontWeight: "500", color: "#8c8c8c", letterSpacing: "0.02em" }}>
                   Not available
                 </span>
               </div>
-              <span className="inline-block text-[10px] px-1.5 py-0.5 rounded-[4px] bg-[#f0f0f0] text-gray-500 font-medium border-0">0</span>
+              <span className="badge text-secondary border-0" style={{ fontSize: "10px", padding: "2px 6px", borderRadius: "4px", background: "#f0f0f0" }}>0</span>
             </div>
           </div>
         )}
@@ -238,7 +249,6 @@ const VendorsSection = ({
     }
   };
 
-  // Handler for appointment
   const handleAppointment = (vendor, med) => {
     if (!isLoggedIn) {
       toast.error("Please login to book appointment");
@@ -307,7 +317,6 @@ const VendorsSection = ({
     }
   };
 
-  // Handler for consultation
   const handleConsultation = (vendor, med) => {
     if (!isLoggedIn) {
       toast.error("Please login to book consultation");
@@ -335,7 +344,6 @@ const VendorsSection = ({
     setShowConsultationModal(true);
   };
 
-  // Handler for lead
   const handleAddLead = (vendor, med, variantId) => {
     if (!isLoggedIn) {
       toast.error("Please login to add lead");
@@ -372,7 +380,6 @@ const VendorsSection = ({
     setShowLeadModal(true);
   };
 
-  // Form handlers
   const handleRentFormChange = (e) => {
     const { name, value } = e.target;
     setRentFormData((prev) => ({
@@ -639,7 +646,6 @@ const VendorsSection = ({
       ? (matchedVendorVariant.discountprice || matchedVendorVariant.discountPrice || null)
       : (vendor?.discountprice || vendor?.discountPrice || null);
 
-    // Calculate discount price based on discountType
     let calculatedDiscountPrice = discountPrice;
     const discountType = matchedVendorVariant
       ? (matchedVendorVariant.discountType || null)
@@ -674,17 +680,42 @@ const VendorsSection = ({
       }
     }
 
-
-
     return (
       <div
         key={vendorIndex}
-        className="flex flex-col p-2.5 border border-slate-200 bg-white rounded-sm mb-1.5 transition-all hover:border-purple-200"
+        className="vendor-item-compact"
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          padding: "6px 8px",
+          border: "1px solid #e2e8f0",
+          borderRadius: "8px",
+          background: "#fff",
+          marginBottom: "6px",
+        }}
       >
-        <div className="flex items-center gap-2.5 w-full">
+        <div
+          className="vendor-top-section"
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "flex-start",
+            gap: "6px",
+            width: "100%",
+          }}
+        >
           <div
-            className="cursor-pointer w-7 h-7 rounded-full overflow-hidden shrink-0 border border-slate-100 flex items-center justify-center bg-slate-50"
+            className="vendor-img"
             onClick={() => handleVendorClick(vendor)}
+            style={{
+              cursor: "pointer",
+              width: "26px",
+              height: "26px",
+              borderRadius: "50%",
+              overflow: "hidden",
+              flexShrink: 0,
+              border: "1px solid #e2e8f0",
+            }}
           >
             {vendor?.bussinessdetails?.bussiness_image?.url ? (
               <img
@@ -693,83 +724,192 @@ const VendorsSection = ({
                 )}
                 alt={vendor?.bussinessdetails?.name || "Vendor"}
                 title={vendor?.bussinessdetails?.name || "Vendor"}
-                className="w-full h-full object-cover"
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                }}
                 onError={(e) => {
                   e.target.src = "/assets/default.png";
                 }}
               />
             ) : (
-              <div className="w-7 h-7 rounded-full bg-slate-50 flex items-center justify-center">
+              <div
+                style={{
+                  width: "26px",
+                  height: "26px",
+                  borderRadius: "50%",
+                  background: "#f9fafb",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
                 <i
-                  className="fas fa-store text-slate-400 text-[10px]"
+                  className="fas fa-store"
+                  style={{ color: "#9ca3af", fontSize: "10px" }}
                 ></i>
               </div>
             )}
           </div>
-          <div className="flex flex-col min-w-0 items-start justify-center flex-1">
+          <div
+            className="vendor-info"
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              minWidth: 0,
+              alignItems: "flex-start",
+              justifyContent: "flex-start",
+            }}
+          >
             <div
-              className="text-xs font-semibold text-slate-700 cursor-pointer truncate w-full text-left line-clamp-1 flex items-center gap-1.5"
+              className="vendor-name"
+              style={{
+                fontSize: "12px",
+                fontWeight: "500",
+                cursor: "pointer",
+                whiteSpace: "nowrap",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                lineHeight: "1.2",
+                color: "#1e293b",
+                display: "block",
+                width: "100%",
+                textAlign: "left",
+                alignSelf: "flex-start",
+              }}
               onClick={() => handleVendorClick(vendor)}
               title={vendor?.bussinessdetails?.name || "Vendor"}
             >
-              <span className="truncate max-w-full block">{vendor?.bussinessdetails?.name || "Vendor"}</span>
-              {!!vendor?.averageRating && !!vendor?.ratingCount && (
-                <div className="flex items-center gap-0.5 text-[9px] text-slate-400 font-medium">
+              {vendor?.bussinessdetails?.name || "Vendor"}
+              {vendor?.averageRating && vendor?.ratingCount && (
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "2px",
+                    fontSize: "9px",
+                    color: "#666",
+                    marginTop: "1px",
+                    marginBottom: "2px",
+                  }}
+                >
                   <i
-                    className="fas fa-star text-amber-400 text-[8px]"
+                    className="fas fa-star"
+                    style={{
+                      color: "#ffc107",
+                      fontSize: "8px",
+                    }}
                   ></i>
-                  <span className="font-semibold text-slate-600">
+                  <span style={{ fontWeight: "500" }}>
                     {vendor.averageRating.toFixed(1)}
                   </span>
-                  <span>
+                  <span style={{ color: "#999" }}>
                     ({vendor.ratingCount}+)
                   </span>
                 </div>
               )}
             </div>
             {vendor?.distanceInKm && (
-              <div className="text-[9px] text-slate-400 flex items-center gap-0.5 mt-0.5">
+              <div
+                className="vendor-distance"
+                style={{
+                  fontSize: "9px",
+                  color: "#6b7280",
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
                 <i
-                  className="fas fa-location-dot text-[8px]"
+                  className="fas fa-location-dot"
+                  style={{ marginRight: "2px", fontSize: "7px" }}
                 ></i>
-                <span>{Number(vendor.distanceInKm).toFixed(1)} km away</span>
+                {Number(vendor.distanceInKm).toFixed(1)} km away
               </div>
             )}
           </div>
         </div>
 
-        <div className="w-full mt-2">
-          <div className="flex items-baseline gap-1.5 text-xs flex-wrap">
+        <div
+          className="vendor-price-section"
+          style={{
+            width: "100%",
+            marginTop: "2px",
+          }}
+        >
+          <div
+            className="vendor-price"
+            style={{
+              display: "flex",
+              gap: "3px",
+              alignItems: "baseline",
+              fontSize: "11px",
+              justifyContent: "flex-start",
+              flexWrap: "wrap",
+            }}
+          >
             {calculatedDiscountPrice &&
               calculatedDiscountPrice > 0 &&
               calculatedDiscountPrice !== vendorPrice ? (
               calculatedDiscountPrice > vendorPrice ? (
                 <>
-                  <span className="font-semibold text-slate-800">
+                  <span
+                    className="new"
+                    style={{ fontWeight: "600", color: "#111827" }}
+                  >
                     ₹{Number(vendorPrice).toFixed(2)}
                   </span>
-                  <span className="text-[9.5px] text-slate-400 line-through">
+                  <span
+                    className="old"
+                    style={{
+                      fontSize: "9.5px",
+                      textDecoration: "line-through",
+                    }}
+                  >
                     ₹{Number(calculatedDiscountPrice).toFixed(2)}
                   </span>
                 </>
               ) : (
                 <>
-                  <span className="font-semibold text-slate-800">
+                  <span
+                    className="new"
+                    style={{ fontWeight: "600", color: "#111827" }}
+                  >
                     ₹{Number(calculatedDiscountPrice).toFixed(2)}
                   </span>
-                  <span className="text-[9.5px] text-slate-400 line-through">
+                  <span
+                    className="old"
+                    style={{
+                      fontSize: "9.5px",
+                      textDecoration: "line-through",
+                    }}
+                  >
                     ₹{Number(vendorPrice).toFixed(2)}
                   </span>
                 </>
               )
             ) : (
-              <span className="font-semibold text-slate-800">
+              <span
+                className="new"
+                style={{ fontWeight: "600", color: "#111827" }}
+              >
                 ₹{Number(vendorPrice).toFixed(2)}
               </span>
             )}
 
             {discount > 0 && (
-              <span className="bg-red-500 text-white text-[8px] px-1 py-0.5 rounded font-bold ml-1">
+              <span
+                className="off"
+                style={{
+                  background: "#dc2626",
+                  color: "#fff",
+                  fontSize: "8px",
+                  padding: "0.5px 3px",
+                  borderRadius: "3px",
+                  fontWeight: "500",
+                  marginLeft: "2px",
+                }}
+              >
                 {discountType === "percentage" && discountPrice
                   ? `${discountPrice}% OFF`
                   : `${discount}% OFF`}
@@ -777,9 +917,20 @@ const VendorsSection = ({
             )}
 
             {vendor?.perDayRent && (
-              <div className="text-[9px] text-[#321961] font-medium flex items-center gap-1 mt-0.5">
+              <div
+                style={{
+                  fontSize: "9px",
+                  color: "#8059ca",
+                  fontWeight: "500",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "2px",
+                  marginTop: "1px",
+                }}
+              >
                 <i
-                  className="fas fa-calendar-day text-[7px]"
+                  className="fas fa-calendar-day"
+                  style={{ fontSize: "7px" }}
                 ></i>
                 <span>₹{vendor.perDayRent} per day</span>
               </div>
@@ -787,13 +938,19 @@ const VendorsSection = ({
           </div>
         </div>
 
-        <div className="flex gap-1 mt-2.5 w-full">
-          <div className="flex-1">
+        <div
+          className="vendor-actions-compact w-100"
+          style={{
+            display: "flex",
+            gap: "4px",
+            marginTop: "4px",
+          }}
+        >
+          <div style={{ flex: 1 }}>
             <VendorActions
               bookingType={bookingType}
               isStockFalse={isStockFalse}
               isServiceType={isServiceType}
-              prescription={prescription}
               med={tablet}
               vendor={vendor}
               effectiveVariantId={selectedVariantId}
@@ -805,7 +962,7 @@ const VendorsSection = ({
               handleAddLead={handleAddLead}
               handleOpenConsultationModal={handleConsultation}
               handleOpenAppointmentModal={handleAppointment}
-              className="w-full"
+              className="w-100"
             />
           </div>
         </div>
@@ -814,46 +971,76 @@ const VendorsSection = ({
   };
 
   return (
-    <div className="relative w-full">
-      {/* Inline view: Default to all if showAllVendors is true */}
+    <div className="product-vendors-section-full" style={{ position: "relative" }}>
       {showAllVendors && (
-        <div className="flex flex-col gap-2">
+        <div className="vendors-list-compact" style={{ maxHeight: "none", opacity: 1, overflow: "visible" }}>
           {vendors.map((vendor, vendorIndex) => renderVendorItem(vendor, vendorIndex))}
         </div>
       )}
 
-      {/* Wrapper container to position the overlay exactly above the toggle bar (only if not showAllVendors) */}
       {!showAllVendors && (
-        <div className="relative mt-2">
-          {/* Toggle Bar to Compare Others */}
+        <div style={{ position: "relative", marginTop: "8px" }}>
           {vendors.length > 0 ? (
             <div
-              className="flex justify-between items-center bg-gradient-to-r from-purple-50 to-indigo-50/30  !rounded-sm px-3.5 py-1.5 cursor-pointer shadow-sm hover:from-purple-100/60 hover:to-indigo-50 transition-all"
+              className="vendors-section-header clickable d-flex justify-content-between align-items-center"
               onClick={handleToggle}
+              style={{
+                background: "linear-gradient(135deg, #f5f3ff 0%, #f0ebff 100%)",
+                border: "1px solid #d8b4fe",
+                borderRadius: "10px",
+                padding: "6px 14px",
+                cursor: "pointer",
+                boxShadow: "0 2px 4px rgba(124, 58, 237, 0.04)",
+                transition: "all 0.2s ease-in-out"
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = "linear-gradient(135deg, #ede9fe 0%, #e4daff 100%)";
+                e.currentTarget.style.borderColor = "#c084fc";
+                e.currentTarget.style.boxShadow = "0 3px 6px rgba(124, 58, 237, 0.08)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = "linear-gradient(135deg, #f5f3ff 0%, #f0ebff 100%)";
+                e.currentTarget.style.borderColor = "#d8b4fe";
+                e.currentTarget.style.boxShadow = "0 2px 4px rgba(124, 58, 237, 0.04)";
+              }}
             >
-              <div className="flex items-center gap-1.5">
-                <i className="fa-solid fa-right-left text-[#321961] text-[11px]"></i>
-                <span className="text-[11.5px] font-bold text-[#321961] tracking-wide">
+              <div className="vendors-header-left d-flex align-items-center">
+                <i className="fa-solid fa-right-left me-2" style={{ color: "#7c3aed", fontSize: "11px" }}></i>
+                <span style={{ fontSize: "11.5px", fontWeight: "700", color: "#7c3aed", letterSpacing: "0.01em" }}>
                   Compare
                 </span>
               </div>
-              <div className="flex items-center gap-2">
-                <span className="bg-[#321961] text-white text-[10px] px-2 py-0.5 rounded-full font-semibold">
+              <div className="d-flex align-items-center gap-2">
+                <span className="badge text-white border-0" style={{ fontSize: "10px", padding: "2px 6px", borderRadius: "20px", background: "#7c3aed" }}>
                   {vendors.length} Available
                 </span>
-                <i className={`fas fa-chevron-down text-[#321961] text-[10px] transition-transform duration-200 ${isExpanded ? "rotate-180" : ""}`}></i>
+                <i className="fas fa-chevron-down" style={{
+                  color: "#7c3aed",
+                  fontSize: "10px",
+                  transition: "transform 0.2s",
+                  transform: isExpanded ? "rotate(180deg)" : "none"
+                }}></i>
               </div>
             </div>
           ) : vendors.length === 0 ? (
-            <div className="relative mt-1">
-              <div className="flex justify-between items-center bg-slate-50 border border-dashed border-slate-300 rounded-xl px-3 py-1.5 cursor-default">
-                <div className="flex items-center gap-1.5">
-                  <i className="fa-solid fa-right-left text-slate-400 text-[10px]"></i>
-                  <span className="text-[11px] font-medium text-slate-500 tracking-wide">
+            <div style={{ position: "relative", marginTop: "4px" }}>
+              <div
+                className="vendors-section-header d-flex justify-content-between align-items-center"
+                style={{
+                  background: "#fafafa",
+                  border: "1px dashed #cbd5e1",
+                  borderRadius: "10px",
+                  padding: "6px 12px",
+                  cursor: "default"
+                }}
+              >
+                <div className="vendors-header-left d-flex align-items-center">
+                  <i className="fa-solid fa-right-left me-2" style={{ color: "#a3a3a3", fontSize: "10px" }}></i>
+                  <span style={{ fontSize: "11px", fontWeight: "500", color: "#8c8c8c", letterSpacing: "0.02em" }}>
                     Not available
                   </span>
                 </div>
-                <span className="bg-slate-100 text-slate-500 text-[10px] px-2 py-0.5 rounded font-semibold">0</span>
+                <span className="badge text-secondary border-0" style={{ fontSize: "10px", padding: "2px 6px", borderRadius: "4px", background: "#f0f0f0" }}>0</span>
               </div>
             </div>
           ) : null}
@@ -861,61 +1048,118 @@ const VendorsSection = ({
           {isExpanded && (
             <div
               onClick={(e) => e.stopPropagation()}
-              className="absolute bottom-[calc(100%+6px)] left-0 right-0 bg-white rounded-xl shadow-[0_15px_40px_rgba(128,89,202,0.18),0_5px_15px_rgba(0,0,0,0.06)] z-[9999] p-4 flex flex-col max-h-[280px] border-0"
+              style={{
+                position: "absolute",
+                bottom: "calc(100% + 4px)",
+                left: 0,
+                right: 0,
+                backgroundColor: "#ffffff",
+                border: "1px solid #e2e8f0",
+                borderRadius: "12px",
+                boxShadow: "0 -4px 20px rgba(0, 0, 0, 0.12)",
+                zIndex: 9999,
+                padding: "12px",
+                display: "flex",
+                flexDirection: "column",
+                maxHeight: "250px",
+              }}
             >
-              {/* Header */}
-              <div className="flex justify-between items-center mb-3 pb-2.5 border-b border-slate-100 bg-gradient-to-r from-purple-50/40 to-transparent -mx-3.5 -mt-3.5 px-3.5 pt-2.5 rounded-t-sm">
-                <div className="flex items-center gap-2">
-                  <div className="w-5 h-5 rounded-full bg-purple-50 flex items-center justify-center">
-                    <i className="fa-solid fa-right-left text-[#321961] text-[10px]"></i>
-                  </div>
-                  <span className="font-bold text-[12.5px] text-slate-800 tracking-wide">Compare Offers</span>
-                  <span className="text-[10px] text-purple-700 bg-purple-50 px-2 py-0.5 rounded-full font-bold">
+              <div style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                marginBottom: "12px",
+                paddingBottom: "8px",
+                borderBottom: "1px solid #f1f5f9"
+              }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+                  <i className="fa-solid fa-right-left" style={{ color: "#8059ca", fontSize: "13px" }}></i>
+                  <span style={{ fontWeight: "600", fontSize: "13px", color: "#1e293b" }}>Compare</span>
+                  <span style={{ fontSize: "11px", color: "#64748b", background: "#f1f5f9", padding: "2px 6px", borderRadius: "12px", fontWeight: "600" }}>
                     {vendors.length}
                   </span>
                 </div>
-                <div
-                  className="bg-slate-100 hover:bg-red-50 text-slate-500 hover:text-red-600 w-6 h-6 !rounded-full flex items-center justify-center transition-all duration-150 cursor-pointer"
+                <button
+                  type="button"
+                  style={{
+                    border: "none",
+                    background: "#f1f5f9",
+                    width: "22px",
+                    height: "22px",
+                    borderRadius: "50%",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    color: "#64748b",
+                    cursor: "pointer",
+                    transition: "all 0.2s",
+                    padding: 0,
+                  }}
                   onClick={handleToggle}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = "#e2e8f0";
+                    e.currentTarget.style.color = "#0f172a";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = "#f1f5f9";
+                    e.currentTarget.style.color = "#64748b";
+                  }}
                 >
-                  <i className="fas fa-times text-[9px]"></i>
-                </div>
+                  <i className="fas fa-times" style={{ fontSize: "10px" }}></i>
+                </button>
               </div>
 
-              {/* Scroll Up Button Indicator */}
               {showScrollUp && (
                 <div
-                  className="absolute top-[48px] left-3.5 right-3.5 h-8 bg-gradient-to-b from-white/95 via-white/80 to-transparent flex justify-center items-center z-10 cursor-pointer transition-opacity duration-200"
+                  style={{
+                    position: "absolute",
+                    top: "45px",
+                    left: "12px",
+                    right: "12px",
+                    height: "28px",
+                    background: "linear-gradient(to bottom, rgba(255,255,255,0.95), rgba(255,255,255,0))",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    zIndex: 10,
+                    cursor: "pointer"
+                  }}
                   onClick={() => {
                     scrollContainerRef.current?.scrollBy({ top: -80, behavior: "smooth" });
                   }}
                 >
-                  <div className="bg-white shadow-sm border border-slate-100 rounded-full w-6 h-6 flex items-center justify-center hover:scale-105 transition-transform">
-                    <i className="fas fa-chevron-up text-[#321961] text-[10px]"></i>
-                  </div>
+                  <i className="fas fa-chevron-up" style={{ color: "#8059ca", fontSize: "12px" }}></i>
                 </div>
               )}
 
-              {/* Scrollable List of All Vendors */}
               <div
                 ref={scrollContainerRef}
                 onScroll={updateScrollIndicators}
-                className="flex-1 overflow-y-auto pr-0.5 scrollbar-thin space-y-2"
+                style={{ flex: 1, overflowY: "auto", paddingRight: "2px" }}
               >
                 {vendors.map((vendor, vendorIndex) => renderVendorItem(vendor, vendorIndex))}
               </div>
 
-              {/* Scroll Down Button Indicator */}
               {showScrollDown && (
                 <div
-                  className="absolute bottom-3.5 left-3.5 right-3.5 h-8 bg-gradient-to-t from-white/95 via-white/80 to-transparent flex justify-center items-center z-10 cursor-pointer transition-opacity duration-200"
+                  style={{
+                    position: "absolute",
+                    bottom: "12px",
+                    left: "12px",
+                    right: "12px",
+                    height: "28px",
+                    background: "linear-gradient(to top, rgba(255,255,255,0.95), rgba(255,255,255,0))",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    zIndex: 10,
+                    cursor: "pointer"
+                  }}
                   onClick={() => {
                     scrollContainerRef.current?.scrollBy({ top: 80, behavior: "smooth" });
                   }}
                 >
-                  <div className="bg-white shadow-sm border border-slate-100 rounded-full w-6 h-6 flex items-center justify-center hover:scale-105 transition-transform">
-                    <i className="fas fa-chevron-down text-[#321961] text-[10px]"></i>
-                  </div>
+                  <i className="fas fa-chevron-down" style={{ color: "#8059ca", fontSize: "12px" }}></i>
                 </div>
               )}
             </div>
@@ -927,14 +1171,12 @@ const VendorsSection = ({
         typeof document !== "undefined" &&
         createPortal(
           <>
-            {/* Share  */}
             <ShareModal
               show={showShareModal}
               onClose={() => setShowShareModal(false)}
               onShare={handleShare}
             />
 
-            {/* Lead Modal */}
             <LeadModal
               show={showLeadModal}
               onClose={() => {
@@ -956,7 +1198,6 @@ const VendorsSection = ({
               fixedType={leadFormData.fixedType}
             />
 
-            {/* Rent Modal */}
             <RentModal
               show={showRentModal}
               onClose={() => {
@@ -973,7 +1214,6 @@ const VendorsSection = ({
               fixedType={rentProduct?.fixedType || getFixedType(currentMed)}
             />
 
-            {/* Consultation Modal */}
             <ConsultationModal
               show={showConsultationModal}
               onClose={toggleConsultationModal}
@@ -988,7 +1228,6 @@ const VendorsSection = ({
               }
             />
 
-            {/* Appointment Modal */}
             <AppointmentModal
               show={showAppointmentModal}
               onClose={() => setShowAppointmentModal(false)}
@@ -1003,6 +1242,7 @@ const VendorsSection = ({
                 appointmentFormData.category || getFixedType(currentMed)
               }
             />
+
             <FamilyMemberSelectionModal
               show={familyMemberModel}
               onClose={() => {
