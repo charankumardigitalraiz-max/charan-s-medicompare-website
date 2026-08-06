@@ -603,7 +603,7 @@ const PrescriptionUploadPage = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
 
           {/* Top Panel: Upload Zone and Checklist */}
-          <div className="lg:col-span-12 flex flex-col md:flex-row gap-6">
+          <div className="lg:col-span-12 flex flex-col md:flex-row gap-6 items-start">
 
 
             {/* Checklist guidelines or Extracted Details */}
