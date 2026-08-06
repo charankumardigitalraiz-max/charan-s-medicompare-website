@@ -648,7 +648,7 @@ const PrescriptionUploadPage = () => {
                             fileInputRef.current?.click();
                           }, 100);
                         }}
-                        className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-md bg-purple-50 hover:bg-purple-100 text-purple-700 font-semibold text-[11px] transition-all border-0 shadow-sm"
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 !rounded-md !bg-primary hover:opacity-90 text-white font-semibold text-xs transition-all border-0 shadow-sm"
                         title="Reupload Prescription"
                       >
                         <i className="fa-solid fa-arrow-up-from-bracket text-[10px]"></i>
@@ -665,17 +665,18 @@ const PrescriptionUploadPage = () => {
                           setAnalysisData(null);
                           if (fileInputRef.current) fileInputRef.current.value = "";
                         }}
-                        className="w-7 h-7 rounded-md bg-slate-50 hover:bg-slate-100 text-slate-400 hover:text-slate-600 flex items-center justify-center transition-all border-0 shadow-sm"
+                        className="inline-flex items-center gap-1 px-3 py-1.5 !rounded-md bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs transition-all border-0 shadow-sm"
                         title="Clear and Close"
                       >
-                        <i className="fa-solid fa-xmark text-sm"></i>
+                        <i className="fa-solid fa-xmark text-[10px]"></i>
+                        <span>Close</span>
                       </button>
                     </div>
                   </div>
 
                   {/* Extracted Metadata Container */}
                   <div className="flex flex-col gap-4">
-                    
+
                     {/* Patient & Doctor & Date Grid */}
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                       {/* Patient Card */}
@@ -737,9 +738,8 @@ const PrescriptionUploadPage = () => {
                           {analysisData?.confidence && (
                             <div className="bg-white px-3 py-2 rounded-md border border-slate-100 flex justify-between items-center shadow-sm">
                               <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">AI Confidence</span>
-                              <span className={`inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full ${
-                                analysisData.confidence.toLowerCase() === 'high' ? 'bg-emerald-50 text-emerald-600 border border-emerald-100' : 'bg-amber-50 text-amber-600 border border-amber-100'
-                              }`}>
+                              <span className={`inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full ${analysisData.confidence.toLowerCase() === 'high' ? 'bg-emerald-50 text-emerald-600 border border-emerald-100' : 'bg-amber-50 text-amber-600 border border-amber-100'
+                                }`}>
                                 <i className="fa-solid fa-circle text-[5px]"></i>
                                 {analysisData.confidence}
                               </span>
