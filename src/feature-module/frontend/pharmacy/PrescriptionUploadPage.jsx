@@ -680,21 +680,21 @@ const PrescriptionUploadPage = () => {
                     {/* Patient & Doctor & Date Grid */}
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                       {/* Patient Card */}
-                      <div className="bg-gradient-to-r from-purple-50/20 to-indigo-50/10 rounded-md border border-slate-100 p-3.5">
-                        <div className="flex items-center gap-1.5 text-purple-800 font-bold text-xs uppercase tracking-wider mb-3">
+                      <div className="bg-gradient-to-r from-purple-50/10 to-indigo-50/5 rounded-md border border-slate-200 pt-3.5 px-3.5 pb-2.5 shadow-sm">
+                        <div className="flex items-center gap-1.5 text-purple-800 font-bold text-xs uppercase tracking-wider mb-2.5">
                           <i className="fa-solid fa-user-injured text-purple-600 text-xs"></i>
                           <span>Patient Information</span>
                         </div>
                         <div className="grid grid-cols-2 gap-2 text-xs">
-                          <div className="col-span-2 bg-white px-3 py-2 rounded-md border border-slate-100 flex flex-col gap-0.5 shadow-sm">
+                          <div className="col-span-2 bg-white px-3 py-1.5 rounded-sm border border-slate-150 flex flex-col gap-0.5 shadow-sm">
                             <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Full Name</span>
                             <span className="font-semibold text-slate-800 truncate text-xs">{analysisData?.patient?.name || "N/A"}</span>
                           </div>
-                          <div className="bg-white px-3 py-2 rounded-md border border-slate-100 flex flex-col gap-0.5 shadow-sm">
+                          <div className="bg-white px-3 py-1.5 rounded-sm border border-slate-150 flex flex-col gap-0.5 shadow-sm">
                             <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Age</span>
                             <span className="font-semibold text-slate-800 text-xs">{analysisData?.patient?.age ? `${analysisData.patient.age} Years` : "N/A"}</span>
                           </div>
-                          <div className="bg-white px-3 py-2 rounded-md border border-slate-100 flex flex-col gap-0.5 shadow-sm">
+                          <div className="bg-white px-3 py-1.5 rounded-sm border border-slate-150 flex flex-col gap-0.5 shadow-sm">
                             <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Gender</span>
                             <span className="font-semibold text-slate-800 text-xs">{analysisData?.patient?.gender || "N/A"}</span>
                           </div>
@@ -702,20 +702,20 @@ const PrescriptionUploadPage = () => {
                       </div>
 
                       {/* Doctor Card */}
-                      <div className="bg-gradient-to-r from-purple-50/20 to-indigo-50/10 rounded-md border border-slate-100 p-3.5">
-                        <div className="flex items-center gap-1.5 text-purple-800 font-bold text-xs uppercase tracking-wider mb-3">
+                      <div className="bg-gradient-to-r from-purple-50/10 to-indigo-50/5 rounded-md border border-slate-200 pt-3.5 px-3.5 pb-2.5 shadow-sm">
+                        <div className="flex items-center gap-1.5 text-purple-800 font-bold text-xs uppercase tracking-wider mb-2.5">
                           <i className="fa-solid fa-user-doctor text-purple-600 text-xs"></i>
                           <span>Consultant Details</span>
                         </div>
                         <div className="flex flex-col gap-2 text-xs">
-                          <div className="bg-white px-3 py-2 rounded-md border border-slate-100 flex flex-col gap-0.5 shadow-sm">
+                          <div className="bg-white px-3 py-1.5 rounded-sm border border-slate-150 flex flex-col gap-0.5 shadow-sm">
                             <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Doctor Name</span>
                             <span className="font-bold text-slate-800 truncate text-xs">{analysisData?.doctor?.name || "N/A"}</span>
                             {analysisData?.doctor?.qualification && (
                               <span className="text-[10px] text-purple-600 font-semibold mt-0.5 leading-tight">{analysisData.doctor.qualification}</span>
                             )}
                           </div>
-                          <div className="bg-white px-3 py-2 rounded-md border border-slate-100 flex flex-col gap-0.5 shadow-sm">
+                          <div className="bg-white px-3 py-1.5 rounded-sm border border-slate-150 flex flex-col gap-0.5 shadow-sm">
                             <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Clinic/Hospital</span>
                             <span className="font-semibold text-slate-700 leading-normal text-xs">{analysisData?.doctor?.clinicOrHospital || "N/A"}</span>
                           </div>
@@ -723,26 +723,16 @@ const PrescriptionUploadPage = () => {
                       </div>
 
                       {/* Date & Meta Card */}
-                      <div className="bg-gradient-to-r from-purple-50/20 to-indigo-50/10 rounded-md border border-slate-100 p-3.5">
-                        <div className="flex items-center gap-1.5 text-purple-800 font-bold text-xs uppercase tracking-wider mb-3">
+                      <div className="bg-gradient-to-r from-purple-50/10 to-indigo-50/5 rounded-md border border-slate-200 pt-3.5 px-3.5 pb-2.5 shadow-sm">
+                        <div className="flex items-center gap-1.5 text-purple-800 font-bold text-xs uppercase tracking-wider mb-2.5">
                           <i className="fa-solid fa-calendar-check text-purple-600 text-xs"></i>
                           <span>Analysis & Date</span>
                         </div>
                         <div className="flex flex-col gap-2 text-xs">
                           {analysisData?.prescriptionDate && (
-                            <div className="bg-white px-3 py-2 rounded-md border border-slate-100 flex flex-col gap-0.5 shadow-sm">
+                            <div className="bg-white px-3 py-1.5 rounded-sm border border-slate-150 flex flex-col gap-0.5 shadow-sm">
                               <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Prescribed Date</span>
                               <span className="font-semibold text-slate-800 text-xs">{analysisData.prescriptionDate}</span>
-                            </div>
-                          )}
-                          {analysisData?.confidence && (
-                            <div className="bg-white px-3 py-2 rounded-md border border-slate-100 flex justify-between items-center shadow-sm">
-                              <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">AI Confidence</span>
-                              <span className={`inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full ${analysisData.confidence.toLowerCase() === 'high' ? 'bg-emerald-50 text-emerald-600 border border-emerald-100' : 'bg-amber-50 text-amber-600 border border-amber-100'
-                                }`}>
-                                <i className="fa-solid fa-circle text-[5px]"></i>
-                                {analysisData.confidence}
-                              </span>
                             </div>
                           )}
                         </div>
