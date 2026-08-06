@@ -623,85 +623,120 @@ const PrescriptionUploadPage = () => {
                 </>
               ) : (
                 <>
-                  <div className="flex items-center gap-2 mb-4 pb-2 border-b border-purple-100 text-purple-700 font-semibold">
-                    <i className="fa-solid fa-file-prescription text-base"></i>
-                    <span>Prescription Details</span>
+                  <div className="flex items-center gap-2.5 mb-4 pb-2.5 border-b border-slate-100 text-[#321961] font-bold">
+                    <div className="w-8 h-8 rounded-full bg-purple-50 text-purple-600 flex items-center justify-center shrink-0 shadow-inner">
+                      <i className="fa-solid fa-receipt text-sm"></i>
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-sm font-bold tracking-tight">Prescription Analyzed</span>
+                      <span className="text-[10px] text-slate-400 font-medium -mt-0.5">AI-extracted summary</span>
+                    </div>
                   </div>
-                  
-                  {/* Extracted Metadata */}
-                  <div className="flex flex-col gap-3">
-                    {/* Patient info */}
-                    <div className="bg-slate-50/50 p-2.5 rounded-lg border border-slate-100">
-                      <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider block mb-1">Patient Details</span>
-                      <div className="flex flex-col gap-1 text-xs">
-                        <div className="flex justify-between">
-                          <span className="text-slate-500">Name:</span>
-                          <span className="font-semibold text-slate-800">{analysisData?.patient?.name || "N/A"}</span>
+
+                  {/* Extracted Metadata Container */}
+                  <div className="flex flex-col gap-4">
+                    
+                    {/* Patient Card */}
+                    <div className="bg-gradient-to-r from-purple-50/20 to-indigo-50/10 rounded-xl border border-slate-100 p-3">
+                      <div className="flex items-center gap-1.5 text-purple-700 font-bold text-[11px] uppercase tracking-wider mb-2">
+                        <i className="fa-solid fa-user-injured text-purple-500 text-xs"></i>
+                        <span>Patient Information</span>
+                      </div>
+                      <div className="grid grid-cols-2 gap-2 text-xs">
+                        <div className="col-span-2 bg-white px-2.5 py-1.5 rounded-lg border border-slate-100 flex flex-col gap-0.5">
+                          <span className="text-[9px] text-slate-400 font-medium">Full Name</span>
+                          <span className="font-semibold text-slate-800 truncate">{analysisData?.patient?.name || "N/A"}</span>
                         </div>
-                        <div className="flex justify-between">
-                          <span className="text-slate-500">Age:</span>
-                          <span className="font-semibold text-slate-800">
-                            {analysisData?.patient?.age ? `${analysisData.patient.age} Yrs` : "N/A"} 
-                            {analysisData?.patient?.gender ? ` (${analysisData.patient.gender})` : ""}
-                          </span>
+                        <div className="bg-white px-2.5 py-1.5 rounded-lg border border-slate-100 flex flex-col gap-0.5">
+                          <span className="text-[9px] text-slate-400 font-medium">Age</span>
+                          <span className="font-semibold text-slate-800">{analysisData?.patient?.age ? `${analysisData.patient.age} Years` : "N/A"}</span>
+                        </div>
+                        <div className="bg-white px-2.5 py-1.5 rounded-lg border border-slate-100 flex flex-col gap-0.5">
+                          <span className="text-[9px] text-slate-400 font-medium">Gender</span>
+                          <span className="font-semibold text-slate-800">{analysisData?.patient?.gender || "N/A"}</span>
                         </div>
                       </div>
                     </div>
 
-                    {/* Doctor info */}
-                    <div className="bg-slate-50/50 p-2.5 rounded-lg border border-slate-100">
-                      <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider block mb-1">Doctor & Clinic</span>
-                      <div className="flex flex-col gap-1 text-xs">
-                        <div className="flex justify-between items-start gap-2">
-                          <span className="text-slate-500 shrink-0">Doctor:</span>
-                          <span className="font-semibold text-slate-800 text-right">{analysisData?.doctor?.name || "N/A"}</span>
+                    {/* Doctor Card */}
+                    <div className="bg-gradient-to-r from-purple-50/20 to-indigo-50/10 rounded-xl border border-slate-100 p-3">
+                      <div className="flex items-center gap-1.5 text-purple-700 font-bold text-[11px] uppercase tracking-wider mb-2">
+                        <i className="fa-solid fa-user-doctor text-purple-500 text-xs"></i>
+                        <span>Consultant Details</span>
+                      </div>
+                      <div className="flex flex-col gap-2 text-xs">
+                        <div className="bg-white px-2.5 py-1.5 rounded-lg border border-slate-100 flex flex-col gap-0.5">
+                          <span className="text-[9px] text-slate-400 font-medium">Doctor Name</span>
+                          <span className="font-bold text-slate-800 truncate">{analysisData?.doctor?.name || "N/A"}</span>
+                          {analysisData?.doctor?.qualification && (
+                            <span className="text-[10px] text-purple-600 font-medium mt-0.5 leading-none">{analysisData.doctor.qualification}</span>
+                          )}
                         </div>
-                        {analysisData?.doctor?.qualification && (
-                          <div className="flex justify-between items-start gap-2">
-                            <span className="text-slate-500 shrink-0">Qual:</span>
-                            <span className="text-[11px] text-slate-600 text-right">{analysisData.doctor.qualification}</span>
-                          </div>
-                        )}
-                        <div className="flex justify-between items-start gap-2">
-                          <span className="text-slate-500 shrink-0">Clinic/Hosp:</span>
-                          <span className="font-semibold text-slate-800 text-right">{analysisData?.doctor?.clinicOrHospital || "N/A"}</span>
+                        <div className="bg-white px-2.5 py-1.5 rounded-lg border border-slate-100 flex flex-col gap-0.5">
+                          <span className="text-[9px] text-slate-400 font-medium">Clinic/Hospital</span>
+                          <span className="font-semibold text-slate-700 leading-normal">{analysisData?.doctor?.clinicOrHospital || "N/A"}</span>
                         </div>
                       </div>
                     </div>
 
-                    {/* Prescription date / Validation info */}
-                    <div className="flex flex-col gap-1 text-xs px-1">
+                    {/* Additional Metadata Info */}
+                    <div className="bg-slate-50/50 rounded-xl p-3 border border-slate-100 flex flex-col gap-2 text-xs">
                       {analysisData?.prescriptionDate && (
-                        <div className="flex justify-between">
-                          <span className="text-slate-500">Prescribed Date:</span>
-                          <span className="font-medium text-slate-700">{analysisData.prescriptionDate}</span>
+                        <div className="flex justify-between items-center">
+                          <div className="flex items-center gap-1 text-slate-500">
+                            <i className="fa-regular fa-calendar text-[11px]"></i>
+                            <span>Prescribed Date:</span>
+                          </div>
+                          <span className="font-semibold text-slate-800">{analysisData.prescriptionDate}</span>
+                        </div>
+                      )}
+                      {analysisData?.confidence && (
+                        <div className="flex justify-between items-center">
+                          <div className="flex items-center gap-1 text-slate-500">
+                            <i className="fa-solid fa-shield-halved text-[11px]"></i>
+                            <span>AI Confidence:</span>
+                          </div>
+                          <span className={`inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full ${
+                            analysisData.confidence.toLowerCase() === 'high' ? 'bg-emerald-50 text-emerald-600 border border-emerald-100' : 'bg-amber-50 text-amber-600 border border-amber-100'
+                          }`}>
+                            <i className="fa-solid fa-circle text-[6px]"></i>
+                            {analysisData.confidence}
+                          </span>
                         </div>
                       )}
                       {analysisData?.validationNotes && (
-                        <div className="flex justify-between">
-                          <span className="text-slate-500">Validation:</span>
-                          <span className="font-medium text-slate-700">{analysisData.validationNotes}</span>
+                        <div className="text-[11px] text-slate-500 bg-white border border-slate-100 p-2 rounded-lg leading-relaxed mt-1 flex gap-1.5 items-start">
+                          <i className="fa-solid fa-circle-info text-purple-500 mt-0.5 shrink-0"></i>
+                          <span>{analysisData.validationNotes}</span>
                         </div>
                       )}
                     </div>
 
-                    {/* Medicines List */}
-                    <div className="border-t border-dashed border-slate-200 mt-2 pt-3">
-                      <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider block mb-2">Prescribed Medications</span>
-                      <div className="flex flex-col gap-1.5 max-h-[220px] overflow-y-auto pr-1">
+                    {/* Prescribed Medications */}
+                    <div className="border-t border-dashed border-slate-200 mt-1 pt-3">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-[11px] text-purple-700 font-bold uppercase tracking-wider">Prescribed Medications</span>
+                        <span className="bg-purple-100 text-[#321961] text-[10px] font-bold px-2 py-0.5 rounded-full">
+                          {analysisData?.medicines?.length || 0} Items
+                        </span>
+                      </div>
+                      <div className="flex flex-col gap-2 max-h-[220px] overflow-y-auto pr-1">
                         {analysisData?.medicines?.map((med, idx) => (
-                          <div key={idx} className="flex justify-between items-center bg-slate-50 p-2 rounded-lg border border-slate-100">
-                            <div className="flex flex-col min-w-0">
-                              <span className="font-semibold text-slate-800 text-xs truncate max-w-[180px]">{med.name}</span>
+                          <div key={idx} className="flex gap-2.5 bg-white p-2.5 rounded-lg border border-slate-100 hover:border-purple-200 hover:shadow-sm transition-all duration-200">
+                            <div className="w-6 h-6 rounded-full bg-purple-50 text-purple-500 flex items-center justify-center shrink-0 mt-0.5">
+                              <i className="fa-solid fa-capsules text-[10px]"></i>
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <span className="font-semibold text-slate-800 text-xs truncate block leading-tight">{med.name}</span>
                               {med.genericName && (
-                                <span className="text-[10px] text-slate-400 truncate max-w-[180px]" title={med.genericName}>
+                                <span className="text-[10px] text-slate-400 truncate block mt-0.5" title={med.genericName}>
                                   {med.genericName}
                                 </span>
                               )}
                             </div>
-                            <div className="text-right shrink-0">
+                            <div className="text-right shrink-0 flex flex-col gap-1 items-end justify-center">
                               {med.frequency && (
-                                <span className="inline-block bg-purple-50 text-[#321961] text-[10px] font-bold px-1.5 py-0.5 rounded border border-purple-100/50">
+                                <span className="inline-block bg-purple-50 text-[#321961] text-[9px] font-bold px-1.5 py-0.5 rounded border border-purple-100/50 tracking-wide">
                                   {med.frequency}
                                 </span>
                               )}
@@ -862,7 +897,7 @@ const PrescriptionUploadPage = () => {
           </div>
 
           {/* Bottom Panel: Results Listing */}
-          <div className={`${hasSearched && searchResults.some(r => !r.isDbProduct) ? "lg:col-span-9" : "lg:col-span-12"} bg-white rounded-2xl border border-slate-200 p-6 min-h-[400px] flex flex-col shadow-sm`}>
+          <div className={`${hasSearched && searchResults.some(r => !r.isDbProduct) ? "lg:col-span-9" : "lg:col-span-12"} bg-white rounded-md border border-slate-200 p-6 min-h-[400px] flex flex-col shadow-sm`}>
             <h2 className="!text-base !font-semibold text-slate-800 mb-4 pb-3 border-b border-slate-100 flex items-center gap-2">
               <i className="fa-solid fa-list-check text-purple-600"></i>
               {hasSearched ? `Matching Medicines (${searchResults.length})` : "Analysis Results"}
@@ -1056,7 +1091,7 @@ const PrescriptionUploadPage = () => {
 
           {/* Right Panel: Unavailable Products */}
           {hasSearched && searchResults.some(r => !r.isDbProduct) && (
-            <div className="lg:col-span-3 bg-white rounded-2xl border border-slate-200 p-5 shadow-sm sticky top-4">
+            <div className="lg:col-span-3 bg-white rounded-md border border-slate-200 p-5 shadow-sm sticky top-4">
               <div className="flex items-center gap-2 mb-4 pb-3 border-b border-slate-100">
                 <div className="w-6 h-6 rounded-full bg-red-100 flex items-center justify-center shrink-0">
                   <i className="fa-solid fa-circle-xmark text-red-500 text-[11px]"></i>
