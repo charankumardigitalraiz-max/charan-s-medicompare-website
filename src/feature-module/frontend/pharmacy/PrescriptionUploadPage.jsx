@@ -614,7 +614,7 @@ const PrescriptionUploadPage = () => {
                     <i className="fa-solid fa-circle-info text-base"></i>
                     <span>Prescription Upload Guidelines</span>
                   </div>
-                  <ul className="pl-4 flex flex-col gap-2 list-decimal mb-0 text-xs">
+                  <ul className="pl-4 flex flex-col gap-2.5 list-decimal mb-0 text-sm">
                     <li>Doctor's signature, stamp, and clinic letterhead must be visible.</li>
                     <li>Patient's full name, age, and consultation date must be clearly printed.</li>
                     <li>The list of medicines, dosage, and strength should be legible.</li>
@@ -686,15 +686,15 @@ const PrescriptionUploadPage = () => {
                           <span>Patient Information</span>
                         </div>
                         <div className="grid grid-cols-2 gap-2 text-xs">
-                          <div className="col-span-2 bg-white px-3 py-1.5 rounded-sm border border-slate-150 flex flex-col gap-0.5 shadow-sm">
+                          <div className="col-span-2 bg-white px-3 py-1.5 rounded-sm border border-slate-50 flex flex-col gap-0.5 shadow-sm">
                             <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Full Name</span>
                             <span className="font-semibold text-slate-800 truncate text-xs">{analysisData?.patient?.name || "N/A"}</span>
                           </div>
-                          <div className="bg-white px-3 py-1.5 rounded-sm border border-slate-150 flex flex-col gap-0.5 shadow-sm">
+                          <div className="bg-white px-3 py-1.5 rounded-sm border border-slate-50 flex flex-col gap-0.5 shadow-sm">
                             <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Age</span>
                             <span className="font-semibold text-slate-800 text-xs">{analysisData?.patient?.age ? `${analysisData.patient.age} Years` : "N/A"}</span>
                           </div>
-                          <div className="bg-white px-3 py-1.5 rounded-sm border border-slate-150 flex flex-col gap-0.5 shadow-sm">
+                          <div className="bg-white px-3 py-1.5 rounded-sm border border-slate-50 flex flex-col gap-0.5 shadow-sm">
                             <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Gender</span>
                             <span className="font-semibold text-slate-800 text-xs">{analysisData?.patient?.gender || "N/A"}</span>
                           </div>
@@ -708,14 +708,14 @@ const PrescriptionUploadPage = () => {
                           <span>Consultant Details</span>
                         </div>
                         <div className="flex flex-col gap-2 text-xs">
-                          <div className="bg-white px-3 py-1.5 rounded-sm border border-slate-150 flex flex-col gap-0.5 shadow-sm">
+                          <div className="bg-white px-3 py-1.5 rounded-sm border border-slate-50 flex flex-col gap-0.5 shadow-sm">
                             <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Doctor Name</span>
                             <span className="font-bold text-slate-800 truncate text-xs">{analysisData?.doctor?.name || "N/A"}</span>
                             {analysisData?.doctor?.qualification && (
                               <span className="text-[10px] text-purple-600 font-semibold mt-0.5 leading-tight">{analysisData.doctor.qualification}</span>
                             )}
                           </div>
-                          <div className="bg-white px-3 py-1.5 rounded-sm border border-slate-150 flex flex-col gap-0.5 shadow-sm">
+                          <div className="bg-white px-3 py-1.5 rounded-sm border border-slate-50 flex flex-col gap-0.5 shadow-sm">
                             <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Clinic/Hospital</span>
                             <span className="font-semibold text-slate-700 leading-normal text-xs">{analysisData?.doctor?.clinicOrHospital || "N/A"}</span>
                           </div>
@@ -730,7 +730,7 @@ const PrescriptionUploadPage = () => {
                         </div>
                         <div className="flex flex-col gap-2 text-xs">
                           {analysisData?.prescriptionDate && (
-                            <div className="bg-white px-3 py-1.5 rounded-sm border border-slate-150 flex flex-col gap-0.5 shadow-sm">
+                            <div className="bg-white px-3 py-1.5 rounded-sm border border-slate-50 flex flex-col gap-0.5 shadow-sm">
                               <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Prescribed Date</span>
                               <span className="font-semibold text-slate-800 text-xs">{analysisData.prescriptionDate}</span>
                             </div>
