@@ -607,7 +607,7 @@ const PrescriptionUploadPage = () => {
 
 
             {/* Checklist guidelines or Extracted Details */}
-            <div className="bg-white border border-purple-100 rounded-md p-5 text-sm text-slate-600 leading-relaxed shadow-sm md:max-w-md w-full shrink-0">
+            <div className={`bg-white border border-purple-100 rounded-md p-5 text-sm text-slate-600 leading-relaxed shadow-sm w-full ${hasSearched ? "" : "md:max-w-md shrink-0"}`}>
               {!hasSearched ? (
                 <>
                   <div className="flex items-center gap-2 mb-3 text-purple-700 font-semibold">
@@ -754,146 +754,148 @@ const PrescriptionUploadPage = () => {
               )}
             </div>
 
-            <div className="bg-white rounded-md border border-slate-200 p-6 shadow-sm flex-1">
-              <h2 className="!text-base !font-semibold text-slate-800 mb-4 flex items-center gap-2">
-                <i className="fa-solid fa-file-medical text-purple-600"></i>
-                Upload Document
-              </h2>
+            {!hasSearched && (
+              <div className="bg-white rounded-md border border-slate-200 p-6 shadow-sm flex-1">
+                <h2 className="!text-base !font-semibold text-slate-800 mb-4 flex items-center gap-2">
+                  <i className="fa-solid fa-file-medical text-purple-600"></i>
+                  Upload Document
+                </h2>
 
-              {/* Dropzone */}
-              {!noPrescription && (
-                <div
-                  className={`flex flex-col items-center justify-center p-5 rounded-2xl cursor-pointer text-center relative border-2 transition-all duration-200 min-h-[140px] ${file
-                    ? "border-purple-600 bg-purple-50/10 p-2"
-                    : "border-dashed border-slate-300 bg-slate-50/50 hover:border-purple-400 hover:bg-slate-50"
-                    }`}
-                  onDragOver={handleDragOver}
-                  onDrop={handleDrop}
-                  onClick={() => !file && fileInputRef.current?.click()}
-                >
-                  <input
-                    type="file"
-                    ref={fileInputRef}
-                    accept="image/*"
-                    className="hidden"
-                    onChange={handleFileChange}
-                  />
-
-                  {file ? (
-                    <div className="relative group w-full flex items-center justify-center rounded-xl overflow-hidden shadow-sm max-h-[160px]" onClick={(e) => e.stopPropagation()}>
-                      {filePreview && (
-                        <img
-                          src={filePreview}
-                          alt="Prescription preview"
-                          className="max-h-[150px] max-w-full object-contain rounded-lg transition-all duration-200"
-                        />
-                      )}
-
-                      {/* Hover Overlay with Delete Icon */}
-                      <div className="absolute inset-0 bg-slate-900/60 opacity-0 group-hover:opacity-100 transition-all duration-200 flex items-center justify-center rounded-xl">
-                        <button
-                          type="button"
-                          onClick={clearFile}
-                          className="flex items-center justify-center w-9 h-9 rounded-full bg-red-600 text-white hover:bg-red-700 hover:scale-105 transition-all border-0 p-0 shadow-md"
-                          title="Remove file"
-                        >
-                          <i className="fa-solid fa-trash-can text-sm"></i>
-                        </button>
-                      </div>
-                    </div>
-                  ) : (
-                    <>
-                      <div className="mb-2 flex items-center justify-center w-10 h-10 rounded-full bg-purple-50 text-purple-600 shadow-inner">
-                        <i className="fa-solid fa-cloud-arrow-up text-lg animate-pulse"></i>
-                      </div>
-                      <span className="text-slate-700 text-xs font-bold block">
-                        Drag & drop or <span className="text-purple-600 hover:underline">browse</span> your prescription
-                      </span>
-                      <span className="text-slate-400 text-[10px] mt-1 block">
-                        Supports JPEG, PNG, WebP (Max 10MB)
-                      </span>
-                    </>
-                  )}
-                </div>
-              )}
-
-              {/* Checkbox: I don't have a prescription */}
-              {mode !== "search" && (
-                <div className="flex items-center gap-2 mt-4 px-3.5 py-3 rounded-lg bg-slate-50 border border-slate-200 select-none">
-                  <input
-                    type="checkbox"
-                    id="noPrescription"
-                    checked={noPrescription}
-                    onChange={(e) => {
-                      setNoPrescription(e.target.checked);
-                      if (e.target.checked) {
-                        setFile(null);
-                        setFilePreview(null);
-                        setValidationError("");
-                      }
-                    }}
-                    className="w-4 h-4 rounded border-slate-300 cursor-pointer accent-purple-600"
-                  />
-                  <label
-                    htmlFor="noPrescription"
-                    className="text-xs font-semibold text-slate-600 cursor-pointer mb-0"
+                {/* Dropzone */}
+                {!noPrescription && (
+                  <div
+                    className={`flex flex-col items-center justify-center p-5 rounded-2xl cursor-pointer text-center relative border-2 transition-all duration-200 min-h-[140px] ${file
+                      ? "border-purple-600 bg-purple-50/10 p-2"
+                      : "border-dashed border-slate-300 bg-slate-50/50 hover:border-purple-400 hover:bg-slate-50"
+                      }`}
+                    onDragOver={handleDragOver}
+                    onDrop={handleDrop}
+                    onClick={() => !file && fileInputRef.current?.click()}
                   >
-                    I don't have a prescription
-                  </label>
-                </div>
-              )}
+                    <input
+                      type="file"
+                      ref={fileInputRef}
+                      accept="image/*"
+                      className="hidden"
+                      onChange={handleFileChange}
+                    />
 
-              {/* Policy Notes */}
-              {mode !== "search" && noPrescription && (
-                <div className="mt-4 p-4 bg-amber-50/70 border border-amber-200 rounded-xl text-amber-900 text-xs leading-relaxed shadow-sm">
-                  <div className="flex gap-2">
-                    <i className="fa-solid fa-circle-info mt-0.5 text-base text-amber-600"></i>
-                    <div>
-                      <strong className="block mb-1.5 font-bold text-sm">Prescription Options:</strong>
-                      <ul className="pl-4 list-disc flex flex-col gap-1.5">
-                        <li>
-                          <strong>Upload After Payment:</strong> Proceed to checkout and upload the prescription later from your order details page.
-                        </li>
-                        <li>
-                          <strong>Get Doctor Prescription:</strong> Alternatively, Medicompares will arrange a doctor consultation and provide a valid prescription in this order for a fee of <strong>₹100</strong>.
-                        </li>
-                      </ul>
+                    {file ? (
+                      <div className="relative group w-full flex items-center justify-center rounded-xl overflow-hidden shadow-sm max-h-[160px]" onClick={(e) => e.stopPropagation()}>
+                        {filePreview && (
+                          <img
+                            src={filePreview}
+                            alt="Prescription preview"
+                            className="max-h-[150px] max-w-full object-contain rounded-lg transition-all duration-200"
+                          />
+                        )}
+
+                        {/* Hover Overlay with Delete Icon */}
+                        <div className="absolute inset-0 bg-slate-900/60 opacity-0 group-hover:opacity-100 transition-all duration-200 flex items-center justify-center rounded-xl">
+                          <button
+                            type="button"
+                            onClick={clearFile}
+                            className="flex items-center justify-center w-9 h-9 rounded-full bg-red-600 text-white hover:bg-red-700 hover:scale-105 transition-all border-0 p-0 shadow-md"
+                            title="Remove file"
+                          >
+                            <i className="fa-solid fa-trash-can text-sm"></i>
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      <>
+                        <div className="mb-2 flex items-center justify-center w-10 h-10 rounded-full bg-purple-50 text-purple-600 shadow-inner">
+                          <i className="fa-solid fa-cloud-arrow-up text-lg animate-pulse"></i>
+                        </div>
+                        <span className="text-slate-700 text-xs font-bold block">
+                          Drag & drop or <span className="text-purple-600 hover:underline">browse</span> your prescription
+                        </span>
+                        <span className="text-slate-400 text-[10px] mt-1 block">
+                          Supports JPEG, PNG, WebP (Max 10MB)
+                        </span>
+                      </>
+                    )}
+                  </div>
+                )}
+
+                {/* Checkbox: I don't have a prescription */}
+                {mode !== "search" && (
+                  <div className="flex items-center gap-2 mt-4 px-3.5 py-3 rounded-lg bg-slate-50 border border-slate-200 select-none">
+                    <input
+                      type="checkbox"
+                      id="noPrescription"
+                      checked={noPrescription}
+                      onChange={(e) => {
+                        setNoPrescription(e.target.checked);
+                        if (e.target.checked) {
+                          setFile(null);
+                          setFilePreview(null);
+                          setValidationError("");
+                        }
+                      }}
+                      className="w-4 h-4 rounded border-slate-300 cursor-pointer accent-purple-600"
+                    />
+                    <label
+                      htmlFor="noPrescription"
+                      className="text-xs font-semibold text-slate-600 cursor-pointer mb-0"
+                    >
+                      I don't have a prescription
+                    </label>
+                  </div>
+                )}
+
+                {/* Policy Notes */}
+                {mode !== "search" && noPrescription && (
+                  <div className="mt-4 p-4 bg-amber-50/70 border border-amber-200 rounded-xl text-amber-900 text-xs leading-relaxed shadow-sm">
+                    <div className="flex gap-2">
+                      <i className="fa-solid fa-circle-info mt-0.5 text-base text-amber-600"></i>
+                      <div>
+                        <strong className="block mb-1.5 font-bold text-sm">Prescription Options:</strong>
+                        <ul className="pl-4 list-disc flex flex-col gap-1.5">
+                          <li>
+                            <strong>Upload After Payment:</strong> Proceed to checkout and upload the prescription later from your order details page.
+                          </li>
+                          <li>
+                            <strong>Get Doctor Prescription:</strong> Alternatively, Medicompares will arrange a doctor consultation and provide a valid prescription in this order for a fee of <strong>₹100</strong>.
+                          </li>
+                        </ul>
+                      </div>
                     </div>
                   </div>
-                </div>
-              )}
+                )}
 
-              {/* CTA Action Buttons */}
-              <div className="flex gap-4 mt-6">
-                <button
-                  type="button"
-                  onClick={() => navigate(-1)}
-                  className="w-1/2 py-2.5 !rounded-md border border-purple-200/60 bg-purple-50 text-purple-700 font-semibold text-sm hover:bg-purple-100/80 hover:text-purple-900 transition-all shadow-sm"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="button"
-                  disabled={isUploading || (!file && !noPrescription)}
-                  onClick={handleVerify}
-                  className={`w-1/2 py-2.5 !rounded-md !font-semibold text-sm text-white transition-all shadow-md hover:shadow-lg border-0 flex items-center justify-center gap-2 ${isUploading || (!file && !noPrescription)
-                    ? "bg-slate-200 text-slate-400 cursor-not-allowed shadow-none hover:shadow-none"
-                    : "bg-primary hover:bg-secondary"
-                    }`}
-                >
-                  {isUploading ? (
-                    <>
-                      <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div>
-                      {mode === "search" ? "Searching..." : "Verifying..."}
-                    </>
-                  ) : noPrescription ? (
-                    "Proceed"
-                  ) : (
-                    mode === "search" ? "Search Medicines" : "Verify & Add"
-                  )}
-                </button>
+                {/* CTA Action Buttons */}
+                <div className="flex gap-4 mt-6">
+                  <button
+                    type="button"
+                    onClick={() => navigate(-1)}
+                    className="w-1/2 py-2.5 !rounded-md border border-purple-200/60 bg-purple-50 text-purple-700 font-semibold text-sm hover:bg-purple-100/80 hover:text-purple-900 transition-all shadow-sm"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="button"
+                    disabled={isUploading || (!file && !noPrescription)}
+                    onClick={handleVerify}
+                    className={`w-1/2 py-2.5 !rounded-md !font-semibold text-sm text-white transition-all shadow-md hover:shadow-lg border-0 flex items-center justify-center gap-2 ${isUploading || (!file && !noPrescription)
+                      ? "bg-slate-200 text-slate-400 cursor-not-allowed shadow-none hover:shadow-none"
+                      : "bg-primary hover:bg-secondary"
+                      }`}
+                  >
+                    {isUploading ? (
+                      <>
+                        <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div>
+                        {mode === "search" ? "Searching..." : "Verifying..."}
+                      </>
+                    ) : noPrescription ? (
+                      "Proceed"
+                    ) : (
+                      mode === "search" ? "Search Medicines" : "Verify & Add"
+                    )}
+                  </button>
+                </div>
               </div>
-            </div>
+            )}
           </div>
 
           {/* Bottom Panel: Results Listing */}
