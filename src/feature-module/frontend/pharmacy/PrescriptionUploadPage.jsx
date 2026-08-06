@@ -759,7 +759,7 @@ const PrescriptionUploadPage = () => {
           </div>
 
           {/* Bottom Panel: Results Listing */}
-          <div className="lg:col-span-12 bg-white rounded-2xl border border-slate-200 p-6 min-h-[400px] flex flex-col shadow-sm">
+          <div className={`${hasSearched && searchResults.some(r => !r.isDbProduct) ? "lg:col-span-9" : "lg:col-span-12"} bg-white rounded-2xl border border-slate-200 p-6 min-h-[400px] flex flex-col shadow-sm`}>
             <h2 className="!text-base !font-semibold text-slate-800 mb-4 pb-3 border-b border-slate-100 flex items-center gap-2">
               <i className="fa-solid fa-list-check text-purple-600"></i>
               {hasSearched ? `Matching Medicines (${searchResults.length})` : "Analysis Results"}
@@ -815,7 +815,7 @@ const PrescriptionUploadPage = () => {
               </div>
             ) : (
               <>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 overflow-y-auto max-h-[700px] pr-1 pb-4">
+                <div className={`grid grid-cols-1 md:grid-cols-2 ${hasSearched && searchResults.some(r => !r.isDbProduct) ? "lg:grid-cols-3" : "lg:grid-cols-4"} gap-6 overflow-y-auto max-h-[700px] pr-1 pb-4`}>
                   {searchResults.filter(r => r.isDbProduct !== false).map((item) => (
                     <div
                       key={item._id}
@@ -928,37 +928,6 @@ const PrescriptionUploadPage = () => {
                     </div>
                   ))}
                 </div>
-
-                {/* Unavailable Products Section */}
-                {searchResults.some(r => !r.isDbProduct) && (
-                  <div className="mt-6 rounded-2xl border border-red-100 bg-red-50/40 p-5">
-                    <div className="flex items-center gap-2 mb-4">
-                      <div className="w-6 h-6 rounded-full bg-red-100 flex items-center justify-center shrink-0">
-                        <i className="fa-solid fa-circle-xmark text-red-400 text-[11px]"></i>
-                      </div>
-                      <h4 className="text-sm font-semibold text-red-600">Products not available on Medicompare</h4>
-                    </div>
-                    <div className="flex flex-col gap-2.5">
-                      {searchResults.filter(r => !r.isDbProduct).map((item) => (
-                        <div key={item._id} className="flex items-center gap-3 bg-white rounded-xl px-4 py-3 border border-red-100 shadow-sm">
-                          <div className="w-8 h-8 rounded-full bg-red-50 border border-red-100 flex items-center justify-center shrink-0">
-                            <i className="fa-solid fa-pills text-red-300 text-xs"></i>
-                          </div>
-                          <div className="flex-1 min-w-0">
-                            <span className="text-slate-700 text-xs font-semibold truncate block leading-tight">{item.name}</span>
-                            {item.strength && (
-                              <span className="text-slate-400 text-[10px] mt-0.5 block">{item.strength}</span>
-                            )}
-                          </div>
-                          <span className="inline-flex items-center gap-1 bg-red-50 border border-red-200 text-red-500 text-[10px] font-semibold px-2.5 py-1 rounded-full shrink-0">
-                            <i className="fa-solid fa-ban text-[9px]"></i>
-                            Not available
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
                 <div className="mt-8 pt-6 border-t border-slate-100">
                   <button
                     type="button"
@@ -978,6 +947,38 @@ const PrescriptionUploadPage = () => {
                 </div>
               </>
             )}
+          </div>
+
+          {/* Right Panel: Unavailable Products */}
+          {hasSearched && searchResults.some(r => !r.isDbProduct) && (
+            <div className="lg:col-span-3 bg-white rounded-2xl border border-slate-200 p-5 shadow-sm sticky top-4">
+              <div className="flex items-center gap-2 mb-4 pb-3 border-b border-slate-100">
+                <div className="w-6 h-6 rounded-full bg-red-100 flex items-center justify-center shrink-0">
+                  <i className="fa-solid fa-circle-xmark text-red-500 text-[11px]"></i>
+                </div>
+                <h4 className="text-sm font-bold text-red-600 mb-0">Unavailable Products</h4>
+              </div>
+              <div className="flex flex-col gap-2.5 max-h-[600px] overflow-y-auto pr-1">
+                {searchResults.filter(r => !r.isDbProduct).map((item) => (
+                  <div key={item._id} className="flex items-center gap-3 bg-slate-50 rounded-xl px-3.5 py-3 border border-slate-100 shadow-inner">
+                    <div className="w-7 h-7 rounded-full bg-white border border-slate-200 flex items-center justify-center shrink-0">
+                      <i className="fa-solid fa-pills text-red-400 text-xs"></i>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <span className="text-slate-700 text-xs font-semibold truncate block leading-tight" title={item.name}>{item.name}</span>
+                      {item.strength && (
+                        <span className="text-slate-400 text-[10px] mt-0.5 block truncate" title={item.strength}>{item.strength}</span>
+                      )}
+                    </div>
+                    <span className="inline-flex items-center gap-1 bg-red-50 border border-red-100 text-red-500 text-[9px] font-semibold px-2 py-0.5 rounded-full shrink-0">
+                      <i className="fa-solid fa-ban text-[8px]"></i>
+                      No Match
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
           </div>
         </div>
       </div>
