@@ -623,13 +623,53 @@ const PrescriptionUploadPage = () => {
                 </>
               ) : (
                 <>
-                  <div className="flex items-center gap-2.5 mb-4 pb-2.5 border-b border-slate-100 text-[#321961] font-bold">
-                    <div className="w-8 h-8 rounded-full bg-purple-50 text-purple-600 flex items-center justify-center shrink-0 shadow-inner">
-                      <i className="fa-solid fa-receipt text-sm"></i>
+                  <div className="flex items-center justify-between mb-4 pb-2.5 border-b border-slate-100 text-[#321961] font-bold">
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-8 h-8 rounded-full bg-purple-50 text-purple-600 flex items-center justify-center shrink-0 shadow-inner">
+                        <i className="fa-solid fa-receipt text-sm"></i>
+                      </div>
+                      <div className="flex flex-col">
+                        <span className="text-sm font-bold tracking-tight">Prescription Analyzed</span>
+                        <span className="text-[10px] text-slate-400 font-medium -mt-0.5">AI-extracted summary</span>
+                      </div>
                     </div>
-                    <div className="flex flex-col">
-                      <span className="text-sm font-bold tracking-tight">Prescription Analyzed</span>
-                      <span className="text-[10px] text-slate-400 font-medium -mt-0.5">AI-extracted summary</span>
+                    <div className="flex items-center gap-2">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setFile(null);
+                          setFilePreview(null);
+                          setSearchResults([]);
+                          setValidationError("");
+                          setHasSearched(false);
+                          setAnalysisData(null);
+                          if (fileInputRef.current) fileInputRef.current.value = "";
+                          setTimeout(() => {
+                            fileInputRef.current?.click();
+                          }, 100);
+                        }}
+                        className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-md bg-purple-50 hover:bg-purple-100 text-purple-700 font-semibold text-[11px] transition-all border-0 shadow-sm"
+                        title="Reupload Prescription"
+                      >
+                        <i className="fa-solid fa-arrow-up-from-bracket text-[10px]"></i>
+                        <span>Reupload</span>
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setFile(null);
+                          setFilePreview(null);
+                          setSearchResults([]);
+                          setValidationError("");
+                          setHasSearched(false);
+                          setAnalysisData(null);
+                          if (fileInputRef.current) fileInputRef.current.value = "";
+                        }}
+                        className="w-7 h-7 rounded-md bg-slate-50 hover:bg-slate-100 text-slate-400 hover:text-slate-600 flex items-center justify-center transition-all border-0 shadow-sm"
+                        title="Clear and Close"
+                      >
+                        <i className="fa-solid fa-xmark text-sm"></i>
+                      </button>
                     </div>
                   </div>
 
