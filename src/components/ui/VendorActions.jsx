@@ -19,7 +19,7 @@ const VendorActions = ({
   effectivePriceForCart = null,
   selectedVariant = null,
   maxStock = 999,
-  prescription,
+  prescription = false,
   IsPackage,
   // Handlers
   handleRentalBookinProcess,

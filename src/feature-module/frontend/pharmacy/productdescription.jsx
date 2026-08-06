@@ -2454,6 +2454,7 @@ const ProductDescription = () => {
           isVariant={isVariant}
           effectivePriceForCart={effectivePriceForCart}
           selectedVariant={selectedVariant}
+          prescription={false}
           // maxStock={maxStock}
           handleRentalBookinProcess={handleRentalBookinProcess}
           handleNavigateToBooking={handleNavigateToBooking}

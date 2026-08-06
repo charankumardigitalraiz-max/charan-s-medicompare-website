@@ -352,92 +352,12 @@ const PrescriptionUploadModal = ({
   const handleVerify = async () => {
     if (noPrescription) {
       if (!isLoggedIn) {
-        toast.error("Please login to proceed with prescription payment");
+        toast.error("Please login to continue");
         navigate("/login");
         return;
       }
-
-      if (!window.Razorpay) {
-        toast.error("Razorpay SDK failed to load. Please check your connection.");
-        return;
-      }
-
-      setIsUploading(true);
-      try {
-        const token = localStorage.getItem("medicomparestoken");
-        const orderRes = await axiosUserInstance.post(
-          "prescription/payment/create",
-          {},
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-
-        if (!orderRes.data || !orderRes.data.success) {
-          throw new Error(orderRes.data?.message || "Failed to create prescription payment order");
-        }
-
-        const orderData = orderRes.data.data;
-
-        const options = {
-          key: "rzp_live_TB29Bn3l1ssijC",
-          amount: orderData.amount,
-          currency: orderData.currency,
-          name: "MediCompares",
-          description: "Prescription Fee",
-          order_id: orderData.razorpayOrderId,
-          handler: async function (response) {
-            try {
-              const verifyRes = await axiosUserInstance.post(
-                "prescription/payment/verify",
-                {
-                  razorpay_order_id: response.razorpay_order_id,
-                  razorpay_payment_id: response.razorpay_payment_id,
-                  razorpay_signature: response.razorpay_signature,
-                },
-                {
-                  headers: {
-                    Authorization: `Bearer ${token}`,
-                  },
-                }
-              );
-
-              if (verifyRes.data && verifyRes.data.success) {
-                toast.success("Prescription fee paid successfully!");
-                onValidated(null);
-              } else {
-                toast.error(verifyRes.data?.message || "Prescription payment verification failed.");
-              }
-            } catch (err) {
-              toast.error("Error verifying prescription payment.");
-            } finally {
-              setIsUploading(false);
-            }
-          },
-          prefill: {
-            name: userProfile ? `${userProfile.first_name || ""} ${userProfile.last_name || ""}`.trim() : "Customer",
-            email: userProfile?.email || "",
-            contact: userProfile?.phone || "",
-          },
-          theme: {
-            color: "#7c3aed",
-          },
-          modal: {
-            ondismiss: function () {
-              setIsUploading(false);
-              toast.error("Prescription payment cancelled.");
-            },
-          },
-        };
-
-        const rzp = new window.Razorpay(options);
-        rzp.open();
-      } catch (err) {
-        toast.error(err.message || "Error starting prescription payment.");
-        setIsUploading(false);
-      }
+      // User has no prescription — pass "payment_required" so the cart shows a prescription fee
+      onValidated("payment_required");
       return;
     }
 

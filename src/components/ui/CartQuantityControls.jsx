@@ -31,7 +31,7 @@ const CartQuantityControls = ({
   rentAndCartButtonStyles,
   contailerStyles,
   individualStyleForCart,
-  prescription,
+  prescription = false,
   inStock = true,
   className = "",
   style = {},
@@ -285,41 +285,35 @@ const CartQuantityControls = ({
     e?.preventDefault();
     if (isLoading) return;
 
-    if (prescription === true && tabletdetails) {
-      tabletdetails.prescriptionRequire = true;
-    }
+    console.log("prescription", prescription)
     // Check if prescription is required for this tablet/medicine
     const rxRequired = tabletdetails?.prescriptionRequired === true || item?.tabletdetails?.prescriptionRequired === true;
     if (rxRequired) {
-      const hasActivePrescriptionPayment = userDetails?.hasActivePrescriptionPayment || (prescription === true);
-
-      if (hasActivePrescriptionPayment) {
-        const existingPrescriptionItem = cartItems.find(
-          (cartItem) => cartItem?.prescriptionImage && cartItem?.prescriptionImage !== ""
-        );
-        const existingPrescription = existingPrescriptionItem?.prescriptionImage || true;
+      // Priority 1: came from PrescriptionUploadPage — medicine was in the analyzed prescription
+      const hasPrescriptionProp = prescription === true;
+      if (hasPrescriptionProp) {
         if (bookingType === "cartslots") {
           setFamilyMemberModel(true);
         } else {
-          proceedToAdd(existingPrescription);
+          proceedToAdd("true");
         }
         return;
       }
 
-      // Check if any item in the cart already has a prescription image uploaded
-      const existingPrescriptionWithImage = cartItems.find(
-        (cartItem) => cartItem?.prescriptionImage && cartItem?.prescriptionImage !== ""
+      // Priority 2: cart already has a "payment_required" item — reuse it for this product too
+      const hasPaymentRequiredInCart = cartItems?.some(
+        (cartItem) => cartItem?.prescriptionImage === "payment_required"
       );
-      if (existingPrescriptionWithImage) {
-        const existingPrescription = existingPrescriptionWithImage.prescriptionImage;
+      if (hasPaymentRequiredInCart) {
         if (bookingType === "cartslots") {
           setFamilyMemberModel(true);
         } else {
-          proceedToAdd(existingPrescription);
+          proceedToAdd("payment_required");
         }
         return;
       }
 
+      // Priority 3: no prescription at all — show the rx upload modal
       setShowPrescriptionModal(true);
       return;
     }

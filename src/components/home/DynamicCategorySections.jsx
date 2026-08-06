@@ -457,7 +457,7 @@ const DynamicCategorySections = ({
           return (
             <div
               key={section._id || index}
-              className="w-full py-6 border-b border-slate-100/50 relative overflow-hidden"
+              className="w-full py-6 border- {} border-slate-100/50 relative overflow-hidden"
               style={{
                 backgroundImage: "url('/medicompare_bg4_instant_healthcare.png')",
                 backgroundSize: "cover",

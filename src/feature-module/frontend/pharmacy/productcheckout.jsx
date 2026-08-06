@@ -119,6 +119,8 @@ export const Cart = () => {
   const [personType, setPersonType] = useState("self");
   const [familyMembers, setFamilyMembers] = useState([]);
   const [selectedFamilyMember, setSelectedFamilyMember] = useState(null);
+  // Derived: true whenever any cart item requires prescription payment at checkout
+  const prescriptionPaymentRequired = cartItems?.some(item => item?.prescriptionImage === "payment_required") ?? false;
 
   const handleBooking = async (vendor, med, effectiveVariantId, price, stock, path, servicePassed) => {
     const resolvedService = servicePassed || med?.subcategoryDetails?.categoryDetails?.fixedType || med?.subcategorys?.category?.fixedType || med?.category?.fixedType || med?.fixedType;
@@ -577,7 +579,9 @@ export const Cart = () => {
         withCouponAndWithWallet,
         walletUsedWithoutCoupon,
         walletUsedWithCoupon,
-        paidAmount: amountToPay
+        paidAmount: amountToPay,
+        isprescriptionPaid: prescriptionPaymentRequired ? true : false,
+        prescriptionamount: prescriptionPaymentRequired ? 100 : null
       },
       bookingTypes: "cart",
       couponAmount: orderCouponDiscount,
@@ -751,7 +755,10 @@ export const Cart = () => {
   const addedDeliveryCharge = withCouponAndWithoutWallet;
   const withoutCouponAndWallet = baseFinalAmount;
   const walletUsed = walletUsedWithCoupon;
-  const amountToPay = selectedPayment === "cod" ? withCouponAndWithoutWallet : withCouponAndWithWallet;
+  const prescriptionFee = prescriptionPaymentRequired ? 100 : 0;
+  const amountToPay = +(
+    (selectedPayment === "cod" ? withCouponAndWithoutWallet : withCouponAndWithWallet) + prescriptionFee
+  ).toFixed(2);
 
   console.log("Clarified Billing breakdown:", {
     withoutCouponAndWithoutWallet,
@@ -791,6 +798,7 @@ export const Cart = () => {
   useEffect(() => {
     if (!appliedCoupon) return;
     const minPurchase = parseFloat(appliedCoupon.minimumPurchase);
+
     if (Number.isFinite(minPurchase) && minPurchase > 0) {
       if (appliedCoupon.createdType === "vendor") {
         const vendorIdStr = String(appliedCoupon.createdBy || appliedCoupon.businessDetails?._id || "");
@@ -1247,6 +1255,9 @@ export const Cart = () => {
                     // const maxQuantity = getItemMaxQuantity(item);
                     const billingSummary = item?.billingSummary;
                     const prescriptionImage = item?.prescriptionImage;
+                    // if (prescriptionImage === "payment_required") {
+                    //   setPrescriptionPaymentRequired(true)
+                    // }
                     // console.log(billingSummary)
                     // console.log(item)
                     return (
@@ -1345,7 +1356,7 @@ export const Cart = () => {
                         )}
 
                         {/* Prescription Uploaded Preview */}
-                        {prescriptionImage && (
+                        {(prescriptionImage !== "true" && prescriptionImage !== "payment_required" && prescriptionImage !== "false") && (
                           <div
                             className="flex items-center gap-2 bg-[#f0fdf4] border border-[#bbf7d0] rounded-lg px-2.5 py-1.5 mt-2"
                           >
@@ -1505,7 +1516,7 @@ export const Cart = () => {
                             </div>
 
                             {/* Prescription Uploaded Preview (Desktop) */}
-                            {prescriptionImage && (
+                            {(prescriptionImage !== "true" && prescriptionImage !== "payment_required" && prescriptionImage !== "false") && (
                               <div
                                 className="inline-flex items-center gap-2 bg-[#f0fdf4] border border-[#bbf7d0] rounded-md px-2 py-1 mb-1.5"
                               >
@@ -1824,6 +1835,19 @@ export const Cart = () => {
                             `₹${(cartBilling?.deliveryCharges || 0).toFixed(2)}`}
                         </span>
                       </div>
+
+                      {prescriptionPaymentRequired && (
+                        <div
+                          className="flex justify-between text-[13px] text-[#475569] mb-3.5"
+                        >
+                          <span className="font-medium">
+                            Prescription Charge
+                          </span>
+                          <span className="font-semibold text-[#16a34a]">
+                            ₹100
+                          </span>
+                        </div>
+                      )}
 
                       {(cartBilling?.couponAmount > 0 || couponDiscount > 0) && (
                         <div

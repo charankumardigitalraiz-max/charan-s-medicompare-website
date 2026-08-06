@@ -43,7 +43,7 @@ const VendorsSection = ({
   getQuantityForVariant,
   rentAndCartButtonStyles,
   contailerStyles,
-  prescription,
+  prescription = false,
   service,
   id,
   navigate,
