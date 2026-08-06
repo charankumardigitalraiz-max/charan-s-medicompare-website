@@ -981,7 +981,6 @@ const PrescriptionUploadPage = () => {
           )}
           </div>
         </div>
-      </div>
 
       <Home2Footer />
 
