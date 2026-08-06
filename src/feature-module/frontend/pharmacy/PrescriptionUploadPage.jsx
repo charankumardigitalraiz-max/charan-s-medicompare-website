@@ -636,45 +636,48 @@ const PrescriptionUploadPage = () => {
                   {/* Extracted Metadata Container */}
                   <div className="flex flex-col gap-4">
                     
-                    {/* Patient Card */}
-                    <div className="bg-gradient-to-r from-purple-50/20 to-indigo-50/10 rounded-xl border border-slate-100 p-3">
-                      <div className="flex items-center gap-1.5 text-purple-700 font-bold text-[11px] uppercase tracking-wider mb-2">
-                        <i className="fa-solid fa-user-injured text-purple-500 text-xs"></i>
-                        <span>Patient Information</span>
+                    {/* Patient & Doctor Grid */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {/* Patient Card */}
+                      <div className="bg-gradient-to-r from-purple-50/20 to-indigo-50/10 rounded-xl border border-slate-100 p-3">
+                        <div className="flex items-center gap-1.5 text-purple-700 font-bold text-[11px] uppercase tracking-wider mb-2">
+                          <i className="fa-solid fa-user-injured text-purple-500 text-xs"></i>
+                          <span>Patient Information</span>
+                        </div>
+                        <div className="grid grid-cols-2 gap-2 text-xs">
+                          <div className="col-span-2 bg-white px-2.5 py-1.5 rounded-lg border border-slate-100 flex flex-col gap-0.5">
+                            <span className="text-[9px] text-slate-400 font-medium">Full Name</span>
+                            <span className="font-semibold text-slate-800 truncate">{analysisData?.patient?.name || "N/A"}</span>
+                          </div>
+                          <div className="bg-white px-2.5 py-1.5 rounded-lg border border-slate-100 flex flex-col gap-0.5">
+                            <span className="text-[9px] text-slate-400 font-medium">Age</span>
+                            <span className="font-semibold text-slate-800">{analysisData?.patient?.age ? `${analysisData.patient.age} Years` : "N/A"}</span>
+                          </div>
+                          <div className="bg-white px-2.5 py-1.5 rounded-lg border border-slate-100 flex flex-col gap-0.5">
+                            <span className="text-[9px] text-slate-400 font-medium">Gender</span>
+                            <span className="font-semibold text-slate-800">{analysisData?.patient?.gender || "N/A"}</span>
+                          </div>
+                        </div>
                       </div>
-                      <div className="grid grid-cols-2 gap-2 text-xs">
-                        <div className="col-span-2 bg-white px-2.5 py-1.5 rounded-lg border border-slate-100 flex flex-col gap-0.5">
-                          <span className="text-[9px] text-slate-400 font-medium">Full Name</span>
-                          <span className="font-semibold text-slate-800 truncate">{analysisData?.patient?.name || "N/A"}</span>
-                        </div>
-                        <div className="bg-white px-2.5 py-1.5 rounded-lg border border-slate-100 flex flex-col gap-0.5">
-                          <span className="text-[9px] text-slate-400 font-medium">Age</span>
-                          <span className="font-semibold text-slate-800">{analysisData?.patient?.age ? `${analysisData.patient.age} Years` : "N/A"}</span>
-                        </div>
-                        <div className="bg-white px-2.5 py-1.5 rounded-lg border border-slate-100 flex flex-col gap-0.5">
-                          <span className="text-[9px] text-slate-400 font-medium">Gender</span>
-                          <span className="font-semibold text-slate-800">{analysisData?.patient?.gender || "N/A"}</span>
-                        </div>
-                      </div>
-                    </div>
 
-                    {/* Doctor Card */}
-                    <div className="bg-gradient-to-r from-purple-50/20 to-indigo-50/10 rounded-xl border border-slate-100 p-3">
-                      <div className="flex items-center gap-1.5 text-purple-700 font-bold text-[11px] uppercase tracking-wider mb-2">
-                        <i className="fa-solid fa-user-doctor text-purple-500 text-xs"></i>
-                        <span>Consultant Details</span>
-                      </div>
-                      <div className="flex flex-col gap-2 text-xs">
-                        <div className="bg-white px-2.5 py-1.5 rounded-lg border border-slate-100 flex flex-col gap-0.5">
-                          <span className="text-[9px] text-slate-400 font-medium">Doctor Name</span>
-                          <span className="font-bold text-slate-800 truncate">{analysisData?.doctor?.name || "N/A"}</span>
-                          {analysisData?.doctor?.qualification && (
-                            <span className="text-[10px] text-purple-600 font-medium mt-0.5 leading-none">{analysisData.doctor.qualification}</span>
-                          )}
+                      {/* Doctor Card */}
+                      <div className="bg-gradient-to-r from-purple-50/20 to-indigo-50/10 rounded-xl border border-slate-100 p-3">
+                        <div className="flex items-center gap-1.5 text-purple-700 font-bold text-[11px] uppercase tracking-wider mb-2">
+                          <i className="fa-solid fa-user-doctor text-purple-500 text-xs"></i>
+                          <span>Consultant Details</span>
                         </div>
-                        <div className="bg-white px-2.5 py-1.5 rounded-lg border border-slate-100 flex flex-col gap-0.5">
-                          <span className="text-[9px] text-slate-400 font-medium">Clinic/Hospital</span>
-                          <span className="font-semibold text-slate-700 leading-normal">{analysisData?.doctor?.clinicOrHospital || "N/A"}</span>
+                        <div className="flex flex-col gap-2 text-xs">
+                          <div className="bg-white px-2.5 py-1.5 rounded-lg border border-slate-100 flex flex-col gap-0.5">
+                            <span className="text-[9px] text-slate-400 font-medium">Doctor Name</span>
+                            <span className="font-bold text-slate-800 truncate">{analysisData?.doctor?.name || "N/A"}</span>
+                            {analysisData?.doctor?.qualification && (
+                              <span className="text-[10px] text-purple-600 font-medium mt-0.5 leading-none">{analysisData.doctor.qualification}</span>
+                            )}
+                          </div>
+                          <div className="bg-white px-2.5 py-1.5 rounded-lg border border-slate-100 flex flex-col gap-0.5">
+                            <span className="text-[9px] text-slate-400 font-medium">Clinic/Hospital</span>
+                            <span className="font-semibold text-slate-700 leading-normal">{analysisData?.doctor?.clinicOrHospital || "N/A"}</span>
+                          </div>
                         </div>
                       </div>
                     </div>
