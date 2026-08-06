@@ -40,6 +40,7 @@ const PrescriptionUploadPage = () => {
   const [hasSearched, setHasSearched] = useState(false);
   const [noPrescription, setNoPrescription] = useState(false);
   const [expandedVendors, setExpandedVendors] = useState({});
+  const [analysisData, setAnalysisData] = useState(null);
 
   const fileInputRef = useRef(null);
 
@@ -327,6 +328,7 @@ const PrescriptionUploadPage = () => {
       setValidationError("");
       setSearchResults([]);
       setHasSearched(false);
+      setAnalysisData(null);
 
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -497,6 +499,7 @@ const PrescriptionUploadPage = () => {
         setSearchResults(sortedResults);
         setValidationError("");
         setHasSearched(true);
+        setAnalysisData(data.data?.analysis || null);
         toast.success("Prescription parsed successfully!");
       } else {
         formData.append("name", medicineData?.name || "");
@@ -561,6 +564,7 @@ const PrescriptionUploadPage = () => {
     setValidationError("");
     setSearchResults([]);
     setHasSearched(false);
+    setAnalysisData(null);
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
@@ -602,18 +606,117 @@ const PrescriptionUploadPage = () => {
           <div className="lg:col-span-12 flex flex-col md:flex-row gap-6">
 
 
-            {/* Checklist guidelines */}
+            {/* Checklist guidelines or Extracted Details */}
             <div className="bg-white border border-purple-100 rounded-md p-5 text-sm text-slate-600 leading-relaxed shadow-sm md:max-w-md w-full shrink-0">
-              <div className="flex items-center gap-2 mb-3 text-purple-700 font-semibold">
-                <i className="fa-solid fa-circle-info text-base"></i>
-                <span>Prescription Upload Guidelines</span>
-              </div>
-              <ul className="pl-4 flex flex-col gap-2 list-decimal mb-0">
-                <li>Doctor's signature, stamp, and clinic letterhead must be visible.</li>
-                <li>Patient's full name, age, and consultation date must be clearly printed.</li>
-                <li>The list of medicines, dosage, and strength should be legible.</li>
-                <li>Do not crop, edit, or adjust the photo. Upload a raw, clear photograph.</li>
-              </ul>
+              {!hasSearched ? (
+                <>
+                  <div className="flex items-center gap-2 mb-3 text-purple-700 font-semibold">
+                    <i className="fa-solid fa-circle-info text-base"></i>
+                    <span>Prescription Upload Guidelines</span>
+                  </div>
+                  <ul className="pl-4 flex flex-col gap-2 list-decimal mb-0 text-xs">
+                    <li>Doctor's signature, stamp, and clinic letterhead must be visible.</li>
+                    <li>Patient's full name, age, and consultation date must be clearly printed.</li>
+                    <li>The list of medicines, dosage, and strength should be legible.</li>
+                    <li>Do not crop, edit, or adjust the photo. Upload a raw, clear photograph.</li>
+                  </ul>
+                </>
+              ) : (
+                <>
+                  <div className="flex items-center gap-2 mb-4 pb-2 border-b border-purple-100 text-purple-700 font-semibold">
+                    <i className="fa-solid fa-file-prescription text-base"></i>
+                    <span>Prescription Details</span>
+                  </div>
+                  
+                  {/* Extracted Metadata */}
+                  <div className="flex flex-col gap-3">
+                    {/* Patient info */}
+                    <div className="bg-slate-50/50 p-2.5 rounded-lg border border-slate-100">
+                      <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider block mb-1">Patient Details</span>
+                      <div className="flex flex-col gap-1 text-xs">
+                        <div className="flex justify-between">
+                          <span className="text-slate-500">Name:</span>
+                          <span className="font-semibold text-slate-800">{analysisData?.patient?.name || "N/A"}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-slate-500">Age:</span>
+                          <span className="font-semibold text-slate-800">
+                            {analysisData?.patient?.age ? `${analysisData.patient.age} Yrs` : "N/A"} 
+                            {analysisData?.patient?.gender ? ` (${analysisData.patient.gender})` : ""}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Doctor info */}
+                    <div className="bg-slate-50/50 p-2.5 rounded-lg border border-slate-100">
+                      <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider block mb-1">Doctor & Clinic</span>
+                      <div className="flex flex-col gap-1 text-xs">
+                        <div className="flex justify-between items-start gap-2">
+                          <span className="text-slate-500 shrink-0">Doctor:</span>
+                          <span className="font-semibold text-slate-800 text-right">{analysisData?.doctor?.name || "N/A"}</span>
+                        </div>
+                        {analysisData?.doctor?.qualification && (
+                          <div className="flex justify-between items-start gap-2">
+                            <span className="text-slate-500 shrink-0">Qual:</span>
+                            <span className="text-[11px] text-slate-600 text-right">{analysisData.doctor.qualification}</span>
+                          </div>
+                        )}
+                        <div className="flex justify-between items-start gap-2">
+                          <span className="text-slate-500 shrink-0">Clinic/Hosp:</span>
+                          <span className="font-semibold text-slate-800 text-right">{analysisData?.doctor?.clinicOrHospital || "N/A"}</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Prescription date / Validation info */}
+                    <div className="flex flex-col gap-1 text-xs px-1">
+                      {analysisData?.prescriptionDate && (
+                        <div className="flex justify-between">
+                          <span className="text-slate-500">Prescribed Date:</span>
+                          <span className="font-medium text-slate-700">{analysisData.prescriptionDate}</span>
+                        </div>
+                      )}
+                      {analysisData?.validationNotes && (
+                        <div className="flex justify-between">
+                          <span className="text-slate-500">Validation:</span>
+                          <span className="font-medium text-slate-700">{analysisData.validationNotes}</span>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Medicines List */}
+                    <div className="border-t border-dashed border-slate-200 mt-2 pt-3">
+                      <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider block mb-2">Prescribed Medications</span>
+                      <div className="flex flex-col gap-1.5 max-h-[220px] overflow-y-auto pr-1">
+                        {analysisData?.medicines?.map((med, idx) => (
+                          <div key={idx} className="flex justify-between items-center bg-slate-50 p-2 rounded-lg border border-slate-100">
+                            <div className="flex flex-col min-w-0">
+                              <span className="font-semibold text-slate-800 text-xs truncate max-w-[180px]">{med.name}</span>
+                              {med.genericName && (
+                                <span className="text-[10px] text-slate-400 truncate max-w-[180px]" title={med.genericName}>
+                                  {med.genericName}
+                                </span>
+                              )}
+                            </div>
+                            <div className="text-right shrink-0">
+                              {med.frequency && (
+                                <span className="inline-block bg-purple-50 text-[#321961] text-[10px] font-bold px-1.5 py-0.5 rounded border border-purple-100/50">
+                                  {med.frequency}
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        ))}
+                        {(!analysisData?.medicines || analysisData.medicines.length === 0) && (
+                          <span className="text-xs text-slate-400 italic">No medications extracted.</span>
+                        )}
+                      </div>
+                    </div>
+
+                  </div>
+                </>
+              )}
             </div>
 
             <div className="bg-white rounded-md border border-slate-200 p-6 shadow-sm flex-1">
@@ -806,6 +909,7 @@ const PrescriptionUploadPage = () => {
                     setSearchResults([]);
                     setValidationError("");
                     setHasSearched(false);
+                    setAnalysisData(null);
                     if (fileInputRef.current) fileInputRef.current.value = "";
                   }}
                   className="mt-6 px-4 py-2 bg-purple-50 text-purple-700 font-semibold text-xs rounded-xl shadow-sm hover:bg-purple-100 transition-all border-0"
@@ -938,6 +1042,7 @@ const PrescriptionUploadPage = () => {
                       setSearchResults([]);
                       setValidationError("");
                       setHasSearched(false);
+                      setAnalysisData(null);
                       if (fileInputRef.current) fileInputRef.current.value = "";
                     }}
                   >
@@ -956,7 +1061,7 @@ const PrescriptionUploadPage = () => {
                 <div className="w-6 h-6 rounded-full bg-red-100 flex items-center justify-center shrink-0">
                   <i className="fa-solid fa-circle-xmark text-red-500 text-[11px]"></i>
                 </div>
-                <h4 className="text-sm font-bold text-red-600 mb-0">Unavailable Products</h4>
+                <h4 className="!text-sm !font-bold text-red-600 mb-0">Unavailable Products</h4>
               </div>
               <div className="flex flex-col gap-2.5 max-h-[600px] overflow-y-auto pr-1">
                 {searchResults.filter(r => !r.isDbProduct).map((item) => (
@@ -979,8 +1084,8 @@ const PrescriptionUploadPage = () => {
               </div>
             </div>
           )}
-          </div>
         </div>
+      </div>
 
       <Home2Footer />
 
