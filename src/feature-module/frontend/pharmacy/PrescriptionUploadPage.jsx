@@ -639,65 +639,65 @@ const PrescriptionUploadPage = () => {
                     {/* Patient & Doctor & Date Grid */}
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                       {/* Patient Card */}
-                      <div className="bg-gradient-to-r from-purple-50/20 to-indigo-50/10 rounded-xl border border-slate-100 p-3">
-                        <div className="flex items-center gap-1.5 text-purple-700 font-bold text-[11px] uppercase tracking-wider mb-2">
-                          <i className="fa-solid fa-user-injured text-purple-500 text-xs"></i>
+                      <div className="bg-gradient-to-r from-purple-50/20 to-indigo-50/10 rounded-xl border border-slate-100 p-3.5">
+                        <div className="flex items-center gap-1.5 text-purple-800 font-bold text-xs uppercase tracking-wider mb-3">
+                          <i className="fa-solid fa-user-injured text-purple-600 text-xs"></i>
                           <span>Patient Information</span>
                         </div>
                         <div className="grid grid-cols-2 gap-2 text-xs">
-                          <div className="col-span-2 bg-white px-2.5 py-1.5 rounded-lg border border-slate-100 flex flex-col gap-0.5">
-                            <span className="text-[9px] text-slate-400 font-medium">Full Name</span>
-                            <span className="font-semibold text-slate-800 truncate">{analysisData?.patient?.name || "N/A"}</span>
+                          <div className="col-span-2 bg-white px-3 py-2 rounded-lg border border-slate-100 flex flex-col gap-0.5 shadow-sm">
+                            <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Full Name</span>
+                            <span className="font-semibold text-slate-800 truncate text-xs">{analysisData?.patient?.name || "N/A"}</span>
                           </div>
-                          <div className="bg-white px-2.5 py-1.5 rounded-lg border border-slate-100 flex flex-col gap-0.5">
-                            <span className="text-[9px] text-slate-400 font-medium">Age</span>
-                            <span className="font-semibold text-slate-800">{analysisData?.patient?.age ? `${analysisData.patient.age} Years` : "N/A"}</span>
+                          <div className="bg-white px-3 py-2 rounded-lg border border-slate-100 flex flex-col gap-0.5 shadow-sm">
+                            <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Age</span>
+                            <span className="font-semibold text-slate-800 text-xs">{analysisData?.patient?.age ? `${analysisData.patient.age} Years` : "N/A"}</span>
                           </div>
-                          <div className="bg-white px-2.5 py-1.5 rounded-lg border border-slate-100 flex flex-col gap-0.5">
-                            <span className="text-[9px] text-slate-400 font-medium">Gender</span>
-                            <span className="font-semibold text-slate-800">{analysisData?.patient?.gender || "N/A"}</span>
+                          <div className="bg-white px-3 py-2 rounded-lg border border-slate-100 flex flex-col gap-0.5 shadow-sm">
+                            <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Gender</span>
+                            <span className="font-semibold text-slate-800 text-xs">{analysisData?.patient?.gender || "N/A"}</span>
                           </div>
                         </div>
                       </div>
 
                       {/* Doctor Card */}
-                      <div className="bg-gradient-to-r from-purple-50/20 to-indigo-50/10 rounded-xl border border-slate-100 p-3">
-                        <div className="flex items-center gap-1.5 text-purple-700 font-bold text-[11px] uppercase tracking-wider mb-2">
-                          <i className="fa-solid fa-user-doctor text-purple-500 text-xs"></i>
+                      <div className="bg-gradient-to-r from-purple-50/20 to-indigo-50/10 rounded-xl border border-slate-100 p-3.5">
+                        <div className="flex items-center gap-1.5 text-purple-800 font-bold text-xs uppercase tracking-wider mb-3">
+                          <i className="fa-solid fa-user-doctor text-purple-600 text-xs"></i>
                           <span>Consultant Details</span>
                         </div>
                         <div className="flex flex-col gap-2 text-xs">
-                          <div className="bg-white px-2.5 py-1.5 rounded-lg border border-slate-100 flex flex-col gap-0.5">
-                            <span className="text-[9px] text-slate-400 font-medium">Doctor Name</span>
-                            <span className="font-bold text-slate-800 truncate">{analysisData?.doctor?.name || "N/A"}</span>
+                          <div className="bg-white px-3 py-2 rounded-lg border border-slate-100 flex flex-col gap-0.5 shadow-sm">
+                            <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Doctor Name</span>
+                            <span className="font-bold text-slate-800 truncate text-xs">{analysisData?.doctor?.name || "N/A"}</span>
                             {analysisData?.doctor?.qualification && (
-                              <span className="text-[10px] text-purple-600 font-medium mt-0.5 leading-none">{analysisData.doctor.qualification}</span>
+                              <span className="text-[10px] text-purple-600 font-semibold mt-0.5 leading-tight">{analysisData.doctor.qualification}</span>
                             )}
                           </div>
-                          <div className="bg-white px-2.5 py-1.5 rounded-lg border border-slate-100 flex flex-col gap-0.5">
-                            <span className="text-[9px] text-slate-400 font-medium">Clinic/Hospital</span>
-                            <span className="font-semibold text-slate-700 leading-normal">{analysisData?.doctor?.clinicOrHospital || "N/A"}</span>
+                          <div className="bg-white px-3 py-2 rounded-lg border border-slate-100 flex flex-col gap-0.5 shadow-sm">
+                            <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Clinic/Hospital</span>
+                            <span className="font-semibold text-slate-700 leading-normal text-xs">{analysisData?.doctor?.clinicOrHospital || "N/A"}</span>
                           </div>
                         </div>
                       </div>
 
                       {/* Date & Meta Card */}
-                      <div className="bg-gradient-to-r from-purple-50/20 to-indigo-50/10 rounded-xl border border-slate-100 p-3">
-                        <div className="flex items-center gap-1.5 text-purple-700 font-bold text-[11px] uppercase tracking-wider mb-2">
-                          <i className="fa-solid fa-calendar-check text-purple-500 text-xs"></i>
+                      <div className="bg-gradient-to-r from-purple-50/20 to-indigo-50/10 rounded-xl border border-slate-100 p-3.5">
+                        <div className="flex items-center gap-1.5 text-purple-800 font-bold text-xs uppercase tracking-wider mb-3">
+                          <i className="fa-solid fa-calendar-check text-purple-600 text-xs"></i>
                           <span>Analysis & Date</span>
                         </div>
                         <div className="flex flex-col gap-2 text-xs">
                           {analysisData?.prescriptionDate && (
-                            <div className="bg-white px-2.5 py-1.5 rounded-lg border border-slate-100 flex flex-col gap-0.5">
-                              <span className="text-[9px] text-slate-400 font-medium">Prescribed Date</span>
-                              <span className="font-semibold text-slate-800">{analysisData.prescriptionDate}</span>
+                            <div className="bg-white px-3 py-2 rounded-lg border border-slate-100 flex flex-col gap-0.5 shadow-sm">
+                              <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Prescribed Date</span>
+                              <span className="font-semibold text-slate-800 text-xs">{analysisData.prescriptionDate}</span>
                             </div>
                           )}
                           {analysisData?.confidence && (
-                            <div className="bg-white px-2.5 py-1.5 rounded-lg border border-slate-100 flex justify-between items-center">
-                              <span className="text-[9px] text-slate-400 font-medium">AI Confidence</span>
-                              <span className={`inline-flex items-center gap-1 text-[9px] font-bold px-2.5 py-0.5 rounded-full ${
+                            <div className="bg-white px-3 py-2 rounded-lg border border-slate-100 flex justify-between items-center shadow-sm">
+                              <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">AI Confidence</span>
+                              <span className={`inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full ${
                                 analysisData.confidence.toLowerCase() === 'high' ? 'bg-emerald-50 text-emerald-600 border border-emerald-100' : 'bg-amber-50 text-amber-600 border border-amber-100'
                               }`}>
                                 <i className="fa-solid fa-circle text-[5px]"></i>
@@ -711,37 +711,37 @@ const PrescriptionUploadPage = () => {
 
                     {/* Validation Notes Info */}
                     {analysisData?.validationNotes && (
-                      <div className="text-[11px] text-slate-500 bg-slate-50 border border-slate-100 p-2.5 rounded-xl leading-relaxed flex gap-1.5 items-start">
-                        <i className="fa-solid fa-circle-info text-purple-500 mt-0.5 shrink-0"></i>
+                      <div className="text-xs text-slate-500 bg-slate-50 border border-slate-100 p-3 rounded-xl leading-relaxed flex gap-2 items-start shadow-inner">
+                        <i className="fa-solid fa-circle-info text-purple-600 mt-0.5 shrink-0"></i>
                         <span>{analysisData.validationNotes}</span>
                       </div>
                     )}
 
                     {/* Prescribed Medications */}
                     <div className="border-t border-dashed border-slate-200 mt-1 pt-3">
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="text-[11px] text-purple-700 font-bold uppercase tracking-wider">Prescribed Medications</span>
+                      <div className="flex items-center justify-between mb-2.5">
+                        <span className="text-xs text-purple-800 font-bold uppercase tracking-wider">Prescribed Medications</span>
                         <span className="bg-purple-100 text-[#321961] text-[10px] font-bold px-2 py-0.5 rounded-full">
                           {analysisData?.medicines?.length || 0} Items
                         </span>
                       </div>
                       <div className="flex flex-col gap-2 max-h-[220px] overflow-y-auto pr-1">
                         {analysisData?.medicines?.map((med, idx) => (
-                          <div key={idx} className="flex gap-2.5 bg-white p-2.5 rounded-lg border border-slate-100 hover:border-purple-200 hover:shadow-sm transition-all duration-200">
-                            <div className="w-6 h-6 rounded-full bg-purple-50 text-purple-500 flex items-center justify-center shrink-0 mt-0.5">
-                              <i className="fa-solid fa-capsules text-[10px]"></i>
+                          <div key={idx} className="flex gap-2.5 bg-white p-3 rounded-lg border border-slate-100 hover:border-purple-200 hover:shadow-sm transition-all duration-200">
+                            <div className="w-6.5 h-6.5 rounded-full bg-purple-50 text-purple-500 flex items-center justify-center shrink-0 mt-0.5 shadow-sm">
+                              <i className="fa-solid fa-capsules text-[11px]"></i>
                             </div>
                             <div className="flex-1 min-w-0">
-                              <span className="font-semibold text-slate-800 text-xs truncate block leading-tight">{med.name}</span>
+                              <span className="font-bold text-slate-800 text-xs truncate block leading-tight">{med.name}</span>
                               {med.genericName && (
-                                <span className="text-[10px] text-slate-400 truncate block mt-0.5" title={med.genericName}>
+                                <span className="text-[10px] text-slate-400 font-medium truncate block mt-1" title={med.genericName}>
                                   {med.genericName}
                                 </span>
                               )}
                             </div>
                             <div className="text-right shrink-0 flex flex-col gap-1 items-end justify-center">
                               {med.frequency && (
-                                <span className="inline-block bg-purple-50 text-[#321961] text-[9px] font-bold px-1.5 py-0.5 rounded border border-purple-100/50 tracking-wide">
+                                <span className="inline-block bg-purple-50 text-[#321961] text-[10px] font-bold px-2 py-0.5 rounded border border-purple-100/50 tracking-wide">
                                   {med.frequency}
                                 </span>
                               )}
