@@ -904,7 +904,7 @@ const PrescriptionUploadPage = () => {
                   <button
                     type="button"
                     onClick={() => navigate(-1)}
-                    className="w-1/2 py-2.5 !rounded-md border border-slate-200 bg-slate-50 text-slate-600 font-semibold text-sm hover:bg-slate-100 hover:text-slate-800 transition-all shadow-sm"
+                    className="w-1/2 py-2.5 !rounded-md !border !border-slate-200 !bg-slate-50 text-slate-600 font-semibold text-sm hover:bg-slate-100 hover:text-slate-800 transition-all shadow-sm"
                   >
                     Cancel
                   </button>
