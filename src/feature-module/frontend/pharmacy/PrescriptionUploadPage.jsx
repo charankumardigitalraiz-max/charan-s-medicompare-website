@@ -636,8 +636,8 @@ const PrescriptionUploadPage = () => {
                   {/* Extracted Metadata Container */}
                   <div className="flex flex-col gap-4">
                     
-                    {/* Patient & Doctor Grid */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {/* Patient & Doctor & Date Grid */}
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                       {/* Patient Card */}
                       <div className="bg-gradient-to-r from-purple-50/20 to-indigo-50/10 rounded-xl border border-slate-100 p-3">
                         <div className="flex items-center gap-1.5 text-purple-700 font-bold text-[11px] uppercase tracking-wider mb-2">
@@ -680,40 +680,42 @@ const PrescriptionUploadPage = () => {
                           </div>
                         </div>
                       </div>
+
+                      {/* Date & Meta Card */}
+                      <div className="bg-gradient-to-r from-purple-50/20 to-indigo-50/10 rounded-xl border border-slate-100 p-3">
+                        <div className="flex items-center gap-1.5 text-purple-700 font-bold text-[11px] uppercase tracking-wider mb-2">
+                          <i className="fa-solid fa-calendar-check text-purple-500 text-xs"></i>
+                          <span>Analysis & Date</span>
+                        </div>
+                        <div className="flex flex-col gap-2 text-xs">
+                          {analysisData?.prescriptionDate && (
+                            <div className="bg-white px-2.5 py-1.5 rounded-lg border border-slate-100 flex flex-col gap-0.5">
+                              <span className="text-[9px] text-slate-400 font-medium">Prescribed Date</span>
+                              <span className="font-semibold text-slate-800">{analysisData.prescriptionDate}</span>
+                            </div>
+                          )}
+                          {analysisData?.confidence && (
+                            <div className="bg-white px-2.5 py-1.5 rounded-lg border border-slate-100 flex justify-between items-center">
+                              <span className="text-[9px] text-slate-400 font-medium">AI Confidence</span>
+                              <span className={`inline-flex items-center gap-1 text-[9px] font-bold px-2.5 py-0.5 rounded-full ${
+                                analysisData.confidence.toLowerCase() === 'high' ? 'bg-emerald-50 text-emerald-600 border border-emerald-100' : 'bg-amber-50 text-amber-600 border border-amber-100'
+                              }`}>
+                                <i className="fa-solid fa-circle text-[5px]"></i>
+                                {analysisData.confidence}
+                              </span>
+                            </div>
+                          )}
+                        </div>
+                      </div>
                     </div>
 
-                    {/* Additional Metadata Info */}
-                    <div className="bg-slate-50/50 rounded-xl p-3 border border-slate-100 flex flex-col gap-2 text-xs">
-                      {analysisData?.prescriptionDate && (
-                        <div className="flex justify-between items-center">
-                          <div className="flex items-center gap-1 text-slate-500">
-                            <i className="fa-regular fa-calendar text-[11px]"></i>
-                            <span>Prescribed Date:</span>
-                          </div>
-                          <span className="font-semibold text-slate-800">{analysisData.prescriptionDate}</span>
-                        </div>
-                      )}
-                      {analysisData?.confidence && (
-                        <div className="flex justify-between items-center">
-                          <div className="flex items-center gap-1 text-slate-500">
-                            <i className="fa-solid fa-shield-halved text-[11px]"></i>
-                            <span>AI Confidence:</span>
-                          </div>
-                          <span className={`inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full ${
-                            analysisData.confidence.toLowerCase() === 'high' ? 'bg-emerald-50 text-emerald-600 border border-emerald-100' : 'bg-amber-50 text-amber-600 border border-amber-100'
-                          }`}>
-                            <i className="fa-solid fa-circle text-[6px]"></i>
-                            {analysisData.confidence}
-                          </span>
-                        </div>
-                      )}
-                      {analysisData?.validationNotes && (
-                        <div className="text-[11px] text-slate-500 bg-white border border-slate-100 p-2 rounded-lg leading-relaxed mt-1 flex gap-1.5 items-start">
-                          <i className="fa-solid fa-circle-info text-purple-500 mt-0.5 shrink-0"></i>
-                          <span>{analysisData.validationNotes}</span>
-                        </div>
-                      )}
-                    </div>
+                    {/* Validation Notes Info */}
+                    {analysisData?.validationNotes && (
+                      <div className="text-[11px] text-slate-500 bg-slate-50 border border-slate-100 p-2.5 rounded-xl leading-relaxed flex gap-1.5 items-start">
+                        <i className="fa-solid fa-circle-info text-purple-500 mt-0.5 shrink-0"></i>
+                        <span>{analysisData.validationNotes}</span>
+                      </div>
+                    )}
 
                     {/* Prescribed Medications */}
                     <div className="border-t border-dashed border-slate-200 mt-1 pt-3">
