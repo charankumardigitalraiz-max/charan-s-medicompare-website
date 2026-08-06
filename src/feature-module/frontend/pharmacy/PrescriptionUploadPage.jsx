@@ -680,7 +680,7 @@ const PrescriptionUploadPage = () => {
                     {/* Patient & Doctor & Date Grid */}
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                       {/* Patient Card */}
-                      <div className="bg-gradient-to-r from-purple-50/10 to-indigo-50/5 rounded-md border border-slate-200 pt-3.5 px-3.5 pb-2.5 shadow-sm">
+                      <div className="bg-gradient-to-r from-purple-50/10 to-indigo-50/5 rounded-md border border-slate-100 pt-3.5 px-3.5 pb-2 shadow-[0_0_12px_rgba(0,0,0,0.05)]">
                         <div className="flex items-center gap-1.5 text-purple-800 font-bold text-xs uppercase tracking-wider mb-2.5">
                           <i className="fa-solid fa-user-injured text-purple-600 text-xs"></i>
                           <span>Patient Information</span>
@@ -702,7 +702,7 @@ const PrescriptionUploadPage = () => {
                       </div>
 
                       {/* Doctor Card */}
-                      <div className="bg-gradient-to-r from-purple-50/10 to-indigo-50/5 rounded-md border border-slate-200 pt-3.5 px-3.5 pb-2.5 shadow-sm">
+                      <div className="bg-gradient-to-r from-purple-50/10 to-indigo-50/5 rounded-md border border-slate-100 pt-3.5 px-3.5 pb-2 shadow-[0_0_12px_rgba(0,0,0,0.05)]">
                         <div className="flex items-center gap-1.5 text-purple-800 font-bold text-xs uppercase tracking-wider mb-2.5">
                           <i className="fa-solid fa-user-doctor text-purple-600 text-xs"></i>
                           <span>Consultant Details</span>
@@ -723,7 +723,7 @@ const PrescriptionUploadPage = () => {
                       </div>
 
                       {/* Date & Meta Card */}
-                      <div className="bg-gradient-to-r from-purple-50/10 to-indigo-50/5 rounded-md border border-slate-200 pt-3.5 px-3.5 pb-2.5 shadow-sm">
+                      <div className="bg-gradient-to-r from-purple-50/10 to-indigo-50/5 rounded-md border border-slate-100 pt-3.5 px-3.5 pb-2 shadow-[0_0_12px_rgba(0,0,0,0.05)]">
                         <div className="flex items-center gap-1.5 text-purple-800 font-bold text-xs uppercase tracking-wider mb-2.5">
                           <i className="fa-solid fa-calendar-check text-purple-600 text-xs"></i>
                           <span>Analysis & Date</span>
