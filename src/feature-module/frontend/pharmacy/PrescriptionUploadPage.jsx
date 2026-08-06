@@ -725,7 +725,7 @@ const PrescriptionUploadPage = () => {
                           {analysisData?.medicines?.length || 0} Items
                         </span>
                       </div>
-                      <div className="flex flex-col gap-2 max-h-[220px] overflow-y-auto pr-1">
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 max-h-[320px] overflow-y-auto pr-1">
                         {analysisData?.medicines?.map((med, idx) => (
                           <div key={idx} className="flex gap-2.5 bg-white p-3 rounded-md border border-slate-100 hover:border-purple-200 hover:shadow-sm transition-all duration-200">
                             <div className="w-6.5 h-6.5 rounded-full bg-purple-50 text-purple-500 flex items-center justify-center shrink-0 mt-0.5 shadow-sm">
@@ -749,7 +749,7 @@ const PrescriptionUploadPage = () => {
                           </div>
                         ))}
                         {(!analysisData?.medicines || analysisData.medicines.length === 0) && (
-                          <span className="text-xs text-slate-400 italic">No medications extracted.</span>
+                          <span className="text-xs text-slate-400 italic col-span-3">No medications extracted.</span>
                         )}
                       </div>
                     </div>
