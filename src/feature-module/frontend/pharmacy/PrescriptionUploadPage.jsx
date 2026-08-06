@@ -576,7 +576,7 @@ const PrescriptionUploadPage = () => {
         style={{ backgroundImage: `url('/assets/Medicompares Background.png')` }}
       >
         <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/85 to-purple-50/75"></div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10">
+        <div className="max-w-[1440px] mx-auto px-4 md:px-6 w-full relative z-10">
           <div className="relative flex items-center justify-center min-h-[44px]">
             <div className="absolute left-0">
               <BackButton />
@@ -593,7 +593,7 @@ const PrescriptionUploadPage = () => {
         </div>
       </div>
 
-      <div className="flex-1 py-6 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+      <div className="flex-1 py-6 px-4 md:px-6 max-w-[1440px] mx-auto w-full">
 
         {/* Dashboard Grid Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
