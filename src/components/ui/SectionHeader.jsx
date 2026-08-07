@@ -13,22 +13,42 @@ const SectionHeader = ({
 }) => {
   const { isMobile } = useResponsive();
   const renderViewAllButton = () => {
-    const buttonClasses = `inline-flex items-center justify-center !font-bold !text-[14px] !text-[#321961] hover:!bg-[#321961] hover:!text-white transition-all duration-300 ${
-      isMobile
-        ? "!p-0 !rounded-full !w-[36px] !h-[36px] !shrink-0 !grow-0 !self-center !bg-[#321961]/10"
-        : "py-[8px] px-[20px] rounded-[50px] w-auto h-auto bg-gradient-to-br from-[rgba(125,46,255,0.1)] to-[rgba(59,130,246,0.1)]"
-    }`;
+    const buttonClasses = `inline-flex items-center justify-center gap-1.5 text-[11px] md:text-[13px] font-bold !rounded-full transition-all duration-300 !no-underline shadow-sm hover:shadow active:scale-[0.98] w-[32px] h-[32px] md:w-auto md:h-auto px-0 md:px-4 py-0 md:py-1.5`;
+
+    const buttonStyle = {
+      color: '#ffffff',
+      backgroundColor: '#321961',
+      border: '1.5px solid #321961',
+    };
+
+    const handleMouseEnter = (e) => {
+      e.currentTarget.style.backgroundColor = 'rgba(50, 25, 97, 0.08)';
+      e.currentTarget.style.color = '#321961';
+      e.currentTarget.style.borderColor = 'rgba(50, 25, 97, 0.15)';
+    };
+
+    const handleMouseLeave = (e) => {
+      e.currentTarget.style.backgroundColor = '#321961';
+      e.currentTarget.style.color = '#ffffff';
+      e.currentTarget.style.borderColor = '#321961';
+    };
 
     const content = (
       <>
-        {!isMobile && viewAllText}
-        <i className={`isax isax-arrow-right-1 ${!isMobile ? "ml-1" : ""}`} />
+        <span className="hidden md:inline">{viewAllText}</span>
+        <i className="fas fa-arrow-right text-[10px]" />
       </>
     );
 
     if (viewAllLink) {
       return (
-        <Link to={viewAllLink} className={buttonClasses}>
+        <Link
+          to={viewAllLink}
+          className={buttonClasses}
+          style={buttonStyle}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        >
           {content}
         </Link>
       );
@@ -36,7 +56,13 @@ const SectionHeader = ({
 
     if (onViewAll) {
       return (
-        <button onClick={onViewAll} className={buttonClasses}>
+        <button
+          onClick={onViewAll}
+          className={buttonClasses}
+          style={buttonStyle}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        >
           {content}
         </button>
       );
@@ -49,11 +75,15 @@ const SectionHeader = ({
     <div
       className={`flex items-center justify-between result-wrap gap-3 my-2 ${className}`}
     >
-      <div
-        className="inline-block py-[4px] px-[10px] bg-gradient-to-br from-[#321961]/10 to-[#321961]/20 rounded-[50px] text-[14px] font-semibold text-[#321961] mb-0"
-      >
-        {icon && <i className={`${icon} mr-[6px]`}></i>}
-        {title}
+      <div className="flex items-center gap-3">
+        {icon && (
+          <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-white shadow-sm border border-slate-100/80 shrink-0">
+            <i className={`${icon} text-lg`} />
+          </div>
+        )}
+        <h3 className="!text-lg md:!text-xl !font-semibold !text-slate-800 tracking-tight !mb-0">
+          {title}
+        </h3>
       </div>
 
       {(viewAllLink || onViewAll) && (

@@ -504,46 +504,28 @@ const Home2Footer = ({ categories: propCategories }) => {
         </footer>
       )}
       {/* Mobile Footer */}
-      <footer className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50 md:!hidden">
-        <div className="p-[3px]">
-          <div className="flex text-center">
-            <div className="w-1/4 flex flex-col items-center justify-center text-[11px] text-gray-600 hover:text-[#822BD4] py-1">
-              <Link to="/">
-                <img src="/assets/home.png" alt="home" loading="lazy" className="mx-auto mb-1 h-6 w-6 object-contain" />
-              </Link>
-              <div>Home</div>
+      <footer className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 z-50 md:!hidden shadow-[0_-4px_12px_rgba(0,0,0,0.05)]">
+        <div className="py-1">
+          <div className="flex justify-around items-center text-center">
+            <Link to="/" className="w-1/4 flex flex-col items-center justify-center py-1 group !no-underline">
+              <i className={`fa-solid fa-house text-xl mb-1 transition-colors duration-300 ${location.pathname === "/" ? "text-[#321961]" : "text-gray-400 group-hover:text-[#321961]"}`}></i>
+              <span className={`text-[10px] font-semibold transition-colors duration-300 ${location.pathname === "/" ? "text-[#321961] font-bold" : "text-gray-500 group-hover:text-[#321961]"}`}>Home</span>
+            </Link>
+
+            <Link to="/mobile-categories" className="w-1/4 flex flex-col items-center justify-center py-1 group !no-underline">
+              <i className={`fa-solid fa-table-cells-large text-xl mb-1 transition-colors duration-300 ${location.pathname === "/mobile-categories" ? "text-[#321961]" : "text-gray-400 group-hover:text-[#321961]"}`}></i>
+              <span className={`text-[10px] font-semibold transition-colors duration-300 ${location.pathname === "/mobile-categories" ? "text-[#321961] font-bold" : "text-gray-500 group-hover:text-[#321961]"}`}>Categories</span>
+            </Link>
+
+            <div onClick={handleProfileClick} className="w-1/4 flex flex-col items-center justify-center py-1 group cursor-pointer">
+              <i className={`fa-solid fa-circle-user text-xl mb-1 transition-colors duration-300 ${location.pathname === "/profile-sidebar" || location.pathname === "/login" || location.pathname === "/profile" ? "text-[#321961]" : "text-gray-400 group-hover:text-[#321961]"}`}></i>
+              <span className={`text-[10px] font-semibold transition-colors duration-300 ${location.pathname === "/profile-sidebar" || location.pathname === "/login" || location.pathname === "/profile" ? "text-[#321961] font-bold" : "text-gray-500 group-hover:text-[#321961]"}`}>Profile</span>
             </div>
 
-            <div className="w-1/4 flex flex-col items-center justify-center text-[11px] text-gray-600 hover:text-[#822BD4] py-1">
-              <Link to="/mobile-categories">
-                <img
-                  src="/assets/bullets.png"
-                  alt="Categories"
-                  loading="lazy"
-                  className="mx-auto mb-1 h-6 w-6 object-contain"
-                />
-              </Link>
-              <div>Categories</div>
-            </div>
-
-            <div className="w-1/4 flex flex-col items-center justify-center text-[11px] text-gray-600 hover:text-[#822BD4] py-1">
-              <div onClick={handleProfileClick} className="cursor-pointer">
-                <img src="/assets/user.png" alt="Profile" loading="lazy" className="mx-auto mb-1 h-6 w-6 object-contain" />
-              </div>
-              <div>Profile</div>
-            </div>
-
-            <div className="w-1/4 flex flex-col items-center justify-center text-[11px] text-gray-600 hover:text-[#822BD4] py-1">
-              <Link to="/cart">
-                <img
-                  src="/assets/shopping-cart.png"
-                  alt="Cart"
-                  loading="lazy"
-                  className="mx-auto mb-1 h-6 w-6 object-contain"
-                />
-              </Link>
-              <div>Cart</div>
-            </div>
+            <Link to="/cart" className="w-1/4 flex flex-col items-center justify-center py-1 group !no-underline">
+              <i className={`fa-solid fa-cart-shopping text-xl mb-1 transition-colors duration-300 ${location.pathname === "/cart" ? "text-[#321961]" : "text-gray-400 group-hover:text-[#321961]"}`}></i>
+              <span className={`text-[10px] font-semibold transition-colors duration-300 ${location.pathname === "/cart" ? "text-[#321961] font-bold" : "text-gray-500 group-hover:text-[#321961]"}`}>Cart</span>
+            </Link>
           </div>
         </div>
       </footer>

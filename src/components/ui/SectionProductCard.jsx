@@ -323,8 +323,8 @@ const SectionProductCard = ({
     labtests: { label: "Book a Lab Test", icon: "fa-flask" },
     "lab-tests": { label: "Book a Lab Test", icon: "fa-flask" },
     diagnostics: { label: "Book a Scan", icon: "fa-microscope" },
-    homecare: { label: "Book a Home Visit", icon: "fa-home" },
-    "home-care": { label: "Book a Home Visit", icon: "fa-home" },
+    homecare: { label: "Book Now", icon: "fa-home" },
+    "home-care": { label: "Book Now", icon: "fa-home" },
     nursingcare: { label: "Book a Nurse", icon: "fa-user-nurse" },
     "clinics-and-rehabs": { label: "Book a Appointment", icon: "fa-clinic-medical" },
     dentalservice: { label: "Book a Dental", icon: "fa-tooth" },
@@ -354,7 +354,7 @@ const SectionProductCard = ({
       onClick={handleImageClick}
     >
       {/* Product Image Section */}
-      <div className="relative w-full h-[140px] flex items-center justify-center p-3 bg-slate-50/50 rounded-2xl overflow-hidden mb-3">
+      <div className="relative w-full h-[120px] flex items-center justify-center p-3 bg-slate-50/50 rounded-2xl overflow-hidden mb-3">
 
         <img
           className="w-[115px] h-[115px] rounded-full object-cover bg-white border border-slate-200/80 shadow-sm group-hover:scale-105 transition-transform duration-300 relative z-10"
@@ -429,7 +429,7 @@ const SectionProductCard = ({
         )}
 
         {/* Product Title */}
-        <h4 className="!text-sm !font-bold !text-gray-800 !leading-snug group-hover:text-[#321961] transition-colors line-clamp-2 min-h-[40px] !m-0 !mb-2 !capitalize">
+        <h4 className="!text-sm !font-semibold !text-gray-800 !leading-snug group-hover:text-[#321961] transition-colors line-clamp-2 min-h-[40px] !m-0 !mb-2 !capitalize">
           {truncateText(productName, titleMaxLength)}
         </h4>
 
@@ -476,7 +476,7 @@ const SectionProductCard = ({
             e.stopPropagation();
             onProductClick(item);
           }}
-          className="!w-full !mt-1.5 !flex !items-center !justify-center !gap-2 !py-2 !px-4 !rounded-sm !text-xs !font-bold !text-white !bg-[#321961] hover:!bg-[#6d4db8] !transition-all !duration-300 !shadow-[0_4px_12px_rgba(128,89,202,0.15)] hover:!shadow-[0_6px_20px_rgba(128,89,202,0.25)] !border-none !cursor-pointer"
+          className="!w-full !mt-1.5 !flex !items-center !justify-center !gap-2 !py-2 !px-4 !rounded-sm !text-xs !font-semibold !text-white !bg-[#321961] hover:!bg-[#6d4db8] !transition-all !duration-300 !shadow-[0_4px_12px_rgba(128,89,202,0.15)] hover:!shadow-[0_6px_20px_rgba(128,89,202,0.25)] !border-none !cursor-pointer"
         >
           <i className={`fas ${ctaConfig.icon} text-[10px]`} />
           <span>{ctaConfig.label}</span>

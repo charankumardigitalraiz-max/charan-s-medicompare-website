@@ -330,24 +330,43 @@ export const getServiceCards = (serviceType) => {
 };
 
 export const getServiceFooterText = (serviceType) => {
+  const normalizedType = String(serviceType || "").toLowerCase().replace(/-/g, "").replace(/_/g, "");
+
   const footerTexts = {
-    medicine: "Start now, it's free, fast, and made for your health needs.",
-    labtests: "Start now, it's free, fast, and get your test results quickly.",
-    diagnostics:
-      "Start now, it's free, fast, and find the best diagnostic centers.",
-    surgeries: "Start now, it's free, fast, and find the best surgical care.",
-    dentalservice: "Start now, it's free, fast, and get your perfect smile.",
-    nursingcare:
-      "Start now, it's free, fast, and get professional care at home.",
-    homecare:
-      "Start now, it's free, fast, and get quality healthcare delivered.",
-    medicalequipment:
-      "Start now, it's free, fast, and find the best medical equipment.",
-    medicaltreatment:
-      "Start now, it's free, fast, and begin your recovery journey.",
+    medicine: "Rx & Prescription Medicines in Hyderabad | 24 Hour Pharmacy Near Me",
+    rxmedicines: "Rx & Prescription Medicines in Hyderabad | 24 Hour Pharmacy Near Me",
+    medicines: "Rx & Prescription Medicines in Hyderabad | 24 Hour Pharmacy Near Me",
+
+    labtests: "Lab Tests & NABL Accredited Diagnostic Labs in Hyderabad | Book Now",
+    labtest: "Lab Tests & NABL Accredited Diagnostic Labs in Hyderabad | Book Now",
+
+    diagnostics: "Diagnostics & NABL Accredited Labs in Hyderabad | Expert Medical Care",
+    diagnostic: "Diagnostics & NABL Accredited Labs in Hyderabad | Expert Medical Care",
+
+    homecare: "Home Nursing Care in Hyderabad | Elderly & Senior Care Services",
+    nursingcare: "Home Nursing Care in Hyderabad | Elderly & Senior Care Services",
+
+    ambulanceservice: "Best Ambulance Service in Hyderabad | 24/7 Emergency Response",
+    ambulance: "Best Ambulance Service in Hyderabad | 24/7 Emergency Response",
+
+    clinicsandrehabs: "Home Care Agency in Hyderabad | Senior & Elderly Care Services",
+    clinics: "Home Care Agency in Hyderabad | Senior & Elderly Care Services",
+    clinic: "Home Care Agency in Hyderabad | Senior & Elderly Care Services",
+
+    dentalservice: "Best Dental Implants & Cosmetic Dentistry in Hyderabad | Book Now",
+    dental: "Best Dental Implants & Cosmetic Dentistry in Hyderabad | Book Now",
+
+    medicaltreatment: "Healthcare Services & Treatments in Hyderabad | Specialist Doctors",
+    treatments: "Healthcare Services & Treatments in Hyderabad | Specialist Doctors",
+    treatment: "Healthcare Services & Treatments in Hyderabad | Specialist Doctors",
+
+    surgeries: "Surgical Procedures in Hyderabad | Laparoscopic, Robotic & Ortho Surgery",
+    surgery: "Surgical Procedures in Hyderabad | Laparoscopic, Robotic & Ortho Surgery",
+
+    medicalequipment: "Medical Equipment & Pharmacy Near Me in Hyderabad | 24 Hour Store",
   };
 
-  return footerTexts[serviceType] || footerTexts.medicine;
+  return footerTexts[normalizedType] || footerTexts[serviceType] || footerTexts.medicine;
 };
 
 const ServiceCards = ({ serviceType, liteMode = false }) => {
@@ -380,46 +399,52 @@ const ServiceCards = ({ serviceType, liteMode = false }) => {
       className={isMobile ? "w-full px-2" : "w-full md:w-1/3 sm:w-1/2 px-2.5 mb-4"}
     >
       <div
-        className={`group relative flex justify-between items-center cursor-pointer mb-2.5 py-3 pr-4 pl-2.5 rounded-[14px] shadow-[0px_4px_14px_0px_rgba(226,237,255,0.08)] transition-all duration-500 bg-[rgba(159,100,255,0.12)] hover:-translate-y-2.5`}
+        className={`group relative flex flex-col justify-between cursor-pointer mb-2.5 p-3 rounded-[14px] shadow-[0px_4px_14px_0px_rgba(226,237,255,0.08)] transition-all duration-500 bg-[rgba(159,100,255,0.12)] ${!isMobile ? "hover:-translate-y-2.5" : ""}`}
         style={{
           zIndex: hoveredIndex === idx ? 12 : "auto",
         }}
-        onMouseEnter={() => setHoveredIndex(idx)}
-        onMouseLeave={() => setHoveredIndex(null)}
+        onMouseEnter={() => !isMobile && setHoveredIndex(idx)}
+        onMouseLeave={() => !isMobile && setHoveredIndex(null)}
         onClick={() =>
           isMobile
             ? setHoveredIndex(hoveredIndex === idx ? null : idx)
             : null
         }
       >
-        <div className="flex items-center w-full">
-          <span className="w-[60px] h-[60px] border border-[#eef1f6] rounded-[10px] mr-3 shrink-0 flex items-center justify-center bg-white shadow-sm">
-            <i
-              className={card.icon}
-              style={{ fontSize: "30px", color: PRIMARY_COLOR }}
-            ></i>
-          </span>
-          <h4 className="mb-0 !text-sm md:!text-base !font-semibold !text-gray-900">
-            <span className="text-gray-900 leading-snug block">{card.title}</span>
-          </h4>
+        <div className="flex items-center justify-between w-full">
+          <div className="flex items-center w-full min-w-0">
+            <span className="w-[50px] h-[50px] md:w-[60px] md:h-[60px] border border-[#eef1f6] rounded-[10px] mr-3 shrink-0 flex items-center justify-center bg-white shadow-sm">
+              <i
+                className={card.icon}
+                style={{ fontSize: isMobile ? "24px" : "30px", color: PRIMARY_COLOR }}
+              ></i>
+            </span>
+            <h4 className="mb-0 !text-sm md:!text-base !font-semibold !text-gray-900">
+              <span className="text-gray-900 leading-snug block">{card.title}</span>
+            </h4>
+          </div>
+
+          <i
+            className={`fa-solid fa-chevron-${hoveredIndex === idx ? "up" : "down"} ml-2 text-xs text-gray-500`}
+          ></i>
         </div>
 
-        <i
-          className={
-            hoveredIndex === idx
-              ? `fa-solid fa-${isMobile ? "arrow-up" : "chevron-up"} ml-2`
-              : `fa-solid fa-${isMobile ? "arrow-down" : "chevron-down"} ml-2`
-          }
-        ></i>
+        {isMobile && hoveredIndex === idx && (
+          <div className="mt-2.5 pt-2.5 border-t border-[#321961]/15 text-[11px] leading-relaxed text-gray-700 text-left">
+            {card.content}
+          </div>
+        )}
 
-        <div
-          className={`absolute top-[calc(100%+12px)] left-1/2 -translate-x-1/2 bg-white text-[#333] py-3 px-4 rounded-xl shadow-[0_8px_24px_rgba(0,0,0,0.15)] min-w-[280px] max-w-[350px] pointer-events-none transition-all duration-300 ease-out z-[999999] border border-slate-100 after:content-[''] after:absolute after:bottom-full after:left-1/2 after:-translate-x-1/2 after:border-8 after:border-transparent after:border-b-white after:drop-shadow-[0_2px_4px_rgba(0,0,0,0.1)] ${hoveredIndex === idx
-            ? "opacity-100 visible translate-y-0"
-            : "opacity-0 invisible translate-y-2.5"
-            }`}
-        >
-          <div className="text-xs leading-relaxed text-gray-600 text-left">{card.content}</div>
-        </div>
+        {!isMobile && (
+          <div
+            className={`absolute top-[calc(100%+12px)] left-1/2 -translate-x-1/2 bg-white text-[#333] py-3 px-4 rounded-xl shadow-[0_8px_24px_rgba(0,0,0,0.15)] min-w-[280px] max-w-[350px] pointer-events-none transition-all duration-300 ease-out z-[999999] border border-slate-100 after:content-[''] after:absolute after:bottom-full after:left-1/2 after:-translate-x-1/2 after:border-8 after:border-transparent after:border-b-white after:drop-shadow-[0_2px_4px_rgba(0,0,0,0.1)] ${hoveredIndex === idx
+              ? "opacity-100 visible translate-y-0"
+              : "opacity-0 invisible translate-y-2.5"
+              }`}
+          >
+            <div className="text-xs leading-relaxed text-gray-600 text-left">{card.content}</div>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -431,23 +456,25 @@ const ServiceCards = ({ serviceType, liteMode = false }) => {
         backgroundColor: PRIMARY_SECTION_BG,
         position: "relative",
         zIndex: hoveredIndex !== null && !liteMode ? 12 : "auto",
-        overflow: "visible",
       }}
     >
       <style>
         {`
-    .service-cards-section .slick-list,
-    .service-cards-section .slick-track {
-      overflow: visible !important;
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
     }
   `}
       </style>
       <div className="max-w-[1440px] mx-auto px-4 md:px-6 lg:px-8">
         <div className="medical-descriptions">
           {isMobile ? (
-            <div className="flex flex-col gap-3">
+            <Slider {...sliderSettings}>
               {cards.map((card, idx) => renderCard(card, idx))}
-            </div>
+            </Slider>
           ) : (
             <div className="flex flex-wrap -mx-2.5">
               {cards.map((card, idx) => renderCard(card, idx))}
@@ -455,12 +482,12 @@ const ServiceCards = ({ serviceType, liteMode = false }) => {
           )}
         </div>
 
-        <h3
+        <h1
           className="text-center !text-[18px] md:!text-xl !font-semibold  my-3"
           style={{ textTransform: "capitalize", color: PRIMARY_COLOR }}
         >
           {footerText}
-        </h3>
+        </h1>
       </div>
     </section>
   );

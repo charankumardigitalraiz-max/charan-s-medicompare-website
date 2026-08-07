@@ -14,6 +14,7 @@ import ConsultationModal from "./ConsultationModal.jsx";
 import AppointmentModal from "./AppointmentModal.jsx";
 import { useState, useRef, useEffect } from "react";
 import { redirectToLoginWithPendingBooking } from "../../../../utils/pendingBookingUtils";
+import SectionHeader from "../../../../components/ui/SectionHeader.jsx";
 
 const SERVICE_BOOKING_TYPES = [
   "consultation",
@@ -195,7 +196,7 @@ const CollapsibleVendorList = ({
         >
           <div className="max-h-[220px] overflow-y-auto flex flex-col gap-1">
             {vendorCount === 0 ? (
-              <div className="w-full py-3 text-center text-slate-400 text-xs">
+              <div className="w-full py-3 text-center !text-slate-400 text-xs">
                 No vendor available
               </div>
             ) : (
@@ -409,47 +410,22 @@ const AlternateProducts = ({
 
   return (
     <div className={isMobile ? "mt-0" : "mt-5"}>
-      <div className="flex justify-between items-center gap-3 mb-4 pb-3.5 border-b border-[#ede9f5]">
-        <div className="flex items-center gap-3 min-w-0">
-          <span className="w-1.5 h-7 rounded-full bg-gradient-to-b from-[#321961] to-[#5a3a9c] shrink-0" aria-hidden="true" />
-          <div className="text-[20px] !font-[500] text-slate-800 margin-0">
-            Alternate Products
+      <SectionHeader
+        title={
+          <div className="flex items-center gap-3">
+            <span className="w-1.5 h-7 rounded-full bg-gradient-to-b from-[#321961] to-[#5a3a9c] shrink-0" aria-hidden="true" />
+            <span className="text-[20px] !font-[500] text-slate-800 margin-0">Alternate Products</span>
+            <span className="bg-[#321961]/10 text-[#321961] text-[11px] font-bold px-2 py-0.5 rounded-full shrink-0 leading-none">
+              {validProducts.length}
+            </span>
           </div>
-          <div className="bg-[#321961]/10 text-[#321961] text-[11px] font-bold px-2 py-0.5 rounded-full shrink-0 leading-none">
-            {validProducts.length}
-          </div>
-        </div>
-
-        <button
-          type="button"
-          className="text-xs font-bold text-white bg-gradient-to-r from-[#321961] to-[#6d48b8] hover:shadow-md hover:shadow-purple-500/20 active:scale-[0.98] py-1.5 px-3.5 !rounded-md inline-flex items-center gap-1.5 transition-all duration-300 cursor-pointer border-none"
-          onClick={() => {
-            // const firstProduct = relatedproducts[0];
-            // if (firstProduct?.tablet?.compositions?._id && firstProduct?.tablet?.compositions?.name) {
-            //   const createSlug = (name) => {
-            //     return name
-            //       .toLowerCase()
-            //       .replace(/[^a-z0-9]+/g, "-")
-            //       .replace(/^-+|-+$/g, "");
-            //   };
-            if (!composition) return;
-            // const isId = /^[0-9a-fA-F]{24}$/.test(composition);
-            // if (isId) {
-            //   navigate(`/composition/${composition}`);
-            // } else {
-            //   const formatComposition = (name) => {
-            //     return encodeURIComponent(String(name).replace(/\s+/g, "_"));
-            //   };
-            //   navigate(`/composition/${formatComposition(composition)}`);
-            // }
-            navigate(`/composition/${composition}`);
-
-          }}
-        >
-          View All
-          <i className="fas fa-arrow-right text-[10px]" aria-hidden="true" />
-        </button>
-      </div>
+        }
+        onViewAll={() => {
+          if (!composition) return;
+          navigate(`/composition/${composition}`);
+        }}
+        className="mb-4 pb-3.5 border-b border-[#ede9f5]"
+      />
 
       <div className="relative w-full">
         {/* Scroll Left Button */}
@@ -1052,7 +1028,7 @@ const AlternateProducts = ({
                         </div>
                       )}
                       <h6
-                        className="!text-[13px] !font-semibold text-slate-800 margin-0 leading-normal line-clamp-2 overflow-hidden text-ellipsis h-5 hover:text-[#321961] transition-colors"
+                        className="!text-[13px] !font-semibold  !text-slate-800 margin-0 leading-normal line-clamp-2 overflow-hidden text-ellipsis h-5 hover:text-[#321961] transition-colors"
                         onClick={handleProductClick}
                       >
                         {(() => {
@@ -1063,7 +1039,7 @@ const AlternateProducts = ({
                       </h6>
                     </div>
 
-                    {typeof finalPrice === "number" && finalPrice > 0 && (
+                    {/* {typeof finalPrice === "number" && finalPrice > 0 && (
                       <div className="flex items-baseline gap-1.5 mb-2.5 flex-wrap">
                         <span className="text-[14px] font-extrabold text-[#321961]">
                           ₹{finalPrice.toFixed(2)}
@@ -1081,7 +1057,7 @@ const AlternateProducts = ({
                           </>
                         )}
                       </div>
-                    )}
+                    )} */}
 
                     {(product?.tablet?.reportsDuration ||
                       product?.tablet?.reportDuration) && (

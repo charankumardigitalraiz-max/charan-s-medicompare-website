@@ -133,8 +133,8 @@ const ProductDescription = () => {
     ),
     customPaging: (i) => (
       <button
-        className={`!h-1.5 !rounded-full !border-none !p-0 !cursor-pointer !transition-all !duration-300 before:!content-none before:!hidden ${currentTopSlide === i
-          ? "!w-[30px] !bg-white"
+        className={`!h-2 !rounded-full !border-none !p-0 !cursor-pointer !transition-all !duration-300 before:!content-none before:!hidden ${currentTopSlide === i
+          ? "!w-6 !bg-white"
           : "!w-2 !bg-white/50"
           }`}
       />
@@ -3107,7 +3107,7 @@ const ProductDescription = () => {
                           <div className="min-w-0 flex flex-col items-center">
                             {/* Main Image Container */}
                             <div
-                              className={`relative overflow-hidden w-full aspect-square max-h-[280px] sm:max-h-[320px] bg-slate-50/70 border border-slate-100 rounded-2xl flex items-center justify-center p-4 hover:cursor-zoom-in group transition-all duration-300 ${isMobile ? "mt-[10px]" : ""}`}
+                              className={`relative overflow-hidden w-full aspect-square max-h-[280px] sm:max-h-[320px] bg-slate-50/70 border border-slate-100 rounded-none flex items-center justify-center p-4 hover:cursor-zoom-in group transition-all duration-300 ${isMobile ? "mt-[10px]" : ""}`}
                               ref={imageZoomRef}
                               onMouseMove={(e) => {
                                 if (isMobile) return;
@@ -3239,7 +3239,7 @@ const ProductDescription = () => {
                                         <button
                                           onClick={handlePrevThumbnails}
                                           disabled={thumbnailStartIndex === 0}
-                                          className={`flex items-center justify-center rounded-full border border-slate-200 text-slate-600 hover:border-[#321961] hover:text-[#321961] hover:bg-slate-50 transition-all duration-200 bg-white w-7 h-7 p-0 shadow-sm ${thumbnailStartIndex === 0
+                                          className={`flex items-center justify-center !rounded-full border border-slate-200 text-slate-600 hover:border-[#321961] hover:text-[#321961] hover:bg-slate-50 transition-all duration-200 bg-white w-7 h-7 p-0 shadow-sm ${thumbnailStartIndex === 0
                                             ? "opacity-40 cursor-not-allowed"
                                             : "opacity-100 cursor-pointer"
                                             }`}
@@ -3264,7 +3264,7 @@ const ProductDescription = () => {
                                                 src={getImageUrl(img)}
                                                 alt={`${tablet?.name} ${actualIndex + 1}`}
                                                 title={`${tablet?.name} ${actualIndex + 1}`}
-                                                className={`w-[50px] h-[50px] sm:w-[56px] sm:h-[56px] object-contain border rounded-xl p-1 bg-white cursor-pointer transition-all duration-200 hover:scale-105 ${selectedImageIndex === actualIndex ? "border-[#321961] ring-2 ring-[#321961]/20 shadow-sm" : "border-slate-200 hover:border-slate-350"}`}
+                                                className={`w-[50px] h-[50px] sm:w-[56px] sm:h-[56px] object-contain border rounded-none p-1 bg-white cursor-pointer transition-all duration-200 hover:scale-105 ${selectedImageIndex === actualIndex ? "border-[#321961] ring-2 ring-[#321961]/20 shadow-sm" : "border-slate-200 hover:border-slate-350"}`}
                                                 onClick={() =>
                                                   setSelectedImageIndex(
                                                     actualIndex,
@@ -3287,7 +3287,7 @@ const ProductDescription = () => {
                                             thumbnailStartIndex >=
                                             maxThumbnails - visibleThumbnails
                                           }
-                                          className={`flex items-center justify-center rounded-full border border-slate-200 text-slate-600 hover:border-[#321961] hover:text-[#321961] hover:bg-slate-50 transition-all duration-200 bg-white w-7 h-7 p-0 shadow-sm ${thumbnailStartIndex >=
+                                          className={`flex items-center justify-center !rounded-full border border-slate-200 text-slate-600 hover:border-[#321961] hover:text-[#321961] hover:bg-slate-50 transition-all duration-200 bg-white w-7 h-7 p-0 shadow-sm ${thumbnailStartIndex >=
                                             maxThumbnails - visibleThumbnails
                                             ? "opacity-40 cursor-not-allowed"
                                             : "opacity-100 cursor-pointer"
@@ -3300,7 +3300,7 @@ const ProductDescription = () => {
                                   )}
 
                                   <button
-                                    className="inline-flex items-center gap-1.5 px-4 py-1.5 !text-xs !font-semibold !border !border-[#321961] !text-[#321961] rounded-full hover:!bg-[#321961] hover:!text-white transition-all duration-200 ease-in-out cursor-pointer mt-6 shadow-sm hover:shadow"
+                                    className="inline-flex items-center !mt-2 gap-1.5 px-4 py-1.5 !text-xs !font-semibold !border !border-[#321961] !text-[#321961] rounded-full hover:!bg-[#321961] hover:!text-white transition-all duration-200 ease-in-out cursor-pointer mt-6 shadow-sm hover:shadow"
                                     onClick={(e) => {
                                       e.preventDefault();
                                       e.stopPropagation();
@@ -3331,19 +3331,19 @@ const ProductDescription = () => {
                           </div>
 
                           <div className="min-w-0">
-                            <h5 className="font-semibold mb-1 capitalize">
-                              {tablet?.name ? tablet.name.charAt(0).toUpperCase() + tablet.name.slice(1) : ""}
-                            </h5>
-                            {tablet?.medicineType && (
-                              <div className="mb-1">
+                            <div className="flex flex-wrap items-center gap-2 mb-2">
+                              <h5 className="font-semibold mb-0 capitalize">
+                                {tablet?.name ? tablet.name.charAt(0).toUpperCase() + tablet.name.slice(1) : ""}
+                              </h5>
+                              {tablet?.medicineType && (
                                 <span
-                                  className="inline-block bg-[#321961] text-white text-xs px-2 py-0.5 rounded-full capitalize"
+                                  className="inline-block bg-[#321961] text-white text-xs px-2 py-0.5 rounded-full capitalize shrink-0"
                                   style={{ textTransform: "capitalize" }}
                                 >
                                   {tablet?.medicineType}
                                 </span>
-                              </div>
-                            )}
+                              )}
+                            </div>
 
                             {med?.variant && med.variant.length > 0 && (
                               <div className="mb-2" style={{ maxWidth: "200px" }}>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Slider from "react-slick";
-import { SectionProductCard } from "../ui";
+import { SectionProductCard, SectionHeader } from "../ui";
 import { useResponsive } from "../../hooks";
 
 const DynamicCategorySections = ({
@@ -23,8 +23,8 @@ const DynamicCategorySections = ({
   } = useResponsive();
   const isMobile = isMobileProp !== undefined ? isMobileProp : isMobileLocal;
 
-  // Scale slidesToShow up to 5 on large screens
-  const slidesToShow = isMobile ? 2 : isTablet ? 3 : isSmallLaptop ? 4 : 5;
+  // Scale slidesToShow up to 6 on large screens
+  const slidesToShow = isMobile ? 2 : isTablet ? 3.5 : isSmallLaptop ? 5 : 6;
 
   // React State for a Live Countdown Timer
   const [timeLeft, setTimeLeft] = useState({ hours: 4, minutes: 12, seconds: 48 });
@@ -69,14 +69,14 @@ const DynamicCategorySections = ({
     arrows: true,
     infinite: false,
     speed: 500,
-    slidesToShow: slidesToShow,
+    slidesToShow: 6,
     slidesToScroll: 1,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
     responsive: [
-      { breakpoint: 1400, settings: { slidesToShow: 4 } },
-      { breakpoint: 1200, settings: { slidesToShow: 3.5 } },
-      { breakpoint: 992, settings: { slidesToShow: 2.5 } },
+      { breakpoint: 1400, settings: { slidesToShow: 5 } },
+      { breakpoint: 1200, settings: { slidesToShow: 4 } },
+      { breakpoint: 992, settings: { slidesToShow: 3 } },
       { breakpoint: 768, settings: { slidesToShow: 2, arrows: true } },
       { breakpoint: 480, settings: { slidesToShow: 1.2, arrows: true } },
     ],
@@ -457,7 +457,7 @@ const DynamicCategorySections = ({
           return (
             <div
               key={section._id || index}
-              className="w-full py-6 border- {} border-slate-100/50 relative overflow-hidden"
+              className="w-full py-3 sm:py-4 relative overflow-hidden"
               style={{
                 backgroundImage: `url('/medicompare_bg4_instant_healthcare.png')`,
                 backgroundSize: "cover",
@@ -479,46 +479,15 @@ const DynamicCategorySections = ({
                 </svg>
               </div>
 
-              <div className="max-w-full mx-auto px-4 md:px-12 relative z-10">
-
+              <div className="max-w-full mx-auto px-2 md:px-4 relative z-10">
                 {/* Rounded Inner Container Box matching mockup style */}
-                <div className="py-2 px-2 md:py-3 md:px-4">
-
-                  {/* Category Title Top Header Panel */}
-                  <div className="flex items-center justify-between mb-5 pb-3 border-b border-slate-100/50">
-                    <div className="flex items-center gap-3">
-                      <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-white shadow-sm border border-slate-100/80">
-                        <i className={`${serviceTheme.iconClass || "fas fa-tag"} text-lg`} />
-                      </div>
-                      <h3 className="!text-lg md:!text-xl !font-semibold !text-slate-800 tracking-tight">
-                        {title}
-                      </h3>
-                    </div>
-                    <div>
-                      {/* View All link matching mockup style */}
-                      <Link
-                        to={`/${currentService || serviceId?.slug || "medicine"}/all`}
-                        className="inline-flex items-center gap-1.5 text-[11px] md:text-[13px] !bg-primary !text-white font-bold px-4 py-1.5 rounded-full transition-all duration-300 !no-underline shadow-sm hover:shadow active:scale-[0.98]"
-                        style={{
-                          color: '#321961',
-                          backgroundColor: 'rgba(50, 25, 97, 0.08)',
-                          border: '1.5px solid rgba(50, 25, 97, 0.15)',
-                        }}
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.backgroundColor = '#321961';
-                          e.currentTarget.style.color = '#ffffff';
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.backgroundColor = 'rgba(50, 25, 97, 0.08)';
-                          e.currentTarget.style.color = '#321961';
-                        }}
-                      >
-                        <span>View All</span>
-                        <i className="fas fa-arrow-right text-[10px]" />
-                      </Link>
-                    </div>
-                  </div>
-
+                <div className="py-1 px-1 md:py-1.5 md:px-2">
+                  <SectionHeader
+                    title={title}
+                    icon={serviceTheme.iconClass || "fas fa-tag"}
+                    viewAllLink={`/${currentService || serviceId?.slug || "medicine"}/all`}
+                    className="mb-3 pb-2 border-b border-slate-100/50"
+                  />
                   {/* Horizontal Products List Slider */}
                   <div className="relative">
                     <style>{`
