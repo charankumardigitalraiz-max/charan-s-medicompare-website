@@ -413,13 +413,13 @@ const ServiceCards = ({ serviceType, liteMode = false }) => {
       >
         <div className="flex items-center justify-between w-full">
           <div className="flex items-center w-full min-w-0">
-            <span className="w-[50px] h-[50px] md:w-[60px] md:h-[60px] border border-[#eef1f6] rounded-[10px] mr-3 shrink-0 flex items-center justify-center bg-white shadow-sm">
+            <span className="w-[45px] h-[45px] md:w-[50px] md:h-[50px] border border-[#eef1f6] rounded-[10px] mr-3 shrink-0 flex items-center justify-center bg-white shadow-sm">
               <i
                 className={card.icon}
-                style={{ fontSize: isMobile ? "24px" : "30px", color: PRIMARY_COLOR }}
+                style={{ fontSize: isMobile ? "24px" : "25px", color: PRIMARY_COLOR }}
               ></i>
             </span>
-            <h4 className="mb-0 !text-sm md:!text-base !font-semibold !text-gray-900">
+            <h4 className="mb-0 !text-[11px] md:!text-[15.5px] !font-medium !text-gray-900">
               <span className="text-gray-900 leading-snug block">{card.title}</span>
             </h4>
           </div>
