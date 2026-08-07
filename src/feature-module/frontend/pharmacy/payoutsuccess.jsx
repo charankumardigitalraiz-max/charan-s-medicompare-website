@@ -86,14 +86,14 @@ const PaymentSuccess = () => {
     <div className="min-h-screen bg-gradient-to-br from-[#f8f5fe] via-white to-[#e8f4ff]">
       <Home2Header />
 
-      <div className="fixed inset-0 z-[99999] bg-black/60 backdrop-blur-sm p-4 overflow-y-auto flex justify-center items-start md:relative md:inset-auto md:z-auto md:bg-transparent md:backdrop-blur-none md:overflow-visible md:items-center md:py-12 md:px-4">
-        <div className="w-full max-w-md md:max-w-lg my-auto md:my-0">
+      <div className="fixed inset-0 z-[99999] bg-black/60 backdrop-blur-sm p-4 overflow-y-auto flex justify-center items-center md:relative md:inset-auto md:z-auto md:bg-transparent md:backdrop-blur-none md:overflow-visible md:py-16 md:px-4">
+        <div className="w-full max-w-[400px] my-auto">
           <div className="bg-white rounded-[24px] shadow-[0_20px_60px_rgba(128,89,202,0.15)] overflow-hidden">
 
             {/* Top accent strip */}
             <div className="h-[6px] bg-gradient-to-r from-[#321961] to-[#04BD6C]" />
 
-            <div className="p-6 md:p-10">
+            <div className="p-6 md:p-8">
               {/* Success Icon */}
               <div className="flex justify-center mb-6">
                 <div className="relative">
@@ -145,7 +145,7 @@ const PaymentSuccess = () => {
               </div>
 
               {/* Next Steps Card */}
-              <div className="bg-[#fffbea] rounded-[16px] p-3 md:p-6 mb-6 border border-[#ffe9a0]">
+              {/* <div className="bg-[#fffbea] rounded-[16px] p-3 md:p-6 mb-6 border border-[#ffe9a0]">
                 <h4 className="flex items-center gap-2 !text-sm md:!text-[15px] !font-semibold !text-[#92600a] mb-3">
                   <i className="fas fa-info-circle" /> What's Next?
                 </h4>
@@ -161,7 +161,7 @@ const PaymentSuccess = () => {
                     </li>
                   ))}
                 </ul>
-              </div>
+              </div> */}
 
               <div className="flex flex-col sm:flex-row gap-3 justify-center max-w-md mx-auto">
                 <Link

@@ -75,6 +75,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
   const searchRef = useRef("");
   const searchInputRef = useRef(null);
   const heroTypeRef = useRef(null);
+  const searchContainerRef = useRef(null);
   const [showPrescriptionModal, setShowPrescriptionModal] = useState(false);
   const homeLiteMode = useMemo(() => shouldUseHomeLiteMode(), []);
 
@@ -111,6 +112,22 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
     }, 2000);
 
     return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        searchContainerRef.current &&
+        !searchContainerRef.current.contains(event.target)
+      ) {
+        setShowSuggestions(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
   }, []);
 
   useEffect(() => {
@@ -884,7 +901,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                   </p>
                 </div>
                 <section
-                  className="p-[30px] md:py-0 md:px-[10px] relative mt-[10px] mobileview z-[9]"
+                  className="p-[12px] md:py-0 md:px-[10px] relative mt-[10px] mobileview z-[9]"
                 >
                   <div
                     className="container-fluid px-3 px-md-4 relative z-[1] w-full max-w-[600px] mx-auto"
@@ -898,6 +915,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                             <div className="col-12">
                               <div
                                 className="search-wrapper searchhome m-auto relative z-10"
+                                ref={searchContainerRef}
                               >
                                 <form onSubmit={(e) => e.preventDefault()}>
                                   <div
@@ -948,7 +966,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                                       style={{
                                         background: "transparent",
                                         color: "rgb(107, 114, 128)",
-                                        border: "1.5px solid rgb(229, 231, 235)",
+                                        // border: "1.5px solid rgb(229, 231, 235)",
                                         borderRadius: "6px",
                                         padding: "2px",
                                         width: "25px",
@@ -959,7 +977,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                                         cursor: "pointer",
                                         transition: "0.2s cubic-bezier(0.4, 0, 0.2, 1)",
                                         flexShrink: 0,
-                                        marginRight: "4px",
+                                        marginRight: "0px",
                                       }}
                                       onMouseEnter={(e) => {
                                         e.currentTarget.style.color = "#7c3aed";
@@ -972,7 +990,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                                         e.currentTarget.style.backgroundColor = "transparent";
                                       }}
                                     >
-                                      <i className="fa-solid fa-file-medical" style={{ fontSize: "12px" }}></i>
+                                      <i className="fas fa-file-prescription" style={{ fontSize: "13px" }}></i>
                                     </button>
 
                                     <button
@@ -1031,6 +1049,12 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                                       <div
                                         className="absolute top-full left-0 right-0 mt-0 bg-white rounded-[10px] border-[1.5px] border-solid border-[#e5e7eb] shadow-[0_20px_40px_rgba(0,0,0,0.12),0_8px_16px_rgba(0,0,0,0.08)] z-[999999] max-h-[400px] overflow-y-auto overflow-x-hidden animate-[fadeInUp_0.2s_ease-out]"
                                       >
+                                        {isLoading && (
+                                          <div className="flex flex-col items-center justify-center py-8 gap-2.5 text-slate-400">
+                                            <i className="fas fa-circle-notch fa-spin text-2xl text-[#321961]"></i>
+                                            <span className="text-xs font-medium text-slate-500">Searching for medicines & services...</span>
+                                          </div>
+                                        )}
                                         {!isLoading &&
                                           !query.trim() &&
                                           searchHistory.length > 0 && (
@@ -1272,6 +1296,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                             alt={item.name}
                             title={item.name}
                             className="h-[46px] w-[46px] object-contain transition-transform duration-[700ms] ease-in-out group-hover:[transform:rotateY(360deg)]"
+                            style={{ filter: "brightness(0) invert(13%) sepia(55%) saturate(3990%) hue-rotate(258deg) brightness(79%) contrast(97%)" }}
                             loading={categoryIndex < 8 ? "eager" : "lazy"}
                             fetchPriority={categoryIndex < 4 ? "high" : "auto"}
                             decoding="async"

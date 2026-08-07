@@ -133,7 +133,7 @@ const Login = () => {
 
   return (
     <section className="w-full min-h-screen flex justify-center items-center p-5 box-border bg-white">
-      <div className="relative w-full max-w-[897px] min-h-[451px] h-auto bg-gradient-to-r from-[#4B22AA] via-[#341777] to-[#6941C6] rounded-[40px] shadow-[2px_4px_10px_0px_rgba(82,82,82,0.1),-1px_1px_4px_0px_rgba(0,0,0,0.24)] flex items-center overflow-hidden max-md:h-auto max-md:flex-col max-md:items-center max-md:p-2.5 max-md:max-w-full max-lg:h-auto max-lg:flex-col max-lg:items-center max-lg:pb-10 max-lg:max-w-[500px] py-6 md:py-0">
+      <div className="relative w-full max-w-[897px] min-h-[451px] h-auto bg-gradient-to-r from-[#4B22AA] via-[#341777] to-[#6941C6] rounded-md shadow-[2px_4px_10px_0px_rgba(82,82,82,0.1),-1px_1px_4px_0px_rgba(0,0,0,0.24)] flex items-center overflow-hidden max-md:h-auto max-md:flex-col max-md:items-center max-md:p-2.5 max-md:max-w-full max-lg:h-auto max-lg:flex-col max-lg:items-center max-lg:pb-10 max-lg:max-w-[500px] py-6 md:py-0">
         <div className="relative w-[468px] min-h-[381px] h-auto bg-[#f9fafb] rounded-[12px] ml-[52px] my-auto px-[46px] pt-[30px] pb-[30px] flex flex-col z-10 shrink-0 max-md:my-5 max-md:mx-0 max-md:w-[95%] max-md:h-auto max-md:p-5 max-lg:my-[35px] max-lg:mx-0 max-lg:w-[90%] max-lg:h-auto">
           <h1 className="!text-[22px] !font-semibold !text-[#344055] !m-0 !mb-4 !leading-normal max-md:text-[18px] max-md:font-bold">Login with MediCompares</h1>
 

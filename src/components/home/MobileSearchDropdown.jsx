@@ -59,6 +59,22 @@ const MobileSearchDropdown = ({
   }, []);
 
   const [hasFetchedRecent, setHasFetchedRecent] = useState(false);
+  const searchContainerRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        searchContainerRef.current &&
+        !searchContainerRef.current.contains(event.target)
+      ) {
+        setMobileSearchShowSuggestions(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
   const searchCacheRef = useRef(new Map());
   const requestCacheRef = useRef(new Map());
 
@@ -483,7 +499,7 @@ const MobileSearchDropdown = ({
         </div>
 
         <div className="container py-3" style={{ backgroundColor: "#f5f6f7", maxWidth: "100%", paddingLeft: "15px", paddingRight: "15px" }}>
-          <div className="relative w-full flex items-center mb-2" style={{ minHeight: "48px" }}>
+          <div ref={searchContainerRef} className="relative w-full flex items-center mb-2" style={{ minHeight: "48px" }}>
             <i
               className="fa fa-search"
               style={{
@@ -519,7 +535,7 @@ const MobileSearchDropdown = ({
               }}
               style={{
                 paddingLeft: "42px",
-                paddingRight: mobileSearchShowDots && mobileSearchLoading ? "80px" : "50px",
+                paddingRight: mobileSearchShowDots && mobileSearchLoading ? "110px" : "82px",
                 width: "100%",
                 height: "46px",
                 borderRadius: "12px",
@@ -537,7 +553,7 @@ const MobileSearchDropdown = ({
                 className="google-dots"
                 style={{
                   position: "absolute",
-                  right: "50px",
+                  right: "82px",
                   top: "50%",
                   transform: "translateY(-50%)",
                   zIndex: 3,
@@ -552,6 +568,34 @@ const MobileSearchDropdown = ({
                 <span className="dott green" />
               </div>
             )}
+
+            <i
+              className="fas fa-file-prescription"
+              title="Upload prescription"
+              onClick={() => {
+                onClose();
+                navigate("/prescription-upload", { state: { mode: "search", pincode: selectedPincode, lat: latitude, lng: longitude } });
+              }}
+              style={{
+                position: "absolute",
+                right: "46px",
+                top: "50%",
+                transform: "translateY(-50%)",
+                cursor: "pointer",
+                color: "#6b7280",
+                transition: "color 0.2s ease",
+                fontSize: "18px",
+                zIndex: 4,
+                flexShrink: 0,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                width: "32px",
+                height: "32px",
+                minWidth: "32px",
+                minHeight: "32px",
+              }}
+            />
 
             <i
               className="fa fa-microphone"
@@ -578,7 +622,7 @@ const MobileSearchDropdown = ({
             />
 
             {/* Dropdown  */}
-            {mobileSearchShowSuggestions && mobileSearchSuggestions.length > 0 && (
+            {mobileSearchShowSuggestions && (mobileSearchLoading || mobileSearchSuggestions.length > 0) && (
               <div
                 style={{
                   position: "absolute",
@@ -594,7 +638,13 @@ const MobileSearchDropdown = ({
                   overflowY: "auto",
                 }}
               >
-                {mobileSearchSuggestions
+                {mobileSearchLoading && (
+                  <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "24px 0", gap: "10px", color: "#9ca3af" }}>
+                    <i className="fas fa-circle-notch fa-spin" style={{ fontSize: "20px", color: "#321961" }}></i>
+                    <span style={{ fontSize: "12px", fontWeight: 500, color: "#6b7280" }}>Searching for medicines...</span>
+                  </div>
+                )}
+                {!mobileSearchLoading && mobileSearchSuggestions
                   .filter(item => {
                     // Filter out invalid objects that could cause rendering errors
                     if (item.noResult) return true;
@@ -734,6 +784,8 @@ const MobileSearchDropdown = ({
               </div>
             )}
           </div>
+
+
 
           {(!mobileSearchQuery || mobileSearchQuery.trim().length === 0) && mobileSearchRecommended.length > 0 && (
             <div className="mt-4 px-1">

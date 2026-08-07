@@ -183,6 +183,22 @@ const ServiceDetails = () => {
   const requestCacheRef = useRef(new Map());
   const serviceFetchIdRef = useRef(0);
   const [serviceDetails, setServicesDetails] = useState(null);
+  const searchContainerRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        searchContainerRef.current &&
+        !searchContainerRef.current.contains(event.target)
+      ) {
+        setShowSuggestions(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   const makeApiCall = async (searchQuery, limitNum = 10, requestType = "search") => {
     try {
@@ -1097,7 +1113,8 @@ const ServiceDetails = () => {
                 >
                   <div className="flex flex-wrap">
                     <div className="w-full mt-3">
-                      <div
+                       <div
+                        ref={searchContainerRef}
                         className={`search-wrapper1 mx-auto relative ${showSuggestions ? "z-30" : "z-[2]"}`}
                       >
                         <form onSubmit={(e) => e.preventDefault()}>
@@ -1128,12 +1145,12 @@ const ServiceDetails = () => {
                               }}
                             />
 
-                            {isLoading && (
+                             {isLoading && (
                               <div
                                 className="google-dots"
                                 style={{
                                   position: "absolute",
-                                  right: "45px",
+                                  right: "75px",
                                   top: "50%",
                                   transform: "translateY(-50%)",
                                 }}
@@ -1144,6 +1161,15 @@ const ServiceDetails = () => {
                                 <span className="dott green" />
                               </div>
                             )}
+
+                            <button
+                              type="button"
+                              title="Upload prescription"
+                              onClick={() => navigate("/prescription-upload", { state: { mode: "search", pincode: selectedPincode, lat: latitude, lng: longitude } })}
+                              className="flex items-center justify-center cursor-pointer transition-all duration-200 ease-in-out shrink-0 rounded-[6px] p-[2px] w-[25px] h-[25px] bg-transparent text-[rgb(107, 114, 128)] border-[1.5px] border-solid border-[rgb(229,231,235)] hover:bg-slate-50 shadow-none"
+                            >
+                              <i className="fas fa-file-prescription text-[13px]"></i>
+                            </button>
 
                             <button
                               type="button"
@@ -1198,6 +1224,12 @@ const ServiceDetails = () => {
                               <div
                                 className={`absolute top-full left-0 right-0 mt-0 bg-white rounded-[10px] border-[1.5px] border-solid border-[#e5e7eb] shadow-[0_20px_40px_rgba(0,0,0,0.12),0_8px_16px_rgba(0,0,0,0.08)] z-[999999] max-h-[400px] overflow-y-auto overflow-x-hidden ${pageLiteMode ? "animate-none" : "animate-[fadeInUp_0.2s_ease-out]"}`}
                               >
+                                {isLoading && (
+                                  <div className="flex flex-col items-center justify-center py-8 gap-2.5 text-slate-400">
+                                    <i className="fas fa-circle-notch fa-spin text-2xl text-[#321961]"></i>
+                                    <span className="text-xs font-medium text-slate-500">Searching for medicines & services...</span>
+                                  </div>
+                                )}
                                 {!isLoading &&
                                   !query.trim() &&
                                   searchHistory.length > 0 && (

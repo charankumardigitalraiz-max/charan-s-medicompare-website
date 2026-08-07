@@ -56,6 +56,13 @@ const CommonPhoneInput = ({
 
   return (
     <div className="phone-input PhoneInput" style={{ width: "100%" }}>
+      <style>{`
+        .flag-svg-container svg {
+          width: 24px !important;
+          height: 16px !important;
+          display: block !important;
+        }
+      `}</style>
       <div
         className="phone-input-container"
         style={{
@@ -68,7 +75,7 @@ const CommonPhoneInput = ({
           backgroundColor: "#fff",
           padding: "0 16px",
           boxSizing: "border-box",
-          gap: "12px",
+          gap: "8px",
         }}
       >
         <div
@@ -126,7 +133,15 @@ const CommonPhoneInput = ({
               {selectedCountry?.flagSvg ? (
                 <span
                   dangerouslySetInnerHTML={{ __html: selectedCountry.flagSvg }}
-                  style={{ lineHeight: 1 }}
+                  className="flag-svg-container"
+                  style={{
+                    lineHeight: 1,
+                    display: "flex",
+                    width: "24px",
+                    height: "16px",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
                 />
               ) : (
                 <img
@@ -141,7 +156,7 @@ const CommonPhoneInput = ({
             <span
               style={{
                 fontWeight: "600",
-                fontSize: "16px",
+                fontSize: "14px",
                 color: "#374151",
                 whiteSpace: "nowrap",
               }}
