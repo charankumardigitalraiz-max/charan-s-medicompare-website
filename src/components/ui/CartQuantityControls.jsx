@@ -312,10 +312,9 @@ const CartQuantityControls = ({
         }
         return;
       }
-
       // Priority 3: no prescription at all — show the rx upload modal
-      setShowPrescriptionModal(true);
-      return;
+      // setShowPrescriptionModal(false);
+      // return;
     }
 
     if (bookingType === "cartslots") {

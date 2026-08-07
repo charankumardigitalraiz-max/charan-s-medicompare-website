@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { QRCodeSVG } from "qrcode.react";
 import { toast } from "react-hot-toast";
 import { axiosUserInstance } from "../../../../Apiservice";
 import { useGoogleLogin } from "@react-oauth/google";
@@ -219,11 +220,19 @@ const Login = () => {
           </div>
 
           <div className="absolute top-[145px] left-[754px] text-center flex flex-col items-center max-md:hidden max-lg:hidden">
-            <img
-              src="/assets/qurcode.png"
-              alt="QR Code"
-              className="w-[53px] h-[49px] mb-2.5"
-            />
+            <div className="w-[53px] h-[53px] bg-white rounded p-0.5 mb-2.5 flex items-center justify-center">
+              <QRCodeSVG
+                value="https://medicompares.com"
+                size={49}
+                level="H"
+                imageSettings={{
+                  src: "/favicon.png",
+                  height: 11,
+                  width: 11,
+                  excavate: true,
+                }}
+              />
+            </div>
             <p className="text-[12px] text-white m-0 leading-[1.4] whitespace-pre-line">
               Scan the QR code
               {"\n"}
@@ -249,7 +258,7 @@ const Login = () => {
             </a>
 
             <a
-              href="https://play.google.com/store/apps?hl=en_IN&pli=1"
+              href="https://play.google.com/store/apps/details?id=com.talkraiz.app"
               target="_blank"
               className="flex items-center w-[150px] h-11 bg-[rgba(103,164,255,0.2)] rounded-[12px] backdrop-blur-[1px] shadow-[inset_0px_4px_50px_0px_#ffffff] no-underline px-3 transition-opacity duration-200 hover:opacity-90 max-md:w-[140px] max-md:h-10"
             >

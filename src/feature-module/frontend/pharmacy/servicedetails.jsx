@@ -1113,7 +1113,7 @@ const ServiceDetails = () => {
                 >
                   <div className="flex flex-wrap">
                     <div className="w-full mt-3">
-                       <div
+                      <div
                         ref={searchContainerRef}
                         className={`search-wrapper1 mx-auto relative ${showSuggestions ? "z-30" : "z-[2]"}`}
                       >
@@ -1145,7 +1145,7 @@ const ServiceDetails = () => {
                               }}
                             />
 
-                             {isLoading && (
+                            {isLoading && (
                               <div
                                 className="google-dots"
                                 style={{
@@ -1511,7 +1511,7 @@ const ServiceDetails = () => {
               <div className="flex items-center flex-wrap gap-3">
                 <Link
                   to={`/view-all-categories/${service}`}
-                  className={`top-vendor-badge service-link-hover !bg-primary !text-white font-semibold flex items-center justify-center transition-all duration-300 ${isMobile ? "!p-0 !flex rounded-full text-[10px] w-[36px] h-[36px] shrink-0 grow-0 self-center" : "py-[8px] px-[20px] rounded-[50px] text-[14px] w-auto h-auto"}`}
+                  className={`!bg-primary !text-white !font-semibold flex items-center justify-center transition-all duration-300 ${isMobile ? "!p-0 !flex rounded-full text-[10px] w-[36px] h-[36px] shrink-0 grow-0 self-center" : "py-[6px] px-[15px] rounded-[50px] text-[14px] w-auto h-auto"}`}
                 >
                   {isMobile ? "" : "View All"}
                   <i className={isMobile ? "isax isax-arrow-right-1" : "isax isax-arrow-right-1 ml-1"}></i>

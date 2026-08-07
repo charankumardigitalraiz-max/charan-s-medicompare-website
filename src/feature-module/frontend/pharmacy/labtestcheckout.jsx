@@ -540,6 +540,12 @@ export const LabTestCheckout = () => {
   };
 
   const handleCouponApply = async (coupon, isManualInput = false) => {
+    if (coupon?.remove) {
+      setAppliedCoupon(null);
+      toast.success("Coupon removed successfully!");
+      return;
+    }
+
     try {
       const token = localStorage.getItem("medicomparestoken");
       if (!token) {
@@ -592,7 +598,6 @@ export const LabTestCheckout = () => {
           serverDiscount: discount,
           serverFinalAmount: finalAmount,
         });
-        setShowOffersModal(false);
         toast.success("Coupon applied successfully!");
       } else {
         toast.error(response.data.message || "Failed to apply coupon");

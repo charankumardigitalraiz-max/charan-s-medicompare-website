@@ -469,6 +469,12 @@ const RentalBookingProcess = () => {
   const installmentAmount = data?.rentalPricing?.installmentAmount || 0;
 
   const handleCouponApply = async (coupon, isManualInput = false) => {
+    if (coupon?.remove) {
+      setAppliedCoupon(null);
+      toast.success("Coupon removed successfully!");
+      return;
+    }
+
     try {
       const token = localStorage.getItem(TOKEN_STORAGE_KEY);
       if (!token) {
@@ -504,7 +510,6 @@ const RentalBookingProcess = () => {
           serverDiscount: discount,
           serverFinalAmount: finalAmount,
         });
-        setShowOffersModal(false);
         toast.success("Coupon applied successfully!");
       } else {
         toast.error(response.data.message || "Failed to apply coupon");

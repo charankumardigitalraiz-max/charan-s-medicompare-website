@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef, useMemo, useLayoutEffect } from "react";
+import { QRCodeSVG } from "qrcode.react";
 import Home2Header from "../../../../components/home/Header-k";
 import SEOHelmet from "../../../../components/SEOHelmet";
 import Home2Footer from "../../../../components/home/Footer-f";
@@ -2580,38 +2581,55 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                           MediCompares India's #1 Medicine Price Comparison
                         </h2>
                       </div>
-                      <div
-                        className="app-scan my-6 flex items-center gap-4 aos"
-                        data-aos="fade-up"
-                      >
-                        <p className="m-0 !text-white/80 text-[14px]">Scan the QR code to get the app now</p>
-                        <img src="/assets/qurcode.png" alt="scan-image" className="w-[80px] h-[80px] border border-white/20 rounded-lg p-1 bg-white shadow-sm" />
-                      </div>
-                      <div className="flex flex-col sm:flex-row gap-3 mt-6">
-                        <a
-                          href="https://www.apple.com/app-store/"
-                          target="_blank"
-                          rel="noopener noreferrer"
+
+                      <div className="flex flex-row items-center justify-start gap-5">
+                        <div
+                          className="app-scan my-6 flex flex-col items-left aos"
+                          data-aos="fade-up"
                         >
-                          <img
-                            src="/assets/img/icons/app-store-icon.svg"
-                            alt="app-store"
-                            title="app-store"
-                            className="h-10"
+                          <p className="m-0 !text-white/80 text-[14px]">Scan the QR code to get the app now</p>
+                          <div className="flex flex-col sm:flex-row gap-3 mt-6">
+                            <a
+                              href="https://www.apple.com/app-store/"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              <img
+                                src="/assets/img/icons/app-store-icon.svg"
+                                alt="app-store"
+                                title="app-store"
+                                className="h-10"
+                              />
+                            </a>
+                            <a
+                              href="https://play.google.com/store/games"
+                              target="blank"
+                              rel="noopener noreferrer"
+                            >
+                              <img
+                                src="/assets/img/icons/playstore.svg"
+                                alt="play-store"
+                                title="play-store"
+                                className="h-10"
+                              />
+                            </a>
+                          </div>
+
+                        </div>
+
+                        <div className="w-[100px] h-[100px] border border-white/20 rounded-sm p-1 bg-white shadow-sm flex items-center justify-center">
+                          <QRCodeSVG
+                            value="https://play.google.com/store/apps/details?id=com.talkraiz.app"
+                            size={100}
+                            level="H"
+                            imageSettings={{
+                              src: "/favicon.png",
+                              height: 16,
+                              width: 16,
+                              excavate: true,
+                            }}
                           />
-                        </a>
-                        <a
-                          href="https://play.google.com/store/games"
-                          target="blank"
-                          rel="noopener noreferrer"
-                        >
-                          <img
-                            src="/assets/img/icons/playstore.svg"
-                            alt="play-store"
-                            title="play-store"
-                            className="h-10"
-                          />
-                        </a>
+                        </div>
                       </div>
                     </div>
                   </div>

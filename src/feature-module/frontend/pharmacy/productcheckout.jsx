@@ -424,6 +424,12 @@ export const Cart = () => {
   };
 
   const handleCouponApply = async (coupon, isManualInput = false) => {
+    if (coupon?.remove) {
+      setAppliedCoupon(null);
+      toast.success("Coupon removed successfully!");
+      return;
+    }
+
     try {
       const token = localStorage.getItem("medicomparestoken");
       if (!token) {
@@ -460,7 +466,6 @@ export const Cart = () => {
           serverDiscount: discount,
           serverFinalAmount: finalAmount,
         });
-        setShowOffersModal(false);
         toast.success("Coupon applied successfully!");
       } else {
         toast.error(response.data.message || "Failed to apply coupon");
@@ -1358,22 +1363,22 @@ export const Cart = () => {
                         {/* Prescription Uploaded Preview */}
                         {(prescriptionImage !== "true" && prescriptionImage !== "payment_required" && prescriptionImage !== "false") && (
                           <div
-                            className="flex items-center gap-2 bg-[#f0fdf4] border border-[#bbf7d0] rounded-lg px-2.5 py-1.5 mt-2"
+                            className="flex items-center gap-2 bg-[#fef2f2] border border-[#fee2e2] rounded-lg px-2.5 py-1.5 mt-2"
                           >
-                            <img
+                            {/* <img
                               src={getImageUrl(prescriptionImage)}
                               alt="Prescription"
                               className="w-8 h-8 rounded object-cover"
-                            />
+                            /> */}
                             <div className="flex flex-col">
-                              <span className="text-[10px] text-[#16a34a] font-semibold">
-                                Prescription Uploaded
+                              <span className="text-[10px] text-[#ef4444] font-semibold">
+                                Prescription Required
                               </span>
                               <a
                                 href={getImageUrl(prescriptionImage)}
                                 target="_blank"
                                 rel="noreferrer"
-                                className="text-[9px] text-[#15803d] underline"
+                                className="text-[9px] text-[#dc2626] underline"
                               >
                                 View Prescription
                               </a>
@@ -1518,16 +1523,16 @@ export const Cart = () => {
                             {/* Prescription Uploaded Preview (Desktop) */}
                             {(prescriptionImage !== "true" && prescriptionImage !== "payment_required" && prescriptionImage !== "false") && (
                               <div
-                                className="inline-flex items-center gap-2 bg-[#f0fdf4] border border-[#bbf7d0] rounded-md px-2 py-1 mb-1.5"
+                                className="inline-flex items-center gap-2 bg-[#fef2f2] border border-[#fee2e2] rounded-md px-2 py-1 mb-1.5"
                               >
-                                <img
+                                {/* <img
                                   src={getImageUrl(prescriptionImage)}
                                   alt="Prescription"
                                   className="w-6 h-6 rounded-[3px] object-cover"
-                                />
+                                /> */}
                                 <div className="flex items-center gap-1.5">
-                                  <span className="text-[9.5px] text-[#16a34a] font-semibold">
-                                    Prescription Uploaded
+                                  <span className="text-[9.5px] text-[#ef4444] font-semibold">
+                                    Prescription Required
                                   </span>
                                   {/* <a
                                     href={getImageUrl(prescriptionImage)}
