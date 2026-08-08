@@ -9,7 +9,7 @@ try {
     .then((categories) => {
       globalCategories = categories || [];
     })
-    .catch(() => {});
+    .catch(() => { });
 } catch (e) {
   // ignore
 }
@@ -18,22 +18,40 @@ export const getShareUrl = (productData) => {
   if (!productData) return PRODUCTION_URL;
   const tablet = productData.tablet || productData.medicineDetails || productData;
   if (tablet?.slug) {
-    const service = tablet.subcategorys?.category?.slug || 
-                    tablet.subcategory?.category?.slug || 
-                    tablet.category?.slug ||
-                    productData.category?.slug ||
-                    tablet.subcategorys?.category?.fixedType || 
-                    tablet.subcategory?.category?.fixedType ||
-                    tablet.fixedType ||
-                    productData.service ||
-                    'medicines';
-    const categories = tablet.subcategorys?.slug || 
-                       tablet.subcategory?.slug || 
-                       tablet.subcategorys?.fixedType || 
-                       tablet.subcategory?.fixedType || 
-                       tablet.category?.slug ||
-                       productData.category?.slug ||
-                       'all';
+    // Resolve subcategory block
+    let sub = tablet.subcategorys || tablet.subcategory || productData.subcatdetails || productData.subcategorydetails || productData.subcategoryDetails || tablet.subcategorys?.category?.slug;
+    if (Array.isArray(sub)) sub = sub[0];
+
+    // Resolve category block
+    const cat = sub?.category ||
+      sub?.catdetails ||
+      sub?.categoryDetails ||
+      (Array.isArray(tablet.category) ? tablet.category[0] : tablet.category) ||
+      (Array.isArray(productData.category) ? productData.category[0] : productData.category);
+
+    const service = cat?.slug ||
+      cat?.fixedType ||
+      tablet.subcategorys?.category?.slug ||
+      tablet.subcategory?.category?.slug ||
+      tablet.category?.slug ||
+      productData.category?.slug ||
+      tablet.fixedType ||
+      productData.service ||
+      tablet.subcategorys?.category?.fixedType ||
+      tablet.subcategory?.category?.fixedType ||
+      'medicines';
+
+    const categories = sub?.slug ||
+      sub?.fixedType ||
+      cat?.slug ||
+      tablet.subcategorys?.slug ||
+      tablet.subcategory?.slug ||
+      tablet.subcategorys?.fixedType ||
+      tablet.subcategory?.fixedType ||
+      tablet.category?.slug ||
+      productData.category?.slug ||
+      'all'
+
     const path = service === categories
       ? `${service}`
       : `${service}/${categories}`;
@@ -46,7 +64,7 @@ export const getShareUrl = (productData) => {
 export const getCleanServiceName = (serviceKey) => {
   if (!serviceKey) return "Product";
   const cleanKey = serviceKey.toLowerCase().replace(/[-_]/g, "").trim();
-  
+
   if (globalCategories && globalCategories.length > 0) {
     const matchedCategory = globalCategories.find(
       (cat) =>
@@ -61,7 +79,7 @@ export const getCleanServiceName = (serviceKey) => {
 
   // Fallback to static mapping if categories aren't loaded yet or match isn't found
   const key = serviceKey.toLowerCase().replace(/[-_]/g, "");
-  
+
   if (key.includes("medicine")) return "Medicine";
   if (key.includes("lab") || key.includes("diagnostic") || key.includes("test")) return "Lab Test";
   if (key.includes("dental")) return "Dental Service";
@@ -72,7 +90,7 @@ export const getCleanServiceName = (serviceKey) => {
   if (key.includes("homecare")) return "Home Care";
   if (key.includes("ambulance")) return "Ambulance";
   if (key.includes("treatment")) return "Medical Treatment";
-  
+
   return serviceKey
     .replace(/[-_]/g, " ")
     .split(" ")
@@ -81,9 +99,9 @@ export const getCleanServiceName = (serviceKey) => {
 };
 
 export const getShareText = (productData, selectedVariants, serviceType) => {
-  if (!productData) return "Check out this product on MediCompare";
+  if (!productData) return "Check out this product on MediCompares";
   const tablet = productData.tablet || productData;
-  if (!tablet) return "Check out this product on MediCompare";
+  if (!tablet) return "Check out this product on MediCompares";
 
   let serviceName = "Product";
   if (serviceType) {
@@ -91,11 +109,11 @@ export const getShareText = (productData, selectedVariants, serviceType) => {
   } else {
     // Dynamic database names are prioritized to support admin-panel changes
     const dbName = tablet.subcategorys?.category?.name ||
-                   tablet.subcategory?.category?.name ||
-                   tablet.category?.name ||
-                   tablet.subcategorys?.name ||
-                   tablet.subcategory?.name ||
-                   "";
+      tablet.subcategory?.category?.name ||
+      tablet.category?.name ||
+      tablet.subcategorys?.name ||
+      tablet.subcategory?.name ||
+      "";
     if (dbName) {
       serviceName = dbName;
     } else {
@@ -270,9 +288,9 @@ export const createNormalizedShareHandler = (shareData, onClose) => {
 
   let text = "";
   if (formattedServiceName.toLowerCase() === "medicine") {
-    text = `Check out this ${formattedServiceName}: ${name} - ₹${price} on MediCompare`;
+    text = `Check out this ${formattedServiceName}: ${name} - ₹${price} on MediCompares`;
   } else {
-    text = `Check out this ${formattedServiceName}: ${name} on MediCompare`;
+    text = `Check out this ${formattedServiceName}: ${name} on MediCompares`;
   }
 
   return {

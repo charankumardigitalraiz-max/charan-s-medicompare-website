@@ -14,6 +14,8 @@ import { IoIosHeartEmpty } from "react-icons/io";
 import { Tabs } from "../../../components/ui";
 import Pagination from "../../../components/ui/Pagination.jsx";
 import CompareOverlayButton from "../../../components/ui/CompareOverlayButton";
+import ShareModal from "../../../components/products/ShareModal.jsx";
+import { getShareUrl } from "../../../utils/shareUtils.js";
 
 const getSlugs = (data) => {
   let sub =
@@ -79,6 +81,13 @@ const Favourites = ({ HomeNavigate, BackButton }) => {
   const favouritesPerPage = 8;
   const navigate = useNavigate();
   const { isMobile } = useResponsive();
+  const [showShareModal, setShowShareModal] = useState(false);
+  const [shareProductData, setShareProductData] = useState(null);
+
+  const handleShare = (item) => {
+    setShareProductData(item);
+    setShowShareModal(true);
+  };
 
   const toSearchText = (value) => {
     if (value === null || value === undefined) return "";
@@ -104,18 +113,18 @@ const Favourites = ({ HomeNavigate, BackButton }) => {
     return "";
   };
 
-  const handleShare = async (item, e) => {
-    if (e) e.stopPropagation();
-    try {
-      const serviceType = item?.category?.[0]?.fixedType || "medicine";
-      const { category, subcategory, slug } = getSlugs(item);
-      const url = `${window.location.origin}/${encodeURIComponent(category || serviceType)}/${encodeURIComponent(subcategory || "all")}/${encodeURIComponent(slug || item._id)}`;
-      await navigator.clipboard.writeText(url);
-      toast.success("Link copied to clipboard!");
-    } catch (err) {
-      toast.error("Failed to copy link");
-    }
-  };
+  // const handleShare = async (item, e) => {
+  //   if (e) e.stopPropagation();
+  //   try {
+  //     const serviceType = item?.category?.[0]?.fixedType || "medicine";
+  //     const { category, subcategory, slug } = getSlugs(item);
+  //     const url = `${window.location.origin}/${encodeURIComponent(category || serviceType)}/${encodeURIComponent(subcategory || "all")}/${encodeURIComponent(slug || item._id)}`;
+  //     await navigator.clipboard.writeText(url);
+  //     toast.success("Link copied to clipboard!");
+  //   } catch (err) {
+  //     toast.error("Failed to copy link");
+  //   }
+  // };
 
   const fetchFavourites = async () => {
     const token = localStorage.getItem("medicomparestoken");
@@ -468,7 +477,7 @@ const Favourites = ({ HomeNavigate, BackButton }) => {
 
             return (
               <div
-                className="flex"
+                className="flex h-full"
                 key={item._id || item.id}
               >
                 <div
@@ -513,7 +522,7 @@ const Favourites = ({ HomeNavigate, BackButton }) => {
                   </div>
 
                   {/* Card Body */}
-                  <div className="product-card-body flex-1 px-2.5 py-2 flex flex-col gap-0.5">
+                  <div className="product-card-body !flex-1 !flex !flex-col px-2.5 py-2 gap-0.5">
                     <div className="flex items-start justify-between w-full gap-2">
                       <div className="flex flex-col gap-0.5 flex-1 min-w-0">
                         <div
@@ -552,7 +561,7 @@ const Favourites = ({ HomeNavigate, BackButton }) => {
                         onClick={(e) => e.stopPropagation()}
                       >
                         <div
-                          className="action-icon-btn cursor-pointer p-1"
+                          className="w-7 h-7 !rounded-full bg-slate-100/80 hover:bg-red-50 flex items-center justify-center transition-all duration-150 shadow-[0_2px_4px_rgba(0,0,0,0.06)] border border-slate-200/60 cursor-pointer"
                           onClick={(e) => {
                             e.stopPropagation();
                             handleToggleFavourite(item._id, true);
@@ -561,7 +570,7 @@ const Favourites = ({ HomeNavigate, BackButton }) => {
                           <FaHeart size={16} color="#ef4444" />
                         </div>
                         <div
-                          className="action-icon-btn cursor-pointer p-1"
+                          className="w-7 h-7 !rounded-full bg-slate-100/80 hover:bg-purple-50 flex items-center justify-center transition-all duration-150 shadow-[0_2px_4px_rgba(0,0,0,0.06)] border border-slate-200/60 cursor-pointer"
                           onClick={(e) => {
                             e.stopPropagation();
                             handleShare(item);
@@ -617,7 +626,7 @@ const Favourites = ({ HomeNavigate, BackButton }) => {
                     {/* View Details Button */}
                     <button
                       onClick={(e) => handleProductClick(item, e)}
-                      className="block w-full text-center py-[4px] px-4 bg-[#321961] text-white !rounded-md border-none !text-[12px] !font-medium transition-all duration-300 cursor-pointer mt-auto hover:bg-[#6b1fe6] hover:-translate-y-px hover:shadow-[0_4px_12px_rgba(125,46,255,0.3)]"
+                      className="block w-full text-center py-[4px] px-4 bg-[#321961] text-white !rounded-sm border-none !text-[12px] !font-medium transition-all duration-300 cursor-pointer !mt-auto hover:bg-[#6b1fe6] hover:-translate-y-px hover:shadow-[0_4px_12px_rgba(125,46,255,0.3)]"
                     >
                       View Details
                     </button>
@@ -638,6 +647,31 @@ const Favourites = ({ HomeNavigate, BackButton }) => {
           />
         </div>
       )}
+      <ShareModal
+        show={showShareModal}
+        onClose={() => {
+          setShowShareModal(false);
+          setShareProductData(null);
+        }}
+        shareData={
+          shareProductData
+            ? {
+              name: shareProductData.name,
+              price: (() => {
+                const variant = shareProductData.variant?.[0] || shareProductData.variants?.[0];
+                return variant?.discountprice || variant?.discountPrice || variant?.price || shareProductData.discountprice || shareProductData.discountPrice || shareProductData.price || 0;
+              })(),
+              link: getShareUrl(shareProductData),
+              serviceType: (() => {
+                let sub = shareProductData.subcatdetails || shareProductData.subcategorydetails || shareProductData.subcategoryDetails || shareProductData.subcategorys;
+                if (Array.isArray(sub)) sub = sub[0];
+                const cat = sub?.catdetails || sub?.categoryDetails || sub?.category || (Array.isArray(shareProductData.category) ? shareProductData.category[0] : shareProductData.category);
+                return cat?.name || cat?.fixedType || shareProductData.service || "medicine";
+              })()
+            }
+            : null
+        }
+      />
     </div>
   );
 };
