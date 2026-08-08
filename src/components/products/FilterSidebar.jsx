@@ -74,7 +74,7 @@ const FilterSidebar = ({
     }));
   };
   const getDefaultPriceRange = (serviceType) => {
-    if (serviceType === "medicine" || serviceType === "medicines") {
+    if (serviceType === "medicine" || serviceType === "medicines" || serviceType === "rx-medicines" || serviceType === "rx-medicines-and-more") {
       return [1, 10000];
     }
     return [200, 100000];
@@ -110,7 +110,7 @@ const FilterSidebar = ({
   const sliderValue = useMemo(() => localValue, [localValue]);
 
   const HeadingName = (service) => {
-    if (service === "medicines") return "MEDICINE";
+    if (service === "medicines" || service === "medicine" || service === "rx-medicines" || service === "rx-medicines-and-more") return "MEDICINE";
     if (service === "surgeries") return "SURGERY";
     if (service === "lab-tests") return "LAB TEST";
     if (service === "diagnostics") return "DIAGNOSTIC";
@@ -231,8 +231,8 @@ const FilterSidebar = ({
             <div
               key={alphaItem.value}
               onClick={() => scrollToLetter(alphaItem.value)}
-              className={`w-7 h-7 shrink-0 rounded-full border-2 border-solid flex items-center justify-center text-xs font-semibold cursor-pointer transition-all duration-200 ${isActive
-                ? "!border-[#321961] !bg-[#321961] text-white shadow-sm"
+              className={`w-7 h-7 shrink-0 rounded-full border-1 border-primary flex items-center justify-center text-xs font-semibold cursor-pointer transition-all duration-200 ${isActive
+                ? "!border-[#321961] !bg-primary text-white shadow-sm"
                 : "!border-[#64748b] bg-white text-[#321961] hover:!bg-purple-50 hover:!border-[#321961]"
                 }`}
             >
@@ -311,7 +311,9 @@ const FilterSidebar = ({
 
             {openAccordion.category &&
               (service !== "medicine" &&
-                service !== "medicines") &&
+                service !== "medicines" &&
+                service !== "rx-medicines" &&
+                service !== "rx-medicines-and-more") &&
               categories?.data &&
               categories?.data?.length > 0 && (
                 <>
@@ -696,7 +698,7 @@ const FilterSidebar = ({
           )}
 
           {/* Medicine Form Section - Only show for medicines with data */}
-          {(service === "medicine" || service === "medicines") && medicineForms && medicineForms.length > 0 && (
+          {(service === "medicine" || service === "medicines" || service === "rx-medicines" || service === "rx-medicines-and-more") && medicineForms && medicineForms.length > 0 && (
             <>
               <hr className="border-t border-slate-100 my-0" />
               <div className="bg-white p-2.5">

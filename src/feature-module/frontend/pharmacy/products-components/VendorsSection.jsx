@@ -12,10 +12,7 @@ import ShareModal from "./ShareModal.jsx";
 import LeadModal from "./LeadModal.jsx";
 import RentModal from "./RentModal.jsx";
 import ConsultationModal from "./ConsultationModal.jsx";
-import {
-  getShareUrl,
-  copyToClipboard,
-} from "../utils/shareUtils.js";
+
 import AppointmentModal from "./AppointmentModal.jsx";
 import { useProfile } from "../../../../context/ProfileContext";
 import { redirectToLoginWithPendingBooking } from "../../../../utils/pendingBookingUtils";
@@ -513,19 +510,7 @@ const VendorsSection = ({
   const toggleConsultationModal = () =>
     setShowConsultationModal(!showConsultationModal);
 
-  const handleShare = {
-    copy: async () => {
-      try {
-        const url = getShareUrl(tablet);
-        await copyToClipboard(url, () => {
-          toast.success("Link copied to clipboard!");
-          setShowShareModal(false);
-        });
-      } catch (err) {
-        toast.error("Failed to copy link");
-      }
-    },
-  };
+
 
   useEffect(() => {
     if (service && familyMemberModel) {
@@ -1174,7 +1159,9 @@ const VendorsSection = ({
             <ShareModal
               show={showShareModal}
               onClose={() => setShowShareModal(false)}
-              onShare={handleShare}
+              product={tablet}
+              selectedVariants={selectedVariants}
+              serviceType={service}
             />
 
             <LeadModal

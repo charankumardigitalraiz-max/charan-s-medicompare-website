@@ -1,6 +1,7 @@
-const ShareModal = ({ show, onClose, onShare }) => {
-  if (!show) return null;
+import React from "react";
+import BaseModal from "../../../../components/ui/BaseModal.jsx";
 
+const ShareModal = ({ show, onClose, onShare }) => {
   const shareOptions = [
     {
       id: "copy",
@@ -8,7 +9,7 @@ const ShareModal = ({ show, onClose, onShare }) => {
       icon: "fas fa-link",
       bgColor: "#f1f3f4",
       iconColor: "#5f6368",
-      onClick: onShare.copy,
+      onClick: onShare?.copy,
     },
     {
       id: "whatsapp",
@@ -16,7 +17,7 @@ const ShareModal = ({ show, onClose, onShare }) => {
       icon: "fab fa-whatsapp",
       bgColor: "#25D366",
       iconColor: "white",
-      onClick: onShare.whatsapp,
+      onClick: onShare?.whatsapp,
     },
     {
       id: "facebook",
@@ -24,7 +25,7 @@ const ShareModal = ({ show, onClose, onShare }) => {
       icon: "fab fa-facebook",
       bgColor: "#1877F2",
       iconColor: "white",
-      onClick: onShare.facebook,
+      onClick: onShare?.facebook,
     },
     {
       id: "twitter",
@@ -32,7 +33,7 @@ const ShareModal = ({ show, onClose, onShare }) => {
       icon: "fab fa-x-twitter",
       bgColor: "#000000",
       iconColor: "white",
-      onClick: onShare.twitter,
+      onClick: onShare?.twitter,
     },
     {
       id: "email",
@@ -40,7 +41,7 @@ const ShareModal = ({ show, onClose, onShare }) => {
       icon: "fas fa-envelope",
       bgColor: "#f1f3f4",
       iconColor: "#5f6368",
-      onClick: onShare.email,
+      onClick: onShare?.email,
     },
     {
       id: "telegram",
@@ -48,7 +49,7 @@ const ShareModal = ({ show, onClose, onShare }) => {
       icon: "fab fa-telegram",
       bgColor: "#0088cc",
       iconColor: "white",
-      onClick: onShare.telegram,
+      onClick: onShare?.telegram,
     },
     {
       id: "linkedin",
@@ -56,102 +57,74 @@ const ShareModal = ({ show, onClose, onShare }) => {
       icon: "fab fa-linkedin",
       bgColor: "#0077B5",
       iconColor: "white",
-      onClick: onShare.linkedin,
+      onClick: onShare?.linkedin,
     },
   ];
 
   return (
-    <div
-      className="modal fade show"
-      style={{
-        display: "block",
-        backgroundColor: "rgba(0,0,0,0.85)",
-        zIndex: "999999999999999",
-        position: "fixed",
-        top: 0,
-        left: 0,
-        width: "100%",
-        height: "100%",
-      }}
+    <BaseModal
+      show={show}
+      onClose={onClose}
+      title="Share"
+      size="sm"
+      bodyClassName="p-3"
     >
       <div
-        className="modal-dialog modal-dialog-centered"
-        style={{ maxWidth: "400px", margin: "auto" }}
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(4, 1fr)",
+          gap: "12px 8px",
+        }}
       >
-        <div
-          className="modal-content"
-          style={{ borderRadius: "12px", border: "none" }}
-        >
-          <div
-            className="modal-header"
-            style={{
-              borderBottom: "1px solid #e9ecef",
-              padding: "20px 24px 16px",
-            }}
-          >
-            <h5
-              className="modal-title"
-              style={{ fontWeight: "600", fontSize: "18px", margin: 0 }}
+        {shareOptions.map((option) => (
+          <div key={option.id}>
+            <div
+              className="share-option"
+              onClick={option.onClick}
+              style={{
+                cursor: "pointer",
+                transition: "all 0.2s",
+                padding: "12px 4px",
+                borderRadius: "8px",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
             >
-              Share
-            </h5>
-            <button
-              type="button"
-              className="btn-close"
-              onClick={onClose}
-              style={{ fontSize: "14px" }}
-            ></button>
-          </div>
-          <div className="modal-body" style={{ padding: "16px" }}>
-            <div className="row g-1">
-              {shareOptions.map((option) => (
-                <div key={option.id} className="col-3">
-                  <div
-                    className="d-flex flex-column align-items-center share-option"
-                    onClick={option.onClick}
-                    style={{
-                      cursor: "pointer",
-                      transition: "all 0.2s",
-                      padding: "12px 8px",
-                      borderRadius: "8px",
-                    }}
-                  >
-                    <div
-                      style={{
-                        width: "40px",
-                        height: "40px",
-                        borderRadius: "50%",
-                        backgroundColor: option.bgColor,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        marginBottom: "8px",
-                      }}
-                    >
-                      <i
-                        className={option.icon}
-                        style={{ fontSize: "20px", color: option.iconColor }}
-                      ></i>
-                    </div>
-                    <span
-                      style={{
-                        fontSize: "12px",
-                        fontWeight: "500",
-                        color: "#202124",
-                      }}
-                    >
-                      {option.label}
-                    </span>
-                  </div>
-                </div>
-              ))}
+              <div
+                style={{
+                  width: "40px",
+                  height: "40px",
+                  borderRadius: "50%",
+                  backgroundColor: option.bgColor,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  marginBottom: "8px",
+                }}
+              >
+                <i
+                  className={option.icon}
+                  style={{ fontSize: "20px", color: option.iconColor }}
+                ></i>
+              </div>
+              <span
+                style={{
+                  fontSize: "12px",
+                  fontWeight: "500",
+                  color: "#202124",
+                  textAlign: "center",
+                }}
+              >
+                {option.label}
+              </span>
             </div>
           </div>
-        </div>
+        ))}
       </div>
-    </div>
+    </BaseModal>
   );
 };
 
 export default ShareModal;
-

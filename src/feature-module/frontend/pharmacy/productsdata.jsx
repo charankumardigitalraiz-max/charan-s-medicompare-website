@@ -19,15 +19,8 @@ import { useCart } from "../../../hooks/useCart.js";
 import {
   getDisplayPrice,
   getVendorPrice,
+  createShareHandler,
   getShareUrl,
-  getShareText,
-  shareToWhatsApp,
-  shareToLinkedIn,
-  shareToFacebook,
-  shareToTwitter,
-  copyToClipboard,
-  shareToEmail,
-  shareToTelegram,
 } from "../../../utils/index.js";
 import { redirectToLoginWithPendingBooking } from "../../../utils/pendingBookingUtils.js";
 import {
@@ -49,17 +42,22 @@ const ProductsData = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const maincategories = searchParams.get("maincategories"); // 'some-slug'
   const [selectedCategories, setSelectedCategories] = useState(() => {
+    const urlCats = searchParams.get("categories");
+    if (urlCats) return urlCats.split(",");
     if (id && id !== "all") return [id];
-    // if (localStorage.getItem('fixedType') === "medicine" || localStorage.getItem('fixedType') === "") return [];
     if (maincategories) return [maincategories];
     return [];
   });
-  const [selectedBrands, setSelectedBrands] = useState(
-    id === "all" ? [] : id ? [id] : [],
-  );
-  const [selectedCompositions, setSelectedCompositions] = useState(
-    id === "all" ? [] : id ? [id] : [],
-  );
+  const [selectedBrands, setSelectedBrands] = useState(() => {
+    const urlBrands = searchParams.get("brands");
+    if (urlBrands) return urlBrands.split(",");
+    return id === "all" ? [] : id ? [id] : [];
+  });
+  const [selectedCompositions, setSelectedCompositions] = useState(() => {
+    const urlCompositions = searchParams.get("compositions");
+    if (urlCompositions) return urlCompositions.split(",");
+    return id === "all" ? [] : id ? [id] : [];
+  });
   const [page, setPage] = useState(() => {
     const pageParam = searchParams.get('page');
     return pageParam ? parseInt(pageParam, 10) : 1;
@@ -242,7 +240,7 @@ const ProductsData = () => {
   };
 
   const getDefaultPriceRange = (serviceType) => {
-    if (serviceType === "medicine" || serviceType === "medicines") {
+    if (serviceType === "medicine" || serviceType === "medicines" || serviceType === "rx-medicines" || serviceType === "rx-medicines-and-more") {
       return [1, 10000];
     }
     return [200, 100000];
@@ -250,9 +248,7 @@ const ProductsData = () => {
   const placeholderText = (service) => {
     if (service === "lab-tests") {
       return "Search any lab tests"
-    } else if (service === "medicine") {
-      return "Search any Medicines"
-    } else if (service === "medicines") {
+    } else if (service === "medicine" || service === "medicines" || service === "rx-medicines" || service === "rx-medicines-and-more") {
       return "Search any Medicines"
     } else if (service === "surgeries") {
       return "Search any Surgery"
@@ -337,20 +333,14 @@ const ProductsData = () => {
     setProductsList([]);
 
     try {
-      let local = localStorage.getItem('fixedType');
-      if (local == service) {
-        service = service;
-      } else {
-        service = local;
-      }
-
+      // Use the route parameter 'service' directly to prevent incorrect filtering when navigating back
       if (searchTerm) {
         targetPage = 1
       }
       const requestBody = {
         userId: userId || userProfile?._id || null,
-        maincatId: (service === "medicine" || service === "medicines" || service === "rx-medicines-and-more") ? (maincategories || id || 'all' || null) : null,
-        categoryId: (service === "medicine" || service === "medicines") ? [] : selectedCategories.length ? selectedCategories : (id && id !== "all") ? [id] : maincategories ? [maincategories] : [],
+        maincatId: (service === "medicine" || service === "medicines" || service === "rx-medicines-and-more" || service === "rx-medicines") ? (maincategories || id || 'all' || null) : null,
+        categoryId: (service === "medicine" || service === "medicines" || service === "rx-medicines" || service === "rx-medicines-and-more") ? [] : selectedCategories.length ? selectedCategories : (id && id !== "all") ? [id] : maincategories ? [maincategories] : [],
         brandId: selectedBrands.length ? selectedBrands : [],
         type: selectedTypes.length ? selectedTypes : [],
         medicineform: selectedForms.length ? selectedForms : [],
@@ -508,16 +498,10 @@ const ProductsData = () => {
 
     if (!data || !data.data) {
       try {
-
-        let local = localStorage.getItem('fixedType');
-        if (local == service) {
-          service = service;
-        } else {
-          service = local;
-        }
+        // Use the route parameter 'service' directly to prevent incorrect filtering when navigating back
         const requestBody = {
           userId: userId || userProfile?._id || null,
-          maincatId: (service === "medicine" || service === "medicines") ? (maincategories || id || null) : null,
+          maincatId: (service === "medicine" || service === "medicines" || service === "rx-medicines" || service === "rx-medicines-and-more") ? (maincategories || id || null) : null,
           categoryId: [],
           brandId: [],
           type: [],
@@ -1429,49 +1413,7 @@ const ProductsData = () => {
     }
   };
 
-  // Share handlers using utils
-  const handleShare = {
-    copy: async () => {
-      try {
-        const url = getShareUrl(shareProductData);
-        await copyToClipboard(url, () => {
-          toast.success("Link copied to clipboard!");
-          setShowShareModal(false);
-        });
-      } catch (err) {
-        toast.error("Failed to copy link");
-      }
-    },
-    whatsapp: () => {
-      const url = getShareUrl(shareProductData);
-      const text = getShareText(shareProductData, selectedVariants);
-      shareToWhatsApp(url, text, () => setShowShareModal(false));
-    },
-    facebook: () => {
-      const url = getShareUrl(shareProductData);
-      shareToFacebook(url, () => setShowShareModal(false));
-    },
-    twitter: () => {
-      const url = getShareUrl(shareProductData);
-      const text = getShareText(shareProductData, selectedVariants);
-      shareToTwitter(url, text, () => setShowShareModal(false));
-    },
-    email: () => {
-      const url = getShareUrl(shareProductData);
-      const text = getShareText(shareProductData, selectedVariants);
-      shareToEmail(url, text, () => setShowShareModal(false));
-    },
-    telegram: () => {
-      const url = getShareUrl(shareProductData);
-      const text = getShareText(shareProductData, selectedVariants);
-      shareToTelegram(url, text, () => setShowShareModal(false));
-    },
-    linkedin: () => {
-      const url = getShareUrl(shareProductData);
-      const text = getShareText(shareProductData, selectedVariants);
-      shareToLinkedIn(url, text, () => setShowShareModal(false));
-    },
-  };
+
 
   // Update userId when userProfile changes
   useEffect(() => {
@@ -1852,10 +1794,10 @@ const ProductsData = () => {
           )}
 
           <div className={`lg:hidden flex flex-col fixed top-0 left-0 w-3/4 max-w-[320px] h-full bg-white z-[9999] shadow-[2px_0_10px_rgba(0,0,0,0.1)] overflow-hidden transition-transform duration-300 ${isFilterDrawerOpen ? "translate-x-0" : "-translate-x-full"}`}>
-            <div className="flex items-center justify-between p-[12px_14px] border-b border-[#e0e0e0] bg-white shrink-0 min-h-[48px] sticky top-0 z-[9999]">
-              <h4 className="text-base font-semibold m-0 text-slate-800">Filters</h4>
+            <div className="flex items-center justify-between p-[12px_14px] border-b border-[#e0e0e0] bg-primary shrink-0 min-h-[48px] sticky top-0 z-[9999]">
+              <h4 className="!text-base !font-semibold m-0 text-white">Filters</h4>
               <button
-                className="flex bg-[#f0f0f0] border border-[#ccc] text-[16px] text-[#333] cursor-pointer p-0 items-center justify-center w-8 h-8 rounded-[6px] shrink-0"
+                className="w-8 h-8 !rounded-full border border-white/30 bg-white/15 text-white flex items-center justify-center cursor-pointer text-[13px] transition-all duration-150 hover:bg-white/28"
                 onClick={() => setIsFilterDrawerOpen(false)}
               >
                 <i className="fas fa-times"></i>
@@ -1923,7 +1865,7 @@ const ProductsData = () => {
             {/* Footer buttons outside scrollable content */}
             <div className="flex gap-[6px] p-[10px_12px] border-t border-[#e0e0e0] bg-white shrink-0 shadow-[0_-2px_10px_rgba(0,0,0,0.1)] sticky bottom-0 z-[9999]">
               <button
-                className="flex-1 p-[8px_10px] rounded-[6px] text-[12px] font-[500] cursor-pointer border-none flex items-center justify-center min-h-[36px] bg-[#f0f0f0] text-[#333]"
+                className="flex-1 p-[8px_10px] !bg-primary !rounded-lg text-[12px] font-[500] cursor-pointer border-none flex items-center justify-center min-h-[36px] !text-white"
                 onClick={() => {
                   handleClearFilters();
                   setIsFilterDrawerOpen(false);
@@ -2252,8 +2194,33 @@ const ProductsData = () => {
 
       <ShareModal
         show={showShareModal}
-        onClose={() => setShowShareModal(false)}
-        onShare={handleShare}
+        onClose={() => {
+          setShowShareModal(false);
+          setShareProductData(null);
+        }}
+        shareData={
+          shareProductData
+            ? {
+              name: shareProductData.tablet?.name || shareProductData.name,
+              price: (() => {
+                const tablet = shareProductData.tablet || shareProductData;
+                const vId = selectedVariants[tablet._id];
+                const variant = tablet.variant?.find((v) => v._id === vId) || tablet.variants?.find((v) => v._id === vId);
+                let p = variant?.discountprice || variant?.discountPrice || variant?.price || tablet.discountprice || tablet.discountPrice || tablet.price || 0;
+                if (!p || p === 0) {
+                  const firstVendor = shareProductData.vendors?.[0] || tablet.vendors?.[0];
+                  if (firstVendor) {
+                    const matched = firstVendor.variant?.find((v) => v.variantId === vId || v._id === vId);
+                    p = matched?.discountprice || matched?.discountPrice || matched?.price || firstVendor.discountprice || firstVendor.discountPrice || firstVendor.price || 0;
+                  }
+                }
+                return p || 0;
+              })(),
+              link: getShareUrl(shareProductData),
+              serviceType: fixedTypeKey
+            }
+            : null
+        }
       />
     </>
   );

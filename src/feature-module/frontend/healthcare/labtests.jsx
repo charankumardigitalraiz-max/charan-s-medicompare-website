@@ -1044,7 +1044,7 @@ const labtests = ({
         </section>
       )}
 
-      {cheaplabtests && cheaplabtests.length > 0 && (
+      {/* {cheaplabtests && cheaplabtests.length > 0 && (
         <div
           className="content doctor-content !py-4 !mx-4 !bg-cover !bg-center !bg-no-repeat !rounded-[16px]"
           style={{
@@ -1417,7 +1417,7 @@ const labtests = ({
             </div>
           </div>
         </div>
-      )}
+      )} */}
 
 
       <section

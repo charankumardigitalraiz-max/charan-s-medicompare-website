@@ -1,6 +1,16 @@
 import { BaseModal } from "../ui";
+import { createShareHandler, createNormalizedShareHandler } from "../../utils/shareUtils.js";
 
-const ShareModal = ({ show, onClose, onShare }) => {
+const ShareModal = ({ show, onClose, onShare: customOnShare, product, selectedVariants, serviceType, shareData }) => {
+  let onShare = customOnShare;
+  if (!onShare) {
+    if (shareData) {
+      onShare = createNormalizedShareHandler(shareData, onClose);
+    } else if (product) {
+      onShare = createShareHandler(product, selectedVariants, onClose, serviceType);
+    }
+  }
+
   const shareOptions = [
     {
       id: "copy",
@@ -8,7 +18,7 @@ const ShareModal = ({ show, onClose, onShare }) => {
       icon: "fas fa-link",
       bgColor: "#f1f3f4",
       iconColor: "#5f6368",
-      onClick: onShare.copy,
+      onClick: () => onShare?.copy?.(),
     },
     {
       id: "whatsapp",
@@ -16,7 +26,7 @@ const ShareModal = ({ show, onClose, onShare }) => {
       icon: "fab fa-whatsapp",
       bgColor: "#25D366",
       iconColor: "white",
-      onClick: onShare.whatsapp,
+      onClick: () => onShare?.whatsapp?.(),
     },
     {
       id: "facebook",
@@ -24,7 +34,7 @@ const ShareModal = ({ show, onClose, onShare }) => {
       icon: "fab fa-facebook",
       bgColor: "#1877F2",
       iconColor: "white",
-      onClick: onShare.facebook,
+      onClick: () => onShare?.facebook?.(),
     },
     {
       id: "twitter",
@@ -32,7 +42,7 @@ const ShareModal = ({ show, onClose, onShare }) => {
       icon: "fab fa-x-twitter",
       bgColor: "#000000",
       iconColor: "white",
-      onClick: onShare.twitter,
+      onClick: () => onShare?.twitter?.(),
     },
     {
       id: "email",
@@ -40,7 +50,7 @@ const ShareModal = ({ show, onClose, onShare }) => {
       icon: "fas fa-envelope",
       bgColor: "#f1f3f4",
       iconColor: "#5f6368",
-      onClick: onShare.email,
+      onClick: () => onShare?.email?.(),
     },
     {
       id: "telegram",
@@ -48,7 +58,7 @@ const ShareModal = ({ show, onClose, onShare }) => {
       icon: "fab fa-telegram",
       bgColor: "#0088cc",
       iconColor: "white",
-      onClick: onShare.telegram,
+      onClick: () => onShare?.telegram?.(),
     },
     {
       id: "linkedin",
@@ -56,7 +66,7 @@ const ShareModal = ({ show, onClose, onShare }) => {
       icon: "fab fa-linkedin",
       bgColor: "#0077B5",
       iconColor: "white",
-      onClick: onShare.linkedin,
+      onClick: () => onShare?.linkedin?.(),
     },
   ];
 

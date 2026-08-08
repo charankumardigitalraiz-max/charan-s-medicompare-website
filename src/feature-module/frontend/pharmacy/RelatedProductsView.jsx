@@ -6,7 +6,12 @@ import {
   axiosCommonInstance,
   axiosUserInstance,
 } from "../../../Apiservice.jsx";
-import { getImageUrl, getDisplayPrice, getVendorPrice } from "../../../utils/index";
+import {
+  getImageUrl,
+  getDisplayPrice,
+  getVendorPrice,
+  createShareHandler,
+} from "../../../utils/index";
 import toast from "react-hot-toast";
 import Home2Header from "../../../components/home/Header-k.jsx";
 import Footer from "../../../components/home/Footer-f.jsx";
@@ -806,33 +811,7 @@ const RelatedProductsView = () => {
     }
   };
 
-  const handleShare = {
-    copy: async () => {
-      try {
-        const url = `${window.location.origin}/${service || "medicine"}/${slug}/${shareProductData?.tablet?.slug}`;
-        await navigator.clipboard.writeText(url);
-        toast.success("Link copied to clipboard!");
-      } catch (err) {
-        toast.error("Failed to copy link");
-      }
-    },
-    whatsapp: () => {
-      const url = `${window.location.origin}/${service || "medicine"}/${slug}/${shareProductData?.tablet?.slug}`;
-      window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(url)}`, "_blank");
-    },
-    facebook: () => {
-      const url = `${window.location.origin}/${service || "medicine"}/${slug}/${shareProductData?.tablet?.slug}`;
-      window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, "_blank");
-    },
-    twitter: () => {
-      const url = `${window.location.origin}/${service || "medicine"}/${slug}/${shareProductData?.tablet?.slug}`;
-      window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}`, "_blank");
-    },
-    email: () => {
-      const url = `${window.location.origin}/${service || "medicine"}/${slug}/${shareProductData?.tablet?.slug}`;
-      window.open(`mailto:?body=${encodeURIComponent(url)}`, "_blank");
-    }
-  };
+
 
   if (allProducts.length === 0 || loading) {
     return (
@@ -1041,14 +1020,15 @@ const RelatedProductsView = () => {
 
       <Footer />
 
-      {/* Share Modal */}
       <ShareModal
         show={showShareModal}
         onClose={() => {
           setShowShareModal(false);
           setShareProductData(null);
         }}
-        onShare={handleShare}
+        product={shareProductData}
+        selectedVariants={selectedVariants}
+        serviceType={service}
       />
 
       {/* Lead Modal */}

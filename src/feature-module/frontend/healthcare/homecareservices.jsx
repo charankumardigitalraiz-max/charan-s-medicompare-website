@@ -496,10 +496,10 @@ const HomeCareServices = ({
   return (
     <>
       <SEOHelmet page="homecare" />
-      {medicalTreatments && medicalTreatments.length > 0 && (
+      {/* {medicalTreatments && medicalTreatments.length > 0 && (
         <section className="!pb-5 !pt-0 !bg-[#f8f4ff]">
           <div className="container-fluid !px-3">
-            {/* Header */}
+    
             <div className="!flex !items-center !justify-between !flex-wrap !gap-3 !mb-4 !pt-4">
               <h3 className="!m-0 !text-[20px] !font-semibold !text-[#1a1a1a]">
                 <i className="fas fa-bolt !text-warning !me-2"></i>
@@ -514,7 +514,6 @@ const HomeCareServices = ({
               </Link>
             </div>
 
-            {/* Swiper */}
             <div className="meq-swiper-wrapper !relative [&_.swiper-wrapper]:!items-stretch [&_.swiper-slide]:!h-auto">
               <button className="meq-arrow-btn homecare-prev" aria-label="Previous">
                 <i className="fas fa-chevron-left"></i>
@@ -528,7 +527,7 @@ const HomeCareServices = ({
                     <SwiperSlide key={index} className="!p-2 !flex !self-stretch">
                       <div className="!flex !flex-col !h-full !w-full !rounded-[16px] !bg-white !shadow-[0_4px_20px_rgba(0,0,0,0.1)] !overflow-hidden !transition-all !duration-300 hover:!shadow-[0_8px_28px_rgba(0,0,0,0.13)] hover:!-translate-y-[2px] !relative">
 
-                        {/* Compare Badge */}
+                      
                         <div
                           onClick={(e) => {
                             e.stopPropagation();
@@ -547,7 +546,7 @@ const HomeCareServices = ({
                           <span style={{ fontSize: "11px", fontWeight: "800", color: "#fff", textTransform: "uppercase", letterSpacing: "0.6px" }}>Compare</span>
                         </div>
 
-                        {/* Product Image */}
+                    
                         <div className="!w-full !h-[180px] !rounded-t-[16px] !overflow-hidden !bg-white">
                           <img
                             src={getImageUrl(treatment?.tabletdetails?.files[0])}
@@ -558,10 +557,10 @@ const HomeCareServices = ({
                           />
                         </div>
 
-                        {/* Card Body */}
+                     
                         <div className="!flex !flex-col !flex-1 !p-3">
 
-                          {/* Name & Rating */}
+                      
                           <div className="!flex !items-start !justify-between !gap-2 !mb-2">
                             <h3 className="!m-0 !text-[14px] !font-semibold !text-[#1a1a1a] !capitalize !leading-snug !line-clamp-2 !min-h-[2.8em] !cursor-pointer" onClick={() => handleProductClick(treatment)}>
                               {treatment?.tabletdetails?.name || "Service"}
@@ -578,12 +577,12 @@ const HomeCareServices = ({
                             </div>
                           </div>
 
-                          {/* Description */}
+                       
                           <p className="!m-0 !mb-2 !text-[11px] !text-[#666] !leading-normal !line-clamp-2 !min-h-[2.8em] !cursor-pointer" onClick={() => handleProductClick(treatment)}>
                             {formatDescription(treatment?.tabletdetails?.description, 100)}
                           </p>
 
-                          {/* Optional metadata */}
+                     
                           {treatment?.tabletdetails?.duration && (
                             <div className="!flex !items-center !gap-2 !text-[11px] !text-[#555] !mt-[4px]">
                               <i className="fa-regular fa-clock !text-primary"></i>
@@ -613,7 +612,7 @@ const HomeCareServices = ({
                             </div>
                           )}
 
-                          {/* Price — pushed to bottom */}
+                       
                           <div className="!rounded-[8px] !p-[8px] !mt-auto !border !border-[rgba(128,89,202,0.15)] !bg-[#f8f4ff]">
                             <div className="!text-[11px] !text-[#000] !font-medium !mb-1">Starting From</div>
                             {treatment?.discountprice ? (
@@ -629,7 +628,7 @@ const HomeCareServices = ({
                             )}
                           </div>
 
-                          {/* Actions */}
+                       
                           <VendorActions
                             bookingType={
                               ["cart", "booking", "slots", "leads", "lead", "rentals", "consultation", "ride", "appointment", "rentals_addtocarts"].includes(bookingType)
@@ -657,7 +656,7 @@ const HomeCareServices = ({
                             buttonStyle={{ width: "100%", padding: "8px", borderRadius: "8px", fontSize: "12px", fontWeight: "600" }}
                           />
 
-                          {/* Vendor footer */}
+                      
                           {vendor && (
                             <div
                               className="!flex !items-center !gap-2 !mt-[6px] !pt-[6px] !border-t !border-[#e0e0e0] !cursor-pointer"
@@ -722,7 +721,7 @@ const HomeCareServices = ({
             </div>
           </div>
         </section>
-      )}
+      )} */}
 
 
 

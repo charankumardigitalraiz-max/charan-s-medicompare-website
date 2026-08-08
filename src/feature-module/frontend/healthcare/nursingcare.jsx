@@ -472,7 +472,7 @@ const NursingCare = ({
     <>
       <SEOHelmet page="clinics" />
 
-      {medicalTreatments && medicalTreatments.length > 0 && (
+      {/* {medicalTreatments && medicalTreatments.length > 0 && (
         <div className="!py-3 !mx-2 !px-2">
           <div className="!w-full">
             <SectionHeader
@@ -489,7 +489,7 @@ const NursingCare = ({
                   return (
                     <div key={index} className="!px-2 !py-2">
                       <div className="!flex !flex-col !h-full !w-full !rounded-[16px] !bg-white !shadow-[0_4px_20px_rgba(0,0,0,0.08)] !overflow-hidden !transition-all !duration-300 hover:!shadow-[0_8px_28px_rgba(0,0,0,0.13)] hover:!-translate-y-[2px]">
-                        {/* Compare badge */}
+                     
                         <div
                           onClick={(e) => {
                             e.stopPropagation();
@@ -508,7 +508,7 @@ const NursingCare = ({
                           <span style={{ fontSize: "11px", fontWeight: "800", color: "#fff", textTransform: "uppercase", letterSpacing: "0.6px" }}>Compare</span>
                         </div>
 
-                        {/* Image container */}
+                       
                         <div className="!w-full !h-[180px] !overflow-hidden !bg-white !rounded-t-[16px]">
                           <img
                             src={getImageUrl(treatment?.tabletdetails?.files[0])}
@@ -519,7 +519,7 @@ const NursingCare = ({
                           />
                         </div>
 
-                        {/* Card Body */}
+                    
                         <div className="!flex !flex-col !flex-1 !p-3">
                           <div className="!flex !items-start !justify-between !gap-2 !mb-1">
                             <h3 className="!m-0 !text-[14px] !font-semibold !text-[#1a1a1a] !capitalize !leading-snug">
@@ -575,7 +575,7 @@ const NursingCare = ({
                               </div>
                             )}
 
-                            {/* Price details */}
+                    }
                             <div className="!rounded-[8px] !p-[8px] !mt-[4px] !border !border-[rgba(128,89,202,0.15)]" style={{ backgroundColor: PRIMARY_SECTION_BG }}>
                               <div className="!text-[10px] !text-[#444] !font-medium !mb-[3px]">Starting From</div>
                               {treatment?.discountprice ? (
@@ -608,7 +608,7 @@ const NursingCare = ({
                             containerStyle={{ display: "flex", width: "100%", marginTop: "8px" }}
                           />
 
-                          {/* Vendor Footer Details */}
+                      
                           {vendor && (
                             <div
                               className="!mt-3 !pt-2 !border-t !border-[#e0e0e0] !cursor-pointer"
@@ -668,7 +668,7 @@ const NursingCare = ({
             </div>
           </div>
         </div>
-      )}
+      )} */}
 
       {middleBanners?.length > 0 && (
         <section

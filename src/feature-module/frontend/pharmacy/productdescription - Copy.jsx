@@ -15,7 +15,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import { useAddToCart } from "../../../hooks/useAddToCart";
 import { useCart } from "../../../hooks/useCart";
-import ShareModal from "./products-components/ShareModal.jsx";
+import ShareModal from "../../../components/products/ShareModal.jsx";
 import LeadModal from "./products-components/LeadModal.jsx";
 import ProductReviewModal from "./products-components/ProductReviewModal.jsx";
 import RentModal from "./products-components/RentModal.jsx";
@@ -33,7 +33,7 @@ import {
   shareToTelegram,
   shareToEmail,
   copyToClipboard,
-} from "./utils/shareUtils.js";
+} from "../../../utils/shareUtils.js";
 import { FaRegShareSquare, FaHeart, FaFileMedical } from "react-icons/fa";
 import { IoIosHeartEmpty } from "react-icons/io";
 import AppointmentModal from "./products-components/AppointmentModal.jsx";

@@ -14,18 +14,9 @@ import { getImageUrl } from "../../../utils/index";
 import toast from "react-hot-toast";
 import PageLoader from "../../../components/ui/PageLoader.jsx";
 import BackButton from "../../../components/ui/BackButton.jsx";
-import ShareModal from "./products-components/ShareModal.jsx";
-import {
-  getShareUrl,
-  copyToClipboard,
-  getShareText,
-  shareToWhatsApp,
-  shareToFacebook,
-  shareToTwitter,
-  shareToLinkedIn,
-  shareToTelegram,
-  shareToEmail,
-} from "./utils/shareUtils.js";
+import ShareModal from "../../../components/products/ShareModal.jsx";
+import { getShareUrl } from "../../../utils/shareUtils.js";
+
 import CategoryProvider from "../../../components/CategoryProvider.jsx";
 import { Offcanvas } from "../../../components/ui/Offcanvas.jsx";
 import { PriceDisplay, ProductImage, CompareOverlayButton, Pagination } from "../../../components/ui/index.js";
@@ -121,6 +112,7 @@ const VendorProfile = () => {
   const [showShareModal, setShowShareModal] = useState(false);
   const [shareProductDataForModal, setShareProductDataForModal] =
     useState(null);
+  const [shareCategoryName, setShareCategoryName] = useState(null);
   const isLoggedIn = !!localStorage.getItem("medicomparestoken");
   const [showFilterCanvas, setShowFilterCanvas] = useState(false);
 
@@ -479,31 +471,7 @@ const VendorProfile = () => {
     }
   };
 
-  const createShareHandler = (productData, selectedVariants = {}) => {
-    const url = getShareUrl(productData);
-    const text = getShareText(productData, selectedVariants);
 
-    return {
-      copy: async () => {
-        try {
-          await copyToClipboard(url, () => {
-            toast.success("Link copied to clipboard!");
-          });
-        } catch (err) {
-          toast.error("Failed to copy link");
-        }
-      },
-      whatsapp: () =>
-        shareToWhatsApp(url, text, () => setShowShareModal(false)),
-      facebook: () => shareToFacebook(url, () => setShowShareModal(false)),
-      twitter: () => shareToTwitter(url, text, () => setShowShareModal(false)),
-      linkedin: () =>
-        shareToLinkedIn(url, text, () => setShowShareModal(false)),
-      telegram: () =>
-        shareToTelegram(url, text, () => setShowShareModal(false)),
-      email: () => shareToEmail(url, text, () => setShowShareModal(false)),
-    };
-  };
 
   const resolveTabletImage = (tablet) => {
     // Check variant level files first
@@ -539,10 +507,9 @@ const VendorProfile = () => {
     return "/assets/default.png";
   };
 
-  const handleShare = (product) => {
-    setShareProductDataForModal({
-      tablet: product?.medicineDetails || product?.tablet || product,
-    });
+  const handleShare = (product, catName) => {
+    setShareProductDataForModal(product);
+    setShareCategoryName(catName || null);
     setShowShareModal(true);
   };
 
@@ -638,6 +605,7 @@ const VendorProfile = () => {
                         alt={cat.name}
                         title={cat.name}
                         className="w-6 h-6 object-contain mr-[10px] rounded-[4px] font-[500]"
+                        style={{ filter: "brightness(0) saturate(100%) invert(14%) sepia(42%) saturate(4523%) hue-rotate(251deg) brightness(87%) contrast(97%)" }}
                       />
                       <span
                         className="truncate text-[13px] font-[500] text-black"
@@ -705,8 +673,8 @@ const VendorProfile = () => {
           </ul>
           {categories.length > categoriesToShow && (
             <div className="text-center mt-2">
-              <span
-                className="text-[#321961] cursor-pointer text-[12px] underline hover:text-[#6d28d9] transition-colors"
+              <button
+                className="inline-flex items-center gap-1.5 px-4 py-1.5 !text-[12px] !font-semibold !text-white hover:!text-white !bg-primary !hover:!bg-primary-hover !border border-[#321961]/20 !hover:border-transparent !rounded-full !shadow-sm transition-all duration-250 cursor-pointer"
                 onClick={() =>
                   setCategoriesToShow(
                     categoriesToShow === 6 ? categories.length : 6,
@@ -714,7 +682,8 @@ const VendorProfile = () => {
                 }
               >
                 {categoriesToShow === 6 ? "View More" : "View Less"}
-              </span>
+                <i className={`fa-solid ${categoriesToShow === 6 ? "fa-chevron-down" : "fa-chevron-up"} text-[10px]`} />
+              </button>
             </div>
           )}
 
@@ -777,7 +746,7 @@ const VendorProfile = () => {
           {Brands.length > brandsToShow && (
             <div className="text-center mt-3">
               <button
-                className="inline-flex items-center gap-1.5 px-4 py-1.5 !text-[12px] !font-semibold !text-[#321961] hover:!text-white !bg-[#321961]/10 !hover:!bg-[#321961] !border border-[#321961]/20 !hover:border-transparent !rounded-full !shadow-sm transition-all duration-250 cursor-pointer"
+                className="inline-flex items-center gap-1.5 px-4 py-1.5 !text-[12px] !font-semibold !text-white hover:!text-white !bg-primary !hover:!bg-primary-hover !border border-[#321961]/20 !hover:border-transparent !rounded-full !shadow-sm transition-all duration-250 cursor-pointer"
                 onClick={() =>
                   setBrandsToShow(brandsToShow === 6 ? Brands.length : 6)
                 }
@@ -820,23 +789,34 @@ const VendorProfile = () => {
       <Home2Header />
       <CategoryProvider />
 
-      <div className="relative overflow-hidden bg-[#f9fbff] py-10 md:py-12 bottom-[2px] z-[1]">
+      <div className="relative overflow-hidden bg-[#f9fbff] py-6 md:py-8 bottom-[2px] z-[1]">
         <div className="absolute inset-0 z-[1] after:content-[''] after:absolute after:inset-0 after:bg-white/30">
           <img className="w-full h-full object-cover" src={breadcrumbBg} />
         </div>
         <div className="relative z-[2] px-[15px] max-w-[1400px] mx-auto">
-          <div className="mb-5">
-            <BackButton className="z-[20] relative" />
-          </div>
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
-            {/* Left side: Vendor details directly on the hero banner */}
-            <div className="w-full lg:w-2/3 text-center lg:text-left">
+          <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
+            {/* Far Left: Back Button */}
+            <div className="w-full lg:w-auto shrink-0 flex justify-start">
+              <BackButton className="z-[20] relative" />
+            </div>
+
+            {/* Center Content: Vendor details */}
+            <div className="w-full lg:flex-1 text-center">
               <h1 className="!text-[28px] md:text-[38px] !font-[600] !text-[#0a2540] !leading-tight mb-3 !tracking-tight">
                 {data?.bussinessdetails?.name || "Partner Store"}
               </h1>
 
               {/* Rating + Order Badges */}
-              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3 mb-3">
+
+
+              {/* Vendor address if available */}
+              {data?.bussinessdetails?.address && (
+                <p className="!text-[14px] !text-gray-600 !font-medium flex items-center justify-center gap-0.5 m-0 mx-auto max-w-[500px] mb-3">
+                  <i className="fas fa-map-marker-alt text-[#321961] text-[14px] relative top-[-1px]" />
+                  <span>{data.bussinessdetails.address}</span>
+                </p>
+              )}
+              <div className="flex flex-wrap items-center justify-center gap-3 mb-3">
                 <div className="flex items-center gap-1.5 bg-white px-3 py-1 rounded-full border border-gray-200 shadow-sm">
                   <span className="text-[#f5a623] text-sm leading-none">★</span>
                   <span className="!text-[13px] !font-bold !text-gray-800">
@@ -851,19 +831,11 @@ const VendorProfile = () => {
                   {data?.totalOrders ? `${data.totalOrders}+ Orders` : "100+ Orders"}
                 </div>
               </div>
-
-              {/* Vendor address if available */}
-              {data?.bussinessdetails?.address && (
-                <p className="!text-[14px] !text-gray-600 !font-medium !flex !items-center !justify-center lg:!justify-start !gap-1.5 m-0 max-w-[500px]">
-                  <i className="fas fa-map-marker-alt text-[#321961] text-[13px]" />
-                  <span>{data.bussinessdetails.address}</span>
-                </p>
-              )}
             </div>
 
-            {/* Right side: Large Brand Logo Container */}
-            <div className="w-full lg:w-1/3 shrink-0">
-              <div className="w-[140px] h-[140px] md:w-[160px] md:h-[160px] bg-white rounded-[20px] p-3 shadow-[0_12px_30px_rgba(0,0,0,0.08)] border border-gray-100 flex items-center justify-center mx-auto lg:ml-auto">
+            {/* Far Right: Large Brand Logo Container */}
+            <div className="hidden lg:flex lg:w-auto shrink-0 justify-center lg:justify-end">
+              <div className="w-[120px] h-[120px] md:w-[140px] md:h-[140px] rounded-[20px] p-3 shadow-[0_12px_30px_rgba(0,0,0,0.08)] border border-gray-100 flex items-center justify-center">
                 <img
                   className="max-w-full max-h-full object-contain"
                   src={
@@ -1089,33 +1061,33 @@ const VendorProfile = () => {
                                       </div>
                                     </div>
 
-                                    <div
-                                      className="flex items-center gap-1 ml-2 shrink-0 mt-[2px]"
-                                      onClick={(e) => e.stopPropagation()}
-                                    >
-                                      <div
-                                        className="action-icon-btn cursor-pointer p-1"
-                                        onClick={(e) => {
-                                          e.stopPropagation();
-                                          handleToggleFavourite(tablet._id, tablet.isFavorite);
-                                        }}
-                                      >
-                                        {tablet.isFavorite ? (
-                                          <FaHeart size={16} color="#ef4444" />
-                                        ) : (
-                                          <IoIosHeartEmpty size={16} color="#9ca3af" />
-                                        )}
-                                      </div>
-                                      <div
-                                        className="action-icon-btn cursor-pointer p-1"
-                                        onClick={(e) => {
-                                          e.stopPropagation();
-                                          handleShare(products);
-                                        }}
-                                      >
-                                        <FaRegShareSquare size={15} color="#9ca3af" />
-                                      </div>
-                                    </div>
+                                       <div
+                                       className="flex items-center gap-1.5 ml-2 shrink-0 mt-[2px]"
+                                       onClick={(e) => e.stopPropagation()}
+                                     >
+                                       <div
+                                         className="w-7 h-7 !rounded-full bg-slate-100/80 hover:bg-red-50 flex items-center justify-center transition-all duration-150 shadow-[0_2px_4px_rgba(0,0,0,0.06)] border border-slate-200/60 cursor-pointer"
+                                         onClick={(e) => {
+                                           e.stopPropagation();
+                                           handleToggleFavourite(tablet._id, tablet.isFavorite);
+                                         }}
+                                       >
+                                         {tablet.isFavorite ? (
+                                           <FaHeart size={16} color="#ef4444" />
+                                         ) : (
+                                           <IoIosHeartEmpty size={16} color="#9ca3af" />
+                                         )}
+                                       </div>
+                                       <div
+                                         className="w-7 h-7 !rounded-full bg-slate-100/80 hover:bg-purple-50 flex items-center justify-center transition-all duration-150 shadow-[0_2px_4px_rgba(0,0,0,0.06)] border border-slate-200/60 cursor-pointer"
+                                         onClick={(e) => {
+                                           e.stopPropagation();
+                                           handleShare(products, categoryName);
+                                         }}
+                                       >
+                                         <FaRegShareSquare size={15} color="#9ca3af" />
+                                       </div>
+                                     </div>
                                   </div>
 
                                   <div className="flex items-center justify-between gap-1 min-w-0">
@@ -1229,26 +1201,21 @@ const VendorProfile = () => {
         onClose={() => {
           setShowShareModal(false);
           setShareProductDataForModal(null);
+          setShareCategoryName(null);
         }}
-        onShare={
+        shareData={
           shareProductDataForModal
-            ? (() => {
-              const relatedProductData = {
-                tablet: shareProductDataForModal.tablet,
-              };
-              const relatedSelectedVariants = shareProductDataForModal.tablet
-                ?._id
-                ? {
-                  [shareProductDataForModal.tablet._id]:
-                    shareProductDataForModal.tablet.variant?.[0]?._id,
-                }
-                : {};
-              return createShareHandler(
-                relatedProductData,
-                relatedSelectedVariants,
-              );
-            })()
-            : handleShare
+            ? {
+              name: shareProductDataForModal.tablet?.name || shareProductDataForModal.medicineDetails?.name || shareProductDataForModal.name,
+              price: (() => {
+                const tablet = shareProductDataForModal.tablet || shareProductDataForModal.medicineDetails || shareProductDataForModal;
+                const variant = tablet.variant?.[0] || tablet.variants?.[0];
+                return variant?.discountprice || variant?.discountPrice || variant?.price || tablet.discountprice || tablet.discountPrice || tablet.price || 0;
+              })(),
+              link: getShareUrl(shareProductDataForModal),
+              serviceType: shareCategoryName || shareProductDataForModal.tablet?.subcategorys?.category?.name || shareProductDataForModal.medicineDetails?.subcategorys?.category?.name || "medicine"
+            }
+            : null
         }
       />
 

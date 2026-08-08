@@ -230,8 +230,7 @@ const MedicinesModule = ({
         </section>
       )}
 
-      {/* Dynamic Products Sections */}
-      <DynamicCategorySections
+      {/*    <DynamicCategorySections
         sections={[
           popularProducts && popularProducts.length > 0 && {
             _id: "trending-now",
@@ -253,6 +252,7 @@ const MedicinesModule = ({
         currentService={currentService}
         sliderSettings={supersaving}
       />
+      */}
     </>
   );
 };

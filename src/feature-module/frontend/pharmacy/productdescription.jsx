@@ -15,7 +15,8 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import { useAddToCart } from "../../../hooks/useAddToCart";
 import { useCart } from "../../../hooks/useCart";
-import ShareModal from "./products-components/ShareModal.jsx";
+import ShareModal from "../../../components/products/ShareModal.jsx";
+import { getShareUrl } from "../../../utils/shareUtils.js";
 import LeadModal from "./products-components/LeadModal.jsx";
 import ProductReviewModal from "./products-components/ProductReviewModal.jsx";
 import RentModal from "./products-components/RentModal.jsx";
@@ -25,17 +26,7 @@ import Branded from "./products-components/Branded.jsx";
 import CartQuantityControls from "../../../components/ui/CartQuantityControls.jsx";
 import VendorActions from "../../../components/ui/VendorActions.jsx";
 import PageLoader from "../../../components/ui/PageLoader.jsx";
-import {
-  getShareUrl,
-  getShareText,
-  shareToWhatsApp,
-  shareToFacebook,
-  shareToTwitter,
-  shareToLinkedIn,
-  shareToTelegram,
-  shareToEmail,
-  copyToClipboard,
-} from "./utils/shareUtils.js";
+
 import { FaRegShareSquare, FaHeart, FaFileMedical, FaExchangeAlt } from "react-icons/fa";
 import { IoIosHeartEmpty } from "react-icons/io";
 import AppointmentModal from "./products-components/AppointmentModal.jsx";
@@ -2061,85 +2052,7 @@ const ProductDescription = () => {
     }
   };
 
-  const shareProductData = product ? { tablet: product.tablet } : null;
-  const shareSelectedVariants = product?.tablet?._id
-    ? {
-      ...selectedVariants,
-      [product.tablet._id]:
-        selectedVariantId ||
-        selectedVariants[product.tablet._id] ||
-        product.tablet.variant?.[0]?._id,
-    }
-    : selectedVariants;
 
-  const createShareHandler = (productData, selectedVariantsData) => {
-    return {
-      copy: async () => {
-        try {
-          const url = getShareUrl(productData);
-          await copyToClipboard(url, () => {
-            toast.success("Link copied to clipboard!");
-            setShowShareModal(false);
-            setShareProductDataForModal(null);
-          });
-        } catch (err) {
-          toast.error("Failed to copy link");
-        }
-      },
-      whatsapp: () => {
-        const url = getShareUrl(productData);
-        const text = getShareText(productData, selectedVariantsData);
-        shareToWhatsApp(url, text, () => {
-          setShowShareModal(false);
-          setShareProductDataForModal(null);
-        });
-      },
-      facebook: () => {
-        const url = getShareUrl(productData);
-        shareToFacebook(url, () => {
-          setShowShareModal(false);
-          setShareProductDataForModal(null);
-        });
-      },
-      twitter: () => {
-        const url = getShareUrl(productData);
-        const text = getShareText(productData, selectedVariantsData);
-        shareToTwitter(url, text, () => {
-          setShowShareModal(false);
-          setShareProductDataForModal(null);
-        });
-      },
-      email: () => {
-        const url = getShareUrl(productData);
-        const text = getShareText(productData, selectedVariantsData);
-        shareToEmail(url, text, () => {
-          setShowShareModal(false);
-          setShareProductDataForModal(null);
-        });
-      },
-      telegram: () => {
-        const url = getShareUrl(productData);
-        const text = getShareText(productData, selectedVariantsData);
-        shareToTelegram(url, text, () => {
-          setShowShareModal(false);
-          setShareProductDataForModal(null);
-        });
-      },
-      linkedin: () => {
-        const url = getShareUrl(productData);
-        const text = getShareText(productData, selectedVariantsData);
-        shareToLinkedIn(url, text, () => {
-          setShowShareModal(false);
-          setShareProductDataForModal(null);
-        });
-      },
-    };
-  };
-
-  const handleShare = createShareHandler(
-    shareProductData,
-    shareSelectedVariants,
-  );
 
   useEffect(() => {
     const init = async () => {
@@ -4896,25 +4809,24 @@ const ProductDescription = () => {
           setShowShareModal(false);
           setShareProductDataForModal(null);
         }}
-        onShare={
+        shareData={
           shareProductDataForModal
-            ? (() => {
-              const relatedProductData = {
-                tablet: shareProductDataForModal.tablet,
-              };
-              const relatedSelectedVariants = shareProductDataForModal.tablet
-                ?._id
-                ? {
-                  [shareProductDataForModal.tablet._id]:
-                    shareProductDataForModal.tablet.variant?.[0]?._id,
-                }
-                : {};
-              return createShareHandler(
-                relatedProductData,
-                relatedSelectedVariants,
-              );
-            })()
-            : handleShare
+            ? {
+              name: shareProductDataForModal.tablet?.name || shareProductDataForModal.name,
+              price: shareProductDataForModal.tablet?.discountprice ||
+                shareProductDataForModal.tablet?.discountPrice ||
+                shareProductDataForModal.tablet?.price ||
+                shareProductDataForModal.price ||
+                0,
+              link: getShareUrl(shareProductDataForModal),
+              serviceType: shareProductDataForModal.tablet?.subcategorys?.category?.fixedType || service || "medicine"
+            }
+            : {
+              name: tablet?.name,
+              price: selectedVariant?.price || tablet?.price || 0,
+              link: getShareUrl(product),
+              serviceType: service || tablet?.subcategorys?.category?.fixedType || "medicine"
+            }
         }
       />
 

@@ -8,14 +8,11 @@ import {
 import { CartQuantityControls } from "../ui";
 import { getImageUrl } from "../../utils/index.js";
 import toast from "react-hot-toast";
-import ShareModal from "../../feature-module/frontend/pharmacy/products-components/ShareModal.jsx";
+import ShareModal from "./ShareModal.jsx";
 import LeadModal from "../../feature-module/frontend/pharmacy/products-components/LeadModal.jsx";
 import RentModal from "../../feature-module/frontend/pharmacy/products-components/RentModal.jsx";
 import ConsultationModal from "../../feature-module/frontend/pharmacy/products-components/ConsultationModal.jsx";
-import {
-  getShareUrl,
-  copyToClipboard,
-} from "../../feature-module/frontend/pharmacy/utils/shareUtils.js";
+
 import AppointmentModal from "../../feature-module/frontend/pharmacy/products-components/AppointmentModal.jsx";
 import { useProfile } from "../../context/ProfileContext";
 
@@ -464,19 +461,7 @@ const VendorsSection = ({
   const toggleConsultationModal = () =>
     setShowConsultationModal(!showConsultationModal);
 
-  const handleShare = {
-    copy: async () => {
-      try {
-        const url = getShareUrl(tablet);
-        await copyToClipboard(url, () => {
-          toast.success("Link copied to clipboard!");
-          setShowShareModal(false);
-        });
-      } catch (err) {
-        toast.error("Failed to copy link");
-      }
-    },
-  };
+
 
   return (
     <div className="product-vendors-section-full">
@@ -1070,10 +1055,12 @@ const VendorsSection = ({
         createPortal(
           <>
             {/* Share  */}
-            <ShareModal
+             <ShareModal
               show={showShareModal}
               onClose={() => setShowShareModal(false)}
-              onShare={handleShare}
+              product={tablet}
+              selectedVariants={selectedVariants}
+              serviceType={service}
             />
 
             {/* Lead Modal */}

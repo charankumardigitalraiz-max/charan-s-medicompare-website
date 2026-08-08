@@ -90,11 +90,11 @@ const ProductsSection = ({
   return (
     <div>
       {/* Products Section Header */}
-      <div className="flex items-center gap-3 mt-2 mb-4 p-3 bg-white rounded-2xl shadow-sm border border-slate-100 lg:hidden">
+      <div className="flex items-center justify-between gap-3 mt-2 mb-4 p-3 bg-white rounded-sm shadow-sm border border-slate-100 lg:hidden">
         {onOpenFilterDrawer && (
           <button
             type="button"
-            className="flex items-center gap-2 px-3.5 py-2 bg-[#321961] text-white border-0 !rounded-lg text-xs font-semibold cursor-pointer hover:bg-[#6d3fc7] transition-all shrink-0"
+            className="flex items-center gap-2 px-3.5 py-2 bg-[#321961] text-white border-0 !rounded-sm text-xs font-semibold cursor-pointer hover:bg-[#6d3fc7] transition-all shrink-0"
             onClick={onOpenFilterDrawer}
           >
             <i className="fas fa-filter text-[10px]"></i>

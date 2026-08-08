@@ -151,6 +151,7 @@ const ViewAllPartners = () => {
                   src={getImageUrl(cat.files) || "/assets/default.png"}
                   alt={cat.name}
                   className="w-6 h-6 object-contain rounded"
+                  style={{ filter: "brightness(0) saturate(100%) invert(14%) sepia(42%) saturate(4523%) hue-rotate(251deg) brightness(87%) contrast(97%)" }}
                   onError={(e) => (e.target.src = "/assets/default.png")}
                 />
                 <span>{cat.name}</span>

@@ -504,7 +504,8 @@ const DentalTeeth = ({
   return (
     <>
       <SEOHelmet page="dental" />
-      {cheaplabtests && cheaplabtests.length > 0 && (
+
+      {/* {cheaplabtests && cheaplabtests.length > 0 && (
         <div className="!py-3 !mx-2 !px-2">
           <div className="!w-full">
             <SectionHeader
@@ -539,10 +540,10 @@ const DentalTeeth = ({
                         className="!w-full !px-1 !pb-2 !h-full !flex !flex-col !cursor-pointer"
                         onClick={() => handleProductClick(transformedProduct)}
                       >
-                        {/* Card wrapper */}
+                       
                         <div className="!flex !flex-col !h-full !w-full !bg-white !rounded-[14px] !overflow-hidden !shadow-[0_2px_16px_rgba(0,0,0,0.07)] hover:!shadow-[0_4px_24px_rgba(128,89,202,0.12)] !transition-all !duration-300">
 
-                          {/* Image */}
+                  
                           <div className="!relative !w-full !h-[140px] !bg-[#f8f6fc] !overflow-hidden !flex-shrink-0">
                             <img
                               src={medicine?.files?.[0] ? getImageUrl(medicine.files[0]) : "/assets/default.png"}
@@ -550,7 +551,7 @@ const DentalTeeth = ({
                               alt={medicine?.name}
                               onError={(e) => { e.target.src = "/assets/default.png"; }}
                             />
-                            {/* Compare Button */}
+                          
                             <div
                               onClick={(e) => {
                                 e.stopPropagation();
@@ -569,9 +570,9 @@ const DentalTeeth = ({
                             </div>
                           </div>
 
-                          {/* Body */}
+                         
                           <div className="!flex !flex-col !flex-grow !p-[10px] !gap-[6px]">
-                            {/* Title + Rating */}
+                        
                             <div className="!flex !items-start !justify-between !gap-2">
                               <h3 className="!m-0 !text-[13px] !font-semibold !text-[#1a1a1a] !leading-snug">
                                 {medicine?.name?.length > 20 ? medicine.name.slice(0, 20) + "..." : medicine?.name}
@@ -584,7 +585,7 @@ const DentalTeeth = ({
 
                             <p className="!m-0 !text-[11px] !text-[#666]">Routine checkup, scaling & polishing</p>
 
-                            {/* Meta info */}
+                     
                             <div className="!flex !flex-col !gap-[3px]">
                               <p className="!m-0 !flex !items-center !gap-[5px] !text-[10px] !text-[#444] !capitalize">
                                 <i className="fas fa-procedures !text-[#321961] !w-[12px]"></i>
@@ -609,7 +610,7 @@ const DentalTeeth = ({
                               )}
                             </div>
 
-                            {/* Price */}
+                           
                             <div className="!flex !items-center !flex-wrap !gap-[6px] !mt-auto !pt-[4px]">
                               {(() => {
                                 const originalPrice = parseFloat(test?.price) || 0;
@@ -648,7 +649,6 @@ const DentalTeeth = ({
                               containerStyle={{ display: "flex", width: "100%" }}
                             />
 
-                            {/* Vendor */}
                             {vendor && (
                               <div className="!mt-[8px] !pt-[8px] !border-t !border-[#0000001a]">
                                 <div
@@ -711,7 +711,7 @@ const DentalTeeth = ({
             </div>
           </div>
         </div>
-      )}
+      )} */}
 
       {middleBanners?.length > 0 && (
         <section
