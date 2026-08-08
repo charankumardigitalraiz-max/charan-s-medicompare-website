@@ -15,7 +15,7 @@ const ForgotPassword = () => {
     }
     setLoading(true);
     try {
-      const bodyData = { email : email.email }; 
+      const bodyData = { email: email.email };
       const response = await axiosUserInstance.post("auth/forgot-password", bodyData);
       toast.success(response.data.message || "Password reset link sent!");
       setEmail("");
@@ -42,7 +42,7 @@ const ForgotPassword = () => {
           <p className="text-center text-muted mb-4">
             Enter your email and we will send you a link to reset your password.
           </p>
-          <form onSubmit={(e)=>handleSubmit(e)}>
+          <form onSubmit={(e) => handleSubmit(e)}>
             <div className="mb-3">
               <input
                 type="email"

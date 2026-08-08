@@ -2602,7 +2602,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                               />
                             </a>
                             <a
-                              href="https://play.google.com/store/games"
+                              href="https://play.google.com/store/apps/details?id=com.medicompares.medicompares"
                               target="blank"
                               rel="noopener noreferrer"
                             >
@@ -2619,7 +2619,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
 
                         <div className="w-[100px] h-[100px] border border-white/20 rounded-sm p-1 bg-white shadow-sm flex items-center justify-center">
                           <QRCodeSVG
-                            value="https://play.google.com/store/apps/details?id=com.talkraiz.app"
+                            value="https://play.google.com/store/apps/details?id=com.medicompares.medicompares"
                             size={100}
                             level="H"
                             imageSettings={{

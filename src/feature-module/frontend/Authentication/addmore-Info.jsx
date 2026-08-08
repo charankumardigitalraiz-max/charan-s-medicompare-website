@@ -357,7 +357,7 @@ const Register = () => {
           <div className="absolute top-[145px] left-[754px] text-center flex flex-col items-center max-md:hidden max-lg:hidden">
             <div className="w-[53px] h-[53px] bg-white rounded p-0.5 mb-2.5 flex items-center justify-center">
               <QRCodeSVG
-                value="https://medicompares.com"
+                value="https://play.google.com/store/apps/details?id=com.medicompares.medicompares"
                 size={49}
                 level="H"
                 imageSettings={{
@@ -393,7 +393,7 @@ const Register = () => {
             </a>
 
             <a
-              href="https://play.google.com/store/apps/details?id=com.talkraiz.app"
+              href="https://play.google.com/store/apps/details?id=com.medicompares.medicompares"
               target="_blank"
               className="flex items-center w-[150px] h-11 bg-[rgba(103,164,255,0.2)] rounded-[12px] backdrop-blur-[1px] shadow-[inset_0px_4px_50px_0px_#ffffff] no-underline px-3 transition-opacity duration-200 hover:opacity-90 max-md:w-[140px] max-md:h-10"
             >
