@@ -26,6 +26,96 @@ const DynamicCategorySections = ({
   // Scale slidesToShow up to 6 on large screens
   const slidesToShow = isMobile ? 2 : isTablet ? 3.5 : isSmallLaptop ? 5 : 6;
 
+  const getServiceBackgroundIcon = (serviceSlug) => {
+    const slug = (serviceSlug || "").toLowerCase();
+
+    // Pharmacy / Medicines
+    if (slug.includes("medicine") || slug.includes("pharmacy")) {
+      return (
+        <svg viewBox="0 0 100 100" className="w-full h-full fill-current text-[var(--color-primary,#321961)]">
+          <path d="M45 15 h10 v30 h-10 z" />
+          <path d="M35 35 h30 v50 c0 5-4 9-9 9 h-12 c-5 0-9-4-9-9 z" />
+          <circle cx="50" cy="60" r="12" />
+        </svg>
+      );
+    }
+
+    // Lab Tests
+    if (slug.includes("labtest") || slug.includes("lab-test")) {
+      return (
+        <svg viewBox="0 0 100 100" className="w-full h-full fill-current text-[var(--color-primary,#321961)]">
+          <path d="M35 85 h30 v5 h-30 z" />
+          <path d="M48 30 h4 v55 h-4 z" />
+          <path d="M40 45 a10 10 0 0 1 20 0 c0 8-5 15-10 15 s-10-7-10-15 z" />
+          <circle cx="50" cy="20" r="8" />
+        </svg>
+      );
+    }
+
+    // Diagnostics / Scans
+    if (slug.includes("diagnostic") || slug.includes("scan")) {
+      return (
+        <svg viewBox="0 0 100 100" className="w-full h-full fill-current text-[var(--color-primary,#321961)]">
+          <circle cx="50" cy="50" r="40" stroke="currentColor" strokeWidth="6" fill="none" />
+          <path d="M50 15 v70 M15 50 h70" stroke="currentColor" strokeWidth="6" />
+          <circle cx="50" cy="50" r="15" />
+        </svg>
+      );
+    }
+
+    // Home Care / Physio / Nursing
+    if (slug.includes("homecare") || slug.includes("home-care") || slug.includes("nurse") || slug.includes("physio")) {
+      return (
+        <svg viewBox="0 0 100 100" className="w-full h-full fill-current text-[var(--color-primary,#321961)]">
+          <path d="M15 45 L50 15 L85 45 V85 H60 V60 H40 V85 H15 Z" />
+          <path d="M43 38 H57 V48 H43 Z" fill="white" />
+        </svg>
+      );
+    }
+
+    // Equipment
+    if (slug.includes("equipment") || slug.includes("surgical")) {
+      return (
+        <svg viewBox="0 0 100 100" className="w-full h-full fill-current text-[var(--color-primary,#321961)]">
+          <circle cx="35" cy="70" r="15" stroke="currentColor" strokeWidth="6" fill="none" />
+          <circle cx="75" cy="70" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
+          <path d="M35 55 h35 v10 h-35 z" />
+          <path d="M50 30 v25 M40 30 h20" stroke="currentColor" strokeWidth="6" />
+        </svg>
+      );
+    }
+
+    // Surgeries / Treatments
+    if (slug.includes("surger") || slug.includes("treatment")) {
+      return (
+        <svg viewBox="0 0 100 100" className="w-full h-full fill-current text-[var(--color-primary,#321961)]">
+          <path d="M10 50 Q30 20, 50 50 T90 50" stroke="currentColor" strokeWidth="6" fill="none" />
+          <circle cx="50" cy="50" r="8" />
+        </svg>
+      );
+    }
+
+    // Ambulance
+    if (slug.includes("ambulance")) {
+      return (
+        <svg viewBox="0 0 100 100" className="w-full h-full fill-current text-[var(--color-primary,#321961)]">
+          <path d="M15 35 h50 l15 15 v25 h-65 z" />
+          <circle cx="30" cy="75" r="10" />
+          <circle cx="65" cy="75" r="10" />
+          <path d="M40 45 H50 V55 H40 Z" fill="white" />
+        </svg>
+      );
+    }
+
+    // Default Shield
+    return (
+      <svg viewBox="0 0 100 120" className="w-full h-full fill-current text-[var(--color-primary,#321961)]">
+        <path d="M50 0 L90 20 V60 C90 85 70 108 50 115 C30 108 10 85 10 60 V20 Z" />
+        <path d="M42 35 H58 V51 H74 V67 H58 V83 H42 V67 H26 V51 H42 Z" fill="white" />
+      </svg>
+    );
+  };
+
   // React State for a Live Countdown Timer
   const [timeLeft, setTimeLeft] = useState({ hours: 4, minutes: 12, seconds: 48 });
 
@@ -471,12 +561,9 @@ const DynamicCategorySections = ({
                 backgroundSize: "12px 12px"
               }} />
 
-              {/* Medical Shield Icon (Top Right) - Matching Mockup */}
+              {/* Medical Shield / Service Icon (Top Right) - Matching Mockup */}
               <div className="absolute top-6 right-8 w-24 h-28 opacity-[0.06] pointer-events-none hidden md:block">
-                <svg viewBox="0 0 100 120" className="w-full h-full fill-current text-[var(--color-primary,#321961)]">
-                  <path d="M50 0 L90 20 V60 C90 85 70 108 50 115 C30 108 10 85 10 60 V20 Z" />
-                  <path d="M42 35 H58 V51 H74 V67 H58 V83 H42 V67 H26 V51 H42 Z" fill="white" />
-                </svg>
+                {getServiceBackgroundIcon(serviceSlug)}
               </div>
 
               <div className="max-w-full mx-auto px-2 md:px-4 relative z-10">
@@ -513,7 +600,7 @@ const DynamicCategorySections = ({
                               onVendorClick={onVendorClick}
                               maxStock={variant?.stock || 999}
                               isMobile={isMobile}
-                              currentService={currentService || categoryFixedType}
+                              currentService={categoryFixedType || currentService || categoryFixedType}
                               disableTooltips={liteMode}
                               className="!h-full"
                             />

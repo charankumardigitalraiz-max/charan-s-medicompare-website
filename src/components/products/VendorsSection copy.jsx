@@ -9,11 +9,11 @@ import { CartQuantityControls } from "../ui";
 import { getImageUrl } from "../../utils/index.js";
 import toast from "react-hot-toast";
 import ShareModal from "./ShareModal.jsx";
-import LeadModal from "../../feature-module/frontend/pharmacy/products-components/LeadModal.jsx";
-import RentModal from "../../feature-module/frontend/pharmacy/products-components/RentModal.jsx";
-import ConsultationModal from "../../feature-module/frontend/pharmacy/products-components/ConsultationModal.jsx";
+import LeadModal from "../modals/LeadModal.jsx";
+import RentModal from "../modals/RentModal.jsx";
+import ConsultationModal from "../modals/ConsultationModal.jsx";
 
-import AppointmentModal from "../../feature-module/frontend/pharmacy/products-components/AppointmentModal.jsx";
+import AppointmentModal from "../modals/AppointmentModal.jsx";
 import { useProfile } from "../../context/ProfileContext";
 
 const INITIAL_LEAD_FORM = {

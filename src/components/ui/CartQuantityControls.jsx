@@ -4,13 +4,13 @@ import { useNavigate } from "react-router-dom";
 import { useCartContext } from "../../context/CartContext";
 import { axiosCommonInstance, axiosUserInstance } from "../../Apiservice.jsx";
 import toast from "react-hot-toast";
-import LeadModal from "../../feature-module/frontend/pharmacy/products-components/LeadModal.jsx";
-import RentModal from "../../feature-module/frontend/pharmacy/products-components/RentModal.jsx";
-import ConsultationModal from "../../feature-module/frontend/pharmacy/products-components/ConsultationModal.jsx";
-import AppointmentModal from "../../feature-module/frontend/pharmacy/products-components/AppointmentModal.jsx";
+import LeadModal from "../modals/LeadModal.jsx";
+import RentModal from "../modals/RentModal.jsx";
+import ConsultationModal from "../modals/ConsultationModal.jsx";
+import AppointmentModal from "../modals/AppointmentModal.jsx";
 import { useProfile } from "../../context/ProfileContext";
-import FamilyMemberSelectionModal from "../../feature-module/frontend/pharmacy/products-components/FamilyMemberSelectionModal.jsx";
-import PrescriptionUploadModal from "../pharmacy/PrescriptionUploadModal.jsx";
+import FamilyMemberSelectionModal from "../modals/FamilyMemberSelectionModal.jsx";
+import PrescriptionUploadModal from "../modals/PrescriptionUploadModal.jsx";
 
 const INITIAL_LEAD_FORM = {
   date: "",

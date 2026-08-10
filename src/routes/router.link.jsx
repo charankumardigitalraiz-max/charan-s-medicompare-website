@@ -1,43 +1,43 @@
 import { Route } from "react-router";
-import Home2 from "../feature-module/frontend/home/home-4";
+import Home2 from "../pages/home/home-4";
 // Authnetication
-import Login from "../feature-module/frontend/Authentication/login/login";
-import ForgotPassword from "../feature-module/frontend/Authentication/forgot-password";
-import AddmoreInfo from "../feature-module/frontend/Authentication/addmore-Info";
-import EmailOtp from "../feature-module/frontend/Authentication/email-otp";
+import Login from "../pages/Authentication/login";
+import ForgotPassword from "../pages/Authentication/forgot-password";
+import AddmoreInfo from "../pages/Authentication/addmore-Info";
+import EmailOtp from "../pages/Authentication/email-otp";
 // pharmacy
-import ProductDescription from "../feature-module/frontend/pharmacy/productdescription";
-import BookinProcess from "../feature-module/frontend/pharmacy/bookingprocess";
-import { Cart as ProductCheckout } from "../feature-module/frontend/pharmacy/productcheckout";
-import { LabTestCheckout } from "../feature-module/frontend/pharmacy/labtestcheckout";
-import Payoutsuccess from "../feature-module/frontend/pharmacy/payoutsuccess";
-import ServiceDetails from "../feature-module/frontend/pharmacy/servicedetails";
+import ProductDescription from "../pages/products/productdescription";
+import BookinProcess from "../pages/products/bookingprocess";
+import { Cart as ProductCheckout } from "../pages/products/productcheckout";
+import { LabTestCheckout } from "../pages/products/labtestcheckout";
+import Payoutsuccess from "../pages/products/payoutsuccess";
+import ServiceDetails from "../pages/products/servicedetails";
 // Policies
-import Policiess from "../feature-module/frontend/pages/Policiess";
-import ErrorPage from "../feature-module/frontend/pages/ErrorPage";
+import Policiess from "../pages/general/Policiess";
+import ErrorPage from "../pages/general/ErrorPage";
 // PROFILE
-import ProfileSidebar from "../feature-module/frontend/usersprofile/profilesidebar/index"; //side bar
-import VendorProfile from "../feature-module/frontend/pharmacy/vendorprofiles";
+import ProfileSidebar from "../pages/profile/profilesidebar/index"; //side bar
+import VendorProfile from "../pages/products/vendorprofiles";
 
 // View Pages
-import MedicineComparePage from "../feature-module/frontend/pharmacy/MedicineComparePage";
-import CompareView from "../feature-module/frontend/pharmacy/package-view";
-import ViewAllCategories from "../feature-module/frontend/pharmacy/viewallcategories";
-import ViewAllPackages from "../feature-module/frontend/pharmacy/viewallpackages";
-import ViewAllPartners from "../feature-module/frontend/pharmacy/viewallpartners";
-import ProductsData from "../feature-module/frontend/pharmacy/productsdata";
-import SearchOverlay from "../feature-module/frontend/healthcare/Search";
-import MobileCategories from "../feature-module/frontend/healthcare/MobileCategories";
-import AmbulanceCheckOut from "../feature-module/frontend/healthcare/AmbulanceCheckOut";
-import Contact from "../feature-module/frontend/pages/Contact";
-import BlogDetails from "../feature-module/frontend/home/home-4/BlogDetails";
-import Manufactures from "../feature-module/frontend/pharmacy/products-components/Manufactures";
-import RentalBookingProcess from "../feature-module/frontend/pharmacy/RentalBookingProcess";
-import Compositions from "../feature-module/frontend/pharmacy/products-components/Compositions";
-import LabTestPackageDetails from "../feature-module/frontend/pharmacy/LabTestPackageDetails";
-import RelatedProductsView from "../feature-module/frontend/pharmacy/RelatedProductsView";
-import BlogList from "../feature-module/frontend/home/home-4/BlogList";
-import PrescriptionUploadPage from "../feature-module/frontend/pharmacy/PrescriptionUploadPage";
+import MedicineComparePage from "../pages/products/MedicineComparePage";
+import CompareView from "../pages/products/package-view";
+import ViewAllCategories from "../pages/products/viewallcategories";
+import ViewAllPackages from "../pages/products/viewallpackages";
+import ViewAllPartners from "../pages/products/viewallpartners";
+import ProductsData from "../pages/products/productsdata";
+import SearchOverlay from "../pages/services/Search";
+import MobileCategories from "../pages/services/MobileCategories";
+import AmbulanceCheckOut from "../pages/products/AmbulanceCheckOut";
+import Contact from "../pages/general/Contact";
+import BlogDetails from "../pages/home/home-4/BlogDetails";
+import Manufactures from "../pages/products/Manufactures";
+import RentalBookingProcess from "../pages/products/RentalBookingProcess";
+import Compositions from "../pages/products/Compositions";
+import LabTestPackageDetails from "../pages/products/LabTestPackageDetails";
+import RelatedProductsView from "../pages/products/RelatedProductsView";
+import BlogList from "../pages/home/home-4/BlogList";
+import PrescriptionUploadPage from "../pages/products/PrescriptionUploadPage";
 
 export const publicRoutes = [
   {

@@ -30,13 +30,13 @@ import "./assets/css/iconsax.css";
 import "./assets/css/feather.css";
 import "rsuite/dist/rsuite.min.css";
 import "./assets/css/tailwind.css";
-import ScrollToTop from "./feature-module/frontend/pages/ScrollUp";
+import ScrollToTop from "./pages/general/ScrollUp";
 import { CartProvider } from "./context/CartContext";
 import { ProfileProvider } from "./context/ProfileContext";
 import { LocationProvider } from "./context/LocationContext";
 import { Tooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
-import CookieConsent from "./components/CookieConsent";
+import CookieConsent from "./components/ui/CookieConsent";
 import { HelmetProvider } from "react-helmet-async";
 const FCMForegroundListener = () => {
   useEffect(() => {
