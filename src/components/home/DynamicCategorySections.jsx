@@ -32,7 +32,7 @@ const DynamicCategorySections = ({
     // Pharmacy / Medicines
     if (slug.includes("medicine") || slug.includes("pharmacy")) {
       return (
-        <svg viewBox="0 0 100 100" className="w-full h-full fill-current text-[var(--color-primary,#321961)]">
+        <svg viewBox="0 0 100 100" className="w-full h-full fill-current text-[var(--color-primary-dark,#331962)]">
           <path d="M45 15 h10 v30 h-10 z" />
           <path d="M35 35 h30 v50 c0 5-4 9-9 9 h-12 c-5 0-9-4-9-9 z" />
           <circle cx="50" cy="60" r="12" />
@@ -43,7 +43,7 @@ const DynamicCategorySections = ({
     // Lab Tests
     if (slug.includes("labtest") || slug.includes("lab-test")) {
       return (
-        <svg viewBox="0 0 100 100" className="w-full h-full fill-current text-[var(--color-primary,#321961)]">
+        <svg viewBox="0 0 100 100" className="w-full h-full fill-current text-[var(--color-primary-dark,#331962)]">
           <path d="M35 85 h30 v5 h-30 z" />
           <path d="M48 30 h4 v55 h-4 z" />
           <path d="M40 45 a10 10 0 0 1 20 0 c0 8-5 15-10 15 s-10-7-10-15 z" />
@@ -55,7 +55,7 @@ const DynamicCategorySections = ({
     // Diagnostics / Scans
     if (slug.includes("diagnostic") || slug.includes("scan")) {
       return (
-        <svg viewBox="0 0 100 100" className="w-full h-full fill-current text-[var(--color-primary,#321961)]">
+        <svg viewBox="0 0 100 100" className="w-full h-full fill-current text-[var(--color-primary-dark,#331962)]">
           <circle cx="50" cy="50" r="40" stroke="currentColor" strokeWidth="6" fill="none" />
           <path d="M50 15 v70 M15 50 h70" stroke="currentColor" strokeWidth="6" />
           <circle cx="50" cy="50" r="15" />
@@ -66,7 +66,7 @@ const DynamicCategorySections = ({
     // Home Care / Physio / Nursing
     if (slug.includes("homecare") || slug.includes("home-care") || slug.includes("nurse") || slug.includes("physio")) {
       return (
-        <svg viewBox="0 0 100 100" className="w-full h-full fill-current text-[var(--color-primary,#321961)]">
+        <svg viewBox="0 0 100 100" className="w-full h-full fill-current text-[var(--color-primary-dark,#331962)]">
           <path d="M15 45 L50 15 L85 45 V85 H60 V60 H40 V85 H15 Z" />
           <path d="M43 38 H57 V48 H43 Z" fill="white" />
         </svg>
@@ -76,7 +76,7 @@ const DynamicCategorySections = ({
     // Equipment
     if (slug.includes("equipment") || slug.includes("surgical")) {
       return (
-        <svg viewBox="0 0 100 100" className="w-full h-full fill-current text-[var(--color-primary,#321961)]">
+        <svg viewBox="0 0 100 100" className="w-full h-full fill-current text-[var(--color-primary-dark,#331962)]">
           <circle cx="35" cy="70" r="15" stroke="currentColor" strokeWidth="6" fill="none" />
           <circle cx="75" cy="70" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
           <path d="M35 55 h35 v10 h-35 z" />
@@ -88,7 +88,7 @@ const DynamicCategorySections = ({
     // Surgeries / Treatments
     if (slug.includes("surger") || slug.includes("treatment")) {
       return (
-        <svg viewBox="0 0 100 100" className="w-full h-full fill-current text-[var(--color-primary,#321961)]">
+        <svg viewBox="0 0 100 100" className="w-full h-full fill-current text-[var(--color-primary-dark,#331962)]">
           <path d="M10 50 Q30 20, 50 50 T90 50" stroke="currentColor" strokeWidth="6" fill="none" />
           <circle cx="50" cy="50" r="8" />
         </svg>
@@ -98,7 +98,7 @@ const DynamicCategorySections = ({
     // Ambulance
     if (slug.includes("ambulance")) {
       return (
-        <svg viewBox="0 0 100 100" className="w-full h-full fill-current text-[var(--color-primary,#321961)]">
+        <svg viewBox="0 0 100 100" className="w-full h-full fill-current text-[var(--color-primary-dark,#331962)]">
           <path d="M15 35 h50 l15 15 v25 h-65 z" />
           <circle cx="30" cy="75" r="10" />
           <circle cx="65" cy="75" r="10" />
@@ -109,7 +109,7 @@ const DynamicCategorySections = ({
 
     // Default Shield
     return (
-      <svg viewBox="0 0 100 120" className="w-full h-full fill-current text-[var(--color-primary,#321961)]">
+      <svg viewBox="0 0 100 120" className="w-full h-full fill-current text-[var(--color-primary-dark,#331962)]">
         <path d="M50 0 L90 20 V60 C90 85 70 108 50 115 C30 108 10 85 10 60 V20 Z" />
         <path d="M42 35 H58 V51 H74 V67 H58 V83 H42 V67 H26 V51 H42 Z" fill="white" />
       </svg>
@@ -139,7 +139,7 @@ const DynamicCategorySections = ({
   const NextArrow = ({ onClick }) => (
     <button
       onClick={onClick}
-      className="absolute right-[2px] md:right-[-15px] top-1/2 -translate-y-1/2 w-10 h-10 !rounded-full bg-white border border-slate-200 text-[#321961] shadow-md hover:bg-slate-50 hover:scale-105 transition-all z-10 flex items-center justify-center cursor-pointer"
+      className="absolute right-[2px] md:right-[-15px] top-1/2 -translate-y-1/2 w-10 h-10 !rounded-full bg-white border border-slate-200 text-primary-dark shadow-md hover:bg-slate-50 hover:scale-105 transition-all z-10 flex items-center justify-center cursor-pointer"
     >
       <i className="fa-solid fa-chevron-right text-xs"></i>
     </button>
@@ -148,7 +148,7 @@ const DynamicCategorySections = ({
   const PrevArrow = ({ onClick }) => (
     <button
       onClick={onClick}
-      className="absolute left-[2px] md:left-[-15px] top-1/2 -translate-y-1/2 w-10 h-10 !rounded-full bg-white border border-slate-200 text-[#321961] shadow-md hover:bg-slate-50 hover:scale-105 transition-all z-10 flex items-center justify-center cursor-pointer"
+      className="absolute left-[2px] md:left-[-15px] top-1/2 -translate-y-1/2 w-10 h-10 !rounded-full bg-white border border-slate-200 text-primary-dark shadow-md hover:bg-slate-50 hover:scale-105 transition-all z-10 flex items-center justify-center cursor-pointer"
     >
       <i className="fa-solid fa-chevron-left text-xs"></i>
     </button>
@@ -243,9 +243,9 @@ const DynamicCategorySections = ({
     if (slug.includes("medicine")) {
       return {
         bgClass: "!bg-gradient-to-br !from-[#f6f2ff] !to-[#fbfaff] !border-[#e8dbff] !shadow-[0_15px_40px_rgba(128,89,202,0.05)]",
-        bannerBg: "from-[#321961] to-[#6d4db8]",
-        iconClass: "fas fa-pills text-[#321961] animate-pulse-glow",
-        bubbleColor: "text-[#321961]/35",
+        bannerBg: "from-primary-dark to-[#6d4db8]",
+        iconClass: "fas fa-pills text-primary-dark animate-pulse-glow",
+        bubbleColor: "text-primary-dark/35",
         animationType: "medicine",
         badge: "💊 Best Prices",
         description: "Compare & buy prescription medicines from top verified pharmacies near you.",
@@ -355,9 +355,9 @@ const DynamicCategorySections = ({
       if (themeIndex === 0) {
         return {
           bgClass: "!bg-gradient-to-br !from-[#f6f2ff] !to-[#fbfaff] !border-[#e8dbff] !shadow-[0_15px_40px_rgba(128,89,202,0.05)]",
-          bannerBg: "from-[#321961] to-[#6d4db8]",
-          iconClass: "fas fa-heartbeat text-[#321961]",
-          bubbleColor: "text-[#321961]/35",
+          bannerBg: "from-primary-dark to-[#6d4db8]",
+          iconClass: "fas fa-heartbeat text-primary-dark",
+          bubbleColor: "text-primary-dark/35",
           animationType: "medicine",
           badge: "⭐ Top Picks",
           description: "Discover the best healthcare options compared in one place.",
@@ -542,7 +542,7 @@ const DynamicCategorySections = ({
           const serviceSlug = currentService || serviceId?.slug || section.serviceType || "";
           const serviceTheme = getServiceTheme(serviceSlug, index);
           const colorMatch = serviceTheme.iconClass?.match(/text-\[(\#[a-fA-F0-9]+)\]/);
-          const themeColor = colorMatch ? colorMatch[1] : '#321961';
+          const themeColor = colorMatch ? colorMatch[1] : "var(--color-primary-dark)";
           const categoryFixedType = section?.serviceId?.fixedType || "";
           return (
             <div
@@ -557,7 +557,7 @@ const DynamicCategorySections = ({
             >
               {/* Dot Matrix Pattern (Top Left) - Matching Mockup */}
               <div className="absolute top-8 left-8 w-24 h-24 opacity-[0.07] pointer-events-none hidden md:block" style={{
-                backgroundImage: "radial-gradient(var(--color-primary, #321961) 2px, transparent 2px)",
+                backgroundImage: "radial-gradient(var(--color-primary-dark, #331962) 2px, transparent 2px)",
                 backgroundSize: "12px 12px"
               }} />
 
@@ -603,6 +603,7 @@ const DynamicCategorySections = ({
                               currentService={categoryFixedType || currentService || categoryFixedType}
                               disableTooltips={liteMode}
                               className="!h-full"
+                              serviceSlug={serviceSlug}
                             />
                           </div>
                         );

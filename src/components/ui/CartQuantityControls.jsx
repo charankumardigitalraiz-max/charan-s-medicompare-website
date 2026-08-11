@@ -300,6 +300,15 @@ const CartQuantityControls = ({
         return;
       }
 
+      if (!hasPrescriptionProp) {
+        if (bookingType === "cartslots") {
+          setFamilyMemberModel(true);
+        } else {
+          proceedToAdd("payment_required");
+        }
+        return;
+      }
+
       // Priority 2: cart already has a "payment_required" item — reuse it for this product too
       const hasPaymentRequiredInCart = cartItems?.some(
         (cartItem) => cartItem?.prescriptionImage === "payment_required"
@@ -312,6 +321,10 @@ const CartQuantityControls = ({
         }
         return;
       }
+
+
+
+
       // Priority 3: no prescription at all — show the rx upload modal
       // setShowPrescriptionModal(false);
       // return;

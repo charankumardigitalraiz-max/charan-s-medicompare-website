@@ -244,14 +244,14 @@ const CouponOffersModal = ({
             <>
               {vendorCoupons.length > 0 && (
                 <div className="!flex !flex-col !gap-3">
-                  <div className="!flex !items-center !gap-2 !px-1 !pb-1 !border-b !border-slate-200/50 !mb-0.5">
-                    <div className="!w-1 !h-3.5 !bg-emerald-500 !rounded-full" />
-                    <span
+                  <div className="!flex !items-center !gap-2 !px-1">
+                    {/* <div className="!w-1 !h-3.5 !bg-emerald-500 !rounded-full" /> */}
+                    {/* <span
                       className="!text-[11px] !font-bold !text-slate-700 !uppercase !tracking-wider"
                       style={{ fontFamily: '"Poppins", sans-serif' }}
                     >
                       Vendor Coupons
-                    </span>
+                    </span> */}
                   </div>
                   {renderSection(vendorCoupons)}
                 </div>
@@ -263,14 +263,14 @@ const CouponOffersModal = ({
 
               {adminCoupons.length > 0 && (
                 <div className="!flex !flex-col !gap-3">
-                  <div className="!flex !items-center !gap-2 !px-1 !pb-1 !border-b !border-slate-200/50 !mb-0.5">
-                    <div className="!w-1 !h-3.5 !bg-[#321961] !rounded-full" />
-                    <span
+                  <div className="!flex !items-center">
+                    {/* <div className="!w-1 !h-3.5 !bg-[#321961] !rounded-full" /> */}
+                    {/* <span
                       className="!text-[11px] !font-bold !text-slate-700 !uppercase !tracking-wider"
                       style={{ fontFamily: '"Poppins", sans-serif' }}
                     >
                       Platform Coupons
-                    </span>
+                    </span> */}
                   </div>
                   {renderSection(adminCoupons)}
                 </div>

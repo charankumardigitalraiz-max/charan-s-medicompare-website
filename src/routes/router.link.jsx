@@ -8,7 +8,7 @@ import EmailOtp from "../pages/Authentication/email-otp";
 // pharmacy
 import ProductDescription from "../pages/products/productdescription";
 import BookinProcess from "../pages/products/bookingprocess";
-import { Cart as ProductCheckout } from "../pages/products/productcheckout";
+import { Cart as ProductCheckout } from "../pages/products/productcheckout2";
 import { LabTestCheckout } from "../pages/products/labtestcheckout";
 import Payoutsuccess from "../pages/products/payoutsuccess";
 import ServiceDetails from "../pages/products/servicedetails";

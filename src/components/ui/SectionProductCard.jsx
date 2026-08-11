@@ -47,7 +47,8 @@ const SectionProductCard = ({
   imageLoading = "lazy",
   fetchPriority = "auto",
   disableTooltips = false,
-  currentService
+  currentService,
+  serviceSlug
 }) => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -346,6 +347,7 @@ const SectionProductCard = ({
   };
 
   const ctaConfig = getButtonConfig(currentService);
+  const isMedicine = ["medicine", "rx-medicines", "medicalequipment", "medical-equipment"].includes(serviceSlug);
 
   return (
     <div
@@ -354,10 +356,10 @@ const SectionProductCard = ({
       onClick={handleImageClick}
     >
       {/* Product Image Section */}
-      <div className="relative w-full h-[120px] flex items-center justify-center p-3 bg-slate-50/50 rounded-2xl overflow-hidden mb-3">
+      <div className={`relative h-[120px] flex items-center justify-center bg-slate-50/50 ${isMedicine ? "w-full p-3 overflow-hidden" : "w-[120px] p-0 rounded-full border border-slate-200/80 mx-auto"} mb-3`}>
 
         <img
-          className="w-[115px] h-[115px] rounded-full object-cover bg-white border border-slate-200/80 shadow-sm group-hover:scale-105 transition-transform duration-300 relative z-10"
+          className={`${isMedicine ? "w-[115px] h-[115px] object-contain" : "w-full h-full rounded-full object-cover"} bg-white group-hover:scale-105 transition-transform duration-300 relative z-10`}
           src={displayImage}
           alt={productName}
           title={productName}
@@ -423,13 +425,13 @@ const SectionProductCard = ({
       <div className="flex flex-col flex-1">
         {/* Manufacturer / Subtitle */}
         {manufacturerName && (
-          <span className="text-[10px] uppercase tracking-wider font-bold text-[#321961] mb-1">
+          <span className="text-[10px] uppercase tracking-wider font-bold text-primary-dark mb-1">
             {truncateText(manufacturerName, 20)}
           </span>
         )}
 
         {/* Product Title */}
-        <h4 className="!text-sm !font-semibold !text-gray-800 !leading-snug group-hover:text-[#321961] transition-colors line-clamp-2 min-h-[40px] !m-0 !mb-2 !capitalize">
+        <h4 className="!text-sm !font-semibold !text-gray-800 !leading-snug group-hover:text-primary-dark transition-colors line-clamp-2 min-h-[40px] !m-0 !mb-2 !capitalize">
           {truncateText(productName, titleMaxLength)}
         </h4>
 
@@ -476,7 +478,7 @@ const SectionProductCard = ({
             e.stopPropagation();
             onProductClick(item);
           }}
-          className="!w-full !mt-1.5 !flex !items-center !justify-center !gap-2 !py-2 !px-4 !rounded-sm !text-xs !font-semibold !text-white !bg-[#321961] hover:!bg-[#6d4db8] !transition-all !duration-300 !shadow-[0_4px_12px_rgba(128,89,202,0.15)] hover:!shadow-[0_6px_20px_rgba(128,89,202,0.25)] !border-none !cursor-pointer"
+          className="!w-full !mt-1.5 !flex !items-center !justify-center !gap-2 !py-2 !px-4 !rounded-sm !text-xs !font-semibold !text-white !bg-primary hover:!bg-[#6d4db8] !transition-all !duration-300 !shadow-[0_4px_12px_rgba(128,89,202,0.15)] hover:!shadow-[0_6px_20px_rgba(128,89,202,0.25)] !border-none !cursor-pointer"
         >
           <i className={`fas ${ctaConfig.icon} text-[10px]`} />
           <span>{ctaConfig.label}</span>
