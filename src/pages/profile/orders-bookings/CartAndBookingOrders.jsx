@@ -962,7 +962,11 @@ const MedicineBookings = ({ HomeNavigate, ServiceTabs }) => {
         <BaseModal
           show={showModel}
           onClose={onClose}
-          title={`Order Details - ${getOrderStatusMeta(selectedOrder?.orderStatus).label || "N/A"} (${selectedOrder?.orderId || "N/A"})`}
+          title={
+            <span className="!text-[16px] !font-semibold !text-slate-700">
+              Order Details - {getOrderStatusMeta(selectedOrder?.orderStatus).label || "N/A"} ({selectedOrder?.orderId || "N/A"})
+            </span>
+          }
           size="md"
           bodyClassName="!p-0"
           headerClassName="border-b border-[#f1eff9] pb-3"

@@ -43,14 +43,17 @@ const AmbulanceBookingModal = ({
   const pickupAutocompleteRef = useRef(null);
   const dropAutocompleteRef = useRef(null);
 
-  // const GOOGLE_MAPS_API_KEY =
-  //   import.meta.env.VITE_GOOGLE_MAPS_API_KEY ||
-  //   "AIzaSyBW_ML0ppoU2o_tsOmT5eMveCwCFP3AXHU";
+  const GOOGLE_MAPS_API_KEY_LOCAL =
+    import.meta.env.VITE_GOOGLE_MAPS_API_KEY ||
+    GOOGLE_MAPS_API_KEY ||
+    "AIzaSyBW_ML0ppoU2o_tsOmT5eMveCwCFP3AXHU";
 
-  const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: GOOGLE_MAPS_API_KEY,
+  const { isLoaded: apiLoaded } = useJsApiLoader({
+    googleMapsApiKey: GOOGLE_MAPS_API_KEY_LOCAL,
     libraries: libraries,
   });
+
+  const isLoaded = apiLoaded || !!(window.google && window.google.maps);
 
   useEffect(() => {
     if (!show) {
@@ -133,10 +136,38 @@ const AmbulanceBookingModal = ({
     };
   }, [show, isLoaded, editData, selectedCategory]);
 
-  const getAddressFromCoordinates = async (lat, lng) => {
+  useEffect(() => {
+    if (!show) return;
+
+    const handleFocus = () => {
+      setTimeout(() => {
+        const pac = document.querySelector(".pac-container");
+        if (pac) {
+          pac.style.setProperty("z-index", "2147483647", "important");
+          pac.classList.add(
+            "!z-[2147483647]",
+            "!max-h-[320px]",
+            "!overflow-y-auto",
+            "!rounded-lg",
+            "!shadow-lg",
+            "!border",
+            "!border-slate-100",
+            "!font-sans"
+          );
+        }
+      }, 150);
+    };
+
+    document.addEventListener("focusin", handleFocus);
+    return () => {
+      document.removeEventListener("focusin", handleFocus);
+    };
+  }, [show]);
+
+   const getAddressFromCoordinates = async (lat, lng) => {
     try {
       const res = await fetch(
-        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${GOOGLE_MAPS_API_KEY}`,
+        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${GOOGLE_MAPS_API_KEY_LOCAL}`,
       );
       const data = await res.json();
       if (data.status === "OK" && data.results && data.results.length > 0) {
@@ -151,7 +182,7 @@ const AmbulanceBookingModal = ({
   const getCoordinatesFromAddress = async (address) => {
     try {
       const res = await fetch(
-        `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${GOOGLE_MAPS_API_KEY}`,
+        `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${GOOGLE_MAPS_API_KEY_LOCAL}`,
       );
       const data = await res.json();
       if (data.status === "OK" && data.results && data.results.length > 0) {
@@ -705,7 +736,7 @@ const AmbulanceBookingModal = ({
             className="p-[12px_16px] border-b border-solid border-[#eee] flex justify-between items-center"
           >
             <h3
-              className="text-[15px] text-black font-semibold m-0"
+              className="!text-[18px] text-black font-semibold m-0"
             >
               Medical Transport Booking
             </h3>
@@ -740,7 +771,7 @@ const AmbulanceBookingModal = ({
           <div
             className="p-[20px_28px] border-b border-solid border-[#eee] flex justify-between items-center"
           >
-            <h3 className="text-[16px] font-medium m-0">
+            <h3 className="!text-[18px] font-medium m-0">
               Medical Transport Booking
             </h3>
             <button

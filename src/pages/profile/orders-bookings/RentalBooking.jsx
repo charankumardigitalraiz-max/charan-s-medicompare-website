@@ -12,6 +12,7 @@ import autoTable from "jspdf-autotable";
 import { useNavigate } from "react-router";
 import BaseModal from "../../../components/ui/BaseModal";
 import Pagination from "../../../components/ui/Pagination.jsx";
+import Tabs from "../../../components/ui/Tabs.jsx";
 // import { fetchCategoryList } from "../../../Apiservice";
 
 // Styles migrated to Tailwind CSS
@@ -678,60 +679,14 @@ const RentalBooking = ({ HomeNavigate, ServiceTabs }) => {
           </div>
         </div>
 
-        <div
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            gap: "12px",
-            marginBottom: "16px",
-          }}
-        >
-          {ServiceTabs?.filter((item) => (item?.categoryType
+        <Tabs
+          tabs={ServiceTabs?.filter((item) => (item?.categoryType
             === "rentals_addtocarts" || item?.categoryType
             === "rent" || item?.categoryType === "all")
-          ).map((service) => (
-            <button
-              key={service?._id}
-              type="button"
-              onClick={() => setSelectedTabType(service?.fixedType)}
-              style={{
-                padding: "10px 18px",
-                borderRadius: "10px",
-                border: selectedTabType === service?.fixedType
-                  ? "1px solid #321961"
-                  : "1px solid #e5e7eb",
-                backgroundColor:
-                  selectedTabType === service?.fixedType ? "#321961" : "#ffffff",
-                color: selectedTabType === service?.fixedType ? "#ffffff" : "#374151",
-                fontSize: "14px",
-                fontWeight: "600",
-                cursor: "pointer",
-                transition: "all 0.25s ease",
-                boxShadow:
-                  selectedTabType === service?.fixedType
-                    ? "0 6px 16px rgba(128, 89, 202, 0.25)"
-                    : "0 2px 8px rgba(0,0,0,0.06)",
-                whiteSpace: "nowrap",
-              }}
-              onMouseEnter={(e) => {
-                if (selectedTabType !== service?.fixedType) {
-                  e.currentTarget.style.backgroundColor = "#f8f5ff";
-                  e.currentTarget.style.borderColor = "#321961";
-                  e.currentTarget.style.color = "#321961";
-                }
-              }}
-              onMouseLeave={(e) => {
-                if (selectedTabType !== service?.fixedType) {
-                  e.currentTarget.style.backgroundColor = "#ffffff";
-                  e.currentTarget.style.borderColor = "#e5e7eb";
-                  e.currentTarget.style.color = "#374151";
-                }
-              }}
-            >
-              {service?.name}
-            </button>
-          ))}
-        </div>
+          )}
+          activeTab={selectedTabType}
+          onChange={setSelectedTabType}
+        />
 
         <div className="mb-3 relative">
           <div

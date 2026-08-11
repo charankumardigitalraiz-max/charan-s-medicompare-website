@@ -174,6 +174,11 @@ const Profile = ({ HomeNavigate, BackButton }) => {
     dataArray.append("gender", profiles.gender);
     dataArray.append("age", profiles.age);
     dataArray.append("medical_conditions", profiles.medical_conditions);
+    if (file) {
+      dataArray.append("image", file);
+      dataArray.append("file", file);
+      dataArray.append("files", file);
+    }
 
     try {
       await axiosUserInstance.post("profile/update", dataArray, {
@@ -255,172 +260,170 @@ const Profile = ({ HomeNavigate, BackButton }) => {
       {!isEditMode ? (
         /* View Mode - Profile Details Display */
         <div className="bg-white rounded-xl p-[30px] shadow-[0_4px_20px_rgba(0,0,0,0.08)] mb-[30px]">
-          {/* Edit Button */}
-          <div className="mb-[25px] flex justify-end">
+          {/* Profile Card Header Info & Edit Button */}
+          <div className="flex items-center justify-between gap-4 pb-5 mb-5 border-b border-slate-100 flex-wrap sm:flex-nowrap">
+            <div className="flex items-center gap-4">
+              <div className="w-14 h-14 rounded-full bg-purple-50 border border-purple-100 flex items-center justify-center text-[#321961] text-xl font-bold shrink-0 shadow-inner overflow-hidden">
+                {profiles.image ? (
+                  <img src={`${imgUrl}/${profiles.image}`} alt="Profile" className="w-full h-full object-cover" />
+                ) : (
+                  profiles.first_name ? profiles.first_name[0].toUpperCase() : <i className="fa-solid fa-user"></i>
+                )}
+              </div>
+              <div>
+                <h4 className="m-0 text-[#0f172a] font-bold text-[18px]">
+                  {profiles.first_name || ""} {profiles.last_name || ""}
+                  {!profiles.first_name && !profiles.last_name && <span className="text-slate-400 font-normal italic text-sm">Guest User</span>}
+                </h4>
+                <p className="text-slate-400 text-[11px] font-semibold m-0 uppercase tracking-wide">Personal Profile</p>
+              </div>
+            </div>
+
             <button
               type="button"
               onClick={handleEditClick}
-              className="bg-[#321961] hover:bg-[#6b1fe6] text-white border-none py-2.5 px-6 !rounded-lg !text-sm !font-semibold inline-flex items-center gap-2 cursor-pointer transition-all duration-300 shadow-[0_4px_15px_rgba(125,46,255,0.3)] hover:shadow-[0_6px_20px_rgba(125,46,255,0.4)] hover:-translate-y-0.5"
+              className="bg-[#321961] hover:bg-[#6b1fe6] text-white border-none py-1.5 px-6 !rounded-sm !text-sm !font-semibold inline-flex items-center gap-2 cursor-pointer transition-all duration-300 shrink-0"
             >
-              <i className="fa-solid fa-pen"></i>
+              <i className="fa-solid fa-pen text-[10px]"></i>
               Edit Profile
             </button>
           </div>
 
-          {/* Profile Details Display */}
-          <div className="row">
-
-            <div className="col-12 mb-3">
-              <div className={rowWrapClass}>
-                <span className={rowLabelClass}>
-                  <i className="fa-solid fa-user text-[12px] text-[#321961]"></i>
-                  Customer ID:
-                </span>
-                <span className={rowValueClass}>
-                  {profiles.custId || <span className="text-slate-400 italic">Not provided</span>}
-                </span>
+          {/* Profile Grid Details */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-5">
+            {/* Customer ID Block */}
+            <div className="bg-slate-50/50 hover:bg-slate-50 rounded-xl p-4 border border-slate-100 flex items-center gap-3 transition-all duration-200">
+              <div className="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center text-sm shrink-0">
+                <i className="fa-solid fa-hashtag"></i>
+              </div>
+              <div className="min-w-0 flex-1">
+                <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider leading-none mb-1">Customer ID</span>
+                <span className="block text-sm font-semibold text-slate-700 truncate">{profiles.custId || <span className="text-slate-300 italic font-normal">N/A</span>}</span>
               </div>
             </div>
 
-            <div className="col-12 mb-3">
-              <div className={rowWrapClass}>
-                <span className={rowLabelClass}>
-                  <i className="fa-solid fa-user text-[12px] text-[#321961]"></i>
-                  First Name:
-                </span>
-                <span className={rowValueClass}>
-                  {profiles.first_name || <span className="text-slate-400 italic">Not provided</span>}
-                </span>
+            {/* Mobile Number Block */}
+            <div className="bg-slate-50/50 hover:bg-slate-50 rounded-xl p-4 border border-slate-100 flex items-center gap-3 transition-all duration-200">
+              <div className="w-10 h-10 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center text-sm shrink-0">
+                <i className="fa-solid fa-phone"></i>
+              </div>
+              <div className="min-w-0 flex-1">
+                <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider leading-none mb-1">Mobile Number</span>
+                <span className="block text-sm font-semibold text-slate-700 truncate">{profiles.phone || <span className="text-slate-300 italic font-normal">N/A</span>}</span>
               </div>
             </div>
 
-            <div className="col-12 mb-3">
-              <div className={rowWrapClass}>
-                <span className={rowLabelClass}>
-                  <i className="fa-solid fa-user text-[12px] text-[#321961]"></i>
-                  Last Name:
-                </span>
-                <span className={rowValueClass}>
-                  {profiles.last_name || <span className="text-slate-400 italic">Not provided</span>}
-                </span>
+            {/* Email Address Block */}
+            <div className="bg-slate-50/50 hover:bg-slate-50 rounded-xl p-4 border border-slate-100 flex items-center gap-3 transition-all duration-200">
+              <div className="w-10 h-10 rounded-lg bg-purple-50 text-[#7c3aed] flex items-center justify-center text-sm shrink-0">
+                <i className="fa-solid fa-envelope"></i>
               </div>
-            </div>
-
-            <div className="col-12 mb-3">
-              <div className={rowWrapClass}>
-                <span className={rowLabelClass}>
-                  <i className="fa-solid fa-phone text-[12px] text-[#321961]"></i>
-                  Mobile Number:
-                </span>
-                <span
-                  className={`flex-1 flex gap-2.5 ${isMobile ? "flex-col items-start w-full" : "flex-row items-center w-auto"
-                    }`}
-                >
-                  <span>
-                    {profiles.phone || <span className="text-slate-400 italic">Not provided</span>}
-                  </span>
-                  {/* {profiles.phone && (
-                    <span className={`inline-flex items-center gap-1 py-1 px-2.5 rounded-xl text-xs font-semibold whitespace-nowrap shrink-0 ${
-                      profiles.mobile_verified === true ? "bg-[rgba(40,167,69,0.1)] text-green-600" : "bg-[rgba(220,53,69,0.1)] text-red-600"
-                    }`}>
-                      <i className={`fa-solid ${profiles.mobile_verified === true ? "fa-check-circle" : "fa-times-circle"} text-[10px]`}></i>
-                      {profiles.mobile_verified === true ? "Verified" : "Unverified"}
-                    </span>
-                  )} */}
-                </span>
-              </div>
-            </div>
-
-            <div className="col-12 mb-3">
-              <div className={rowWrapClass}>
-                <span className={rowLabelClass}>
-                  <i className="fa-solid fa-envelope text-[12px] text-[#321961]"></i>
-                  Email:
-                </span>
-                <span
-                  className={`flex-1 flex gap-2.5 overflow-hidden ${isMobile ? "flex-col items-start w-full" : "flex-row items-center w-auto"
-                    }`}
-                >
-                  <span className={`overflow-hidden text-ellipsis whitespace-nowrap min-w-0 ${isMobile ? "w-full" : "w-auto"}`}>
-                    {profiles.email || <span className="text-slate-400 italic">Not provided</span>}
-                  </span>
+              <div className="min-w-0 flex-1">
+                <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider leading-none mb-1">Email Address</span>
+                <div className="flex items-center gap-1.5 flex-wrap">
+                  <span className="text-sm font-semibold text-slate-700 truncate max-w-[140px]" title={profiles.email}>{profiles.email || <span className="text-slate-300 italic font-normal">N/A</span>}</span>
                   {profiles.email && (
-                    <span
-                      className={`inline-flex items-center gap-1 py-1 px-2.5 rounded-xl text-xs font-semibold whitespace-nowrap shrink-0 ${profiles.email_verified === true
-                        ? "bg-[rgba(40,167,69,0.1)] text-green-600"
-                        : "bg-[rgba(220,53,69,0.1)] text-red-600"
-                        }`}
-                    >
-                      <i className={`fa-solid ${profiles.email_verified === true ? "fa-check-circle" : "fa-times-circle"} text-[10px]`}></i>
+                    <span className={`inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded-full text-[9px] font-bold ${profiles.email_verified === true ? "bg-emerald-100 text-emerald-700" : "bg-rose-100 text-rose-700"
+                      }`}>
+                      <i className={`fa-solid ${profiles.email_verified === true ? "fa-circle-check" : "fa-circle-xmark"} text-[8px]`}></i>
                       {profiles.email_verified === true ? "Verified" : "Unverified"}
                     </span>
                   )}
                   {profiles.email && profiles.email_verified === false && (
                     <button
                       type="button"
-                      className={`btn btn-primary btn-sm shrink-0 whitespace-nowrap py-1.5 px-3.5 text-[13px] font-medium ${isMobile ? "self-start" : "self-auto"
-                        }`}
+                      className="bg-[#321961] text-white border-0 py-0.5 px-2 rounded text-[10px] font-bold cursor-pointer hover:bg-purple-700 transition"
                       onClick={handleSendOtp}
                       disabled={isSendingOtp}
                     >
-                      {isSendingOtp ? "Sending OTP..." : "Verify Email"}
+                      {isSendingOtp ? "..." : "Verify"}
                     </button>
                   )}
-                </span>
+                </div>
               </div>
             </div>
 
-            <div className="col-12 mb-3">
-              <div className={rowWrapClass}>
-                <span className={rowLabelClass}>
-                  <i className="fa-solid fa-venus-mars text-[12px] text-[#321961]"></i>
-                  Gender:
-                </span>
-                <span className={`${rowValueClass} capitalize`}>
-                  {profiles.gender || <span className="text-slate-400 italic">Not provided</span>}
-                </span>
+            {/* Gender Block */}
+            <div className="bg-slate-50/50 hover:bg-slate-50 rounded-xl p-4 border border-slate-100 flex items-center gap-3 transition-all duration-200">
+              <div className="w-10 h-10 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center text-sm shrink-0">
+                <i className="fa-solid fa-venus-mars"></i>
+              </div>
+              <div className="min-w-0 flex-1">
+                <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider leading-none mb-1">Gender</span>
+                <span className="block text-sm font-semibold text-slate-700 capitalize">{profiles.gender || <span className="text-slate-300 italic font-normal">N/A</span>}</span>
               </div>
             </div>
 
-            <div className="col-12 mb-3">
-              <div className={rowWrapClass}>
-                <span className={rowLabelClass}>
-                  <i className="fa-solid fa-cake-candles text-[12px] text-[#321961]"></i>
-                  Age:
-                </span>
-                <span className={rowValueClass}>
-                  {profiles.age || <span className="text-slate-400 italic">Not provided</span>}
-                </span>
+            {/* Age Block */}
+            <div className="bg-slate-50/50 hover:bg-slate-50 rounded-xl p-4 border border-slate-100 flex items-center gap-3 transition-all duration-200">
+              <div className="w-10 h-10 rounded-lg bg-pink-50 text-pink-600 flex items-center justify-center text-sm shrink-0">
+                <i className="fa-solid fa-cake-candles"></i>
+              </div>
+              <div className="min-w-0 flex-1">
+                <span className="block text-[10px] font-bold text-slate-400 uppercase tracking-wider leading-none mb-1">Age</span>
+                <span className="block text-sm font-semibold text-slate-700">{profiles.age ? `${profiles.age} Years` : <span className="text-slate-300 italic font-normal">N/A</span>}</span>
               </div>
             </div>
+          </div>
 
-            <div className="col-12 mb-3">
-              <div className={`flex gap-2 py-3 px-4 text-[15px] text-slate-800 ${isMobile ? "flex-col items-start" : "flex-row items-start"}`}>
-                <span className={`${rowLabelClass} pt-0.5`}>
-                  <i className="fa-solid fa-file-medical text-[12px] text-[#321961]"></i>
-                  Medical Conditions:
-                </span>
-                <span className={`${rowValueClass} whitespace-pre-wrap break-words`}>
-                  {profiles.medical_conditions || <span className="text-slate-400 italic">Not provided</span>}
-                </span>
-              </div>
+          {/* Medical Conditions block */}
+          <div className="bg-purple-50/30 border border-purple-100 rounded-xl p-4 flex gap-3.5">
+            <div className="w-9 h-9 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center text-sm shrink-0 mt-0.5">
+              <i className="fa-solid fa-file-medical"></i>
             </div>
-
+            <div className="flex-1 min-w-0">
+              <span className="block text-[10.5px] font-bold text-[#321961] uppercase tracking-wider mb-1">Medical Conditions / Diseases</span>
+              <p className="m-0 text-slate-600 text-[13px] leading-relaxed whitespace-pre-wrap break-words font-medium">
+                {profiles.medical_conditions || <span className="text-slate-400 italic font-normal">No medical conditions listed.</span>}
+              </p>
+            </div>
           </div>
         </div>
       ) : (
         <form onSubmit={handleSubmitProfile}>
           <div className="bg-white rounded-xl p-[30px] shadow-[0_4px_20px_rgba(0,0,0,0.08)] mb-[30px]">
-            <div className="row">
-              <div className="col-lg-4 col-md-6 mb-4">
-                <div className="form-wrap">
-                  <label className="text-sm font-semibold text-slate-600 mb-2 flex items-center gap-1.5">
+            {/* Profile Photo Uploader Section */}
+            <div className="flex items-center gap-4 pb-5 mb-5 border-b border-slate-100">
+              <div className="relative group w-16 h-16 rounded-full overflow-hidden border border-slate-200 shadow-inner shrink-0 cursor-pointer">
+                {file ? (
+                  <img src={URL.createObjectURL(file)} alt="Preview" className="w-full h-full object-cover" />
+                ) : profiles.image ? (
+                  <img src={`${imgUrl}/${profiles.image}`} alt="Profile" className="w-full h-full object-cover" />
+                ) : (
+                  <div className="w-full h-full bg-purple-50 flex items-center justify-center text-[#321961] text-xl font-black">
+                    {profiles.first_name ? profiles.first_name[0].toUpperCase() : <i className="fa-solid fa-user"></i>}
+                  </div>
+                )}
+                {/* Hover overlay with input file */}
+                <label className="absolute inset-0 bg-black/45 flex items-center justify-center cursor-pointer opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                  <i className="fa-solid fa-camera text-white text-sm"></i>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => {
+                      if (e.target.files && e.target.files[0]) {
+                        setFile(e.target.files[0]);
+                      }
+                    }}
+                    className="hidden"
+                  />
+                </label>
+              </div>
+              <div>
+                <span className="block text-sm font-bold text-slate-700">Profile Photo</span>
+                <span className="block text-[11px] text-slate-400 mt-0.5">Click photo overlay to upload new image</span>
+              </div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <div className="w-full">
+                <div className="flex flex-col">
+                  <label className="text-sm font-semibold text-slate-600 mb-1.5 flex items-center gap-1.5">
                     <i className="fa-solid fa-user text-[12px] text-[#321961]"></i>
                     First Name
                   </label>
                   <input
                     type="text"
-                    className="form-control rounded-lg border border-slate-200 py-3 px-[15px] text-sm transition-all duration-300 focus:border-[#321961] outline-none"
+                    className="w-full h-[48px] rounded-lg border border-slate-200 px-4 text-sm transition-all duration-300 focus:border-[#321961] focus:ring-1 focus:ring-[#321961]/20 outline-none bg-white"
                     name="first_name"
                     value={profiles.first_name || ""}
                     onChange={handleProfiles}
@@ -428,15 +431,15 @@ const Profile = ({ HomeNavigate, BackButton }) => {
                 </div>
               </div>
 
-              <div className="col-lg-4 col-md-6 mb-4">
-                <div className="form-wrap">
-                  <label className="text-sm font-semibold text-slate-600 mb-2 flex items-center gap-1.5">
+              <div className="w-full">
+                <div className="flex flex-col">
+                  <label className="text-sm font-semibold text-slate-600 mb-1.5 flex items-center gap-1.5">
                     <i className="fa-solid fa-user text-[12px] text-[#321961]"></i>
                     Last Name
                   </label>
                   <input
                     type="text"
-                    className="form-control rounded-lg border border-slate-200 py-3 px-[15px] text-sm transition-all duration-300 focus:border-[#321961] outline-none"
+                    className="w-full h-[48px] rounded-lg border border-slate-200 px-4 text-sm transition-all duration-300 focus:border-[#321961] focus:ring-1 focus:ring-[#321961]/20 outline-none bg-white"
                     name="last_name"
                     value={profiles.last_name || ""}
                     onChange={handleProfiles}
@@ -444,17 +447,17 @@ const Profile = ({ HomeNavigate, BackButton }) => {
                 </div>
               </div>
 
-              <div className="col-lg-4 col-md-6 mb-4">
-                <div className="form-wrap">
-                  <label className="text-sm font-semibold text-slate-600 mb-2 flex items-center gap-1.5">
+              <div className="w-full">
+                <div className="flex flex-col">
+                  <label className="text-sm font-semibold text-slate-600 mb-1.5 flex items-center gap-1.5">
                     <i className="fa-solid fa-phone text-[12px] text-[#321961]"></i>
                     Mobile Number
                   </label>
                   <input
                     type="tel"
-                    className={`form-control rounded-lg border border-slate-200 py-3 px-[15px] text-sm transition-all duration-300 outline-none ${profiles.mobile_verified === true
+                    className={`w-full h-[48px] rounded-lg border border-slate-200 px-4 text-sm transition-all duration-300 outline-none ${profiles.mobile_verified === true
                       ? "bg-slate-100 cursor-not-allowed opacity-70"
-                      : "bg-white cursor-text focus:border-[#321961]"
+                      : "bg-white cursor-text focus:border-[#321961] focus:ring-1 focus:ring-[#321961]/20"
                       }`}
                     name="phone"
                     value={profiles.phone || ""}
@@ -478,15 +481,15 @@ const Profile = ({ HomeNavigate, BackButton }) => {
                 </div>
               </div>
 
-              <div className="col-lg-4 col-md-6 mb-4">
-                <div className="form-wrap">
-                  <label className="text-sm font-semibold text-slate-600 mb-2 flex items-center gap-1.5">
+              <div className="w-full">
+                <div className="flex flex-col">
+                  <label className="text-sm font-semibold text-slate-600 mb-1.5 flex items-center gap-1.5">
                     <i className="fa-solid fa-envelope text-[12px] text-[#321961]"></i>
                     Email
                   </label>
                   <input
                     type="email"
-                    className="form-control rounded-lg border border-slate-200 py-3 px-[15px] text-sm transition-all duration-300 focus:border-[#321961] outline-none"
+                    className="w-full h-[48px] rounded-lg border border-slate-200 px-4 text-sm transition-all duration-300 focus:border-[#321961] focus:ring-1 focus:ring-[#321961]/20 outline-none bg-white"
                     name="email"
                     value={profiles.email || ""}
                     onChange={handleProfiles}
@@ -494,14 +497,14 @@ const Profile = ({ HomeNavigate, BackButton }) => {
                 </div>
               </div>
 
-              <div className="col-lg-4 col-md-6 mb-4">
-                <div className="form-wrap">
-                  <label className="text-sm font-semibold text-slate-600 mb-2 flex items-center gap-1.5">
+              <div className="w-full">
+                <div className="flex flex-col">
+                  <label className="text-sm font-semibold text-slate-600 mb-1.5 flex items-center gap-1.5">
                     <i className="fa-solid fa-venus-mars text-[12px] text-[#321961]"></i>
                     Gender
                   </label>
                   <select
-                    className="form-control rounded-lg border border-slate-200 py-3 px-[15px] text-sm bg-white transition-all duration-300 appearance-none focus:border-[#321961] outline-none bg-no-repeat"
+                    className="w-full h-[48px] rounded-lg border border-slate-200 px-4 text-sm bg-white transition-all duration-300 appearance-none focus:border-[#321961] focus:ring-1 focus:ring-[#321961]/20 outline-none bg-no-repeat"
                     name="gender"
                     value={profiles.gender || ""}
                     onChange={handleProfiles}
@@ -519,9 +522,9 @@ const Profile = ({ HomeNavigate, BackButton }) => {
                 </div>
               </div>
 
-              <div className="col-lg-4 col-md-6 mb-4">
-                <div className="form-wrap">
-                  <label className="text-sm font-semibold text-slate-600 mb-2 flex items-center gap-1.5">
+              <div className="w-full">
+                <div className="flex flex-col">
+                  <label className="text-sm font-semibold text-slate-600 mb-1.5 flex items-center gap-1.5">
                     <i className="fa-solid fa-calendar-days text-[12px] text-[#321961]"></i>
                     Date of Birth
                   </label>
@@ -530,7 +533,9 @@ const Profile = ({ HomeNavigate, BackButton }) => {
                     onChange={handleDateOfBirthChange}
                     format="MM/dd/yyyy"
                     placeholder="Select Date of Birth"
-                    style={{ width: '100%' }}
+                    style={{ width: '100%', height: '48px' }}
+                    className="w-full h-[48px]"
+                    size="lg"
                     disabledDate={(date) => date && date > new Date()}
                     cleanable
                   />
@@ -549,14 +554,14 @@ const Profile = ({ HomeNavigate, BackButton }) => {
                 </div>
               </div>
 
-              <div className="col-lg-12 mb-4">
-                <div className="form-wrap">
-                  <label className="text-sm font-semibold text-slate-600 mb-2 flex items-center gap-1.5">
+              <div className="w-full md:col-span-2 lg:col-span-3">
+                <div className="flex flex-col">
+                  <label className="text-sm font-semibold text-slate-600 mb-1.5 flex items-center gap-1.5">
                     <i className="fa-solid fa-file-medical text-[12px] text-[#321961]"></i>
                     Medical Conditions / Diseases
                   </label>
                   <textarea
-                    className="form-control rounded-lg border border-slate-200 py-3 px-[15px] text-sm resize-y min-h-[100px] transition-all duration-300 focus:border-[#321961] outline-none"
+                    className="w-full rounded-lg border border-slate-200 p-3.5 text-sm resize-y min-h-[100px] transition-all duration-300 focus:border-[#321961] focus:ring-1 focus:ring-[#321961]/20 outline-none bg-white"
                     name="medical_conditions"
                     value={profiles.medical_conditions || ""}
                     onChange={handleProfiles}
@@ -573,18 +578,18 @@ const Profile = ({ HomeNavigate, BackButton }) => {
           </div>
 
           {/* Submit Button Section */}
-          <div className="flex justify-end gap-[15px] text-end">
+          <div className="flex justify-end gap-[15px] text-end mt-4">
             <button
               type="button"
               onClick={handleCancelEdit}
-              className="bg-white hover:bg-slate-100 text-slate-600 border border-slate-200 hover:border-slate-300 py-2 px-[30px] !rounded-md !text-base !font-semibold inline-flex items-center gap-2 cursor-pointer transition-all duration-300"
+              className="bg-slate-100 hover:bg-slate-200 text-slate-700 py-2.5 px-6 !rounded-lg !text-sm !font-semibold inline-flex items-center gap-2 cursor-pointer transition-all duration-300"
             >
-              <i className="fas fa-times"></i>
+              <i className="fas fa-times text-xs"></i>
               Cancel
             </button>
             <button
               type="submit"
-              className="bg-[#321961] hover:bg-[#6b1fe6] text-white border-none py-2.5 px-6 !rounded-lg !text-sm !font-semibold inline-flex items-center gap-2 cursor-pointer transition-all duration-300 shadow-[0_4px_15px_rgba(125,46,255,0.3)] hover:shadow-[0_6px_20px_rgba(125,46,255,0.4)] hover:-translate-y-0.5"
+              className="bg-[#321961] hover:bg-[#6b1fe6] text-white border-none py-2.5 px-6 !rounded-lg !text-sm !font-semibold inline-flex items-center gap-2 cursor-pointer transition-all duration-300"
             >
               <i className="fas fa-check-circle"></i>
               Update Profile

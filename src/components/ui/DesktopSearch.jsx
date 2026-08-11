@@ -509,7 +509,7 @@ const DesktopSearch = ({ showSearch, setShowSearchOverlay, myservice }) => {
         if (latestSearchRef.current !== searchTerm) {
           return;
         }
-        
+
         const suggestions =
           result.list.length > 0 ? result.list : [{ noResult: true }];
 
@@ -932,6 +932,40 @@ const DesktopSearch = ({ showSearch, setShowSearchOverlay, myservice }) => {
             />
           </div>
         </div>
+
+        <button
+          type="button"
+          title="Upload prescription"
+          onClick={() => navigate("/prescription-upload", { state: { mode: "search", pincode: selectedPincode, lat: latitude, lng: longitude } })}
+          style={{
+            background: "transparent",
+            color: "rgb(107, 114, 128)",
+            border: "1.5px solid #e5e7eb",
+            borderRadius: "6px",
+            padding: "2px",
+            width: "25px",
+            height: "25px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            cursor: "pointer",
+            transition: "0.2s cubic-bezier(0.4, 0, 0.2, 1)",
+            flexShrink: 0,
+            marginRight: "0px",
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.color = "#7c3aed";
+            e.currentTarget.style.borderColor = "#7c3aed";
+            e.currentTarget.style.backgroundColor = "#f5f3ff";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.color = "rgb(107, 114, 128)";
+            e.currentTarget.style.borderColor = "#e5e7eb";
+            e.currentTarget.style.backgroundColor = "transparent";
+          }}
+        >
+          <i className="fas fa-file-prescription" style={{ fontSize: "13px" }}></i>
+        </button>
 
         <button
           type="button"

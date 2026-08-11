@@ -947,7 +947,7 @@ const LocationOffcanvas = ({
                     <div
                       key={address._id}
                       onClick={() => hasLocation && handleAddressSelect(address._id, true)}
-                      className={`relative rounded-xl mb-3 overflow-hidden transition-all duration-250 ${hasLocation ? "cursor-pointer" : "cursor-default"
+                      className={`relative rounded-md mb-3 overflow-hidden transition-all duration-250 ${hasLocation ? "cursor-pointer" : "cursor-default"
                         } border-[1.5px] bg-white ${isSelected
                           ? "border-primary shadow-[0_4px_20px_rgba(128,89,202,0.12)]"
                           : "border-slate-200 shadow-[0_2px_10px_rgba(15,23,42,0.04)] hover:border-[#c4a8f0]"
@@ -993,14 +993,14 @@ const LocationOffcanvas = ({
                           <button
                             onClick={(e) => { e.stopPropagation(); handleEditAddress(address); }}
                             title="Edit"
-                            className="w-[26px] h-[26px] rounded-md border border-slate-200 bg-white text-slate-500 flex items-center justify-center cursor-pointer transition-all duration-150 hover:bg-[#f5f3ff] hover:text-primary hover:border-[#c4a8f0]"
+                            className="w-[26px] h-[26px] !rounded-full border border-purple-100 !bg-primary text-white flex items-center justify-center cursor-pointer transition-all duration-150 hover:bg-primary hover:text-white hover:border-[#321961]"
                           >
                             <i className="fas fa-pen text-[10px]" />
                           </button>
                           <button
                             onClick={(e) => { e.stopPropagation(); handleDeleteAddress(address._id); }}
                             title="Delete"
-                            className="w-[26px] h-[26px] rounded-md border border-slate-200 bg-white text-slate-500 flex items-center justify-center cursor-pointer transition-all duration-150 hover:bg-red-50 hover:text-red-500 hover:border-red-300"
+                            className="w-[26px] h-[26px] !rounded-full border border-rose-100 bg-rose-600 text-rose-600 flex items-center justify-center cursor-pointer transition-all duration-150 hover:bg-rose-600 hover:text-white hover:border-rose-600"
                           >
                             <i className="fas fa-trash text-[10px]" />
                           </button>
@@ -1045,13 +1045,15 @@ const LocationOffcanvas = ({
                   </div>
                 )}
 
-                <button
-                  onClick={() => setShowLocationModal(true)}
-                  className="w-full py-2.5 bg-primary text-white text-[13px] font-semibold border-none !rounded-xl cursor-pointer flex items-center justify-center gap-1.5 shadow-[0_4px_14px_rgba(128,89,202,0.35)] mt-1 transition-all duration-200"
-                >
-                  <i className="fas fa-plus text-[11px]" />
-                  Add New Address
-                </button>
+                <div className="flex justify-center mt-3 w-full">
+                  <button
+                    onClick={() => setShowLocationModal(true)}
+                    className="w-full max-w-[240px] py-2.5 bg-primary text-white text-[13px] font-semibold border-none !rounded-xl cursor-pointer flex items-center justify-center gap-1.5 shadow-[0_4px_14px_rgba(128,89,202,0.35)] transition-all duration-200"
+                  >
+                    <i className="fas fa-plus text-[11px]" />
+                    Add New Address
+                  </button>
+                </div>
               </div>
             )}
           </div>

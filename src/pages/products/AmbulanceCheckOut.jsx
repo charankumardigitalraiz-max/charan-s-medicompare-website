@@ -436,7 +436,7 @@ const AmbulanceCheckOut = () => {
       >
         {/* LEFT COLUMN: Main Card */}
         <div
-        className="bg-white rounded-[12px] shadow-[0_2px_8px_rgba(0,0,0,0.07)]"
+          className="bg-white rounded-[12px] shadow-[0_2px_8px_rgba(0,0,0,0.07)]"
           style={{
             width: isMobile || isTablet ? "100%" : "67%",
             borderRadius: "12px",
@@ -450,7 +450,7 @@ const AmbulanceCheckOut = () => {
           {/* Back to Home Button */}
           <div style={{ paddingTop: "0px", marginBottom: "15px" }}>
             <Link
-              to="/ambulance-service"
+              to="/ambulance"
               style={{
                 display: "inline-flex",
                 alignItems: "center",
@@ -830,14 +830,14 @@ const AmbulanceCheckOut = () => {
             <button
               onClick={handleConfirmBooking}
               disabled={isSubmitting}
-              className="w-full py-3 px-5 text-white text-[14px] font-bold rounded-full border-none cursor-pointer transition-all"
+              className="w-full py-1 px-5 text-white !text-[14px] !font-semibold rounded-full border-none cursor-pointer transition-all"
               style={{
                 background: isSubmitting ? "#6c757d" : "#321961",
                 borderColor: "#321961",
                 color: "#ffffff",
                 fontWeight: "700",
                 fontSize: "14px",
-                padding: "12px",
+                padding: "8px",
                 borderRadius: "30px"
               }}
             >
