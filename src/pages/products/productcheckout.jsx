@@ -1260,6 +1260,11 @@ export const Cart = () => {
                     // const maxQuantity = getItemMaxQuantity(item);
                     const billingSummary = item?.billingSummary;
                     const prescriptionImage = item?.prescriptionImage;
+                    const rxRequired = item?.prescriptionImage === "payment_required";
+                    //  ||
+                    //   item?.tabletdetails?.prescriptionRequired === true ||
+                    //   item?.productDetails?.tabletDetails?.prescriptionRequired === true ||
+                    //   item?.productDetails?.prescriptionRequired === true;
                     // if (prescriptionImage === "payment_required") {
                     //   setPrescriptionPaymentRequired(true)
                     // }
@@ -1361,27 +1366,31 @@ export const Cart = () => {
                         )}
 
                         {/* Prescription Uploaded Preview */}
-                        {(prescriptionImage !== "true" && prescriptionImage !== "payment_required" && prescriptionImage !== "false") && (
+                        {rxRequired && (
                           <div
                             className="flex items-center gap-2 bg-[#fef2f2] border border-[#fee2e2] rounded-lg px-2.5 py-1.5 mt-2"
                           >
-                            {/* <img
-                              src={getImageUrl(prescriptionImage)}
-                              alt="Prescription"
-                              className="w-8 h-8 rounded object-cover"
-                            /> */}
                             <div className="flex flex-col">
                               <span className="text-[10px] text-[#ef4444] font-semibold">
                                 Prescription Required
                               </span>
-                              <a
-                                href={getImageUrl(prescriptionImage)}
-                                target="_blank"
-                                rel="noreferrer"
-                                className="text-[9px] text-[#dc2626] underline"
-                              >
-                                View Prescription
-                              </a>
+                              {/* {prescriptionImage && prescriptionImage !== "payment_required" && prescriptionImage !== "true" && prescriptionImage !== "false" && (
+                                <div className="flex items-center gap-2 mt-1">
+                                  <img
+                                    src={getImageUrl(prescriptionImage)}
+                                    alt="Prescription"
+                                    className="w-8 h-8 rounded object-cover"
+                                  />
+                                  <a
+                                    href={getImageUrl(prescriptionImage)}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    className="text-[9px] text-[#dc2626] underline"
+                                  >
+                                    View Prescription
+                                  </a>
+                                </div>
+                              )} */}
                             </div>
                           </div>
                         )}
@@ -1447,6 +1456,7 @@ export const Cart = () => {
                     const itemPrice = parseFloat(item.price) || 0;
                     const prescriptionImage = item?.prescriptionImage
                     const billingSummary = item?.billingSummary;
+                    const rxRequired = item?.prescriptionImage === "payment_required" || false;
 
 
                     return (
@@ -1521,28 +1531,32 @@ export const Cart = () => {
                             </div>
 
                             {/* Prescription Uploaded Preview (Desktop) */}
-                            {(prescriptionImage !== "true" && prescriptionImage !== "payment_required" && prescriptionImage !== "false") && (
+                            {rxRequired && (
                               <div
-                                className="inline-flex items-center gap-2 bg-[#fef2f2] border border-[#fee2e2] rounded-md px-2 py-1 mb-1.5"
+                                className="inline-flex flex-col gap-1 bg-[#fef2f2] border border-[#fee2e2] rounded-md px-2 py-1 mb-1.5"
                               >
-                                {/* <img
-                                  src={getImageUrl(prescriptionImage)}
-                                  alt="Prescription"
-                                  className="w-6 h-6 rounded-[3px] object-cover"
-                                /> */}
                                 <div className="flex items-center gap-1.5">
                                   <span className="text-[9.5px] text-[#ef4444] font-semibold">
                                     Prescription Required
                                   </span>
-                                  {/* <a
-                                    href={getImageUrl(prescriptionImage)}
-                                    target="_blank"
-                                    rel="noreferrer"
-                                    className="text-[9.5px] text-[#15803d] underline"
-                                  >
-                                    View
-                                  </a> */}
                                 </div>
+                                {/* {prescriptionImage && prescriptionImage !== "payment_required" && prescriptionImage !== "true" && prescriptionImage !== "false" && (
+                                  <div className="flex items-center gap-1.5">
+                                    <img
+                                      src={getImageUrl(prescriptionImage)}
+                                      alt="Prescription"
+                                      className="w-6 h-6 rounded-[3px] object-cover"
+                                    />
+                                    <a
+                                      href={getImageUrl(prescriptionImage)}
+                                      target="_blank"
+                                      rel="noreferrer"
+                                      className="text-[9.5px] text-[#dc2626] underline"
+                                    >
+                                      View Prescription
+                                    </a>
+                                  </div>
+                                )} */}
                               </div>
                             )}
 

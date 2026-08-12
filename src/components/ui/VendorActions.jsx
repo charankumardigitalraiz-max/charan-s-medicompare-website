@@ -107,7 +107,7 @@ const VendorActions = ({
           }}
           variant={med?.variant?.find((v) => v._id === effectiveVariantId) || med?.variants?.find((v) => v._id === effectiveVariantId)}
           options={{
-            bookingType: "cart",
+            bookingType: "rent",
             type: "normal",
           }}
           className="pd-cart-controls"
@@ -392,7 +392,7 @@ const VendorActions = ({
             tabletdetails: med,
             vendordetails: vendor?.bussinessdetails || vendor,
             variants: med?.variant || med?.variants,
-            vendorId: vendor?._id || vendor?.vendorId,
+            vendorId: vendor?.vendorId || vendor?._id || vendor?.vendorId,
             packageId: packageId,
             price:
               calculatedDiscountPrice && calculatedDiscountPrice > 0

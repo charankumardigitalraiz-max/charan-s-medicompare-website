@@ -755,7 +755,7 @@ const TrendingProducts = ({
                               }
                               med={item.tabletdetails || item}
                               vendor={item.vendordetails || item.vendors || {}}
-                              price={parseFloat(item.perDayRent) || 0}
+                              price={parseFloat(item.price) || 0}
                               rentPerDay={item?.perDayRent}
                               calculatedDiscountPrice={parseFloat(item.discountprice || item.discountPrice) || null}
                               service={item?.tabletdetails?.subcatdetails?.catdetails?.fixedType}

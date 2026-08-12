@@ -168,18 +168,23 @@ export const CartProvider = ({ children }) => {
         cartType = cartType.toLowerCase().trim();
         if (cartType === "medicines") {
           cartType = "medicine";
-        }
-      }
-      if (!cartType) {
-        const path = window.location.pathname.toLowerCase();
-        if (path.includes("labtest") || path.includes("lab-test")) {
+        } else if (cartType === "labtests") {
           cartType = "labtests";
-        } else if (path.includes("medicalequipment") || path.includes("medical-equipment")) {
+        }
+        else if (cartType === "medicalequipment" || cartType === medical - equipment) {
           cartType = "medicalequipment";
-        } else if (path.includes("medicines") || path.includes("medicine") || path.includes("pharmacy")) {
-          cartType = "medicine";
         }
       }
+      // if (!cartType) {
+      //   const path = window.location.pathname.toLowerCase();
+      //   if (path.includes("labtest") || path.includes("lab-test")) {
+      //     cartType = "labtests";
+      //   } else if (path.includes("medicalequipment") || path.includes("medical-equipment")) {
+      //     cartType = "medicalequipment";
+      //   } else if (path.includes("medicines") || path.includes("medicine") || path.includes("pharmacy")) {
+      //     cartType = "medicine";
+      //   }
+      // }
       // if (!cartType) {
       //   const localFixedType = localStorage.getItem("fixedType");
       //   if (localFixedType) {

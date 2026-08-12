@@ -854,6 +854,71 @@ const CartQuantityControls = ({
         </div>
       ))}
 
+
+
+
+      {bookingType === "rent" && (item?.discountprice ? item?.discountprice > 0 : item?.price > 0) && (
+
+        (quantity > 0 ?
+          (
+            <div
+              className="w-full flex flex-col items-center gap-1"
+            >
+              <div
+                className={`cart-qty-controls ${className}`}
+                style={individualStyleForCart}
+              >
+                <button
+                  className="cart-qty-btn cart-qty-decrease"
+                  onClick={handleDecrement}
+                  disabled={isLoading || quantity <= 0}
+                >
+                  <i className="fas fa-minus"></i>
+                </button>
+                <span className="cart-qty-value">{quantity}</span>
+                <button
+                  className="cart-qty-btn cart-qty-increase"
+                  onClick={handleIncrement}
+                // disabled={isLoading || atMaxStock}
+                >
+                  <i className="fas fa-plus"></i>
+                </button>
+              </div>
+              {/* )} */}
+              {/* {atMaxStock && (
+              <small
+                style={{
+                  display: "block",
+                  textAlign: "center",
+                  color: "#b45309",
+                  fontSize: "11px",
+                  fontWeight: 600,
+                  lineHeight: 1.3,
+                  maxWidth: "140px",
+                }}
+              >
+                Only {effectiveMaxStock} in stock
+              </small>
+            )} */}
+
+            </div>
+          ) : (
+            <div style={contailerStyles}>
+              <button
+                className="w-full flex-1 flex items-center !bg-primary justify-center gap-1.5 !py-1 !px-2.5 !rounded-sm !text-[11px] !font-semibold !text-white transition-all cursor-pointer border-none"
+                style={{
+                  ...actionButtonStyle,
+                  opacity: (isLoading || !(item?.discountprice ? item?.discountprice > 0 : (item?.price > 0 || price > 0))) ? 0.6 : 1,
+                  cursor: (isLoading || !(item?.discountprice ? item?.discountprice > 0 : (item?.price > 0 || price > 0))) ? "not-allowed" : "pointer"
+                }}
+                onClick={handleAdd}
+                disabled={isLoading || !(item?.discountprice ? item?.discountprice > 0 : (item?.price > 0 || price > 0))}
+              >
+                <i className="fas fa-shopping-cart me-2"></i>Add
+              </button>
+            </div>
+          )))}
+
       {typeof document !== "undefined" &&
         createPortal(
           <>
