@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Home2Header from "../../components/layout/Header-k";
 import CategoryProvider from "../../components/ui/CategoryProvider.jsx";
 import { Link, useNavigate } from "react-router-dom";
-import AmbulanceBookingModal from "../services/AmbulanceBookingModal";
+import AmbulanceBookingModal from "../../components/modals/AmbulanceBookingModal";
 import { axiosUserInstance } from "../../Apiservice";
 import toast from "react-hot-toast";
 import { getImageUrl } from "../../utils/imageUrl.js";

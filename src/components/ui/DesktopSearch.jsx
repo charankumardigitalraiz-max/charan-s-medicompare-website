@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { axiosCommonInstance } from "../../Apiservice";
+import VendorOffersModal from "./VendorOffersModal.jsx";
 import { getImageUrl } from "../../utils/index";
 import {
   getMedicinePincodeFromStorage,
@@ -345,6 +346,7 @@ const DesktopSearch = ({ showSearch, setShowSearchOverlay, myservice }) => {
   const [showMicPermission, setShowMicPermission] = useState(false);
   const [skipMicPermission, setSkipMicPermission] = useState(false);
   const [isNavigatingFromRecent, setIsNavigatingFromRecent] = useState(false);
+  const [vendorModel, setVendorModel] = useState(null);
   // const [searchCache, setSearchCache] = useState(new Map());
   const [hasFetchedRecent, setHasFetchedRecent] = useState(false);
   const { selectedPincode, latitude, longitude } = useLocationContext();
@@ -1099,7 +1101,7 @@ const DesktopSearch = ({ showSearch, setShowSearchOverlay, myservice }) => {
                                 </span>
                               )}
                             </div>
-                            <span style={{
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><span style={{
                               fontSize: '10px',
                               color: '#666',
                               backgroundColor: '#f0f0f0',
@@ -1112,7 +1114,7 @@ const DesktopSearch = ({ showSearch, setShowSearchOverlay, myservice }) => {
                                 : item?.tablet?.category?.fixedType === "medicine"
                                   ? capitalize(item?.tablet?.medicineType || "product")
                                   : capitalize(item?.tablet?.category?.name || "product")}
-                            </span>
+                            </span> <button type="button" onClick={(e) => { e.stopPropagation(); e.preventDefault(); setVendorModel(item); }} style={{ background: '#f8fafc', border: '1px solid #e2e8f0', color: 'var(--color-primary)', cursor: 'pointer', padding: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%', width: '24px', height: '24px', transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)', boxShadow: '0 1px 2px rgba(0,0,0,0.05)' }} onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = 'var(--color-primary)'; e.currentTarget.style.color = '#ffffff'; e.currentTarget.style.borderColor = 'var(--color-primary)'; e.currentTarget.style.transform = 'scale(1.08)'; }} onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#f8fafc'; e.currentTarget.style.color = 'var(--color-primary)'; e.currentTarget.style.borderColor = '#e2e8f0'; e.currentTarget.style.transform = 'none'; }} title="Insert into search"><i className="fa fa-plus" style={{ fontSize: '11px' }} /></button></div>
                           </div>
                         </div>
                       ))}
@@ -1497,8 +1499,11 @@ const DesktopSearch = ({ showSearch, setShowSearchOverlay, myservice }) => {
           </div>
         </div>
       )}
+      <VendorOffersModal show={!!vendorModel} onClose={() => setVendorModel(null)} product={vendorModel} />
     </div>
   );
 };
+
+
 
 export default DesktopSearch;

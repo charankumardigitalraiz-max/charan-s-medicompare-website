@@ -26,6 +26,7 @@ import DynamicCategorySections from "../../../components/home/DynamicCategorySec
 import PageLoader from "../../../components/ui/PageLoader.jsx";
 import { getImageUrl } from "../../../utils";
 import PrescriptionUploadModal from "../../../components/modals/PrescriptionUploadModal";
+import VendorOffersModal from "../../../components/ui/VendorOffersModal.jsx";
 import {
   collectHomeImagePaths,
   prefetchImageUrls,
@@ -78,6 +79,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
   const heroTypeRef = useRef(null);
   const searchContainerRef = useRef(null);
   const [showPrescriptionModal, setShowPrescriptionModal] = useState(false);
+  const [vendorModel, setVendorModel] = useState(null);
   const homeLiteMode = useMemo(() => shouldUseHomeLiteMode(), []);
 
   useLayoutEffect(() => {
@@ -860,7 +862,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
         <PageLoader />
       ) : (
         <div
-          className={`main-wrapper${homeLiteMode ? " home-lite-page" : ""} overflow-x-hidden w-full font-['Poppins',sans-serif] ${homeLiteMode ? "overflow-y-visible h-auto" : "overflow-y-hidden h-full"
+          className={`main-wrapper ${homeLiteMode ? " home-lite-page" : ""} overflow-x-hidden w-full font-['Poppins',sans-serif] ${homeLiteMode ? "overflow-y-visible h-auto" : "overflow-y-hidden h-full"
             } ${isMobile ? "bg-[#f9f9f9]" : ""}`}
         >
           <Home2Header />
@@ -902,7 +904,9 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                     Compare the best healthcare services near you only on
                     <span className="font-semibold text-[#321961]"> MediCompares</span>
                   </p>
+
                 </div>
+
                 <section
                   className="p-[12px] md:py-0 md:px-[10px] relative mt-[10px] mobileview z-[9]"
                 >
@@ -1188,7 +1192,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                                         {!isLoading &&
                                           query.trim() &&
                                           filteredSuggestions.map((item, index) => (
-                                            <button
+                                            <div
                                               key={item._id || item.tablet?._id || index}
                                               onClick={() => handleSelect(item)}
                                               className={`w-full p-[10px] border-none bg-transparent text-left cursor-pointer text-[15px] text-[#111827] flex z-[9999999] items-center justify-between gap-[14px] transition-all duration-200 ease relative hover:bg-[#f9fafb] ${index < filteredSuggestions.length - 1
@@ -1219,7 +1223,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                                                   )}
                                                 </div>
                                               </div>
-                                              <span
+                                              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><span
                                                 className="text-[10px] text-[#666] bg-[#f0f0f0] py-[2px] px-[8px] rounded-[12px] whitespace-nowrap ml-[8px] capitalize"
                                               >
                                                 {item?.type === "package"
@@ -1227,8 +1231,8 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                                                   : item?.tablet?.category?.fixedType === "medicine"
                                                     ? (item?.tablet?.medicineType || "product")
                                                     : (item?.tablet?.category?.name || "product")}
-                                              </span>
-                                            </button>
+                                              </span> <button type="button" onClick={(e) => { e.stopPropagation(); e.preventDefault(); setVendorModel(item); }} style={{ background: '#f8fafc', border: '1px solid #e2e8f0', color: 'var(--color-primary)', cursor: 'pointer', padding: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%', width: '24px', height: '24px', transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)', boxShadow: '0 1px 2px rgba(0,0,0,0.05)' }} onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = 'var(--color-primary)'; e.currentTarget.style.color = '#ffffff'; e.currentTarget.style.borderColor = 'var(--color-primary)'; e.currentTarget.style.transform = 'scale(1.08)'; }} onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#f8fafc'; e.currentTarget.style.color = 'var(--color-primary)'; e.currentTarget.style.borderColor = '#e2e8f0'; e.currentTarget.style.transform = 'none'; }} title="Insert into search"><i className="fa fa-plus" style={{ fontSize: '11px' }} /></button></div>
+                                            </div>
                                           ))}
                                         {!isLoading && query.trim() && hasMoreSuggestions && filteredSuggestions.length > 0 && (
                                           <button
@@ -2801,11 +2805,14 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
             lat={latitude}
             lng={longitude}
           />
+          <VendorOffersModal show={!!vendorModel} onClose={() => setVendorModel(null)} product={vendorModel} />
           <Home2Footer />
         </div>
       )}
     </>
   );
 };
+
+
 
 export default Home2;

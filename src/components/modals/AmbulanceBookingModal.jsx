@@ -164,7 +164,7 @@ const AmbulanceBookingModal = ({
     };
   }, [show]);
 
-   const getAddressFromCoordinates = async (lat, lng) => {
+  const getAddressFromCoordinates = async (lat, lng) => {
     try {
       const res = await fetch(
         `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${GOOGLE_MAPS_API_KEY_LOCAL}`,

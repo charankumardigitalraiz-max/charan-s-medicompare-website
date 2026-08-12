@@ -14,6 +14,7 @@ import toast from "react-hot-toast";
 import { axiosCommonInstance, imgUrl } from "../../Apiservice.jsx";
 import { getImageUrl } from "../../utils/index";
 import { useLocation as useLocationContext } from "../../context/LocationContext";
+import VendorOffersModal from "../../components/ui/VendorOffersModal.jsx";
 import LabTest from "../services/labtests.jsx";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -179,6 +180,7 @@ const ServiceDetails = () => {
   const abortControllerRef = useRef(null);
   const latestSearchRef = useRef("");
   const [searchCache, setSearchCache] = useState(new Map());
+  const [vendorModel, setVendorModel] = useState(null);
   const requestCacheRef = useRef(new Map());
   const serviceFetchIdRef = useRef(0);
   const [serviceDetails, setServicesDetails] = useState(null);
@@ -1372,7 +1374,7 @@ const ServiceDetails = () => {
                                 {!isLoading &&
                                   query.trim() &&
                                   filteredSuggestions.map((item, index) => (
-                                    <button
+                                    <div
                                       key={getSearchItemId(item) || `search-${index}`}
                                       onClick={() => handleSelect(item)}
                                       className={`w-full p-[10px] border-none bg-transparent text-left cursor-pointer text-[15px] text-[#111827] flex z-[9999999] items-center gap-[14px] transition-all duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] relative ${index < filteredSuggestions.length - 1 ? "border-b border-solid border-[#f3f4f6]" : "border-b-0"}`}
@@ -1390,7 +1392,7 @@ const ServiceDetails = () => {
                                           query,
                                         )}
                                       </span>
-                                      <span
+                                      <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><span
                                         className="text-[10px] text-[#666] bg-[#f0f0f0] py-[2px] px-[8px] rounded-[12px] whitespace-nowrap ml-[8px] capitalize"
                                       >
                                         {item?.type === "package"
@@ -1398,8 +1400,8 @@ const ServiceDetails = () => {
                                           : item?.tablet?.category?.fixedType === "medicine"
                                             ? (item?.tablet?.medicineType || "product")
                                             : (item?.tablet?.category?.name || "product")}
-                                      </span>
-                                    </button>
+                                      </span> <button type="button" onClick={(e) => { e.stopPropagation(); e.preventDefault(); setVendorModel(item); }} style={{ background: '#f8fafc', border: '1px solid #e2e8f0', color: 'var(--color-primary)', cursor: 'pointer', padding: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%', width: '24px', height: '24px', transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)', boxShadow: '0 1px 2px rgba(0,0,0,0.05)' }} onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = 'var(--color-primary)'; e.currentTarget.style.color = '#ffffff'; e.currentTarget.style.borderColor = 'var(--color-primary)'; e.currentTarget.style.transform = 'scale(1.08)'; }} onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#f8fafc'; e.currentTarget.style.color = 'var(--color-primary)'; e.currentTarget.style.borderColor = '#e2e8f0'; e.currentTarget.style.transform = 'none'; }} title="Insert into search"><i className="fa fa-plus" style={{ fontSize: '11px' }} /></button></div>
+                                    </div>
                                   ))}
                                 {!isLoading && query.trim() && hasMoreSuggestions && filteredSuggestions.length > 0 && (
                                   <button
@@ -1923,10 +1925,13 @@ const ServiceDetails = () => {
         </section>
       )} */}
 
+      <VendorOffersModal show={!!vendorModel} onClose={() => setVendorModel(null)} product={vendorModel} />
       <Footer />
     </div>
   );
 };
+
+
 
 export default ServiceDetails;
 

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import AmbulanceBookingModal from "./AmbulanceBookingModal.jsx";
+import AmbulanceBookingModal from "../../components/modals/AmbulanceBookingModal.jsx";
 import { getImageUrl } from "../../utils/index";
 import { axiosCommonInstance } from "../../Apiservice";
 import toast from "react-hot-toast";

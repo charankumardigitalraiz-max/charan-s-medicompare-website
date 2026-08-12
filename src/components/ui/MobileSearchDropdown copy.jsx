@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { axiosCommonInstance, imgUrl } from "../../Apiservice";
-import VendorOffersModal from "./VendorOffersModal.jsx";
+import BaseModal from "./BaseModal.jsx";
 import { getImageUrl } from "../../utils/index";
 import {
   getMedicinePincodeFromStorage,
@@ -28,8 +28,8 @@ const MobileSearchDropdown = ({
   const [showMicPermission, setShowMicPermission] = useState(false);
   const [skipMicPermission, setSkipMicPermission] = useState(false);
   const [isMoreLoading, setIsMoreLoading] = useState(false);
-  const [vendorModel, setVendorModel] = useState(null);
   const [suggestionsLimit, setSuggestionsLimit] = useState(10);
+  const [vendorModel, setVendorModel] = useState(false)
   const [hasMoreSuggestions, setHasMoreSuggestions] = useState(true);
   const mobileSearchDebounceTimerRef = useRef(null);
 
@@ -656,7 +656,6 @@ const MobileSearchDropdown = ({
                     <div
                       key={item._id || index}
                       onClick={(e) => {
-                        
                         if (!item.noResult) {
                           handleMobileProductClick(item);
                         }
@@ -718,22 +717,68 @@ const MobileSearchDropdown = ({
                                 )}
                               </div>
                             </div>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><span style={{
-                              fontSize: '10px',
-                              color: '#666',
-                              backgroundColor: '#f0f0f0',
-                              padding: '2px 8px',
-                              borderRadius: '12px',
-                              whiteSpace: 'nowrap',
-                              marginLeft: '8px',
-                              textTransform: "capitalize"
-                            }}>
-                              {item?.type === "package"
-                                ? item?.type
-                                : item?.tablet?.category?.fixedType === "medicine"
-                                  ? (item?.tablet?.medicineType || "product")
-                                  : (item?.tablet?.category?.name || "product")}
-                            </span> <button type="button" onClick={(e) => { e.stopPropagation(); e.preventDefault(); setVendorModel(item); }} style={{ background: '#f8fafc', border: '1px solid #e2e8f0', color: 'var(--color-primary)', cursor: 'pointer', padding: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%', width: '24px', height: '24px', transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)', boxShadow: '0 1px 2px rgba(0,0,0,0.05)' }} onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = 'var(--color-primary)'; e.currentTarget.style.color = '#ffffff'; e.currentTarget.style.borderColor = 'var(--color-primary)'; e.currentTarget.style.transform = 'scale(1.08)'; }} onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#f8fafc'; e.currentTarget.style.color = 'var(--color-primary)'; e.currentTarget.style.borderColor = '#e2e8f0'; e.currentTarget.style.transform = 'none'; }} title="Insert into search"><i className="fa fa-plus" style={{ fontSize: '11px' }} /></button></div>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                              <span style={{
+                                fontSize: '10px',
+                                color: '#666',
+                                backgroundColor: '#f0f0f0',
+                                padding: '2px 8px',
+                                borderRadius: '12px',
+                                whiteSpace: 'nowrap',
+                                textTransform: "capitalize"
+                              }}>
+                                {item?.type === "package"
+                                  ? item?.type
+                                  : item?.tablet?.category?.fixedType === "medicine"
+                                    ? (item?.tablet?.medicineType || "product")
+                                    : (item?.tablet?.category?.name || "product")}
+                              </span>
+                              <button
+                                type="button"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  // const queryText = item.query || item?.tablet?.name || "";
+                                  // if (queryText) {
+                                  //   setDesktopSearchQuery(queryText);
+                                  //   if (searchInputRef.current) {
+                                  //     searchInputRef.current.focus();
+                                  //   }
+                                  // }
+                                  setVendorModel(true)
+
+                                }}
+                                style={{
+                                  background: "#f8fafc",
+                                  border: "1px solid #e2e8f0",
+                                  color: "var(--color-primary)",
+                                  cursor: "pointer",
+                                  padding: "4px",
+                                  display: "flex",
+                                  alignItems: "center",
+                                  justifyContent: "center",
+                                  borderRadius: "50%",
+                                  width: "24px",
+                                  height: "24px",
+                                  transition: "all 0.2s cubic-bezier(0.4, 0, 0.2, 1)",
+                                  boxShadow: "0 1px 2px rgba(0,0,0,0.05)",
+                                }}
+                                onMouseEnter={(e) => {
+                                  e.currentTarget.style.backgroundColor = "var(--color-primary)";
+                                  e.currentTarget.style.color = "#ffffff";
+                                  e.currentTarget.style.borderColor = "var(--color-primary)";
+                                  e.currentTarget.style.transform = "scale(1.08)";
+                                }}
+                                onMouseLeave={(e) => {
+                                  e.currentTarget.style.backgroundColor = "#f8fafc";
+                                  e.currentTarget.style.color = "var(--color-primary)";
+                                  e.currentTarget.style.borderColor = "#e2e8f0";
+                                  e.currentTarget.style.transform = "none";
+                                }}
+                                title="Insert into search"
+                              >
+                                <i className="fa fa-plus" style={{ fontSize: "11px" }} />
+                              </button>
+                            </div>
                           </div>
                         </>
                       ) : (
@@ -1048,12 +1093,21 @@ const MobileSearchDropdown = ({
         )}
 
       </div>
-      <VendorOffersModal show={!!vendorModel} onClose={() => setVendorModel(null)} product={vendorModel} />
+      {vendorModel && (
+        <BaseModal
+          title={"Upload Prescription"}
+          isOpen={vendorModel}
+          onClose={() => setVendorModel(false)}
+          showCloseButton={true}
+          size="md"
+        >
+          <p>Upload Prescription</p>
+        </BaseModal>
+      )}
+
     </>
   );
 };
-
-
 
 export default MobileSearchDropdown;
 
