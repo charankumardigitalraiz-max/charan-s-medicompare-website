@@ -970,81 +970,21 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                                       type="button"
                                       title="Upload prescription"
                                       onClick={() => navigate("/prescription-upload", { state: { mode: "search", pincode: selectedPincode, lat: latitude, lng: longitude } })}
-                                      style={{
-                                        background: "transparent",
-                                        color: "rgb(107, 114, 128)",
-                                        // border: "1.5px solid rgb(229, 231, 235)",
-                                        borderRadius: "6px",
-                                        padding: "2px",
-                                        width: "25px",
-                                        height: "25px",
-                                        display: "flex",
-                                        alignItems: "center",
-                                        justifyContent: "center",
-                                        cursor: "pointer",
-                                        transition: "0.2s cubic-bezier(0.4, 0, 0.2, 1)",
-                                        flexShrink: 0,
-                                        marginRight: "0px",
-                                      }}
-                                      onMouseEnter={(e) => {
-                                        e.currentTarget.style.color = "#7c3aed";
-                                        e.currentTarget.style.borderColor = "#7c3aed";
-                                        e.currentTarget.style.backgroundColor = "#f5f3ff";
-                                      }}
-                                      onMouseLeave={(e) => {
-                                        e.currentTarget.style.color = "rgb(107, 114, 128)";
-                                        e.currentTarget.style.borderColor = "rgb(229, 231, 235)";
-                                        e.currentTarget.style.backgroundColor = "transparent";
-                                      }}
+                                      className="flex items-center justify-center w-[30px] h-[30px] !rounded-full !bg-violet-200 !text-violet-600 border !border-solid !border-violet-100/80 cursor-pointer transition-all duration-300 ease-in-out shrink-0 hover:bg-violet-600 hover:text-white hover:border-violet-600 hover:scale-110 active:scale-90 hover:shadow-[0_4px_12px_rgba(124,58,237,0.25)]"
                                     >
-                                      <i className="fas fa-file-prescription" style={{ fontSize: "13px" }}></i>
+                                      <i className="fas fa-file-prescription text-[13px]"></i>
                                     </button>
 
                                     <button
                                       type="button"
                                       title="Voice search"
                                       onClick={startVoiceRecognition}
-                                      className={`rounded-[6px] p-[2px] w-[25px] h-[25px] flex items-center justify-center cursor-pointer transition-all duration-200 ease shrink-0 ${isListening
-                                        ? "bg-[#e0f2fe] text-[#0284c7] border-[1.5px] border-solid border-[#0284c7] shadow-[0_0_6px_rgba(2,132,199,0.6)]"
-                                        : "bg-transparent text-[rgb(107,114,128)] border-[1.5px] border-solid border-[rgb(229,231,235)] shadow-none"
+                                      className={`flex items-center justify-center w-[30px] h-[30px] !rounded-full border border-solid transition-all duration-300 ease-in-out cursor-pointer shrink-0 active:scale-90 ${isListening
+                                        ? "bg-gradient-to-r from-rose-500 to-red-600 text-white border-rose-500 shadow-[0_0_12px_rgba(244,63,94,0.5)] hover:scale-110 hover:shadow-[0_0_16px_rgba(244,63,94,0.7)]"
+                                        : "bg-blue-50 text-blue-600 border-blue-100/80 hover:bg-blue-600 hover:text-white hover:border-blue-600 hover:scale-110 hover:shadow-[0_4px_12px_rgba(37,99,235,0.25)]"
                                         }`}
                                     >
-                                      <svg
-                                        width={14}
-                                        height={14}
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                      >
-                                        <path
-                                          d="M12 1C10.34 1 9 2.34 9 4V12C9 13.66 10.34 15 12 15C13.66 15 15 13.66 15 12V4C15 2.34 13.66 1 12 1Z"
-                                          stroke="currentColor"
-                                          strokeWidth={2}
-                                          strokeLinecap="round"
-                                          strokeLinejoin="round"
-                                        />
-                                        <path
-                                          d="M19 10V12C19 15.87 15.87 19 12 19C8.13 19 5 15.87 5 12V10"
-                                          stroke="currentColor"
-                                          strokeWidth={2}
-                                          strokeLinecap="round"
-                                          strokeLinejoin="round"
-                                        />
-                                        <path
-                                          d="M12 19V23"
-                                          stroke="currentColor"
-                                          strokeWidth={2}
-                                          strokeLinecap="round"
-                                          strokeLinejoin="round"
-                                        />
-                                        <path
-                                          d="M8 23H16"
-                                          stroke="currentColor"
-                                          strokeWidth={2}
-                                          strokeLinecap="round"
-                                          strokeLinejoin="round"
-                                        />
-                                      </svg>
+                                      <i className={`${isListening ? "fas fa-microphone text-white animate-pulse" : "fas fa-microphone"} text-[14px]`}></i>
                                     </button>
                                   </div>
 

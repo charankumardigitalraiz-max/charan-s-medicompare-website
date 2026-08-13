@@ -167,7 +167,7 @@ const ProductCard = React.memo(({ item, onClick }) => {
         <img
           src={
             !imageError
-              ? resolveImage(tablet?.variant?.[0]) || resolveImage(tablet) || "/assets/default.png"
+              ? resolveImage(tablet?.variant?.[0]) || resolveImage(tablet) || "/medicine.jpg"
               : "/assets/default.png"
           }
           alt={tablet?.name}

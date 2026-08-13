@@ -52,6 +52,7 @@ const VendorOffersModal = ({ show, onClose, product }) => {
       onClose={onClose}
       showCloseButton={true}
       size="xl"
+      isBottomSheetOnMobile={true}
     >
       {loading ? (
         <div className="flex flex-col items-center justify-center py-12 gap-2 text-slate-400">
@@ -64,7 +65,7 @@ const VendorOffersModal = ({ show, onClose, product }) => {
           No offers available for this product at your location.
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 py-1">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-3 py-1">
           {vendors.map((vendor, index) => {
             const logo = getImageUrl(vendor?.businessDetails?.business_image || vendor?.bussinessdetails?.logo);
             const shopName = vendor?.businessDetails?.name || "Store";

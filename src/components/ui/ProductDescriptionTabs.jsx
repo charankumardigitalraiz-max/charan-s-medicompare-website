@@ -275,35 +275,50 @@ const ProductDescriptionTabs = ({
 
         <div className={`px-5 pb-5 ${isTabContentOpen ? "" : "bg-black/[0.02]"}`}>
           {/* Navigation Tabs - Emulating the .user-tabs .nav-tabs design */}
-          <div className="bg-white p-1 border border-gray-200 rounded-md flex flex-col md:flex-row mt-4 mb-4 gap-1">
-            {tabs.map((tab) => (
-              <button
-                key={tab.id}
-                disabled={!tab.has}
-                onClick={(e) => {
-                  e.preventDefault();
-                  if (!tab.has) return;
-                  setActiveTab(tab.id);
-                  setShowMoreProductInfo(false);
-                  setShowMoreDirections(false);
-                  setShowMoreSideEffects(false);
-                  setShowMorePrecautions(false);
-                }}
-                className={`flex-1 text-center whitespace-nowrap !text-[13px] !font-bold py-2.5 px-3 !border-b-2 md:border-l-0 md:border-b-2 transition-all duration-200 ${activeTab === tab.id
-                  ? "!border-[#321961] !text-[#321961] bg-purple-50/30"
-                  : tab.has
-                    ? "!border-transparent !text-[#012047] hover:text-[#321961] hover:bg-gray-50/50"
-                    : "!border-transparent !text-gray-300 cursor-not-allowed"
-                  }`}
-              >
-                <div className="flex items-center justify-center gap-1.5">
-                  <span>{tab.label}</span>
-                  {!tab.has && (
-                    <i className="fas fa-lock text-[11px] opacity-60"></i>
-                  )}
-                </div>
-              </button>
-            ))}
+          <div
+            className="flex overflow-x-auto whitespace-nowrap pb-2.5 gap-2 [&::-webkit-scrollbar]:!hidden md:bg-white md:p-1 md:border md:border-solid md:border-gray-200 md:rounded-md md:flex md:flex-row mt-4 mb-4"
+            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+          >
+            {(() => {
+              const tabIcons = {
+                productInfo: "fa-solid fa-circle-info",
+                directionss: "fa-solid fa-hand-holding-medical",
+                sideEffectss: "fa-solid fa-triangle-exclamation",
+                precuations: "fa-solid fa-user-shield",
+              };
+
+              return tabs.map((tab) => (
+                <button
+                  key={tab.id}
+                  disabled={!tab.has}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    if (!tab.has) return;
+                    setActiveTab(tab.id);
+                    setShowMoreProductInfo(false);
+                    setShowMoreDirections(false);
+                    setShowMoreSideEffects(false);
+                    setShowMorePrecautions(false);
+                  }}
+                  className={`flex-1 text-center whitespace-nowrap !text-[12.5px] md:!text-[13px] !font-bold py-2.5 px-4 transition-all duration-200 cursor-pointer
+                    border border-solid md:border-t-transparent md:border-x-transparent md:border-b-2 md:rounded-none
+                    ${activeTab === tab.id
+                      ? "!bg-[#321961] !text-white !border-[#321961] md:!bg-purple-50/30 md:!text-[#321961] md:!border-b-[#321961] !rounded-sm md:!rounded-none"
+                      : tab.has
+                        ? "!bg-white !text-[#012047] !border-slate-200/80 hover:!text-[#321961] hover:!bg-slate-55 md:!bg-transparent md:!border-b-transparent md:hover:!bg-gray-50/50 !rounded-sm md:!rounded-none"
+                        : "!bg-slate-50/30 !text-gray-300 !border-slate-100/50 cursor-not-allowed md:!bg-transparent md:!border-b-transparent !rounded-sm md:!rounded-none"
+                    }`}
+                >
+                  <div className="flex items-center justify-center gap-1.5">
+                    <i className={`${tabIcons[tab.id] || "fa-solid fa-circle-info"} text-[12px] opacity-90`}></i>
+                    <span>{tab.label}</span>
+                    {!tab.has && (
+                      <i className="fas fa-lock text-[11px] opacity-60"></i>
+                    )}
+                  </div>
+                </button>
+              ));
+            })()}
           </div>
 
           {/* Tab Content */}

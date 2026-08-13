@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { axiosCommonInstance, imgUrl } from "../../Apiservice";
 import VendorOffersModal from "./VendorOffersModal.jsx";
 import { getImageUrl } from "../../utils/index";
@@ -35,6 +35,17 @@ const MobileSearchDropdown = ({
 
   const navigate = useNavigate();
   const { selectedPincode, latitude, longitude } = useLocationContext();
+  const recommendedScrollRef = useRef(null);
+
+  const scrollRecommended = (direction) => {
+    if (recommendedScrollRef.current) {
+      const scrollAmount = 220;
+      recommendedScrollRef.current.scrollBy({
+        left: direction === "left" ? -scrollAmount : scrollAmount,
+        behavior: "smooth",
+      });
+    }
+  };
 
   const resolveImage = (item) => {
     const img =
@@ -571,57 +582,29 @@ const MobileSearchDropdown = ({
               </div>
             )}
 
-            <i
-              className="fas fa-file-prescription"
+            <button
+              type="button"
               title="Upload prescription"
               onClick={() => {
                 onClose();
                 navigate("/prescription-upload", { state: { mode: "search", pincode: selectedPincode, lat: latitude, lng: longitude } });
               }}
-              style={{
-                position: "absolute",
-                right: "46px",
-                top: "50%",
-                transform: "translateY(-50%)",
-                cursor: "pointer",
-                color: "#6b7280",
-                transition: "color 0.2s ease",
-                fontSize: "18px",
-                zIndex: 4,
-                flexShrink: 0,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                width: "32px",
-                height: "32px",
-                minWidth: "32px",
-                minHeight: "32px",
-              }}
-            />
+              className="!absolute !mr-1 !right-[46px] !top-1/2 !-translate-y-1/2 !z-[4] !flex !items-center !justify-center !w-[30px] !h-[30px] !rounded-full !bg-violet-50 !text-violet-600 !border !border-solid !border-violet-100/80 !cursor-pointer !transition-all !duration-300 !ease-in-out !shrink-0 hover:!bg-violet-600 hover:!text-white hover:!border-violet-600 hover:!scale-110 active:!scale-90 hover:!shadow-[0_4px_12px_rgba(124,58,237,0.25)]"
+            >
+              <i className="fas fa-file-prescription text-[13px]"></i>
+            </button>
 
-            <i
-              className="fa fa-microphone"
+            <button
+              type="button"
+              title="Voice search"
               onClick={startMobileVoiceRecognition}
-              style={{
-                position: "absolute",
-                right: "14px",
-                top: "50%",
-                transform: "translateY(-50%)",
-                cursor: "pointer",
-                color: mobileSearchIsListening ? "#321961" : "#6b7280",
-                transition: "color 0.2s ease",
-                fontSize: "18px",
-                zIndex: 4,
-                flexShrink: 0,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                width: "32px",
-                height: "32px",
-                minWidth: "32px",
-                minHeight: "32px",
-              }}
-            />
+              className={`!absolute !right-[14px]  !top-1/2 !-translate-y-1/2 !z-[4] !flex !items-center !justify-center !w-[30px] !h-[30px] !rounded-full !border !border-solid !transition-all !duration-300 !ease-in-out !cursor-pointer active:!scale-90 ${mobileSearchIsListening
+                ? "!bg-gradient-to-r !from-rose-500 !to-red-600 !text-white !border-rose-500 !shadow-[0_0_12px_rgba(244,63,94,0.5)] hover:!scale-110 hover:!shadow-[0_0_16px_rgba(244,63,94,0.7)]"
+                : "!bg-blue-50 !text-blue-600 !border-blue-100/80 hover:!bg-blue-600 hover:!text-white hover:!border-blue-600 hover:!scale-110 hover:!shadow-[0_4px_12px_rgba(37,99,235,0.25)]"
+                }`}
+            >
+              <i className={`${mobileSearchIsListening ? "fas fa-microphone text-white animate-pulse" : "fas fa-microphone"} text-[14px]`}></i>
+            </button>
 
             {/* Dropdown  */}
             {mobileSearchShowSuggestions && (mobileSearchLoading || mobileSearchSuggestions.length > 0) && (
@@ -656,7 +639,7 @@ const MobileSearchDropdown = ({
                     <div
                       key={item._id || index}
                       onClick={(e) => {
-                        
+
                         if (!item.noResult) {
                           handleMobileProductClick(item);
                         }
@@ -787,66 +770,6 @@ const MobileSearchDropdown = ({
             )}
           </div>
 
-
-
-          {(!mobileSearchQuery || mobileSearchQuery.trim().length === 0) && mobileSearchRecommended.length > 0 && (
-            <div className="mt-4 px-1">
-              <h6 className="!text-[14px] !font-semibold text-gray-800 mb-3">Recommended for you</h6>
-              <div className="flex gap-3 overflow-x-auto pb-2 scrollbar-thin select-none">
-                {mobileSearchRecommended
-                  .filter(item => typeof item === 'object' && item !== null && item?.tablet)
-                  .map((item, index) => {
-                    const tablet = item?.tablet;
-                    return (
-                      <div
-                        key={tablet?._id || index}
-                        onClick={() => handleMobileProductClick(item)}
-                        className="bg-white rounded-sm p-3 border border-gray-200 shadow-sm cursor-pointer min-w-[130px] max-w-[130px] flex-shrink-0 flex flex-col hover:border-[#321961] transition-all"
-                      >
-                        <div className="w-full h-20 bg-gray-50 rounded-lg flex items-center justify-center overflow-hidden mb-2">
-                          <img
-                            src={
-                              resolveImage(tablet?.variant?.[0]) ||
-                              resolveImage(tablet) ||
-                              "/medicine.jpg"
-                            }
-                            alt={tablet?.name}
-                            loading="lazy"
-                            className="max-w-full max-h-full object-contain p-1"
-                            onError={(e) => {
-                              e.target.onerror = null;
-                              e.target.src = "/medicine.jpg";
-                            }}
-                          />
-                        </div>
-                        <p className="text-[12px] font-bold text-gray-800 truncate m-0 leading-tight">
-                          {tablet?.name || "Unknown"}
-                        </p>
-                        <div className="text-[11px] font-bold text-[#321961] mt-1.5 flex items-center flex-wrap gap-1">
-                          {item?.vendors && item?.vendors.length > 0 ? (
-                            item?.vendors?.[0]?.discountprice ? (
-                              <>
-                                <span className="line-through text-gray-400 text-[9px]">
-                                  ₹{item?.vendors?.[0]?.price}
-                                </span>
-                                <span>₹{item?.vendors?.[0]?.discountprice}</span>
-                              </>
-                            ) : (
-                              item?.vendors?.[0]?.price ? `₹${item?.vendors?.[0]?.price}` : "Price on request"
-                            )
-                          ) : (
-                            tablet?.variant?.[0]?.price || tablet?.price
-                              ? `₹${(tablet?.variant?.[0]?.price || tablet?.price).toFixed(2)}`
-                              : "Price on request"
-                          )}
-                        </div>
-                      </div>
-                    );
-                  })}
-              </div>
-            </div>
-          )}
-
           {(!mobileSearchQuery || mobileSearchQuery.trim().length === 0) &&
             mobileSearchRecentSearches.length > 0 && (
               <div className="mt-5 px-1">
@@ -857,37 +780,225 @@ const MobileSearchDropdown = ({
                   <button
                     type="button"
                     onClick={clearMobileRecentSearches}
-                    className="!text-[11px] !font-semibold !text-red-500 hover:text-red-700 bg-red-55 hover:bg-red-100 rounded-full px-3 py-1 cursor-pointer transition-colors border-none"
+                    className="!text-[11px] !font-semibold !text-red-500 hover:text-red-700 bg-red-55 hover:bg-red-100 !rounded-full px-3 py-1 cursor-pointer transition-colors border-none"
                   >
                     Clear All
                   </button>
                 </div>
-                <div className="bg-white rounded-sm border border-gray-200 overflow-hidden divide-y divide-gray-100">
+                <div className="!flex !flex-wrap !gap-2 !pt-1">
                   {mobileSearchRecentSearches
                     .filter(searchTerm => typeof searchTerm === 'string')
                     .map((searchTerm, index) => (
                       <div
                         key={index}
-                        className="flex justify-between items-center p-3 hover:bg-gray-50 transition-colors"
+                        className="!flex !items-center !gap-1.5 !bg-slate-100/70 hover:!bg-slate-200/60 !border !border-solid !border-slate-200/60 !rounded-full !pl-3.5 !pr-1.5 !py-1 !transition-all !duration-200 hover:!scale-[1.03] !max-w-[200px]"
                       >
-                        <div
+                        <span
                           onClick={() => handleMobileRecentSearchClick(searchTerm)}
-                          className="flex-1 flex items-center gap-2 cursor-pointer text-[14px] text-gray-700 font-medium truncate"
+                          className="!text-[12.5px] !text-slate-700 !font-semibold !truncate !cursor-pointer !capitalize"
                         >
-                          <i className="fa-regular fa-clock text-gray-400 shrink-0 text-sm" />
-                          <span className="truncate">{searchTerm}</span>
-                        </div>
+                          {searchTerm}
+                        </span>
                         <button
+                          type="button"
                           onClick={() => removeMobileRecentSearch(searchTerm)}
-                          className="text-gray-400 hover:text-gray-600 p-1 border-none bg-transparent cursor-pointer"
+                          className="!text-slate-400 hover:!text-slate-600 !w-5 !h-5 !rounded-full hover:!bg-slate-200 !flex !items-center !justify-center !border-none !bg-transparent !cursor-pointer !transition-colors !shrink-0"
+                          title="Delete"
                         >
-                          <i className="fa-solid fa-xmark text-sm shrink-0" />
+                          <i className="fa-solid fa-xmark text-[10px]" />
                         </button>
                       </div>
                     ))}
                 </div>
               </div>
             )}
+
+          {(!mobileSearchQuery || mobileSearchQuery.trim().length === 0) && mobileSearchRecommended.length > 0 && (
+            <div className="mt-4 px-1">
+              <div className="!flex !justify-between !items-center !mb-3">
+                <h6 className="!text-[14px] !font-semibold text-gray-800 !m-0">Recommended for you</h6>
+                <div className="!flex !gap-1.5">
+                  <button
+                    type="button"
+                    onClick={() => scrollRecommended("left")}
+                    className="!w-7 !h-7 !rounded-full !bg-white !border !border-solid !border-slate-200 !text-slate-600 !flex !items-center !justify-center hover:!bg-slate-50 hover:!border-slate-300 active:!scale-90 !transition-all !cursor-pointer"
+                  >
+                    <i className="fa-solid fa-chevron-left text-[10px]" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => scrollRecommended("right")}
+                    className="!w-7 !h-7 !rounded-full !bg-white !border !border-solid !border-slate-200 !text-slate-600 !flex !items-center !justify-center hover:!bg-slate-50 hover:!border-slate-300 active:!scale-90 !transition-all !cursor-pointer"
+                  >
+                    <i className="fa-solid fa-chevron-right text-[10px]" />
+                  </button>
+                </div>
+              </div>
+              <div
+                ref={recommendedScrollRef}
+                className="!flex !gap-3 !overflow-x-auto !pt-2 !pb-2 !select-none [&::-webkit-scrollbar]:!hidden"
+                style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+              >
+                {mobileSearchRecommended
+                  .filter(item => typeof item === 'object' && item !== null && item?.tablet)
+                  .map((item, index) => {
+                    const tablet = item?.tablet;
+                    const productImage =
+                      resolveImage(tablet?.variant?.[0]) ||
+                      resolveImage(tablet) ||
+                      "/medicine.jpg";
+                    const vendorName =
+                      item?.vendors?.[0]?.bussinessdetails?.name ||
+                      item?.vendors?.[0]?.name ||
+                      "MediCompares";
+                    const vendorImage =
+                      item?.vendors?.[0]?.bussinessdetails?.bussiness_image?.url ||
+                      item?.vendors?.[0]?.bussiness_image?.[0]?.url ||
+                      "";
+                    const displayPrice =
+                      item?.vendors?.[0]?.discountprice ||
+                      item?.vendors?.[0]?.price ||
+                      tablet?.variant?.[0]?.price ||
+                      tablet?.price ||
+                      0;
+                    const originalPrice =
+                      item?.vendors?.[0]?.price ||
+                      0;
+                    const hasDiscount =
+                      !!item?.vendors?.[0]?.discountprice;
+                    const discountPct =
+                      originalPrice > 0
+                        ? Math.round(((originalPrice - displayPrice) / originalPrice) * 100)
+                        : 0;
+                    const categorySlug = tablet?.category?.slug || "medicine";
+                    const subcategorySlug = tablet?.subcategorys?.slug || "tablets";
+                    const productSlug = tablet?.slug || "";
+
+                    return (
+                      <div
+                        key={tablet?._id || index}
+                        className="!min-w-[210px] !max-w-[210px] !flex-shrink-0 !self-stretch !flex !flex-col !bg-white !rounded-md !border !border-solid !border-[#f1f5f9] !shadow-[0_4px_18px_rgba(0,0,0,0.07)] !relative !overflow-hidden !transition-all !duration-300 hover:!-translate-y-[3px] hover:!border-[#321961] hover:!shadow-[0_8px_24px_rgba(128,89,202,0.15)]"
+                      >
+                        {/* Compare badge */}
+                        {productSlug && (
+                          <div className="!absolute !right-2 !top-2 !z-10 !cursor-pointer !bg-[#321961] !text-white !border-[1.5px] !border-solid !border-[#321961] !rounded-[20px] !w-8 hover:!w-[82px] !h-[26px] !flex !items-center !justify-start !pl-[9px] !shadow-[0_2px_8px_rgba(128,89,202,0.4)] !overflow-hidden !whitespace-nowrap !transition-all !duration-300">
+                            <Link
+                              to={`/${categorySlug}/${subcategorySlug}/${productSlug}/compare`}
+                              className="!flex !items-center !text-white !no-underline"
+                            >
+                              <i className="fa-solid fa-right-left !shrink-0 !text-[11px] !text-white" />
+                              <span className="ml-1.5 text-[11px] font-semibold text-white">
+                                Compare
+                              </span>
+                            </Link>
+                          </div>
+                        )}
+
+                        {/* Image */}
+                        <div
+                          className="!w-full !h-[130px] !bg-[#f8fafc] !flex !items-center !justify-center !p-2.5 !cursor-pointer !shrink-0"
+                          onClick={() => handleMobileProductClick(item)}
+                        >
+                          <img
+                            src={productImage}
+                            alt="product"
+                            className="!max-h-full !max-w-full !object-contain"
+                            onError={(e) => {
+                              e.target.src = "/medicine.jpg";
+                            }}
+                          />
+                        </div>
+
+                        {/* Details */}
+                        <div className="!flex !flex-col !gap-1.5 !p-2.5 !flex-1">
+                          {/* Name */}
+                          <div
+                            className="!cursor-pointer"
+                            onClick={() => handleMobileProductClick(item)}
+                          >
+                            <p
+                              className="!text-[12.5px] !font-medium !text-[#0f172a] !m-0 !leading-[1.35] !capitalize !overflow-hidden"
+                              style={{ display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical" }}
+                            >
+                              {tablet?.name}
+                            </p>
+                          </div>
+
+                          {/* Seller & rating */}
+                          <div className="!flex !items-center !justify-between !gap-1 !min-w-0">
+                            <div className="!flex !items-center !gap-1.5 !min-w-0 !flex-1 !overflow-hidden">
+                              {vendorImage ? (
+                                <img
+                                  src={getImageUrl(vendorImage)}
+                                  alt={vendorName}
+                                  className="!w-5 !h-5 !rounded-full !object-cover !bg-[#f1f5f9] !shrink-0"
+                                  onError={(e) => {
+                                    e.target.src = "/assets/img/logo.png";
+                                  }}
+                                />
+                              ) : (
+                                <img
+                                  src="/assets/img/logo.png"
+                                  alt="logo"
+                                  className="!w-5 !h-5 !rounded-full !object-cover !bg-[#f1f5f9] !shrink-0"
+                                />
+                              )}
+                              <span
+                                className="!text-[11.5px] !font-semibold !text-[#334155] !truncate"
+                                title={vendorName}
+                              >
+                                {vendorName}
+                              </span>
+                            </div>
+                            <div className="!flex !items-center !gap-0.5 !shrink-0">
+                              <span className="!text-[11px] !text-[#fbbf24]">★</span>
+                              <span className="!text-[10.5px] !font-semibold !text-[#475569]">
+                                {tablet?.averageRating
+                                  ? tablet.averageRating.toFixed(1)
+                                  : "0.0"}
+                              </span>
+                            </div>
+                          </div>
+
+                          {/* Pricing */}
+                          <div className="!flex !flex-col !gap-px">
+                            <div className="!flex !items-center !flex-wrap !gap-1">
+                              <span className="!text-[13.5px] !font-bold !text-[#0f172a]">
+                                ₹{displayPrice.toFixed(2)}
+                              </span>
+                              {hasDiscount && (
+                                <span className="!text-[10.5px] !line-through !text-[#94a3b8]">
+                                  ₹{Number(originalPrice).toFixed(2)}
+                                </span>
+                              )}
+                            </div>
+                            {hasDiscount && (
+                              <span className="!text-[10px] !font-bold !text-[#dc2626]">
+                                {discountPct}% OFF
+                              </span>
+                            )}
+                          </div>
+
+                          {/* Actions */}
+                          <div className="!mt-auto !pt-1.5 !border-t !border-solid !border-[#f1f5f9]">
+                            <button
+                              type="button"
+                              onClick={() => handleMobileProductClick(item)}
+                              className="!w-full !flex !items-center !justify-center !gap-1.5 !py-1.5 !rounded-md !text-[11.5px] !font-semibold !text-white !bg-[#321961] hover:!bg-[#432380] !transition-all !duration-200 !border-none !cursor-pointer"
+                            >
+                              <span>View Details</span>
+                              <i className="fas fa-arrow-right text-[9px]" />
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+              </div>
+            </div>
+          )}
+
+
 
           {mobileSearchQuery && mobileSearchQuery.trim().length > 0 && !mobileSearchLoading && mobileSearchSuggestions.length > 0 && mobileSearchSuggestions[0].noResult && (
             <div className="mt-4 text-center" style={{ padding: "40px 20px" }}>

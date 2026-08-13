@@ -1167,7 +1167,7 @@ const ServiceDetails = () => {
                               type="button"
                               title="Upload prescription"
                               onClick={() => navigate("/prescription-upload", { state: { mode: "search", pincode: selectedPincode, lat: latitude, lng: longitude } })}
-                              className="flex items-center justify-center cursor-pointer transition-all duration-200 ease-in-out shrink-0 rounded-[6px] p-[2px] w-[25px] h-[25px] bg-transparent text-[rgb(107, 114, 128)] border-[1.5px] border-solid border-[rgb(229,231,235)] hover:bg-slate-50 shadow-none"
+                              className="!flex !items-center !justify-center !w-[30px] !h-[30px] !rounded-full !bg-violet-50 !text-violet-600 !border !border-solid !border-violet-100/80 !cursor-pointer !transition-all !duration-300 !ease-in-out !shrink-0 hover:!bg-violet-600 hover:!text-white hover:!border-violet-600 hover:!scale-110 active:!scale-90 hover:!shadow-[0_4px_12px_rgba(124,58,237,0.25)]"
                             >
                               <i className="fas fa-file-prescription text-[13px]"></i>
                             </button>
@@ -1176,7 +1176,11 @@ const ServiceDetails = () => {
                               type="button"
                               title="Voice search"
                               onClick={startVoiceRecognition}
-                              className={`flex items-center justify-center cursor-pointer transition-all duration-200 ease-in-out shrink-0 rounded-[6px] p-[2px] w-[25px] h-[25px] ${isListening ? "bg-[#e0f2fe] text-[#0284c7] border-[1.5px] border-solid border-[#0284c7] shadow-[0_0_6px_rgba(2,132,199,0.6)]" : "bg-transparent text-[rgb(107, 114, 128)] border-[1.5px] border-solid border-[rgb(229,231,235)] shadow-none"}`}
+                              className={`!flex !items-center !justify-center !w-[30px] !h-[30px] !rounded-full !border !border-solid !transition-all !duration-300 !ease-in-out !cursor-pointer active:!scale-90 ${
+                                isListening
+                                  ? "!bg-gradient-to-r !from-rose-500 !to-red-600 !text-white !border-rose-500 !shadow-[0_0_12px_rgba(244,63,94,0.5)] hover:!scale-110 hover:!shadow-[0_0_16px_rgba(244,63,94,0.7)]"
+                                  : "!bg-blue-50 !text-blue-600 !border-blue-100/80 hover:!bg-blue-600 hover:!text-white hover:!border-blue-600 hover:!scale-110 hover:!shadow-[0_4px_12px_rgba(37,99,235,0.25)]"
+                              }`}
                             >
                               <svg
                                 width={14}
@@ -1184,6 +1188,7 @@ const ServiceDetails = () => {
                                 viewBox="0 0 24 24"
                                 fill="none"
                                 xmlns="http://www.w3.org/2000/svg"
+                                className={`${isListening ? "animate-pulse" : ""}`}
                               >
                                 <path
                                   d="M12 1C10.34 1 9 2.34 9 4V12C9 13.66 10.34 15 12 15C13.66 15 15 13.66 15 12V4C15 2.34 13.66 1 12 1Z"

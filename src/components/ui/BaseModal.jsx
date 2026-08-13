@@ -15,6 +15,7 @@ const BaseModal = ({
   backdrop = true,
   zIndex = 99999999,
   disableBackdropBlur = false, // new prop
+  isBottomSheetOnMobile = false, // new prop
 }) => {
   if (!show) return null;
 
@@ -27,7 +28,10 @@ const BaseModal = ({
 
   return (
     <div
-      className="fixed inset-0 flex items-center justify-center p-4"
+      className={`fixed inset-0 flex p-4 ${isBottomSheetOnMobile
+          ? "sm:items-center sm:justify-center items-end justify-center !p-0 sm:!p-4"
+          : "items-center justify-center"
+        }`}
 
       style={{
         zIndex,
@@ -36,10 +40,13 @@ const BaseModal = ({
       onClick={backdrop ? onClose : undefined}
     >
       <div
-        className={`bg-white rounded-lg shadow-xl w-full ${sizeClasses[size]} transition-all flex flex-col ${className}`}
+        className={`bg-white shadow-xl w-full ${sizeClasses[size]} transition-all flex flex-col ${isBottomSheetOnMobile
+            ? "rounded-t-2xl sm:rounded-lg rounded-b-none sm:rounded-b-lg"
+            : "rounded-lg"
+          } ${className}`}
         onClick={(e) => e.stopPropagation()}
         style={{
-          maxHeight: "80vh",
+          maxHeight: isBottomSheetOnMobile ? "90vh" : "80vh",
         }}
       >
         {/* Header */}
