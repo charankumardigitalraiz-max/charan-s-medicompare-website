@@ -939,55 +939,21 @@ const DesktopSearch = ({ showSearch, setShowSearchOverlay, myservice }) => {
           type="button"
           title="Upload prescription"
           onClick={() => navigate("/prescription-upload", { state: { mode: "search", pincode: selectedPincode, lat: latitude, lng: longitude } })}
-          style={{
-            background: "transparent",
-            color: "rgb(107, 114, 128)",
-            border: "1.5px solid #e5e7eb",
-            borderRadius: "6px",
-            padding: "2px",
-            width: "25px",
-            height: "25px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            cursor: "pointer",
-            transition: "0.2s cubic-bezier(0.4, 0, 0.2, 1)",
-            flexShrink: 0,
-            marginRight: "0px",
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.color = "#7c3aed";
-            e.currentTarget.style.borderColor = "#7c3aed";
-            e.currentTarget.style.backgroundColor = "#f5f3ff";
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.color = "rgb(107, 114, 128)";
-            e.currentTarget.style.borderColor = "#e5e7eb";
-            e.currentTarget.style.backgroundColor = "transparent";
-          }}
+          className="!flex !items-center !justify-center !w-[30px] !h-[30px] !rounded-full !bg-violet-200 !text-violet-600 !border !border-solid !border-violet-100/80 !cursor-pointer !transition-all !duration-300 !ease-in-out !shrink-0 hover:!bg-violet-600 hover:!text-white hover:!border-violet-600 hover:!scale-110 active:!scale-90 hover:!shadow-[0_4px_12px_rgba(124,58,237,0.25)]"
         >
-          <i className="fas fa-file-prescription" style={{ fontSize: "13px" }}></i>
+          <i className="fas fa-file-prescription text-[13px]"></i>
         </button>
 
         <button
           type="button"
-          className="action-btn"
-          onClick={startDesktopVoiceRecognition}
-          style={{
-            width: "25px",
-            height: "25px",
-            borderRadius: "6px",
-            border: "1.5px solid #e5e7eb",
-            background: desktopSearchIsListening ? "#321961" : "transparent",
-            color: desktopSearchIsListening ? "#fff" : "#6b7280",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            cursor: "pointer",
-          }}
           title="Voice search"
+          onClick={startDesktopVoiceRecognition}
+          className={`!flex !items-center !justify-center !w-[30px] !h-[30px] !rounded-full !border !border-solid !transition-all !duration-300 !ease-in-out !cursor-pointer !shrink-0 active:!scale-90 ${desktopSearchIsListening
+            ? "!bg-gradient-to-r !from-rose-500 !to-red-600 !text-white !border-rose-500 !shadow-[0_0_12px_rgba(244,63,94,0.5)] hover:!scale-110 hover:!shadow-[0_0_16px_rgba(244,63,94,0.7)]"
+            : "!bg-blue-50 !text-blue-600 !border-blue-100/80 hover:!bg-blue-600 hover:!text-white hover:!border-blue-600 hover:!scale-110 hover:!shadow-[0_4px_12px_rgba(37,99,235,0.25)]"
+            }`}
         >
-          <i className="fas fa-microphone" style={{ fontSize: "14px" }}></i>
+          <i className={`${desktopSearchIsListening ? "fas fa-microphone text-white animate-pulse" : "fas fa-microphone"} text-[14px]`}></i>
         </button>
       </div>
 

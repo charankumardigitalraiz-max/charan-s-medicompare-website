@@ -589,7 +589,7 @@ const MobileSearchDropdown = ({
                 onClose();
                 navigate("/prescription-upload", { state: { mode: "search", pincode: selectedPincode, lat: latitude, lng: longitude } });
               }}
-              className="!absolute !mr-1 !right-[46px] !top-1/2 !-translate-y-1/2 !z-[4] !flex !items-center !justify-center !w-[30px] !h-[30px] !rounded-full !bg-violet-50 !text-violet-600 !border !border-solid !border-violet-100/80 !cursor-pointer !transition-all !duration-300 !ease-in-out !shrink-0 hover:!bg-violet-600 hover:!text-white hover:!border-violet-600 hover:!scale-110 active:!scale-90 hover:!shadow-[0_4px_12px_rgba(124,58,237,0.25)]"
+              className="!absolute !mr-1 !right-[46px] !top-1/2 !-translate-y-1/2 !z-[4] !flex !items-center !justify-center !w-[30px] !h-[30px] !rounded-full !bg-violet-200 !text-violet-600 !border !border-solid !border-violet-100/80 !cursor-pointer !transition-all !duration-300 !ease-in-out !shrink-0 hover:!bg-violet-600 hover:!text-white hover:!border-violet-600 hover:!scale-110 active:!scale-90 hover:!shadow-[0_4px_12px_rgba(124,58,237,0.25)]"
             >
               <i className="fas fa-file-prescription text-[13px]"></i>
             </button>
@@ -598,7 +598,7 @@ const MobileSearchDropdown = ({
               type="button"
               title="Voice search"
               onClick={startMobileVoiceRecognition}
-              className={`!absolute !right-[14px]  !top-1/2 !-translate-y-1/2 !z-[4] !flex !items-center !justify-center !w-[30px] !h-[30px] !rounded-full !border !border-solid !transition-all !duration-300 !ease-in-out !cursor-pointer active:!scale-90 ${mobileSearchIsListening
+              className={`!absolute !right-[14px]  !top-1/2 !-translate-y-1/2 !z-[4] !flex !items-center !justify-center !w-[30px] !h-[30px] !rounded-full !border !border-solid !transition-all !duration-300 !ease-in-out !cursor-pointer !shrink-0 active:!scale-90 ${mobileSearchIsListening
                 ? "!bg-gradient-to-r !from-rose-500 !to-red-600 !text-white !border-rose-500 !shadow-[0_0_12px_rgba(244,63,94,0.5)] hover:!scale-110 hover:!shadow-[0_0_16px_rgba(244,63,94,0.7)]"
                 : "!bg-blue-50 !text-blue-600 !border-blue-100/80 hover:!bg-blue-600 hover:!text-white hover:!border-blue-600 hover:!scale-110 hover:!shadow-[0_4px_12px_rgba(37,99,235,0.25)]"
                 }`}
