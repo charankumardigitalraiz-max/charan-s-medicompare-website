@@ -216,7 +216,7 @@ const Address = ({ HomeNavigate, BackButton }) => {
                             }
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="bg-[#faf8ff] border border-[#e1d5f5] text-[#321961] no-underline font-semibold text-xs inline-flex items-center justify-center py-2 px-4 rounded-lg transition-all duration-200 ease w-full hover:bg-[#321961] hover:text-white hover:border-[#321961] hover:no-underline"
+                            className="!bg-[#faf8ff] !border border-[#e1d5f5] !text-[#321961] no-underline font-semibold text-xs inline-flex items-center justify-center py-2 px-4 rounded-lg transition-all duration-200 ease w-full hover:bg-[#321961] hover:text-white hover:border-[#321961] hover:no-underline"
                           >
                             <i className="fa-solid fa-location-dot me-1"></i>{" "}
                             View in Maps

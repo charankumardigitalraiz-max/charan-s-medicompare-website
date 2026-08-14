@@ -394,6 +394,8 @@ const VendorProfile = () => {
           ? subcategoryData.name.toLowerCase().replace(/\s+/g, "-")
           : null);
 
+      const categorFixedType = productData?.fixedType;
+
       if (service && categories && productId) {
         navigate(
           `/${encodeURIComponent(service)}/${encodeURIComponent(
@@ -972,6 +974,7 @@ const VendorProfile = () => {
                           const tablet = products?.medicineDetails || products?.tablet;
                           if (!tablet?._id) return null;
                           const serviceType = activeCategory?.slug || tablet?.service || products?.service || "medicine";
+                          const isRoundImage = products?.category?.fixedType || activeCategory?.fixedType || tablet?.service || products?.service || "medicine";
                           const normalizedProductForPrice = {
                             ...products,
                             tablet: products?.tablet || products?.medicineDetails
@@ -1001,107 +1004,75 @@ const VendorProfile = () => {
                               className="flex h-full"
                             >
                               <div
-                                className="modern-product-card flex flex-col cursor-pointer w-full min-h-0 border border-[#dee2e6] shadow-[0_4px_10px_rgba(0,0,0,0.05)] rounded-[10px] bg-white transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.8,0.25,1)] hover:-translate-y-1 hover:shadow-[0_8px_20px_rgba(0,0,0,0.1)]"
-                                onClick={() => handleProductClick(products)}
-                              // style={{
-                              //   display: "flex",
-                              //   flexDirection: "column",
-                              //   cursor: "pointer",
-                              //   height: "100%",
-                              //   minHeight: "auto",
-                              //   border: "1px solid #dee2e6",
-                              //   boxShadow: "0 4px 10px rgba(0, 0, 0, 0.05)",
-                              //   borderRadius: "10px",
-                              //   backgroundColor: "#ffffff",
-                              //   transition: "all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)"
-                              // }}
+                                className="w-full flex flex-col bg-white rounded-md border border-[#f1f5f9] shadow-[0_4px_18px_rgba(0,0,0,0.07)] relative overflow-hidden transition-all duration-300 hover:-translate-y-[3px] hover:!border-[#f1f5f9] hover:shadow-[0_8px_24px_rgba(128,89,202,0.15)]"
                               >
-                                {/* Image Container */}
-                                <div className="product-image-container-vertical relative overflow-hidden bg-[#f8fafc] rounded-t-[10px]">
-                                  <ProductImage
-                                    src={resolveTabletImage(tablet)}
-                                    alt={tablet?.name || "Product"}
-                                    containerStyle={{ height: "168px", padding: "8px" }}
-                                  />
-
-                                  {/* Rating Overlay */}
-                                  <div
-                                    className="absolute top-[10px] left-[10px] bg-white px-2 py-0.5 rounded-[20px] text-[11px] font-[600] flex items-center gap-1 shadow-[0_2px_5px_rgba(0,0,0,0.1)] border border-[#e0e0e0] z-10"
+                                {/* Compare badge */}
+                                <div className="absolute right-2 top-2 z-10 cursor-pointer bg-[#321961] text-white border-[1.5px] border-[#321961] rounded-[20px] w-8 h-[26px] flex items-center justify-start pl-[9px] shadow-[0_2px_8px_rgba(128,89,202,0.4)] overflow-hidden whitespace-nowrap transition-all duration-300 hover:w-[85px] group">
+                                  <Link
+                                    to={`/${serviceType}/${tablet?.subcategoryDetails?.slug || tablet?.subcategorys?.slug}/${tablet?.slug}/compare`}
+                                    className="flex items-center text-white no-underline w-full"
+                                    onClick={(e) => e.stopPropagation()}
                                   >
-                                    <FaStar
-                                      className="text-[#ffc107] text-[10px]"
-                                    />
-                                    <span>{tablet?.averageRating?.toFixed(1) || "0"}</span>
-                                    <span
-                                      className="text-[#9ca3af] font-[400] text-[10px]"
-                                    >
-                                      ({tablet?.ratingCount > 0 ? `${tablet.ratingCount}` : "0"})
+                                    <i className="fa-solid fa-right-left shrink-0 text-[11px] text-white" />
+                                    <span className="opacity-0 group-hover:opacity-100 ml-1.5 text-[11px] font-semibold text-white transition-opacity duration-300">
+                                      Compare
                                     </span>
-                                  </div>
-
-                                  {/* Compare Overlay Button */}
-                                  <CompareOverlayButton
-                                    tablet={tablet}
-                                    serviceType={serviceType}
-                                  />
+                                  </Link>
                                 </div>
 
-                                {/* Card Body */}
+                                {/* Image */}
                                 <div
-                                  className="flex-grow flex flex-col gap-0.5 p-[8px_10px]"
+                                  className="w-full h-[130px] bg-[#f5f3ff] flex items-center justify-center p-2.5 cursor-pointer shrink-0 relative"
+                                  onClick={() => handleProductClick(products)}
                                 >
-                                  <div className="flex items-start justify-between w-full gap-2">
-                                    <div className="flex flex-col gap-0.5 flex-1 min-w-0">
-                                      <div
-                                        className="product-title text-capitalize text-[13px] font-[500] leading-[1.3] m-0 text-[#0f172a] tracking-[-0.01em] whitespace-nowrap overflow-hidden text-ellipsis block"
-                                        title={tablet.name || ""}
-                                      >
-                                        {tablet.name}
-                                      </div>
-                                    </div>
+                                  <img
+                                    src={resolveTabletImage(tablet)}
+                                    alt={tablet?.name || "Product"}
+                                    className={
+                                      isRoundImage !== "medicine" &&
+                                        isRoundImage !== "medical-equipment" &&
+                                        isRoundImage !== "medicalequipment"
+                                        ? "w-[100px] h-[100px] !rounded-full object-cover border-2 border-solid border-[#7d2eff]/10"
+                                        : "max-h-full max-w-full object-contain"
+                                    }
+                                  />
+                                  {/* Rating Overlay */}
+                                  <div className="absolute bottom-2 left-2 bg-white px-2 py-0.5 rounded-full text-[10px] font-bold flex items-center gap-1 shadow-[0_2px_5px_rgba(0,0,0,0.1)] border border-[#e2e8f0] z-10" onClick={(e) => e.stopPropagation()}>
+                                    <span className="text-[#fbbf24] text-[10px]">★</span>
+                                    <span className="text-[#334155]">{tablet?.averageRating ? tablet.averageRating.toFixed(1) : "0.0"}</span>
+                                    <span className="text-slate-400 font-normal">({tablet?.ratingCount > 0 ? tablet.ratingCount : "0"})</span>
+                                  </div>
+                                </div>
 
-                                       <div
-                                       className="flex items-center gap-1.5 ml-2 shrink-0 mt-[2px]"
-                                       onClick={(e) => e.stopPropagation()}
-                                     >
-                                       <div
-                                         className="w-7 h-7 !rounded-full bg-slate-100/80 hover:bg-red-50 flex items-center justify-center transition-all duration-150 shadow-[0_2px_4px_rgba(0,0,0,0.06)] border border-slate-200/60 cursor-pointer"
-                                         onClick={(e) => {
-                                           e.stopPropagation();
-                                           handleToggleFavourite(tablet._id, tablet.isFavorite);
-                                         }}
-                                       >
-                                         {tablet.isFavorite ? (
-                                           <FaHeart size={16} color="#ef4444" />
-                                         ) : (
-                                           <IoIosHeartEmpty size={16} color="#9ca3af" />
-                                         )}
-                                       </div>
-                                       <div
-                                         className="w-7 h-7 !rounded-full bg-slate-100/80 hover:bg-purple-50 flex items-center justify-center transition-all duration-150 shadow-[0_2px_4px_rgba(0,0,0,0.06)] border border-slate-200/60 cursor-pointer"
-                                         onClick={(e) => {
-                                           e.stopPropagation();
-                                           handleShare(products, categoryName);
-                                         }}
-                                       >
-                                         <FaRegShareSquare size={15} color="#9ca3af" />
-                                       </div>
-                                     </div>
+                                {/* Details */}
+                                <div className="flex flex-col gap-1.5 p-2.5 flex-1">
+                                  {/* Name */}
+                                  <div
+                                    className="cursor-pointer"
+                                    onClick={() => handleProductClick(products)}
+                                  >
+                                    <p className="text-[12.5px] font-medium text-[#0f172a] m-0 leading-[1.35] capitalize overflow-hidden"
+                                      style={{ display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical" }}>
+                                      {tablet.name}
+                                    </p>
                                   </div>
 
+                                  {/* Seller & brand */}
                                   <div className="flex items-center justify-between gap-1 min-w-0">
-                                    {(tablet?.brands?.name || tablet?.brand?.name || tablet?.manufacture?.name) && (
-                                      <span
-                                        className="text-[10.5px] text-[#321961] overflow-hidden text-ellipsis whitespace-nowrap tracking-[0.02em] bg-[#f5f3ff] px-2 py-0.5 rounded-[6px] border border-[rgba(125,46,255,0.1)] inline-block max-w-full"
-                                        title={tablet?.brands?.name || tablet?.brand?.name || tablet?.manufacture?.name}
-                                      >
-                                        By {tablet?.brands?.name || tablet?.brand?.name || tablet?.manufacture?.name}
-                                      </span>
-                                    )}
+                                    <div className="flex items-center gap-1.5 min-w-0 flex-1 overflow-hidden">
+                                      {(tablet?.brands?.name || tablet?.brand?.name || tablet?.manufacture?.name) && (
+                                        <span
+                                          className="text-[11.5px] font-semibold text-[#334155] truncate"
+                                          title={tablet?.brands?.name || tablet?.brand?.name || tablet?.manufacture?.name}
+                                        >
+                                          By {tablet?.brands?.name || tablet?.brand?.name || tablet?.manufacture?.name}
+                                        </span>
+                                      )}
+                                    </div>
                                   </div>
 
                                   {/* Product Details Grid */}
-                                  <div className="product-details-grid flex flex-col gap-0.5">
+                                  <div className="product-details-grid flex flex-col gap-0.5 mt-0.5">
                                     {(() => {
                                       const specs = [
                                         { label: "Composition", value: tablet?.compositions?.name },
@@ -1131,26 +1102,59 @@ const VendorProfile = () => {
                                     })()}
                                   </div>
 
-                                  {/* Equipments Section */}
-                                  {tablet?.equipmentType?.length > 0 && (
-                                    <div className="mt-2 pt-2 border-t border-dashed border-t-[#eaeaea]">
-                                      <div className="mb-1 flex items-center text-[11px] text-[#6b7280]">
-                                        <span className="text-[11px] font-[600] uppercase tracking-[0.02em]">Equipments:</span>
-                                      </div>
-                                      <div className="flex flex-wrap gap-1">
-                                        {tablet.equipmentType.slice(0, 3).map((item, index) => (
-                                          <span key={index} className="bg-gray-100 text-gray-700 border border-gray-200 px-2 py-0.5 text-[9px] rounded-[4px]">
-                                            {item}
-                                          </span>
-                                        ))}
-                                        {tablet.equipmentType.length > 3 && (
-                                          <span className="bg-gray-100 text-gray-500 border border-gray-200 px-2 py-0.5 text-[9px] rounded-[4px]">
-                                            +{tablet.equipmentType.length - 3} More
-                                          </span>
+                                  {/* Pricing */}
+                                  {/* <div className="flex flex-col gap-px mt-0.5">
+                                    <div className="flex items-center flex-wrap gap-1">
+                                      <span className="text-[13px] font-bold text-[#0f172a]">
+                                        ₹{FinalAmount.toFixed(2)}
+                                      </span>
+                                      {hasDiscount && (
+                                        <span className="text-[10px] line-through text-[#94a3b8]">
+                                          ₹{Number(CurrentPrice).toFixed(2)}
+                                        </span>
+                                      )}
+                                    </div>
+                                    {hasDiscount && (
+                                      <span className="text-[9.5px] font-bold text-[#dc2626]">
+                                        {discountPercent}% OFF
+                                      </span>
+                                    )}
+                                  </div> */}
+
+                                  {/* Actions */}
+                                  <div className="mt-auto pt-2.5 border-t border-[#f1f5f9] flex items-center justify-between gap-2" onClick={(e) => e.stopPropagation()}>
+                                    <div className="flex items-center gap-2">
+                                      <div
+                                        className={`w-[32px] h-[32px] rounded-full flex items-center justify-center transition-all duration-200 border cursor-pointer shadow-sm hover:shadow-md hover:scale-105 active:scale-95 ${tablet.isFavorite
+                                          ? "!bg-red-50 !border-red-100 !text-[#ef4444]"
+                                          : "!bg-rose-50/50 !border-rose-100/60 !text-rose-500 hover:bg-[#ef4444] hover:text-white hover:border-[#ef4444]"
+                                          }`}
+                                        onClick={() => handleToggleFavourite(tablet._id, tablet.isFavorite)}
+                                        title="Favourite"
+                                      >
+                                        {tablet.isFavorite ? (
+                                          <FaHeart size={14} />
+                                        ) : (
+                                          <IoIosHeartEmpty size={14} />
                                         )}
                                       </div>
+                                      <div
+                                        className="w-[32px] h-[32px] rounded-full !bg-purple-50 !border !border-purple-100/60 !text-purple-600 hover:bg-[#321961] hover:text-white hover:border-[#321961] flex items-center justify-center transition-all duration-200 cursor-pointer shadow-sm hover:shadow-md hover:scale-105 active:scale-95"
+                                        onClick={() => handleShare(products, categoryName)}
+                                        title="Share"
+                                      >
+                                        <FaRegShareSquare size={14} />
+                                      </div>
                                     </div>
-                                  )}
+                                    <button
+                                      type="button"
+                                      onClick={() => handleProductClick(products)}
+                                      className="bg-[#321961] hover:bg-[#5b32a1] text-white !text-[11px] font-semibold py-1.5 px-3.5 !rounded-md transition-all duration-300 border-none cursor-pointer flex items-center gap-1.5 shadow-sm hover:shadow-[0_4px_12px_rgba(50,25,97,0.25)] hover:-translate-y-px active:translate-y-0"
+                                    >
+                                      <i className="fa-solid fa-eye text-[11px]" />
+                                      View Details
+                                    </button>
+                                  </div>
                                 </div>
                               </div>
                             </div>

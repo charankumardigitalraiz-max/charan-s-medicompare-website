@@ -3,6 +3,7 @@ import { axiosUserInstance, imgUrl } from "../../Apiservice";
 import { toast } from "react-hot-toast";
 import { useResponsive } from "../../hooks/useResponsive";
 import { DatePicker } from 'rsuite';
+import { getImageUrl } from "../../utils/index";
 
 const Profile = ({ HomeNavigate, BackButton }) => {
   const [profiles, setProfile] = useState({});
@@ -265,13 +266,20 @@ const Profile = ({ HomeNavigate, BackButton }) => {
             <div className="flex items-center gap-4">
               <div className="w-14 h-14 rounded-full bg-purple-50 border border-purple-100 flex items-center justify-center text-[#321961] text-xl font-bold shrink-0 shadow-inner overflow-hidden">
                 {profiles.image ? (
-                  <img src={`${imgUrl}/${profiles.image}`} alt="Profile" className="w-full h-full object-cover" />
+                  <img
+                    src={
+                      profiles.image.startsWith("blob:")
+                        ? profiles.image
+                        : getImageUrl(profiles.image)
+                    }
+                    alt="Profile"
+                    className="w-full h-full object-cover" />
                 ) : (
                   profiles.first_name ? profiles.first_name[0].toUpperCase() : <i className="fa-solid fa-user"></i>
                 )}
               </div>
               <div>
-                <h4 className="m-0 text-[#0f172a] font-bold text-[18px]">
+                <h4 className="m-0 text-[#0f172a] font-semibold text-[18px]">
                   {profiles.first_name || ""} {profiles.last_name || ""}
                   {!profiles.first_name && !profiles.last_name && <span className="text-slate-400 font-normal italic text-sm">Guest User</span>}
                 </h4>
@@ -292,7 +300,7 @@ const Profile = ({ HomeNavigate, BackButton }) => {
           {/* Profile Grid Details */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-5">
             {/* Customer ID Block */}
-            <div className="bg-slate-50/50 hover:bg-slate-50 rounded-xl p-4 border border-slate-100 flex items-center gap-3 transition-all duration-200">
+            <div className="bg-slate-50/50 hover:bg-slate-50 rounded-sm p-4 border border-slate-100 flex items-center gap-3 transition-all duration-200">
               <div className="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center text-sm shrink-0">
                 <i className="fa-solid fa-hashtag"></i>
               </div>
@@ -303,7 +311,7 @@ const Profile = ({ HomeNavigate, BackButton }) => {
             </div>
 
             {/* Mobile Number Block */}
-            <div className="bg-slate-50/50 hover:bg-slate-50 rounded-xl p-4 border border-slate-100 flex items-center gap-3 transition-all duration-200">
+            <div className="bg-slate-50/50 hover:bg-slate-50 rounded-sm p-4 border border-slate-100 flex items-center gap-3 transition-all duration-200">
               <div className="w-10 h-10 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center text-sm shrink-0">
                 <i className="fa-solid fa-phone"></i>
               </div>
@@ -314,7 +322,7 @@ const Profile = ({ HomeNavigate, BackButton }) => {
             </div>
 
             {/* Email Address Block */}
-            <div className="bg-slate-50/50 hover:bg-slate-50 rounded-xl p-4 border border-slate-100 flex items-center gap-3 transition-all duration-200">
+            <div className="bg-slate-50/50 hover:bg-slate-50 rounded-sm p-4 border border-slate-100 flex items-center gap-3 transition-all duration-200">
               <div className="w-10 h-10 rounded-lg bg-purple-50 text-[#7c3aed] flex items-center justify-center text-sm shrink-0">
                 <i className="fa-solid fa-envelope"></i>
               </div>
@@ -344,7 +352,7 @@ const Profile = ({ HomeNavigate, BackButton }) => {
             </div>
 
             {/* Gender Block */}
-            <div className="bg-slate-50/50 hover:bg-slate-50 rounded-xl p-4 border border-slate-100 flex items-center gap-3 transition-all duration-200">
+            <div className="bg-slate-50/50 hover:bg-slate-50 rounded-sm p-4 border border-slate-100 flex items-center gap-3 transition-all duration-200">
               <div className="w-10 h-10 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center text-sm shrink-0">
                 <i className="fa-solid fa-venus-mars"></i>
               </div>
@@ -355,7 +363,7 @@ const Profile = ({ HomeNavigate, BackButton }) => {
             </div>
 
             {/* Age Block */}
-            <div className="bg-slate-50/50 hover:bg-slate-50 rounded-xl p-4 border border-slate-100 flex items-center gap-3 transition-all duration-200">
+            <div className="bg-slate-50/50 hover:bg-slate-50 rounded-sm p-4 border border-slate-100 flex items-center gap-3 transition-all duration-200">
               <div className="w-10 h-10 rounded-lg bg-pink-50 text-pink-600 flex items-center justify-center text-sm shrink-0">
                 <i className="fa-solid fa-cake-candles"></i>
               </div>
@@ -367,7 +375,7 @@ const Profile = ({ HomeNavigate, BackButton }) => {
           </div>
 
           {/* Medical Conditions block */}
-          <div className="bg-purple-50/30 border border-purple-100 rounded-xl p-4 flex gap-3.5">
+          <div className="bg-purple-50/30 border border-purple-100 rounded-sm p-4 flex gap-3.5">
             <div className="w-9 h-9 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center text-sm shrink-0 mt-0.5">
               <i className="fa-solid fa-file-medical"></i>
             </div>

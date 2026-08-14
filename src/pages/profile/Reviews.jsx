@@ -73,7 +73,7 @@ const Reviews = ({ HomeNavigate, BackButton }) => {
       : "You";
 
     return (
-      <div className="h-full flex flex-col justify-between m-0 p-5 rounded-xl border border-slate-200 bg-white transition-all duration-200 hover:shadow-[0_4px_12px_rgba(0,0,0,0.1)]">
+      <div className="h-full flex flex-col justify-between m-0 p-5 rounded-md border border-slate-200 bg-white transition-all duration-200 hover:shadow-[0_4px_12px_rgba(0,0,0,0.1)]">
         <div>
           <div className="flex justify-between items-start">
             <div className="flex items-center gap-2">
@@ -118,8 +118,8 @@ const Reviews = ({ HomeNavigate, BackButton }) => {
             </div>
 
             {review.review && (
-              <p className="text-[13px] text-slate-600 mt-2.5 leading-relaxed bg-[#fcfcfc] p-2.5 rounded-lg border border-slate-100 m-0">
-                {review.review}
+              <p className="text-[13px] text-slate-600 italic mt-2.5 leading-relaxed bg-[#faf8ff] p-2.5 pl-3.5 rounded-lg border border-slate-100  m-0">
+                "{review.review}"
               </p>
             )}
           </div>

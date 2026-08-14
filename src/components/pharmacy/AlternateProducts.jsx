@@ -598,6 +598,12 @@ const AlternateProducts = ({
                 categoryData?.fixedType ||
                 service ||
                 "medicines";
+              const isRoundImage =
+                productService !== "medicine" &&
+                productService !== "medicines" &&
+                productService !== "rx-medicines" &&
+                productService !== "medical-equipment" &&
+                productService !== "medicalequipment";
               const categories =
                 subcategoryData?.slug ||
                 (subcategoryData?.name
@@ -1005,7 +1011,11 @@ const AlternateProducts = ({
                       src={variantImage}
                       title={product?.tablet?.name || "Product"}
                       alt={product?.tablet?.name || "Product"}
-                      className="max-w-full max-h-full h-auto w-auto object-contain mix-blend-multiply transition-transform duration-300 hover:scale-105"
+                      className={
+                        isRoundImage
+                          ? "w-[120px] h-[120px] !rounded-full object-cover border border-[#7d2eff]/10 transition-transform duration-300 hover:scale-105"
+                          : "max-w-full max-h-full h-auto w-auto object-contain mix-blend-multiply transition-transform duration-300 hover:scale-105"
+                      }
                       onError={(e) => {
                         e.target.src = "/medicine.jpg";
                       }}

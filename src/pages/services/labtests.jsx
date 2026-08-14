@@ -1566,7 +1566,7 @@ const labtests = ({
         >
           <div className="text-center mb-4">
             <div
-              className="section-badgese !mb-[12px] !mx-auto"
+              className="!inline-flex !items-center !gap-1.5 !px-3.5 !py-1 !rounded-full !bg-purple-50 !text-purple-700 !border !border-purple-100/80 !text-[12px] !font-semibold !mb-[12px] !mx-auto"
             >
               <i className="fa-solid fa-circle-info" />
               Why Choose Us

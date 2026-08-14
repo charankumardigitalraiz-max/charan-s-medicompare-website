@@ -485,7 +485,7 @@ const Favourites = ({ HomeNavigate, BackButton }) => {
                   onClick={() => handleProductClick(item)}
                 >
                   {/* Image Container */}
-                  <div className="product-image-container-vertical relative overflow-hidden bg-slate-50 rounded-t-[10px] h-[168px] flex items-center justify-center">
+                  <div className="product-image-container-vertical relative overflow-hidden rounded-t-[10px] h-[168px] flex items-center justify-center">
                     <img
                       alt={item.name}
                       title={item.name}
@@ -505,7 +505,13 @@ const Favourites = ({ HomeNavigate, BackButton }) => {
                       onError={(e) => {
                         e.target.src = "/medicine.jpg";
                       }}
-                      className="max-h-[90%] max-w-[90%] object-contain"
+                      className={
+                        serviceType !== "medicine" &&
+                          serviceType !== "medical-equipment" &&
+                          serviceType !== "medicalequipment"
+                          ? "w-[120px] h-[120px] rounded-full object-cover border-2 border-solid border-[#7d2eff]/10"
+                          : "max-h-[90%] max-w-[90%] object-contain"
+                      }
                     />
 
                     {/* Rating Overlay */}
@@ -628,7 +634,7 @@ const Favourites = ({ HomeNavigate, BackButton }) => {
                       onClick={(e) => handleProductClick(item, e)}
                       className="block w-full text-center py-[4px] px-4 bg-[#321961] text-white !rounded-sm border-none !text-[12px] !font-medium transition-all duration-300 cursor-pointer !mt-auto hover:bg-[#6b1fe6] hover:-translate-y-px hover:shadow-[0_4px_12px_rgba(125,46,255,0.3)]"
                     >
-                      View Details
+                      <i className="fa-solid fa-eye me-1.5"></i> View Details
                     </button>
                   </div>
                 </div>
