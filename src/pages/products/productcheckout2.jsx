@@ -687,6 +687,7 @@ export const Cart = () => {
       couponId: selectedPayment === "cod" ? null : appliedCoupon?._id || null,
       billingSummary: {
         ...cartBilling,
+        isWallet: selectedPayment === "cod" ? null : walletUsed > 0 ? true : false,
         walletAmount: selectedPayment === "cod" ? null : walletUsed > 0 ? walletUsed : null,
         couponAmount: selectedPayment === "cod" ? null : orderCouponDiscount,
         couponId: selectedPayment === "cod" ? null : appliedCoupon?._id || null,
@@ -839,6 +840,18 @@ export const Cart = () => {
     return +discountAmount.toFixed(2);
   };
 
+
+
+
+
+
+
+
+  const isPrescriptionUploaded = verifiedPrescriptionImage &&
+    verifiedPrescriptionImage !== "payment_required" &&
+    verifiedPrescriptionImage !== "false" &&
+    verifiedPrescriptionImage !== "true";
+  const prescriptionFee = (prescriptionPaymentRequired && !isPrescriptionUploaded) ? prescriptionCharge : 0;
   // Always derive from current cart — serverDiscount/serverFinalAmount are stale after item changes
   const baseFinalAmount = cartBilling?.finalAmount || 0;
   const deliveryCharges = cartBilling?.deliveryCharges || 0;
@@ -849,10 +862,10 @@ export const Cart = () => {
     : baseFinalAmount;
 
   // 1. Without Coupon & Without Wallet
-  const withoutCouponAndWithoutWallet = +(baseFinalAmount + deliveryCharges).toFixed(2);
+  const withoutCouponAndWithoutWallet = +(baseFinalAmount + deliveryCharges + prescriptionFee).toFixed(2);
 
   // 2. With Coupon & Without Wallet
-  const withCouponAndWithoutWallet = +(couponAmountApplied + deliveryCharges).toFixed(2);
+  const withCouponAndWithoutWallet = +(couponAmountApplied + deliveryCharges + prescriptionFee).toFixed(2);
 
   const walletVal = Math.max(0, walletAmount || 0);
 
@@ -872,14 +885,10 @@ export const Cart = () => {
   const couponAmmountApplied = couponAmountApplied;
   const addedDeliveryCharge = withCouponAndWithoutWallet;
   const withoutCouponAndWallet = baseFinalAmount;
-  const walletUsed = walletUsedWithCoupon;
-  const isPrescriptionUploaded = verifiedPrescriptionImage &&
-    verifiedPrescriptionImage !== "payment_required" &&
-    verifiedPrescriptionImage !== "false" &&
-    verifiedPrescriptionImage !== "true";
-  const prescriptionFee = (prescriptionPaymentRequired && !isPrescriptionUploaded) ? prescriptionCharge : 0;
+  const walletUsed = walletUsedWithCoupon + prescriptionFee;
+
   const amountToPay = +(
-    (selectedPayment === "cod" ? withCouponAndWithoutWallet : withCouponAndWithWallet) + prescriptionFee
+    (selectedPayment === "cod" ? withCouponAndWithoutWallet : withCouponAndWithWallet)
   ).toFixed(2);
 
   console.log("Clarified Billing breakdown:", {

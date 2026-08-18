@@ -889,7 +889,7 @@ export const CartProvider = ({ children }) => {
 
     if (isLoggedIn()) {
       setCartItems(serverCart);
-      if (serverCart.length > 0) saveToLocalStorage(serverCart);
+      saveToLocalStorage(serverCart);
       return serverCart;
     }
 

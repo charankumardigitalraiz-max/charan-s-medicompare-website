@@ -41,6 +41,7 @@ const PrescriptionUploadPage = () => {
   const [noPrescription, setNoPrescription] = useState(false);
   const [expandedVendors, setExpandedVendors] = useState({});
   const [analysisData, setAnalysisData] = useState(null);
+  const [prescriptionImageUrl, setPrescriptionImageUrl] = useState("");
 
   const fileInputRef = useRef(null);
 
@@ -329,6 +330,7 @@ const PrescriptionUploadPage = () => {
       setSearchResults([]);
       setHasSearched(false);
       setAnalysisData(null);
+      setPrescriptionImageUrl("");
 
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -425,6 +427,7 @@ const PrescriptionUploadPage = () => {
         setValidationError("");
         setHasSearched(true);
         setAnalysisData(data.data?.analysis || null);
+        setPrescriptionImageUrl(data.data?.prescriptionImage || "");
         toast.success("Prescription parsed successfully!");
       } else {
         formData.append("name", medicineData?.name || "");
@@ -503,6 +506,7 @@ const PrescriptionUploadPage = () => {
     setSearchResults([]);
     setHasSearched(false);
     setAnalysisData(null);
+    setPrescriptionImageUrl("");
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
@@ -581,6 +585,7 @@ const PrescriptionUploadPage = () => {
                           setValidationError("");
                           setHasSearched(false);
                           setAnalysisData(null);
+                          setPrescriptionImageUrl("");
                           if (fileInputRef.current) fileInputRef.current.value = "";
                           setTimeout(() => {
                             fileInputRef.current?.click();
@@ -601,6 +606,7 @@ const PrescriptionUploadPage = () => {
                           setValidationError("");
                           setHasSearched(false);
                           setAnalysisData(null);
+                          setPrescriptionImageUrl("");
                           if (fileInputRef.current) fileInputRef.current.value = "";
                         }}
                         className="inline-flex items-center gap-1 px-3 py-1.5 !rounded-md bg-red-50 hover:bg-red-100/80 text-red-600 hover:text-red-700 !font-semibold !text-xs transition-all border border-red-100 shadow-sm"
@@ -920,6 +926,7 @@ const PrescriptionUploadPage = () => {
                     setValidationError("");
                     setHasSearched(false);
                     setAnalysisData(null);
+                    setPrescriptionImageUrl("");
                     if (fileInputRef.current) fileInputRef.current.value = "";
                   }}
                   className="mt-6 px-4 py-2 bg-purple-50 text-purple-700 font-semibold text-xs rounded-xl shadow-sm hover:bg-purple-100 transition-all border-0"
@@ -1015,7 +1022,7 @@ const PrescriptionUploadPage = () => {
                                 distanceInKm: v.distanceInKm || v.vendor?.distance || v.businessDetails?.distance || v.distance
                               }))}
                               tablet={item}
-                              prescription={true}
+                              prescription={prescriptionImageUrl || true}
                               selectedVariants={{}}
                               selectedVendors={{}}
                               expandedVendors={expandedVendors}
@@ -1053,6 +1060,7 @@ const PrescriptionUploadPage = () => {
                       setValidationError("");
                       setHasSearched(false);
                       setAnalysisData(null);
+                      setPrescriptionImageUrl("");
                       if (fileInputRef.current) fileInputRef.current.value = "";
                     }}
                   >

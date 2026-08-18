@@ -290,12 +290,13 @@ const CartQuantityControls = ({
     const rxRequired = tabletdetails?.prescriptionRequired === true || item?.tabletdetails?.prescriptionRequired === true;
     if (rxRequired) {
       // Priority 1: came from PrescriptionUploadPage — medicine was in the analyzed prescription
-      const hasPrescriptionProp = prescription === true;
+      const hasPrescriptionProp = !!prescription;
       if (hasPrescriptionProp) {
         if (bookingType === "cartslots") {
           setFamilyMemberModel(true);
         } else {
-          proceedToAdd("true");
+          const prescriptionValue = typeof prescription === "string" ? prescription : "true";
+          proceedToAdd(prescriptionValue);
         }
         return;
       }
