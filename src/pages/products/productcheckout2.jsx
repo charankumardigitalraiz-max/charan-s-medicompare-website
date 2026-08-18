@@ -121,7 +121,12 @@ export const Cart = () => {
   const [familyMembers, setFamilyMembers] = useState([]);
   const [selectedFamilyMember, setSelectedFamilyMember] = useState(null);
   // Derived: true whenever any cart item requires prescription payment at checkout
-  const prescriptionPaymentRequired = cartItems?.some(item => item?.prescriptionImage === "payment_required") ?? false;
+  const prescriptionPaymentRequired = cartItems?.some(item => {
+    return item?.prescriptionRequired === true ||
+      item?.tabletdetails?.prescriptionRequired === true ||
+      item?.productDetails?.tabletDetails?.prescriptionRequired === true ||
+      item?.productDetails?.prescriptionRequired === true;
+  }) ?? false;
 
   const [showPrescriptionModal, setShowPrescriptionModal] = useState(false);
   const [prescriptionMedicine, setPrescriptionMedicine] = useState(null);
@@ -663,7 +668,11 @@ export const Cart = () => {
       };
     });
 
-    const isRxPaid = prescriptionPaymentRequired || forcePrescriptionImage === "payment_required";
+    const isUploaded = forcePrescriptionImage &&
+      forcePrescriptionImage !== "payment_required" &&
+      forcePrescriptionImage !== "false" &&
+      forcePrescriptionImage !== "true";
+    const isRxPaid = prescriptionPaymentRequired && !isUploaded;
 
     const payload = {
       items: itemsWithServiceType,
@@ -671,7 +680,7 @@ export const Cart = () => {
       shipping: 0,
       discount: orderCouponDiscount,
       tax: orderTax,
-      total: withCouponAndWithoutWallet,
+      total: withCouponAndWithoutWallet + (isRxPaid ? prescriptionCharge : 0),
       shippingAddress: selectedAddress._id,
       billingAddress: selectedAddress._id,
       paymentmethod: selectedPayment,
@@ -690,6 +699,7 @@ export const Cart = () => {
         walletUsedWithCoupon,
         paidAmount: amountToPay,
         isprescriptionPaid: isRxPaid ? true : false,
+        // isPrescriptionPaid: isRxPaid ? true : false,
         prescriptionamount: isRxPaid ? prescriptionCharge : null
       },
       bookingTypes: "cart",
@@ -863,7 +873,11 @@ export const Cart = () => {
   const addedDeliveryCharge = withCouponAndWithoutWallet;
   const withoutCouponAndWallet = baseFinalAmount;
   const walletUsed = walletUsedWithCoupon;
-  const prescriptionFee = prescriptionPaymentRequired ? prescriptionCharge : 0;
+  const isPrescriptionUploaded = verifiedPrescriptionImage &&
+    verifiedPrescriptionImage !== "payment_required" &&
+    verifiedPrescriptionImage !== "false" &&
+    verifiedPrescriptionImage !== "true";
+  const prescriptionFee = (prescriptionPaymentRequired && !isPrescriptionUploaded) ? prescriptionCharge : 0;
   const amountToPay = +(
     (selectedPayment === "cod" ? withCouponAndWithoutWallet : withCouponAndWithWallet) + prescriptionFee
   ).toFixed(2);
@@ -1363,6 +1377,10 @@ export const Cart = () => {
                     // const maxQuantity = getItemMaxQuantity(item);
                     const billingSummary = item?.billingSummary;
                     const prescriptionImage = item?.prescriptionImage;
+                    const rxRequired = item?.prescriptionRequired === true ||
+                      item?.tabletdetails?.prescriptionRequired === true ||
+                      item?.productDetails?.tabletDetails?.prescriptionRequired === true ||
+                      item?.productDetails?.prescriptionRequired === true;
                     // if (prescriptionImage === "payment_required") {
                     //   setPrescriptionPaymentRequired(true)
                     // }
@@ -1464,30 +1482,40 @@ export const Cart = () => {
                         )}
 
                         {/* Prescription Uploaded Preview */}
-                        {(prescriptionImage !== "true" && prescriptionImage !== "payment_required" && prescriptionImage !== "false") && (
+                        {prescriptionImage && prescriptionImage !== "true" && prescriptionImage !== "false" && prescriptionImage !== "payment_required" ? (
                           <div
-                            className="flex items-center gap-2 bg-[#fef2f2] border border-[#fee2e2] rounded-lg px-2.5 py-1.5 mt-2"
+                            className="flex items-center gap-2 bg-[#f0fdf4] border border-[#dcfce7] rounded-lg px-2.5 py-1.5 mt-2"
                           >
-                            {/* <img
+                            <img
                               src={getImageUrl(prescriptionImage)}
                               alt="Prescription"
                               className="w-8 h-8 rounded object-cover"
-                            /> */}
+                            />
                             <div className="flex flex-col">
-                              <span className="text-[10px] text-[#ef4444] font-semibold">
-                                Prescription Required
+                              <span className="text-[10px] text-[#16a34a] font-semibold">
+                                Prescription Uploaded
                               </span>
                               <a
                                 href={getImageUrl(prescriptionImage)}
                                 target="_blank"
                                 rel="noreferrer"
-                                className="text-[9px] text-[#dc2626] underline"
+                                className="text-[9px] text-[#15803d] underline"
                               >
                                 View Prescription
                               </a>
                             </div>
                           </div>
-                        )}
+                        ) : (rxRequired || prescriptionImage === "payment_required") ? (
+                          <div
+                            className="flex items-center gap-2 bg-[#fef2f2] border border-[#fee2e2] rounded-lg px-2.5 py-1.5 mt-2"
+                          >
+                            <div className="flex flex-col">
+                              <span className="text-[10px] text-[#ef4444] font-semibold">
+                                Prescription Required
+                              </span>
+                            </div>
+                          </div>
+                        ) : null}
 
                         {/* Bottom row: Qty Controls and Subtotal */}
                         <div
@@ -1550,6 +1578,10 @@ export const Cart = () => {
                     const itemPrice = parseFloat(item.price) || 0;
                     const prescriptionImage = item?.prescriptionImage
                     const billingSummary = item?.billingSummary;
+                    const rxRequired = item?.prescriptionRequired === true ||
+                      item?.tabletdetails?.prescriptionRequired === true ||
+                      item?.productDetails?.tabletDetails?.prescriptionRequired === true ||
+                      item?.productDetails?.prescriptionRequired === true;
 
 
                     return (
@@ -1576,6 +1608,7 @@ export const Cart = () => {
                               className="w-[70px] h-[70px] rounded-xl object-cover shadow-[0_4px_12px_rgba(128,89,202,0.06)] border border-[#f3effa] transition-transform duration-200 ease-in-out hover:scale-[1.03]"
                             />
                           </div>
+
                           <div className="flex-1 min-w-0">
                             <div
                               onClick={() => handleProductClick(item)}
@@ -1624,30 +1657,40 @@ export const Cart = () => {
                             </div>
 
                             {/* Prescription Uploaded Preview (Desktop) */}
-                            {(prescriptionImage !== "true" && prescriptionImage !== "payment_required" && prescriptionImage !== "false") && (
+                            {prescriptionImage && prescriptionImage !== "true" && prescriptionImage !== "false" && prescriptionImage !== "payment_required" ? (
                               <div
-                                className="inline-flex items-center gap-2 bg-[#fef2f2] border border-[#fee2e2] rounded-md px-2 py-1 mb-1.5"
+                                className="inline-flex items-center gap-2 bg-[#f0fdf4] border border-[#dcfce7] rounded-md px-2 py-1 mb-1.5"
                               >
-                                {/* <img
+                                <img
                                   src={getImageUrl(prescriptionImage)}
                                   alt="Prescription"
                                   className="w-6 h-6 rounded-[3px] object-cover"
-                                /> */}
+                                />
                                 <div className="flex items-center gap-1.5">
-                                  <span className="text-[9.5px] text-[#ef4444] font-semibold">
-                                    Prescription Required
+                                  <span className="text-[9.5px] text-[#16a34a] font-semibold">
+                                    Prescription Uploaded
                                   </span>
-                                  {/* <a
+                                  <a
                                     href={getImageUrl(prescriptionImage)}
                                     target="_blank"
                                     rel="noreferrer"
                                     className="text-[9.5px] text-[#15803d] underline"
                                   >
                                     View
-                                  </a> */}
+                                  </a>
                                 </div>
                               </div>
-                            )}
+                            ) : (rxRequired || prescriptionImage === "payment_required") ? (
+                              <div
+                                className="inline-flex items-center gap-2 bg-[#fef2f2] border border-[#fee2e2] rounded-md px-2 py-1 mb-1.5"
+                              >
+                                <div className="flex items-center gap-1.5">
+                                  <span className="text-[9.5px] text-[#ef4444] font-semibold">
+                                    Prescription Required
+                                  </span>
+                                </div>
+                              </div>
+                            ) : null}
 
                             <div
                               className="flex items-center gap-1.5 flex-wrap"
@@ -1944,7 +1987,7 @@ export const Cart = () => {
                         </span>
                       </div>
 
-                      {prescriptionPaymentRequired && (
+                      {prescriptionFee > 0 && (
                         <div
                           className="flex justify-between text-[13px] text-[#475569] mb-3.5"
                         >

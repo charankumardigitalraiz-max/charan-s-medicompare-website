@@ -190,7 +190,12 @@ const PrescriptionUploadModal2 = ({
           </div>
           <button
             type="button"
-            onClick={onClose}
+            onClick={() => {
+              onClose();
+              if (onValidated) {
+                onValidated("payment_required", []);
+              }
+            }}
             className="!w-full !py-2.5 !rounded-md !bg-[#321961] !text-white !font-bold !text-[14px] hover:!opacity-90 !transition-all !border-0"
           >
             Got it, Close

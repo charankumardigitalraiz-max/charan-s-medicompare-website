@@ -10,6 +10,7 @@ import {
 } from "../../utils/productUtils";
 import toast from "react-hot-toast";
 import { useLocation as useLocationContext } from "../../context/LocationContext";
+import { useVoiceRecognition } from "../../hooks";
 
 const MobileSearchDropdown = ({
   isOpen,
@@ -22,11 +23,13 @@ const MobileSearchDropdown = ({
   const [mobileSearchLoading, setMobileSearchLoading] = useState(false);
   const [mobileSearchRecommended, setMobileSearchRecommended] = useState([]);
   const [mobileSearchShowSuggestions, setMobileSearchShowSuggestions] = useState(true);
-  const [mobileSearchIsListening, setMobileSearchIsListening] = useState(false);
+  const {
+    isListening: mobileSearchIsListening,
+    startListening: startVoiceListening,
+    MicPermissionModal
+  } = useVoiceRecognition();
   const [mobileSearchShowDots, setMobileSearchShowDots] = useState(false);
   const [mobileSearchRecentSearches, setMobileSearchRecentSearches] = useState([]);
-  const [showMicPermission, setShowMicPermission] = useState(false);
-  const [skipMicPermission, setSkipMicPermission] = useState(false);
   const [isMoreLoading, setIsMoreLoading] = useState(false);
   const [suggestionsLimit, setSuggestionsLimit] = useState(10);
   const [vendorModel, setVendorModel] = useState(false)
@@ -54,10 +57,6 @@ const MobileSearchDropdown = ({
         setMobileSearchRecentSearches([]);
       }
     }
-
-    const micPermission = localStorage.getItem("medicompares_mic_permission");
-
-    setSkipMicPermission(micPermission === "granted");
   }, []);
 
   const [hasFetchedRecent, setHasFetchedRecent] = useState(false);
@@ -237,70 +236,11 @@ const MobileSearchDropdown = ({
   }, [isOpen, onClose]);
 
   // Voice 
-  const startMobileVoiceRecognition = (skipPermissionCheck = false) => {
-    if (!skipPermissionCheck && !skipMicPermission) {
-      setShowMicPermission(true);
-      return;
-    }
-
-    const SpeechRecognition =
-      window.SpeechRecognition || window.webkitSpeechRecognition;
-
-    if (!SpeechRecognition) {
-      toast.error("Your browser does not support voice search");
-      return;
-    }
-
-    const recognition = new SpeechRecognition();
-
-    recognition.lang = "en-IN";
-    recognition.interimResults = false;
-    recognition.continuous = false;
-
-    try {
-      recognition.start();
-      setMobileSearchIsListening(true);
-    } catch (error) { }
-
-    recognition.onstart = () => {
-      setMobileSearchIsListening(true);
-    };
-
-    recognition.onresult = (event) => {
-      const voiceText = event.results[0][0].transcript;
+  const startMobileVoiceRecognition = () => {
+    startVoiceListening((voiceText) => {
       setMobileSearchQuery(voiceText);
-      setMobileSearchIsListening(false);
       addToMobileRecentSearches(voiceText);
-    };
-
-    recognition.onerror = (event) => {
-      setMobileSearchIsListening(false);
-
-      if (event.error === "not-allowed") {
-        toast.error("Microphone permission denied");
-      } else if (event.error === "no-speech") {
-        toast.error("No voice detected");
-      } else {
-        toast.error("Voice recognition failed");
-      }
-    };
-
-    recognition.onend = () => {
-      setMobileSearchIsListening(false);
-    };
-  };
-
-  const handleMobileMicPermission = (granted, skipFuture) => {
-    setShowMicPermission(false);
-    if (granted) {
-      if (skipFuture) {
-        setSkipMicPermission(true);
-        localStorage.setItem("medicompares_mic_permission", "granted");
-      }
-      setTimeout(() => {
-        startMobileVoiceRecognition(true);
-      }, 100);
-    }
+    });
   };
 
   const addToMobileRecentSearches = (searchTerm) => {
@@ -944,153 +884,7 @@ const MobileSearchDropdown = ({
         </div>
 
         {/* Microphone  */}
-        {showMicPermission && (
-          <div
-            style={{
-              position: "fixed",
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              backgroundColor: "rgba(0, 0, 0, 0.5)",
-              zIndex: 10001,
-              display: "flex",
-              alignItems: "flex-end",
-              justifyContent: "center",
-            }}
-            onClick={() => setShowMicPermission(false)}
-          >
-            <div
-              style={{
-                backgroundColor: "#ffffff",
-                width: "100%",
-                maxWidth: "100%",
-                borderTopLeftRadius: "20px",
-                borderTopRightRadius: "20px",
-                padding: "24px",
-                maxHeight: "70vh",
-                overflowY: "auto",
-              }}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px" }}>
-                <h2
-                  style={{
-                    fontSize: "22px",
-                    fontWeight: "bold",
-                    color: "#000",
-                    margin: 0,
-                    fontFamily: "serif",
-                  }}
-                >
-                  Shop faster with voice
-                </h2>
-                <button
-                  onClick={() => setShowMicPermission(false)}
-                  style={{
-                    background: "none",
-                    border: "none",
-                    fontSize: "24px",
-                    cursor: "pointer",
-                    color: "#000",
-                    padding: "0",
-                    width: "32px",
-                    height: "32px",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  ×
-                </button>
-              </div>
-
-              <div style={{ textAlign: "center", marginBottom: "24px" }}>
-                <i
-                  className="fa fa-microphone"
-                  style={{
-                    fontSize: "64px",
-                    color: "#0284c7",
-                    marginBottom: "16px",
-                  }}
-                />
-              </div>
-
-              <div style={{ marginBottom: "24px" }}>
-                <label
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "12px",
-                    cursor: "pointer",
-                    marginBottom: "16px",
-                  }}
-                >
-                  <input
-                    type="checkbox"
-                    id="mic-skip-checkbox"
-                    style={{ width: "20px", height: "20px", cursor: "pointer" }}
-                  />
-                  <span style={{ fontSize: "14px", color: "#374151" }}>
-                    Allow this MediCompares app to access your microphone and skip this step in the future.
-                  </span>
-                </label>
-                <p style={{ fontSize: "12px", color: "#6b7280", marginTop: "8px" }}>
-                  You can manage this access at any time in{" "}
-                  <span style={{ color: "#0284c7", textDecoration: "underline", cursor: "pointer" }}>
-                    permissions settings
-                  </span>
-                  .
-                </p>
-                <p style={{ fontSize: "12px", color: "#6b7280", marginTop: "12px" }}>
-                  Your audio is transcribed in the cloud then automatically deleted. We store and use the transcripts as described in our{" "}
-                  <span style={{ color: "#0284c7", textDecoration: "underline", cursor: "pointer" }}>
-                    Privacy Notice
-                  </span>
-                  .
-                </p>
-              </div>
-
-              <div style={{ display: "flex", gap: "12px", marginTop: "24px" }}>
-                <button
-                  onClick={() => handleMobileMicPermission(false, false)}
-                  style={{
-                    flex: 1,
-                    padding: "14px",
-                    border: "1px solid #d1d5db",
-                    borderRadius: "8px",
-                    backgroundColor: "#ffffff",
-                    color: "#000",
-                    fontSize: "16px",
-                    fontWeight: "500",
-                    cursor: "pointer",
-                  }}
-                >
-                  Not now
-                </button>
-                <button
-                  onClick={() => {
-                    const checkbox = document.getElementById("mic-skip-checkbox");
-                    handleMobileMicPermission(true, checkbox?.checked || false);
-                  }}
-                  style={{
-                    flex: 1,
-                    padding: "14px",
-                    border: "none",
-                    borderRadius: "8px",
-                    backgroundColor: "#321961",
-                    color: "#000",
-                    fontSize: "16px",
-                    fontWeight: "600",
-                    cursor: "pointer",
-                  }}
-                >
-                  Turn on microphone
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
+        <MicPermissionModal />
 
       </div>
       {vendorModel && (

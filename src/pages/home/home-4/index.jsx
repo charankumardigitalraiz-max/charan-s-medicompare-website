@@ -27,6 +27,7 @@ import PageLoader from "../../../components/ui/PageLoader.jsx";
 import { getImageUrl } from "../../../utils";
 import PrescriptionUploadModal from "../../../components/modals/PrescriptionUploadModal";
 import VendorOffersModal from "../../../components/ui/VendorOffersModal.jsx";
+import { useVoiceRecognition } from "../../../hooks";
 import {
   collectHomeImagePaths,
   prefetchImageUrls,
@@ -55,7 +56,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
   const [blogss, setblogss] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isMoreLoading, setIsMoreLoading] = useState(false);
-  const [isListening, setIsListening] = useState(false);
+  const { isListening, startListening } = useVoiceRecognition();
   const [faqss, setFaqs] = useState([]);
   const [sections, setSections] = useState([]);
   const [part1Vendors, setPart1Vendors] = useState([]);
@@ -305,67 +306,11 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
     fetchSuggestions(value, 10, false);
   };
 
-  const [recognition, setRecognition] = useState(null);
-
   const startVoiceRecognition = () => {
-    if (recognition) {
-      try {
-        recognition.stop();
-        recognition.onstart = null;
-        recognition.onresult = null;
-        recognition.onerror = null;
-        recognition.onend = null;
-      } catch (error) { }
-    }
-
-    const SpeechRecognition =
-      window.SpeechRecognition || window.webkitSpeechRecognition;
-
-    if (!SpeechRecognition) {
-      toast.error("Your browser does not support voice search");
-      return;
-    }
-
-    const newRecognition = new SpeechRecognition();
-
-    newRecognition.lang = "en-IN";
-    newRecognition.interimResults = false;
-    newRecognition.continuous = false;
-
-    newRecognition.onstart = () => {
-      setIsListening(true);
-    };
-
-    newRecognition.onresult = (event) => {
-      const voiceText = event.results[0][0].transcript;
+    startListening((voiceText) => {
       setQuery(voiceText);
       handleChange({ target: { value: voiceText } });
-      setIsListening(false);
-    };
-
-    newRecognition.onerror = (event) => {
-      setIsListening(false);
-
-      if (event.error === "not-allowed") {
-        toast.error("Microphone permission denied");
-      } else if (event.error === "no-speech") {
-        toast.error("No voice detected");
-      } else {
-        toast.error("Voice recognition failed");
-      }
-    };
-
-    newRecognition.onend = () => {
-      setIsListening(false);
-    };
-
-    try {
-      newRecognition.start();
-      setIsListening(true);
-      setRecognition(newRecognition);
-    } catch (error) {
-      // Handle error silently or show toast if needed
-    }
+    });
   };
 
   const handlePrescriptionSearchCompleted = (resData) => {
@@ -569,22 +514,6 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
       setshow(true);
     }
   }, [selectedPincode]);
-
-  useEffect(() => {
-    return () => {
-      if (recognition) {
-        try {
-          recognition.stop();
-          recognition.onstart = null;
-          recognition.onresult = null;
-          recognition.onerror = null;
-          recognition.onend = null;
-        } catch (error) {
-          // Ignore cleanup errors
-        }
-      }
-    };
-  }, [recognition]);
 
   useEffect(() => {
     const initializeComponent = async () => {

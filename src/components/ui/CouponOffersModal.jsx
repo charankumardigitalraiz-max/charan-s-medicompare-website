@@ -231,7 +231,7 @@ const CouponOffersModal = ({
 
         <div className="offers-list !flex !flex-col !gap-3">
           {!hasCoupons ? (
-            <div className="!flex !flex-col !items-center !justify-center !py-12 !px-5 !text-center !bg-white !rounded-xl !border !border-slate-100 !shadow-sm">
+            <div className="!flex !flex-col !items-center !justify-center !py-12 !px-5 !text-center !bg-white !rounded-sm !border !border-slate-100 !shadow-sm">
               <div className="!text-3xl !mb-3">🎟️</div>
               <span className="!text-sm !font-bold !text-slate-700">
                 No Coupons Available

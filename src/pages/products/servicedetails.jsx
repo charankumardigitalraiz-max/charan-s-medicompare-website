@@ -18,7 +18,7 @@ import VendorOffersModal from "../../components/ui/VendorOffersModal.jsx";
 import LabTest from "../services/labtests.jsx";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import { useResponsive } from "../../hooks";
+import { useResponsive, useVoiceRecognition } from "../../hooks";
 import ServiceCards from "../../components/ui/ServiceCards.jsx";
 import DynamicCategorySections from "../../components/home/DynamicCategorySections.jsx";
 import HomeProductScrollCarousel from "../../components/home/HomeProductScrollCarousel.jsx";
@@ -163,7 +163,7 @@ const ServiceDetails = () => {
   const [topCategoriesProducts, settopCategoriesProducts] = useState([]);
   const [topdoctors, settopdoctors] = useState([]);
   const [categoryvendor, setcategoryvendor] = useState([]);
-  const [isListening, setIsListening] = useState(false);
+  const { isListening, startListening } = useVoiceRecognition();
   const [vendorproducts, setvendorproducts] = useState([]);
   const [partners, setpartners] = useState([]);
   const [packages, setPackages] = useState([]);
@@ -496,45 +496,10 @@ const ServiceDetails = () => {
   };
 
   const startVoiceRecognition = () => {
-    const SpeechRecognition =
-      window.SpeechRecognition || window.webkitSpeechRecognition;
-
-    if (!SpeechRecognition) {
-      toast.error("Your browser does not support voice search");
-      return;
-    }
-
-    const recognition = new SpeechRecognition();
-    recognition.lang = "en-IN";
-    recognition.interimResults = false;
-    recognition.continuous = false;
-
-    try {
-      recognition.start();
-      setIsListening(true);
-    } catch (error) { }
-
-    recognition.onstart = () => setIsListening(true);
-
-    recognition.onresult = (event) => {
-      const voiceText = event.results[0][0].transcript;
+    startListening((voiceText) => {
       setQuery(voiceText);
       handleChange({ target: { value: voiceText } });
-      setIsListening(false);
-    };
-
-    recognition.onerror = (event) => {
-      setIsListening(false);
-      if (event.error === "not-allowed") {
-        toast.error("Microphone permission denied");
-      } else if (event.error === "no-speech") {
-        toast.error("No voice detected");
-      } else {
-        toast.error("Voice recognition failed");
-      }
-    };
-
-    recognition.onend = () => setIsListening(false);
+    });
   };
 
   useEffect(() => {
