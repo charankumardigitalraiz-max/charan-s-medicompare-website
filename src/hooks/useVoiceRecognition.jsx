@@ -83,12 +83,13 @@ export const useVoiceRecognition = () => {
 
     recognition.onerror = (event) => {
       setIsListening(false);
+      console.error("Speech recognition error:", event.error);
       if (event.error === "not-allowed") {
-        // Suppress permission denied toast per user request
+        toast.error("Microphone access denied. Please enable it in browser settings.");
       } else if (event.error === "no-speech") {
         toast.error("No voice detected");
       } else {
-        toast.error("Voice recognition failed");
+        toast.error(`Voice recognition failed: ${event.error}`);
       }
     };
 
