@@ -12,7 +12,7 @@ export const useVoiceRecognition = () => {
   const recognitionRef = useRef(null);
   const onResultCallbackRef = useRef(null);
 
-  const startListening = useCallback(async (onResult, isExplicitSkip = false) => {
+  const startListening = useCallback((onResult, isExplicitSkip = false) => {
     onResultCallbackRef.current = onResult;
 
     // Show custom modal if first time and not explicitly skipped
@@ -25,33 +25,6 @@ export const useVoiceRecognition = () => {
       try {
         recognitionRef.current.stop();
       } catch (e) { }
-    }
-
-    // Check permission state in browser
-    let permissionState = "prompt";
-    if (navigator.permissions && navigator.permissions.query) {
-      try {
-        const result = await navigator.permissions.query({ name: "microphone" });
-        permissionState = result.state;
-      } catch (e) { }
-    }
-
-    if (permissionState === "denied") {
-      toast("Please enable microphone in browser settings to use voice search", { icon: "🎙️" });
-      return;
-    }
-
-    // If permission needs to be requested, trigger the native browser permission prompt safely
-    if (permissionState === "prompt" && navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-      try {
-        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        stream.getTracks().forEach((track) => track.stop());
-      } catch (err) {
-        // Only stop if the user explicitly blocked/denied it
-        if (err.name === "NotAllowedError" || err.name === "PermissionDeniedError") {
-          return;
-        }
-      }
     }
 
     const SpeechRecognition =
@@ -120,9 +93,7 @@ export const useVoiceRecognition = () => {
         setSkipMicPermission(true);
         localStorage.setItem("medicompares_mic_permission", "granted");
       }
-      setTimeout(() => {
-        startListening(onResultCallbackRef.current, true);
-      }, 100);
+      startListening(onResultCallbackRef.current, true);
     }
   }, [startListening]);
 
