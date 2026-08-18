@@ -163,7 +163,7 @@ const ServiceDetails = () => {
   const [topCategoriesProducts, settopCategoriesProducts] = useState([]);
   const [topdoctors, settopdoctors] = useState([]);
   const [categoryvendor, setcategoryvendor] = useState([]);
-  const { isListening, startListening } = useVoiceRecognition();
+  const { isListening, startListening, MicPermissionModal } = useVoiceRecognition();
   const [vendorproducts, setvendorproducts] = useState([]);
   const [partners, setpartners] = useState([]);
   const [packages, setPackages] = useState([]);
@@ -1141,11 +1141,10 @@ const ServiceDetails = () => {
                               type="button"
                               title="Voice search"
                               onClick={startVoiceRecognition}
-                              className={`!flex !items-center !justify-center !w-[30px] !h-[30px] !rounded-full !border !border-solid !transition-all !duration-300 !ease-in-out !cursor-pointer active:!scale-90 ${
-                                isListening
+                              className={`!flex !items-center !justify-center !w-[30px] !h-[30px] !rounded-full !border !border-solid !transition-all !duration-300 !ease-in-out !cursor-pointer active:!scale-90 ${isListening
                                   ? "!bg-gradient-to-r !from-rose-500 !to-red-600 !text-white !border-rose-500 !shadow-[0_0_12px_rgba(244,63,94,0.5)] hover:!scale-110 hover:!shadow-[0_0_16px_rgba(244,63,94,0.7)]"
                                   : "!bg-blue-50 !text-blue-600 !border-blue-100/80 hover:!bg-blue-600 hover:!text-white hover:!border-blue-600 hover:!scale-110 hover:!shadow-[0_4px_12px_rgba(37,99,235,0.25)]"
-                              }`}
+                                }`}
                             >
                               <svg
                                 width={14}
@@ -1896,6 +1895,7 @@ const ServiceDetails = () => {
       )} */}
 
       <VendorOffersModal show={!!vendorModel} onClose={() => setVendorModel(null)} product={vendorModel} />
+      <MicPermissionModal />
       <Footer />
     </div>
   );

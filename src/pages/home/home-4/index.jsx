@@ -56,7 +56,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
   const [blogss, setblogss] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [isMoreLoading, setIsMoreLoading] = useState(false);
-  const { isListening, startListening } = useVoiceRecognition();
+  const { isListening, startListening, MicPermissionModal } = useVoiceRecognition();
   const [faqss, setFaqs] = useState([]);
   const [sections, setSections] = useState([]);
   const [part1Vendors, setPart1Vendors] = useState([]);
@@ -2675,6 +2675,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
             lng={longitude}
           />
           <VendorOffersModal show={!!vendorModel} onClose={() => setVendorModel(null)} product={vendorModel} />
+          <MicPermissionModal />
           <Home2Footer />
         </div>
       )}
