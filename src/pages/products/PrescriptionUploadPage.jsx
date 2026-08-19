@@ -370,6 +370,12 @@ const PrescriptionUploadPage = () => {
         if (lat) formData.append("lat", lat);
         if (lng) formData.append("lng", lng);
 
+        const uid = localStorage.getItem("medicompares_uid");
+        if (uid) {
+          formData.append("userId", uid);
+          formData.append("user", uid);
+        }
+
         const response = await axiosInstance.post(`/prescription/analyze`, formData);
         const data = response?.data;
 
@@ -432,6 +438,12 @@ const PrescriptionUploadPage = () => {
       } else {
         formData.append("name", medicineData?.name || "");
         formData.append("composition", medicineData?.compositions?.name || "");
+
+        const uid = localStorage.getItem("medicompares_uid");
+        if (uid) {
+          formData.append("userId", uid);
+          formData.append("user", uid);
+        }
 
         const response = await axiosInstance.post(`/prescription/analyze`, formData);
         const data = response?.data;

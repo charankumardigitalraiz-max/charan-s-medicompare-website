@@ -2228,6 +2228,10 @@ const ProductDescription = () => {
         ? (vendor.matchedVariantPrice ?? vendor.matchedPrice ?? vendor.price ?? 0)
         : (vendor.price ?? vendor.matchedPrice ?? 0);
     }
+
+    if (!price || price <= 0) {
+      return null;
+    }
     const discountPrice = isVariant
       ? (vendor.matchedVariantDiscountPrice ??
         vendor.matchedDiscountPrice ??
@@ -3616,7 +3620,7 @@ const ProductDescription = () => {
                                         </span>
                                       </div>
                                     )}
-                                    {(tablet?.keywords || tablet?.keyword) && (
+                                    {/* {(tablet?.keywords || tablet?.keyword) && (
                                       <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
                                         <div className="flex items-center gap-1 text-gray-500 font-normal">
                                           <i className="fa fa-tags fa-xs" style={{ width: "14px", flexShrink: 0, color: "#321961" }}></i>
@@ -3626,7 +3630,7 @@ const ProductDescription = () => {
                                           {Array.isArray(tablet?.keywords) ? tablet.keywords.join(", ") : tablet?.keywords || tablet?.keyword}
                                         </span>
                                       </div>
-                                    )}
+                                    )} */}
                                     {tablet?.dynamicFields?.map((field) => (
                                       <div key={field.label} style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
                                         <div className="flex items-center gap-1 text-gray-500 font-normal">
@@ -3687,7 +3691,7 @@ const ProductDescription = () => {
                                         </span>
                                       </div>
                                     )}
-                                    {(tablet?.keywords || tablet?.keyword) && (
+                                    {/* {(tablet?.keywords || tablet?.keyword) && (
                                       <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
                                         <div className="flex items-center gap-1 text-gray-500 font-normal">
                                           <i className="fa fa-tags fa-xs" style={{ width: "14px", flexShrink: 0, color: "#321961" }}></i>
@@ -3697,7 +3701,7 @@ const ProductDescription = () => {
                                           {Array.isArray(tablet?.keywords) ? tablet.keywords.join(", ") : tablet?.keywords || tablet?.keyword}
                                         </span>
                                       </div>
-                                    )}
+                                    )} */}
                                     {tablet?.dynamicFields?.map((field) => (
                                       <div key={field.label} style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
                                         <div className="flex items-center gap-1 text-gray-500 font-normal">
@@ -3758,7 +3762,7 @@ const ProductDescription = () => {
                                         </span>
                                       </div>
                                     )}
-                                    {(tablet?.keywords || tablet?.keyword) && (
+                                    {/* {(tablet?.keywords || tablet?.keyword) && (
                                       <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
                                         <div className="flex items-center gap-1 text-gray-500 font-normal">
                                           <i className="fa fa-tags fa-xs" style={{ width: "14px", flexShrink: 0, color: "#321961" }}></i>
@@ -3768,7 +3772,7 @@ const ProductDescription = () => {
                                           {Array.isArray(tablet?.keywords) ? tablet.keywords.join(", ") : tablet?.keywords || tablet?.keyword}
                                         </span>
                                       </div>
-                                    )}
+                                    )} */}
                                     {tablet?.dynamicFields?.map((field) => (
                                       <div key={field.label} style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
                                         <div className="flex items-center gap-1 text-gray-500 font-normal">
@@ -3842,7 +3846,7 @@ const ProductDescription = () => {
                                           </span>
                                         </div>
                                       )}
-                                      {(tablet?.keywords || tablet?.keyword) && (
+                                      {/* {(tablet?.keywords || tablet?.keyword) && (
                                         <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
                                           <div className="flex items-center gap-1 text-gray-500 font-normal">
                                             <i className="fa fa-tags fa-xs" style={{ width: "14px", flexShrink: 0, color: "#321961" }}></i>
@@ -3852,7 +3856,7 @@ const ProductDescription = () => {
                                             {Array.isArray(tablet?.keywords) ? tablet.keywords.join(", ") : tablet?.keywords || tablet?.keyword}
                                           </span>
                                         </div>
-                                      )}
+                                      )} */}
                                       {tablet?.dynamicFields?.map((field) => (
                                         <div key={field.label} style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
                                           <div className="flex items-center gap-1 text-gray-500 font-normal">
@@ -3904,7 +3908,7 @@ const ProductDescription = () => {
                                           </span>
                                         </div>
                                       )}
-                                      {(tablet?.keywords || tablet?.keyword) && (
+                                      {/* {(tablet?.keywords || tablet?.keyword) && (
                                         <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
                                           <div className="flex items-center gap-1 text-gray-500 font-normal">
                                             <i className="fa fa-tags fa-xs" style={{ width: "14px", flexShrink: 0, color: "#321961" }}></i>
@@ -3914,7 +3918,7 @@ const ProductDescription = () => {
                                             {Array.isArray(tablet?.keywords) ? tablet.keywords.join(", ") : tablet?.keywords || tablet?.keyword}
                                           </span>
                                         </div>
-                                      )}
+                                      )} */}
                                       {tablet?.dynamicFields?.map((field) => (
                                         <div key={field.label} style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
                                           <div className="flex items-center gap-1 text-gray-500 font-normal">
@@ -3977,7 +3981,7 @@ const ProductDescription = () => {
                                           </span>
                                         </div>
                                       )}
-                                      {(tablet?.keywords || tablet?.keyword) && (
+                                      {/* {(tablet?.keywords || tablet?.keyword) && (
                                         <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
                                           <div className="flex items-center gap-1 text-gray-500 font-normal">
                                             <i className="fa fa-tags fa-xs" style={{ width: "14px", flexShrink: 0, color: "#321961" }}></i>
@@ -3987,7 +3991,7 @@ const ProductDescription = () => {
                                             {Array.isArray(tablet?.keywords) ? tablet.keywords.join(", ") : tablet?.keywords || tablet?.keyword}
                                           </span>
                                         </div>
-                                      )}
+                                      )} */}
                                       {tablet?.dynamicFields?.map((field) => (
                                         <div key={field.label} style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
                                           <div className="flex items-center gap-1 text-gray-500 font-normal">
@@ -4039,7 +4043,7 @@ const ProductDescription = () => {
                                           </span>
                                         </div>
                                       )}
-                                      {(tablet?.keywords || tablet?.keyword) && (
+                                      {/* {(tablet?.keywords || tablet?.keyword) && (
                                         <div style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
                                           <div className="flex items-center gap-1 text-gray-500 font-normal">
                                             <i className="fa fa-tags fa-xs" style={{ width: "14px", flexShrink: 0, color: "#321961" }}></i>
@@ -4049,7 +4053,7 @@ const ProductDescription = () => {
                                             {Array.isArray(tablet?.keywords) ? tablet.keywords.join(", ") : tablet?.keywords || tablet?.keyword}
                                           </span>
                                         </div>
-                                      )}
+                                      )} */}
                                       {tablet?.dynamicFields?.map((field) => (
                                         <div key={field.label} style={{ display: "grid", gridTemplateColumns: "125px 1fr", gap: "8px", fontSize: "12px", alignItems: "start" }}>
                                           <div className="flex items-center gap-1 text-gray-500 font-normal">

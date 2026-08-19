@@ -18,6 +18,7 @@ const PrescriptionUploadModal2 = ({
   const [showTeleconsultScreen, setShowTeleconsultScreen] = useState(false);
   const [prescriptionCharge, setPrescriptionCharge] = useState(100);
   const [showSuccessScreen, setShowSuccessScreen] = useState(false);
+  const [unmatchedOption, setUnmatchedOption] = useState("continue_verified");
   const fileInputRef = useRef(null);
 
   useEffect(() => {
@@ -29,6 +30,7 @@ const PrescriptionUploadModal2 = ({
       setAnalysisResults(null);
       setShowTeleconsultScreen(false);
       setShowSuccessScreen(false);
+      setUnmatchedOption("continue_verified");
     }
   }, [show]);
 
@@ -129,6 +131,12 @@ const PrescriptionUploadModal2 = ({
 
       formData.append("medicines", JSON.stringify(medicinePayload));
 
+      const uid = localStorage.getItem("medicompares_uid");
+      if (uid) {
+        formData.append("userId", uid);
+        formData.append("user", uid);
+      }
+
       const response = await axiosInstance.post(`/cart/prescription/analyze`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
@@ -193,7 +201,11 @@ const PrescriptionUploadModal2 = ({
             onClick={() => {
               onClose();
               if (onValidated) {
-                onValidated("payment_required", []);
+                onValidated(
+                  analysisResults?.prescriptionImage || "payment_required",
+                  analysisResults?.medicines || [],
+                  true
+                );
               }
             }}
             className="!w-full !py-2.5 !rounded-md !bg-[#321961] !text-white !font-bold !text-[14px] hover:!opacity-90 !transition-all !border-0"
@@ -384,6 +396,45 @@ const PrescriptionUploadModal2 = ({
                           </div>
                         ))}
                       </div>
+
+                      {analysisResults.medicines?.some((m) => !m.matched) && (
+                        <div className="!mt-4 !p-4 !rounded-xl !bg-amber-50/50 !border !border-amber-100 text-left">
+                          <span className="!block !font-semibold !mb-3.5 !text-amber-900 !text-[13px]">
+                            Some medicines could not be verified from your prescription. Please choose how to proceed:
+                          </span>
+                          <div className="!flex !flex-col !gap-3">
+                            <label className="!flex !items-start !gap-2.5 !cursor-pointer">
+                              <input
+                                type="radio"
+                                name="unmatchedOption"
+                                value="teleconsult"
+                                checked={unmatchedOption === "teleconsult"}
+                                onChange={() => setUnmatchedOption("teleconsult")}
+                                className="!mt-1 !cursor-pointer !accent-purple-600"
+                              />
+                              <div className="!text-[12.5px] !text-slate-700">
+                                <strong className="!block !text-slate-800">Add doctor consultation (₹{prescriptionCharge})</strong>
+                                A registered doctor will call you to verify unmatched medicines and issue a prescription.
+                              </div>
+                            </label>
+
+                            <label className="!flex !items-start !gap-2.5 !cursor-pointer">
+                              <input
+                                type="radio"
+                                name="unmatchedOption"
+                                value="continue_verified"
+                                checked={unmatchedOption === "continue_verified"}
+                                onChange={() => setUnmatchedOption("continue_verified")}
+                                className="!mt-1 !cursor-pointer !accent-purple-600"
+                              />
+                              <div className="!text-[12.5px] !text-slate-700">
+                                <strong className="!block !text-slate-800">Remove unmatched medicines and proceed</strong>
+                                Only the matched medicines will be kept in your cart. Unmatched items will be removed.
+                              </div>
+                            </label>
+                          </div>
+                        </div>
+                      )}
                     </div>
                   ) : (
                     <div className="!mb-4">
@@ -400,15 +451,17 @@ const PrescriptionUploadModal2 = ({
                   )}
 
                   {/* Consultation option link */}
-                  <div className="!mt-2 !mb-1 text-center border-t border-dashed border-slate-200 pt-3">
-                    <button
-                      type="button"
-                      onClick={() => setShowTeleconsultScreen(true)}
-                      className="text-[12.5px] text-purple-600 hover:text-purple-800 font-bold underline bg-transparent border-0 cursor-pointer p-0"
-                    >
-                      I don't have a prescription, I need one
-                    </button>
-                  </div>
+                  {!analysisResults.isValidPrescription && (
+                    <div className="!mt-2 !mb-1 text-center border-t border-dashed border-slate-200 pt-3">
+                      <button
+                        type="button"
+                        onClick={() => setShowTeleconsultScreen(true)}
+                        className="text-[12.5px] text-purple-600 hover:text-purple-800 font-bold underline bg-transparent border-0 cursor-pointer p-0"
+                      >
+                        I don't have a prescription, I need one
+                      </button>
+                    </div>
+                  )}
                 </div>
 
                 <div className="!flex !gap-3 !mt-4">
@@ -422,7 +475,13 @@ const PrescriptionUploadModal2 = ({
                   <button
                     type="button"
                     disabled={!analysisResults.isValidPrescription}
-                    onClick={() => onValidated(analysisResults.prescriptionImage, analysisResults.medicines)}
+                    onClick={() => {
+                      if (analysisResults.medicines?.some((m) => !m.matched) && unmatchedOption === "teleconsult") {
+                        setShowSuccessScreen(true);
+                      } else {
+                        onValidated(analysisResults.prescriptionImage, analysisResults.medicines);
+                      }
+                    }}
                     className={`!w-1/2 !py-2.5 !rounded-sm !font-semibold !text-[14px] !text-white !transition-all !shadow-md hover:!shadow-lg !border-0 ${!analysisResults.isValidPrescription
                       ? "!bg-slate-200 !text-slate-400 !cursor-not-allowed !shadow-none hover:!shadow-none"
                       : "!bg-[#321961] hover:!opacity-95"
@@ -556,7 +615,7 @@ const PrescriptionUploadModal2 = ({
                   )}
 
                   {/* Checkbox: I don't have a prescription */}
-                  {mode !== "search" && (
+                  {mode !== "search" && !isUploading && (
                     <div className="!flex !items-center !gap-2 !mt-3 !mb-2 !px-3.5 !py-2.5 !rounded-sm !bg-slate-50 !border !border-slate-200 !select-none">
                       <input
                         type="checkbox"

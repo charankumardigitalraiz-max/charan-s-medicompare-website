@@ -353,27 +353,9 @@ const MedicineComparePage = () => {
     }
   };
 
-  const handleVariantChange = async (variantId) => {
+  const handleVariantChange = (variantId) => {
     if (!product || !variantId) return;
-
-    setLoading(true);
     setSelectedVariantId(variantId);
-    try {
-      const searchParams = new URLSearchParams(location.search);
-      const urlServiceSlug = searchParams.get("serviceslug");
-      const prodId = product?.tablet?._id || product?._id;
-      if (prodId) {
-        await fetchProductData(
-          prodId,
-          "show",
-          checkedPincode,
-          true,
-          urlServiceSlug,
-        );
-      }
-    } catch (err) {
-      setLoading(false);
-    }
   };
 
   const handlePincodeCheck = async (e) => {
@@ -1138,12 +1120,17 @@ const MedicineComparePage = () => {
   const fallbackVendors = !variantVendors.length
     ? buildVendorVariants(pharmacies, null)
     : [];
-  const vendorsToDisplay =
+  const rawVendorsToDisplay =
     variantVendors.length > 0
       ? variantVendors
       : fallbackVendors.length > 0
         ? fallbackVendors
         : pharmacies;
+
+  const vendorsToDisplay = rawVendorsToDisplay.filter((v) => {
+    const priceVal = parseFloat(v?.price || v?.matchedPrice || v?.matchedVariantPrice || 0);
+    return priceVal > 0;
+  });
 
   const tabletFiles = product?.tablet?.files || [];
   const tabletImageUrl = product?.tablet?.imageUrl || [];

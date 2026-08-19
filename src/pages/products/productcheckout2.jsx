@@ -133,6 +133,8 @@ export const Cart = () => {
   const [pendingOrderSubmit, setPendingOrderSubmit] = useState(false);
   const [verifiedPrescriptionImage, setVerifiedPrescriptionImage] = useState(null);
   const [prescriptionCharge, setPrescriptionCharge] = useState(100);
+  const [matchedMedicines, setMatchedMedicines] = useState([]);
+  const [isTeleconsultRequested, setIsTeleconsultRequested] = useState(false);
 
   useEffect(() => {
     if (pendingOrderSubmit && !isSubmitting && cartItems.length > 0) {
@@ -141,13 +143,12 @@ export const Cart = () => {
     }
   }, [cartItems, pendingOrderSubmit, isSubmitting, verifiedPrescriptionImage]);
 
-  const handlePrescriptionValidated = async (prescriptionImageVal, checkedMedicines) => {
+  const handlePrescriptionValidated = async (prescriptionImageVal, checkedMedicines, isTeleconsult = false) => {
     setShowPrescriptionModal(false);
     setIsSubmitting(true);
     try {
-      const token = localStorage.getItem("medicomparestoken");
-      const normalizedUnmatchedNames = (checkedMedicines && Array.isArray(checkedMedicines))
-        ? checkedMedicines.filter(m => !m.matched).map(m => m.name.toLowerCase().trim())
+      const normalizedMatchedNames = (checkedMedicines && Array.isArray(checkedMedicines))
+        ? checkedMedicines.filter(m => m.matched).map(m => m.name.toLowerCase().trim())
         : [];
 
       const unmatchedItems = [];
@@ -160,25 +161,29 @@ export const Cart = () => {
 
         const medName = (item?.productDetails?.tabletDetails?.name || item?.tabletdetails?.name || item?.name || "").toLowerCase().trim();
 
-        if (rxRequired && prescriptionImageVal !== "payment_required") {
-          const isUnmatched = normalizedUnmatchedNames.some(name => {
+        if (rxRequired) {
+          const isMatched = normalizedMatchedNames.some(name => {
             return medName.includes(name) || name.includes(medName);
           });
-          if (isUnmatched) {
+          if (!isMatched) {
             unmatchedItems.push(item);
           }
         }
       });
 
-      if (unmatchedItems.length > 0) {
-        for (const item of unmatchedItems) {
-          const pkgId = item.packageId || (item.type === "package" ? item._id : null);
-          await removeItem(item.vendorId, item.productId, item.variantId, pkgId);
+      if (!isTeleconsult) {
+        if (unmatchedItems.length > 0) {
+          for (const item of unmatchedItems) {
+            const pkgId = item.packageId || (item.type === "package" ? item._id : null);
+            await removeItem(item.vendorId, item.productId, item.variantId, pkgId);
+          }
+          toast.success("Unverified medicines have been removed from your cart.");
         }
-        toast.success("Unverified medicines have been removed from your cart.");
       }
 
       await refreshCart();
+      setMatchedMedicines(normalizedMatchedNames);
+      setIsTeleconsultRequested(isTeleconsult);
       setVerifiedPrescriptionImage(prescriptionImageVal);
       setPendingOrderSubmit(true);
     } catch (error) {
@@ -655,16 +660,35 @@ export const Cart = () => {
         item?.tabletdetails?.prescriptionRequired === true ||
         item?.productDetails?.tabletDetails?.prescriptionRequired === true ||
         item?.productDetails?.prescriptionRequired === true;
+
+      const medName = (item?.productDetails?.tabletDetails?.name || item?.tabletdetails?.name || item?.name || "").toLowerCase().trim();
+
+      const isMatched = rxRequired && matchedMedicines.some(name => {
+        return medName.includes(name) || name.includes(medName);
+      });
+
+      const validPrescription = item.prescriptionImage &&
+        item.prescriptionImage !== "false" &&
+        item.prescriptionImage !== "true" &&
+        item.prescriptionImage !== "payment_required";
+
+      let resolvedPrescriptionImage = null;
+      if (rxRequired) {
+        if (isMatched) {
+          resolvedPrescriptionImage = verifiedPrescriptionImage || item.prescriptionImage;
+        } else if (validPrescription) {
+          resolvedPrescriptionImage = item.prescriptionImage;
+        } else if (isTeleconsultRequested || forcePrescriptionImage === "payment_required" || item.prescriptionImage === "payment_required") {
+          resolvedPrescriptionImage = "payment_required";
+        }
+      }
+
       return {
         ...item,
         serviceType:
           item?.productDetails?.tabletDetails?.subcategoryDetails?.categoryDetails
             ?.fixedType || null,
-        prescriptionImage: rxRequired
-          ? (item.prescriptionImage && item.prescriptionImage !== "false" && item.prescriptionImage !== "payment_required"
-            ? item.prescriptionImage
-            : forcePrescriptionImage || item.prescriptionImage)
-          : (item.prescriptionImage || null)
+        prescriptionImage: resolvedPrescriptionImage
       };
     });
 
@@ -672,7 +696,7 @@ export const Cart = () => {
       forcePrescriptionImage !== "payment_required" &&
       forcePrescriptionImage !== "false" &&
       forcePrescriptionImage !== "true";
-    const isRxPaid = prescriptionPaymentRequired && !isUploaded;
+    const isRxPaid = prescriptionPaymentRequired && (isTeleconsultRequested || !isUploaded);
 
     const payload = {
       items: itemsWithServiceType,
@@ -680,7 +704,7 @@ export const Cart = () => {
       shipping: 0,
       discount: orderCouponDiscount,
       tax: orderTax,
-      total: withCouponAndWithoutWallet + (isRxPaid ? prescriptionCharge : 0),
+      total: withCouponAndWithoutWallet,
       shippingAddress: selectedAddress._id,
       billingAddress: selectedAddress._id,
       paymentmethod: selectedPayment,
@@ -843,15 +867,11 @@ export const Cart = () => {
 
 
 
-
-
-
-
   const isPrescriptionUploaded = verifiedPrescriptionImage &&
     verifiedPrescriptionImage !== "payment_required" &&
     verifiedPrescriptionImage !== "false" &&
     verifiedPrescriptionImage !== "true";
-  const prescriptionFee = (prescriptionPaymentRequired && !isPrescriptionUploaded) ? prescriptionCharge : 0;
+  const prescriptionFee = (prescriptionPaymentRequired && (isTeleconsultRequested || !isPrescriptionUploaded)) ? prescriptionCharge : 0;
   // Always derive from current cart — serverDiscount/serverFinalAmount are stale after item changes
   const baseFinalAmount = cartBilling?.finalAmount || 0;
   const deliveryCharges = cartBilling?.deliveryCharges || 0;
@@ -885,7 +905,7 @@ export const Cart = () => {
   const couponAmmountApplied = couponAmountApplied;
   const addedDeliveryCharge = withCouponAndWithoutWallet;
   const withoutCouponAndWallet = baseFinalAmount;
-  const walletUsed = walletUsedWithCoupon + prescriptionFee;
+  const walletUsed = walletUsedWithCoupon;
 
   const amountToPay = +(
     (selectedPayment === "cod" ? withCouponAndWithoutWallet : withCouponAndWithWallet)
