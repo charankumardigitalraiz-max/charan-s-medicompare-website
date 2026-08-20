@@ -22,7 +22,7 @@ import { useMediaQuery } from "react-responsive";
 import MedicineSection from "../../../components/ui/MedicineSection";
 import { useLocation as useLocationContext } from "../../../context/LocationContext";
 import CustomerReviewsSuccessModal from "../../../components/modals/CustomerReviewSuccessModal";
-import DynamicCategorySections from "../../../components/home/DynamicCategorySections";
+import DynamicCategorySections2 from "../../../components/home/DynamicCategorySections2";
 import PageLoader from "../../../components/ui/PageLoader.jsx";
 import { getImageUrl } from "../../../utils";
 import PrescriptionUploadModal from "../../../components/modals/PrescriptionUploadModal";
@@ -79,6 +79,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
   const searchInputRef = useRef(null);
   const heroTypeRef = useRef(null);
   const searchContainerRef = useRef(null);
+  const serviceSliderRef = useRef(null);
   const [showPrescriptionModal, setShowPrescriptionModal] = useState(false);
   const [vendorModel, setVendorModel] = useState(null);
   const homeLiteMode = useMemo(() => shouldUseHomeLiteMode(), []);
@@ -854,276 +855,325 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                                 ref={searchContainerRef}
                               >
                                 <form onSubmit={(e) => e.preventDefault()}>
-                                  <div
-                                    className="bg-white rounded-[30px] border border-solid border-[#e5e7eb] shadow-[0_1px_3px_rgba(0,0,0,0.02),0_1px_2px_rgba(0,0,0,0.01)] transition-all duration-250 ease-in-out overflow-hidden relative flex items-center p-2 gap-2"
-                                  >
-                                    <div
-                                      className="flex items-center justify-center w-[25px] h-[25px] text-[#9ca3af] shrink-0"
-                                    >
-                                      <i
-                                        className="fas fa-search text-[14px]"
-                                      ></i>
-                                    </div>
-
-                                    <input
-                                      ref={searchInputRef}
-                                      type="text"
-                                      placeholder={placeholderTexts[0]}
-                                      value={query}
-                                      onChange={handleChange}
-                                      onFocus={() => {
-                                        if (
-                                          !query.trim() &&
-                                          searchHistory.length > 0
-                                        ) {
-                                          setShowSuggestions(true);
-                                        } else if (query) {
-                                          setShowSuggestions(true);
-                                        }
-                                      }}
-                                      className="search-input !border-none !outline-none flex-1 text-[clamp(14px,2vw,16px)] p-0 text-[#111827] bg-transparent font-inherit font-normal min-w-0"
-                                    />
-
-                                    {isLoading && (
-                                      <div
-                                        className="google-dots absolute right-[70px] top-1/2 -translate-y-1/2"
-                                      >
-                                        <span className="dott blue" />
-                                        <span className="dott red" />
-                                        <span className="dott yellow" />
-                                        <span className="dott green" />
-                                      </div>
-                                    )}
-
-                                    <button
-                                      type="button"
-                                      title="Upload prescription"
-                                      onClick={() => navigate("/prescription-upload", { state: { mode: "search", pincode: selectedPincode, lat: latitude, lng: longitude } })}
-                                      className="!flex !items-center !justify-center !w-[30px] !h-[30px] !rounded-full !bg-violet-200 !text-violet-600 !border !border-solid !border-violet-100/80 !cursor-pointer !transition-all !duration-300 !ease-in-out !shrink-0 hover:!bg-violet-600 hover:!text-white hover:!border-violet-600 hover:!scale-110 active:!scale-90 hover:!shadow-[0_4px_12px_rgba(124,58,237,0.25)]"
-                                    >
-                                      <i className="fas fa-file-prescription text-[13px]"></i>
-                                    </button>
-
-                                    <button
-                                      type="button"
-                                      title="Voice search"
-                                      onClick={startVoiceRecognition}
-                                      className={`!flex !items-center !justify-center !w-[30px] !h-[30px] !rounded-full !border !border-solid !transition-all !duration-300 !ease-in-out !cursor-pointer !shrink-0 active:!scale-90 ${isListening
-                                        ? "!bg-gradient-to-r !from-rose-500 !to-red-600 !text-white !border-rose-500 !shadow-[0_0_12px_rgba(244,63,94,0.5)] hover:!scale-110 hover:!shadow-[0_0_16px_rgba(244,63,94,0.7)]"
-                                        : "!bg-blue-50 !text-blue-600 !border-blue-100/80 hover:!bg-blue-600 hover:!text-white hover:!border-blue-600 hover:!scale-110 hover:!shadow-[0_4px_12px_rgba(37,99,235,0.25)]"
-                                        }`}
-                                    >
-                                      <i className={`${isListening ? "fas fa-microphone text-white animate-pulse" : "fas fa-microphone"} text-[14px]`}></i>
-                                    </button>
-                                  </div>
-
-                                  {(isLoading ||
-                                    (showSuggestions &&
-                                      (filteredSuggestions.length > 0 ||
-                                        (!query.trim() &&
-                                          searchHistory.length > 0)))) && (
-                                      <div
-                                        className="absolute top-full left-0 right-0 mt-0 bg-white rounded-[10px] border-[1.5px] border-solid border-[#e5e7eb] shadow-[0_20px_40px_rgba(0,0,0,0.12),0_8px_16px_rgba(0,0,0,0.08)] z-[999999] max-h-[400px] overflow-y-auto overflow-x-hidden animate-[fadeInUp_0.2s_ease-out]"
-                                      >
-                                        {isLoading && (
-                                          <div className="flex flex-col items-center justify-center py-8 gap-2.5 text-slate-400">
-                                            <i className="fas fa-circle-notch fa-spin text-2xl text-[#321961]"></i>
-                                            <span className="text-xs font-medium text-slate-500">Searching for medicines & services...</span>
+                                  {(() => {
+                                    const isDropdownActive = isLoading || (showSuggestions && (filteredSuggestions.length > 0 || (!query.trim() && searchHistory.length > 0)));
+                                    return (
+                                      <>
+                                        <div
+                                          className={`bg-white border border-solid transition-all duration-250 ease-in-out overflow-hidden relative flex items-center p-2.5 gap-2.5 ${isDropdownActive
+                                            ? "rounded-t-[20px] rounded-b-none border-slate-200 border-b-transparent shadow-[0_15px_30px_rgba(50,25,97,0.05)]"
+                                            : "rounded-[30px] border-slate-200 shadow-[0_4px_20px_rgba(0,0,0,0.02),0_1px_3px_rgba(0,0,0,0.01)] hover:border-[#321961]/50 focus-within:border-[#321961]"
+                                            }`}
+                                        >
+                                          <div
+                                            className="flex items-center justify-center w-[25px] h-[25px] text-[#321961]/60 shrink-0"
+                                          >
+                                            <i
+                                              className="fas fa-search text-[15px]"
+                                            ></i>
                                           </div>
-                                        )}
-                                        {!isLoading &&
-                                          !query.trim() &&
-                                          searchHistory.length > 0 && (
-                                            <>
-                                              <div
-                                                className="py-[6px] px-[15px] text-[12px] border-b border-solid border-[#f3f4f6] bg-[#f9fafb] flex justify-between items-center"
-                                              >
-                                                <span>Recent Search History</span>
-                                                <button
-                                                  type="button"
-                                                  onClick={clearSearchHistory}
-                                                  className="bg-none border-none text-[#ef4444] text-[11px] cursor-pointer py-1 px-2 rounded-[4px] transition-all duration-200 ease hover:bg-[#fef2f2]"
-                                                >
-                                                  Clear All
-                                                </button>
+
+                                          <input
+                                            ref={searchInputRef}
+                                            type="text"
+                                            placeholder={placeholderTexts[0]}
+                                            value={query}
+                                            onChange={handleChange}
+                                            onFocus={() => {
+                                              if (
+                                                !query.trim() &&
+                                                searchHistory.length > 0
+                                              ) {
+                                                setShowSuggestions(true);
+                                              } else if (query) {
+                                                setShowSuggestions(true);
+                                              }
+                                            }}
+                                            className="search-input !border-none !outline-none flex-1 text-[clamp(14.5px,2vw,16px)] p-0 text-[#111827] bg-transparent font-inherit font-medium min-w-0 placeholder-slate-400"
+                                          />
+
+                                          {isLoading && (
+                                            <div
+                                              className="google-dots absolute right-[75px] top-1/2 -translate-y-1/2"
+                                            >
+                                              <span className="dott blue" />
+                                              <span className="dott red" />
+                                              <span className="dott yellow" />
+                                              <span className="dott green" />
+                                            </div>
+                                          )}
+
+                                          <button
+                                            type="button"
+                                            title="Upload prescription"
+                                            onClick={() => navigate("/prescription-upload", { state: { mode: "search", pincode: selectedPincode, lat: latitude, lng: longitude } })}
+                                            className="!flex !items-center !justify-center !w-[30px] !h-[30px] !rounded-full !bg-violet-100 !text-[#7c3aed] !border-none !cursor-pointer !transition-all !duration-300 !ease-in-out !shrink-0 hover:!bg-[#7c3aed] hover:!text-white hover:!scale-110 active:!scale-90 hover:!shadow-[0_4px_12px_rgba(124,58,237,0.25)]"
+                                          >
+                                            <i className="fas fa-file-prescription text-[13px]"></i>
+                                          </button>
+
+                                          <button
+                                            type="button"
+                                            title="Voice search"
+                                            onClick={startVoiceRecognition}
+                                            className={`!flex !items-center !justify-center !w-[30px] !h-[30px] !rounded-full !border-none !transition-all !duration-300 !ease-in-out !cursor-pointer !shrink-0 active:!scale-90 ${isListening
+                                              ? "!bg-gradient-to-r !from-rose-500 !to-red-600 !text-white !shadow-[0_0_12px_rgba(244,63,94,0.5)] hover:!scale-110 hover:!shadow-[0_0_16px_rgba(244,63,94,0.7)]"
+                                              : "!bg-blue-50 !text-blue-600 hover:!bg-blue-600 hover:!text-white hover:!scale-110 hover:!shadow-[0_4px_12px_rgba(37,99,235,0.25)]"
+                                              }`}
+                                          >
+                                            <i className={`${isListening ? "fas fa-microphone text-white animate-pulse" : "fas fa-microphone"} text-[14px]`}></i>
+                                          </button>
+                                        </div>
+
+                                        {(isLoading || isDropdownActive) && (
+                                          <div
+                                            className={`absolute top-full left-0 right-0 mt-0 bg-white border border-solid border-slate-200 z-[999999] max-h-[400px] overflow-y-auto overflow-x-hidden animate-[fadeInUp_0.2s_ease-out] ${isDropdownActive
+                                              ? "rounded-b-[20px] rounded-t-none border-t-0 shadow-[0_20px_45px_rgba(50,25,97,0.12)]"
+                                              : "rounded-[20px] shadow-[0_10px_30px_rgba(0,0,0,0.08)]"
+                                              }`}
+                                          >
+                                            {isLoading && (
+                                              <div className="flex flex-col items-center justify-center py-8 gap-2.5 text-slate-400">
+                                                <i className="fas fa-circle-notch fa-spin text-2xl text-[#321961]"></i>
+                                                <span className="text-xs font-medium text-slate-500">Searching for medicines & services...</span>
                                               </div>
-                                              {searchHistory.map(
-                                                (historyItem, index) => (
-                                                  <button
-                                                    key={
-                                                      typeof historyItem ===
-                                                        "object" && historyItem._id
-                                                        ? `history-${historyItem._id}`
-                                                        : `history-${index}`
-                                                    }
-                                                    onClick={() =>
-                                                      handleHistorySelect(historyItem)
-                                                    }
-                                                    className={`w-full py-[10px] px-[15px] border-none bg-transparent text-left cursor-pointer text-[15px] text-[#111827] flex z-[9999999] items-center gap-[14px] transition-all duration-200 ease relative hover:bg-[#f9fafb] ${index < searchHistory.length - 1
-                                                      ? "border-b border-solid border-[#f3f4f6]"
-                                                      : "border-b-0"
-                                                      }`}
+                                            )}
+                                            {!isLoading &&
+                                              !query.trim() &&
+                                              searchHistory.length > 0 && (
+                                                <>
+                                                  <div
+                                                    className="py-[6px] px-[15px] text-[12px] border-b border-solid border-[#f3f4f6] bg-[#f9fafb] flex justify-between items-center"
                                                   >
-                                                    <img
-                                                      src={getImageUrl(
-                                                        historyItem?.item?.tablet
-                                                          ?.imageUrl?.length > 0
-                                                          ? historyItem.item.tablet
-                                                            .imageUrl[0]
-                                                          : historyItem?.item?.tablet
-                                                            ?.files?.length > 0
-                                                            ? historyItem.item.tablet
-                                                              .files[0]
-                                                            : historyItem?.item
-                                                              ?.imageUrl?.length >
-                                                              0
-                                                              ? historyItem.item
-                                                                .imageUrl[0]
-                                                              : historyItem?.item
-                                                                ?.files?.length >
-                                                                0
-                                                                ? historyItem.item
-                                                                  .files[0]
-                                                                : historyItem?.tablet
-                                                                  ?.imageUrl
-                                                                  ?.length > 0
-                                                                  ? historyItem.tablet
-                                                                    .imageUrl[0]
-                                                                  : historyItem
-                                                                    ?.tablet
-                                                                    ?.files
-                                                                    ?.length > 0
-                                                                    ? historyItem
-                                                                      .tablet
-                                                                      .files[0]
-                                                                    : "/assets/default.png",
-                                                      )}
-                                                      alt="image"
-                                                      className="w-[40px] h-[40px] rounded-[6px] object-contain bg-[#f8f9fa] shrink-0"
-                                                      onError={(e) => {
-                                                        e.target.src =
-                                                          "/assets/default.png";
-                                                      }}
-                                                    />
-
-                                                    {/* Product Name */}
-                                                    <span
-                                                      className="flex-1 leading-[1.5] overflow-hidden text-ellipsis whitespace-nowrap"
+                                                    <span>Recent Search History</span>
+                                                    <button
+                                                      type="button"
+                                                      onClick={clearSearchHistory}
+                                                      className="bg-none border-none text-[#ef4444] text-[11px] cursor-pointer py-1 px-2 rounded-[4px] transition-all duration-200 ease hover:bg-[#fef2f2]"
                                                     >
-                                                      {typeof historyItem === "string"
-                                                        ? historyItem
-                                                        : historyItem.searchTerm ||
-                                                        "Unknown"}
-                                                    </span>
+                                                      Clear All
+                                                    </button>
+                                                  </div>
+                                                  {searchHistory.map(
+                                                    (historyItem, index) => (
+                                                      <button
+                                                        key={
+                                                          typeof historyItem ===
+                                                            "object" && historyItem._id
+                                                            ? `history-${historyItem._id}`
+                                                            : `history-${index}`
+                                                        }
+                                                        onClick={() =>
+                                                          handleHistorySelect(historyItem)
+                                                        }
+                                                        className={`w-full py-[10px] px-[15px] border-none bg-transparent text-left cursor-pointer text-[15px] text-[#111827] flex z-[9999999] items-center gap-[14px] transition-all duration-200 ease relative hover:bg-[#f9fafb] ${index < searchHistory.length - 1
+                                                          ? "border-b border-solid border-[#f3f4f6]"
+                                                          : "border-b-0"
+                                                          }`}
+                                                      >
+                                                        <img
+                                                          src={getImageUrl(
+                                                            historyItem?.item?.tablet
+                                                              ?.imageUrl?.length > 0
+                                                              ? historyItem.item.tablet
+                                                                .imageUrl[0]
+                                                              : historyItem?.item?.tablet
+                                                                ?.files?.length > 0
+                                                                ? historyItem.item.tablet
+                                                                  .files[0]
+                                                                : historyItem?.item
+                                                                  ?.imageUrl?.length >
+                                                                  0
+                                                                  ? historyItem.item
+                                                                    .imageUrl[0]
+                                                                  : historyItem?.item
+                                                                    ?.files?.length >
+                                                                    0
+                                                                    ? historyItem.item
+                                                                      .files[0]
+                                                                    : historyItem?.tablet
+                                                                      ?.imageUrl
+                                                                      ?.length > 0
+                                                                      ? historyItem.tablet
+                                                                        .imageUrl[0]
+                                                                      : historyItem
+                                                                        ?.tablet
+                                                                        ?.files
+                                                                        ?.length > 0
+                                                                        ? historyItem
+                                                                          .tablet
+                                                                          .files[0]
+                                                                        : "/assets/default.png",
+                                                          )}
+                                                          alt="image"
+                                                          className="w-[40px] h-[40px] rounded-[6px] object-contain bg-[#f8f9fa] shrink-0"
+                                                          onError={(e) => {
+                                                            e.target.src =
+                                                              "/assets/default.png";
+                                                          }}
+                                                        />
 
-                                                    {/* Medicine Type Badge */}
-                                                    {typeof historyItem ===
-                                                      "object" &&
-                                                      (historyItem?.item?.tablet
-                                                        ?.medicineType ||
-                                                        historyItem?.item?.tablet
-                                                          ?.type ||
-                                                        historyItem?.tablet
-                                                          ?.medicineType ||
-                                                        historyItem?.tablet
-                                                          ?.type) && (
+                                                        {/* Product Name */}
                                                         <span
-                                                          className="ms-auto badge rounded-pill bg-primary text-[11px] mr-[8px]"
+                                                          className="flex-1 leading-[1.5] overflow-hidden text-ellipsis whitespace-nowrap"
                                                         >
-                                                          {historyItem?.item?.tablet
+                                                          {typeof historyItem === "string"
+                                                            ? historyItem
+                                                            : historyItem.searchTerm ||
+                                                            "Unknown"}
+                                                        </span>
+
+                                                        {/* Medicine Type Badge */}
+                                                        {typeof historyItem ===
+                                                          "object" &&
+                                                          (historyItem?.item?.tablet
                                                             ?.medicineType ||
                                                             historyItem?.item?.tablet
                                                               ?.type ||
                                                             historyItem?.tablet
                                                               ?.medicineType ||
-                                                            historyItem?.tablet?.type}
+                                                            historyItem?.tablet
+                                                              ?.type) && (
+                                                            <span
+                                                              className="ms-auto badge rounded-pill bg-primary text-[11px] mr-[8px]"
+                                                            >
+                                                              {historyItem?.item?.tablet
+                                                                ?.medicineType ||
+                                                                historyItem?.item?.tablet
+                                                                  ?.type ||
+                                                                historyItem?.tablet
+                                                                  ?.medicineType ||
+                                                                historyItem?.tablet?.type}
+                                                            </span>
+                                                          )}
+                                                        <div
+                                                          onClick={(e) => {
+                                                            e.stopPropagation();
+                                                            deleteSearchHistoryItem(
+                                                              index,
+                                                              historyItem,
+                                                            );
+                                                          }}
+                                                          className="bg-none border-none text-[#ef4444] text-[14px] cursor-pointer p-[4px] rounded-[4px] transition-all duration-200 ease flex items-center justify-center w-[24px] h-[24px] shrink-0 hover:bg-[#fef2f2]"
+                                                          title="Delete this search"
+                                                        >
+                                                          <i className="fas fa-times"></i>
+                                                        </div>
+                                                      </button>
+                                                    ),
+                                                  )}
+                                                </>
+                                              )}
+
+                                            {!isLoading &&
+                                              query.trim() &&
+                                              filteredSuggestions.map((item, index) => (
+                                                <div
+                                                  key={item._id || item.tablet?._id || index}
+                                                  onClick={() => handleSelect(item)}
+                                                  className={`w-full p-[11px] border-none bg-transparent text-left cursor-pointer text-[14.5px] text-slate-800 flex z-[9999999] items-center justify-between gap-[14px] transition-all duration-200 ease relative hover:bg-[#321961]/5 ${index < filteredSuggestions.length - 1
+                                                    ? "border-b border-solid border-slate-100"
+                                                    : "border-b-0"
+                                                    }`}
+                                                >
+                                                  <div className="flex items-center gap-[12px]">
+                                                    <div
+                                                      className="text-[#321961]/40 shrink-0"
+                                                    >
+                                                      <i className="fas fa-search text-[13px]"></i>
+                                                    </div>
+                                                    <div className="flex flex-col">
+                                                      <span
+                                                        className="flex-1 leading-snug font-medium text-slate-800 capitalize"
+                                                      >
+                                                        {highlightMatch(
+                                                          item.tablet?.name,
+                                                          query,
+                                                        )}
+                                                      </span>
+
+                                                      {item.tablet?.packagingDetails && (
+                                                        <span className="text-[11px] text-[#888] mt-[2px] font-normal">
+                                                          {item?.tablet?.packagingDetails}
                                                         </span>
                                                       )}
-                                                    <div
+                                                    </div>
+                                                  </div>
+                                                  <div className="flex items-center gap-2">
+                                                    <span
+                                                      className="text-[10px] text-[#321961] bg-[#321961]/8 py-[2.5px] px-[9px] rounded-full whitespace-nowrap ml-[8px] capitalize font-bold"
+                                                    >
+                                                      {item?.type === "package"
+                                                        ? item?.type
+                                                        : item?.tablet?.category?.fixedType === "medicine"
+                                                          ? (item?.tablet?.medicineType || "product")
+                                                          : (item?.tablet?.category?.name || "product")}
+                                                    </span>
+                                                    <button
+                                                      type="button"
                                                       onClick={(e) => {
                                                         e.stopPropagation();
-                                                        deleteSearchHistoryItem(
-                                                          index,
-                                                          historyItem,
-                                                        );
+                                                        e.preventDefault();
+                                                        setVendorModel(item);
                                                       }}
-                                                      className="bg-none border-none text-[#ef4444] text-[14px] cursor-pointer p-[4px] rounded-[4px] transition-all duration-200 ease flex items-center justify-center w-[24px] h-[24px] shrink-0 hover:bg-[#fef2f2]"
-                                                      title="Delete this search"
+                                                      style={{
+                                                        background: '#ffffff',
+                                                        border: '1px solid #e2e8f0',
+                                                        color: '#321961',
+                                                        cursor: 'pointer',
+                                                        padding: '4px',
+                                                        display: 'flex',
+                                                        alignItems: 'center',
+                                                        justifyContent: 'center',
+                                                        borderRadius: '50%',
+                                                        width: '24px',
+                                                        height: '24px',
+                                                        transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
+                                                        boxShadow: '0 1px 3px rgba(0,0,0,0.05)'
+                                                      }}
+                                                      onMouseEnter={(e) => {
+                                                        e.currentTarget.style.backgroundColor = '#321961';
+                                                        e.currentTarget.style.color = '#ffffff';
+                                                        e.currentTarget.style.borderColor = '#321961';
+                                                        e.currentTarget.style.transform = 'scale(1.08)';
+                                                      }}
+                                                      onMouseLeave={(e) => {
+                                                        e.currentTarget.style.backgroundColor = '#ffffff';
+                                                        e.currentTarget.style.color = '#321961';
+                                                        e.currentTarget.style.borderColor = '#e2e8f0';
+                                                        e.currentTarget.style.transform = 'none';
+                                                      }}
+                                                      title="Insert into search"
                                                     >
-                                                      <i className="fas fa-times"></i>
-                                                    </div>
-                                                  </button>
-                                                ),
-                                              )}
-                                            </>
-                                          )}
-
-                                        {!isLoading &&
-                                          query.trim() &&
-                                          filteredSuggestions.map((item, index) => (
-                                            <div
-                                              key={item._id || item.tablet?._id || index}
-                                              onClick={() => handleSelect(item)}
-                                              className={`w-full p-[10px] border-none bg-transparent text-left cursor-pointer text-[15px] text-[#111827] flex z-[9999999] items-center justify-between gap-[14px] transition-all duration-200 ease relative hover:bg-[#f9fafb] ${index < filteredSuggestions.length - 1
-                                                ? "border-b border-solid border-[#f3f4f6]"
-                                                : "border-b-0"
-                                                }`}
-                                            >
-                                              <div className="flex items-center gap-[14px]">
-                                                <div
-                                                  className="text-[#9ca3af] shrink-0"
-                                                >
-                                                  <i className="fas fa-search"></i>
+                                                      <i className="fa fa-plus" style={{ fontSize: '10px' }} />
+                                                    </button>
+                                                  </div>
                                                 </div>
-                                                <div className="flex flex-col">
-                                                  <span
-                                                    className="flex-1 leading-[1.5] capitalize"
-                                                  >
-                                                    {highlightMatch(
-                                                      item.tablet?.name,
-                                                      query,
-                                                    )}
-                                                  </span>
-
-                                                  {item.tablet?.packagingDetails && (
-                                                    <span className="text-[11px] text-[#888] mt-[2px]">
-                                                      {item?.tablet?.packagingDetails}
-                                                    </span>
-                                                  )}
-                                                </div>
-                                              </div>
-                                              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><span
-                                                className="text-[10px] text-[#666] bg-[#f0f0f0] py-[2px] px-[8px] rounded-[12px] whitespace-nowrap ml-[8px] capitalize"
+                                              ))}
+                                            {!isLoading && query.trim() && hasMoreSuggestions && filteredSuggestions.length > 0 && (
+                                              <button
+                                                type="button"
+                                                disabled={isMoreLoading}
+                                                onClick={(e) => {
+                                                  e.preventDefault();
+                                                  e.stopPropagation();
+                                                  const nextLimit = suggestionsLimit + 20;
+                                                  setSuggestionsLimit(nextLimit);
+                                                  fetchSuggestions(query, nextLimit, true);
+                                                }}
+                                                className={`w-full p-[10px] border-none font-semibold text-center text-[13px] border-t border-solid border-[#f3f4f6] transition-all duration-200 ${isMoreLoading
+                                                  ? "text-[#9ca3af] cursor-not-allowed bg-[#f9fafb]"
+                                                  : "text-[#321961] cursor-pointer bg-[#f9fafb] hover:bg-[#f1f5f9]"
+                                                  }`}
                                               >
-                                                {item?.type === "package"
-                                                  ? item?.type
-                                                  : item?.tablet?.category?.fixedType === "medicine"
-                                                    ? (item?.tablet?.medicineType || "product")
-                                                    : (item?.tablet?.category?.name || "product")}
-                                              </span> <button type="button" onClick={(e) => { e.stopPropagation(); e.preventDefault(); setVendorModel(item); }} style={{ background: '#f8fafc', border: '1px solid #e2e8f0', color: 'var(--color-primary)', cursor: 'pointer', padding: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%', width: '24px', height: '24px', transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)', boxShadow: '0 1px 2px rgba(0,0,0,0.05)' }} onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = 'var(--color-primary)'; e.currentTarget.style.color = '#ffffff'; e.currentTarget.style.borderColor = 'var(--color-primary)'; e.currentTarget.style.transform = 'scale(1.08)'; }} onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#f8fafc'; e.currentTarget.style.color = 'var(--color-primary)'; e.currentTarget.style.borderColor = '#e2e8f0'; e.currentTarget.style.transform = 'none'; }} title="Insert into search"><i className="fa fa-plus" style={{ fontSize: '11px' }} /></button></div>
-                                            </div>
-                                          ))}
-                                        {!isLoading && query.trim() && hasMoreSuggestions && filteredSuggestions.length > 0 && (
-                                          <button
-                                            type="button"
-                                            disabled={isMoreLoading}
-                                            onClick={(e) => {
-                                              e.preventDefault();
-                                              e.stopPropagation();
-                                              const nextLimit = suggestionsLimit + 20;
-                                              setSuggestionsLimit(nextLimit);
-                                              fetchSuggestions(query, nextLimit, true);
-                                            }}
-                                            className={`w-full p-[10px] border-none font-semibold text-center text-[13px] border-t border-solid border-[#f3f4f6] transition-all duration-200 ${isMoreLoading
-                                              ? "text-[#9ca3af] cursor-not-allowed bg-[#f9fafb]"
-                                              : "text-[#321961] cursor-pointer bg-[#f9fafb] hover:bg-[#f1f5f9]"
-                                              }`}
-                                          >
-                                            {isMoreLoading ? "Loading..." : "Load More"}
-                                          </button>
+                                                {isMoreLoading ? "Loading..." : "Load More"}
+                                              </button>
+                                            )}
+                                          </div>
                                         )}
-                                      </div>
-                                    )}
+                                      </>
+                                    );
+                                  })()}
                                 </form>
                               </div>
                             </div>
@@ -1280,7 +1330,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
             />
           )}
 
-          <DynamicCategorySections
+          <DynamicCategorySections2
             sections={sections.filter(sec => sec.title?.toLowerCase() !== "top most medicines" && sec.title?.toLowerCase() !== "top sales medicines")}
             onProductClick={handleProductClick}
             onCompareClick={handleCompareDynamic}
@@ -1291,620 +1341,883 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
           // currentService={sections?.}
           />
 
-          {/* PROMOTIONAL BANNER */}
-          <section className="my-4 px-3">
-            <div className="container-fluid">
-              <div
-                className={`bg-[#AA6DF6] rounded-[20px] relative overflow-hidden shadow-[0_10px_30px_rgba(128,89,202,0.3)] flex items-center justify-between ${isMobile
-                  ? "p-[30px_20px] flex-col min-h-auto text-center gap-[20px]"
-                  : "p-[20px_40px] flex-row min-h-[150px] text-left gap-0"
-                  }`}
-              >
-                {/* Abstract Shapes */}
-                <div
-                  className="absolute top-[-50px] right-[-50px] w-[150px] h-[150px] rounded-full bg-white/10"
-                ></div>
-                <div
-                  className="absolute bottom-[-30px] left-[100px] w-[150px] h-[150px] rounded-full bg-white/5"
-                ></div>
+          {/* PROMOTIONAL SECTION */}
+          <section className="py-12 my-6 px-3 relative overflow-hidden bg-[#faf9fc]/30">
+            <div className="container mx-auto max-w-7xl">
 
-                <div
-                  className="relative z-10 text-white max-w-[600px]"
-                >
-                  <span
-                    className="bg-white/20 py-[6px] px-[16px] rounded-[30px] text-[13px] font-semibold inline-block mb-[15px] border border-solid border-white/30"
-                  >
-                    <i className="fas fa-heartbeat me-2"></i> Complete Healthcare
-                  </span>
-                  <h2
-                    className={`font-extrabold mb-[10px] text-white ${isMobile ? "text-[20px]" : "text-[24px]"
-                      }`}
-                  >
-                    Your Trusted Healthcare Partner
-                  </h2>
-                  <p
-                    className={`opacity-90 m-0 text-white ${isMobile ? "text-[14px]" : "text-[16px]"
-                      }`}
-                  >
-                    Access quality healthcare services, medicines, diagnostics, and
-                    expert consultation all in one place.
-                  </p>
+              {/* Section Header */}
+              <div className="text-center mb-12 max-w-2xl mx-auto">
+                <div className="inline-flex items-center gap-1.5 bg-[#321961]/10 border border-solid border-[#321961]/20 py-1.5 px-4 rounded-full mb-4">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#321961] animate-pulse"></span>
+                  <span className="text-[11px] uppercase tracking-wider text-[#321961] font-semibold">Ecosystem Overview</span>
+                </div>
+                <h2 className="text-[34px] font-light text-[#0f172a] leading-tight tracking-tight mb-3">
+                  Quick Access to <span className="font-normal !text-green">Healthcare Services</span>
+                </h2>
+                <p className="text-[13.5px] text-[#64748b] font-light leading-relaxed">
+                  Easily browse prescriptions, find fast emergency support, or request clinical diagnostic test bookings.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+                {/* Left Card: Brand Promo */}
+                <div className="lg:col-span-5 relative overflow-hidden rounded-sm bg-gradient-to-br from-[#1e0a3d] to-[#321961] p-[30px] text-white shadow-[0_10px_30px_rgba(50,25,97,0.15)] flex flex-col justify-between min-h-[220px]">
+                  {/* Glowing blobs */}
+                  <div className="absolute -top-[50px] -right-[50px] w-[150px] h-[150px] rounded-full bg-[#aa6df6]/20 blur-[30px]"></div>
+
+                  <div className="relative z-10">
+                    <span className="inline-flex items-center gap-1.5 bg-white/10 py-[4px] px-[12px] rounded-full text-[11px] font-semibold border border-white/20 backdrop-blur-md mb-4">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                      All-in-One Platform
+                    </span>
+                    <h3 className="text-[22px] font-extrabold mb-2 tracking-tight">Your Health, Simplified.</h3>
+                    <p className="text-[13px] text-slate-200 leading-relaxed opacity-90">
+                      Compare pricing, locate emergency services, and book medical appointments instantly.
+                    </p>
+                  </div>
+
+                  <div className="relative z-10 mt-6 flex gap-6 text-[12px]">
+                    <div className="flex flex-col">
+                      <span className="font-extrabold text-[16px] text-[#aa6df6]">24/7</span>
+                      <span className="text-slate-300 text-[11px]">Availability</span>
+                    </div>
+                    <div className="w-[1px] bg-white/10"></div>
+                    <div className="flex flex-col">
+                      <span className="font-extrabold text-[16px] text-emerald-400">100%</span>
+                      <span className="text-slate-300 text-[11px]">Verified Partners</span>
+                    </div>
+                  </div>
                 </div>
 
-                <div className="relative z-10">
-                  <button
-                    className="btn bg-white text-[#321961] py-[12px] px-[30px] rounded-[50px] font-bold text-[13px] shadow-[0_5px_15px_rgba(0,0,0,0.1)] border-none"
-                    onClick={() => {
-                      localStorage.setItem("fixedType", "medicine");
-                      navigate("/medicine/all");
-                    }}
+                {/* Right Cards: Quick Service Access */}
+                <div className="lg:col-span-7 grid grid-cols-1 md:grid-cols-3 gap-4">
+                  {[
+                    {
+                      icon: "fas fa-pills",
+                      title: "Buy Medicines",
+                      desc: "Compare and order prescriptions from local pharmacies.",
+                      label: "Explore",
+                      fixedType: "medicine",
+                      path: "/medicine/all",
+                      cardBg: "bg-gradient-to-br from-[#321961] to-[#4c1d95] hover:from-[#3d1f75] hover:to-[#5b21b6]",
+                      iconClass: "bg-white/20 text-white",
+                      labelClass: "text-white/80",
+                      titleClass: "!text-white",
+                      descClass: "!text-white/70",
+                      borderClass: "border-[#321961]/30",
+                      shadowHover: "hover:shadow-[0_15px_35px_rgba(50,25,97,0.35)]",
+                    },
+                    {
+                      icon: "fas fa-microscope",
+                      title: "Diagnostics",
+                      desc: "Compare test packages & schedule home sample collection.",
+                      label: "Book a Test",
+                      fixedType: "labtest",
+                      path: "/diagnostics/all",
+                      cardBg: "bg-gradient-to-br from-[#059669] to-[#065f46] hover:from-[#10b981] hover:to-[#047857]",
+                      iconClass: "bg-white/20 text-white",
+                      labelClass: "text-white/80",
+                      titleClass: "!text-white",
+                      descClass: "!text-white/70",
+                      borderClass: "border-emerald-700/30",
+                      shadowHover: "hover:shadow-[0_15px_35px_rgba(5,150,105,0.35)]",
+                    },
+                    {
+                      icon: "fas fa-ambulance",
+                      title: "Ambulances",
+                      desc: "Instant dispatch & real-time booking tracking map.",
+                      label: "Book Dispatch",
+                      fixedType: "ambulance",
+                      path: "/ambulance",
+                      cardBg: "bg-gradient-to-br from-[#dc2626] to-[#991b1b] hover:from-[#ef4444] hover:to-[#b91c1c]",
+                      iconClass: "bg-white/20 text-white",
+                      labelClass: "text-white/80",
+                      titleClass: "!text-white",
+                      descClass: "!text-white/70",
+                      borderClass: "border-red-800/30",
+                      shadowHover: "hover:shadow-[0_15px_35px_rgba(220,38,38,0.35)]",
+                    },
+                  ].map((card, idx) => (
+                    <div
+                      key={idx}
+                      onClick={() => {
+                        localStorage.setItem("fixedType", card.fixedType);
+                        navigate(card.path);
+                      }}
+                      className={`group cursor-pointer border border-solid ${card.borderClass} ${card.cardBg} p-5 rounded-sm shadow-[0_4px_15px_rgba(0,0,0,0.03)] ${card.shadowHover} transition-all duration-300 flex flex-col justify-between min-h-[180px] hover:-translate-y-1`}
+                    >
+                      <div>
+                        <div className={`w-10 h-10 rounded-[12px] flex items-center justify-center transition-all duration-300 mb-4 shadow-sm ${card.iconClass}`}>
+                          <i className={`${card.icon} text-[16px]`}></i>
+                        </div>
+                        <h4 className={`text-[14px] font-medium mb-1 transition-colors duration-300 ${card.titleClass}`}>{card.title}</h4>
+                        <p className={`text-[11.5px] font-light leading-normal transition-colors duration-300 ${card.descClass}`}>{card.desc}</p>
+                      </div>
+                      <span className={`text-[11px] font-medium flex items-center gap-1 mt-4 transition-colors duration-300 ${card.labelClass}`}>
+                        {card.label} <i className="fas fa-arrow-right text-[9px] transition-transform group-hover:translate-x-0.5"></i>
+                      </span>
+                    </div>
+                  ))}
+                </div>
+
+              </div>
+            </div>
+          </section>
+
+          <section className="py-14 relative overflow-hidden bg-gradient-to-br from-[#faf9fc] via-[#f3effc] to-[#faf9fc]">
+            {/* Ambient blobs */}
+            <div className="absolute top-[-80px] left-[-60px] w-[320px] h-[320px] rounded-full bg-[#aa6df6]/8 blur-[90px] pointer-events-none"></div>
+            <div className="absolute bottom-[-100px] right-[-80px] w-[380px] h-[380px] rounded-full bg-[#0ea5e9]/6 blur-[100px] pointer-events-none"></div>
+
+            <div className="container mx-auto px-4 max-w-7xl relative z-10">
+
+              {/* Top header */}
+              <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between mb-12 gap-4">
+                <div>
+                  <div className="flex items-center gap-2 mb-3">
+                    <div className="w-6 h-[2px] bg-[#7c3aed] rounded-full"></div>
+                    <span className="text-[#7c3aed] text-[11px] uppercase tracking-[0.3em] font-bold">Surgical Care</span>
+                  </div>
+                  <h2 className="text-[38px] font-light text-[#0f172a] leading-tight tracking-tight">
+                    Explore <span className="font-normal bg-gradient-to-r from-[#7c3aed] to-[#aa6df6] bg-clip-text text-transparent">Surgeries</span>
+                  </h2>
+                </div>
+                <p className="text-[13px] text-[#64748b] font-light leading-relaxed max-w-[360px] lg:text-right">
+                  Compare pricing, read reviews, and find elite surgical clinics and certified surgeons near you.
+                </p>
+              </div>
+
+              {/* Cards */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                {[
+                  {
+                    num: "01",
+                    icon: "fas fa-search-dollar",
+                    title: "Compare Prices",
+                    desc: "Instantly compare surgical package costs and hidden fees across multiple hospitals.",
+                    accent: "from-[#7c3aed] to-[#4c1d95]",
+                    cardBg: "from-[#f5f3ff] to-[#e8dffc] border-violet-200/60 hover:border-[#7c3aed]/40",
+                    glow: "rgba(124,58,237,0.15)",
+                    tag: "Cost Transparency",
+                  },
+                  {
+                    num: "02",
+                    icon: "fas fa-user-md",
+                    title: "Expert Surgeons",
+                    desc: "Locate board-certified specialist surgeons with verified credentials and patient reviews.",
+                    accent: "from-[#0ea5e9] to-[#0369a1]",
+                    cardBg: "from-[#f0f9ff] to-[#d5f0fc] border-sky-200/60 hover:border-[#0ea5e9]/40",
+                    glow: "rgba(14,165,233,0.15)",
+                    tag: "Verified Specialists",
+                  },
+                  {
+                    num: "03",
+                    icon: "fas fa-shield-alt",
+                    title: "Safe & Reliable",
+                    desc: "Book NABH-accredited partner clinics with proven safety protocols and track records.",
+                    accent: "from-[#10b981] to-[#065f46]",
+                    cardBg: "from-[#f0fdf4] to-[#d1fae5] border-emerald-200/60 hover:border-[#10b981]/40",
+                    glow: "rgba(16,185,129,0.15)",
+                    tag: "Accredited Clinics",
+                  },
+                ].map((card, idx) => (
+                  <div
+                    key={idx}
+                    className={`group relative overflow-hidden rounded-[20px] border border-solid ${card.cardBg} bg-gradient-to-br p-6 transition-all duration-400 hover:-translate-y-1 cursor-pointer`}
+                    style={{ transition: "all 0.35s cubic-bezier(0.4, 0, 0.2, 1)" }}
+                    onMouseEnter={e => e.currentTarget.style.boxShadow = `0 20px 45px -10px ${card.glow}`}
+                    onMouseLeave={e => e.currentTarget.style.boxShadow = "none"}
                   >
-                    Explore Services <i className="fas fa-arrow-right ms-2"></i>
-                  </button>
+                    {/* Subtle gradient overlay on hover */}
+                    <div className={`absolute inset-0 bg-gradient-to-br ${card.accent} opacity-0 group-hover:opacity-[0.03] transition-opacity duration-400 rounded-[20px]`}></div>
+
+                    {/* Number watermark */}
+                    <span className="absolute top-4 right-5 text-[52px] font-bold text-slate-200/30 leading-none select-none">{card.num}</span>
+
+                    {/* Icon */}
+                    <div className={`relative w-11 h-11 rounded-[14px] bg-gradient-to-br ${card.accent} flex items-center justify-center mb-5 shadow-sm`}>
+                      <i className={`${card.icon} text-white text-[14px]`}></i>
+                    </div>
+
+                    {/* Tag */}
+                    <span className={`inline-block text-[10px] font-bold px-2.5 py-1 rounded-full bg-gradient-to-r ${card.accent} text-white mb-3 opacity-95`}>
+                      {card.tag}
+                    </span>
+
+                    {/* Title */}
+                    <h5 className="text-[16px] font-semibold text-[#0f172a] mb-2 leading-snug">{card.title}</h5>
+
+                    {/* Desc */}
+                    <p className="text-[12px] text-[#64748b] font-light leading-relaxed">{card.desc}</p>
+
+                    {/* Bottom arrow */}
+                    <div className="mt-5 flex items-center gap-1.5">
+                      <div className={`w-5 h-[1.5px] bg-gradient-to-r ${card.accent} rounded-full transition-all duration-300 group-hover:w-8`}></div>
+                      <i className="fas fa-arrow-right text-slate-400 text-[9px] group-hover:text-[#7c3aed] transition-colors duration-300"></i>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+            </div>
+          </section>
+
+          <section className="py-16 bg-white relative overflow-hidden">
+            <style>{`
+              .QuickAccessSlider .slick-dots {
+                bottom: -24px !important;
+                display: flex !important;
+                justify-content: center;
+                align-items: center;
+                list-style: none;
+                padding: 0;
+                margin: 0;
+              }
+              .QuickAccessSlider .slick-dots li {
+                margin: 0 4px !important;
+                display: inline-block;
+                width: auto !important;
+                height: auto !important;
+              }
+              .QuickAccessSlider .slick-dots li button {
+                width: 8px !important;
+                height: 8px !important;
+                padding: 0 !important;
+                border-radius: 9999px !important;
+                background-color: #e2e8f0 !important;
+                transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+                border: none !important;
+                cursor: pointer;
+                font-size: 0 !important;
+                line-height: 0 !important;
+              }
+              .QuickAccessSlider .slick-dots li button:before {
+                display: none !important;
+              }
+              .QuickAccessSlider .slick-dots li.slick-active button {
+                width: 28px !important;
+                height: 8px !important;
+                background-color: #321961 !important;
+              }
+            `}</style>
+            <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse 60% 50% at 20% 50%, rgba(124,58,237,0.04) 0%, transparent 70%), radial-gradient(ellipse 50% 60% at 80% 50%, rgba(14,165,233,0.04) 0%, transparent 70%)" }}></div>
+
+            <div className="container mx-auto px-4 max-w-7xl relative z-10">
+
+              {/* Section header */}
+              <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between mb-10 gap-3">
+                <div>
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="w-6 h-[2px] bg-[#321961] rounded-full"></span>
+                    <span className="text-[11px] text-[#321961] uppercase tracking-[0.25em] font-medium">Healthcare Access</span>
+                  </div>
+                  <h2 className="text-[32px] font-light text-[#0f172a] leading-tight tracking-tight">
+                    Quick Access to <span className="text-[#321961] font-normal">Services</span>
+                  </h2>
+                </div>
+                <div className="flex items-center gap-6">
+                  <p className="text-[13px] text-[#94a3b8] font-light max-w-[280px] sm:text-right leading-relaxed hidden md:block">
+                    Compare, book and connect with top healthcare providers near you.
+                  </p>
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => serviceSliderRef.current?.slickPrev()}
+                      className="w-9 h-9 !rounded-full border border-solid border-[#e2e8f0] hover:border-[#321961] hover:bg-[#321961]/5 flex items-center justify-center text-[#64748b] hover:text-[#321961] transition-all duration-300 cursor-pointer shadow-sm"
+                      aria-label="Previous Slide"
+                    >
+                      <i className="fas fa-chevron-left text-[12px]"></i>
+                    </button>
+                    <button
+                      onClick={() => serviceSliderRef.current?.slickNext()}
+                      className="w-9 h-9 !rounded-full border border-solid border-[#e2e8f0] hover:border-[#321961] hover:bg-[#321961]/5 flex items-center justify-center text-[#64748b] hover:text-[#321961] transition-all duration-300 cursor-pointer shadow-sm"
+                      aria-label="Next Slide"
+                    >
+                      <i className="fas fa-chevron-right text-[12px]"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Bento grid */}
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
+
+                {/* Hero info card â€” left */}
+                <div className="lg:col-span-4 rounded-sm p-7 flex flex-col justify-between min-h-[360px] relative overflow-hidden" style={{ background: "linear-gradient(145deg, #321961 0%, #4a1d96 60%, #1e3a5f 100%)" }}>
+                  {/* Watermark circle */}
+                  <div className="absolute -bottom-10 -right-10 w-[180px] h-[180px] rounded-full border border-solid border-white/10"></div>
+                  <div className="absolute -bottom-6 -right-6 w-[120px] h-[120px] rounded-full border border-solid border-white/10"></div>
+
+                  <div>
+                    <div className="w-11 h-11 rounded-[14px] bg-white/15 flex items-center justify-center mb-5">
+                      <i className="fas fa-heartbeat text-white text-[18px]"></i>
+                    </div>
+                    <h3 className="text-[24px] font-light text-white leading-snug mb-3">
+                      All your healthcare,<br />
+                      <span className="font-normal text-[#c4b5fd]">one platform</span>
+                    </h3>
+                    <p className="text-[13px] text-white/55 font-light leading-relaxed">
+                      Compare prices across 500+ hospitals and clinics. Book instantly. Get the best care at the price.
+                    </p>
+                  </div>
+
+                  <div className="grid grid-cols-3 gap-2 mt-6">
+                    {[
+                      { val: "500+", label: "Hospitals" },
+                      { val: "10K+", label: "Patients" },
+                      { val: "24/7", label: "Support" },
+                    ].map((s, i) => (
+                      <div key={i} className="bg-white/10 rounded-[12px] p-3 text-center">
+                        <div className="text-[18px] font-normal text-white">{s.val}</div>
+                        <div className="text-[10px] text-white/50 font-light mt-0.5">{s.label}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Service cards carousel — right */}
+                <div className="lg:col-span-8 QuickAccessSlider">
+                  <Slider
+                    ref={serviceSliderRef}
+                    dots={false}
+                    infinite={true}
+                    speed={500}
+                    slidesToShow={3}
+                    slidesToScroll={1}
+                    arrows={false}
+                    autoplay={true}
+                    autoplaySpeed={3500}
+                    responsive={[
+                      {
+                        breakpoint: 1024,
+                        settings: {
+                          slidesToShow: 2,
+                          slidesToScroll: 1,
+                        }
+                      },
+                      {
+                        breakpoint: 640,
+                        settings: {
+                          slidesToShow: 1,
+                          slidesToScroll: 1,
+                        }
+                      }
+                    ]}
+                  >
+                    {[
+                      {
+                        icon: "fas fa-tooth",
+                        title: "Dental Care",
+                        desc: "Find top dentists and compare prices across clinics in your city.",
+                        cta: "Browse Dentists",
+                        link: "/dentalservice/all",
+                        from: "#7c3aed",
+                        to: "#4c1d95",
+                        glow: "rgba(124,58,237,0.18)",
+                        badge: "Oral Health",
+                      },
+                      {
+                        icon: "fas fa-vial",
+                        title: "Lab Tests",
+                        desc: "Book diagnostic tests online and get reports delivered at home.",
+                        cta: "Book a Test",
+                        link: "/labtests/all",
+                        from: "#0ea5e9",
+                        to: "#0369a1",
+                        glow: "rgba(14,165,233,0.18)",
+                        badge: "Diagnostics",
+                      },
+                      {
+                        icon: "fas fa-ambulance",
+                        title: "Ambulance",
+                        desc: "Emergency ambulance with 24/7 availability and real-time tracking.",
+                        cta: "Book Now",
+                        link: "/ambulanceservice",
+                        from: "#f43f5e",
+                        to: "#be123c",
+                        glow: "rgba(244,63,94,0.18)",
+                        badge: "Emergency",
+                      },
+                      {
+                        icon: "fas fa-pills",
+                        title: "Buy Medicines",
+                        desc: "Compare and order prescriptions from local pharmacies.",
+                        cta: "Explore",
+                        link: "/medicine/all",
+                        from: "#321961",
+                        to: "#4c1d95",
+                        glow: "rgba(50,25,97,0.18)",
+                        badge: "Medicines",
+                      },
+                      {
+                        icon: "fas fa-microscope",
+                        title: "Diagnostics Lab",
+                        desc: "Compare test packages & schedule sample collection.",
+                        cta: "Book a Test",
+                        link: "/diagnostics/all",
+                        from: "#059669",
+                        to: "#065f46",
+                        glow: "rgba(5,150,105,0.18)",
+                        badge: "Lab Tests",
+                      },
+                      {
+                        icon: "fas fa-user-md",
+                        title: "Surgical Care",
+                        desc: "Explore surgeries, certified clinics, and surgeons.",
+                        cta: "Explore",
+                        link: "/surgeries/all",
+                        from: "#8b5cf6",
+                        to: "#6d28d9",
+                        glow: "rgba(139,92,246,0.18)",
+                        badge: "Surgeries",
+                      }
+                    ].map((card, idx) => (
+                      <div key={idx} className="px-2 pb-6">
+                        <div
+                          onClick={() => navigate(card.link)}
+                          className="group relative rounded-sm border border-solid border-[#f1f5f9] bg-[#fafafa] cursor-pointer flex flex-col overflow-hidden"
+                          style={{ transition: "all 0.3s ease", minHeight: "280px" }}
+                          onMouseEnter={e => {
+                            e.currentTarget.style.boxShadow = `0 20px 50px -12px ${card.glow}`;
+                            e.currentTarget.style.borderColor = card.from;
+                            e.currentTarget.style.transform = "translateY(-5px)";
+                          }}
+                          onMouseLeave={e => {
+                            e.currentTarget.style.boxShadow = "none";
+                            e.currentTarget.style.borderColor = "#f1f5f9";
+                            e.currentTarget.style.transform = "translateY(0)";
+                          }}
+                        >
+                          {/* Colored top bar */}
+                          <div className="h-[3px] w-full" style={{ background: `linear-gradient(90deg, ${card.from}, ${card.to})` }}></div>
+
+                          <div className="p-6 flex flex-col flex-1">
+                            {/* Icon */}
+                            <div
+                              className="w-12 h-12 rounded-[14px] flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-105"
+                              style={{ background: `linear-gradient(135deg, ${card.from}, ${card.to})`, boxShadow: `0 6px 20px ${card.glow}` }}
+                            >
+                              <i className={`${card.icon} text-white text-[18px]`}></i>
+                            </div>
+
+                            {/* Badge */}
+                            <span
+                              className="text-[10px] font-medium px-2.5 py-0.5 rounded-full mb-3 inline-block w-fit"
+                              style={{ background: `${card.from}15`, color: card.from }}
+                            >{card.badge}</span>
+
+                            {/* Title */}
+                            <h4 className="text-[15px] font-medium text-[#0f172a] mb-2">{card.title}</h4>
+
+                            {/* Desc */}
+                            <p className="text-[12px] text-[#64748b] font-light leading-relaxed flex-1">{card.desc}</p>
+
+                            {/* Arrow CTA */}
+                            <div
+                              className="mt-5 flex items-center gap-1.5 text-[12px] font-medium transition-all duration-300 group-hover:gap-2.5"
+                              style={{ color: card.from }}
+                            >
+                              <span>{card.cta}</span>
+                              <i className="fas fa-arrow-right text-[10px]"></i>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </Slider>
+
+                  {/* Horizontal Info Strip */}
+                  <div
+                    className="mt-2 p-4 rounded-sm bg-gradient-to-r from-[#321961] to-[#1e3a5f] flex flex-col sm:flex-row items-center justify-between gap-4 shadow-[0_15px_30px_rgba(50,25,97,0.15)] relative overflow-hidden group hover:scale-[1.01] transition-transform duration-300"
+                  >
+                    {/* Glowing glass overlay */}
+                    <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div className="absolute -top-10 -left-10 w-24 h-24 rounded-full bg-[#aa6df6]/20 blur-[20px]"></div>
+
+                    <div className="flex items-center gap-4 relative z-10">
+                      <div className="w-10 h-10 rounded-[14px] bg-white/10 flex items-center justify-center text-[#c4b5fd] shrink-0 border border-solid border-white/10 shadow-inner">
+                        <i className="fas fa-magic text-[14px] animate-pulse"></i>
+                      </div>
+                      <div className="text-left">
+                        <span className="text-[10px] font-semibold tracking-wider text-[#c4b5fd] uppercase block mb-0.5">Instant Assistance</span>
+                        <p className="text-[12.5px] text-white/80 font-light m-0 leading-relaxed">
+                          Can't find a specific service? Get free support from our medical coordinators.
+                        </p>
+                      </div>
+                    </div>
+
+                    <Link
+                      to="/contact-us"
+                      className="relative z-10 px-5 py-2 rounded-full !bg-white !text-[#321961] hover:bg-[#c4b5fd] hover:text-white transition-all no-underline duration-300 text-[12.5px] !font-medium flex items-center gap-1.5 whitespace-nowrap shadow-md group-hover:-translate-x-1"
+                    >
+                      <span>Connect Now</span>
+                      <i className="fas fa-arrow-right text-[10px]"></i>
+                    </Link>
+
+                  </div>
+
                 </div>
               </div>
             </div>
           </section>
 
           <section
-            className="py-12"
+            className="py-2 lg:py-0 lg:h-[600px] flex items-center justify-center relative overflow-hidden"
             style={{
-              backgroundColor: "#E8E4F5",
-              backgroundImage: homeLiteMode
-                ? "none"
-                : "url('/assets/Medicompares%20Background.png')",
+              backgroundImage: "url('/assets/workflow_background.png')",
               backgroundSize: "cover",
               backgroundPosition: "center",
               backgroundRepeat: "no-repeat",
             }}
           >
-            <div className="container mx-auto px-4">
-              <div className="text-center mb-10 aos" data-aos="fade-up">
-                <h2
-                  className="!text-[28px] !font-semibold mb-[12px] inline-block w-full bg-gradient-to-br from-[#321961] to-[#6d48b8] bg-clip-text text-transparent text-[#321961]"
-                >
-                  Explore Surgeries
+            {/* Soft modern glass overlay to maintain high contrast for cards */}
+            <div className="absolute inset-0 bg-white/80 backdrop-blur-[1px] pointer-events-none"></div>
+
+            {/* High-tech grid pattern overlay */}
+            <div className="absolute inset-0 bg-[linear-gradient(to_right,#e2e8f0_1px,transparent_1px),linear-gradient(to_bottom,#e2e8f0_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_50%,#000_70%,transparent_100%)] opacity-25"></div>
+
+            {/* Ambient gradients */}
+            <div className="absolute top-0 left-0 w-[500px] h-[500px] rounded-full bg-[#ea580c]/5 blur-[120px] pointer-events-none"></div>
+            <div className="absolute bottom-0 right-0 w-[500px] h-[500px] rounded-full bg-[#321961]/5 blur-[120px] pointer-events-none"></div>
+
+            <div className="container mx-auto px-4 max-w-7xl relative z-10 text-center">
+
+              {/* Centered header */}
+              <div className="mb-16 max-w-2xl mx-auto">
+                <div className="inline-flex items-center gap-1.5 bg-[#ea580c]/10 border border-solid border-[#ea580c]/20 py-1.5 px-4 rounded-full mb-4">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#ea580c] animate-pulse"></span>
+                  <span className="text-[11px] uppercase tracking-wider text-[#ea580c] font-medium">Simple Workflow</span>
+                </div>
+                <h2 className="text-[34px] font-light text-[#0f172a] leading-tight tracking-tight mb-3">
+                  4 Easy Steps to Get <span className="font-normal text-[#ea580c]">Your Solution</span>
                 </h2>
-                <p
-                  className="text-[14px] text-[#6b7280] max-w-[700px] mx-auto mb-[20px] leading-[1.6]"
-                >
-                  Discover a wide range of surgical procedures across various
-                  medical specialties. Compare prices, read patient reviews, and
-                  find the best surgeons and hospitals near you.
+                <p className="text-[13.5px] text-[#64748b] font-light leading-relaxed">
+                  Compare pricing matrices, verify compositions, and get prompt home deliveries with ease.
                 </p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-4 max-w-[800px] mx-auto">
-                  <div
-                    className="group p-[16px] bg-white rounded-[12px] shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-center cursor-pointer transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:scale-[1.02]"
-                  >
-                    <div
-                      className="w-[50px] h-[50px] mx-auto mb-[12px] bg-gradient-to-br from-[#321961] to-[#6d48b8] rounded-[12px] flex items-center justify-center text-[24px] text-white relative transition-all duration-300 group-hover:scale-110 group-hover:rotate-6"
-                    >
-                      <i className="fas fa-search-dollar transition-all duration-300 group-hover:scale-110"></i>
-                    </div>
-                    <h5
-                      className="!text-[16px] !font-semibold text-[#1f2937] mb-[6px]"
-                    >
-                      Compare Prices
-                    </h5>
-                    <p className="text-[13px] text-[#6b7280] m-0">
-                      Compare costs across multiple hospitals
-                    </p>
-                  </div>
-
-                  <div
-                    className="group p-[16px] bg-white rounded-[12px] shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-center cursor-pointer transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:scale-[1.02]"
-                  >
-                    <div
-                      className="w-[50px] h-[50px] mx-auto mb-[12px] bg-gradient-to-br from-[#321961] to-[#6d48b8] rounded-[12px] flex items-center justify-center text-[24px] text-white relative transition-all duration-300 group-hover:scale-110 group-hover:rotate-6"
-                    >
-                      <i className="fas fa-user-md transition-all duration-300 group-hover:scale-110"></i>
-                    </div>
-                    <h5
-                      className="!text-[16px] !font-semibold text-[#1f2937] mb-[6px]"
-                    >
-                      Expert Surgeons
-                    </h5>
-                    <p className="text-[13px] text-[#6b7280] m-0">
-                      Find experienced and qualified surgeons
-                    </p>
-                  </div>
-
-                  <div
-                    className="group p-[16px] bg-white rounded-[12px] shadow-[0_2px_8px_rgba(0,0,0,0.08)] text-center cursor-pointer transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:scale-[1.02]"
-                  >
-                    <div
-                      className="w-[50px] h-[50px] mx-auto mb-[12px] bg-gradient-to-br from-[#321961] to-[#6d48b8] rounded-[12px] flex items-center justify-center text-[24px] text-white relative transition-all duration-300 group-hover:scale-110 group-hover:rotate-6"
-                    >
-                      <i className="fas fa-shield-alt transition-all duration-300 group-hover:scale-110"></i>
-                    </div>
-                    <h5
-                      className="!text-[16px] !font-semibold text-[#1f2937] mb-[6px]"
-                    >
-                      Safe & Reliable
-                    </h5>
-                    <p className="text-[13px] text-[#6b7280] m-0">
-                      Trusted hospitals with proven track records
-                    </p>
-                  </div>
-                </div>
               </div>
-            </div>
-          </section>
 
-          <section
-            className="py-12"
-            style={{
-              background:
-                "linear-gradient(135deg, #f8f9fa 0%, #ffffff 50%, #f0f4ff 100%)",
-              position: "relative",
-              overflow: "hidden",
-            }}
-          >
-            <div className="absolute top-[-20%] left-[-10%] w-[300px] h-[300px] rounded-full bg-[#321961]/5 blur-[80px] pointer-events-none"></div>
-            <div className="absolute bottom-[-20%] right-[-10%] w-[350px] h-[350px] rounded-full bg-[#3b82f6]/5 blur-[100px] pointer-events-none"></div>
-            <div className="container mx-auto px-4 relative z-10">
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                <div className="lg:col-span-5 w-full aos" data-aos="fade-right">
-                  <div className="relative">
+              {/* Horizontal stepper workflow */}
+              <div className="relative">
+                {/* Connecting timeline line for desktop */}
+                <div className="hidden lg:block absolute top-[44px] left-[10%] right-[10%] h-[2px] bg-gradient-to-r from-[#ea580c] via-[#7c3aed] to-[#10b981] opacity-20 pointer-events-none"></div>
+
+                <style>{`
+                  .flip-card-container {
+                    perspective: 1000px;
+                  }
+                  .flip-card-inner {
+                    position: relative;
+                    width: 100%;
+                    height: 100%;
+                    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+                    transform-style: preserve-3d;
+                  }
+                  .flip-card-container:hover .flip-card-inner {
+                    transform: rotateY(180deg);
+                  }
+                  .flip-card-front, .flip-card-back {
+                    position: absolute;
+                    width: 100%;
+                    height: 100%;
+                    -webkit-backface-visibility: hidden;
+                    backface-visibility: hidden;
+                    border-radius: 1.5rem;
+                  }
+                  .flip-card-back {
+                    transform: rotateY(180deg);
+                  }
+                `}</style>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                  {[
+                    {
+                      step: "01",
+                      title: "Search Products",
+                      desc: "Look up your prescription, brand name, or generic salts.",
+                      icon: "fas fa-search",
+                      color: "#ea580c",
+                      glow: "rgba(234,88,12,0.15)",
+                    },
+                    {
+                      step: "02",
+                      title: "Verify Salt Details",
+                      desc: "Verify chemical compositions, dosage, and substitute drugs.",
+                      icon: "fas fa-file-medical",
+                      color: "#7c3aed",
+                      glow: "rgba(124,58,237,0.15)",
+                    },
+                    {
+                      step: "03",
+                      title: "Compare Quotes",
+                      desc: "Compare real-time pricing from verified local pharmacies.",
+                      icon: "fas fa-balance-scale",
+                      color: "#0ea5e9",
+                      glow: "rgba(14,165,233,0.15)",
+                    },
+                    {
+                      step: "04",
+                      title: "Fast Delivery",
+                      desc: "Place your order securely and get it delivered in minutes.",
+                      icon: "fas fa-shipping-fast",
+                      color: "#10b981",
+                      glow: "rgba(16,185,129,0.15)",
+                    }
+                  ].map((item, idx) => (
                     <div
-                      className="inline-block py-[8px] px-[20px] bg-gradient-to-br from-[#321961]/20 to-[#6d48b8]/20 rounded-[50px] mb-[10px] text-[14px] font-semibold text-[#321961]"
+                      key={idx}
+                      className="flip-card-container w-full max-w-[230px] h-[240px] mx-auto relative select-none"
                     >
-                      <i
-                        className="fas fa-clock mr-[8px] text-[#321961]"
-                      ></i>
-                      Instant Healthcare Access
-                    </div>
-                    <h2
-                      className="!text-[28px] md:!text-[32px] !font-semibold text-[#1a1a1a] mb-[10px] tracking-normal leading-[1.3]"
-                    >
-                      Quick Access to{" "}
-                      <span
-                        className="bg-gradient-to-br from-[#321961] via-[#3b82f6] to-[#059669] bg-[length:200%_200%] bg-clip-text text-transparent animate-[gradient_3s_ease_infinite]"
-                      >
-                        Healthcare Services
-                      </span>
-                    </h2>
-                    <p
-                      className="text-[#4b5563] text-[14px] font-normal leading-[1.7] mb-6"
-                    >
-                      Get instant access to Dental, lab tests, and emergency
-                      ambulance services. Compare prices, book appointments, and
-                      find the best healthcare providers near you all in one place.
-                    </p>
-
-                    <div className="mb-6">
-                      {[
-                        {
-                          icon: "fas fa-check-circle",
-                          text: "Compare prices across multiple providers",
-                        },
-                        {
-                          icon: "fas fa-check-circle",
-                          text: "Book appointments instantly online",
-                        },
-                        {
-                          icon: "fas fa-check-circle",
-                          text: "24/7 emergency services available",
-                        },
-                      ].map((feature, idx) => (
+                      <div className="flip-card-inner">
+                        {/* Front Side */}
                         <div
-                          key={idx}
-                          className="flex items-center mb-[14px]"
-                        >
-                          <div
-                            className="w-[32px] h-[32px] rounded-[8px] bg-gradient-to-br from-[#321961] to-[#6d48b8] flex items-center justify-center mr-[14px] shrink-0"
-                          >
-                            <i
-                              className={`${feature.icon} text-white text-[14px]`}
-                            ></i>
-                          </div>
-                          <span
-                            className="text-[#374151] text-[14px] font-medium"
-                          >
-                            {feature.text}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-
-                    <div
-                      className="flex gap-[15px] flex-wrap p-[12px] bg-gradient-to-br from-[#7d2eff]/5 to-[#3b82f6]/5 rounded-[16px] border border-solid border-[#7d2eff]/10"
-                    >
-                      {/* Hospitals */}
-                      <div
-                        className="flex items-center gap-[12px]"
-                      >
-                        <i
-                          className="fa fa-hospital text-[28px] text-[#321961]"
-                        ></i>
-                        <div
-                          className="flex flex-col leading-[1.2]"
-                        >
-                          <span
-                            className="text-[22px] bg-gradient-to-br from-[#321961] to-[#3b82f6] bg-clip-text text-transparent font-semibold"
-                          >
-                            500+
-                          </span>
-                          <span className="text-[12px] font-medium">
-                            Hospitals
-                          </span>
-                        </div>
-                      </div>
-
-                      <div
-                        className="flex items-center gap-[12px]"
-                      >
-                        <i
-                          className="fa fa-smile text-[28px] text-[#3b82f6]"
-                        ></i>
-                        <div
-                          className="flex flex-col leading-[1.2]"
-                        >
-                          <span
-                            className="text-[22px] bg-gradient-to-br from-[#3b82f6] to-[#059669] bg-clip-text text-transparent font-semibold"
-                          >
-                            10K+
-                          </span>
-                          <span className="text-[12px] font-medium">
-                            Happy Patients
-                          </span>
-                        </div>
-                      </div>
-
-                      {/* Support */}
-                      <div
-                        className="flex items-center gap-[12px]"
-                      >
-                        <i
-                          className="fa fa-headset text-[28px] text-[#059669]"
-                        ></i>
-                        <div
-                          className="flex flex-col leading-[1.2]"
-                        >
-                          <span
-                            className="text-[22px] bg-gradient-to-br from-[#059669] to-[#10b981] bg-clip-text text-transparent font-semibold"
-                          >
-                            24/7
-                          </span>
-                          <span className="text-[12px] font-medium">
-                            Support
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="lg:col-span-7 w-full">
-                  <div className="flex flex-col gap-3">
-                    {[
-                      {
-                        id: 1,
-                        title: "Dental",
-                        description:
-                          "Find the best dental care options and compare prices",
-                        icon: "fas fa-tooth",
-                        gradient:
-                          "linear-gradient(135deg, #321961 0%, #822BD4 100%)",
-                        hoverGradient:
-                          "linear-gradient(135deg, #822BD4 0%, #321961 100%)",
-                        shadowColor: "rgba(125, 46, 255, 0.25)",
-                        topBarGradient:
-                          "linear-gradient(90deg, #321961, #3b82f6, #822BD4)",
-                        link: "/dentalservice",
-                      },
-                      {
-                        id: 2,
-                        title: "Lab Tests",
-                        description:
-                          "Book lab tests online and get results quickly",
-                        icon: "fas fa-vial",
-                        gradient:
-                          "linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%)",
-                        hoverGradient:
-                          "linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%)",
-                        shadowColor: "rgba(59, 130, 246, 0.25)",
-                        topBarGradient:
-                          "linear-gradient(90deg, #3b82f6, #60a5fa, #93c5fd)",
-                        link: "/labtests",
-                      },
-                      {
-                        id: 3,
-                        title: "Ambulance",
-                        description: "Emergency ambulance services available 24/7",
-                        icon: "fas fa-ambulance",
-                        gradient:
-                          "linear-gradient(135deg, #dc2626 0%, #ef4444 100%)",
-                        hoverGradient:
-                          "linear-gradient(135deg, #ef4444 0%, #dc2626 100%)",
-                        shadowColor: "rgba(220, 38, 38, 0.25)",
-                        topBarGradient:
-                          "linear-gradient(90deg, #dc2626, #ef4444, #f87171)",
-                        link: "/ambulanceservice",
-                      },
-                    ].map((item, index) => (
-                      <div key={item.id} className="w-full">
-                        <div
-                          className={`quick-access-card group aos p-[12px] rounded-[14px] bg-white border-2 border-solid border-transparent transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] shadow-[0_3px_15px_rgba(0,0,0,0.08)] relative overflow-hidden cursor-pointer hover:-translate-y-[8px] hover:scale-[1.02] ${item.gradient.includes("#321961")
-                            ? "hover:shadow-[0_12px_40px_rgba(125,46,255,0.25)] hover:border-[#321961]"
-                            : item.gradient.includes("#3b82f6")
-                              ? "hover:shadow-[0_12px_40px_rgba(59,130,246,0.25)] hover:border-[#3b82f6]"
-                              : "hover:shadow-[0_12px_40px_rgba(220,38,38,0.25)] hover:border-[#dc2626]"
-                            }`}
-                          data-aos="fade-up"
-                          data-aos-delay={index * 100}
-                          onClick={() => navigate(item.link)}
+                          className="flip-card-front bg-white/95 backdrop-blur-md border border-solid flex flex-col items-center justify-between p-5 text-center shadow-[0_12px_30px_-5px_rgba(0,0,0,0.03)]"
                           style={{
-                            animationDelay: `${index * 0.1}s`,
+                            borderColor: `${item.color}25`
                           }}
                         >
+                          {/* Step index badge indicator */}
+                          <div className="px-3 py-0.5 rounded-full bg-slate-50 text-[9px] font-bold tracking-wider uppercase border border-solid border-slate-200/60 shadow-sm" style={{ color: item.color }}>
+                            Step {item.step}
+                          </div>
+
+                          {/* Icon with glowing background wrapper */}
                           <div
-                            className="absolute top-0 left-0 right-0 h-[3px] scale-x-0 origin-left transition-transform duration-400 ease group-hover:scale-x-100"
+                            className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto"
                             style={{
-                              background: item.topBarGradient,
+                              background: `linear-gradient(135deg, ${item.color}15, ${item.color}05)`,
+                              border: `1px solid ${item.color}30`,
+                              boxShadow: `0 6px 15px -4px ${item.glow}`
                             }}
-                          />
-                          <div
-                            className="flex items-center gap-4"
                           >
-                            <div
-                              className="quick-access-icon-wrapper relative inline-block shrink-0"
-                            >
-                              <div
-                                className="quick-access-icon w-[60px] h-[60px] rounded-[14px] flex items-center justify-center text-[24px] text-white relative z-[1] transition-all duration-300 ease group-hover:scale-110 group-hover:rotate-6"
-                                style={{
-                                  background: item.gradient,
-                                  boxShadow: `0 6px 20px ${item.shadowColor}`,
-                                }}
-                              >
-                                <i className={item.icon}></i>
-                              </div>
-                            </div>
-                            <div className="flex-1 text-left">
-                              <h4
-                                className="!text-[16px] !font-semibold mb-[6px] text-[#1f2937] leading-[1.3]"
-                              >
-                                {item.title}
-                              </h4>
-                              <p
-                                className="text-[#6b7280] text-[13px] leading-[1.5] m-0 mb-[8px]"
-                              >
-                                {item.description}
-                              </p>
-                              <div
-                                className={`inline-flex items-center gap-[6px] text-[13px] font-semibold transition-all duration-300 ease group-hover:translate-x-[4px] ${item.gradient.includes("#321961")
-                                  ? "text-[#321961]"
-                                  : item.gradient.includes("#3b82f6")
-                                    ? "text-[#3b82f6]"
-                                    : "text-[#dc2626]"
-                                  }`}
-                              >
-                                <span>Explore</span>
-                                <i className="fas fa-arrow-right"></i>
-                              </div>
-                            </div>
+                            <i className={`${item.icon} text-[18px]`} style={{ color: item.color }}></i>
+                          </div>
+
+                          {/* Step Header */}
+                          <h4 className="!text-[14px] font-semibold text-[#0f172a] mb-1 leading-tight">{item.title}</h4>
+
+                          {/* Action Hint */}
+                          <span className="text-[9px] text-slate-400 font-medium flex items-center gap-1 justify-center">
+                            <span>Hover to reveal</span>
+                            <i className="fas fa-sync text-[7px] animate-spin" style={{ animationDuration: '4s' }}></i>
+                          </span>
+                        </div>
+
+                        {/* Back Side */}
+                        <div
+                          className="flip-card-back text-white flex flex-col items-center justify-between p-5 text-center shadow-lg"
+                          style={{
+                            background: `linear-gradient(135deg, ${item.color}, ${item.color}dd)`,
+                            boxShadow: `0 15px 35px -8px ${item.glow}`
+                          }}
+                        >
+                          <span className="text-[9px] font-mono tracking-widest text-white/60 uppercase">Step {item.step}</span>
+
+                          <div className="my-auto flex flex-col gap-2">
+                            <h4 className="text-[14px] font-bold text-white leading-tight">{item.title}</h4>
+                            <p className="text-[11px] text-white/90 font-light leading-relaxed m-0 max-w-[180px] mx-auto">{item.desc}</p>
+                          </div>
+
+                          <div className="w-5 h-5 rounded-full bg-white/15 flex items-center justify-center text-[9px] text-white/80">
+                            <i className="fas fa-check"></i>
                           </div>
                         </div>
                       </div>
-                    ))}
-                  </div>
+                    </div>
+                  ))}
                 </div>
               </div>
+
             </div>
           </section>
 
-          <section className="py-12 bg-white">
-            <div className="container mx-auto px-4">
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                <div
-                  className="lg:col-span-4 w-full flex justify-center aos"
-                  data-aos="fade-up"
-                >
-                  <div className="max-w-[360px] lg:max-w-full">
-                    <img
-                      src="/assets/img/work-img.png"
-                      className="max-w-full h-auto rounded-2xl shadow-lg object-cover"
-                      alt="doctor-image"
-                      loading="lazy"
-                    />
-                  </div>
-                </div>
-                <div className="lg:col-span-8 w-full">
-                  <div className="mb-6 aos" data-aos="fade-up">
-                    <div
-                      className="mb-3 inline-block py-[8px] px-[20px] bg-gradient-to-br from-[#ea580c]/20 to-[#f97316]/20 rounded-[50px] text-[14px] font-semibold text-[#ea580c]"
-                    >
-                      <i
-                        className="fas fa-info-circle mr-[8px]"
-                      ></i>
-                      How it Works
+          <section className="py-24 bg-gradient-to-b from-white to-slate-50 relative overflow-hidden">
+            {/* Ambient glows */}
+            <div className="absolute top-1/4 left-0 w-[400px] h-[400px] rounded-full bg-[#7c3aed]/3 blur-[100px] pointer-events-none"></div>
+            <div className="absolute bottom-1/4 right-0 w-[400px] h-[400px] rounded-full bg-[#059669]/3 blur-[100px] pointer-events-none"></div>
+
+            <div className="container mx-auto px-4 max-w-7xl relative z-10">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+
+                {/* Left Side: Spotlight Big Feature Card */}
+                <div className="lg:col-span-5 flex flex-col gap-6">
+                  <div className="text-left">
+                    <div className="inline-flex items-center gap-1.5 bg-[#7c3aed]/10 border border-solid border-[#7c3aed]/20 py-1.5 px-4 rounded-full mb-4">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#7c3aed] animate-pulse"></span>
+                      <span className="text-[11px] uppercase tracking-wider text-[#7c3aed] font-bold">Core Strengths</span>
                     </div>
-                    <h2
-                      className="!text-[28px] !font-semibold mb-[12px] text-gray-800"
-                    >
-                      4 easy steps to get your solution
+                    <h2 className="text-[36px] font-light text-[#0f172a] leading-tight tracking-tight mb-4">
+                      Key Features & <span className="font-normal text-[#7c3aed]">Benefits</span>
                     </h2>
-                  </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {[
-                      {
-                        title: "Search Medicines",
-                        description: "Search for medicines by name, category, or health condition.",
-                        icon: "/assets/img/icons/searchubg.png",
-                        alt: "search-doctor-icon"
-                      },
-                      {
-                        title: "Check Medicine Details",
-                        description: "View detailed information about the medicine including brand, composition, and alternatives.",
-                        icon: "/assets/img/icons/first-aid-kit.png",
-                        alt: "doctor-profile-icon"
-                      },
-                      {
-                        title: "Compare Prices",
-                        description: "Compare prices from multiple pharmacies and choose the best deal.",
-                        icon: "/assets/img/icons/price-comparison.png",
-                        alt: "calendar-icon"
-                      },
-                      {
-                        title: "Get Your Solution",
-                        description: "Select the pharmacy, place your order, and get your medicines at the best price.",
-                        icon: "/assets/img/icons/doctor-consultation.png",
-                        alt: "solution-icon"
-                      }
-                    ].map((step, idx) => (
-                      <div className="aos h-full" data-aos="fade-up" key={idx}>
-                        <div className="flex items-start gap-4 p-5 bg-white rounded-md shadow-[0_4px_12px_rgba(0,0,0,0.08)] border border-gray-100 hover:shadow-lg transition-all h-full">
-                          <div className="w-12 h-12 rounded-xl bg-orange-50 flex items-center justify-center shrink-0">
-                            <img
-                              src={step.icon}
-                              alt={step.alt}
-                              loading="lazy"
-                              className="w-6 h-6 object-contain"
-                            />
-                          </div>
-                          <div className="flex-1">
-                            <h5 className="text-base font-semibold text-gray-800 mb-1">{step.title}</h5>
-                            <p className="text-[13px] text-gray-500 leading-relaxed m-0">
-                              {step.description}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <section
-            className="py-12"
-            style={{
-              background:
-                "linear-gradient(135deg, #f8f9fa 0%, #ffffff 50%, #f8f9fa 100%)",
-              position: "relative",
-              overflow: "hidden",
-            }}
-          >
-            <div className="absolute top-[-20%] left-[-10%] w-[300px] h-[300px] rounded-full bg-[#321961]/5 blur-[80px] pointer-events-none"></div>
-            <div className="absolute bottom-[-20%] right-[-10%] w-[300px] h-[300px] rounded-full bg-[#059669]/5 blur-[80px] pointer-events-none"></div>
-            <div className="container mx-auto px-4 relative z-10">
-              <div className="text-center mb-10 aos" data-aos="fade-up">
-                <h2
-                  className="!text-[24px] !font-semibold mb-[8px]"
-                >
-                  Key Features & Benefits
-                </h2>
-                <p
-                  className="!text-[#6b7280] !text-[13px] !max-w-[500px] !mx-auto !mt-[6px] !mb-0 !font-normal"
-                >
-                  Compare prices from 500+ pharmacies, get 100% genuine
-                  medicines, find cheaper alternatives, set price alerts, enjoy
-                  fast delivery, and receive expert support 24/7.
-                </p>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-1">
-                {[
-                  {
-                    id: 1,
-                    title: "Price Comparison",
-                    description: "Compare prices from 500+ pharmacies instantly. Find the best deals and save up to 40% on your medicine bills.",
-                    icon: "fas fa-search-dollar",
-                    topBarGradient: "linear-gradient(90deg, #321961, #3b82f6, #059669)",
-                    iconGradient: "from-[#321961] to-[#6d48b8]",
-                    hoverShadow: "hover:shadow-[0_12px_40px_rgba(125,46,255,0.2)] hover:border-[#321961]",
-                    delay: "0s"
-                  },
-                  {
-                    id: 2,
-                    title: "100% Genuine",
-                    description: "All medicines are verified and sourced from licensed pharmacies. Your health and safety is our top priority.",
-                    icon: "fas fa-shield-alt",
-                    topBarGradient: "linear-gradient(90deg, #059669, #10b981, #34d399)",
-                    iconGradient: "from-[#059669] to-[#10b981]",
-                    hoverShadow: "hover:shadow-[0_12px_40px_rgba(5,150,105,0.2)] hover:border-[#059669]",
-                    delay: "0.1s"
-                  },
-                  {
-                    id: 3,
-                    title: "Find Alternatives",
-                    description: "Discover cheaper alternatives with the same composition. Get detailed information about substitutes and save more.",
-                    icon: "fas fa-exchange-alt",
-                    topBarGradient: "linear-gradient(90deg, #321961, #3b82f6, #822BD4)",
-                    iconGradient: "from-[#321961] to-[#6d48b8]",
-                    hoverShadow: "hover:shadow-[0_12px_40px_rgba(125,46,255,0.2)] hover:border-[#321961]",
-                    delay: "0.2s"
-                  },
-                  {
-                    id: 4,
-                    title: "Price Alerts",
-                    description: "Set price alerts for your regular medicines and get notified when prices drop. Never miss a great deal again.",
-                    icon: "fas fa-bell",
-                    topBarGradient: "linear-gradient(90deg, #dc2626, #ef4444, #f87171)",
-                    iconGradient: "from-[#dc2626] to-[#ef4444]",
-                    hoverShadow: "hover:shadow-[0_12px_40px_rgba(220,38,38,0.2)] hover:border-[#dc2626]",
-                    delay: "0.3s"
-                  },
-                  {
-                    id: 5,
-                    title: "Fast Delivery",
-                    description: "Choose from home delivery or store pickup. Get your medicines delivered to your doorstep quickly and safely.",
-                    icon: "fas fa-truck",
-                    topBarGradient: "linear-gradient(90deg, #3b82f6, #60a5fa, #93c5fd)",
-                    iconGradient: "from-[#3b82f6] to-[#60a5fa]",
-                    hoverShadow: "hover:shadow-[0_12px_40px_rgba(59,130,246,0.2)] hover:border-[#3b82f6]",
-                    delay: "0.4s"
-                  },
-                  {
-                    id: 6,
-                    title: "Expert Support",
-                    description: "Get expert guidance on medicines, alternatives, and health tips. Our support team is available 24/7 to help you.",
-                    icon: "fas fa-user-md",
-                    topBarGradient: "linear-gradient(90deg, #059669, #10b981, #34d399)",
-                    iconGradient: "from-[#059669] to-[#10b981]",
-                    hoverShadow: "hover:shadow-[0_12px_40px_rgba(5,150,105,0.2)] hover:border-[#059669]",
-                    delay: "0.5s"
-                  }
-                ].map((feature) => (
-                  <div
-                    className={`group p-[24px] rounded-[12px] bg-white border-2 border-solid border-transparent transition-all duration-400 ease-[cubic-bezier(0.4,0,0.2,1)] shadow-[0_4px_20px_rgba(0,0,0,0.06)] relative overflow-hidden h-full hover:-translate-y-[8px] ${feature.hoverShadow}`}
-                    key={feature.id}
-                    data-aos="fade-up"
-                    data-aos-delay={feature.id * 100}
-                    style={{
-                      animationDelay: feature.delay,
-                    }}
-                  >
-                    <div
-                      className="absolute top-0 left-0 right-0 h-[4px] scale-x-0 origin-left transition-transform duration-400 ease group-hover:scale-x-100"
-                      style={{
-                        background: feature.topBarGradient,
-                      }}
-                    />
-                    <div
-                      className="mb-[12px] relative inline-block"
-                    >
-                      <div
-                        className={`w-[48px] h-[48px] mx-auto bg-gradient-to-br ${feature.iconGradient} rounded-[12px] flex items-center justify-center text-[18px] text-white relative z-10 shadow-[0_4px_12px_rgba(0,0,0,0.1)] group-hover:animate-[iconBounce_0.6s_ease-in-out]`}
-                      >
-                        <i className={feature.icon}></i>
-                      </div>
-                    </div>
-                    <h4
-                      className="!text-[16px] !font-semibold mb-[6px] text-[#1f2937] leading-[1.3]"
-                    >
-                      {feature.title}
-                    </h4>
-                    <p
-                      className="text-[#6b7280] text-[12px] leading-[1.6] m-0"
-                    >
-                      {feature.description}
+                    <p className="text-[14.5px] text-[#64748b] font-light leading-relaxed max-w-[380px] mb-6">
+                      Explore the tools that make Medicompare the smartest platform to compare prices, verify compostions, and buy medicines.
                     </p>
                   </div>
-                ))}
+
+                  {/* Mega Spotlight Box */}
+                  <div className="rounded-md p-8 text-white relative overflow-hidden shadow-[0_20px_50px_rgba(50,25,97,0.15)]" style={{ background: "linear-gradient(135deg, #321961 0%, #1e0a3d 60%, #172554 100%)" }}>
+                    <div className="absolute top-0 right-0 w-32 h-32 rounded-full bg-[#7c3aed]/30 blur-[25px] pointer-events-none"></div>
+                    <div className="absolute bottom-0 left-0 w-32 h-32 rounded-full bg-[#0ea5e9]/10 blur-[25px] pointer-events-none"></div>
+
+                    <div className="relative z-10 text-left">
+                      <span className="text-[11px] font-semibold text-[#c4b5fd] tracking-widest uppercase block mb-3">Highlight Feature</span>
+                      <h3 className="text-[28px] font-normal leading-snug mb-3">
+                        Save Up to <span className="text-[#ea580c] font-semibold">40%</span> On Medical Bills
+                      </h3>
+                      <p className="text-[13px] text-white/70 font-light leading-relaxed mb-6">
+                        Medicompare queries over 500 local pharmacies in real-time to find you the lowest prices and substitutes automatically.
+                      </p>
+
+                      {/* Mock Compare Strip */}
+                      <div className="bg-white/10 rounded-lg p-4 border border-solid border-white/10 flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <div className="w-9 h-9 rounded-full bg-[#ea580c]/20 flex items-center justify-center text-[#ea580c]">
+                            <i className="fas fa-search-dollar text-[14px]"></i>
+                          </div>
+                          <div>
+                            <div className="text-[12px] font-medium text-white">Compare Prices</div>
+                            <div className="text-[10px] text-white/50">500+ Verified Partners</div>
+                          </div>
+                        </div>
+                        <i className="fas fa-arrow-right text-white/40 text-[12px]"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right Side: Staggered Asymmetrical Benefits List */}
+                <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-6 items-start">
+
+                  {/* Left Column of Staggered Grid */}
+                  <div className="grid grid-cols-1 gap-6">
+                    {[
+                      {
+                        id: 2,
+                        title: "100% Genuine",
+                        description: "Sourced exclusively from verified licensed pharmacies for your safety.",
+                        icon: "fas fa-shield-alt",
+                        accent: "#10b981",
+                        glow: "rgba(16,185,129,0.18)",
+                      },
+                      {
+                        id: 4,
+                        title: "Real-time Price Alerts",
+                        description: "Set price watches on your regular prescriptions and get instant drop alerts.",
+                        icon: "fas fa-bell",
+                        accent: "#f43f5e",
+                        glow: "rgba(244,63,94,0.18)",
+                      },
+                      {
+                        id: 6,
+                        title: "Expert Support 24/7",
+                        description: "Get active assistance on substitutes and medical salts from our support team.",
+                        icon: "fas fa-user-md",
+                        accent: "#8b5cf6",
+                        glow: "rgba(139,92,246,0.18)",
+                      }
+                    ].map((card) => (
+                      <div
+                        key={card.id}
+                        className="group relative bg-white border border-solid border-slate-200/60 rounded-sm p-6 transition-all duration-300 hover:-translate-y-1 overflow-hidden"
+                        style={{ transition: "all 0.3s ease" }}
+                        onMouseEnter={e => {
+                          e.currentTarget.style.boxShadow = `0 15px 35px -8px ${card.glow}`;
+                          e.currentTarget.style.borderColor = card.accent;
+                        }}
+                        onMouseLeave={e => {
+                          e.currentTarget.style.boxShadow = "none";
+                          e.currentTarget.style.borderColor = "rgba(226,232,240,0.6)";
+                        }}
+                      >
+                        {/* Dynamic colored accent bar on the left */}
+                        <div
+                          className="absolute left-0 top-0 bottom-0 w-[3px] transition-all duration-300 group-hover:w-1.5"
+                          style={{ background: card.accent }}
+                        ></div>
+
+                        <div className="flex items-start gap-4 text-left pl-1">
+                          <div
+                            className="w-11 h-11 rounded-full flex items-center justify-center shrink-0 shadow-md text-white transition-transform duration-300 group-hover:scale-110"
+                            style={{
+                              background: `linear-gradient(135deg, ${card.accent}, ${card.accent}dd)`,
+                              boxShadow: `0 4px 12px ${card.glow}`
+                            }}
+                          >
+                            <i className={`${card.icon} text-[15px]`}></i>
+                          </div>
+                          <div>
+                            <h4 className="!text-[15px] !font-semibold !text-[#0f172a] mb-1.5">{card.title}</h4>
+                            <p className="!text-[12.5px] !text-[#64748b] !font-light leading-relaxed m-0">{card.description}</p>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Right Column of Staggered Grid (Vertically Offset/Staggered) */}
+                  <div className="grid grid-cols-1 gap-6 sm:mt-8">
+                    {[
+                      {
+                        id: 3,
+                        title: "Alternative Suggestions",
+                        description: "Discover generic substitutes with matching compositions at cheaper prices.",
+                        icon: "fas fa-exchange-alt",
+                        accent: "#ea580c",
+                        glow: "rgba(234,88,12,0.18)",
+                      },
+                      {
+                        id: 5,
+                        title: "Fast Doorstep Delivery",
+                        description: "Order prescriptions and get them delivered to your home or pharmacy pickup.",
+                        icon: "fas fa-truck",
+                        accent: "#0ea5e9",
+                        glow: "rgba(14,165,233,0.18)",
+                      }
+                    ].map((card) => (
+                      <div
+                        key={card.id}
+                        className="group relative bg-white border border-solid border-slate-200/60 rounded-[20px] p-6 transition-all duration-300 hover:-translate-y-1 overflow-hidden"
+                        style={{ transition: "all 0.3s ease" }}
+                        onMouseEnter={e => {
+                          e.currentTarget.style.boxShadow = `0 15px 35px -8px ${card.glow}`;
+                          e.currentTarget.style.borderColor = card.accent;
+                        }}
+                        onMouseLeave={e => {
+                          e.currentTarget.style.boxShadow = "none";
+                          e.currentTarget.style.borderColor = "rgba(226,232,240,0.6)";
+                        }}
+                      >
+                        {/* Dynamic colored accent bar on the left */}
+                        <div
+                          className="absolute left-0 top-0 bottom-0 w-[3px] transition-all duration-300 group-hover:w-1.5"
+                          style={{ background: card.accent }}
+                        ></div>
+
+                        <div className="flex items-start gap-4 text-left pl-1">
+                          <div
+                            className="w-11 h-11 rounded-full flex items-center justify-center shrink-0 shadow-md text-white transition-transform duration-300 group-hover:scale-110"
+                            style={{
+                              background: `linear-gradient(135deg, ${card.accent}, ${card.accent}dd)`,
+                              boxShadow: `0 4px 12px ${card.glow}`
+                            }}
+                          >
+                            <i className={`${card.icon} text-[15px]`}></i>
+                          </div>
+                          <div>
+                            <h4 className="!text-[15px] !font-semibold !text-[#0f172a] mb-1.5">{card.title}</h4>
+                            <p className="!text-[12.5px] !text-[#64748b] !font-light leading-relaxed m-0">{card.description}</p>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                </div>
               </div>
             </div>
           </section>
+
+
+
 
           {(() => {
             const sectionData = compareSection?.[0];
@@ -1942,241 +2255,263 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
             const formattedSavingsAmount = savingsAmount % 1 === 0 ? savingsAmount : savingsAmount.toFixed(2);
 
             return (
-              <section
-                className="py-12 bg-[linear-gradient(135deg,#321961_0%,#822BD4_100%)] text-white relative"
-              >
-                <div className="container mx-auto px-4">
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-                    <div className="w-full">
-                      <div className="showcase-content aos" data-aos="fade-right">
-                        <h2
-                          className="!text-[32px] !font-semibold !mb-[16px] !text-white"
-                        >
-                          {title}
-                        </h2>
-                        <p
-                          className="!text-[15px] !leading-[1.6] !mb-[24px] !text-white/90"
-                        >
-                          {subtitle}
-                        </p>
-                        <div className="flex gap-6 mb-6 mt-4">
-                          <div>
-                            <h3
-                              className="!text-[32px] !font-semibold !m-0 !text-[#04BD6C]"
-                            >
-                              {totalSaving}
-                            </h3>
-                            <p
-                              className="!m-0 !text-[14px] !text-white/80"
-                            >
-                              Total Savings
-                            </p>
+              <section className="py-15 bg-gradient-to-br from-[#f1effd] via-[#e2f1fd] to-[#dcfce7] text-slate-800 relative overflow-hidden">
+                {/* Modern light mesh gradient background blobs */}
+                <div className="absolute top-[-10%] left-[-10%] w-[400px] h-[400px] rounded-full bg-[#7c3aed]/12 blur-[90px] pointer-events-none"></div>
+                <div className="absolute bottom-[-10%] right-[-10%] w-[450px] h-[450px] rounded-full bg-[#10b981]/12 blur-[100px] pointer-events-none"></div>
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] rounded-full bg-[#0ea5e9]/8 blur-[120px] pointer-events-none"></div>
+
+                <div className="container mx-auto px-4 max-w-7xl relative z-10">
+
+                  {/* Eyebrow and header */}
+                  <div className="text-center mb-16 max-w-2xl mx-auto">
+                    <div className="inline-flex items-center gap-1.5 bg-[#10b981]/10 border border-solid border-[#10b981]/25 py-1.5 px-4 rounded-full mb-4">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#10b981] animate-pulse"></span>
+                      <span className="text-[11px] uppercase tracking-wider text-[#10b981] font-semibold">Visual comparison</span>
+                    </div>
+                    <h2 className="text-[36px] font-light text-[#0f172a] leading-tight tracking-tight mb-3">
+                      How Much You Can <span className="font-normal text-[#7c3aed]">Really Save</span>
+                    </h2>
+                    <p className="text-[14px] text-[#64748b] font-light max-w-lg mx-auto">
+                      Compare a standard offline pharmacy receipt with a Medicompare digital receipt to witness the price gap.
+                    </p>
+                  </div>
+
+                  {/* Asymmetrical 3-Column Receipt Splitter */}
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+
+                    {/* Bill A: Standard Retail Receipt */}
+                    <div className="lg:col-span-4 bg-white/90 backdrop-blur-md text-slate-800 rounded-2xl p-6 shadow-[0_15px_35px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_50px_rgba(239,68,68,0.08)] transition-all duration-300 relative flex flex-col justify-between overflow-hidden border border-solid border-red-100/80 min-h-[390px]">
+                      <div className="absolute top-0 left-0 right-0 h-1.5 bg-[#ef4444]"></div>
+                      <div>
+                        <div className="flex justify-between items-start border-b border-solid border-slate-100 pb-3 mb-4 font-mono text-[11px] text-slate-400">
+                          <span>STANDARD RETAIL RATE</span>
+                          <span>EST. HIGHEST SHOP</span>
+                        </div>
+                        <h4 className="text-[16px] font-semibold text-slate-700 font-mono mb-4 text-left">RETAIL INVOICE</h4>
+
+                        <div className="flex flex-col gap-3 font-mono text-[13px] text-left">
+                          <div className="flex justify-between">
+                            <span>1x {tabletName}</span>
+                            <span className="font-semibold text-slate-600">₹{maxPrice || 45.00}</span>
                           </div>
-                          <div>
-                            <h3
-                              className="!text-[32px] !font-semibold !m-0 !text-[#04BD6C]"
-                            >
-                              {averageSaving}
-                            </h3>
-                            <p
-                              className="!m-0 !text-[14px] !text-white/80"
-                            >
-                              Average Savings
-                            </p>
+                          <div className="flex justify-between text-slate-400">
+                            <span>Estimated Local Markup</span>
+                            <span>₹15.00</span>
                           </div>
                         </div>
+                      </div>
+
+                      <div>
+                        <div className="mt-8 border-t border-dashed border-slate-200 pt-4 text-left font-mono">
+                          <div className="flex justify-between items-center text-[15px] font-bold text-slate-800">
+                            <span>TOTAL DUE</span>
+                            <span className="text-[#ef4444]">₹{maxPrice ? (maxPrice + 15) : 60.00}</span>
+                          </div>
+                          <span className="text-[9px] text-[#ef4444] bg-[#ef4444]/5 px-2 py-0.5 rounded-full mt-2 inline-block">Estimated standard retail shop rate</span>
+                        </div>
+
+                        {/* Stylized Receipt Barcode for Standard Retail */}
+                        {/* <div className="mt-4 flex flex-col items-center opacity-30 hover:opacity-60 transition-opacity duration-300 select-none">
+                          <div className="flex gap-[2.5px] h-5 items-stretch">
+                            <div className="w-[1.5px] bg-slate-800"></div>
+                            <div className="w-[2px] bg-slate-800"></div>
+                            <div className="w-[1px] bg-slate-800"></div>
+                            <div className="w-[4px] bg-slate-800"></div>
+                            <div className="w-[1px] bg-slate-800"></div>
+                            <div className="w-[2px] bg-slate-800"></div>
+                            <div className="w-[1.5px] bg-slate-800"></div>
+                            <div className="w-[3px] bg-slate-800"></div>
+                            <div className="w-[2px] bg-slate-800"></div>
+                            <div className="w-[1px] bg-slate-800"></div>
+                            <div className="w-[4px] bg-slate-800"></div>
+                            <div className="w-[1px] bg-slate-800"></div>
+                          </div>
+                          <span className="text-[7.5px] font-mono tracking-[0.3em] mt-1.5 text-slate-500">MC-RETAIL-OVERPAY</span>
+                        </div> */}
+                      </div>
+                    </div>
+
+                    {/* Column 2: VS Divider & Live Stats */}
+                    <div className="lg:col-span-4 flex flex-col justify-center items-center gap-6 text-center py-6 lg:py-0">
+                      <div className="relative flex items-center justify-between my-2 w-full max-w-[340px] gap-2">
+                        <style>{`
+                          @keyframes compareSway {
+                            0%, 100% { transform: translateX(0); }
+                            25% { transform: translateX(-8px); }
+                            75% { transform: translateX(8px); }
+                          }
+                          @keyframes swipeLeft {
+                            0%, 100% { transform: translateX(0); opacity: 0.4; }
+                            50% { transform: translateX(-6px); opacity: 1; }
+                          }
+                          @keyframes swipeRight {
+                            0%, 100% { transform: translateX(0); opacity: 0.4; }
+                            50% { transform: translateX(6px); opacity: 1; }
+                          }
+                          .animate-compare-sway {
+                            animation: compareSway 4s ease-in-out infinite;
+                          }
+                          .animate-swipe-left {
+                            animation: swipeLeft 2s ease-in-out infinite;
+                          }
+                          .animate-swipe-right {
+                            animation: swipeRight 2s ease-in-out infinite;
+                          }
+                        `}</style>
+
+                        {/* Left Retail Pointer */}
+                        <div className="text-[#ef4444] animate-swipe-left text-[12px] flex items-center gap-1 font-semibold select-none shrink-0">
+                          <i className="fas fa-chevron-left text-[9px]"></i>
+                          <span className="text-[13px] font-mono tracking-tighter uppercase">Other's</span>
+                        </div>
+
+                        {/* VS Circle */}
+                        <div className="w-16 h-16 shrink-0 rounded-full bg-gradient-to-br from-[#321961] to-[#7c3aed] text-white flex items-center justify-center shadow-[0_8px_25px_rgba(50,25,97,0.3)] relative z-10 transition-transform duration-500 hover:scale-110 hover:rotate-12 cursor-default animate-compare-sway">
+                          <span className="text-[18px] font-bold tracking-widest font-mono">VS</span>
+                        </div>
+
+                        {/* Right Savings Pointer */}
+                        <div className="text-[#10b981] animate-swipe-right text-[12px] flex items-center gap-1 font-semibold select-none shrink-0">
+                          <span className="text-[13px] font-mono tracking-tighter uppercase">Medicompares</span>
+                          <i className="fas fa-chevron-right text-[9px]"></i>
+                        </div>
+                      </div>
+
+                      <div className="p-6 rounded-md bg-white/90 backdrop-blur-md border border-solid border-slate-200/80 shadow-[0_15px_35px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_50px_rgba(124,58,237,0.08)] transition-all duration-300 w-full">
+                        <h4 className="text-[20px] font-medium text-[#0f172a] mb-2">Smart Price Check</h4>
+                        <p className="text-[12.5px] text-[#64748b] font-light leading-relaxed mb-4">
+                          Medicompare acts as your digital broker, sorting through regional pharmacy databases to slice your margins.
+                        </p>
+
+                        <div className="bg-[#10b981]/10 border border-solid border-[#10b981]/30 rounded-md p-3.5 mb-4">
+                          <span className="text-[10px] text-slate-500 uppercase tracking-widest block mb-0.5">Average savings</span>
+                          <span className="text-[22px] font-bold text-[#10b981]">Save {savingsPercent}% Instantly</span>
+                        </div>
+
                         <Link
                           to="/medicine/all"
-                          className="!bg-white !text-[#321961] hover:bg-gray-50 py-3 px-8 rounded-full !font-medium !text-[15px] !no-underline inline-block transition-all shadow-md"
+                          className="!bg-gradient-to-r from-[#321961] to-[#7c3aed] text-white hover:from-[#1e0a3d] hover:to-[#5b21b6] py-3 px-6 rounded-full font-semibold text-[13.5px] no-underline inline-flex items-center gap-2 transition-all duration-300 w-full justify-center shadow-md shadow-indigo-500/10"
                         >
-                          Start Comparing Now{" "}
-                          <i className="fas fa-arrow-right ms-2"></i>
+                          <span>Compare live prices</span>
+                          <i className="fas fa-arrow-right text-[10px]"></i>
                         </Link>
                       </div>
                     </div>
-                    <div className="w-full">
-                      <div
-                        className="bg-white rounded-[16px] p-6 border border-gray-100 shadow-lg max-w-[480px] mx-auto lg:mx-0"
-                        data-aos="fade-left"
-                      >
-                        <h4
-                          className="!text-[#2c3e50] !mb-[20px] !text-[18px] !font-semibold"
-                        >
-                          Example: {tabletName}
+
+                    {/* Bill B: Medicompare Glowing Digital Invoice (Scaled up & Highlighted) */}
+                    <div className="lg:col-span-4 bg-gradient-to-b from-white to-[#f0fdf4]/70 text-slate-800 rounded-2xl p-6 shadow-[0_25px_60px_rgba(16,185,129,0.18)] hover:shadow-[0_25px_60px_rgba(16,185,129,0.28)] transition-all duration-300 relative flex flex-col justify-between overflow-hidden scale-[1.03] lg:scale-[1.05] z-10 min-h-[390px]">
+                      <div className="absolute top-0 left-0 right-0 h-1.5 bg-[#10b981]"></div>
+
+                      {/* Premium Authentic Watermark Stamp */}
+                      <div className="absolute -right-4 top-10 opacity-[0.07] pointer-events-none -rotate-12 select-none">
+                        <i className="fas fa-shield-alt text-[100px] text-[#10b981]"></i>
+                      </div>
+
+                      <div>
+                        <div className="flex justify-between items-center border-b border-solid border-slate-100 pb-3 mb-4 font-mono text-[11px] text-[#10b981] font-semibold">
+                          <span>MEDICOMPARES</span>
+                          <span className="flex items-center gap-1"><i className="fas fa-star text-[9px] animate-pulse"></i> BEST DEAL</span>
+                        </div>
+                        <h4 className="text-[16px] font-semibold text-slate-700 font-mono mb-4 text-left flex items-center gap-1.5">
+                          <span>SAVINGS INVOICE</span>
                         </h4>
 
-                        {vendors.length > 0 ? (
-                          vendors.map((vendor, idx) => {
-                            const price = vendor.products?.[0]?.displayPrice;
-                            const isBest = vendor.isBestDeal;
-                            const distance = vendor.businessdetails?.distance;
-                            const name = vendor.businessdetails?.name || "Pharmacy";
+                        <div className="flex flex-col gap-2 font-mono text-[12px] text-left">
+                          {vendors.length > 0 ? (
+                            vendors.map((vendor, idx) => {
+                              const price = vendor.products?.[0]?.displayPrice;
+                              const isBest = vendor.isBestDeal;
+                              const name = vendor.businessdetails?.name || "Pharmacy";
 
-                            if (isBest) {
                               return (
                                 <div
                                   key={vendor._id || idx}
-                                  className="mb-3 p-3 bg-[linear-gradient(135deg,#04BD6C_0%,#05a85c_100%)] rounded-lg border border-[#04BD6C] relative cursor-pointer"
-                                  onClick={() => handleVendorClick(vendor)}
+                                  className={`flex justify-between items-center py-1.5 px-2.5 rounded-lg border border-solid transition-all duration-300 ${isBest
+                                    ? "bg-[#10b981]/8 border-[#10b981]/25 shadow-[0_4px_12px_rgba(16,185,129,0.06)] scale-[1.02] text-slate-800"
+                                    : "border-transparent bg-transparent text-slate-500"
+                                    }`}
                                 >
-                                  <div className="flex justify-between items-center">
-                                    <div>
-                                      <h6 className="!m-0 !text-white !text-[14px] !font-medium">
-                                        {name} (Best Deal)
-                                      </h6>
-                                      {distance !== undefined && (
-                                        <p className="!m-0 !text-white/90 !text-[12px]">
-                                          {distance} km away
-                                        </p>
-                                      )}
-                                    </div>
-                                    <div className="text-right">
-                                      <span className="!text-[16px] !font-semibold !text-white">
-                                        ₹{price}
-                                      </span>
-                                    </div>
-                                  </div>
-                                  {savingsPercent > 0 && (
-                                    <div
-                                      className="absolute top-[-10px] right-[15px] !bg-[#FFA726] !text-white !py-[2px] !px-[10px] !rounded-[20px] !text-[11px] !font-semibold"
-                                    >
-                                      Save {savingsPercent}%
-                                    </div>
-                                  )}
+                                  <span className={isBest ? "text-[#0ea5e9] font-semibold flex items-center gap-1.5 min-w-0" : "text-slate-500 truncate"}>
+                                    <span className="truncate max-w-[100px] sm:max-w-[130px] block">{name}</span>
+                                    {isBest && <span className="text-[9px] text-white bg-[#10b981] px-1.5 py-0.5 rounded font-bold uppercase shrink-0 shadow-sm">Best Deal</span>}
+                                  </span>
+                                  <span className={`font-semibold shrink-0 ${isBest ? "text-[#10b981] text-[13px]" : "text-slate-600"}`}>
+                                    ₹{price}
+                                  </span>
                                 </div>
                               );
-                            } else {
-                              return (
-                                <div
-                                  key={vendor._id || idx}
-                                  className="mb-3 p-3 bg-[#f8f9fa] rounded-lg border border-[#e9ecef] cursor-pointer"
-                                  onClick={() => handleVendorClick(vendor)}
-                                >
-                                  <div className="flex justify-between items-center">
-                                    <div>
-                                      <h6 className="!m-0 !text-[#495057] !text-[14px] !font-medium">
-                                        {name}
-                                      </h6>
-                                      {distance !== undefined && (
-                                        <p className="!m-0 !text-[#6c757d] !text-[12px]">
-                                          {distance} km away
-                                        </p>
-                                      )}
-                                    </div>
-                                    <div className="text-right">
-                                      <span className="!text-[16px] !font-semibold !text-[#495057]">
-                                        ₹{price}
-                                      </span>
-                                    </div>
-                                  </div>
-                                </div>
-                              );
-                            }
-                          })
-                        ) : (
-                          <>
-                            <div
-                              className="mb-3 p-3 bg-[#f8f9fa] rounded-lg border border-[#e9ecef]"
-                            >
-                              <div className="flex justify-between items-center">
-                                <div>
-                                  <h6
-                                    className="!m-0 !text-[#495057] !text-[14px] !font-medium"
-                                  >
-                                    Pharmacy A
-                                  </h6>
-                                  <p
-                                    className="!m-0 !text-[#6c757d] !text-[12px]"
-                                  >
-                                    2.5 km away
-                                  </p>
-                                </div>
-                                <div className="text-right">
-                                  <span
-                                    className="!text-[16px] !font-semibold !text-[#495057]"
-                                  >
-                                    ₹45
-                                  </span>
-                                </div>
+                            })
+                          ) : (
+                            <>
+                              <div className="flex justify-between items-center py-1.5 px-2.5 rounded-lg border border-solid border-transparent text-slate-500 min-w-0">
+                                <span className="truncate max-w-[100px] sm:max-w-[130px] block">Pharmacy A</span>
+                                <span className="font-semibold text-slate-600 shrink-0">₹45.00</span>
                               </div>
-                            </div>
-                            <div
-                              className="mb-3 p-3 bg-[linear-gradient(135deg,#04BD6C_0%,#05a85c_100%)] rounded-lg border border-[#04BD6C] relative"
-                            >
-                              <div className="flex justify-between items-center">
-                                <div>
-                                  <h6
-                                    className="!m-0 !text-white !text-[14px] !font-medium"
-                                  >
-                                    Pharmacy B (Best Deal)
-                                  </h6>
-                                  <p
-                                    className="!m-0 !text-white/90 !text-[12px]"
-                                  >
-                                    1.8 km away
-                                  </p>
-                                </div>
-                                <div className="text-right">
-                                  <span
-                                    className="!text-[16px] !font-semibold !text-white"
-                                  >
-                                    ₹32
-                                  </span>
-                                </div>
+                              <div className="flex justify-between items-center py-1.5 px-2.5 rounded-lg border border-solid bg-[#10b981]/8 border-[#10b981]/25 shadow-[0_4px_12px_rgba(16,185,129,0.06)] scale-[1.02] text-slate-800 min-w-0">
+                                <span className="text-[#0ea5e9] font-semibold flex items-center gap-1.5 min-w-0">
+                                  <span className="truncate max-w-[100px] sm:max-w-[130px] block">Pharmacy B</span>
+                                  <span className="text-[9px] text-white bg-[#10b981] px-1.5 py-0.5 rounded font-bold uppercase shrink-0 shadow-sm">Best Deal</span>
+                                </span>
+                                <span className="text-[#10b981] font-bold text-[13px] shrink-0">₹32.00</span>
                               </div>
-                              <div
-                                className="absolute top-[-10px] right-[15px] !bg-[#FFA726] !text-white !py-[2px] !px-[10px] !rounded-[20px] !text-[11px] !font-semibold"
-                              >
-                                Save 29%
+                              <div className="flex justify-between items-center py-1.5 px-2.5 rounded-lg border border-solid border-transparent text-slate-500 min-w-0">
+                                <span className="truncate max-w-[100px] sm:max-w-[130px] block">Pharmacy C</span>
+                                <span className="text-slate-600 font-semibold shrink-0">₹50.00</span>
                               </div>
-                            </div>
-                            <div
-                              className="mb-3 p-3 bg-[#f8f9fa] rounded-lg border border-[#e9ecef]"
-                            >
-                              <div className="flex justify-between items-center">
-                                <div>
-                                  <h6
-                                    className="!m-0 !text-[#495057] !text-[14px] !font-medium"
-                                  >
-                                    Pharmacy C
-                                  </h6>
-                                  <p
-                                    className="!m-0 !text-[#6c757d] !text-[12px]"
-                                  >
-                                    3.2 km away
-                                  </p>
-                                </div>
-                                <div className="text-right">
-                                  <span
-                                    className="!text-[16px] !font-semibold !text-[#495057]"
-                                  >
-                                    ₹50
-                                  </span>
-                                </div>
-                              </div>
-                            </div>
-                          </>
-                        )}
-
-                        <div
-                          className="mt-4 text-center p-4 bg-gradient-to-br from-[#f8f9fa] to-white rounded-xl border border-gray-100"
-                        >
-                          <p className="m-0 !text-[#6c757d] !text-[13px]">
-                            You Save
-                          </p>
-                          <h3
-                            className="!mt-[4px] !mx-0 !mb-0 !text-[#04BD6C] !text-[28px] !font-semibold"
-                          >
-                            ₹{formattedSavingsAmount} {vendors.length > 0 ? "" : "per strip"}
-                          </h3>
+                            </>
+                          )}
                         </div>
                       </div>
+
+                      <div>
+                        <div className="mt-8 border-t border-dashed border-slate-200 pt-4 text-left font-mono">
+                          <div className="flex justify-between items-center text-[15px] font-bold text-slate-800">
+                            <span>BEST PRICE</span>
+                            <span className="text-[#10b981] text-[17px]">₹{bestDealPrice || 32.00}</span>
+                          </div>
+                          <span className="text-[10px] text-[#10b981] bg-[#10b981]/10 border border-solid border-[#10b981]/25 px-2.5 py-1 rounded-full mt-2 inline-flex items-center gap-1 font-semibold">
+                            <i className="fas fa-piggy-bank text-[10px]"></i>
+                            Saved ₹{formattedSavingsAmount} {vendors.length > 0 ? "" : "per strip"}
+                          </span>
+                        </div>
+
+                        {/* Stylized Receipt Barcode */}
+                        {/* <div className="mt-4 flex flex-col items-center opacity-40 hover:opacity-75 transition-opacity duration-300 select-none">
+                          <div className="flex gap-[2.5px] h-5 items-stretch">
+                            <div className="w-[2px] bg-slate-800"></div>
+                            <div className="w-[1px] bg-slate-800"></div>
+                            <div className="w-[3px] bg-slate-800"></div>
+                            <div className="w-[1px] bg-slate-800"></div>
+                            <div className="w-[2px] bg-slate-800"></div>
+                            <div className="w-[4px] bg-slate-800"></div>
+                            <div className="w-[1.5px] bg-slate-800"></div>
+                            <div className="w-[3px] bg-slate-800"></div>
+                            <div className="w-[2px] bg-slate-800"></div>
+                            <div className="w-[1px] bg-slate-800"></div>
+                            <div className="w-[4px] bg-slate-800"></div>
+                            <div className="w-[2px] bg-slate-800"></div>
+                          </div>
+                          <span className="text-[7.5px] font-mono tracking-[0.3em] mt-1.5 text-slate-500">MC-DEAL-ACTIVE</span>
+                        </div> */}
+                      </div>
                     </div>
+
                   </div>
                 </div>
               </section>
             );
           })()}
+
+
+
+
+
+
+
+
+
+
 
           {testimonials && testimonials.length > 0 && (
             <section
@@ -2227,88 +2562,154 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
             </section>
           )}
 
+
+
           {faqss && faqss.length > 0 && (
             <section className="py-12 bg-white">
               <div className="container mx-auto px-4">
-                <div
-                  className="text-center mb-10 aos"
-                  data-aos="fade-up"
-                >
-                  <div
-                    className="mb-2 inline-block py-[8px] px-[20px] bg-gradient-to-br from-[#321961]/20 to-[#6d48b8]/20 rounded-[50px] text-[14px] font-semibold text-[#321961]"
-                  >
-                    <i
-                      className="fas fa-question-circle mr-[8px] text-[#321961]"
-                    ></i>
-                    Get Your Answer
+                <div className="text-center mb-16 max-w-2xl mx-auto">
+                  <div className="inline-flex items-center gap-1.5 bg-[#321961]/10 border border-solid border-[#321961]/20 py-1.5 px-4 rounded-full mb-4">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#321961] animate-pulse"></span>
+                    <span className="text-[11px] uppercase tracking-wider text-[#321961] font-bold">FAQ Support</span>
                   </div>
-                  <h2
-                    className="!text-[28px] !font-semibold mb-[12px]"
-                  >
-                    Frequently Asked Questions
+                  <h2 className="text-[34px] font-light text-[#0f172a] leading-tight tracking-tight mb-3">
+                    Frequently Asked <span className="font-normal text-[#321961]">Questions</span>
                   </h2>
-                  <p
-                    className="text-[#6b7280] text-[14px] max-w-[600px] mx-auto mt-[8px] mb-0 font-normal"
-                  >
-                    Find the best medicine prices, ensure authenticity with
-                    verified products, explore cost-effective alternatives, get
-                    price alerts, enjoy quick delivery, and access expert
-                    assistance anytime.
+                  <p className="text-[13.5px] text-[#64748b] font-light leading-relaxed max-w-lg mx-auto">
+                    Find the best medicine prices, ensure authenticity with verified products, explore cost-effective alternatives, and get instant answers.
                   </p>
                 </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-                  <div
-                    className="hidden lg:block w-full aos"
-                    data-aos="fade-up"
-                  >
-                    <div className="max-w-[480px] mx-auto">
-                      <img
-                        src="/assets/Medicomapres FAQ (2).png"
-                        className="max-w-full h-auto object-contain"
-                        alt="faq illustration"
-                        loading="lazy"
-                        decoding="async"
-                      />
-                    </div>
+                {/* Desktop Split-Pane View */}
+                <div className="hidden lg:grid grid-cols-12 gap-8 items-stretch">
+                  {/* Left: Interactive Question Cards */}
+                  <div className="col-span-5 flex flex-col gap-3 justify-center">
+                    {faqss.map((faq, index) => {
+                      const isActive = openIndex === index;
+                      return (
+                        <div
+                          key={index}
+                          onClick={() => toggleAccordion(index)}
+                          className={`p-4.5 rounded-md border-2 border-solid cursor-pointer text-left transition-all duration-300 flex items-center justify-between gap-4 ${isActive
+                            ? "bg-gradient-to-r from-white to-[#faf9fc] border-[#321961] shadow-[0_12px_30px_rgba(50,25,97,0.06)] translate-x-2"
+                            : "bg-white border-slate-100 hover:border-slate-300 hover:bg-slate-50/50 shadow-sm"
+                            }`}
+                        >
+                          <span className={`text-[14.5px] font-semibold transition-colors duration-200 ${isActive ? "text-[#321961]" : "text-slate-700"}`}>
+                            {faq.question}
+                          </span>
+                          <i className={`fas fa-chevron-right text-[12px] transition-transform duration-300 ${isActive ? "text-[#321961] translate-x-1" : "text-slate-400"}`}></i>
+                        </div>
+                      );
+                    })}
                   </div>
-                  <div className="w-full">
-                    <div className="aos" data-aos="fade-up">
-                      <div className="flex flex-col gap-3">
-                        {faqss.map((faq, index) => {
-                          const isOpen = openIndex === index;
 
-                          return (
-                            <div className={`bg-white rounded-sm border transition-all duration-300 mb-3 overflow-hidden ${isOpen ? 'border-[#321961] shadow-[0_4px_20px_rgba(128,89,202,0.12)]' : 'border-gray-200 shadow-sm hover:shadow-md'}`} key={index}>
-                              <h2 className="m-0">
-                                <button
-                                  type="button"
-                                  onClick={() => toggleAccordion(index)}
-                                  aria-expanded={isOpen}
-                                  className="flex items-center justify-between w-full p-5 font-semibold text-left border-none bg-white hover:bg-gray-50/50 transition-colors cursor-pointer gap-4"
-                                >
-                                  <span className={`flex-1 text-[15px] font-semibold tracking-tight transition-colors duration-200 ${isOpen ? 'text-[#321961]' : 'text-gray-800'}`}>
-                                    {faq.question}
-                                  </span>
-                                  <i
-                                    className={`fa-solid fa-chevron-down text-gray-400 text-[14px] transition-transform duration-300 ${isOpen ? 'rotate-180 text-[#321961]' : ''} shrink-0`}
-                                    aria-hidden="true"
-                                  />
-                                </button>
-                              </h2>
+                  {/* Right: Glowing Spotlight Answer Panel */}
+                  <div className="col-span-7">
+                    <div className="bg-gradient-to-br from-[#321961] to-[#1e0a3d] rounded-md p-8 text-white shadow-[0_20px_50px_rgba(50,25,97,0.15)] h-full flex flex-col justify-between relative overflow-hidden min-h-[380px]">
+                      {/* Decorative glowing blobs */}
+                      <div className="absolute top-0 right-0 w-32 h-32 rounded-full bg-[#7c3aed]/20 blur-[30px] pointer-events-none"></div>
+                      <div className="absolute bottom-0 left-0 w-32 h-32 rounded-full bg-[#10b981]/10 blur-[30px] pointer-events-none"></div>
 
-                              <div
-                                className={`transition-all duration-300 ease-in-out overflow-hidden ${isOpen ? 'max-h-[500px] opacity-100 border-t border-gray-100' : 'max-h-0 opacity-0 pointer-events-none'}`}
-                              >
-                                <div className="p-5 bg-[#faf9fc]/40 text-[14px] text-gray-500 leading-relaxed">
-                                  <p className="m-0">{faq.answer}</p>
-                                </div>
+                      <div className="relative z-10 grid grid-cols-1 md:grid-cols-12 gap-8 items-center h-full">
+                        {/* Left Column: Text Content */}
+                        <div className="md:col-span-7 text-left flex flex-col justify-between h-full">
+                          <div>
+                            {/* Eyebrow badge */}
+                            <div className="inline-flex items-center gap-1.5 bg-white/10 border border-solid border-white/20 py-1 px-3.5 rounded-full mb-6">
+                              <i className="fas fa-magic text-[#c4b5fd] text-[10px] animate-pulse"></i>
+                              <span className="text-[10px] uppercase tracking-wider text-[#c4b5fd] font-semibold">Answer Spotlight</span>
+                            </div>
+
+                            {/* Title and Answer */}
+                            <h4 className="text-[17px] font-semibold text-white mb-4 leading-snug">
+                              {faqss[openIndex === null ? 0 : openIndex]?.question}
+                            </h4>
+                            <p className="text-[12.5px] text-white/85 font-light leading-relaxed mb-6">
+                              {faqss[openIndex === null ? 0 : openIndex]?.answer}
+                            </p>
+                          </div>
+
+                          {/* Bottom Quick Help Section */}
+                          <div className="pt-4 border-t border-solid border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
+                            <div className="flex items-center gap-2.5 text-left">
+                              <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-[#c4b5fd] shrink-0">
+                                <i className="fas fa-comment-dots text-[11px]"></i>
+                              </div>
+                              <div>
+                                <div className="text-[8.5px] text-white/50 uppercase tracking-wider">Still have questions?</div>
+                                <div className="text-[11px] font-medium text-white">Get real-time support</div>
                               </div>
                             </div>
-                          );
-                        })}
+                            {/* <Link
+                              to="/contact"
+                              className="px-4 py-2 rounded-full bg-white text-[#321961] hover:bg-[#c4b5fd] hover:text-white transition-all duration-300 text-[11.5px] font-semibold no-underline shadow-md shadow-white/5 shrink-0"
+                            >
+                              Chat Now
+                            </Link> */}
+                          </div>
+                        </div>
+
+                        {/* Right Column: Dynamic Question Image */}
+                        <div className="md:col-span-5 flex justify-center items-center h-full relative">
+                          <img
+                            src={(() => {
+                              const qText = (faqss[openIndex === null ? 0 : openIndex]?.question || "").toLowerCase();
+                              if (qText.includes("authentic") || qText.includes("genuine") || qText.includes("safe") || qText.includes("original") || qText.includes("quality")) {
+                                return "/assets/faq_authenticity.png";
+                              } else if (qText.includes("substitute") || qText.includes("alternative") || qText.includes("generic") || qText.includes("salt")) {
+                                return "/assets/faq_substitute.png";
+                              } else if (qText.includes("delivery") || qText.includes("shipping") || qText.includes("speed") || qText.includes("home")) {
+                                return "/assets/faq_delivery.png";
+                              } else if (qText.includes("prescription") || qText.includes("require") || qText.includes("rx") || qText.includes("upload")) {
+                                return "/assets/faq_prescription.png";
+                              }
+                              return "/assets/faq_pricing.png";
+                            })()}
+                            className="max-h-[220px] object-contain transition-all duration-500 transform hover:scale-105 filter drop-shadow-[0_12px_25px_rgba(0,0,0,0.15)]"
+                            key={openIndex} // Triggers React reflow/fade animation on index change
+                            alt="Question illustration"
+                          />
+                        </div>
                       </div>
                     </div>
+                  </div>
+                </div>
+
+                {/* Mobile Accordion View */}
+                <div className="block lg:hidden w-full">
+                  <div className="flex flex-col gap-3">
+                    {faqss.map((faq, index) => {
+                      const isOpen = openIndex === index;
+                      return (
+                        <div className={`bg-white rounded-xl border transition-all duration-300 overflow-hidden ${isOpen ? 'border-[#321961] shadow-[0_8px_20px_rgba(50,25,97,0.08)]' : 'border-gray-200 shadow-sm'}`} key={index}>
+                          <h2 className="m-0">
+                            <button
+                              type="button"
+                              onClick={() => toggleAccordion(index)}
+                              aria-expanded={isOpen}
+                              className="flex items-center justify-between w-full p-4 font-semibold text-left border-none bg-white hover:bg-gray-50/50 transition-colors cursor-pointer gap-4"
+                            >
+                              <span className={`flex-1 text-[14px] font-semibold tracking-tight transition-colors duration-200 ${isOpen ? 'text-[#321961]' : 'text-gray-800'}`}>
+                                {faq.question}
+                              </span>
+                              <i
+                                className={`fa-solid fa-chevron-down text-gray-400 text-[12px] transition-transform duration-300 ${isOpen ? 'rotate-180 text-[#321961]' : ''} shrink-0`}
+                                aria-hidden="true"
+                              />
+                            </button>
+                          </h2>
+
+                          <div
+                            className={`transition-all duration-300 ease-in-out overflow-hidden ${isOpen ? 'max-h-[500px] opacity-100 border-t border-gray-100' : 'max-h-0 opacity-0 pointer-events-none'}`}
+                          >
+                            <div className="p-4 bg-[#faf9fc]/40 text-[13px] text-gray-500 leading-relaxed">
+                              <p className="m-0">{faq.answer}</p>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               </div>
@@ -2329,30 +2730,16 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
               }}
             >
               <div className="container mx-auto px-4">
-                <div
-                  className="text-center mb-10 aos"
-                  data-aos="fade-up"
-                >
-                  <div
-                    className="mb-2 inline-block py-[8px] px-[20px] bg-gradient-to-br from-[#321961]/20 to-[#6d48b8]/20 rounded-[50px] text-[14px] font-semibold text-[#321961]"
-                  >
-                    <i
-                      className="fas fa-bolt mr-[8px] text-[#321961]"
-                    ></i>
-                    Our Blogs
+                <div className="text-center mb-16 max-w-2xl mx-auto">
+                  <div className="inline-flex items-center gap-1.5 bg-[#321961]/10 border border-solid border-[#321961]/20 py-1.5 px-4 rounded-full mb-4">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#321961] animate-pulse"></span>
+                    <span className="text-[11px] uppercase tracking-wider text-[#321961] font-bold">Our Blogs</span>
                   </div>
-                  <h2
-                    className="text-[36px] !font-semibold mb-[12px] inline-block w-full bg-gradient-to-br from-[#321961] to-[#6d48b8] bg-clip-text text-transparent text-[#321961]"
-                  >
-                    Insights and Tips on Medicines
+                  <h2 className="text-[34px] font-light text-[#0f172a] leading-tight tracking-tight mb-3">
+                    Insights & Tips on <span className="font-normal text-[#321961]">Medicines</span>
                   </h2>
-                  <p
-                    className="text-[#6b7280] text-[14px] max-w-[600px] mx-auto mt-[8px] mb-0 font-normal"
-                  >
-                    Stay informed with our latest blog posts on medicine pricing,
-                    authentic products, cost-effective alternatives, and health
-                    tips. Learn how to save on medicines while ensuring quality
-                    and safety.
+                  <p className="text-[13.5px] text-[#64748b] font-light leading-relaxed max-w-lg mx-auto">
+                    Stay informed with our latest blog posts on medicine pricing, authentic products, cost-effective alternatives, and smart savings tips.
                   </p>
                 </div>
                 {homeLiteMode ? (
@@ -2536,95 +2923,139 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
             </section>
           )}
 
-          <section className="py-12 bg-white">
+          <section className="py-16 bg-white">
             <div className="container mx-auto px-4">
-              <div className="bg-gradient-to-br from-[#3b1c73] via-[#4d2594] to-[#6a35c2] rounded-2xl p-8 relative overflow-hidden shadow-xl">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+              <div className="bg-gradient-to-br from-[#1e0a3d] via-[#321961] to-[#4c1d95] rounded-md p-8 lg:p-12 relative overflow-hidden shadow-[0_20px_50px_rgba(50,25,97,0.2)]">
+                {/* Decorative floating background elements */}
+                <div className="absolute top-[-20%] right-[-10%] w-[350px] h-[350px] rounded-full bg-[#7c3aed]/15 blur-[60px] pointer-events-none"></div>
+                <div className="absolute bottom-[-10%] left-[-5%] w-[300px] h-[300px] rounded-full bg-[#10b981]/10 blur-[50px] pointer-events-none"></div>
+
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10">
+
+                  {/* Left Column: Floating Phone Mockup */}
                   <div
-                    className="w-full flex justify-center aos"
+                    className="lg:col-span-5 flex justify-center aos"
                     data-aos="fade-up"
                   >
-                    <div className="max-w-[320px] lg:max-w-full">
+                    <div className="max-w-[280px] lg:max-w-full relative">
+                      {/* Soft backdrop glow behind phone */}
+                      <div className="absolute inset-0 bg-[#7c3aed]/25 rounded-full filter blur-[40px] transform scale-75 animate-pulse pointer-events-none"></div>
                       <img
                         src="/assets/mobileapp.png"
-                        className="max-w-full h-auto object-contain animate-[float_4s_ease-in-out_infinite]"
-                        alt="mobileapp"
-                        title="mobileapp"
+                        className="max-w-full h-auto object-contain relative z-10 animate-[float_4s_ease-in-out_infinite]"
+                        alt="Medicompare Mobile App Mockup"
+                        title="Medicompare Mobile App"
                         loading="lazy"
                         decoding="async"
                       />
                     </div>
                   </div>
-                  <div className="w-full">
-                    <div className="app-content">
-                      <div
-                        className="app-header aos"
-                        data-aos="fade-up"
-                      >
-                        <h5 className="text-[16px] font-bold !text-[#ffb74d] mb-2">Download Our App Now.</h5>
-                        <h2 className="!text-[32px] !font-bold !text-white leading-tight">
-                          MediCompares India's #1 Medicine Price Comparison
+
+                  {/* Right Column: Content and Download Access */}
+                  <div className="lg:col-span-7 text-left">
+                    <div className="app-content flex flex-col gap-6">
+
+                      {/* Eyebrow and main header */}
+                      <div className="aos" data-aos="fade-up">
+                        <div className="inline-flex items-center gap-1.5 bg-white/10 border border-solid border-white/20 py-1.5 px-4 rounded-full mb-4 backdrop-blur-sm">
+                          <span className="w-1.5 h-1.5 rounded-full bg-[#10b981] animate-pulse"></span>
+                          <span className="text-[11px] uppercase tracking-wider text-[#10b981] font-bold">Go Mobile</span>
+                        </div>
+                        <h2 className="text-[32px] lg:text-[40px] font-bold text-white leading-tight tracking-tight">
+                          Compare & Save On the Go
                         </h2>
+                        <p className="text-[14px] text-slate-200/90 font-light mt-3 leading-relaxed max-w-xl">
+                          Download India's #1 medicine price comparison app. Check live pricing, upload prescriptions, and track deliveries straight from your phone.
+                        </p>
                       </div>
 
-                      <div className="flex flex-row items-center justify-start gap-5">
-                        <div
-                          className="app-scan my-6 flex flex-col items-left aos"
-                          data-aos="fade-up"
-                        >
-                          <p className="m-0 !text-white/80 text-[14px]">Scan the QR code to get the app now</p>
-                          <div className="flex flex-col sm:flex-row gap-3 mt-6">
-                            <a
-                              href="https://www.apple.com/app-store/"
-                              target="_blank"
-                              rel="noopener noreferrer"
-                            >
-                              <img
-                                src="/assets/img/icons/app-store-icon.svg"
-                                alt="app-store"
-                                title="app-store"
-                                className="h-10"
-                              />
-                            </a>
-                            <a
-                              href="https://play.google.com/store/apps/details?id=com.medicompares.medicompares"
-                              target="blank"
-                              rel="noopener noreferrer"
-                            >
-                              <img
-                                src="/assets/img/icons/playstore.svg"
-                                alt="play-store"
-                                title="play-store"
-                                className="h-10"
-                              />
-                            </a>
+                      {/* Key Features Bullet List */}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 my-2 text-white">
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-[#10b981] shrink-0">
+                            <i className="fas fa-search-dollar text-[12px]"></i>
                           </div>
-
+                          <span className="text-[13px] font-medium text-slate-200">Real-Time Price Checks</span>
                         </div>
-
-                        <div className="w-[100px] h-[100px] border border-white/20 rounded-sm p-1 bg-white shadow-sm flex items-center justify-center">
-                          <QRCodeSVG
-                            value="https://play.google.com/store/apps/details?id=com.medicompares.medicompares"
-                            size={100}
-                            level="H"
-                            imageSettings={{
-                              src: "/favicon.png",
-                              height: 16,
-                              width: 16,
-                              excavate: true,
-                            }}
-                          />
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-[#10b981] shrink-0">
+                            <i className="fas fa-file-prescription text-[12px]"></i>
+                          </div>
+                          <span className="text-[13px] font-medium text-slate-200">Easy Rx Uploads</span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-[#10b981] shrink-0">
+                            <i className="fas fa-bell text-[12px]"></i>
+                          </div>
+                          <span className="text-[13px] font-medium text-slate-200">Instant Price Alerts</span>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-[#10b981] shrink-0">
+                            <i className="fas fa-truck-loading text-[12px]"></i>
+                          </div>
+                          <span className="text-[13px] font-medium text-slate-200">Fast Doorstep Delivery</span>
                         </div>
                       </div>
+
+                      {/* Download Section (Buttons + QR Code) */}
+                      <div className="flex flex-col sm:flex-row items-center gap-6 mt-4 pt-6 border-t border-solid border-white/10">
+                        {/* Store Buttons */}
+                        <div className="flex flex-col gap-3 w-full sm:w-auto shrink-0">
+                          <a
+                            href="https://play.google.com/store/apps/details?id=com.medicompares.medicompares"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="transition-transform duration-300 hover:scale-[1.03] block"
+                          >
+                            <img
+                              src="/assets/img/icons/playstore.svg"
+                              alt="Download Play Store"
+                              className="h-[44px]"
+                            />
+                          </a>
+                          <a
+                            href="https://www.apple.com/app-store/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="transition-transform duration-300 hover:scale-[1.03] block"
+                          >
+                            <img
+                              src="/assets/img/icons/app-store-icon.svg"
+                              alt="Download App Store"
+                              className="h-[44px]"
+                            />
+                          </a>
+                        </div>
+
+                        {/* Scanner QR Card */}
+                        <div className="flex items-center gap-4 bg-white/5 border border-solid border-white/10 p-3.5 rounded-2xl backdrop-blur-md w-full sm:w-auto">
+                          <div className="w-[84px] h-[84px] bg-white rounded-xl p-1.5 shadow-md flex items-center justify-center shrink-0">
+                            <QRCodeSVG
+                              value="https://play.google.com/store/apps/details?id=com.medicompares.medicompares"
+                              size={72}
+                              level="H"
+                              imageSettings={{
+                                src: "/favicon.png",
+                                height: 12,
+                                width: 12,
+                                excavate: true,
+                              }}
+                            />
+                          </div>
+                          <div className="text-left">
+                            <div className="text-[10px] text-white/50 uppercase tracking-widest font-semibold mb-0.5">Quick Download</div>
+                            <h5 className="text-[13px] font-bold text-white mb-1">Scan QR Code</h5>
+                            <p className="text-[11px] text-slate-300/80 leading-normal m-0 max-w-[130px]">
+                              Point your phone camera to scan and download instantly.
+                            </p>
+                          </div>
+                        </div>
+
+                      </div>
+
                     </div>
                   </div>
-                </div>
-                <div className="absolute right-0 bottom-0 opacity-10 pointer-events-none hidden lg:block">
-                  <img
-                    src="assets/img/bg/app-bg-01.png"
-                    alt="image"
-                    style={{ height: "360px" }}
-                  />
+
                 </div>
               </div>
             </div>
@@ -2647,7 +3078,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
               right: "10px",
             className="absolute top-[10px] right-[10px] z-[10000] bg-[#dc3545] border-none text-white rounded-full w-[25px] h-[25px] flex items-center justify-center cursor-pointer text-[16px]"
           >
-            ×
+            Ãƒâ€”
           </button>
 
           <Modal.Body className="p-0">

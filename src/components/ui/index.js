@@ -23,6 +23,7 @@ export { default as Tabs } from "./Tabs";
 export { default as SectionHeader } from "./SectionHeader";
 export { default as BackButton } from "./BackButton";
 export { default as SectionProductCard } from "./SectionProductCard";
+export { default as SectionProductCard2 } from "./SectionProductCard2";
 export { default as CookieConsent } from "./CookieConsent";
 export { default as SEOHelmet } from "./SEOHelmet";
 export { default as CategoryProvider } from "./CategoryProvider";

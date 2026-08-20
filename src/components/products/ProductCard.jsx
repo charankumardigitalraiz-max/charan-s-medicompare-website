@@ -235,7 +235,7 @@ const ProductCard = ({
             cursor: "pointer",
             border: "1px solid #dee2e6",
             boxShadow: "0 4px 12px rgba(0, 0, 0, 0.05)",
-            borderRadius: "8px",
+            // borderRadius: "8px",
             background: "#ffffff",
             transition: "all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)"
           }}
@@ -880,7 +880,7 @@ const ProductCard = ({
   return (
     <div className="w-full flex">
       <div
-        className="flex flex-col bg-white rounded-lg border border-slate-200/80 shadow-sm hover:shadow-md hover:border-purple-300 transition-all duration-300 w-full cursor-pointer overflow-hidden"
+        className="flex flex-col bg-white rounded-sm border border-slate-200/80 shadow-sm hover:shadow-md hover:border-purple-300 transition-all duration-300 w-full cursor-pointer overflow-hidden"
         onClick={() => navigate(`/${service}/${id}/${tablet.slug}`)}
       >
         {/* Image Container */}

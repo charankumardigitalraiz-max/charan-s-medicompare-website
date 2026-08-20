@@ -994,6 +994,64 @@ export const LabTestCheckout = () => {
     return "Family Member";
   };
 
+  const getPatientGender = (id) => {
+    if (id === "self") {
+      return userProfile?.gender || "male";
+    }
+    const member = familyMembers.find(m => m._id === id);
+    if (member) {
+      return member.gender || "male";
+    }
+    for (const item of cartItems) {
+      const patient = (item.labTestPatients || []).find(p => String(p.patientId) === String(id));
+      if (patient && patient.patientDetails) {
+        return patient.patientDetails.gender || "male";
+      }
+    }
+    return "male";
+  };
+
+  const renderPatientAvatar = (gender) => {
+    const isFemale = String(gender).toLowerCase() === "female";
+    if (isFemale) {
+      return (
+        <div className="w-[38px] h-[38px] rounded-full overflow-hidden bg-rose-50 border border-solid border-rose-100 flex items-center justify-center shrink-0 shadow-sm">
+          <svg viewBox="0 0 100 100" className="w-full h-full">
+            <defs>
+              <linearGradient id="femaleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#fff1f2" />
+                <stop offset="100%" stopColor="#ffe4e6" />
+              </linearGradient>
+            </defs>
+            <circle cx="50" cy="50" r="50" fill="url(#femaleGrad)" />
+            <path d="M50 20c-15 0-22 10-22 22 0 4 1 8 3 11-1 4-1 8 0 12 1 4 4 7 8 9a20 20 0 0 0 22 0c4-2 7-5 8-9 1-4 1-8 0-12 2-3 3-7 3-11 0-12-7-22-22-22z" fill="#f43f5e" opacity="0.15" />
+            <circle cx="50" cy="46" r="18" fill="#fda4af" />
+            <path d="M50 20c-11 0-18 6-18 16v8c0 3 2 5 5 5s5-2 5-5v-5c0-4 3-7 8-7s8 3 8 7v5c0 3 2 5 5 5s5-2 5-5v-8c0-10-7-16-18-16z" fill="#e11d48" />
+            <path d="M26 82c0-8 8-15 18-17.5l6 4.5 6-4.5c10 2.5 18 9.5 18 17.5v6H26v-6z" fill="#fb7185" />
+          </svg>
+        </div>
+      );
+    }
+
+    return (
+      <div className="w-[38px] h-[38px] rounded-full overflow-hidden bg-blue-50 border border-solid border-blue-100 flex items-center justify-center shrink-0 shadow-sm">
+        <svg viewBox="0 0 100 100" className="w-full h-full">
+          <defs>
+            <linearGradient id="maleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#eff6ff" />
+              <stop offset="100%" stopColor="#dbeafe" />
+            </linearGradient>
+          </defs>
+          <circle cx="50" cy="50" r="50" fill="url(#maleGrad)" />
+          <path d="M50 22c-12 0-20 6-20 18 0 4 1 7 2 9-1 3-1 6 0 9 1 3 3 5 6 7a20 20 0 0 0 24 0c3-2 5-4 6-7 1-3 1-6 0-9 1-2 2-5 2-9 0-12-8-18-20-18z" fill="#3b82f6" opacity="0.15" />
+          <circle cx="50" cy="47" r="18" fill="#93c5fd" />
+          <path d="M50 22c-10 0-16 5-16 12 0 4 2 5 5 2 2-2 5-4 11-4s9 2 11 4c3 3 5 2 5-2 0-7-6-12-16-12z" fill="#2563eb" />
+          <path d="M26 82c0-8 8-15 18-17.5l6 4.5 6-4.5c10 2.5 18 9.5 18 17.5v6H26v-6z" fill="#60a5fa" />
+        </svg>
+      </div>
+    );
+  };
+
   // Generate date options for the next 7 days
   const getDateOptions = () => {
     const options = [];
@@ -1063,7 +1121,7 @@ export const LabTestCheckout = () => {
           }`}
       >
         <div
-          className={`card shadow-sm border-none bg-white relative rounded-xl ${labTestItems.length === 0 || isMobile || isTablet ? "w-full" : "w-[67%]"
+          className={`card shadow-sm border-none bg-white relative rounded-md ${labTestItems.length === 0 || isMobile || isTablet ? "w-full" : "w-[67%]"
             } ${isMobile ? "p-4 mb-1" : "p-6 mb-0"
             }`}
         >
@@ -1310,7 +1368,7 @@ export const LabTestCheckout = () => {
                 >
                   {/* Section header — Vendor details (highlighted) */}
                   <div
-                    className="border-[1.5px] border-l-4 border-[#c4b5fd] border-l-[#321961] rounded-xl px-4 py-3.5 mb-5 flex items-center gap-3 bg-gradient-to-br from-[#f5f0ff] to-[#ede9ff] shadow-[0_4px_14px_rgba(128,89,202,0.12)]"
+                    className="border-[1.5px] border-l-4 border-[#c4b5fd] border-l-[#321961] rounded-md px-4 py-3.5 mb-5 flex items-center gap-3 bg-gradient-to-br from-[#f5f0ff] to-[#ede9ff] shadow-[0_4px_14px_rgba(128,89,202,0.12)]"
                   >
                     <div className="flex items-center gap-3 w-full">
                       {/* Vendor icon */}
@@ -1383,9 +1441,7 @@ export const LabTestCheckout = () => {
                           {/* Patient header */}
                           <div className={`px-4 py-3.5 flex items-center gap-3 ${displayItems.length > 0 ? "border-b border-[#f1f5f9]" : "border-b-0"}`}>
                             {/* Avatar */}
-                            <div className="w-[38px] h-[38px] rounded-full bg-[#321961] flex items-center justify-center shrink-0 text-white text-xs font-extrabold tracking-wide">
-                              {initials}
-                            </div>
+                            {renderPatientAvatar(getPatientGender(patientId))}
                             {/* Name & count */}
                             <div className="flex-1 min-w-0">
                               <div className="text-sm font-bold text-[#1e293b] overflow-hidden text-ellipsis whitespace-nowrap">
@@ -1457,7 +1513,7 @@ export const LabTestCheckout = () => {
                                     <button
                                       type="button"
                                       onClick={() => handleRemovePatientItem(item._id, patientId)}
-                                      className="w-[30px] h-[30px] rounded-lg bg-[#fff5f5] border border-[#fecaca] flex items-center justify-center cursor-pointer shrink-0"
+                                      className="w-[30px] h-[30px] !rounded-full bg-[#fff5f5] border border-[#fecaca] flex items-center justify-center cursor-pointer shrink-0"
                                     >
                                       <Trash2 size={13} color="#ef4444" />
                                     </button>
@@ -1538,7 +1594,7 @@ export const LabTestCheckout = () => {
 
         {labTestItems.length > 0 && (
           <div
-            className={`card shadow-sm border border-[#f1f5f9] bg-white rounded-2xl ${isMobile || isTablet ? "w-full static" : "w-[33%] sticky top-[0px]"
+            className={`card shadow-sm border border-[#f1f5f9] bg-white rounded-md ${isMobile || isTablet ? "w-full static" : "w-[33%] sticky top-[0px]"
               } ${isMobile ? "p-4 " : "p-7"
               }`}
           >
@@ -1925,7 +1981,7 @@ export const LabTestCheckout = () => {
               <hr className="my-1 border-[#f1f5f9]" />
 
               {/* Checkout Actions */}
-              <div className="flex gap-3 bg-[#fdfaff] p-4 rounded-2xl items-center border border-[#f3e8ff]">
+              <div className="flex gap-3 bg-[#fdfaff] p-4 rounded-md items-center border border-[#f3e8ff]">
                 <div className="flex-1 min-w-0 flex flex-col items-start justify-center leading-tight">
                   <div className="text-xs font-semibold text-gray-500">Total Payable</div>
                   <div className="text-xl font-semibold text-[#1e1b4b] mt-0.5">₹{amountToPay.toFixed(2)}</div>

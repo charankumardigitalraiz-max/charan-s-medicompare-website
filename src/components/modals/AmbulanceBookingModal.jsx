@@ -9,6 +9,7 @@ import { useProfile } from "../../context/ProfileContext.jsx";
 import { useLocation } from "../../context/LocationContext";
 import { useResponsive } from "../../hooks";
 import { GOOGLE_MAPS_API_KEY } from "../../utils/index.js"
+import AmbulanceLoader from "../ui/AmbulanceLoader.jsx";
 
 const libraries = ["places"];
 
@@ -23,6 +24,19 @@ const AmbulanceBookingModal = ({
   const { selectedPincode, latitude, longitude } = useLocation();
   const [ambulanceData, setAmbulanceData] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
+  const [loaderStep, setLoaderStep] = useState(0);
+
+  useEffect(() => {
+    let interval;
+    if (isSearching) {
+      setLoaderStep(0);
+      interval = setInterval(() => {
+        setLoaderStep((prev) => (prev + 1) % 4);
+      }, 1800);
+    }
+    return () => clearInterval(interval);
+  }, [isSearching]);
+
   const [location, setLocation] = useState({
     pickup: {
       lat: null,
@@ -288,6 +302,7 @@ const AmbulanceBookingModal = ({
   const performSearch = async (pickupData, dropData) => {
     setIsSearching(true);
     setAmbulanceData([]);
+    const startTime = Date.now();
 
     try {
       let finalPickupData = pickupData;
@@ -360,6 +375,11 @@ const AmbulanceBookingModal = ({
         toast.error(response?.data?.message || "No ambulances found");
       }
     } finally {
+      const elapsedTime = Date.now() - startTime;
+      const remainingTime = Math.max(0, 2000 - elapsedTime);
+      if (remainingTime > 0) {
+        await new Promise((resolve) => setTimeout(resolve, remainingTime));
+      }
       setIsSearching(false);
     }
   };
@@ -426,9 +446,10 @@ const AmbulanceBookingModal = ({
           }
         `}</style>
         <form onSubmit={handleSearch}>
-          <div className="flex flex-col md:flex-row gap-3 mb-5">
+          <div className="flex flex-col md:flex-row gap-4 mb-6">
+            {/* Pickup Input */}
             <div className="flex-1 relative">
-              <div className="absolute left-[12px] top-1/2 -translate-y-1/2 text-[#666] text-[18px] z-[1]">
+              <div className="absolute left-[14px] top-1/2 -translate-y-1/2 text-emerald-600 text-[16px] z-[1]">
                 <i className="fas fa-map-marker-alt"></i>
               </div>
               {isLoaded ? (
@@ -457,7 +478,7 @@ const AmbulanceBookingModal = ({
                       }));
                       setPickupLocation(newAddress);
                     }}
-                    className="w-full py-[10px] px-[30px] border border-solid border-[#e0e0e0] rounded-[8px] text-[13px] font-normal"
+                    className="w-full py-[12px] pl-[38px] pr-[38px] border border-solid border-[#e2e8f0] rounded-[10px] text-[13.5px] font-normal placeholder-[#94a3b8] transition-all duration-200 focus:border-[#321961] focus:ring-2 focus:ring-[#321961]/10 outline-none hover:border-[#cbd5e1] shadow-sm bg-white"
                     autoComplete="off"
                   />
                 </Autocomplete>
@@ -466,23 +487,24 @@ const AmbulanceBookingModal = ({
                   type="text"
                   placeholder="Loading places..."
                   disabled
-                  className="w-full py-[10px] px-[30px] border border-solid border-[#e0e0e0] rounded-[8px] text-[13px] font-normal"
+                  className="w-full py-[12px] pl-[38px] pr-[38px] border border-solid border-[#e2e8f0] rounded-[10px] text-[13.5px] font-normal bg-slate-50 text-slate-400"
                 />
               )}
               {location.pickup.address && (
                 <button
                   type="button"
                   onClick={handleClearPickup}
-                  className="absolute right-[12px] top-1/2 -translate-y-1/2 bg-none border-none text-[#666] cursor-pointer"
+                  className="absolute right-[12px] top-1/2 -translate-y-1/2 bg-slate-100 hover:bg-slate-200 border-none text-[#475569] hover:text-[#0f172a] cursor-pointer w-6 h-6 !rounded-full flex items-center justify-center transition-colors duration-150"
                   title="Clear pickup location"
                 >
-                  <i className="fas fa-times"></i>
+                  <i className="fas fa-times text-[12px]"></i>
                 </button>
               )}
             </div>
 
+            {/* Drop Input */}
             <div className="flex-1 relative">
-              <div className="absolute left-[12px] top-1/2 -translate-y-1/2 text-[#666] text-[18px] z-[1]">
+              <div className="absolute left-[14px] top-1/2 -translate-y-1/2 text-rose-600 text-[16px] z-[1]">
                 <i className="fas fa-map-marker-alt"></i>
               </div>
               {isLoaded ? (
@@ -511,7 +533,7 @@ const AmbulanceBookingModal = ({
                       }));
                       setDropLocation(newAddress);
                     }}
-                    className="w-full py-[10px] px-[30px] border border-solid border-[#e0e0e0] rounded-[8px] text-[13px] font-normal"
+                    className="w-full py-[12px] pl-[38px] pr-[38px] border border-solid border-[#e2e8f0] rounded-[10px] text-[13.5px] font-normal placeholder-[#94a3b8] transition-all duration-200 focus:border-[#321961] focus:ring-2 focus:ring-[#321961]/10 outline-none hover:border-[#cbd5e1] shadow-sm bg-white"
                     autoComplete="off"
                   />
                 </Autocomplete>
@@ -520,63 +542,60 @@ const AmbulanceBookingModal = ({
                   type="text"
                   placeholder="Loading places..."
                   disabled
-                  className="w-full py-[10px] px-[30px] border border-solid border-[#e0e0e0] rounded-[8px] text-[13px] font-normal"
+                  className="w-full py-[12px] pl-[38px] pr-[38px] border border-solid border-[#e2e8f0] rounded-[10px] text-[13.5px] font-normal bg-slate-50 text-slate-400"
                 />
               )}
               {location.drop.address && (
                 <button
                   type="button"
                   onClick={handleClearDrop}
-                  className="absolute right-[12px] top-1/2 -translate-y-1/2 bg-none border-none text-[#666] text-[16px] cursor-pointer z-[2] p-[4px] rounded-[4px] flex items-center justify-center"
+                  className="absolute right-[12px] top-1/2 -translate-y-1/2 bg-slate-100 hover:bg-slate-200 border-none text-[#475569] hover:text-[#0f172a] cursor-pointer w-6 h-6 !rounded-full flex items-center justify-center transition-colors duration-150 z-[2]"
                   title="Clear drop location"
                 >
-                  <i className="fas fa-times"></i>
+                  <i className="fas fa-times text-[12px]"></i>
                 </button>
               )}
             </div>
 
-            <div className="md:w-[140px] shrink-0">
+            {/* Search Button */}
+            <div className="md:w-[110px] shrink-0">
               <button
                 type="submit"
                 disabled={isSearching || !isLoaded}
-                className={`w-full h-full min-h-[42px] p-[10px] text-white border-none !rounded-[8px] text-[13px] font-semibold flex items-center justify-center gap-[8px] ${isSearching ? "bg-[#9ca3af] cursor-not-allowed" : "bg-[#321961] cursor-pointer"}`}
+                className={`w-full h-full min-h-[20px] px-[16px] text-white border-none !rounded-[8px] text-[12.5px] font-semibold tracking-wider flex items-center justify-center gap-[6px] transition-all duration-200 active:scale-[0.96] shadow-[0_3px_10px_rgba(50,25,97,0.15)] hover:shadow-[0_5px_15px_rgba(50,25,97,0.25)] ${isSearching ? "bg-slate-400 cursor-not-allowed" : "bg-[#321961] hover:bg-[#221044] cursor-pointer"}`}
               >
-                <i className="fas fa-search"></i> Search
+                <i className="fas fa-search text-[11px]"></i>
+                <span>Find</span>
               </button>
             </div>
           </div>
         </form>
 
         {/* Header Section */}
-        {(isSearching ||
-          ambulanceData.length > 0 ||
-          (location.pickup.address && location.drop.address)) && (
-            <div style={{ marginBottom: "14px" }}>
-              <h3
-                style={{
-                  fontSize: "15px",
-                  fontWeight: 600,
-                  color: "#111",
-                  marginBottom: "4px",
-                }}
-              >
-                {isSearching
-                  ? "Searching..."
-                  : `Available Ambulances (${ambulanceData.length})`}
-              </h3>
-              <p style={{ fontSize: "13px", color: "#555", margin: 0 }}>
-                {isSearching
-                  ? "Looking for available ambulances in your area..."
-                  : "Select the best option for your medical transport"}
-              </p>
-            </div>
-          )}
+        {/* {(isSearching || ambulanceData.length > 0) && (
+          <div style={{ marginBottom: "14px" }}>
+            <h3
+              style={{
+                fontSize: "15px",
+                fontWeight: 600,
+                color: "#111",
+                marginBottom: "4px",
+              }}
+            >
+              {isSearching
+                ? "Searching..."
+                : `Available Ambulances (${ambulanceData.length})`}
+            </h3>
+            <p style={{ fontSize: "13px", color: "#555", margin: 0 }}>
+              {isSearching
+                ? "Looking for available ambulances in your area..."
+                : "Select the best option for your medical transport"}
+            </p>
+          </div>
+        )} */}
 
         {isSearching ? (
-          <div className="text-center py-[60px]">
-            <div className="inline-block w-10 h-10 border-4 border-[#321961] border-t-transparent rounded-full animate-spin" role="status"></div>
-            <p className="mt-4 text-[#555]">Searching for ambulances...</p>
-          </div>
+          <AmbulanceLoader />
         ) : ambulanceData.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {ambulanceData.map((vendorItem, index) => {
@@ -724,7 +743,7 @@ const AmbulanceBookingModal = ({
         onClick={handleOverlayClick}
       >
         <div
-          className="w-full bg-white rounded-t-[16px] max-h-[92vh] flex flex-col animate-[slideUp_0.4s_ease-out]"
+          className="w-full bg-white !rounded-sm max-h-[92vh] flex flex-col animate-[slideUp_0.4s_ease-out]"
           onClick={(e) => e.stopPropagation()}
         >
           <div className="p-[12px_0] text-center">
