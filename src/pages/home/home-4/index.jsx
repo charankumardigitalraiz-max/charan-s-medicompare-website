@@ -1349,12 +1349,12 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                       </div>
 
                       <div className="flex-1 min-w-0 text-left">
-                        <h4 className="!font-semibold !text-[14px] text-slate-800 group-hover:text-[#321961] transition-colors duration-300 mb-0.5 tracking-wide leading-snug truncate">
+                        <h4 className="!font-[600] !text-[14px] !text-[#1e293b] group-hover:!text-[#321961] transition-colors duration-300 !mb-0 !leading-tight truncate !tracking-tight">
                           {item.name}
                         </h4>
-                        <span className="inline-flex items-center gap-1 text-[10px] font-bold text-[#321961] py-0.5 rounded-full transition-all duration-300 ">
-                          <span>Compare Live</span>
-                          <i className="fas fa-chevron-right text-[8px] transform group-hover:translate-x-0.5 transition-transform" />
+                        <span className="inline-flex items-center gap-0.5 text-[10px] font-medium text-[#94a3b8] group-hover:text-[#321961] transition-colors duration-300 mt-0.5">
+                          <span>Explore</span>
+                          <i className="fas fa-arrow-right text-[7px] transform group-hover:translate-x-0.5 transition-transform" />
                         </span>
                       </div>
                     </div>
