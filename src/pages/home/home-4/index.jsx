@@ -1433,30 +1433,30 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
 
                 {/* Left Card: Brand Promo */}
-                <div className="lg:col-span-5 relative overflow-hidden rounded-sm bg-gradient-to-br from-[#1e0a3d] to-[#321961] p-[30px] text-white shadow-[0_10px_30px_rgba(50,25,97,0.15)] flex flex-col justify-between min-h-[220px]">
+                <div className="lg:col-span-5 relative overflow-hidden rounded-sm bg-gradient-to-br from-[#f8f4ff] to-[#e8e3f5] border border-solid border-[#321961]/15 p-[30px] text-slate-800 shadow-[0_10px_30px_rgba(50,25,97,0.06)] flex flex-col justify-between min-h-[220px]">
                   {/* Glowing blobs */}
-                  <div className="absolute -top-[50px] -right-[50px] w-[150px] h-[150px] rounded-full bg-[#aa6df6]/20 blur-[30px]"></div>
+                  <div className="absolute -top-[50px] -right-[50px] w-[150px] h-[150px] rounded-full bg-[#321961]/5 blur-[30px]"></div>
 
                   <div className="relative z-10">
-                    <span className="inline-flex items-center gap-1.5 bg-white/10 py-[4px] px-[12px] rounded-full text-[11px] font-semibold border border-white/20 backdrop-blur-md mb-4">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span className="inline-flex items-center gap-1.5 bg-[#321961]/10 py-[4px] px-[12px] rounded-full text-[11px] font-semibold border border-[#321961]/25 text-[#321961] mb-4">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
                       All-in-One Platform
                     </span>
-                    <h3 className="text-[22px] font-extrabold mb-2 tracking-tight">Your Health, Simplified.</h3>
-                    <p className="text-[13px] text-slate-200 leading-relaxed opacity-90">
+                    <h3 className="text-[22px] font-extrabold mb-2 tracking-tight text-[#321961]">Your Health, Simplified.</h3>
+                    <p className="text-[13px] text-slate-600 leading-relaxed opacity-95">
                       Compare pricing, locate emergency services, and book medical appointments instantly.
                     </p>
                   </div>
 
                   <div className="relative z-10 mt-6 flex gap-6 text-[12px]">
                     <div className="flex flex-col">
-                      <span className="font-extrabold text-[16px] text-[#aa6df6]">24/7</span>
-                      <span className="text-slate-300 text-[11px]">Availability</span>
+                      <span className="font-extrabold text-[16px] text-[#6d48b8]">24/7</span>
+                      <span className="text-slate-500 text-[11px]">Availability</span>
                     </div>
-                    <div className="w-[1px] bg-white/10"></div>
+                    <div className="w-[1px] bg-[#321961]/10"></div>
                     <div className="flex flex-col">
-                      <span className="font-extrabold text-[16px] text-emerald-400">100%</span>
-                      <span className="text-slate-300 text-[11px]">Verified Partners</span>
+                      <span className="font-extrabold text-[16px] text-[#059669]">100%</span>
+                      <span className="text-slate-500 text-[11px]">Verified Partners</span>
                     </div>
                   </div>
                 </div>
@@ -1471,13 +1471,13 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                       label: "Explore",
                       fixedType: "medicine",
                       path: "/medicine/all",
-                      cardBg: "bg-gradient-to-br from-[#321961] to-[#4c1d95] hover:from-[#3d1f75] hover:to-[#5b21b6]",
-                      iconClass: "bg-white/20 text-white",
-                      labelClass: "text-white/80",
-                      titleClass: "!text-white",
-                      descClass: "!text-white/70",
-                      borderClass: "border-[#321961]/30",
-                      shadowHover: "hover:shadow-[0_15px_35px_rgba(50,25,97,0.35)]",
+                      cardBg: "bg-gradient-to-br from-[#f8f6fc] to-[#ebdffc] hover:from-[#ebdffc] hover:to-[#e1ccfc]",
+                      iconClass: "bg-[#321961]/10 text-[#321961]",
+                      labelClass: "text-[#321961]/80",
+                      titleClass: "text-[#321961]",
+                      descClass: "text-slate-600",
+                      borderClass: "border-[#321961]/15",
+                      shadowHover: "hover:shadow-[0_15px_35px_rgba(50,25,97,0.12)]",
                     },
                     {
                       icon: "fas fa-microscope",
@@ -1486,13 +1486,13 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                       label: "Book a Test",
                       fixedType: "labtest",
                       path: "/diagnostics/all",
-                      cardBg: "bg-gradient-to-br from-[#059669] to-[#065f46] hover:from-[#10b981] hover:to-[#047857]",
-                      iconClass: "bg-white/20 text-white",
-                      labelClass: "text-white/80",
-                      titleClass: "!text-white",
-                      descClass: "!text-white/70",
-                      borderClass: "border-emerald-700/30",
-                      shadowHover: "hover:shadow-[0_15px_35px_rgba(5,150,105,0.35)]",
+                      cardBg: "bg-gradient-to-br from-[#f0fdf4] to-[#d1fae5] hover:from-[#d1fae5] hover:to-[#bbf7d0]",
+                      iconClass: "bg-[#059669]/10 text-[#059669]",
+                      labelClass: "text-[#065f46]/80",
+                      titleClass: "text-[#065f46]",
+                      descClass: "text-slate-600",
+                      borderClass: "border-emerald-500/15",
+                      shadowHover: "hover:shadow-[0_15px_35px_rgba(5,150,105,0.12)]",
                     },
                     {
                       icon: "fas fa-ambulance",
@@ -1501,13 +1501,13 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                       label: "Book Dispatch",
                       fixedType: "ambulance",
                       path: "/ambulance",
-                      cardBg: "bg-gradient-to-br from-[#dc2626] to-[#991b1b] hover:from-[#ef4444] hover:to-[#b91c1c]",
-                      iconClass: "bg-white/20 text-white",
-                      labelClass: "text-white/80",
-                      titleClass: "!text-white",
-                      descClass: "!text-white/70",
-                      borderClass: "border-red-800/30",
-                      shadowHover: "hover:shadow-[0_15px_35px_rgba(220,38,38,0.35)]",
+                      cardBg: "bg-gradient-to-br from-[#fff5f5] to-[#ffe3e3] hover:from-[#ffe3e3] hover:to-[#ffd1d1]",
+                      iconClass: "bg-[#dc2626]/10 text-[#dc2626]",
+                      labelClass: "text-[#991b1b]/80",
+                      titleClass: "text-[#991b1b]",
+                      descClass: "text-slate-600",
+                      borderClass: "border-red-500/15",
+                      shadowHover: "hover:shadow-[0_15px_35px_rgba(220,38,38,0.12)]",
                     },
                   ].map((card, idx) => (
                     <div
@@ -1713,21 +1713,21 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
               {/* Bento grid */}
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
 
-                {/* Hero info card â€” left */}
-                <div className="lg:col-span-4 rounded-sm p-7 flex flex-col justify-between min-h-[360px] relative overflow-hidden" style={{ background: "linear-gradient(145deg, #321961 0%, #4a1d96 60%, #1e3a5f 100%)" }}>
+                {/* Hero info card — left */}
+                <div className="lg:col-span-4 rounded-sm p-7 flex flex-col justify-between min-h-[360px] relative overflow-hidden border border-solid border-white/10" style={{ background: "#7c3aed" }}>
                   {/* Watermark circle */}
                   <div className="absolute -bottom-10 -right-10 w-[180px] h-[180px] rounded-full border border-solid border-white/10"></div>
                   <div className="absolute -bottom-6 -right-6 w-[120px] h-[120px] rounded-full border border-solid border-white/10"></div>
 
                   <div>
-                    <div className="w-11 h-11 rounded-[14px] bg-white/15 flex items-center justify-center mb-5">
+                    <div className="w-11 h-11 rounded-[14px] bg-white/20 flex items-center justify-center mb-5">
                       <i className="fas fa-heartbeat text-white text-[18px]"></i>
                     </div>
                     <h3 className="text-[24px] font-light text-white leading-snug mb-3">
                       All your healthcare,<br />
-                      <span className="font-normal text-[#c4b5fd]">one platform</span>
+                      <span className="font-semibold text-violet-250 text-[#eddffc]">one platform</span>
                     </h3>
-                    <p className="text-[13px] text-white/55 font-light leading-relaxed">
+                    <p className="text-[13px] text-white/80 font-light leading-relaxed">
                       Compare prices across 500+ hospitals and clinics. Book instantly. Get the best care at the price.
                     </p>
                   </div>
@@ -1739,8 +1739,8 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                       { val: "24/7", label: "Support" },
                     ].map((s, i) => (
                       <div key={i} className="bg-white/10 rounded-[12px] p-3 text-center">
-                        <div className="text-[18px] font-normal text-white">{s.val}</div>
-                        <div className="text-[10px] text-white/50 font-light mt-0.5">{s.label}</div>
+                        <div className="text-[18px] font-semibold text-white">{s.val}</div>
+                        <div className="text-[10px] text-white/60 font-light mt-0.5">{s.label}</div>
                       </div>
                     ))}
                   </div>
@@ -1846,16 +1846,16 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                       <div key={idx} className="px-2 pb-6">
                         <div
                           onClick={() => navigate(card.link)}
-                          className="group relative rounded-sm border border-solid border-[#f1f5f9] bg-[#fafafa] cursor-pointer flex flex-col overflow-hidden"
-                          style={{ transition: "all 0.3s ease", minHeight: "280px" }}
+                          className="group relative rounded-sm border border-solid bg-white cursor-pointer flex flex-col overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.04)]"
+                          style={{ transition: "all 0.3s ease", minHeight: "280px", borderColor: `${card.from}22` }}
                           onMouseEnter={e => {
-                            e.currentTarget.style.boxShadow = `0 20px 50px -12px ${card.glow}`;
+                            e.currentTarget.style.boxShadow = `0 20px 45px -8px ${card.glow}`;
                             e.currentTarget.style.borderColor = card.from;
                             e.currentTarget.style.transform = "translateY(-5px)";
                           }}
                           onMouseLeave={e => {
-                            e.currentTarget.style.boxShadow = "none";
-                            e.currentTarget.style.borderColor = "#f1f5f9";
+                            e.currentTarget.style.boxShadow = "0 8px 30px rgba(0,0,0,0.04)";
+                            e.currentTarget.style.borderColor = `${card.from}22`;
                             e.currentTarget.style.transform = "translateY(0)";
                           }}
                         >
@@ -1899,19 +1899,19 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
 
                   {/* Horizontal Info Strip */}
                   <div
-                    className="mt-2 p-4 rounded-sm bg-gradient-to-r from-[#321961] to-[#1e3a5f] flex flex-col sm:flex-row items-center justify-between gap-4 shadow-[0_15px_30px_rgba(50,25,97,0.15)] relative overflow-hidden group hover:scale-[1.01] transition-transform duration-300"
+                    className="mt-2 p-4 rounded-sm bg-gradient-to-r from-[#f8f6fc] to-[#e0f2fe] border border-solid border-[#7c3aed]/15 flex flex-col sm:flex-row items-center justify-between gap-4 shadow-[0_15px_30px_rgba(124,58,237,0.06)] relative overflow-hidden group hover:scale-[1.01] transition-transform duration-300"
                   >
                     {/* Glowing glass overlay */}
-                    <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <div className="absolute -top-10 -left-10 w-24 h-24 rounded-full bg-[#aa6df6]/20 blur-[20px]"></div>
+                    <div className="absolute inset-0 bg-[#7c3aed]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    <div className="absolute -top-10 -left-10 w-24 h-24 rounded-full bg-[#aa6df6]/10 blur-[20px]"></div>
 
                     <div className="flex items-center gap-4 relative z-10">
-                      <div className="w-10 h-10 rounded-[14px] bg-white/10 flex items-center justify-center text-[#c4b5fd] shrink-0 border border-solid border-white/10 shadow-inner">
+                      <div className="w-10 h-10 rounded-[14px] bg-[#7c3aed]/10 flex items-center justify-center text-[#7c3aed] shrink-0 border border-solid border-[#7c3aed]/10 shadow-inner">
                         <i className="fas fa-magic text-[14px] animate-pulse"></i>
                       </div>
                       <div className="text-left">
-                        <span className="text-[10px] font-semibold tracking-wider text-[#c4b5fd] uppercase block mb-0.5">Instant Assistance</span>
-                        <p className="text-[12.5px] text-white/80 font-light m-0 leading-relaxed">
+                        <span className="text-[10px] font-bold tracking-wider text-[#7c3aed] uppercase block mb-0.5">Instant Assistance</span>
+                        <p className="text-[12.5px] text-slate-600 font-light m-0 leading-relaxed">
                           Can't find a specific service? Get free support from our medical coordinators.
                         </p>
                       </div>
@@ -1919,7 +1919,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
 
                     <Link
                       to="/contact-us"
-                      className="relative z-10 px-5 py-2 rounded-full !bg-white !text-[#321961] hover:bg-[#c4b5fd] hover:text-white transition-all no-underline duration-300 text-[12.5px] !font-medium flex items-center gap-1.5 whitespace-nowrap shadow-md group-hover:-translate-x-1"
+                      className="relative z-10 px-5 py-2 rounded-full !bg-[#7c3aed] !text-white hover:bg-[#6d28d9] transition-all no-underline duration-300 text-[12.5px] !font-medium flex items-center gap-1.5 whitespace-nowrap shadow-md group-hover:-translate-x-1"
                     >
                       <span>Connect Now</span>
                       <i className="fas fa-arrow-right text-[10px]"></i>
@@ -1962,8 +1962,8 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                 <h2 className="text-[34px] font-light text-[#0f172a] leading-tight tracking-tight mb-3">
                   4 Easy Steps to Get <span className="font-normal text-[#ea580c]">Your Solution</span>
                 </h2>
-                <p className="text-[13.5px] text-[#64748b] font-light leading-relaxed">
-                  Compare pricing matrices, verify compositions, and get prompt home deliveries with ease.
+                <p className="text-[13.5px] text-[#64748b] font-light leading-relaxed tracking-wide">
+                  <span className="font-semibold text-[#ea580c]">Compare pricing matrices</span>, <span className="font-semibold text-[#7c3aed]">verify compositions</span>, and get <span className="font-semibold text-[#10b981]">prompt home deliveries</span> with ease.
                 </p>
               </div>
 
@@ -2125,31 +2125,31 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                   </div>
 
                   {/* Mega Spotlight Box */}
-                  <div className="rounded-md p-8 text-white relative overflow-hidden shadow-[0_20px_50px_rgba(50,25,97,0.15)]" style={{ background: "linear-gradient(135deg, #321961 0%, #1e0a3d 60%, #172554 100%)" }}>
-                    <div className="absolute top-0 right-0 w-32 h-32 rounded-full bg-[#7c3aed]/30 blur-[25px] pointer-events-none"></div>
-                    <div className="absolute bottom-0 left-0 w-32 h-32 rounded-full bg-[#0ea5e9]/10 blur-[25px] pointer-events-none"></div>
+                  <div className="rounded-md p-8 text-slate-800 relative overflow-hidden shadow-[0_20px_50px_rgba(50,25,97,0.06)] border border-solid border-[#321961]/15" style={{ background: "linear-gradient(135deg, #f8f4ff 0%, #e8e3f5 100%)" }}>
+                    <div className="absolute top-0 right-0 w-32 h-32 rounded-full bg-[#7c3aed]/10 blur-[25px] pointer-events-none"></div>
+                    <div className="absolute bottom-0 left-0 w-32 h-32 rounded-full bg-[#0ea5e9]/5 blur-[25px] pointer-events-none"></div>
 
                     <div className="relative z-10 text-left">
-                      <span className="text-[11px] font-semibold text-[#c4b5fd] tracking-widest uppercase block mb-3">Highlight Feature</span>
-                      <h3 className="text-[28px] font-normal leading-snug mb-3">
+                      <span className="text-[11px] font-bold text-[#7c3aed] tracking-widest uppercase block mb-3">Highlight Feature</span>
+                      <h3 className="text-[28px] font-normal leading-snug mb-3 text-[#321961]">
                         Save Up to <span className="text-[#ea580c] font-semibold">40%</span> On Medical Bills
                       </h3>
-                      <p className="text-[13px] text-white/70 font-light leading-relaxed mb-6">
-                        Medicompare queries over 500 local pharmacies in real-time to find you the lowest prices and substitutes automatically.
+                      <p className="text-[13.5px] text-slate-600 font-light leading-relaxed mb-6 tracking-wide">
+                        <span className="font-medium text-[#321961]">Medicompare</span> queries over <span className="font-semibold text-slate-800">500+ local pharmacies</span> in real-time to find you the <span className="font-semibold text-[#059669]">lowest prices</span> and substitutes automatically.
                       </p>
 
                       {/* Mock Compare Strip */}
-                      <div className="bg-white/10 rounded-lg p-4 border border-solid border-white/10 flex items-center justify-between">
+                      <div className="group/strip cursor-pointer bg-white/60 hover:bg-[#321961] rounded-sm p-4 border border-solid border-[#321961]/10 flex items-center justify-between transition-all duration-300 shadow-sm hover:shadow-sm">
                         <div className="flex items-center gap-3">
-                          <div className="w-9 h-9 rounded-full bg-[#ea580c]/20 flex items-center justify-center text-[#ea580c]">
+                          <div className="w-9 h-9 rounded-full bg-[#ea580c] group-hover/strip:bg-white/20 flex items-center justify-center text-[#ea580c] group-hover/strip:text-white transition-all duration-300">
                             <i className="fas fa-search-dollar text-[14px]"></i>
                           </div>
                           <div>
-                            <div className="text-[12px] font-medium text-white">Compare Prices</div>
-                            <div className="text-[10px] text-white/50">500+ Verified Partners</div>
+                            <div className="text-[12px] font-semibold !text-slate-800 group-hover/strip:!text-white transition-colors duration-300">Compare Prices</div>
+                            <div className="text-[10px] !text-slate-500 group-hover/strip:text-white/70 transition-colors duration-300">500+ Verified Partners</div>
                           </div>
                         </div>
-                        <i className="fas fa-arrow-right text-white/40 text-[12px]"></i>
+                        <i className="fas fa-arrow-right text-[#321961]/40 group-hover/strip:!text-white text-[12px] transition-colors duration-300"></i>
                       </div>
                     </div>
                   </div>
@@ -2164,7 +2164,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                       {
                         id: 2,
                         title: "100% Genuine",
-                        description: "Sourced exclusively from verified licensed pharmacies for your safety.",
+                        description: "Sourced directly from verified licensed pharmacies to guarantee quality.",
                         icon: "fas fa-shield-alt",
                         accent: "#10b981",
                         glow: "rgba(16,185,129,0.18)",
@@ -2172,7 +2172,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                       {
                         id: 4,
                         title: "Real-time Price Alerts",
-                        description: "Set price watches on your regular prescriptions and get instant drop alerts.",
+                        description: "Track your prescriptions and get notified immediately when rates drop.",
                         icon: "fas fa-bell",
                         accent: "#f43f5e",
                         glow: "rgba(244,63,94,0.18)",
@@ -2180,7 +2180,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                       {
                         id: 6,
                         title: "Expert Support 24/7",
-                        description: "Get active assistance on substitutes and medical salts from our support team.",
+                        description: "Get instant support on generic substitutes and active medical salts.",
                         icon: "fas fa-user-md",
                         accent: "#8b5cf6",
                         glow: "rgba(139,92,246,0.18)",
@@ -2217,7 +2217,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                           </div>
                           <div>
                             <h4 className="!text-[15px] !font-semibold !text-[#0f172a] mb-1.5">{card.title}</h4>
-                            <p className="!text-[12.5px] !text-[#64748b] !font-light leading-relaxed m-0">{card.description}</p>
+                            <p className="!text-[12.5px] !text-[#64748b]/95 !font-light leading-relaxed m-0 tracking-wide">{card.description}</p>
                           </div>
                         </div>
                       </div>
@@ -2230,7 +2230,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                       {
                         id: 3,
                         title: "Alternative Suggestions",
-                        description: "Discover generic substitutes with matching compositions at cheaper prices.",
+                        description: "Compare generic alternatives with the exact same chemical compositions.",
                         icon: "fas fa-exchange-alt",
                         accent: "#ea580c",
                         glow: "rgba(234,88,12,0.18)",
@@ -2238,7 +2238,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                       {
                         id: 5,
                         title: "Fast Doorstep Delivery",
-                        description: "Order prescriptions and get them delivered to your home or pharmacy pickup.",
+                        description: "Order online for speedy home delivery or convenient local pickup.",
                         icon: "fas fa-truck",
                         accent: "#0ea5e9",
                         glow: "rgba(14,165,233,0.18)",
@@ -2275,7 +2275,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                           </div>
                           <div>
                             <h4 className="!text-[15px] !font-semibold !text-[#0f172a] mb-1.5">{card.title}</h4>
-                            <p className="!text-[12.5px] !text-[#64748b] !font-light leading-relaxed m-0">{card.description}</p>
+                            <p className="!text-[12.5px] !text-[#64748b]/95 !font-light leading-relaxed m-0 tracking-wide">{card.description}</p>
                           </div>
                         </div>
                       </div>
@@ -2326,19 +2326,18 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
             const formattedSavingsAmount = savingsAmount % 1 === 0 ? savingsAmount : savingsAmount.toFixed(2);
 
             return (
-              <section className="py-15 bg-gradient-to-br from-[#f1effd] via-[#e2f1fd] to-[#dcfce7] text-slate-800 relative overflow-hidden">
+              <section className="py-15 bg-gradient-to-br from-[#faf9fc] via-[#f1ebfa] to-[#ebdffc] text-slate-800 relative overflow-hidden">
                 {/* Modern light mesh gradient background blobs */}
-                <div className="absolute top-[-10%] left-[-10%] w-[400px] h-[400px] rounded-full bg-[#7c3aed]/12 blur-[90px] pointer-events-none"></div>
-                <div className="absolute bottom-[-10%] right-[-10%] w-[450px] h-[450px] rounded-full bg-[#10b981]/12 blur-[100px] pointer-events-none"></div>
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[350px] rounded-full bg-[#0ea5e9]/8 blur-[120px] pointer-events-none"></div>
+                <div className="absolute top-[-10%] left-[-10%] w-[400px] h-[400px] rounded-full bg-[#7c3aed]/8 blur-[90px] pointer-events-none"></div>
+                <div className="absolute bottom-[-10%] right-[-10%] w-[450px] h-[450px] rounded-full bg-[#321961]/5 blur-[100px] pointer-events-none"></div>
 
                 <div className="container mx-auto px-4 max-w-7xl relative z-10">
 
                   {/* Eyebrow and header */}
                   <div className="text-center mb-16 max-w-2xl mx-auto">
-                    <div className="inline-flex items-center gap-1.5 bg-[#10b981]/10 border border-solid border-[#10b981]/25 py-1.5 px-4 rounded-full mb-4">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#10b981] animate-pulse"></span>
-                      <span className="text-[11px] uppercase tracking-wider text-[#10b981] font-semibold">Visual comparison</span>
+                    <div className="inline-flex items-center gap-1.5 bg-[#7c3aed]/10 border border-solid border-[#7c3aed]/25 py-1.5 px-4 rounded-full mb-4">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#7c3aed] animate-pulse"></span>
+                      <span className="text-[11px] uppercase tracking-wider text-[#7c3aed] font-semibold">Visual comparison</span>
                     </div>
                     <h2 className="text-[36px] font-light text-[#0f172a] leading-tight tracking-tight mb-3">
                       How Much You Can <span className="font-normal text-[#7c3aed]">Really Save</span>
@@ -2352,7 +2351,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                   <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
 
                     {/* Bill A: Standard Retail Receipt */}
-                    <div className="lg:col-span-4 bg-white/90 backdrop-blur-md text-slate-800 rounded-2xl p-6 shadow-[0_15px_35px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_50px_rgba(239,68,68,0.08)] transition-all duration-300 relative flex flex-col justify-between overflow-hidden border border-solid border-red-100/80 min-h-[390px]">
+                    <div className="lg:col-span-4 bg-white text-slate-800 rounded-2xl p-6 shadow-[0_15px_35px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_50px_rgba(239,68,68,0.06)] transition-all duration-300 relative flex flex-col justify-between overflow-hidden border border-solid border-red-100/80 min-h-[390px]">
                       <div className="absolute top-0 left-0 right-0 h-1.5 bg-[#ef4444]"></div>
                       <div>
                         <div className="flex justify-between items-start border-b border-solid border-slate-100 pb-3 mb-4 font-mono text-[11px] text-slate-400">
@@ -2443,26 +2442,26 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                         </div>
 
                         {/* Right Savings Pointer */}
-                        <div className="text-[#10b981] animate-swipe-right text-[12px] flex items-center gap-1 font-semibold select-none shrink-0">
+                        <div className="text-[#7c3aed] animate-swipe-right text-[12px] flex items-center gap-1 font-semibold select-none shrink-0">
                           <span className="text-[13px] font-mono tracking-tighter uppercase">Medicompares</span>
                           <i className="fas fa-chevron-right text-[9px]"></i>
                         </div>
                       </div>
 
-                      <div className="p-6 rounded-md bg-white/90 backdrop-blur-md border border-solid border-slate-200/80 shadow-[0_15px_35px_rgba(0,0,0,0.05)] hover:shadow-[0_20px_50px_rgba(124,58,237,0.08)] transition-all duration-300 w-full">
+                      <div className="p-6 rounded-md bg-white border border-solid border-[#7c3aed]/15 shadow-[0_15px_35px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_50px_rgba(124,58,237,0.06)] transition-all duration-300 w-full">
                         <h4 className="text-[20px] font-medium text-[#0f172a] mb-2">Smart Price Check</h4>
                         <p className="text-[12.5px] text-[#64748b] font-light leading-relaxed mb-4">
                           Medicompare acts as your digital broker, sorting through regional pharmacy databases to slice your margins.
                         </p>
 
-                        <div className="bg-[#10b981]/10 border border-solid border-[#10b981]/30 rounded-md p-3.5 mb-4">
+                        <div className="bg-[#7c3aed]/10 border border-solid border-[#7c3aed]/20 rounded-md p-3.5 mb-4">
                           <span className="text-[10px] text-slate-500 uppercase tracking-widest block mb-0.5">Average savings</span>
-                          <span className="text-[22px] font-bold text-[#10b981]">Save {savingsPercent}% Instantly</span>
+                          <span className="text-[22px] font-bold text-[#7c3aed]">Save {savingsPercent}% Instantly</span>
                         </div>
 
                         <Link
                           to="/medicine/all"
-                          className="!bg-gradient-to-r from-[#321961] to-[#7c3aed] text-white hover:from-[#1e0a3d] hover:to-[#5b21b6] py-3 px-6 rounded-full font-semibold text-[13.5px] no-underline inline-flex items-center gap-2 transition-all duration-300 w-full justify-center shadow-md shadow-indigo-500/10"
+                          className="!bg-gradient-to-r from-[#321961] to-[#7c3aed] text-white hover:from-[#4c2d96] hover:to-[#6d28d9] py-3 px-6 rounded-full font-semibold text-[13.5px] no-underline inline-flex items-center gap-2 transition-all duration-300 w-full justify-center shadow-md shadow-indigo-500/10"
                         >
                           <span>Compare live prices</span>
                           <i className="fas fa-arrow-right text-[10px]"></i>
@@ -2471,16 +2470,16 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                     </div>
 
                     {/* Bill B: Medicompare Glowing Digital Invoice (Scaled up & Highlighted) */}
-                    <div className="lg:col-span-4 bg-gradient-to-b from-white to-[#f0fdf4]/70 text-slate-800 rounded-2xl p-6 shadow-[0_25px_60px_rgba(16,185,129,0.18)] hover:shadow-[0_25px_60px_rgba(16,185,129,0.28)] transition-all duration-300 relative flex flex-col justify-between overflow-hidden scale-[1.03] lg:scale-[1.05] z-10 min-h-[390px]">
-                      <div className="absolute top-0 left-0 right-0 h-1.5 bg-[#10b981]"></div>
+                    <div className="lg:col-span-4 bg-gradient-to-b from-white to-[#f5f3ff]/70 text-slate-800 rounded-2xl p-6 shadow-[0_25px_60px_rgba(124,58,237,0.1)] hover:shadow-[0_25px_60px_rgba(124,58,237,0.18)] transition-all duration-300 relative flex flex-col justify-between overflow-hidden scale-[1.03] lg:scale-[1.05] z-10 min-h-[390px] border border-solid border-[#7c3aed]/20">
+                      <div className="absolute top-0 left-0 right-0 h-1.5 bg-[#7c3aed]"></div>
 
                       {/* Premium Authentic Watermark Stamp */}
                       <div className="absolute -right-4 top-10 opacity-[0.07] pointer-events-none -rotate-12 select-none">
-                        <i className="fas fa-shield-alt text-[100px] text-[#10b981]"></i>
+                        <i className="fas fa-shield-alt text-[100px] text-[#7c3aed]"></i>
                       </div>
 
                       <div>
-                        <div className="flex justify-between items-center border-b border-solid border-slate-100 pb-3 mb-4 font-mono text-[11px] text-[#10b981] font-semibold">
+                        <div className="flex justify-between items-center border-b border-solid border-slate-100 pb-3 mb-4 font-mono text-[11px] text-[#7c3aed] font-semibold">
                           <span>MEDICOMPARES</span>
                           <span className="flex items-center gap-1"><i className="fas fa-star text-[9px] animate-pulse"></i> BEST DEAL</span>
                         </div>
@@ -2499,15 +2498,15 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                                 <div
                                   key={vendor._id || idx}
                                   className={`flex justify-between items-center py-1.5 px-2.5 rounded-lg border border-solid transition-all duration-300 ${isBest
-                                    ? "bg-[#10b981]/8 border-[#10b981]/25 shadow-[0_4px_12px_rgba(16,185,129,0.06)] scale-[1.02] text-slate-800"
+                                    ? "bg-[#7c3aed]/8 border-[#7c3aed]/25 shadow-[0_4px_12px_rgba(124,58,237,0.06)] scale-[1.02] text-slate-800"
                                     : "border-transparent bg-transparent text-slate-500"
                                     }`}
                                 >
-                                  <span className={isBest ? "text-[#0ea5e9] font-semibold flex items-center gap-1.5 min-w-0" : "text-slate-500 truncate"}>
+                                  <span className={isBest ? "text-[#7c3aed] font-semibold flex items-center gap-1.5 min-w-0" : "text-slate-500 truncate"}>
                                     <span className="truncate max-w-[100px] sm:max-w-[130px] block">{name}</span>
-                                    {isBest && <span className="text-[9px] text-white bg-[#10b981] px-1.5 py-0.5 rounded font-bold uppercase shrink-0 shadow-sm">Best Deal</span>}
+                                    {isBest && <span className="text-[9px] text-white bg-[#7c3aed] px-1.5 py-0.5 rounded font-bold uppercase shrink-0 shadow-sm">Best Deal</span>}
                                   </span>
-                                  <span className={`font-semibold shrink-0 ${isBest ? "text-[#10b981] text-[13px]" : "text-slate-600"}`}>
+                                  <span className={`font-semibold shrink-0 ${isBest ? "text-[#7c3aed] text-[13px]" : "text-slate-600"}`}>
                                     ₹{price}
                                   </span>
                                 </div>
@@ -2519,12 +2518,12 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                                 <span className="truncate max-w-[100px] sm:max-w-[130px] block">Pharmacy A</span>
                                 <span className="font-semibold text-slate-600 shrink-0">₹45.00</span>
                               </div>
-                              <div className="flex justify-between items-center py-1.5 px-2.5 rounded-lg border border-solid bg-[#10b981]/8 border-[#10b981]/25 shadow-[0_4px_12px_rgba(16,185,129,0.06)] scale-[1.02] text-slate-800 min-w-0">
-                                <span className="text-[#0ea5e9] font-semibold flex items-center gap-1.5 min-w-0">
+                              <div className="flex justify-between items-center py-1.5 px-2.5 rounded-lg border border-solid bg-[#7c3aed]/8 border-[#7c3aed]/25 shadow-[0_4px_12px_rgba(124,58,237,0.06)] scale-[1.02] text-slate-800 min-w-0">
+                                <span className="text-[#7c3aed] font-semibold flex items-center gap-1.5 min-w-0">
                                   <span className="truncate max-w-[100px] sm:max-w-[130px] block">Pharmacy B</span>
-                                  <span className="text-[9px] text-white bg-[#10b981] px-1.5 py-0.5 rounded font-bold uppercase shrink-0 shadow-sm">Best Deal</span>
+                                  <span className="text-[9px] text-white bg-[#7c3aed] px-1.5 py-0.5 rounded font-bold uppercase shrink-0 shadow-sm">Best Deal</span>
                                 </span>
-                                <span className="text-[#10b981] font-bold text-[13px] shrink-0">₹32.00</span>
+                                <span className="text-[#7c3aed] font-bold text-[13px] shrink-0">₹32.00</span>
                               </div>
                               <div className="flex justify-between items-center py-1.5 px-2.5 rounded-lg border border-solid border-transparent text-slate-500 min-w-0">
                                 <span className="truncate max-w-[100px] sm:max-w-[130px] block">Pharmacy C</span>
@@ -2539,9 +2538,9 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                         <div className="mt-8 border-t border-dashed border-slate-200 pt-4 text-left font-mono">
                           <div className="flex justify-between items-center text-[15px] font-bold text-slate-800">
                             <span>BEST PRICE</span>
-                            <span className="text-[#10b981] text-[17px]">₹{bestDealPrice || 32.00}</span>
+                            <span className="text-[#7c3aed] text-[17px]">₹{bestDealPrice || 32.00}</span>
                           </div>
-                          <span className="text-[10px] text-[#10b981] bg-[#10b981]/10 border border-solid border-[#10b981]/25 px-2.5 py-1 rounded-full mt-2 inline-flex items-center gap-1 font-semibold">
+                          <span className="text-[10px] text-[#7c3aed] bg-[#7c3aed]/10 border border-solid border-[#7c3aed]/25 px-2.5 py-1 rounded-full mt-2 inline-flex items-center gap-1 font-semibold">
                             <i className="fas fa-piggy-bank text-[10px]"></i>
                             Saved ₹{formattedSavingsAmount} {vendors.length > 0 ? "" : "per strip"}
                           </span>
@@ -2635,7 +2634,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
 
 
           {((row1 && row1.length > 0) || (row2 && row2.length > 0)) && (
-            <section className="py-20 bg-gradient-to-br from-[#1e0a3d] via-[#321961] to-[#251247] overflow-hidden relative">
+            <section className="py-20 bg-gradient-to-br from-[#faf9fc] via-[#f1ebfa] to-[#e8e2f2] overflow-hidden relative">
               <style dangerouslySetInnerHTML={{
                 __html: `
                 @keyframes marquee-left {
@@ -2664,14 +2663,14 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
 
               <div className="max-w-full mx-auto px-6 md:px-12 lg:px-20 relative z-10">
                 <div className="text-center mb-14" data-aos="fade-up">
-                  <div className="inline-flex items-center gap-1.5 bg-white/10 border border-solid border-white/20 py-1.5 px-4 rounded-full mb-4">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#10b981] animate-pulse"></span>
-                    <span className="text-[11px] uppercase tracking-wider text-white font-bold">Our Partners</span>
+                  <div className="inline-flex items-center gap-1.5 bg-[#321961]/10 border border-solid border-[#321961]/25 py-1.5 px-4 rounded-full mb-4">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#059669] animate-pulse"></span>
+                    <span className="text-[11px] uppercase tracking-wider text-[#321961] font-bold">Our Partners</span>
                   </div>
-                  <h2 className="text-[34px] font-light text-white leading-tight tracking-tight mb-3">
-                    Trusted Network of Healthcare <span className="font-normal text-[#10b981]">Partners</span>
+                  <h2 className="text-[34px] font-light text-[#0f172a] leading-tight tracking-tight mb-3">
+                    Trusted Network of Healthcare <span className="font-normal text-[#059669]">Partners</span>
                   </h2>
-                  <p className="text-[13.5px] text-slate-300 font-light leading-relaxed max-w-lg mx-auto">
+                  <p className="text-[13.5px] text-slate-600 font-light leading-relaxed max-w-lg mx-auto">
                     Collaborating with India's top certified pharmacies, diagnostic labs, and medical providers to bring you the best prices.
                   </p>
                 </div>
@@ -2695,9 +2694,9 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                           <div
                             key={`r1-${vendor._id || idx}-${idx}`}
                             onClick={() => handleVendorClick(vendor)}
-                            className="w-[280px] h-[88px] bg-white/5 backdrop-blur-md rounded-xl border border-solid border-white/10 p-3 flex flex-row items-center gap-3.5 cursor-pointer transition-all duration-300 hover:bg-white/15 hover:border-white/25 hover:shadow-[0_8px_25px_rgba(255,255,255,0.05)] hover:-translate-y-1 relative group overflow-hidden shrink-0"
+                            className="w-[280px] h-[88px] bg-white rounded-xl border border-solid border-[#321961]/10 p-3 flex flex-row items-center gap-3.5 cursor-pointer transition-all duration-300 hover:border-[#321961]/35 hover:shadow-[0_8px_25px_rgba(50,25,97,0.06)] hover:-translate-y-1 relative group overflow-hidden shrink-0"
                           >
-                            <div className="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                            <div className="absolute inset-0 bg-gradient-to-tr from-[#321961]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
 
                             <div className="w-[64px] h-[64px] rounded-lg bg-white flex items-center justify-center p-1.5 shadow-sm transition-transform duration-300 group-hover:scale-105 shrink-0">
                               {logoSrc ? (
@@ -2721,7 +2720,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                             </div>
 
                             <div className="flex-1 min-w-0 text-left">
-                              <h4 className="!text-[15px] font-semibold text-white/90 m-0 leading-snug whitespace-normal break-words w-full capitalize group-hover:text-[#10b981] transition-colors duration-300 font-sans tracking-wide">
+                              <h4 className="!text-[15px] font-semibold text-slate-800 m-0 leading-snug whitespace-normal break-words w-full capitalize group-hover:text-[#059669] transition-colors duration-300 font-sans tracking-wide">
                                 {name}
                               </h4>
                             </div>
@@ -2748,9 +2747,9 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                           <div
                             key={`r2-${vendor._id || idx}-${idx}`}
                             onClick={() => handleVendorClick(vendor)}
-                            className="w-[280px] h-[88px] bg-white/5 backdrop-blur-md rounded-xl border border-solid border-white/10 p-3 flex flex-row items-center gap-3.5 cursor-pointer transition-all duration-300 hover:bg-white/15 hover:border-white/25 hover:shadow-[0_8px_25px_rgba(255,255,255,0.05)] hover:-translate-y-1 relative group overflow-hidden shrink-0"
+                            className="w-[280px] h-[88px] bg-white rounded-xl border border-solid border-[#321961]/10 p-3 flex flex-row items-center gap-3.5 cursor-pointer transition-all duration-300 hover:border-[#321961]/35 hover:shadow-[0_8px_25px_rgba(50,25,97,0.06)] hover:-translate-y-1 relative group overflow-hidden shrink-0"
                           >
-                            <div className="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                            <div className="absolute inset-0 bg-gradient-to-tr from-[#321961]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
 
                             <div className="w-[64px] h-[64px] rounded-lg bg-white flex items-center justify-center p-1.5 shadow-sm transition-transform duration-300 group-hover:scale-105 shrink-0">
                               {logoSrc ? (
@@ -2774,7 +2773,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                             </div>
 
                             <div className="flex-1 min-w-0 text-left">
-                              <h4 className="!text-[15px] font-semibold text-white/90 m-0 leading-snug whitespace-normal break-words w-full capitalize group-hover:text-[#10b981] transition-colors duration-300 font-sans tracking-wide">
+                              <h4 className="!text-[15px] font-semibold text-slate-800 m-0 leading-snug whitespace-normal break-words w-full capitalize group-hover:text-[#059669] transition-colors duration-300 font-sans tracking-wide">
                                 {name}
                               </h4>
                             </div>
@@ -2800,8 +2799,8 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                   <h2 className="text-[34px] font-light text-[#0f172a] leading-tight tracking-tight mb-3">
                     Frequently Asked <span className="font-normal text-[#321961]">Questions</span>
                   </h2>
-                  <p className="text-[13.5px] text-[#64748b] font-light leading-relaxed max-w-lg mx-auto">
-                    Find the best medicine prices, ensure authenticity with verified products, explore cost-effective alternatives, and get instant answers.
+                  <p className="text-[13.5px] text-[#64748b] font-light leading-relaxed max-w-lg mx-auto tracking-wide">
+                    Find the <span className="font-semibold text-[#321961]">best medicine prices</span>, ensure <span className="font-semibold text-[#059669]">authenticity</span> with verified products, explore <span className="font-semibold text-[#7c3aed]">cost-effective alternatives</span>, and get instant answers.
                   </p>
                 </div>
 
@@ -2831,9 +2830,9 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
 
                   {/* Right: Glowing Spotlight Answer Panel */}
                   <div className="col-span-7">
-                    <div className="bg-gradient-to-br from-[#321961] to-[#1e0a3d] rounded-md p-8 text-white shadow-[0_20px_50px_rgba(50,25,97,0.15)] h-full flex flex-col justify-between relative overflow-hidden min-h-[380px]">
+                    <div className="bg-gradient-to-br from-[#7c3aed] to-[#5b21b6] rounded-md p-8 text-white shadow-[0_20px_50px_rgba(124,58,237,0.15)] h-full flex flex-col justify-between relative overflow-hidden min-h-[380px] border border-solid border-white/10">
                       {/* Decorative glowing blobs */}
-                      <div className="absolute top-0 right-0 w-32 h-32 rounded-full bg-[#7c3aed]/20 blur-[30px] pointer-events-none"></div>
+                      <div className="absolute top-0 right-0 w-32 h-32 rounded-full bg-white/10 blur-[30px] pointer-events-none"></div>
                       <div className="absolute bottom-0 left-0 w-32 h-32 rounded-full bg-[#10b981]/10 blur-[30px] pointer-events-none"></div>
 
                       <div className="relative z-10 grid grid-cols-1 md:grid-cols-12 gap-8 items-center h-full">
@@ -2841,9 +2840,9 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                         <div className="md:col-span-7 text-left flex flex-col justify-between h-full">
                           <div>
                             {/* Eyebrow badge */}
-                            <div className="inline-flex items-center gap-1.5 bg-white/10 border border-solid border-white/20 py-1 px-3.5 rounded-full mb-6">
-                              <i className="fas fa-magic text-[#c4b5fd] text-[10px] animate-pulse"></i>
-                              <span className="text-[10px] uppercase tracking-wider text-[#c4b5fd] font-semibold">Answer Spotlight</span>
+                            <div className="inline-flex items-center gap-1.5 bg-white/15 border border-solid border-white/20 py-1 px-3.5 rounded-full mb-6">
+                              <i className="fas fa-magic text-[#ebdffc] text-[10px] animate-pulse"></i>
+                              <span className="text-[10px] uppercase tracking-wider text-[#ebdffc] font-semibold">Answer Spotlight</span>
                             </div>
 
                             {/* Title and Answer */}
@@ -2858,12 +2857,12 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                           {/* Bottom Quick Help Section */}
                           <div className="pt-4 border-t border-solid border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4">
                             <div className="flex items-center gap-2.5 text-left">
-                              <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-[#c4b5fd] shrink-0">
+                              <div className="w-8 h-8 rounded-full bg-white/15 flex items-center justify-center text-white shrink-0">
                                 <i className="fas fa-comment-dots text-[11px]"></i>
                               </div>
                               <div>
                                 <div className="text-[8.5px] text-white/50 uppercase tracking-wider">Still have questions?</div>
-                                <div className="text-[11px] font-medium text-white">Get real-time support</div>
+                                <div className="text-[11px] font-semibold text-white">Get real-time support</div>
                               </div>
                             </div>
                             {/* <Link
