@@ -1302,8 +1302,8 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                   <h2 className="text-[34px] font-light text-[#0f172a] leading-tight tracking-tight mb-3">
                     Explore Multiple <span className="font-normal text-[#321961]">Services</span>
                   </h2>
-                  <p className="text-[13.5px] text-[#64748b] font-light leading-relaxed">
-                    Browse a wide range of medical categories to compare pricing, verify compositions, and find the best deals.
+                  <p className="text-[13.5px] text-[#475569] font-normal leading-[1.75] max-w-[520px] mx-auto">
+                    Browse a wide range of medical categories to compare pricing, verify compositions, and find the best deals near you.
                   </p>
                 </div>
 
