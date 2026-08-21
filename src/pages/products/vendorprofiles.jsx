@@ -51,7 +51,7 @@ const DetailRow = ({ label, value, title }) => {
   return (
     <div
       className={`group rounded-[6px] transition-all duration-200 min-h-[22px] min-w-0 relative flex px-2 py-1 w-full hover:bg-[#f5f3ff] hover:border-purple-200 ${isExpanded
-        ? "bg-[#f5f3ff] border border-[#321961] flex-col items-start gap-1 z-20 shadow-md"
+        ? "bg-[#f5f3ff] border border-[var(--color-primary,#4c2691)] flex-col items-start gap-1 z-20 shadow-md"
         : "flex-row items-center justify-between gap-[6px]"
         } ${isClickable ? "cursor-pointer" : "cursor-default"}`}
       onClick={(e) => {
@@ -62,7 +62,7 @@ const DetailRow = ({ label, value, title }) => {
       title={title || value}
     >
       <span
-        className={`text-[11px] font-[500] capitalize tracking-[0.04em] whitespace-nowrap shrink-0 transition-colors ${isExpanded ? "text-[#321961]" : "text-[#6b7280]"
+        className={`text-[11px] font-[500] capitalize tracking-[0.04em] whitespace-nowrap shrink-0 transition-colors ${isExpanded ? "text-[var(--color-primary,#4c2691)]" : "text-[#6b7280]"
           }`}
       >
         {label}
@@ -650,7 +650,7 @@ const VendorProfile = () => {
                                 checked={selectedSubcategories.includes(
                                   sub.slug,
                                 )}
-                                className="mr-2 rounded border-gray-300 text-[#321961] focus:ring-[#321961]"
+                                className="mr-2 rounded border-gray-300 text-[var(--color-primary,#4c2691)] focus:ring-[var(--color-primary,#4c2691)]"
                                 onChange={() =>
                                   handleSubcategoryToggle(sub.slug)
                                 }
@@ -675,7 +675,7 @@ const VendorProfile = () => {
           {categories.length > categoriesToShow && (
             <div className="text-center mt-2">
               <button
-                className="inline-flex items-center gap-1.5 px-4 py-1.5 !text-[12px] !font-semibold !text-white hover:!text-white !bg-primary !hover:!bg-primary-hover !border border-[#321961]/20 !hover:border-transparent !rounded-full !shadow-sm transition-all duration-250 cursor-pointer"
+                className="inline-flex items-center gap-1.5 px-4 py-1.5 !text-[12px] !font-semibold !text-white hover:!text-white !bg-primary !hover:!bg-primary-hover !border border-[var(--color-primary,#4c2691)]/20 !hover:border-transparent !rounded-full !shadow-sm transition-all duration-250 cursor-pointer"
                 onClick={() =>
                   setCategoriesToShow(
                     categoriesToShow === 6 ? categories.length : 6,
@@ -728,7 +728,7 @@ const VendorProfile = () => {
                       <input
                         type="checkbox"
                         id={`brand-${brand.slug}`}
-                        className="mr-2 rounded border-gray-300 text-[#321961] focus:ring-[#321961] cursor-pointer"
+                        className="mr-2 rounded border-gray-300 text-[var(--color-primary,#4c2691)] focus:ring-[var(--color-primary,#4c2691)] cursor-pointer"
                         checked={selectedBrands.includes(brand.slug)}
                         onChange={() => handleBrandToggle(brand.slug)}
                         onClick={(e) => e.stopPropagation()}
@@ -747,7 +747,7 @@ const VendorProfile = () => {
           {Brands.length > brandsToShow && (
             <div className="text-center mt-3">
               <button
-                className="inline-flex items-center gap-1.5 px-4 py-1.5 !text-[12px] !font-semibold !text-white hover:!text-white !bg-primary !hover:!bg-primary-hover !border border-[#321961]/20 !hover:border-transparent !rounded-full !shadow-sm transition-all duration-250 cursor-pointer"
+                className="inline-flex items-center gap-1.5 px-4 py-1.5 !text-[12px] !font-semibold !text-white hover:!text-white !bg-primary !hover:!bg-primary-hover !border border-[var(--color-primary,#4c2691)]/20 !hover:border-transparent !rounded-full !shadow-sm transition-all duration-250 cursor-pointer"
                 onClick={() =>
                   setBrandsToShow(brandsToShow === 6 ? Brands.length : 6)
                 }
@@ -808,12 +808,10 @@ const VendorProfile = () => {
               </h1>
 
               {/* Rating + Order Badges */}
-
-
               {/* Vendor address if available */}
               {data?.bussinessdetails?.address && (
                 <p className="!text-[14px] !text-gray-600 !font-medium flex items-center justify-center gap-0.5 m-0 mx-auto max-w-[500px] mb-3">
-                  <i className="fas fa-map-marker-alt text-[#321961] text-[14px] relative top-[-1px]" />
+                  <i className="fas fa-map-marker-alt text-[var(--color-primary,#4c2691)] text-[14px] relative top-[-1px]" />
                   <span>{data.bussinessdetails.address}</span>
                 </p>
               )}
@@ -828,7 +826,7 @@ const VendorProfile = () => {
                   </span>
                 </div>
 
-                <div className="bg-[#321961]/10 text-[#321961] text-[12px] font-bold px-3 py-1 rounded-full border border-[#321961]/20 shadow-sm">
+                <div className="bg-[var(--color-primary,#4c2691)]/[0.08] text-[var(--color-primary,#4c2691)] text-[12px] font-bold px-3 py-1 rounded-full border border-[var(--color-primary,#4c2691)]/20 shadow-sm">
                   {data?.totalOrders ? `${data.totalOrders}+ Orders` : "100+ Orders"}
                 </div>
               </div>
@@ -856,7 +854,7 @@ const VendorProfile = () => {
         <div className="flex items-center justify-between lg:hidden mb-3 mobile-filter-buttons-container">
           <button
             type="button"
-            className="inline-flex items-center gap-1 !text-xs !font-semibold px-2.5 py-1.5 !rounded bg-[#321961] !text-white hover:bg-[#6d28d9] transition-colors"
+            className="inline-flex items-center gap-1 !text-xs !font-semibold px-2.5 py-1.5 !rounded bg-[var(--color-primary,#4c2691)] !text-white hover:bg-[var(--color-primary-dark,#5c33a6)] transition-colors"
             onClick={() => setShowFilterCanvas(true)}
           >
             <i className="fas fa-filter"></i>
@@ -865,7 +863,7 @@ const VendorProfile = () => {
 
           <button
             type="button"
-            className="inline-flex items-center gap-1 !text-xs !font-semibold px-2.5 py-1.5 !rounded bg-[#321961] !text-white hover:bg-[#6d28d9] transition-colors"
+            className="inline-flex items-center gap-1 !text-xs !font-semibold px-2.5 py-1.5 !rounded bg-[var(--color-primary,#4c2691)] !text-white hover:bg-[var(--color-primary-dark,#5c33a6)] transition-colors"
           >
             <i className="fas fa-redo"></i>
             <span>Clear</span>
@@ -1007,7 +1005,7 @@ const VendorProfile = () => {
                                 className="w-full flex flex-col bg-white rounded-md border border-[#f1f5f9] shadow-[0_4px_18px_rgba(0,0,0,0.07)] relative overflow-hidden transition-all duration-300 hover:-translate-y-[3px] hover:!border-[#f1f5f9] hover:shadow-[0_8px_24px_rgba(128,89,202,0.15)]"
                               >
                                 {/* Compare badge */}
-                                <div className="absolute right-2 top-2 z-10 cursor-pointer bg-[#321961] text-white border-[1.5px] border-[#321961] rounded-[20px] w-8 h-[26px] flex items-center justify-start pl-[9px] shadow-[0_2px_8px_rgba(128,89,202,0.4)] overflow-hidden whitespace-nowrap transition-all duration-300 hover:w-[85px] group">
+                                <div className="absolute right-2 top-2 z-10 cursor-pointer bg-[var(--color-primary,#4c2691)] text-white border-[1.5px] border-[var(--color-primary,#4c2691)] rounded-[20px] w-8 h-[26px] flex items-center justify-start pl-[9px] shadow-[0_2px_8px_rgba(128,89,202,0.4)] overflow-hidden whitespace-nowrap transition-all duration-300 hover:w-[85px] group">
                                   <Link
                                     to={`/${serviceType}/${tablet?.subcategoryDetails?.slug || tablet?.subcategorys?.slug}/${tablet?.slug}/compare`}
                                     className="flex items-center text-white no-underline w-full"
@@ -1139,7 +1137,7 @@ const VendorProfile = () => {
                                         )}
                                       </div>
                                       <div
-                                        className="w-[32px] h-[32px] rounded-full !bg-purple-50 !border !border-purple-100/60 !text-purple-600 hover:bg-[#321961] hover:text-white hover:border-[#321961] flex items-center justify-center transition-all duration-200 cursor-pointer shadow-sm hover:shadow-md hover:scale-105 active:scale-95"
+                                        className="w-[32px] h-[32px] rounded-full !bg-purple-50 !border !border-purple-100/60 !text-purple-600 hover:bg-[var(--color-primary,#4c2691)] hover:text-white hover:border-[var(--color-primary,#4c2691)] flex items-center justify-center transition-all duration-200 cursor-pointer shadow-sm hover:shadow-md hover:scale-105 active:scale-95"
                                         onClick={() => handleShare(products, categoryName)}
                                         title="Share"
                                       >
@@ -1149,7 +1147,7 @@ const VendorProfile = () => {
                                     <button
                                       type="button"
                                       onClick={() => handleProductClick(products)}
-                                      className="bg-[#321961] hover:bg-[#5b32a1] text-white !text-[11px] font-semibold py-1.5 px-3.5 !rounded-md transition-all duration-300 border-none cursor-pointer flex items-center gap-1.5 shadow-sm hover:shadow-[0_4px_12px_rgba(50,25,97,0.25)] hover:-translate-y-px active:translate-y-0"
+                                      className="bg-[var(--color-primary,#4c2691)] hover:bg-[var(--color-primary-dark,#5c33a6)] text-white !text-[11px] font-semibold py-1.5 px-3.5 !rounded-md transition-all duration-300 border-none cursor-pointer flex items-center gap-1.5 shadow-sm hover:shadow-[0_4px_12px_rgba(76,38,145,0.25)] hover:-translate-y-px active:translate-y-0"
                                     >
                                       <i className="fa-solid fa-eye text-[11px]" />
                                       View Details

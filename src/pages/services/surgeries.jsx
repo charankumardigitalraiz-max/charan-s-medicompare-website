@@ -867,7 +867,7 @@ const surgeries = ({
           <div className="container-fluid !px-4 md:!px-6 !mx-auto">
             <div className="!text-center !mb-10">
               <h2
-                className="!text-[28px] !font-semibold inline-block bg-gradient-to-br from-[#321961] to-[#6d48b8] bg-clip-text text-transparent"
+                className="!text-[28px] !font-semibold inline-block bg-gradient-to-br from-[var(--color-primary,#4c2691)] to-[var(--color-primary-dark,#5c33a6)] bg-clip-text text-transparent"
               >
                 Meet Our Best Surgeons
               </h2>
@@ -921,7 +921,7 @@ const surgeries = ({
                             ? doctor.name.substring(0, 22) + "..."
                             : doctor.name}
                         </h6>
-                        <span className="!text-[#321961] !font-medium !text-[13px] !mb-[12px] !block">
+                        <span className="!text-[var(--color-primary,#4c2691)] !font-medium !text-[13px] !mb-[12px] !block">
                           {doctor.position.length > 26
                             ? doctor.position.substring(0, 26) + "..."
                             : doctor.position}
@@ -930,7 +930,7 @@ const surgeries = ({
                         <div className="!bg-transparent !rounded-[10px] !p-[10px_12px] !mb-[12px] !text-left">
                           <div className="!text-[12px] !text-[#64748b] !mb-[6px] !flex !items-center !gap-[8px] !leading-[1.4] last:!mb-0">
                             <i
-                              className="fa fa-user-md text-[#321961] !text-[11px] !w-[16px] !h-[16px] !flex !items-center !justify-center !shrink-0"
+                              className="fa fa-user-md text-[var(--color-primary,#4c2691)] !text-[11px] !w-[16px] !h-[16px] !flex !items-center !justify-center !shrink-0"
                             ></i>
                             <span className="!flex-1 !overflow-hidden !text-ellipsis !whitespace-nowrap">
                               <span className="!flex-1 !overflow-hidden !text-ellipsis !whitespace-nowrap">
@@ -957,7 +957,7 @@ const surgeries = ({
                           )}
                           <div className="!text-[12px] !text-[#64748b] !mb-[6px] !flex !items-center !gap-[8px] !leading-[1.4] last:!mb-0" title={doctor.address}>
                             <i
-                              className="fa-solid fa-location-dot text-[#321961] !text-[11px] !w-[16px] !h-[16px] !flex !items-center !justify-center !shrink-0"
+                              className="fa-solid fa-location-dot text-[var(--color-primary,#4c2691)] !text-[11px] !w-[16px] !h-[16px] !flex !items-center !justify-center !shrink-0"
                             ></i>
                             <span className="!flex-1 !overflow-hidden !text-ellipsis !whitespace-nowrap">
                               {doctor.address.length > 30
@@ -969,14 +969,14 @@ const surgeries = ({
 
                         <div className="!flex !gap-2">
                           <a
-                            className="!flex !items-center !justify-center !gap-[6px] !py-[6px] !px-1 !text-[10px] !font-semibold !rounded-[8px] !border-none !cursor-pointer !transition-all !duration-300 !flex-1 !tracking-[0.3px] !bg-[#321961] !text-white hover:!-translate-y-[2px] hover:!shadow-[0_6px_16px_rgba(125,46,255,0.25)] hover:!bg-gradient-to-br hover:!from-[#321961] hover:!to-[#6a1de8] no-underline"
+                            className="!flex !items-center !justify-center !gap-[6px] !py-[6px] !px-1 !text-[10px] !font-semibold !rounded-[8px] !border-none !cursor-pointer !transition-all !duration-300 !flex-1 !tracking-[0.3px] !bg-[var(--color-primary,#4c2691)] !text-white hover:!-translate-y-[2px] hover:!shadow-[0_6px_16px_rgba(125,46,255,0.25)] hover:!bg-gradient-to-br hover:!from-[var(--color-primary,#4c2691)] hover:!to-[#6a1de8] no-underline"
                             href="tel:+919010357778"
                           >
                             <i className="fa fa-phone"></i>
                             Call
                           </a>
                           <button
-                            className="!flex !items-center !justify-center !gap-[6px] !py-[6px] !px-1 !text-[10px] !font-semibold !rounded-[8px] !border-[1.5px] !border-solid !border-[#321961] !bg-white !text-[#321961] !cursor-pointer !transition-all !duration-300 !flex-1 !tracking-[0.3px] hover:!-translate-y-[2px] hover:!shadow-[0_6px_16px_rgba(125,46,255,0.25)] hover:!bg-[#321961] hover:!text-white hover:!border-[#321961]"
+                            className="!flex !items-center !justify-center !gap-[6px] !py-[6px] !px-1 !text-[10px] !font-semibold !rounded-[8px] !border-[1.5px] !border-solid !border-[var(--color-primary,#4c2691)] !bg-white !text-[var(--color-primary,#4c2691)] !cursor-pointer !transition-all !duration-300 !flex-1 !tracking-[0.3px] hover:!-translate-y-[2px] hover:!shadow-[0_6px_16px_rgba(125,46,255,0.25)] hover:!bg-[var(--color-primary-dark,#5c33a6)] hover:!text-white hover:!border-[var(--color-primary,#4c2691)]"
                             onClick={() => handleDoctorConsultationClick(doctor)}
                           >
                             Get An Enquiry
@@ -1135,7 +1135,7 @@ const surgeries = ({
                           </div>
                           <div className="location" title={vendor.address}>
                             <i
-                              className="fa-solid fa-location-dot text-[#321961]"
+                              className="fa-solid fa-location-dot text-[var(--color-primary,#4c2691)]"
                             />{" "}
                             {vendor.address?.length > 45
                               ? vendor.address
@@ -1354,7 +1354,7 @@ const surgeries = ({
           <div className="container-fluid !px-4 md:!px-6 !py-4 !mx-auto">
             <div className="!text-center !mb-6">
               <h2 className="!text-[22px] !font-medium !text-gray-900">
-                <i className="fa fa-bolt !mr-2 !text-[#321961]" />
+                <i className="fa fa-bolt !mr-2 !text-[var(--color-primary,#4c2691)]" />
                 One-Stop Solution for Everything You Need
               </h2>
             </div>
@@ -1462,7 +1462,7 @@ const surgeries = ({
           </style>
           <div className="container !px-4 md:!px-6 !mx-auto relative z-[1]">
             <h2
-              className="!text-[28px] !font-medium !inline-block !w-full !text-center !bg-gradient-to-br !from-[#321961] !to-[#6d48b8] !bg-clip-text !text-transparent"
+              className="!text-[28px] !font-medium !inline-block !w-full !text-center !bg-gradient-to-br !from-[var(--color-primary,#4c2691)] !to-[#6d48b8] !bg-clip-text !text-transparent"
             >
               How MediCompares Works
             </h2>
@@ -1573,7 +1573,7 @@ const surgeries = ({
                       cx={feature.id === 1 ? "50" : feature.id <= 3 ? "0" : "100"}
                       cy={feature.id === 1 ? "0" : "30"}
                       r="4"
-                      fill="#321961"
+                      fill="var(--color-primary,#4c2691)"
                     />
                     <circle
                       cx="50"
@@ -1614,7 +1614,7 @@ const surgeries = ({
                     {/* ICON */}
                     <div className="!mt-2.5">
                       <div
-                        className="!w-10 !h-10 !rounded-full !flex !items-center !justify-center !bg-gradient-to-br !from-[#321961] !to-[#6d48b8] !mx-auto"
+                        className="!w-10 !h-10 !rounded-full !flex !items-center !justify-center !bg-gradient-to-br !from-[var(--color-primary,#4c2691)] !to-[#6d48b8] !mx-auto"
                         style={{
                           animation: "pulse 2s infinite",
                         }}
@@ -1832,7 +1832,7 @@ const surgeries = ({
                 </div>
               </div>
               <div className="!w-full lg:!w-7/12">
-                <div className="!bg-[#faf7ff] !rounded-[18px] !p-[34px] max-sm:!p-[24px] !max-w-[800px] !mx-auto !border !border-solid !border-[#321961]/10">
+                <div className="!bg-[#faf7ff] !rounded-[18px] !p-[34px] max-sm:!p-[24px] !max-w-[800px] !mx-auto !border !border-solid !border-[var(--color-primary,#4c2691)]/10">
                   <h2
                     className="!text-[28px] !font-medium !text-[#1a1a1a] !mb-[16px]"
                   >
@@ -1911,11 +1911,11 @@ const surgeries = ({
                       >
                         <div className="!mb-2">
                           <i
-                            className={`${stat.icon} fa-2x !text-[#321961]`}
+                            className={`${stat.icon} fa-2x !text-[var(--color-primary,#4c2691)]`}
                           />
                         </div>
                         <h5
-                          className="!font-bold !text-[#321961] !text-[24px] !m-0 !mb-[4px]"
+                          className="!font-bold !text-[var(--color-primary,#4c2691)] !text-[24px] !m-0 !mb-[4px]"
                         >
                           {stat.value}
                         </h5>

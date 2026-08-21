@@ -603,8 +603,8 @@ const MobileSearchDropdown = ({
                 {mobileSearchLoading && (
                   <div className="flex flex-col items-center justify-center py-8 gap-4 text-slate-400">
                     <div className="relative w-14 h-14 flex items-center justify-center">
-                      <div className="absolute inset-0 rounded-full border-[3px] border-solid border-[#321961]/10 animate-ping opacity-75"></div>
-                      <div className="absolute inset-0 rounded-full border-[3px] border-solid border-transparent border-t-[#321961] border-r-[#7c3aed] animate-spin"></div>
+                      <div className="absolute inset-0 rounded-full border-[3px] border-solid border-[var(--color-primary,#4c2691)]/10 animate-ping opacity-75"></div>
+                      <div className="absolute inset-0 rounded-full border-[3px] border-solid border-transparent border-t-[var(--color-primary,#4c2691)] border-r-[#7c3aed] animate-spin"></div>
                       <div className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center shadow-inner z-10">
                         <i
                           key={activeLoaderIconIndex}
@@ -740,7 +740,7 @@ const MobileSearchDropdown = ({
                       padding: "12px",
                       border: "none",
                       background: "#f9fafb",
-                      color: isMoreLoading ? "#9ca3af" : "#321961",
+                      color: isMoreLoading ? "#9ca3af" : "var(--color-primary,#4c2691)",
                       fontWeight: "600",
                       textAlign: "center",
                       cursor: isMoreLoading ? "not-allowed" : "pointer",
@@ -869,11 +869,11 @@ const MobileSearchDropdown = ({
                     return (
                       <div
                         key={tablet?._id || index}
-                        className="!min-w-[210px] !max-w-[210px] !flex-shrink-0 !self-stretch !flex !flex-col !bg-white !rounded-md !border !border-solid !border-[#f1f5f9] !shadow-[0_4px_18px_rgba(0,0,0,0.07)] !relative !overflow-hidden !transition-all !duration-300 hover:!-translate-y-[3px] hover:!border-[#321961] hover:!shadow-[0_8px_24px_rgba(128,89,202,0.15)]"
+                        className="!min-w-[210px] !max-w-[210px] !flex-shrink-0 !self-stretch !flex !flex-col !bg-white !rounded-md !border !border-solid !border-[#f1f5f9] !shadow-[0_4px_18px_rgba(0,0,0,0.07)] !relative !overflow-hidden !transition-all !duration-300 hover:!-translate-y-[3px] hover:!border-[var(--color-primary,#4c2691)] hover:!shadow-[0_8px_24px_rgba(128,89,202,0.15)]"
                       >
                         {/* Compare badge */}
                         {productSlug && (
-                          <div className="!absolute !right-2 !top-2 !z-10 !cursor-pointer !bg-[#321961] !text-white !border-[1.5px] !border-solid !border-[#321961] !rounded-[20px] !w-8 hover:!w-[82px] !h-[26px] !flex !items-center !justify-start !pl-[9px] !shadow-[0_2px_8px_rgba(128,89,202,0.4)] !overflow-hidden !whitespace-nowrap !transition-all !duration-300">
+                          <div className="!absolute !right-2 !top-2 !z-10 !cursor-pointer !bg-[var(--color-primary,#4c2691)] !text-white !border-[1.5px] !border-solid !border-[var(--color-primary,#4c2691)] !rounded-[20px] !w-8 hover:!w-[82px] !h-[26px] !flex !items-center !justify-start !pl-[9px] !shadow-[0_2px_8px_rgba(128,89,202,0.4)] !overflow-hidden !whitespace-nowrap !transition-all !duration-300">
                             <Link
                               to={`/${categorySlug}/${subcategorySlug}/${productSlug}/compare`}
                               className="!flex !items-center !text-white !no-underline"
@@ -976,7 +976,7 @@ const MobileSearchDropdown = ({
                             <button
                               type="button"
                               onClick={() => handleMobileProductClick(item)}
-                              className="!w-full !flex !items-center !justify-center !gap-1.5 !py-1.5 !rounded-md !text-[11.5px] !font-semibold !text-white !bg-[#321961] hover:!bg-[#432380] !transition-all !duration-200 !border-none !cursor-pointer"
+                              className="!w-full !flex !items-center !justify-center !gap-1.5 !py-1.5 !rounded-md !text-[11.5px] !font-semibold !text-white !bg-[var(--color-primary,#4c2691)] hover:!bg-[#432380] !transition-all !duration-200 !border-none !cursor-pointer"
                             >
                               <span>View Details</span>
                               <i className="fas fa-arrow-right text-[9px]" />

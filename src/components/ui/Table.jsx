@@ -29,7 +29,7 @@ const Table = ({ headers = [], data = [], loading = false, emptyMessage = "No da
             <tr>
               <td colSpan={headers.length} className="!px-6 !py-12 !text-center">
                 <div className="!flex !items-center !justify-center !gap-2">
-                  <div className="!h-5 !w-5 !animate-spin !rounded-full !border-2 !border-[#321961] !border-t-transparent"></div>
+                  <div className="!h-5 !w-5 !animate-spin !rounded-full !border-2 !border-[var(--color-primary,#4c2691)] !border-t-transparent"></div>
                   <span className="!text-slate-400 !font-medium">Loading data...</span>
                 </div>
               </td>

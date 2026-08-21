@@ -466,7 +466,7 @@ const Compositions = () => {
     <>
       {initialDataLoading ? (
         <div className="text-center py-4">
-          <div className="animate-spin inline-block w-4 h-4 border-2 border-[#321961] border-t-transparent rounded-full" role="status">
+          <div className="animate-spin inline-block w-4 h-4 border-2 border-[var(--color-primary,#4c2691)] border-t-transparent rounded-full" role="status">
             <span className="sr-only">Loading...</span>
           </div>
         </div>
@@ -475,7 +475,7 @@ const Compositions = () => {
           <div className="p-4 rounded-lg border border-slate-200 bg-white relative">
             {filterLoading && (
               <div className="absolute top-2.5 right-2.5 z-10">
-                <i className="fas fa-spinner fa-spin text-xs text-[#321961]"></i>
+                <i className="fas fa-spinner fa-spin text-xs text-[var(--color-primary,#4c2691)]"></i>
               </div>
             )}
             <div className="flex justify-between items-center">
@@ -491,7 +491,7 @@ const Compositions = () => {
                   setSelectedBrands([]);
                   setSelectedRatings([]);
                 }}
-                className="text-xs border-none bg-transparent text-[#321961] cursor-pointer hover:underline"
+                className="text-xs border-none bg-transparent text-[var(--color-primary,#4c2691)] cursor-pointer hover:underline"
               >
                 Clear
               </button>
@@ -523,7 +523,7 @@ const Compositions = () => {
                 }}
                 styles={{
                   track: {
-                    backgroundColor: "#321961",
+                    backgroundColor: "var(--color-primary,#4c2691)",
                     height: 6,
                   },
                   rail: {
@@ -531,7 +531,7 @@ const Compositions = () => {
                     height: 6,
                   },
                   handle: {
-                    borderColor: "#321961",
+                    borderColor: "var(--color-primary,#4c2691)",
                     backgroundColor: "#fff",
                     width: 22,
                     height: 22,
@@ -574,7 +574,7 @@ const Compositions = () => {
                       <input
                         type="checkbox"
                         id={`rating-${rating.value}`}
-                        className="w-4 h-4 rounded border-gray-300 text-[#321961] focus:ring-[#321961] mr-2 cursor-pointer"
+                        className="w-4 h-4 rounded border-gray-300 text-[var(--color-primary,#4c2691)] focus:ring-[var(--color-primary,#4c2691)] mr-2 cursor-pointer"
                         checked={selectedRatings.includes(rating.value)}
                         onChange={() => handleRatingToggle(rating.value)}
                         onClick={(e) => e.stopPropagation()}
@@ -597,7 +597,7 @@ const Compositions = () => {
 
           {brandsLoading && (
             <div className="text-center py-2">
-              <div className="animate-spin inline-block w-4 h-4 border-2 border-[#321961] border-t-transparent rounded-full" role="status">
+              <div className="animate-spin inline-block w-4 h-4 border-2 border-[var(--color-primary,#4c2691)] border-t-transparent rounded-full" role="status">
                 <span className="sr-only">Loading...</span>
               </div>
             </div>
@@ -628,7 +628,7 @@ const Compositions = () => {
                       <input
                         type="checkbox"
                         id={`brand-${brand._id}`}
-                        className="w-4 h-4 rounded border-gray-300 text-[#321961] focus:ring-[#321961] mr-2 cursor-pointer"
+                        className="w-4 h-4 rounded border-gray-300 text-[var(--color-primary,#4c2691)] focus:ring-[var(--color-primary,#4c2691)] mr-2 cursor-pointer"
                         checked={selectedBrands.includes(brand._id)}
                         onChange={() => handleBrandToggle(brand._id)}
                         onClick={(e) => e.stopPropagation()}
@@ -657,7 +657,7 @@ const Compositions = () => {
                   loadMoreBrands();
                 }}
                 disabled={brandLoading}
-                className="!text-xs !font-bold !text-[#321961] !border !border-[#321961]/30 !bg-purple-50/50 !py-1.5 !px-3 !rounded-lg hover:bg-[#321961] hover:text-white transition-all duration-200 cursor-pointer"
+                className="!text-xs !font-bold !text-[var(--color-primary,#4c2691)] !border !border-[var(--color-primary,#4c2691)]/30 !bg-purple-50/50 !py-1.5 !px-3 !rounded-lg hover:bg-[var(--color-primary,#4c2691)] hover:text-white transition-all duration-200 cursor-pointer"
               >
                 {brandLoading ? "Loading..." : "View More"}
               </button>
@@ -681,10 +681,10 @@ const Compositions = () => {
           box-shadow: 0 0 0 5px rgba(128, 89, 202, 0.2) !important;
         }
         .rc-slider-handle:hover {
-          border-color: #321961 !important;
+          border-color: var(--color-primary,#4c2691) !important;
         }
         .rc-slider-handle:active {
-          border-color: #321961 !important;
+          border-color: var(--color-primary,#4c2691) !important;
           box-shadow: 0 0 5px rgba(128, 89, 202, 0.5) !important;
         }
       `}</style>
@@ -731,7 +731,7 @@ const Compositions = () => {
             <div className="w-full lg:w-4/12">
               <div className="bg-white rounded-[14px] p-[18px_20px] flex items-center gap-[15px] shadow-[0_12px_30px_rgba(128,89,202,0.1)] border border-purple-100/50 max-w-[360px] ml-auto lg:ml-auto lg:mt-0 mt-5 mx-auto">
                 <div className="w-[60px] h-[60px] rounded-[10px] bg-purple-50 flex items-center justify-center shrink-0">
-                  <i className="fas fa-flask text-[#321961] text-[24px]"></i>
+                  <i className="fas fa-flask text-[var(--color-primary,#4c2691)] text-[24px]"></i>
                 </div>
                 <div>
                   <div className="font-[700] text-base text-black capitalize truncate max-w-[220px]">
@@ -740,7 +740,7 @@ const Compositions = () => {
                   <div className="text-[12px] text-[#6b7280] mt-0.5">
                     Active Formulation
                   </div>
-                  <div className="text-[12px] text-[#321961] mt-1 font-bold">
+                  <div className="text-[12px] text-[var(--color-primary,#4c2691)] mt-1 font-bold">
                     {products?.length || 0} Products Available
                   </div>
                 </div>
@@ -786,7 +786,7 @@ const Compositions = () => {
         <div className="flex items-center justify-between lg:hidden mb-3">
           <button
             type="button"
-            className="h-[32px] inline-flex items-center justify-center gap-1 bg-[#321961] text-white text-xs font-semibold px-3 py-1.5 rounded-lg cursor-pointer"
+            className="h-[32px] inline-flex items-center justify-center gap-1 bg-[var(--color-primary,#4c2691)] text-white text-xs font-semibold px-3 py-1.5 rounded-lg cursor-pointer"
             onClick={() => setShowFilterCanvas(true)}
           >
             <i className="fas fa-filter"></i>

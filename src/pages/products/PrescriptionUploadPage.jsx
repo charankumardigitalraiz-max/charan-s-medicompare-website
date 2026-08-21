@@ -577,7 +577,7 @@ const PrescriptionUploadPage = () => {
                 </>
               ) : (
                 <>
-                  <div className="flex items-center justify-between mb-4 pb-2.5 border-b border-slate-100 text-[#321961] font-bold">
+                  <div className="flex items-center justify-between mb-4 pb-2.5 border-b border-slate-100 text-[var(--color-primary,#4c2691)] font-bold">
                     <div className="flex items-center gap-2.5">
                       <div className="w-8 h-8 rounded-full bg-purple-50 text-purple-600 flex items-center justify-center shrink-0 shadow-inner">
                         <i className="fa-solid fa-receipt text-sm"></i>
@@ -707,7 +707,7 @@ const PrescriptionUploadPage = () => {
                     <div className="border-t border-dashed border-slate-200 mt-1 pt-3">
                       <div className="flex items-center justify-between mb-2.5">
                         <span className="text-xs text-purple-800 font-bold uppercase tracking-wider">Prescribed Medications</span>
-                        <span className="bg-purple-100 text-[#321961] text-[10px] font-bold px-2 py-0.5 rounded-full">
+                        <span className="bg-purple-100 text-[var(--color-primary,#4c2691)] text-[10px] font-bold px-2 py-0.5 rounded-full">
                           {analysisData?.medicines?.length || 0} Items
                         </span>
                       </div>
@@ -727,7 +727,7 @@ const PrescriptionUploadPage = () => {
                             </div>
                             <div className="text-right shrink-0 flex flex-col gap-1 items-end justify-center">
                               {med.frequency && (
-                                <span className="inline-block bg-purple-50 text-[#321961] text-[10px] font-bold px-2 py-0.5 rounded border border-purple-100/50 tracking-wide">
+                                <span className="inline-block bg-purple-50 text-[var(--color-primary,#4c2691)] text-[10px] font-bold px-2 py-0.5 rounded border border-purple-100/50 tracking-wide">
                                   {med.frequency}
                                 </span>
                               )}
@@ -973,7 +973,7 @@ const PrescriptionUploadPage = () => {
                         {/* Manufacturer Badge */}
                         {(item.manufacture?.name || item.brand?.name) && (
                           <div className="flex items-center gap-1 mt-1">
-                            <span className="text-[10px] text-[#321961] bg-purple-50/50 border border-purple-100 px-2 py-0.5 rounded-md font-medium tracking-wide truncate max-w-full inline-block">
+                            <span className="text-[10px] text-[var(--color-primary,#4c2691)] bg-purple-50/50 border border-purple-100 px-2 py-0.5 rounded-md font-medium tracking-wide truncate max-w-full inline-block">
                               By {item.manufacture?.name || item.brand?.name}
                             </span>
                           </div>
@@ -1002,7 +1002,7 @@ const PrescriptionUploadPage = () => {
                         {item.price && (
                           <div className="flex items-center gap-1.5 mt-auto pt-2 border-t border-slate-100">
                             <span className="text-slate-500 text-xs">MRP</span>
-                            <span className="text-[#321961] font-bold text-[13px]">
+                            <span className="text-[var(--color-primary,#4c2691)] font-bold text-[13px]">
                               ₹{Number(item.price).toFixed(2)}
                             </span>
                           </div>

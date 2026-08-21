@@ -1057,7 +1057,7 @@ const LocationModal = ({
                   ) : (
                     <div className="flex flex-col items-center justify-center h-full bg-slate-50 border rounded">
                       <div
-                        className="animate-spin h-8 w-8 rounded-full border-4 border-[#321961] border-t-transparent mb-3"
+                        className="animate-spin h-8 w-8 rounded-full border-4 border-[var(--color-primary,#4c2691)] border-t-transparent mb-3"
                         role="status"
                       >
                         <span className="sr-only">Loading...</span>
@@ -1145,7 +1145,7 @@ const LocationModal = ({
                                       ref={addressInputRef}
                                       type="text"
                                       disabled={!locationChange}
-                                      className="w-full p-[9px_12px_9px_36px] border border-solid border-slate-200 rounded-xl text-xs bg-white focus:border-[#321961] focus:ring-2 focus:ring-purple-100 transition-all outline-none"
+                                      className="w-full p-[9px_12px_9px_36px] border border-solid border-slate-200 rounded-xl text-xs bg-white focus:border-[var(--color-primary,#4c2691)] focus:ring-2 focus:ring-purple-100 transition-all outline-none"
                                       placeholder="Enter location, pincode, city, state..."
                                       value={locationName || ""}
                                       onChange={(e) => handleSearchInputChange(e.target.value)}
@@ -1166,7 +1166,7 @@ const LocationModal = ({
                                 onClick={() => setLocationChange(!locationChange)}
                                 className={`px-3.5 rounded-xl text-xs font-semibold border-0 cursor-pointer transition-colors ${locationChange
                                   ? "bg-emerald-600 hover:bg-emerald-700 text-white"
-                                  : "bg-[#f3ecff] text-[#321961] hover:bg-[#e7daff]"
+                                  : "bg-[#f3ecff] text-[var(--color-primary,#4c2691)] hover:bg-[#e7daff]"
                                   }`}
                                 style={{ height: "36px", minWidth: "70px" }}
                               >
@@ -1243,7 +1243,7 @@ const LocationModal = ({
                           <div className="mt-4">
                             <button
                               type="button"
-                              className="w-full py-2.5 bg-gradient-to-r from-[#321961] to-[#9d72e8] text-white text-xs font-bold rounded-xl border-0 cursor-pointer shadow-md shadow-purple-200 hover:shadow-lg transition-all"
+                              className="w-full py-2.5 bg-[var(--color-primary,#4c2691)] text-white text-xs font-bold rounded-xl border-0 cursor-pointer shadow-md shadow-purple-200 hover:shadow-lg transition-all"
                               onClick={() => handleTabChange("recipient-details")}
                             >
                               Next: Tag Address
@@ -1274,7 +1274,7 @@ const LocationModal = ({
                                   key={item.key}
                                   type="button"
                                   className={`px-3 py-1.5 border border-solid rounded-xl text-xs font-semibold cursor-pointer transition-all flex items-center gap-1.5 flex-1 min-w-[calc(50%-4px)] justify-center ${formData.addressType === item.key
-                                    ? "border-[#321961] bg-[#321961] text-white shadow-md shadow-purple-100"
+                                    ? "border-[var(--color-primary,#4c2691)] bg-[var(--color-primary,#4c2691)] text-white shadow-md shadow-purple-100"
                                     : "border-slate-200 bg-white text-slate-600 hover:bg-slate-50"
                                     }`}
                                   onClick={() => handleAddressTypeChange(item.key)}
@@ -1290,7 +1290,7 @@ const LocationModal = ({
                             <div className="mb-2">
                               <input
                                 type="text"
-                                className="w-full p-[9px_12px] border border-solid border-slate-200 rounded-xl text-xs bg-white focus:border-[#321961] focus:ring-2 focus:ring-purple-100 transition-all outline-none"
+                                className="w-full p-[9px_12px] border border-solid border-slate-200 rounded-xl text-xs bg-white focus:border-[var(--color-primary,#4c2691)] focus:ring-2 focus:ring-purple-100 transition-all outline-none"
                                 placeholder="e.g., Hospital, School, Shop, etc."
                                 value={customAddressType}
                                 onChange={(e) => setCustomAddressType(e.target.value)}
@@ -1334,7 +1334,7 @@ const LocationModal = ({
                                       ref={recipientInputRef}
                                       type="text"
                                       disabled={!locationChange}
-                                      className="w-full p-[9px_12px_9px_36px] border border-solid border-slate-200 rounded-xl text-xs bg-white focus:border-[#321961] focus:ring-2 focus:ring-purple-100 transition-all outline-none"
+                                      className="w-full p-[9px_12px_9px_36px] border border-solid border-slate-200 rounded-xl text-xs bg-white focus:border-[var(--color-primary,#4c2691)] focus:ring-2 focus:ring-purple-100 transition-all outline-none"
                                       placeholder="Enter location, pincode, city, state..."
                                       value={locationName}
                                       onChange={(e) => handleSearchInputChange(e.target.value)}
@@ -1355,7 +1355,7 @@ const LocationModal = ({
                                 onClick={() => setLocationChange(!locationChange)}
                                 className={`px-3 rounded-xl text-xs font-semibold border-0 cursor-pointer transition-colors whitespace-nowrap ${locationChange
                                   ? "bg-emerald-600 hover:bg-emerald-700 text-white"
-                                  : "bg-[#f3ecff] text-[#321961] hover:bg-[#e7daff]"
+                                  : "bg-[#f3ecff] text-[var(--color-primary,#4c2691)] hover:bg-[#e7daff]"
                                   }`}
                                 style={{ height: "36px", minWidth: "70px" }}
                               >
@@ -1365,7 +1365,7 @@ const LocationModal = ({
                             <div className="w-full">
                               <input
                                 type="text"
-                                className="w-full p-[9px_12px] border border-solid border-slate-200 rounded-xl text-xs bg-white focus:border-[#321961] focus:ring-2 focus:ring-purple-100 transition-all outline-none"
+                                className="w-full p-[9px_12px] border border-solid border-slate-200 rounded-xl text-xs bg-white focus:border-[var(--color-primary,#4c2691)] focus:ring-2 focus:ring-purple-100 transition-all outline-none"
                                 placeholder="Enter House/ Office/ Flat *"
                                 value={formData.houseNo}
                                 onChange={(e) => handleInputChange("houseNo", e.target.value)}
@@ -1375,7 +1375,7 @@ const LocationModal = ({
                             <div className="w-full">
                               <input
                                 type="text"
-                                className="w-full p-[9px_12px] border border-solid border-slate-200 rounded-xl text-xs bg-white focus:border-[#321961] focus:ring-2 focus:ring-purple-100 transition-all outline-none"
+                                className="w-full p-[9px_12px] border border-solid border-slate-200 rounded-xl text-xs bg-white focus:border-[var(--color-primary,#4c2691)] focus:ring-2 focus:ring-purple-100 transition-all outline-none"
                                 placeholder="Enter Apartment/ Area *"
                                 value={formData.area}
                                 onChange={(e) => handleInputChange("area", e.target.value)}
@@ -1388,7 +1388,7 @@ const LocationModal = ({
                             <div className="w-full">
                               <input
                                 type="text"
-                                className="w-full p-[9px_12px] border border-solid border-slate-200 rounded-xl text-xs bg-white focus:border-[#321961] focus:ring-2 focus:ring-purple-100 transition-all outline-none"
+                                className="w-full p-[9px_12px] border border-solid border-slate-200 rounded-xl text-xs bg-white focus:border-[var(--color-primary,#4c2691)] focus:ring-2 focus:ring-purple-100 transition-all outline-none"
                                 placeholder="Nearby Landmark (optional)"
                                 value={formData.landmark}
                                 onChange={(e) => handleInputChange("landmark", e.target.value)}
@@ -1396,7 +1396,7 @@ const LocationModal = ({
                             </div>
                             <div className="w-full">
                               <textarea
-                                className="w-full p-[9px_12px] border border-solid border-slate-200 rounded-xl text-xs bg-white focus:border-[#321961] focus:ring-2 focus:ring-purple-100 transition-all outline-none"
+                                className="w-full p-[9px_12px] border border-solid border-slate-200 rounded-xl text-xs bg-white focus:border-[var(--color-primary,#4c2691)] focus:ring-2 focus:ring-purple-100 transition-all outline-none"
                                 rows="3"
                                 placeholder="Ex: Near Gate, Pink Colour Building"
                                 value={formData.description}
@@ -1544,7 +1544,7 @@ const LocationModal = ({
 
                   <button
                     type="button"
-                    className="absolute bg-[#321961] hover:bg-[#6b42b8] text-white rounded-full w-[44px] h-[44px] flex items-center justify-center cursor-pointer shadow-md transition-all z-[1000]"
+                    className="absolute bg-[var(--color-primary,#4c2691)] hover:bg-[var(--color-primary-dark,#5c33a6)] text-white rounded-full w-[44px] h-[44px] flex items-center justify-center cursor-pointer shadow-md transition-all z-[1000]"
                     style={{
                       top: "12px",
                       right: "12px",
@@ -1568,7 +1568,7 @@ const LocationModal = ({
               ) : (
                 <div className="flex flex-col items-center justify-center h-full bg-slate-50 border rounded">
                   <div
-                    className="animate-spin h-8 w-8 rounded-full border-4 border-[#321961] border-t-transparent mb-3"
+                    className="animate-spin h-8 w-8 rounded-full border-4 border-[var(--color-primary,#4c2691)] border-t-transparent mb-3"
                     role="status"
                   >
                     <span className="sr-only">Loading...</span>
@@ -1583,7 +1583,7 @@ const LocationModal = ({
               <div className="p-5 flex flex-col h-full justify-between">
                 <div className="flex justify-between items-center mb-4">
                   <h5 className="text-base font-bold text-slate-800 mb-0 flex items-center gap-2">
-                    <span className="w-2.5 h-2.5 rounded-full bg-[#321961]"></span>
+                    <span className="w-2.5 h-2.5 rounded-full bg-[var(--color-primary,#4c2691)]"></span>
                     {editingAddress ? "Edit Address Details" : "Add New Address"}
                   </h5>
                   <button
@@ -1602,7 +1602,7 @@ const LocationModal = ({
                       type="button"
                       onClick={() => handleTabChange("address-details")}
                       className={`!pb-2.5 !text-[13px] !font-bold !border-b-2 !border-solid !transition-colors !cursor-pointer ${activeTab === "address-details"
-                        ? "!border-[#321961] !text-[#321961]"
+                        ? "!border-[var(--color-primary,#4c2691)] !text-[var(--color-primary,#4c2691)]"
                         : "!border-transparent !text-slate-400 hover:text-slate-600"
                         }`}
                     >
@@ -1612,7 +1612,7 @@ const LocationModal = ({
                       type="button"
                       onClick={() => handleTabChange("recipient-details")}
                       className={`!pb-2.5 !text-[13px] !font-bold !border-b-2 !border-solid !transition-colors !cursor-pointer ${activeTab === "recipient-details"
-                        ? "!border-[#321961] !text-[#321961]"
+                        ? "!border-[var(--color-primary,#4c2691)] !text-[var(--color-primary,#4c2691)]"
                         : "!border-transparent !text-slate-400 hover:text-slate-600"
                         }`}
                     >
@@ -1658,7 +1658,7 @@ const LocationModal = ({
                                     ref={addressInputRef}
                                     type="text"
                                     disabled={!locationChange}
-                                    className="w-full h-[36px] p-[0_12px_0_36px] border border-solid border-r-0 border-slate-200 rounded-l-xl text-xs bg-white focus:border-[#321961] focus:ring-2 focus:ring-purple-100 transition-all outline-none"
+                                    className="w-full h-[36px] p-[0_12px_0_36px] border border-solid border-r-0 border-slate-200 rounded-l-xl text-xs bg-white focus:border-[var(--color-primary,#4c2691)] focus:ring-2 focus:ring-purple-100 transition-all outline-none"
                                     placeholder="Enter area, sector or landmark..."
                                     value={locationName}
                                     onChange={(e) => handleSearchInputChange(e.target.value)}
@@ -1678,8 +1678,8 @@ const LocationModal = ({
                               type="button"
                               onClick={() => setLocationChange(!locationChange)}
                               className={`px-3.5 !rounded-r-xl text-xs font-semibold border border-solid cursor-pointer transition-colors ${locationChange
-                                ? "bg-[#321961] hover:bg-[#6b42b8] border-[#321961] text-white"
-                                : "bg-[#f3ecff] text-[#321961] border-slate-200 hover:bg-[#e7daff] hover:border-[#321961]"
+                                ? "bg-[var(--color-primary,#4c2691)] hover:bg-[var(--color-primary-dark,#5c33a6)] border-[var(--color-primary,#4c2691)] text-white"
+                                : "bg-[#f5f0ff] text-[var(--color-primary,#4c2691)] border-slate-200 hover:bg-[#eadeff] hover:border-[var(--color-primary,#4c2691)]"
                                 }`}
                               style={{ height: "36px", minWidth: "70px" }}
                             >
@@ -1746,7 +1746,7 @@ const LocationModal = ({
                       <div className="mt-6">
                         <button
                           type="button"
-                          className="w-full py-2.5 bg-gradient-to-r from-[#321961] to-[#9d72e8] text-white text-xs font-bold rounded-xl border-0 cursor-pointer shadow-md shadow-purple-200 hover:shadow-lg transition-all"
+                          className="w-full py-2.5 bg-[var(--color-primary,#4c2691)] hover:bg-[var(--color-primary-dark,#5c33a6)] text-white text-xs font-bold !rounded-xl border-0 cursor-pointer shadow-md transition-all"
                           onClick={() => handleTabChange("recipient-details")}
                         >
                           Next: Tag Address
@@ -1774,7 +1774,7 @@ const LocationModal = ({
                                 key={item.key}
                                 type="button"
                                 className={`px-3 py-1.5 border border-solid rounded-xl text-xs font-semibold cursor-pointer transition-all flex items-center gap-1.5 ${formData.addressType === item.key
-                                  ? "border-[#321961] bg-[#321961] text-white shadow-md shadow-purple-100"
+                                  ? "border-[var(--color-primary,#4c2691)] bg-[var(--color-primary,#4c2691)] text-white shadow-md shadow-purple-100"
                                   : "border-slate-200 bg-white text-slate-600 hover:bg-slate-50"
                                   }`}
                                 onClick={() => handleAddressTypeChange(item.key)}
@@ -1791,7 +1791,7 @@ const LocationModal = ({
                             <div>
                               <input
                                 type="text"
-                                className="w-full p-[9px_12px] border border-solid border-slate-200 rounded-xl text-xs bg-white focus:border-[#321961] focus:ring-2 focus:ring-purple-100 transition-all outline-none"
+                                className="w-full p-[9px_12px] border border-solid border-slate-200 rounded-xl text-xs bg-white focus:border-[var(--color-primary,#4c2691)] focus:ring-2 focus:ring-purple-100 transition-all outline-none"
                                 placeholder="e.g., Hospital, School, Shop, etc."
                                 value={customAddressType}
                                 onChange={(e) => setCustomAddressType(e.target.value)}
@@ -1802,7 +1802,7 @@ const LocationModal = ({
                           <div className="grid grid-cols-2 gap-3">
                             <input
                               type="text"
-                              className="w-full p-[9px_12px] border border-solid border-slate-200 rounded-xl text-xs bg-white focus:border-[#321961] focus:ring-2 focus:ring-purple-100 transition-all outline-none"
+                              className="w-full p-[9px_12px] border border-solid border-slate-200 rounded-xl text-xs bg-white focus:border-[var(--color-primary,#4c2691)] focus:ring-2 focus:ring-purple-100 transition-all outline-none"
                               placeholder="House/ Office/ Flat *"
                               value={formData.houseNo}
                               onChange={(e) => handleInputChange("houseNo", e.target.value)}
@@ -1810,7 +1810,7 @@ const LocationModal = ({
                             />
                             <input
                               type="text"
-                              className="w-full p-[9px_12px] border border-solid border-slate-200 rounded-xl text-xs bg-white focus:border-[#321961] focus:ring-2 focus:ring-purple-100 transition-all outline-none"
+                              className="w-full p-[9px_12px] border border-solid border-slate-200 rounded-xl text-xs bg-white focus:border-[var(--color-primary,#4c2691)] focus:ring-2 focus:ring-purple-100 transition-all outline-none"
                               placeholder="Apartment/ Area *"
                               value={formData.area}
                               onChange={(e) => handleInputChange("area", e.target.value)}
@@ -1819,13 +1819,13 @@ const LocationModal = ({
                           </div>
                           <input
                             type="text"
-                            className="w-full p-[9px_12px] border border-solid border-slate-200 rounded-xl text-xs bg-white focus:border-[#321961] focus:ring-2 focus:ring-purple-100 transition-all outline-none"
+                            className="w-full p-[9px_12px] border border-solid border-slate-200 rounded-xl text-xs bg-white focus:border-[var(--color-primary,#4c2691)] focus:ring-2 focus:ring-purple-100 transition-all outline-none"
                             placeholder="Nearby Landmark (optional)"
                             value={formData.landmark}
                             onChange={(e) => handleInputChange("landmark", e.target.value)}
                           />
                           <textarea
-                            className="w-full p-[9px_12px] border border-solid border-slate-200 rounded-xl text-xs bg-white focus:border-[#321961] focus:ring-2 focus:ring-purple-100 transition-all outline-none"
+                            className="w-full p-[9px_12px] border border-solid border-slate-200 rounded-xl text-xs bg-white focus:border-[var(--color-primary,#4c2691)] focus:ring-2 focus:ring-purple-100 transition-all outline-none"
                             rows="2"
                             placeholder="Instructions (Ex: Near Gate, Pink Building)"
                             value={formData.description}
@@ -1837,7 +1837,7 @@ const LocationModal = ({
                       <div className="mt-6">
                         <button
                           type="submit"
-                          className="w-full py-2.5 bg-gradient-to-r from-[#321961] to-[#9d72e8] hover:from-[#6b42b8] hover:to-[#8c60d5] text-white text-xs font-bold rounded-xl border-0 cursor-pointer shadow-md shadow-purple-200 hover:shadow-lg transition-all flex items-center justify-center gap-1.5"
+                          className="w-full py-2.5 bg-[var(--color-primary,#4c2691)] hover:bg-[var(--color-primary-dark,#5c33a6)] text-white text-xs font-bold rounded-xl border-0 cursor-pointer shadow-md shadow-purple-200 hover:shadow-lg transition-all flex items-center justify-center gap-1.5"
                           disabled={isSubmitting}
                         >
                           {isSubmitting ? (

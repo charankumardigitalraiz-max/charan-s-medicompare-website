@@ -23,7 +23,7 @@ const SearchInput = ({
   return (
     <div className={`relative max-w-[700px] mx-auto z-10 ${className}`}>
       <div className="relative bg-white rounded-[20px] shadow-[0_4px_20px_rgba(0,0,0,0.06)] border border-solid border-[rgba(0,0,0,0.05)] p-[2px_2px_2px_40px] md:p-[4px_4px_4px_50px] overflow-hidden focus-within:shadow-[0_4px_20px_rgba(0,0,0,0.08)] focus-within:border-[rgba(0,0,0,0.1)]">
-        <div className="absolute left-4 md:left-[18px] top-1/2 -translate-y-1/2 text-[#321961] text-base md:text-[18px] z-10">
+        <div className="absolute left-4 md:left-[18px] top-1/2 -translate-y-1/2 text-[var(--color-primary,#4c2691)] text-base md:text-[18px] z-10">
           <i className={icon}></i>
         </div>
         <input
@@ -36,7 +36,7 @@ const SearchInput = ({
         />
         {showClearButton && value && (
           <div
-            className="absolute right-3 md:right-[20px] top-1/2 -translate-y-1/2 bg-[rgba(125,46,255,0.1)] hover:bg-[rgba(125,46,255,0.2)] rounded-full w-7 h-7 md:w-[32px] md:h-[32px] flex items-center justify-center text-[#321961] cursor-pointer z-10 transition-all duration-200"
+            className="absolute right-3 md:right-[20px] top-1/2 -translate-y-1/2 bg-[rgba(125,46,255,0.1)] hover:bg-[rgba(125,46,255,0.2)] rounded-full w-7 h-7 md:w-[32px] md:h-[32px] flex items-center justify-center text-[var(--color-primary,#4c2691)] cursor-pointer z-10 transition-all duration-200"
             onClick={handleClear}
             aria-label="Clear search"
           >

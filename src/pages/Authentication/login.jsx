@@ -182,7 +182,7 @@ const Login = () => {
                 href="/policies/privacy-policy"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[12px] text-[#321961] no-underline font-medium"
+                className="text-[12px] text-[var(--color-primary,#4c2691)] no-underline font-medium"
               >
                 Privacy Policy
               </a>
@@ -191,7 +191,7 @@ const Login = () => {
                 href="/policies/terms-and-conditions"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-[12px] text-[#321961] no-underline font-medium"
+                className="text-[12px] text-[var(--color-primary,#4c2691)] no-underline font-medium"
               >
                 Terms and Conditions
               </a>

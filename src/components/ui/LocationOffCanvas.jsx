@@ -768,7 +768,7 @@ const LocationOffcanvas = ({
     <>
       <style>{`
         .loc-search-input::placeholder { color: #94a3b8; font-size: 13px; }
-        .loc-search-input:focus { outline: none; border-color: #321961 !important; }
+        .loc-search-input:focus { outline: none; border-color: var(--color-primary,#4c2691) !important; }
       `}</style>
 
       {/* Overlay */}
@@ -993,7 +993,7 @@ const LocationOffcanvas = ({
                           <button
                             onClick={(e) => { e.stopPropagation(); handleEditAddress(address); }}
                             title="Edit"
-                            className="w-[26px] h-[26px] !rounded-full border border-purple-100 !bg-primary text-white flex items-center justify-center cursor-pointer transition-all duration-150 hover:bg-primary hover:text-white hover:border-[#321961]"
+                            className="w-[26px] h-[26px] !rounded-full border border-purple-100 !bg-primary text-white flex items-center justify-center cursor-pointer transition-all duration-150 hover:bg-primary hover:text-white hover:border-[var(--color-primary-dark,#5c33a6)]"
                           >
                             <i className="fas fa-pen text-[10px]" />
                           </button>

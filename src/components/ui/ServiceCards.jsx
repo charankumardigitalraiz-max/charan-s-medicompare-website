@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Slider from "react-slick";
 
-const PRIMARY_COLOR = "#321961";
+const PRIMARY_COLOR = "var(--color-primary,#4c2691)";
 const PRIMARY_SECTION_BG = "#f8f4ff";
 const PRIMARY_CARD_BG = "rgba(159, 100, 255, 0.16)";
 
@@ -430,7 +430,7 @@ const ServiceCards = ({ serviceType, liteMode = false }) => {
         </div>
 
         {isMobile && hoveredIndex === idx && (
-          <div className="mt-2.5 pt-2.5 border-t border-[#321961]/15 text-[11px] leading-relaxed text-gray-700 text-left">
+          <div className="mt-2.5 pt-2.5 border-t border-[var(--color-primary,#4c2691)]/15 text-[11px] leading-relaxed text-gray-700 text-left">
             {card.content}
           </div>
         )}

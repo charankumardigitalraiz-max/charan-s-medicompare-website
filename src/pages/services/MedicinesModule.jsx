@@ -92,7 +92,7 @@ const MedicinesModule = ({
                   borderRadius: "50px",
                   fontSize: "14px",
                   fontWeight: "600",
-                  color: "#321961",
+                  color: "var(--color-primary,#4c2691)",
                 }}
               >
                 <i className="fas fa-bolt" style={{ marginRight: "8px" }}></i>

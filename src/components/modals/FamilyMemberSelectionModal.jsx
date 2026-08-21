@@ -523,7 +523,7 @@ const FamilyMemberSelectionModal = ({
                 </label>
                 <input
                   type="text"
-                  className="w-full px-3 py-2 border border-slate-300 rounded-lg text-[13.5px] outline-none transition-colors focus:border-[#321961] focus:ring-1 focus:ring-[#321961]"
+                  className="w-full px-3 py-2 border border-slate-300 rounded-lg text-[13.5px] outline-none transition-colors focus:border-[var(--color-primary,#4c2691)] focus:ring-1 focus:ring-[var(--color-primary,#4c2691)]"
                   name="name"
                   placeholder="Enter Name"
                   value={formData.name}
@@ -551,7 +551,7 @@ const FamilyMemberSelectionModal = ({
                       dateOfBirth: e.target.value,
                     }))
                   }
-                  className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#321961]"
+                  className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary,#4c2691)]"
                   style={{
                     position: "relative",
                     zIndex: 9999999999998,
@@ -574,7 +574,7 @@ const FamilyMemberSelectionModal = ({
                   // )} */}
                 {formData.dateOfBirth && (
                   <small
-                    className="mt-1 block text-[11px] text-[#321961] font-semibold"
+                    className="mt-1 block text-[11px] text-[var(--color-primary,#4c2691)] font-semibold"
                   >
                     Age: {calculateAge(formData.dateOfBirth)} years
                   </small>
@@ -590,7 +590,7 @@ const FamilyMemberSelectionModal = ({
                   Gender
                 </label>
                 <select
-                  className="w-full px-3 py-2 border border-slate-300 rounded-lg text-[13.5px] outline-none bg-white transition-colors focus:border-[#321961] focus:ring-1 focus:ring-[#321961]"
+                  className="w-full px-3 py-2 border border-slate-300 rounded-lg text-[13.5px] outline-none bg-white transition-colors focus:border-[var(--color-primary,#4c2691)] focus:ring-1 focus:ring-[var(--color-primary,#4c2691)]"
                   name="gender"
                   value={formData.gender}
                   onChange={handleInputChange}
@@ -657,11 +657,11 @@ const FamilyMemberSelectionModal = ({
                   styles={{
                     control: (baseStyles, state) => ({
                       ...baseStyles,
-                      borderColor: state.isFocused ? "#321961" : "#ccc",
+                      borderColor: state.isFocused ? "var(--color-primary,#4c2691)" : "#ccc",
                       boxShadow: state.isFocused
-                        ? "0 0 0 1px #321961"
+                        ? "0 0 0 1px var(--color-primary,#4c2691)"
                         : "none",
-                      "&:hover": { borderColor: "#321961" },
+                      "&:hover": { borderColor: "var(--color-primary,#4c2691)" },
                       fontSize: "13.5px",
                       borderRadius: "20px !important"
                     }),
@@ -697,7 +697,7 @@ const FamilyMemberSelectionModal = ({
                 </label>
                 <input
                   type="tel"
-                  className="w-full px-3 py-2 border border-slate-300 rounded-lg text-[13.5px] outline-none transition-colors focus:border-[#321961] focus:ring-1 focus:ring-[#321961]"
+                  className="w-full px-3 py-2 border border-slate-300 rounded-lg text-[13.5px] outline-none transition-colors focus:border-[var(--color-primary,#4c2691)] focus:ring-1 focus:ring-[var(--color-primary,#4c2691)]"
                   placeholder="Enter 10-digit Mobile Number"
                   name="mobile"
                   value={formData.mobile}
@@ -725,7 +725,7 @@ const FamilyMemberSelectionModal = ({
                   value={formData.relationship}
                   onChange={handleInputChange}
                   required
-                  className="w-full px-3 py-2 border border-slate-300 rounded-lg text-[13.5px] outline-none bg-white transition-colors focus:border-[#321961] focus:ring-1 focus:ring-[#321961]"
+                  className="w-full px-3 py-2 border border-slate-300 rounded-lg text-[13.5px] outline-none bg-white transition-colors focus:border-[var(--color-primary,#4c2691)] focus:ring-1 focus:ring-[var(--color-primary,#4c2691)]"
                 >
                   <option value="">Select relationship</option>
                   <option value="Brother">Brother</option>
@@ -774,7 +774,7 @@ const FamilyMemberSelectionModal = ({
                   >
                     <input
                       type="text"
-                      className="w-full pl-9 pr-3 py-2 border border-slate-300 rounded-lg text-[13.5px] outline-none transition-colors focus:border-[#321961] focus:ring-1 focus:ring-[#321961]"
+                      className="w-full pl-9 pr-3 py-2 border border-slate-300 rounded-lg text-[13.5px] outline-none transition-colors focus:border-[var(--color-primary,#4c2691)] focus:ring-1 focus:ring-[var(--color-primary,#4c2691)]"
                       name="location"
                       value={formData.location}
                       onChange={handleInputChange}
@@ -810,7 +810,7 @@ const FamilyMemberSelectionModal = ({
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="px-6 py-2 !text-sm !font-medium !rounded-full !bg-[#321961] hover:bg-[#6f42c1] text-white border-none transition-colors"
+                className="px-6 py-2 !text-sm !font-medium !rounded-full !bg-[var(--color-primary,#4c2691)] hover:bg-[#6f42c1] text-white border-none transition-colors"
               >
                 {isSubmitting ? "Adding..." : "Add Profile"}
               </button>

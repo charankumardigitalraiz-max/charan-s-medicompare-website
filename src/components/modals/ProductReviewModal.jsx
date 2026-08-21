@@ -157,7 +157,7 @@ const ProductReviewModal = ({ show, onClose, product, position = "right", onRevi
           onClick={(e) => e.stopPropagation()}
         >
           {/* Header styled like LocationOffCanvas */}
-          <div className="!bg-[#321961] py-[18px] px-5 pb-4 flex items-center justify-between shrink-0">
+          <div className="!bg-[var(--color-primary,#4c2691)] py-[18px] px-5 pb-4 flex items-center justify-between shrink-0">
             <div className="flex items-center gap-2.5">
               <div className="w-[34px] h-[34px] rounded-[10px] bg-white/20 flex items-center justify-center">
                 <i className="fas fa-star text-white text-[14px]" />
@@ -232,7 +232,7 @@ const ProductReviewModal = ({ show, onClose, product, position = "right", onRevi
                       type="button"
                       onClick={() => setSelectedTag(tag)}
                       className={`px-3.5 py-1.5 !rounded-full text-xs cursor-pointer flex items-center gap-1 transition-all duration-200 ${selectedTag === tag
-                        ? "bg-[#321961] text-white border-none font-semibold shadow-sm shadow-purple-500/25"
+                        ? "bg-[var(--color-primary,#4c2691)] text-white border-none font-semibold shadow-sm shadow-purple-500/25"
                         : "border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-600"
                         }`}
                     >
@@ -248,7 +248,7 @@ const ProductReviewModal = ({ show, onClose, product, position = "right", onRevi
                 Write Your Review
               </h6>
               <textarea
-                className="w-full rounded-lg border border-slate-200 text-xs resize-none bg-slate-50 p-2.5 outline-none focus:border-[#321961] focus:bg-white transition-all duration-200"
+                className="w-full rounded-lg border border-slate-200 text-xs resize-none bg-slate-50 p-2.5 outline-none focus:border-[var(--color-primary,#4c2691)] focus:bg-white transition-all duration-200"
                 rows="4"
                 placeholder="Share your thoughts about this product..."
                 value={reviewText}
@@ -262,7 +262,7 @@ const ProductReviewModal = ({ show, onClose, product, position = "right", onRevi
           <div className="p-5 border-t border-slate-100 bg-white">
             <button
               type="button"
-              className="w-full font-semibold bg-[#321961] hover:bg-[#6a45b3] text-white !rounded-lg text-base border-none py-3 shadow-md hover:shadow-lg transition-all duration-200 cursor-pointer"
+              className="w-full font-semibold bg-[var(--color-primary,#4c2691)] hover:bg-[var(--color-primary-dark,#5c33a6)] text-white !rounded-lg text-base border-none py-3 shadow-md hover:shadow-lg transition-all duration-200 cursor-pointer"
               onClick={handleSubmit}
             >
               {isSubmitting ? "Submitting..." : "Submit Review"}
@@ -307,7 +307,7 @@ const ProductReviewModal = ({ show, onClose, product, position = "right", onRevi
           }}
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="!bg-[#321961] py-[18px] px-5 pb-4 flex items-center justify-between shrink-0">
+          <div className="!bg-[var(--color-primary,#4c2691)] py-[18px] px-5 pb-4 flex items-center justify-between shrink-0">
             <div className="flex items-center gap-2.5">
               <div className="w-[34px] h-[34px] rounded-[10px] bg-white/20 flex items-center justify-center">
                 <i className="fas fa-star text-white text-[14px]" />
@@ -385,7 +385,7 @@ const ProductReviewModal = ({ show, onClose, product, position = "right", onRevi
                       type="button"
                       onClick={() => setSelectedTag(tag)}
                       className={`px-3 py-1 !rounded-full !text-xs flex items-center gap-0.5 cursor-pointer transition-all duration-200 ${selectedTag === tag
-                        ? "!bg-[#321961] !text-white !border-none !font-medium"
+                        ? "!bg-[var(--color-primary,#4c2691)] !text-white !border-none !font-medium"
                         : "!border !border-gray-300 !bg-white !text-gray-700 !font-normal"
                         }`}
                     >
@@ -401,7 +401,7 @@ const ProductReviewModal = ({ show, onClose, product, position = "right", onRevi
                 Write Your Review
               </h6>
               <textarea
-                className="!w-full !rounded-lg !border !border-gray-200 !text-xs !resize-none !bg-gray-50 !p-2.5 !outline-none !focus:border-[#321961] !focus:bg-white !transition-all !duration-200"
+                className="!w-full !rounded-lg !border !border-gray-200 !text-xs !resize-none !bg-gray-50 !p-2.5 !outline-none !focus:border-[var(--color-primary,#4c2691)] !focus:bg-white !transition-all !duration-200"
                 rows="4"
                 placeholder=" Write Your Review..."
                 value={reviewText}
@@ -415,7 +415,7 @@ const ProductReviewModal = ({ show, onClose, product, position = "right", onRevi
           <div className="p-5 border-t border-gray-100">
             <button
               type="button"
-              className="w-full !font-semibold !bg-[#321961] hover:!bg-[#6a45b3] text-white !rounded-lg !py-2 !text-sm !border-none !shadow-md hover:!shadow-lg !transition-all !duration-200 !cursor-pointer"
+              className="w-full !font-semibold !bg-[var(--color-primary,#4c2691)] hover:!bg-[var(--color-primary-dark,#5c33a6)] text-white !rounded-lg !py-2 !text-sm !border-none !shadow-md hover:!shadow-lg !transition-all !duration-200 !cursor-pointer"
               onClick={handleSubmit}
             >
               {isSubmitting ? "Submitting..." : "Submit Review"}

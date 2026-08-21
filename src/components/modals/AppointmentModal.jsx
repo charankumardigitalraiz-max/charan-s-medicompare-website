@@ -569,13 +569,13 @@ const AppointmentModal = ({
                             height: "44px",
                             background:
                               selectedTimeSlot === "Morning"
-                                ? "#321961"
+                                ? "var(--color-primary,#4c2691)"
                                 : "#fff",
                             color:
                               selectedTimeSlot === "Morning" ? "#fff" : "#333",
                             borderColor:
                               selectedTimeSlot === "Morning"
-                                ? "#321961"
+                                ? "var(--color-primary,#4c2691)"
                                 : "#ddd",
                           }}
                         >
@@ -591,7 +591,7 @@ const AppointmentModal = ({
                             minWidth: "140px",
                             background:
                               selectedTimeSlot === "Afternoon"
-                                ? "#321961"
+                                ? "var(--color-primary,#4c2691)"
                                 : "#fff",
                             color:
                               selectedTimeSlot === "Afternoon"
@@ -599,7 +599,7 @@ const AppointmentModal = ({
                                 : "#333",
                             borderColor:
                               selectedTimeSlot === "Afternoon"
-                                ? "#321961"
+                                ? "var(--color-primary,#4c2691)"
                                 : "#ddd",
                           }}
                         >
@@ -615,13 +615,13 @@ const AppointmentModal = ({
                             minWidth: "140px",
                             background:
                               selectedTimeSlot === "Evening"
-                                ? "#321961"
+                                ? "var(--color-primary,#4c2691)"
                                 : "#fff",
                             color:
                               selectedTimeSlot === "Evening" ? "#fff" : "#333",
                             borderColor:
                               selectedTimeSlot === "Evening"
-                                ? "#321961"
+                                ? "var(--color-primary,#4c2691)"
                                 : "#ddd",
                           }}
                         >
@@ -641,7 +641,7 @@ const AppointmentModal = ({
                                 height: "44px",
                                 background:
                                   selectedTiming === "7AM-3PM"
-                                    ? "#321961"
+                                    ? "var(--color-primary,#4c2691)"
                                     : "#fff",
                                 color:
                                   selectedTiming === "7AM-3PM"
@@ -649,7 +649,7 @@ const AppointmentModal = ({
                                     : "#333",
                                 borderColor:
                                   selectedTiming === "7AM-3PM"
-                                    ? "#321961"
+                                    ? "var(--color-primary,#4c2691)"
                                     : "#ddd",
                               }}
                             >
@@ -668,7 +668,7 @@ const AppointmentModal = ({
                                 height: "44px",
                                 background:
                                   selectedTiming === "8AM-4PM"
-                                    ? "#321961"
+                                    ? "var(--color-primary,#4c2691)"
                                     : "#fff",
                                 color:
                                   selectedTiming === "8AM-4PM"
@@ -676,7 +676,7 @@ const AppointmentModal = ({
                                     : "#333",
                                 borderColor:
                                   selectedTiming === "8AM-4PM"
-                                    ? "#321961"
+                                    ? "var(--color-primary,#4c2691)"
                                     : "#ddd",
                               }}
                             >
@@ -695,7 +695,7 @@ const AppointmentModal = ({
                                 height: "44px",
                                 background:
                                   selectedTiming === "9AM-5PM"
-                                    ? "#321961"
+                                    ? "var(--color-primary,#4c2691)"
                                     : "#fff",
                                 color:
                                   selectedTiming === "9AM-5PM"
@@ -703,7 +703,7 @@ const AppointmentModal = ({
                                     : "#333",
                                 borderColor:
                                   selectedTiming === "9AM-5PM"
-                                    ? "#321961"
+                                    ? "var(--color-primary,#4c2691)"
                                     : "#ddd",
                               }}
                             >
@@ -726,7 +726,7 @@ const AppointmentModal = ({
                                 height: "44px",
                                 background:
                                   selectedTiming === "7PM-7AM"
-                                    ? "#321961"
+                                    ? "var(--color-primary,#4c2691)"
                                     : "#fff",
                                 color:
                                   selectedTiming === "7PM-7AM"
@@ -734,7 +734,7 @@ const AppointmentModal = ({
                                     : "#333",
                                 borderColor:
                                   selectedTiming === "7PM-7AM"
-                                    ? "#321961"
+                                    ? "var(--color-primary,#4c2691)"
                                     : "#ddd",
                               }}
                             >
@@ -745,7 +745,7 @@ const AppointmentModal = ({
                                   color:
                                     selectedTiming === "7PM-7AM"
                                       ? "#fff"
-                                      : "#321961",
+                                      : "var(--color-primary,#4c2691)",
                                 }}
                               ></i>
                               7PM-7AM
@@ -759,7 +759,7 @@ const AppointmentModal = ({
                                 height: "44px",
                                 background:
                                   selectedTiming === "8PM-8AM"
-                                    ? "#321961"
+                                    ? "var(--color-primary,#4c2691)"
                                     : "#fff",
                                 color:
                                   selectedTiming === "8PM-8AM"
@@ -767,7 +767,7 @@ const AppointmentModal = ({
                                     : "#333",
                                 borderColor:
                                   selectedTiming === "8PM-8AM"
-                                    ? "#321961"
+                                    ? "var(--color-primary,#4c2691)"
                                     : "#ddd",
                               }}
                             >
@@ -778,7 +778,7 @@ const AppointmentModal = ({
                                   color:
                                     selectedTiming === "8PM-8AM"
                                       ? "#fff"
-                                      : "#321961",
+                                      : "var(--color-primary,#4c2691)",
                                 }}
                               ></i>
                               8PM-8AM
@@ -792,7 +792,7 @@ const AppointmentModal = ({
                                 height: "44px",
                                 background:
                                   selectedTiming === "9PM-9AM"
-                                    ? "#321961"
+                                    ? "var(--color-primary,#4c2691)"
                                     : "#fff",
                                 color:
                                   selectedTiming === "9PM-9AM"
@@ -800,7 +800,7 @@ const AppointmentModal = ({
                                     : "#333",
                                 borderColor:
                                   selectedTiming === "9PM-9AM"
-                                    ? "#321961"
+                                    ? "var(--color-primary,#4c2691)"
                                     : "#ddd",
                               }}
                             >
@@ -811,7 +811,7 @@ const AppointmentModal = ({
                                   color:
                                     selectedTiming === "9PM-9AM"
                                       ? "#fff"
-                                      : "#321961",
+                                      : "var(--color-primary,#4c2691)",
                                 }}
                               ></i>
                               9PM-9AM
@@ -829,7 +829,7 @@ const AppointmentModal = ({
                                 height: "44px",
                                 background:
                                   selectedTiming === "Full Day"
-                                    ? "#321961"
+                                    ? "var(--color-primary,#4c2691)"
                                     : "#fff",
                                 color:
                                   selectedTiming === "Full Day"
@@ -837,7 +837,7 @@ const AppointmentModal = ({
                                     : "#333",
                                 borderColor:
                                   selectedTiming === "Full Day"
-                                    ? "#321961"
+                                    ? "var(--color-primary,#4c2691)"
                                     : "#ddd",
                               }}
                             >
@@ -856,13 +856,13 @@ const AppointmentModal = ({
                                 height: "44px",
                                 background:
                                   selectedTiming === "24/7"
-                                    ? "#321961"
+                                    ? "var(--color-primary,#4c2691)"
                                     : "#fff",
                                 color:
                                   selectedTiming === "24/7" ? "#fff" : "#333",
                                 borderColor:
                                   selectedTiming === "24/7"
-                                    ? "#321961"
+                                    ? "var(--color-primary,#4c2691)"
                                     : "#ddd",
                               }}
                             >
@@ -1029,7 +1029,7 @@ const AppointmentModal = ({
                   className="btn px-5 py-2 w-100"
                   disabled={isSubmitting}
                   style={{
-                    background: "#321961",
+                    background: "var(--color-primary,#4c2691)",
                     color: "#fff",
                     fontWeight: 600,
                   }}

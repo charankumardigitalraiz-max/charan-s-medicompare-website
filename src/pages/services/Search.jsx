@@ -128,10 +128,10 @@ const SearchOverlay = () => {
           <div className="sticky top-3 md:top-6 z-60 bg-gradient-to-b from-white/96 via-white/96 to-transparent pb-2 mb-2">
             <div className="flex items-center relative z-10 bg-white p-2 md:p-3 rounded-2xl">
               <div
-                className="flex-1 flex items-center gap-1.5 p-2 border border-[#7d2eff]/15 rounded-lg bg-[#7d2eff]/4 transition-colors duration-200 relative focus-within:border-[#321961] focus-within:bg-[#321961]/5"
+                className="flex-1 flex items-center gap-1.5 p-2 border border-[#7d2eff]/15 rounded-lg bg-[#7d2eff]/4 transition-colors duration-200 relative focus-within:border-[var(--color-primary,#4c2691)] focus-within:bg-[var(--color-primary,#4c2691)]/5"
                 style={{ position: "relative" }}
               >
-                <span className="w-6 h-6 inline-flex items-center justify-center text-[#321961] shrink-0" aria-hidden="true">
+                <span className="w-6 h-6 inline-flex items-center justify-center text-[var(--color-primary,#4c2691)] shrink-0" aria-hidden="true">
                   <svg
                     viewBox="0 0 24 24"
                     role="presentation"
@@ -237,7 +237,7 @@ const SearchOverlay = () => {
 
               <button
                 type="button"
-                className="border-none bg-transparent w-9 h-9 inline-flex items-center justify-center rounded-full text-3xl font-light text-[#321961] cursor-pointer mb-3.5 d-lg-block d-none"
+                className="border-none bg-transparent w-9 h-9 inline-flex items-center justify-center rounded-full text-3xl font-light text-[var(--color-primary,#4c2691)] cursor-pointer mb-3.5 d-lg-block d-none"
                 onClick={handleClose}
                 aria-label="Close search overlay"
               >
@@ -859,9 +859,9 @@ const SearchOverlay = () => {
                                     <span
                                       className="fs-12 fw-medium"
                                       style={{
-                                        border: "1px solid #321961",
+                                        border: "1px solid var(--color-primary,#4c2691)",
                                         borderRadius: "4px",
-                                        color: "#321961",
+                                        color: "var(--color-primary,#4c2691)",
                                       }}
                                     >
                                       <img
@@ -1577,9 +1577,9 @@ const SearchOverlay = () => {
                                     <span
                                       className="fs-12 fw-medium"
                                       style={{
-                                        border: "1px solid #321961",
+                                        border: "1px solid var(--color-primary,#4c2691)",
                                         borderRadius: "4px",
-                                        color: "#321961",
+                                        color: "var(--color-primary,#4c2691)",
                                       }}
                                     >
                                       <img

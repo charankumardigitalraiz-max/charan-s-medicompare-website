@@ -169,7 +169,7 @@ const AmbulanceLoader = () => {
               <path d="M 32,76 L 32,36 Q 32,34 35,34 L 105,34 Q 107,34 109,36 L 118,48 L 138,56 Q 144,58 144,63 L 144,76 Z" fill="url(#chassis-grad)" stroke="#1e293b" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
               
               {/* Brand Purple Body Accent Stripe */}
-              <path d="M 33,58 L 143,58 L 138,56 L 108,56 L 33,56 Z" fill="#321961" />
+              <path d="M 33,58 L 143,58 L 138,56 L 108,56 L 33,56 Z" fill="var(--color-primary,#4c2691)" />
 
               {/* Modern Tinted Glass Windows */}
               <path d="M 104,38 L 115,38 L 123,48 L 104,48 Z" fill="url(#window-grad)" stroke="#1e293b" strokeWidth="2" strokeLinejoin="round" />
@@ -207,7 +207,7 @@ const AmbulanceLoader = () => {
             {/* Sporty Rotating Wheels with Chrome/Indigo Trim */}
             <g className="amb-wheel">
               <circle cx="52" cy="76" r="9" fill="#1e293b" stroke="#1e293b" strokeWidth="1" />
-              <circle cx="52" cy="76" r="6.5" fill="none" stroke="#321961" strokeWidth="1" />
+              <circle cx="52" cy="76" r="6.5" fill="none" stroke="var(--color-primary,#4c2691)" strokeWidth="1" />
               <circle cx="52" cy="76" r="4.5" fill="#94a3b8" />
               <circle cx="52" cy="76" r="1.5" fill="#ffffff" />
               {/* Wheel Spokes */}
@@ -216,7 +216,7 @@ const AmbulanceLoader = () => {
             </g>
             <g className="amb-wheel">
               <circle cx="110" cy="76" r="9" fill="#1e293b" stroke="#1e293b" strokeWidth="1" />
-              <circle cx="110" cy="76" r="6.5" fill="none" stroke="#321961" strokeWidth="1" />
+              <circle cx="110" cy="76" r="6.5" fill="none" stroke="var(--color-primary,#4c2691)" strokeWidth="1" />
               <circle cx="110" cy="76" r="4.5" fill="#94a3b8" />
               <circle cx="110" cy="76" r="1.5" fill="#ffffff" />
               {/* Wheel Spokes */}
@@ -229,7 +229,7 @@ const AmbulanceLoader = () => {
             <line x1="5" y1="88" x2="195" y2="88" stroke="#cbd5e1" strokeWidth="1.5" />
           </svg>
         </div>
-        <p className="text-[13px] font-bold text-[#321961] animate-pulse tracking-[0.15em] mt-4 uppercase">
+        <p className="text-[13px] font-bold text-[var(--color-primary,#4c2691)] animate-pulse tracking-[0.15em] mt-4 uppercase">
           Locating Responders
         </p>
         <p className="text-[11px] text-[#64748b] mt-1 text-center font-medium">

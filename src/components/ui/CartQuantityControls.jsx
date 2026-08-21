@@ -727,17 +727,17 @@ const CartQuantityControls = ({
           {inStock ? (
             quantity > 0 ? (
               <div className="flex flex-col items-center gap-1 w-full">
-                <div className="flex items-center justify-between border border-[#321961] bg-[#fdfaff] !rounded-sm px-2.5 py-1 w-full shadow-sm">
+                <div className="flex items-center justify-between border border-[var(--color-primary,#4c2691)] bg-[#fdfaff] !rounded-sm px-2.5 py-1 w-full shadow-sm">
                   <button
-                    className="text-[#321961] hover:bg-[var(--color-primary)]/10 disabled:opacity-50 w-5 h-5 rounded flex items-center justify-center cursor-pointer border-none bg-transparent"
+                    className="text-[var(--color-primary,#4c2691)] hover:bg-[var(--color-primary)]/10 disabled:opacity-50 w-5 h-5 rounded flex items-center justify-center cursor-pointer border-none bg-transparent"
                     onClick={handleDecrement}
                     disabled={isLoading || quantity <= 0}
                   >
                     <i className="fas fa-minus text-[10px]"></i>
                   </button>
-                  <span className="text-xs font-bold text-[#321961] px-2">{quantity}</span>
+                  <span className="text-xs font-bold text-[var(--color-primary,#4c2691)] px-2">{quantity}</span>
                   <button
-                    className="text-[#321961] hover:bg-[var(--color-primary)]/10 w-5 h-5 rounded flex items-center justify-center cursor-pointer border-none bg-transparent"
+                    className="text-[var(--color-primary,#4c2691)] hover:bg-[var(--color-primary)]/10 w-5 h-5 rounded flex items-center justify-center cursor-pointer border-none bg-transparent"
                     onClick={handleIncrement}
                     disabled={isLoading}
                   >
@@ -799,15 +799,15 @@ const CartQuantityControls = ({
           <div className="w-full flex flex-col items-center gap-1">
             <div className="flex items-center justify-between bg-[#fdfaff] !rounded-sm px-2.5 py-1 w-full !shadow-[0_0_8px_rgba(50,25,97,0.18)] transition-shadow duration-200">
               <button
-                className="text-[#321961] hover:bg-[var(--color-primary)]/10 disabled:opacity-50 w-5 h-5 rounded flex items-center justify-center cursor-pointer border-none bg-transparent"
+                className="text-[var(--color-primary,#4c2691)] hover:bg-[var(--color-primary)]/10 disabled:opacity-50 w-5 h-5 rounded flex items-center justify-center cursor-pointer border-none bg-transparent"
                 onClick={handleDecrement}
                 disabled={isLoading || quantity <= 0}
               >
                 <i className="fas fa-minus text-[10px]"></i>
               </button>
-              <span className="text-xs font-bold text-[#321961] px-2">{quantity}</span>
+              <span className="text-xs font-bold text-[var(--color-primary,#4c2691)] px-2">{quantity}</span>
               <button
-                className="text-[#321961] hover:bg-[var(--color-primary)]/10 w-5 h-5 rounded flex items-center justify-center cursor-pointer border-none bg-transparent"
+                className="text-[var(--color-primary,#4c2691)] hover:bg-[var(--color-primary)]/10 w-5 h-5 rounded flex items-center justify-center cursor-pointer border-none bg-transparent"
                 onClick={handleIncrement}
               >
                 <i className="fas fa-plus text-[10px]"></i>

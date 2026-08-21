@@ -6,7 +6,7 @@ export const PAGE_LOADER_IMAGE = "/MediCompares_Logo.png";
 const CATEGORY_THEMES = {
   medicine: {
     image: "/assets/img/loaders/medicine_loader.png",
-    color: "#321961",
+    color: "var(--color-primary,#4c2691)",
     label: "Rx Medicines",
     bg: "from-[#f6f2ff] to-[#fbfaff]",
     subtext: "Comparing prescription medicine prices...",
@@ -155,8 +155,8 @@ const PageLoader = () => {
           width={180}
           style={{ height: "auto" }}
         />
-        <div className="w-12 h-1 rounded-full bg-[#321961]/25 overflow-hidden mt-6 relative">
-          <div className="absolute top-0 left-0 h-full bg-[#321961] w-1/2 rounded-full animate-[loadingBar_1.5s_infinite_ease-in-out]" />
+        <div className="w-12 h-1 rounded-full bg-[var(--color-primary,#4c2691)]/25 overflow-hidden mt-6 relative">
+          <div className="absolute top-0 left-0 h-full bg-[var(--color-primary,#4c2691)] w-1/2 rounded-full animate-[loadingBar_1.5s_infinite_ease-in-out]" />
         </div>
         <style>{`
           @keyframes loadingBar {
@@ -176,7 +176,7 @@ const PageLoader = () => {
       <div
         className="absolute w-[300px] h-[300px] rounded-full blur-[100px] opacity-10 animate-pulse pointer-events-none"
         style={{
-          backgroundColor: "#321961",
+          backgroundColor: "var(--color-primary,#4c2691)",
           top: "20%",
           left: "20%"
         }}
@@ -184,7 +184,7 @@ const PageLoader = () => {
       <div
         className="absolute w-[300px] h-[300px] rounded-full blur-[100px] opacity-10 animate-pulse pointer-events-none"
         style={{
-          backgroundColor: "#321961",
+          backgroundColor: "var(--color-primary,#4c2691)",
           bottom: "20%",
           right: "20%",
           animationDelay: "1s"
@@ -216,7 +216,7 @@ const PageLoader = () => {
       <div className="relative flex items-center justify-center w-36 h-36 mb-8">
         <div
           className="absolute inset-0 rounded-full border-[3.5px] border-t-transparent animate-custom-rotate"
-          style={{ borderColor: "#32196120", borderTopColor: "#321961" }}
+          style={{ borderColor: "var(--color-primary,#4c2691)20", borderTopColor: "var(--color-primary,#4c2691)" }}
         />
         <div
           className="absolute w-28 h-28 rounded-full bg-white shadow-lg flex items-center justify-center overflow-hidden animate-custom-pulse border border-white/60"
@@ -232,7 +232,7 @@ const PageLoader = () => {
       {/* Typography */}
       <h3
         className="text-lg font-black tracking-wide mb-1.5 uppercase text-slate-800"
-        style={{ color: "#321961" }}
+        style={{ color: "var(--color-primary,#4c2691)" }}
       >
         {theme.label}
       </h3>
@@ -245,7 +245,7 @@ const PageLoader = () => {
         <div
           className="absolute top-0 h-full rounded-full"
           style={{
-            backgroundColor: "#321961",
+            backgroundColor: "var(--color-primary,#4c2691)",
             width: "30%",
             animation: "customProgress 1.6s infinite ease-in-out"
           }}

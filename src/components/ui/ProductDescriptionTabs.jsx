@@ -303,9 +303,9 @@ const ProductDescriptionTabs = ({
                   className={`flex-1 text-center whitespace-nowrap !text-[12.5px] md:!text-[13px] !font-bold py-2.5 px-4 transition-all duration-200 cursor-pointer
                     border border-solid md:border-t-transparent md:border-x-transparent md:border-b-2 md:rounded-none
                     ${activeTab === tab.id
-                      ? "!bg-[#321961] !text-white !border-[#321961] md:!bg-purple-50/30 md:!text-[#321961] md:!border-b-[#321961] !rounded-sm md:!rounded-none"
+                      ? "!bg-[var(--color-primary,#4c2691)] !text-white !border-[var(--color-primary,#4c2691)] md:!bg-purple-50/30 md:!text-[var(--color-primary,#4c2691)] md:!border-b-[var(--color-primary,#4c2691)] !rounded-sm md:!rounded-none"
                       : tab.has
-                        ? "!bg-white !text-[#012047] !border-slate-200/80 hover:!text-[#321961] hover:!bg-slate-55 md:!bg-transparent md:!border-b-transparent md:hover:!bg-gray-50/50 !rounded-sm md:!rounded-none"
+                        ? "!bg-white !text-[#012047] !border-slate-200/80 hover:!text-[var(--color-primary,#4c2691)] hover:!bg-slate-55 md:!bg-transparent md:!border-b-transparent md:hover:!bg-gray-50/50 !rounded-sm md:!rounded-none"
                         : "!bg-slate-50/30 !text-gray-300 !border-slate-100/50 cursor-not-allowed md:!bg-transparent md:!border-b-transparent !rounded-sm md:!rounded-none"
                     }`}
                 >
@@ -348,7 +348,7 @@ const ProductDescriptionTabs = ({
                         {productContent && hasMoreThanNWords(sanitizedContent, 50) && (
                           <div className="mt-3">
                             <span
-                              className="text-xs font-semibold text-[#321961] hover:underline cursor-pointer"
+                              className="text-xs font-semibold text-[var(--color-primary,#4c2691)] hover:underline cursor-pointer"
                               onClick={() => {
                                 const wasExpanded = showMoreProductInfo;
                                 setShowMoreProductInfo(!showMoreProductInfo);
@@ -385,7 +385,7 @@ const ProductDescriptionTabs = ({
                         {directionsContent && hasMoreThanNWords(sanitizedContent, 50) && (
                           <div className="mt-3">
                             <span
-                              className="text-xs font-semibold text-[#321961] hover:underline cursor-pointer"
+                              className="text-xs font-semibold text-[var(--color-primary,#4c2691)] hover:underline cursor-pointer"
                               onClick={() => {
                                 const wasExpanded = showMoreDirections;
                                 setShowMoreDirections(!showMoreDirections);
@@ -419,7 +419,7 @@ const ProductDescriptionTabs = ({
                   {tablet?.sideeffects && hasMoreThanNWords(sanitizeHTML(tablet?.sideeffects || ""), 50) && (
                     <div className="mt-3 mb-4">
                       <span
-                        className="text-xs font-semibold text-[#321961] hover:underline cursor-pointer"
+                        className="text-xs font-semibold text-[var(--color-primary,#4c2691)] hover:underline cursor-pointer"
                         onClick={() => {
                           const wasExpanded = showMoreSideEffects;
                           setShowMoreSideEffects(!showMoreSideEffects);
@@ -438,7 +438,7 @@ const ProductDescriptionTabs = ({
                       >
                         <div className="flex items-center gap-2.5 font-semibold text-sm text-gray-800">
                           <span>Test Parameters</span>
-                          <span className="bg-[#321961] text-white px-2 py-0.5 rounded-full text-xs font-bold">
+                          <span className="bg-[var(--color-primary,#4c2691)] text-white px-2 py-0.5 rounded-full text-xs font-bold">
                             {tablet.parameterss.length}
                           </span>
                         </div>
@@ -448,7 +448,7 @@ const ProductDescriptionTabs = ({
                         <div className="p-4">
                           <div className="flex flex-wrap gap-2 mb-3">
                             {tablet.parameterss.map((param, idx) => (
-                              <span key={idx} className="bg-purple-50 text-[#321961] px-3 py-1 rounded-md text-xs font-medium border border-purple-100">
+                              <span key={idx} className="bg-purple-50 text-[var(--color-primary,#4c2691)] px-3 py-1 rounded-md text-xs font-medium border border-purple-100">
                                 {param.name}
                               </span>
                             ))}
@@ -505,7 +505,7 @@ const ProductDescriptionTabs = ({
                   {tablet?.precaution && hasMoreThanNWords(sanitizeHTML(tablet?.precaution || ""), 50) && (
                     <div className="mt-3">
                       <span
-                        className="text-xs font-semibold text-[#321961] hover:underline cursor-pointer"
+                        className="text-xs font-semibold text-[var(--color-primary,#4c2691)] hover:underline cursor-pointer"
                         onClick={() => {
                           const wasExpanded = showMorePrecautions;
                           setShowMorePrecautions(!showMorePrecautions);

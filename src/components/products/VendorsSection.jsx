@@ -762,7 +762,7 @@ const VendorsSection = ({
             )}
 
             {vendor?.perDayRent && (
-              <div className="text-[9px] text-[#321961] font-medium flex items-center gap-1 mt-0.5">
+              <div className="text-[9px] text-[var(--color-primary,#4c2691)] font-medium flex items-center gap-1 mt-0.5">
                 <i
                   className="fas fa-calendar-day text-[7px]"
                 ></i>
@@ -817,16 +817,16 @@ const VendorsSection = ({
               onClick={handleToggle}
             >
               <div className="flex items-center gap-1.5">
-                <i className="fa-solid fa-right-left text-[#321961] text-[11px]"></i>
-                <span className="text-[11.5px] font-bold text-[#321961] tracking-wide">
+                <i className="fa-solid fa-right-left text-[var(--color-primary,#4c2691)] text-[11px]"></i>
+                <span className="text-[11.5px] font-bold text-[var(--color-primary,#4c2691)] tracking-wide">
                   Compare
                 </span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="bg-[#321961] text-white text-[10px] px-2 py-0.5 rounded-full font-semibold">
+                <span className="bg-[var(--color-primary,#4c2691)] text-white text-[10px] px-2 py-0.5 rounded-full font-semibold">
                   {vendors.length} Available
                 </span>
-                <i className={`fas fa-chevron-down text-[#321961] text-[10px] transition-transform duration-200 ${isExpanded ? "rotate-180" : ""}`}></i>
+                <i className={`fas fa-chevron-down text-[var(--color-primary,#4c2691)] text-[10px] transition-transform duration-200 ${isExpanded ? "rotate-180" : ""}`}></i>
               </div>
             </div>
           ) : vendors.length === 0 ? (
@@ -852,7 +852,7 @@ const VendorsSection = ({
               <div className="flex justify-between items-center mb-3 pb-2.5 border-b border-slate-100 bg-gradient-to-r from-purple-50/40 to-transparent -mx-3.5 -mt-3.5 px-3.5 pt-2.5 rounded-t-sm">
                 <div className="flex items-center gap-2">
                   <div className="w-5 h-5 rounded-full bg-purple-50 flex items-center justify-center">
-                    <i className="fa-solid fa-right-left text-[#321961] text-[10px]"></i>
+                    <i className="fa-solid fa-right-left text-[var(--color-primary,#4c2691)] text-[10px]"></i>
                   </div>
                   <span className="font-bold text-[12.5px] text-slate-800 tracking-wide">Compare Offers</span>
                   <span className="text-[10px] text-purple-700 bg-purple-50 px-2 py-0.5 rounded-full font-bold">
@@ -876,7 +876,7 @@ const VendorsSection = ({
                   }}
                 >
                   <div className="bg-white shadow-sm border border-slate-100 rounded-full w-6 h-6 flex items-center justify-center hover:scale-105 transition-transform">
-                    <i className="fas fa-chevron-up text-[#321961] text-[10px]"></i>
+                    <i className="fas fa-chevron-up text-[var(--color-primary,#4c2691)] text-[10px]"></i>
                   </div>
                 </div>
               )}
@@ -899,7 +899,7 @@ const VendorsSection = ({
                   }}
                 >
                   <div className="bg-white shadow-sm border border-slate-100 rounded-full w-6 h-6 flex items-center justify-center hover:scale-105 transition-transform">
-                    <i className="fas fa-chevron-down text-[#321961] text-[10px]"></i>
+                    <i className="fas fa-chevron-down text-[var(--color-primary,#4c2691)] text-[10px]"></i>
                   </div>
                 </div>
               )}

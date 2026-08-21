@@ -819,7 +819,7 @@ const RelatedProductsView = () => {
         <Home2Header />
         <div className="flex-1 flex items-center justify-center pt-[100px] pb-10 bg-gradient-to-b from-gray-50 to-white min-h-[80vh]">
           <div className="text-center">
-            <div className="w-12 h-12 border-4 border-[#321961] border-t-transparent rounded-full animate-spin inline-block" role="status">
+            <div className="w-12 h-12 border-4 border-[var(--color-primary,#4c2691)] border-t-transparent rounded-full animate-spin inline-block" role="status">
               <span className="sr-only">Loading...</span>
             </div>
             <p className="mt-3 text-gray-500 text-base font-medium">
@@ -845,7 +845,7 @@ const RelatedProductsView = () => {
           className="absolute inset-0 w-full h-full object-cover object-center"
         />
         <div className="relative z-10 max-w-[1400px] mx-auto px-4 py-5 flex flex-wrap items-center justify-between min-h-[120px]">
-          <BackButton className="!rounded-full !bg-white/90 border border-[#321961]/30 !text-[#321961] hover:!bg-[#321961] hover:!text-white shadow-sm" />
+          <BackButton className="!rounded-full !bg-white/90 border border-[var(--color-primary,#4c2691)]/30 !text-[var(--color-primary,#4c2691)] hover:!bg-[var(--color-primary,#4c2691)] hover:!text-white shadow-sm" />
 
           <div className="hidden lg:flex items-center gap-4 relative pr-12">
             <div className="relative h-[120px] w-[140px]">
@@ -868,7 +868,7 @@ const RelatedProductsView = () => {
             <div className="w-full px-2 relative">
               {pageLoading && (
                 <div className="absolute inset-0 bg-white/60 backdrop-blur-[1px] z-50 flex items-center justify-center min-h-[300px] rounded-xl">
-                  <div className="w-10 h-10 border-4 border-[#321961] border-t-transparent rounded-full animate-spin"></div>
+                  <div className="w-10 h-10 border-4 border-[var(--color-primary,#4c2691)] border-t-transparent rounded-full animate-spin"></div>
                 </div>
               )}
 
@@ -921,7 +921,7 @@ const RelatedProductsView = () => {
                           width: "100%",
                           gap: "4px",
                           borderRadius: "50px",
-                          border: "1px solid #321961",
+                          border: "1px solid var(--color-primary,#4c2691)",
                           background: "#fdfaff",
                           boxShadow: "0 2px 5px rgba(125, 46, 255, 0.1)"
                         }}

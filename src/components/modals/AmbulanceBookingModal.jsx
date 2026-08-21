@@ -478,7 +478,7 @@ const AmbulanceBookingModal = ({
                       }));
                       setPickupLocation(newAddress);
                     }}
-                    className="w-full py-[12px] pl-[38px] pr-[38px] border border-solid border-[#e2e8f0] rounded-[10px] text-[13.5px] font-normal placeholder-[#94a3b8] transition-all duration-200 focus:border-[#321961] focus:ring-2 focus:ring-[#321961]/10 outline-none hover:border-[#cbd5e1] shadow-sm bg-white"
+                    className="w-full py-[12px] pl-[38px] pr-[38px] border border-solid border-[#e2e8f0] rounded-[10px] text-[13.5px] font-normal placeholder-[#94a3b8] transition-all duration-200 focus:border-[var(--color-primary,#4c2691)] focus:ring-2 focus:ring-[var(--color-primary,#4c2691)]/10 outline-none hover:border-[#cbd5e1] shadow-sm bg-white"
                     autoComplete="off"
                   />
                 </Autocomplete>
@@ -533,7 +533,7 @@ const AmbulanceBookingModal = ({
                       }));
                       setDropLocation(newAddress);
                     }}
-                    className="w-full py-[12px] pl-[38px] pr-[38px] border border-solid border-[#e2e8f0] rounded-[10px] text-[13.5px] font-normal placeholder-[#94a3b8] transition-all duration-200 focus:border-[#321961] focus:ring-2 focus:ring-[#321961]/10 outline-none hover:border-[#cbd5e1] shadow-sm bg-white"
+                    className="w-full py-[12px] pl-[38px] pr-[38px] border border-solid border-[#e2e8f0] rounded-[10px] text-[13.5px] font-normal placeholder-[#94a3b8] transition-all duration-200 focus:border-[var(--color-primary,#4c2691)] focus:ring-2 focus:ring-[var(--color-primary,#4c2691)]/10 outline-none hover:border-[#cbd5e1] shadow-sm bg-white"
                     autoComplete="off"
                   />
                 </Autocomplete>
@@ -562,7 +562,7 @@ const AmbulanceBookingModal = ({
               <button
                 type="submit"
                 disabled={isSearching || !isLoaded}
-                className={`w-full h-full min-h-[20px] px-[16px] text-white border-none !rounded-[8px] text-[12.5px] font-semibold tracking-wider flex items-center justify-center gap-[6px] transition-all duration-200 active:scale-[0.96] shadow-[0_3px_10px_rgba(50,25,97,0.15)] hover:shadow-[0_5px_15px_rgba(50,25,97,0.25)] ${isSearching ? "bg-slate-400 cursor-not-allowed" : "bg-[#321961] hover:bg-[#221044] cursor-pointer"}`}
+                className={`w-full h-full min-h-[20px] px-[16px] text-white border-none !rounded-[8px] text-[12.5px] font-semibold tracking-wider flex items-center justify-center gap-[6px] transition-all duration-200 active:scale-[0.96] shadow-[0_3px_10px_rgba(50,25,97,0.15)] hover:shadow-[0_5px_15px_rgba(50,25,97,0.25)] ${isSearching ? "bg-slate-400 cursor-not-allowed" : "bg-[var(--color-primary,#4c2691)] hover:bg-[#221044] cursor-pointer"}`}
               >
                 <i className="fas fa-search text-[11px]"></i>
                 <span>Find</span>
@@ -694,7 +694,7 @@ const AmbulanceBookingModal = ({
 
                       <button
                         type="submit"
-                        className="py-[5px] px-[10px] bg-[#321961] text-white border-none !rounded-[4px] text-[12px] font-semibold cursor-pointer whitespace-nowrap"
+                        className="py-[5px] px-[10px] bg-[var(--color-primary,#4c2691)] text-white border-none !rounded-[4px] text-[12px] font-semibold cursor-pointer whitespace-nowrap"
                         onClick={() => handleClick(vendorItem)}
                       >
                         Book Now

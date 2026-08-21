@@ -1188,7 +1188,7 @@ const MedicineComparePage = () => {
                         className="w-10 h-10 bg-[#efe9ff] rounded-full flex items-center justify-center shrink-0"
                       >
                         <i
-                          className="fas fa-location text-[#321961] text-[18px]"
+                          className="fas fa-location text-[var(--color-primary,#4c2691)] text-[18px]"
                         ></i>
                       </div>
 
@@ -1212,7 +1212,7 @@ const MedicineComparePage = () => {
                     >
                       <input
                         type="text"
-                        className="form-control h-10 text-[14px] !rounded-l-md border border-gray-300 px-3 focus:outline-none focus:ring-1 focus:ring-[#321961] focus:border-[#321961]"
+                        className="form-control h-10 text-[14px] !rounded-l-md border border-gray-300 px-3 focus:outline-none focus:ring-1 focus:ring-[var(--color-primary,#4c2691)] focus:border-[var(--color-primary,#4c2691)]"
                         placeholder="Enter Pin code"
                         value={pincode}
                         onChange={(e) => {
@@ -1232,7 +1232,7 @@ const MedicineComparePage = () => {
                       />
 
                       <button
-                        className="btn bg-[#321961] text-white py-2 px-[18px] !rounded-r-md text-[14px] !font-medium border-none whitespace-nowrap transition-colors duration-200"
+                        className="btn bg-[var(--color-primary,#4c2691)] text-white py-2 px-[18px] !rounded-r-md text-[14px] !font-medium border-none whitespace-nowrap transition-colors duration-200"
                         onClick={handlePincodeCheck}
                         disabled={loadingVendors}
                       >
@@ -1305,7 +1305,7 @@ const MedicineComparePage = () => {
                             Select Variant
                           </div>
                           <select
-                            className="mt-1 w-full px-3 py-2 border border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-1 focus:ring-[#321961] focus:border-[#321961] text-[14px] h-[38px] rounded-[8px]"
+                            className="mt-1 w-full px-3 py-2 border border-gray-300 bg-white shadow-sm focus:outline-none focus:ring-1 focus:ring-[var(--color-primary,#4c2691)] focus:border-[var(--color-primary,#4c2691)] text-[14px] h-[38px] rounded-[8px]"
                             value={selectedVariantId || ""}
                             onChange={(e) =>
                               handleVariantChange(e.target.value)
@@ -1529,7 +1529,7 @@ const MedicineComparePage = () => {
                                       />
                                     ) : (
                                       <div
-                                        className="w-full h-full bg-gradient-to-br from-[#321961] to-[#6a1fd9] text-white flex items-center justify-center font-bold text-[18px]"
+                                        className="w-full h-full bg-gradient-to-br from-[var(--color-primary,#4c2691)] to-[#6a1fd9] text-white flex items-center justify-center font-bold text-[18px]"
                                       >
                                         {vendorName
                                           .substring(0, 2)
@@ -1565,7 +1565,7 @@ const MedicineComparePage = () => {
                                       className="text-[13px] text-[#6c757d] m-0"
                                     >
                                       <i
-                                        className="fas fa-map-marker-alt mr-1 text-[#321961]"
+                                        className="fas fa-map-marker-alt mr-1 text-[var(--color-primary,#4c2691)]"
                                       ></i>
                                       {pharmacy?.bussinessdetails?.address
                                         ? pharmacy.bussinessdetails.address
@@ -1605,7 +1605,7 @@ const MedicineComparePage = () => {
                                         ].includes(categoryFixedType) &&
                                           estimatedDelivery && (
                                             <p
-                                              className="text-[12px] text-[#321961] mt-1 font-semibold"
+                                              className="text-[12px] text-[var(--color-primary,#4c2691)] mt-1 font-semibold"
                                             >
                                               <i
                                                 className="fas fa-truck mr-1 text-[10px]"
@@ -1677,7 +1677,7 @@ const MedicineComparePage = () => {
                                         )}
                                         {fullVendor?.perDayRent && (
                                           <div
-                                            className="text-[11px] font-semibold bg-[#f8f9fa] py-0.5 px-1.5 rounded whitespace-nowrap text-[#321961]"
+                                            className="text-[11px] font-semibold bg-[#f8f9fa] py-0.5 px-1.5 rounded whitespace-nowrap text-[var(--color-primary,#4c2691)]"
                                           >
                                             <i className="fas fa-calendar-day mr-0.5 text-[8px]"></i>
                                             Per Day Rent: ₹{Number(fullVendor?.perDayRent || 0).toFixed(2)}
@@ -1779,7 +1779,7 @@ const MedicineComparePage = () => {
                         <div className="p-[18px]">
                           <div className="flex gap-3.5 items-start mb-4">
                             <div className="w-10 h-10 bg-[#f3efff] rounded-[10px] flex items-center justify-center shrink-0">
-                              <i className="fa-solid fa-shield-halved text-[18px] text-[#321961]" />
+                              <i className="fa-solid fa-shield-halved text-[18px] text-[var(--color-primary,#4c2691)]" />
                             </div>
                             <div>
                               <h6 className="text-[14px] font-semibold mb-0.5">Verified Pharmacies</h6>
@@ -1790,7 +1790,7 @@ const MedicineComparePage = () => {
                           </div>
                           <div className="flex gap-3.5 items-start mb-4">
                             <div className="w-10 h-10 bg-[#f3efff] rounded-[10px] flex items-center justify-center shrink-0">
-                              <i className="fa-solid fa-tags text-[18px] text-[#321961]" />
+                              <i className="fa-solid fa-tags text-[18px] text-[var(--color-primary,#4c2691)]" />
                             </div>
                             <div>
                               <h6 className="text-[14px] font-semibold mb-0.5">Best Price Guarantee</h6>
@@ -1799,7 +1799,7 @@ const MedicineComparePage = () => {
                           </div>
                           <div className="flex gap-3.5 items-start mb-4">
                             <div className="w-10 h-10 bg-[#f3efff] rounded-[10px] flex items-center justify-center shrink-0">
-                              <i className="fa-solid fa-bolt text-[18px] text-[#321961]" />
+                              <i className="fa-solid fa-bolt text-[18px] text-[var(--color-primary,#4c2691)]" />
                             </div>
                             <div>
                               <h6 className="text-[14px] font-semibold mb-0.5">Quick Comparison</h6>
@@ -1810,7 +1810,7 @@ const MedicineComparePage = () => {
                           </div>
                           <div className="flex gap-3.5 items-start last:mb-0">
                             <div className="w-10 h-10 bg-[#f3efff] rounded-[10px] flex items-center justify-center shrink-0">
-                              <i className="fa-solid fa-box text-[18px] text-[#321961]" />
+                              <i className="fa-solid fa-box text-[18px] text-[var(--color-primary,#4c2691)]" />
                             </div>
                             <div>
                               <h6 className="text-[14px] font-semibold mb-0.5">Reliable Delivery</h6>

@@ -969,10 +969,10 @@ const DesktopSearch = ({ showSearch, setShowSearchOverlay, myservice }) => {
                   background-color: rgba(50, 25, 97, 0.05) !important;
                 }
                 .desktop-search-suggestion:hover .suggestion-text-name {
-                  color: #321961 !important;
+                  color: var(--color-primary,#4c2691) !important;
                 }
                 .desktop-search-suggestion:hover .fa-search {
-                  color: #321961 !important;
+                  color: var(--color-primary,#4c2691) !important;
                   opacity: 0.8 !important;
                   transform: scale(1.1);
                 }
@@ -982,8 +982,8 @@ const DesktopSearch = ({ showSearch, setShowSearchOverlay, myservice }) => {
             {desktopSearchLoading && (
               <div className="flex flex-col items-center justify-center py-8 gap-4 text-slate-400">
                 <div className="relative w-14 h-14 flex items-center justify-center">
-                  <div className="absolute inset-0 rounded-full border-[3px] border-solid border-[#321961]/10 animate-ping opacity-75"></div>
-                  <div className="absolute inset-0 rounded-full border-[3px] border-solid border-transparent border-t-[#321961] border-r-[#7c3aed] animate-spin"></div>
+                  <div className="absolute inset-0 rounded-full border-[3px] border-solid border-[var(--color-primary,#4c2691)]/10 animate-ping opacity-75"></div>
+                  <div className="absolute inset-0 rounded-full border-[3px] border-solid border-transparent border-t-[var(--color-primary,#4c2691)] border-r-[#7c3aed] animate-spin"></div>
                   <div className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center shadow-inner z-10">
                     <i
                       key={activeLoaderIconIndex}
@@ -1047,7 +1047,7 @@ const DesktopSearch = ({ showSearch, setShowSearchOverlay, myservice }) => {
                           <i
                             className="fa fa-search"
                             style={{
-                              color: "#321961",
+                              color: "var(--color-primary,#4c2691)",
                               opacity: 0.4,
                               marginRight: "10px",
                               fontSize: "12px",
@@ -1072,7 +1072,7 @@ const DesktopSearch = ({ showSearch, setShowSearchOverlay, myservice }) => {
                             </div>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><span style={{
                               fontSize: '10px',
-                              color: '#321961',
+                              color: 'var(--color-primary,#4c2691)',
                               backgroundColor: 'rgba(50, 25, 97, 0.08)',
                               padding: '2.5px 10px',
                               borderRadius: '12px',
@@ -1084,7 +1084,7 @@ const DesktopSearch = ({ showSearch, setShowSearchOverlay, myservice }) => {
                                 : item?.tablet?.category?.fixedType === "medicine"
                                   ? capitalize(item?.tablet?.medicineType || "product")
                                   : capitalize(item?.tablet?.category?.name || "product")}
-                            </span> <button type="button" onClick={(e) => { e.stopPropagation(); e.preventDefault(); setVendorModel(item); }} style={{ background: '#f8fafc', border: '1px solid #e2e8f0', color: '#321961', cursor: 'pointer', padding: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%', width: '24px', height: '24px', transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)', boxShadow: '0 1px 2px rgba(0,0,0,0.05)' }} onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#321961'; e.currentTarget.style.color = '#ffffff'; e.currentTarget.style.borderColor = '#321961'; e.currentTarget.style.transform = 'scale(1.08)'; }} onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#f8fafc'; e.currentTarget.style.color = '#321961'; e.currentTarget.style.borderColor = '#e2e8f0'; e.currentTarget.style.transform = 'none'; }} title="Insert into search"><i className="fa fa-plus" style={{ fontSize: '11px' }} /></button></div>
+                            </span> <button type="button" onClick={(e) => { e.stopPropagation(); e.preventDefault(); setVendorModel(item); }} style={{ background: '#f8fafc', border: '1px solid #e2e8f0', color: 'var(--color-primary,#4c2691)', cursor: 'pointer', padding: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%', width: '24px', height: '24px', transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)', boxShadow: '0 1px 2px rgba(0,0,0,0.05)' }} onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = 'var(--color-primary,#4c2691)'; e.currentTarget.style.color = '#ffffff'; e.currentTarget.style.borderColor = 'var(--color-primary,#4c2691)'; e.currentTarget.style.transform = 'scale(1.08)'; }} onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#f8fafc'; e.currentTarget.style.color = 'var(--color-primary,#4c2691)'; e.currentTarget.style.borderColor = '#e2e8f0'; e.currentTarget.style.transform = 'none'; }} title="Insert into search"><i className="fa fa-plus" style={{ fontSize: '11px' }} /></button></div>
                           </div>
                         </div>
                       ))}
@@ -1108,7 +1108,7 @@ const DesktopSearch = ({ showSearch, setShowSearchOverlay, myservice }) => {
                           border: "none",
                           borderRadius: "20px",
                           background: "rgba(50, 25, 97, 0.05)",
-                          color: isMoreLoading ? "#9ca3af" : "#321961 !important",
+                          color: isMoreLoading ? "#9ca3af" : "var(--color-primary,#4c2691) !important",
                           fontWeight: "700",
                           textAlign: "center",
                           cursor: isMoreLoading ? "not-allowed" : "pointer",
@@ -1117,14 +1117,14 @@ const DesktopSearch = ({ showSearch, setShowSearchOverlay, myservice }) => {
                         }}
                         onMouseEnter={(e) => {
                           if (!isMoreLoading) {
-                            e.currentTarget.style.backgroundColor = "#321961";
+                            e.currentTarget.style.backgroundColor = "var(--color-primary,#4c2691)";
                             e.currentTarget.style.color = "#ffffff";
                           }
                         }}
                         onMouseLeave={(e) => {
                           if (!isMoreLoading) {
                             e.currentTarget.style.backgroundColor = "rgba(50, 25, 97, 0.05)";
-                            e.currentTarget.style.color = "#321961";
+                            e.currentTarget.style.color = "var(--color-primary,#4c2691)";
                           }
                         }}
                       >

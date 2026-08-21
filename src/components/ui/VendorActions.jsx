@@ -89,7 +89,7 @@ const VendorActions = ({
             width: "100%",
             gap: "4px",
             borderRadius: "4px",
-            border: "1px solid #321961",
+            border: "1px solid var(--color-primary,#4c2691)",
             background: "#fdfaff",
             boxShadow: "0 2px 5px rgba(125, 46, 255, 0.1)",
           }}
@@ -361,7 +361,7 @@ const VendorActions = ({
             width: "100%",
             gap: "4px",
             borderRadius: "4px",
-            border: "1px solid #321961",
+            border: "1px solid var(--color-primary,#4c2691)",
             background: "#fdfaff",
             boxShadow: "0 2px 5px rgba(125, 46, 255, 0.1)",
           }}
@@ -415,7 +415,7 @@ const VendorActions = ({
             width: "100%",
             gap: "4px",
             borderRadius: "4px",
-            border: "1px solid #321961",
+            border: "1px solid var(--color-primary,#4c2691)",
             background: "#fdfaff",
             boxShadow: "0 2px 5px rgba(125, 46, 255, 0.1)",
           }}

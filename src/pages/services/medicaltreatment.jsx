@@ -378,7 +378,7 @@ const medicaltreatment = ({
           <div className="row mb-3">
             <div className="col-12 text-center">
               <h2
-                className="!text-[40px] !font-semibold !inline-block !bg-gradient-to-br !from-[#321961] !to-[#6d48b8] !bg-clip-text !text-transparent !mb-[15px]"
+                className="!text-[40px] !font-semibold !inline-block !bg-gradient-to-br !from-[var(--color-primary,#4c2691)] !to-[#6d48b8] !bg-clip-text !text-transparent !mb-[15px]"
                 data-aos="fade-up"
                 data-aos-delay="100"
               >
@@ -428,7 +428,7 @@ const medicaltreatment = ({
                   },
                 ].map((process, index) => {
                   const colors = [
-                    { primary: "#321961", light: "#F8F5FE" },
+                    { primary: "var(--color-primary,#4c2691)", light: "#F8F5FE" },
                     { primary: "#4ECDC4", light: "#E0F7F4" },
                     { primary: "#FFE66D", light: "#FFF9E6" },
                     { primary: "#A8E6CF", light: "#F0FDF4" },
@@ -445,8 +445,8 @@ const medicaltreatment = ({
                       {/* Connecting Line with Primary Color */}
                       {index < 3 && (
                         <div className="d-none d-lg-block !absolute !top-1/2 !right-[-20px] !-translate-y-1/2 !z-0">
-                          <div className="!w-[40px] !h-[3px] !bg-gradient-to-r !from-[#321961] !to-[rgba(125,46,255,0.3)] !rounded-[2px] !relative">
-                            <div className="!absolute !right-[-6px] !top-1/2 !-translate-y-1/2 !w-0 !h-0 !border-l-[8px] !border-l-solid !border-l-[#321961] !border-t-[4px] !border-t-transparent !border-b-[4px] !border-b-transparent"></div>
+                          <div className="!w-[40px] !h-[3px] !bg-gradient-to-r !from-[var(--color-primary,#4c2691)] !to-[rgba(125,46,255,0.3)] !rounded-[2px] !relative">
+                            <div className="!absolute !right-[-6px] !top-1/2 !-translate-y-1/2 !w-0 !h-0 !border-l-[8px] !border-l-solid !border-l-[var(--color-primary,#4c2691)] !border-t-[4px] !border-t-transparent !border-b-[4px] !border-b-transparent"></div>
                           </div>
                         </div>
                       )}
@@ -459,7 +459,7 @@ const medicaltreatment = ({
                         }}
                       ></div>
 
-                      <div className="!bg-white !rounded-[15px] !py-10 !px-[30px] !shadow-[0_4px_20px_rgba(0,0,0,0.08)] !border !border-solid !border-[#e5e7eb] !border-t-0 !text-center !h-full !transition-all !duration-300 !relative !z-10 hover:!-translate-y-[5px] hover:!shadow-[0_8px_30px_rgba(125,46,255,0.2)] hover:!border-[#321961]">
+                      <div className="!bg-white !rounded-[15px] !py-10 !px-[30px] !shadow-[0_4px_20px_rgba(0,0,0,0.08)] !border !border-solid !border-[#e5e7eb] !border-t-0 !text-center !h-full !transition-all !duration-300 !relative !z-10 hover:!-translate-y-[5px] hover:!shadow-[0_8px_30px_rgba(125,46,255,0.2)] hover:!border-[var(--color-primary,#4c2691)]">
                         {/* Icon Container with Primary Color Accent */}
                         <div className="!relative !inline-block !mb-[25px]">
                           {/* Decorative Circle Behind Icon */}
@@ -873,14 +873,14 @@ const medicaltreatment = ({
                                     </div>
 
                                     <div className="!flex !items-center !gap-1 !text-[#6b7280] !text-[11px] !overflow-hidden">
-                                      <i className="fa-solid fa-location-dot !text-[11px] !text-[#321961]"></i>
+                                      <i className="fa-solid fa-location-dot !text-[11px] !text-[var(--color-primary,#4c2691)]"></i>
                                       <span className="!overflow-hidden !text-ellipsis !whitespace-nowrap">
                                         {vendor?.address}
                                       </span>
                                     </div>
                                     {treatment?.distanceInKm && (
                                       <div className="!flex !items-center !gap-1 !text-[#6b7280] !text-[11px] !overflow-hidden">
-                                        <i className="fas fa-map-marker-alt !text-[10px] !text-[#321961] !mr-[4px]"></i>
+                                        <i className="fas fa-map-marker-alt !text-[10px] !text-[var(--color-primary,#4c2691)] !mr-[4px]"></i>
 
                                         <span className="!overflow-hidden !text-ellipsis !whitespace-nowrap">
                                           {parseFloat(treatment.distanceInKm).toFixed(1)} km away
@@ -1016,7 +1016,7 @@ const medicaltreatment = ({
                     <p
                       style={{
                         fontSize: "15px",
-                        color: "#321961",
+                        color: "var(--color-primary,#4c2691)",
                         fontWeight: "500",
                         marginBottom: "15px",
                       }}

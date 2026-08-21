@@ -373,7 +373,7 @@ const CompareView = () => {
                                 <>
                                   <span
                                     className="price"
-                                    style={{ fontSize: isMobile ? "16px" : "18px", fontWeight: "600", color: "#321961" }}
+                                    style={{ fontSize: isMobile ? "16px" : "18px", fontWeight: "600", color: "var(--color-primary,#4c2691)" }}
                                   >
                                     ₹{Number(effectivePrice || 0).toFixed(2)}
                                   </span>
@@ -393,7 +393,7 @@ const CompareView = () => {
                                         <span
                                           style={{
                                             fontSize: "11px",
-                                            color: "#321961",
+                                            color: "var(--color-primary,#4c2691)",
                                             fontWeight: "500",
                                             background: "#f3e8ff",
                                             padding: "1px 5px",
@@ -466,7 +466,7 @@ const CompareView = () => {
                             <hr className="hrline my-3" style={{ borderTop: "1px solid #f1f5f9" }} />
                             <div className="profiles-section">
                               <h4 style={{ fontSize: "11px", fontWeight: "600", color: "#475569", textTransform: "uppercase", letterSpacing: "0.5px" }} className="d-flex align-items-center gap-1.5 mb-2">
-                                <i className="fa-solid fa-user-doctor" style={{ color: "#321961", fontSize: "10px" }}></i>
+                                <i className="fa-solid fa-user-doctor" style={{ color: "var(--color-primary,#4c2691)", fontSize: "10px" }}></i>
                                 {pkg.subcategories.length} Profile{pkg.subcategories.length > 1 ? "s" : ""}
                               </h4>
 
@@ -474,7 +474,7 @@ const CompareView = () => {
                                 <ul className="points-list m-0 p-0" style={{ listStyle: "none" }}>
                                   {pkg.subcategories.map((profile, index) => (
                                     <li key={index} className="point-item d-flex align-items-center gap-2 mb-1">
-                                      <span className="point-icon" style={{ fontSize: "11px", color: "#321961" }}>✓</span>
+                                      <span className="point-icon" style={{ fontSize: "11px", color: "var(--color-primary,#4c2691)" }}>✓</span>
                                       <span className="point-text" style={{ fontSize: "12px", color: "#475569", fontWeight: "400" }}>
                                         {profile?.name}
                                       </span>
@@ -491,7 +491,7 @@ const CompareView = () => {
                             <hr className="hrline my-3" style={{ borderTop: "1px solid #f1f5f9" }} />
                             <div className="tests-section">
                               <h4 style={{ fontSize: "11px", fontWeight: "600", color: "#475569", textTransform: "uppercase", letterSpacing: "0.5px" }} className="d-flex align-items-center gap-1.5 mb-2">
-                                <i className="fa-solid fa-vial" style={{ color: "#321961", fontSize: "10px" }}></i>
+                                <i className="fa-solid fa-vial" style={{ color: "var(--color-primary,#4c2691)", fontSize: "10px" }}></i>
                                 {pkg.tablets.length} Test{pkg.tablets.length > 1 ? "s" : ""}
                               </h4>
 
@@ -499,7 +499,7 @@ const CompareView = () => {
                                 <ul className="points-list m-0 p-0" style={{ listStyle: "none" }}>
                                   {pkg.tablets.map((test, index) => (
                                     <li key={index} className="point-item d-flex align-items-center gap-2 mb-1">
-                                      <span className="point-icon" style={{ fontSize: "11px", color: "#321961" }}>✓</span>
+                                      <span className="point-icon" style={{ fontSize: "11px", color: "var(--color-primary,#4c2691)" }}>✓</span>
                                       <span className="point-text" style={{ fontSize: "12px", color: "#475569", fontWeight: "400" }}>
                                         {test.name}
                                       </span>
@@ -516,7 +516,7 @@ const CompareView = () => {
                             <hr className="hrline my-3" style={{ borderTop: "1px solid #f1f5f9" }} />
                             <div className="tests-section">
                               <h4 style={{ fontSize: "11px", fontWeight: "600", color: "#475569", textTransform: "uppercase", letterSpacing: "0.5px" }} className="d-flex align-items-center gap-1.5 mb-2">
-                                <i className="fa-solid fa-flask" style={{ color: "#321961", fontSize: "10px" }}></i>
+                                <i className="fa-solid fa-flask" style={{ color: "var(--color-primary,#4c2691)", fontSize: "10px" }}></i>
                                 {pkg.parameterss.length} Parameter{pkg.parameterss.length > 1 ? "s" : ""}
                               </h4>
 
@@ -524,7 +524,7 @@ const CompareView = () => {
                                 <ul className="points-list m-0 p-0" style={{ listStyle: "none" }}>
                                   {pkg.parameterss.map((test, index) => (
                                     <li key={index} className="point-item d-flex align-items-center gap-2 mb-1">
-                                      <span className="point-icon" style={{ fontSize: "11px", color: "#321961" }}>✓</span>
+                                      <span className="point-icon" style={{ fontSize: "11px", color: "var(--color-primary,#4c2691)" }}>✓</span>
                                       <span className="point-text" style={{ fontSize: "12px", color: "#475569", fontWeight: "400" }}>
                                         {test.name}
                                       </span>

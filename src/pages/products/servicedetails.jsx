@@ -45,7 +45,7 @@ const getSearchItemId = (item) => item?.tablet?._id || item?._id || null;
 const ServiceCategoryCard = memo(({ cat, index, onClick }) => (
   <div className="w-1/3 sm:w-1/2 md:w-1/4 lg:w-1/6 xl:w-1/6 px-1.5 sm:px-2 mb-4 flex">
     <div
-      className="group flex-1 cursor-pointer bg-white !border !border-[#e5e7eb] hover:!border-[#321961]/40 !shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:!shadow-[0_8px_20px_rgba(128,89,202,0.08)] !rounded-md w-full text-center p-4 max-sm:p-2.5 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-center items-center"
+      className="group flex-1 cursor-pointer bg-white !border !border-[#e5e7eb] hover:!border-[var(--color-primary,#4c2691)]/40 !shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:!shadow-[0_8px_20px_rgba(128,89,202,0.08)] !rounded-md w-full text-center p-4 max-sm:p-2.5 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-center items-center"
       onClick={() => onClick(cat)}
       role="button"
       tabIndex={0}
@@ -64,7 +64,7 @@ const ServiceCategoryCard = memo(({ cat, index, onClick }) => (
           decoding="async"
         />
       </span>
-      <h4 className="!font-semibold !text-[13px] max-sm:!text-[10px] !text-slate-700 group-hover:!text-[#321961] transition-colors duration-200 mb-0 line-clamp-2 text-center leading-snug max-sm:leading-tight">
+      <h4 className="!font-semibold !text-[13px] max-sm:!text-[10px] !text-slate-700 group-hover:!text-[var(--color-primary,#4c2691)] transition-colors duration-200 mb-0 line-clamp-2 text-center leading-snug max-sm:leading-tight">
         {cat?.name || "No Category"}
       </h4>
     </div>
@@ -789,7 +789,7 @@ const ServiceDetails = () => {
     ]
   };
 
-  const PRIMARY_COLOR = "#321961";
+  const PRIMARY_COLOR = "var(--color-primary,#4c2691)";
   const PRIMARY_SECTION_BG = "#f8f4ff";
 
   const displayCategories = useMemo(
@@ -1260,10 +1260,10 @@ const ServiceDetails = () => {
                                       background-color: rgba(50, 25, 97, 0.05) !important;
                                     }
                                     .service-suggestion-row:hover .suggestion-text-name {
-                                      color: #321961 !important;
+                                      color: var(--color-primary,#4c2691) !important;
                                     }
                                     .service-suggestion-row:hover .fa-search {
-                                      color: #321961 !important;
+                                      color: var(--color-primary,#4c2691) !important;
                                       opacity: 0.8 !important;
                                       transform: scale(1.1);
                                     }
@@ -1272,8 +1272,8 @@ const ServiceDetails = () => {
                                 {isLoading && (
                                   <div className="flex flex-col items-center justify-center py-8 gap-4 text-slate-400">
                                     <div className="relative w-14 h-14 flex items-center justify-center">
-                                      <div className="absolute inset-0 rounded-full border-[3px] border-solid border-[#321961]/10 animate-ping opacity-75"></div>
-                                      <div className="absolute inset-0 rounded-full border-[3px] border-solid border-transparent border-t-[#321961] border-r-[#7c3aed] animate-spin"></div>
+                                      <div className="absolute inset-0 rounded-full border-[3px] border-solid border-[var(--color-primary,#4c2691)]/10 animate-ping opacity-75"></div>
+                                      <div className="absolute inset-0 rounded-full border-[3px] border-solid border-transparent border-t-[var(--color-primary,#4c2691)] border-r-[#7c3aed] animate-spin"></div>
                                       <div className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center shadow-inner z-10">
                                         <i
                                           key={activeLoaderIconIndex}
@@ -1438,7 +1438,7 @@ const ServiceDetails = () => {
                                       className="service-suggestion-row flex items-center cursor-pointer text-[15px]"
                                     >
                                       <div
-                                        className="text-[#321961] shrink-0"
+                                        className="text-[var(--color-primary,#4c2691)] shrink-0"
                                         style={{ opacity: 0.4, marginRight: "10px", fontSize: "12px", transition: "all 0.2s ease" }}
                                       >
                                         <i className="fas fa-search"></i>
@@ -1456,7 +1456,7 @@ const ServiceDetails = () => {
                                         className="whitespace-nowrap ml-[8px] capitalize"
                                         style={{
                                           fontSize: '10px',
-                                          color: '#321961',
+                                          color: 'var(--color-primary,#4c2691)',
                                           backgroundColor: 'rgba(50, 25, 97, 0.08)',
                                           padding: '2.5px 10px',
                                           borderRadius: '12px',
@@ -1468,7 +1468,7 @@ const ServiceDetails = () => {
                                           : item?.tablet?.category?.fixedType === "medicine"
                                             ? (item?.tablet?.medicineType || "product")
                                             : (item?.tablet?.category?.name || "product")}
-                                      </span> <button type="button" onClick={(e) => { e.stopPropagation(); e.preventDefault(); setVendorModel(item); }} style={{ background: '#f8fafc', border: '1px solid #e2e8f0', color: '#321961', cursor: 'pointer', padding: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%', width: '24px', height: '24px', transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)', boxShadow: '0 1px 2px rgba(0,0,0,0.05)' }} onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#321961'; e.currentTarget.style.color = '#ffffff'; e.currentTarget.style.borderColor = '#321961'; e.currentTarget.style.transform = 'scale(1.08)'; }} onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#f8fafc'; e.currentTarget.style.color = '#321961'; e.currentTarget.style.borderColor = '#e2e8f0'; e.currentTarget.style.transform = 'none'; }} title="Insert into search"><i className="fa fa-plus" style={{ fontSize: '11px' }} /></button></div>
+                                      </span> <button type="button" onClick={(e) => { e.stopPropagation(); e.preventDefault(); setVendorModel(item); }} style={{ background: '#f8fafc', border: '1px solid #e2e8f0', color: 'var(--color-primary,#4c2691)', cursor: 'pointer', padding: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%', width: '24px', height: '24px', transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)', boxShadow: '0 1px 2px rgba(0,0,0,0.05)' }} onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = 'var(--color-primary,#4c2691)'; e.currentTarget.style.color = '#ffffff'; e.currentTarget.style.borderColor = 'var(--color-primary,#4c2691)'; e.currentTarget.style.transform = 'scale(1.08)'; }} onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#f8fafc'; e.currentTarget.style.color = 'var(--color-primary,#4c2691)'; e.currentTarget.style.borderColor = '#e2e8f0'; e.currentTarget.style.transform = 'none'; }} title="Insert into search"><i className="fa fa-plus" style={{ fontSize: '11px' }} /></button></div>
                                     </div>
                                   ))}
                                 {!isLoading && query.trim() && hasMoreSuggestions && filteredSuggestions.length > 0 && (
@@ -1491,7 +1491,7 @@ const ServiceDetails = () => {
                                       border: "none",
                                       borderRadius: "20px",
                                       background: "rgba(50, 25, 97, 0.05)",
-                                      color: isMoreLoading ? "#9ca3af" : "#321961",
+                                      color: isMoreLoading ? "#9ca3af" : "var(--color-primary,#4c2691)",
                                       fontWeight: "700",
                                       textAlign: "center",
                                       cursor: isMoreLoading ? "not-allowed" : "pointer",
@@ -1500,14 +1500,14 @@ const ServiceDetails = () => {
                                     }}
                                     onMouseEnter={(e) => {
                                       if (!isMoreLoading) {
-                                        e.currentTarget.style.backgroundColor = "#321961";
+                                        e.currentTarget.style.backgroundColor = "var(--color-primary,#4c2691)";
                                         e.currentTarget.style.color = "#ffffff";
                                       }
                                     }}
                                     onMouseLeave={(e) => {
                                       if (!isMoreLoading) {
                                         e.currentTarget.style.backgroundColor = "rgba(50, 25, 97, 0.05)";
-                                        e.currentTarget.style.color = "#321961";
+                                        e.currentTarget.style.color = "var(--color-primary,#4c2691)";
                                       }
                                     }}
                                   >

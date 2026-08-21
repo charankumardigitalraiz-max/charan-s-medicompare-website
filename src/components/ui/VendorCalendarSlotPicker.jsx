@@ -239,7 +239,7 @@ const VendorCalendarSlotPicker = ({
           transition: color 0.2s;
         }
         .vc-month-nav button:hover:not(:disabled) {
-          color: #321961;
+          color: var(--color-primary,#4c2691);
         }
         .vc-month-nav button:disabled {
           opacity: 0.3;
@@ -296,8 +296,8 @@ const VendorCalendarSlotPicker = ({
         }
         .calendar-day-cell.selected {
           background: #f3effa !important;
-          border-color: #321961 !important;
-          color: #321961 !important;
+          border-color: var(--color-primary,#4c2691) !important;
+          color: var(--color-primary,#4c2691) !important;
           font-weight: 700 !important;
         }
         .day-dot-indicator {
@@ -328,13 +328,13 @@ const VendorCalendarSlotPicker = ({
           color: #475569;
         }
         .time-slot-pill:hover {
-          border-color: #321961;
-          color: #321961;
+          border-color: var(--color-primary,#4c2691);
+          color: var(--color-primary,#4c2691);
           background: #fdfaff;
         }
         .time-slot-pill.selected {
-          background: #321961;
-          border-color: #321961;
+          background: var(--color-primary,#4c2691);
+          border-color: var(--color-primary,#4c2691);
           color: #fff;
         }
         .slots-action-bar {
@@ -345,7 +345,7 @@ const VendorCalendarSlotPicker = ({
         }
         .book-btn-purple {
           width: 100%;
-          background: #321961;
+          background: var(--color-primary,#4c2691);
           color: #fff;
           border: none;
           padding: 10px;
@@ -446,7 +446,7 @@ const VendorCalendarSlotPicker = ({
               className="flex items-center justify-center"
               style={{ minHeight: "150px" }}
             >
-              <div className="spinner-border spinner-border-sm text-[#321961]" role="status">
+              <div className="spinner-border spinner-border-sm text-[var(--color-primary,#4c2691)]" role="status">
                 <span className="visually-hidden">Loading...</span>
               </div>
             </div>
@@ -508,7 +508,7 @@ const VendorCalendarSlotPicker = ({
               }}
             >
               <span style={{ color: "#64748b" }}>Selection</span>
-              <span style={{ fontWeight: 600, color: "#321961" }}>
+              <span style={{ fontWeight: 600, color: "var(--color-primary,#4c2691)" }}>
                 {selectedTimeSlot
                   ? `${format(selectedDate, "dd MMM")} at ${selectedTimeSlot}`
                   : "Pick a time"}

@@ -793,7 +793,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
             />
           ) : (
             <div
-              className="w-[60px] h-[60px] rounded-full bg-gradient-to-br from-[#321961] to-[#3b82f6] flex items-center justify-center text-white text-[24px] font-bold uppercase"
+              className="w-[60px] h-[60px] rounded-full bg-[var(--color-primary,#4c2691)] flex items-center justify-center text-white text-[24px] font-bold uppercase"
             >
               {review.name && review.name.trim().length > 0
                 ? review.name.trim()[0]
@@ -870,7 +870,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                 >
                   <h1 className="m-0 !mb-[10px] !text-[clamp(22px,3.5vw,34px)] !font-semibold text-[#343434]">
                     Compare &amp; Choose{" "}
-                    <span className="text-[#321961]">
+                    <span className="text-[var(--color-primary,#4c2691)]">
                       {homeLiteMode ? (
                         <span ref={heroTypeRef}>Medicines</span>
                       ) : (
@@ -893,7 +893,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
 
                   <p className="m-0 text-[clamp(13px,2vw,20px)] text-[#757575]">
                     Compare the best healthcare services near you only on
-                    <span className="font-semibold text-[#321961]"> MediCompares</span>
+                    <span className="font-semibold text-[var(--color-primary,#4c2691)]"> MediCompares</span>
                   </p>
 
                 </div>
@@ -927,7 +927,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                                             }`}
                                         >
                                           <div
-                                            className="flex items-center justify-center w-[25px] h-[25px] text-[#321961]/60 shrink-0"
+                                            className="flex items-center justify-center w-[25px] h-[25px] text-[var(--color-primary,#4c2691)]/60 shrink-0"
                                           >
                                             <i
                                               className="fas fa-search text-[15px]"
@@ -1022,8 +1022,8 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                                                   `
                                                 }} />
                                                 <div className="relative w-14 h-14 flex items-center justify-center">
-                                                  <div className="absolute inset-0 rounded-full border-[3px] border-solid border-[#321961]/10 animate-ping opacity-75"></div>
-                                                  <div className="absolute inset-0 rounded-full border-[3px] border-solid border-transparent border-t-[#321961] border-r-[#7c3aed] animate-spin"></div>
+                                                  <div className="absolute inset-0 rounded-full border-[3px] border-solid border-[var(--color-primary,#4c2691)]/10 animate-ping opacity-75"></div>
+                                                  <div className="absolute inset-0 rounded-full border-[3px] border-solid border-transparent border-t-[var(--color-primary,#4c2691)] border-r-[#7c3aed] animate-spin"></div>
                                                   <div className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center shadow-inner z-10">
                                                     <i
                                                       key={activeLoaderIconIndex}
@@ -1172,14 +1172,14 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                                                 <div
                                                   key={item._id || item.tablet?._id || index}
                                                   onClick={() => handleSelect(item)}
-                                                  className={`w-full p-[11px] border-none bg-transparent text-left cursor-pointer text-[14.5px] text-slate-800 flex z-[9999999] items-center justify-between gap-[14px] transition-all duration-200 ease relative hover:bg-[#321961]/5 ${index < filteredSuggestions.length - 1
+                                                  className={`w-full p-[11px] border-none bg-transparent text-left cursor-pointer text-[14.5px] text-slate-800 flex z-[9999999] items-center justify-between gap-[14px] transition-all duration-200 ease relative hover:bg-[var(--color-primary-dark,#5c33a6)]/5 ${index < filteredSuggestions.length - 1
                                                     ? "border-b border-solid border-slate-100"
                                                     : "border-b-0"
                                                     }`}
                                                 >
                                                   <div className="flex items-center gap-[12px]">
                                                     <div
-                                                      className="text-[#321961]/40 shrink-0"
+                                                      className="text-[var(--color-primary,#4c2691)]/40 shrink-0"
                                                     >
                                                       <i className="fas fa-search text-[13px]"></i>
                                                     </div>
@@ -1202,7 +1202,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                                                   </div>
                                                   <div className="flex items-center gap-2">
                                                     <span
-                                                      className="text-[10px] text-[#321961] bg-[#321961]/8 py-[2.5px] px-[9px] rounded-full whitespace-nowrap ml-[8px] capitalize font-bold"
+                                                      className="text-[10px] text-[var(--color-primary,#4c2691)] bg-[var(--color-primary,#4c2691)]/8 py-[2.5px] px-[9px] rounded-full whitespace-nowrap ml-[8px] capitalize font-bold"
                                                     >
                                                       {item?.type === "package"
                                                         ? item?.type
@@ -1220,7 +1220,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                                                       style={{
                                                         background: '#ffffff',
                                                         border: '1px solid #e2e8f0',
-                                                        color: '#321961',
+                                                        color: 'var(--color-primary,#4c2691)',
                                                         cursor: 'pointer',
                                                         padding: '4px',
                                                         display: 'flex',
@@ -1233,14 +1233,14 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                                                         boxShadow: '0 1px 3px rgba(0,0,0,0.05)'
                                                       }}
                                                       onMouseEnter={(e) => {
-                                                        e.currentTarget.style.backgroundColor = '#321961';
+                                                        e.currentTarget.style.backgroundColor = 'var(--color-primary,#4c2691)';
                                                         e.currentTarget.style.color = '#ffffff';
-                                                        e.currentTarget.style.borderColor = '#321961';
+                                                        e.currentTarget.style.borderColor = 'var(--color-primary,#4c2691)';
                                                         e.currentTarget.style.transform = 'scale(1.08)';
                                                       }}
                                                       onMouseLeave={(e) => {
                                                         e.currentTarget.style.backgroundColor = '#ffffff';
-                                                        e.currentTarget.style.color = '#321961';
+                                                        e.currentTarget.style.color = 'var(--color-primary,#4c2691)';
                                                         e.currentTarget.style.borderColor = '#e2e8f0';
                                                         e.currentTarget.style.transform = 'none';
                                                       }}
@@ -1252,23 +1252,35 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                                                 </div>
                                               ))}
                                             {!isLoading && query.trim() && hasMoreSuggestions && filteredSuggestions.length > 0 && (
-                                              <button
-                                                type="button"
-                                                disabled={isMoreLoading}
-                                                onClick={(e) => {
-                                                  e.preventDefault();
-                                                  e.stopPropagation();
-                                                  const nextLimit = suggestionsLimit + 20;
-                                                  setSuggestionsLimit(nextLimit);
-                                                  fetchSuggestions(query, nextLimit, true);
-                                                }}
-                                                className={`w-full p-[10px] border-none font-semibold text-center text-[13px] border-t border-solid border-[#f3f4f6] transition-all duration-200 ${isMoreLoading
-                                                  ? "text-[#9ca3af] cursor-not-allowed bg-[#f9fafb]"
-                                                  : "text-[#321961] cursor-pointer bg-[#f9fafb] hover:bg-[#f1f5f9]"
-                                                  }`}
-                                              >
-                                                {isMoreLoading ? "Loading..." : "Load More"}
-                                              </button>
+                                              <div className="w-full flex justify-center py-2">
+                                                <button
+                                                  type="button"
+                                                  disabled={isMoreLoading}
+                                                  onClick={(e) => {
+                                                    e.preventDefault();
+                                                    e.stopPropagation();
+                                                    const nextLimit = suggestionsLimit + 20;
+                                                    setSuggestionsLimit(nextLimit);
+                                                    fetchSuggestions(query, nextLimit, true);
+                                                  }}
+                                                  className={`mx-auto py-1.5 px-6 !rounded-full font-semibold text-[12px] transition-all duration-300 flex items-center justify-center gap-1.5 border border-solid ${isMoreLoading
+                                                    ? "text-slate-400 border-slate-200 bg-slate-50 cursor-not-allowed"
+                                                    : "!text-[var(--color-primary,#4c2691)] border-[var(--color-primary,#4c2691)]/20 !bg-[#f5f0ff] hover:!bg-[var(--color-primary,#4c2691)] hover:!text-white hover:border-[var(--color-primary,#4c2691)] cursor-pointer"
+                                                    }`}
+                                                >
+                                                  {isMoreLoading ? (
+                                                    <>
+                                                      <i className="fa-solid fa-spinner animate-spin text-[10px]" />
+                                                      <span>Loading...</span>
+                                                    </>
+                                                  ) : (
+                                                    <>
+                                                      <span>Load More</span>
+                                                      <i className="fa-solid fa-chevron-down text-[10px]" />
+                                                    </>
+                                                  )}
+                                                </button>
+                                              </div>
                                             )}
                                           </div>
                                         )}
@@ -1294,12 +1306,12 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
 
               <div className="max-w-full mx-auto px-6 md:px-12 lg:px-20 relative z-10">
                 <div className="text-center mb-12 max-w-2xl lg:max-w-4xl mx-auto" data-aos="fade-up">
-                  {/* <div className="inline-flex items-center gap-1.5 bg-[#321961]/10 border border-solid border-[#321961]/20 py-1.5 px-4 rounded-full mb-4">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#321961] animate-pulse"></span>
-                    <span className="text-[11px] uppercase tracking-wider text-[#321961] font-semibold">Specialized Care</span>
+                  {/* <div className="inline-flex items-center gap-1.5 bg-[var(--color-primary,#4c2691)]/10 border border-solid border-[var(--color-primary,#4c2691)]/20 py-1.5 px-4 rounded-full mb-4">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-primary,#4c2691)] animate-pulse"></span>
+                    <span className="text-[11px] uppercase tracking-wider text-[var(--color-primary,#4c2691)] font-semibold">Specialized Care</span>
                   </div> */}
                   <h2 className="!text-[34px] !font-light text-[#0f172a] leading-tight tracking-tight mb-3">
-                    Explore Multiple <span className="font-normal text-[#321961]">Services</span>
+                    Explore Multiple <span className="font-normal text-[var(--color-primary,#4c2691)]">Services</span>
                   </h2>
                   <p className="text-[13.5px] text-[#475569] font-normal leading-[1.75] max-w-[520px] mx-auto">
                     Browse a wide range of medical categories to compare pricing, verify compositions, and find the best deals near you.
@@ -1323,15 +1335,15 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                     <div
                       key={item._id}
                       onClick={() => handleCategoryClick(item)}
-                      className="group cursor-pointer bg-white border border-solid border-slate-200/80 rounded-md p-4 flex flex-row items-center gap-4 transition-all duration-300 hover:border-[#321961]/35 hover:shadow-[0_12px_30px_rgba(50,25,97,0.06)] hover:-translate-y-1 relative overflow-hidden"
+                      className="group cursor-pointer bg-white border border-solid border-slate-200/80 rounded-md p-4 flex flex-row items-center gap-4 transition-all duration-300 hover:border-[var(--color-primary-dark,#5c33a6)]/35 hover:shadow-[0_12px_30px_rgba(50,25,97,0.06)] hover:-translate-y-1 relative overflow-hidden"
                     >
                       {/* Glow Blob decoration on card hover */}
                       <div className="absolute -bottom-10 -right-10 w-20 h-20 bg-[#7c3aed]/5 rounded-full blur-xl group-hover:bg-[#7c3aed]/10 transition-colors duration-300"></div>
 
                       {/* Interactive Accent Line */}
-                      <div className="absolute inset-x-0 bottom-0 h-[3px] bg-gradient-to-r from-[#321961] to-[#7c3aed] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                      <div className="absolute inset-x-0 bottom-0 h-[3px] bg-[var(--color-primary,#4c2691)] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
-                      <div className="w-[52px] h-[52px] rounded-xl bg-gradient-to-br from-[#321961]/5 to-[#7c3aed]/5 border border-solid border-slate-200/40 flex items-center justify-center transition-all duration-300 group-hover:from-[#321961] group-hover:to-[#7c3aed] group-hover:shadow-[0_4px_12px_rgba(125,46,255,0.25)] shrink-0">
+                      <div className="w-[52px] h-[52px] rounded-xl bg-gradient-to-br from-[var(--color-primary,#4c2691)]/5 to-[var(--color-primary,#4c2691)]/5 border border-solid border-slate-200/40 flex items-center justify-center transition-all duration-300 group-hover:bg-[var(--color-primary,#4c2691)] group-hover:shadow-[0_4px_12px_rgba(125,46,255,0.25)] shrink-0">
                         <img
                           src={
                             item?.files
@@ -1348,10 +1360,10 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                       </div>
 
                       <div className="flex-1 min-w-0 text-left">
-                        <h4 className="!font-[600] !text-[14px] !text-[#1e293b] group-hover:!text-[#321961] transition-colors duration-300 !mb-0 !leading-tight truncate !tracking-tight">
+                        <h4 className="!font-[600] !text-[14px] !text-[#1e293b] group-hover:!text-[var(--color-primary,#4c2691)] transition-colors duration-300 !mb-0 !leading-tight truncate !tracking-tight">
                           {item.name}
                         </h4>
-                        <span className="inline-flex items-center gap-0.5 text-[10px] font-medium text-[#94a3b8] group-hover:text-[#321961] transition-colors duration-300 mt-0.5">
+                        <span className="inline-flex items-center gap-0.5 text-[10px] font-medium text-[#94a3b8] group-hover:text-[var(--color-primary,#4c2691)] transition-colors duration-300 mt-0.5">
                           <span>Explore</span>
                           <i className="fas fa-arrow-right text-[7px] transform group-hover:translate-x-0.5 transition-transform" />
                         </span>
@@ -1370,7 +1382,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
               title="Top Most Medicines"
               icon="fas fa-capsules"
               bgColor="rgba(79, 70, 229, 0.12)"
-              iconColor="#321961"
+              iconColor="var(--color-primary,#4c2691)"
               medicines={mediciness}
               isMobile={isMobile}
               decorativeElements={
@@ -1383,7 +1395,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                         top: "10%",
                         left: "5%",
                         fontSize: "40px",
-                        color: "#321961",
+                        color: "var(--color-primary,#4c2691)",
                         animation: "floatBlob 25s infinite",
                       },
                       icon: "fas fa-capsules",
@@ -1406,7 +1418,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                         top: "15%",
                         right: "20%",
                         fontSize: "20px",
-                        color: "#321961",
+                        color: "var(--color-primary,#4c2691)",
                         animation: "driftScale 18s infinite",
                         animationDelay: "2s",
                       },
@@ -1429,7 +1441,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                         bottom: "5%",
                         left: "15%",
                         fontSize: "28px",
-                        color: "#321961",
+                        color: "var(--color-primary,#4c2691)",
                         animation: "wobble 20s infinite",
                         opacity: 0.1,
                       },
@@ -1474,9 +1486,9 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
 
               {/* Section Header */}
               <div className="text-center mb-12 max-w-2xl mx-auto">
-                <div className="inline-flex items-center gap-1.5 bg-[#321961]/10 border border-solid border-[#321961]/20 py-1.5 px-4 rounded-full mb-4">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#321961] animate-pulse"></span>
-                  <span className="text-[11px] uppercase tracking-wider text-[#321961] font-semibold">Ecosystem Overview</span>
+                <div className="inline-flex items-center gap-1.5 bg-[var(--color-primary,#4c2691)]/10 border border-solid border-[var(--color-primary,#4c2691)]/20 py-1.5 px-4 rounded-full mb-4">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-primary,#4c2691)] animate-pulse"></span>
+                  <span className="text-[11px] uppercase tracking-wider text-[var(--color-primary,#4c2691)] font-semibold">Ecosystem Overview</span>
                 </div>
                 <h2 className="!text-[34px] !font-light text-[#0f172a] leading-tight tracking-tight mb-3">
                   Quick Access to <span className="font-normal !text-green">Healthcare Services</span>
@@ -1567,11 +1579,11 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                       fixedType: "medicine",
                       path: "/medicine/all",
                       cardBg: "bg-gradient-to-br from-[#fbfaff] to-[#f3ebff] hover:from-[#f3ebff] hover:to-[#e9daff]",
-                      iconClass: "bg-[#321961]/8 text-[#321961] border border-[#321961]/10",
-                      labelClass: "text-[#321961]/80 font-semibold tracking-wide",
+                      iconClass: "bg-[var(--color-primary,#4c2691)]/8 text-[var(--color-primary,#4c2691)] border border-[var(--color-primary,#4c2691)]/10",
+                      labelClass: "text-[var(--color-primary,#4c2691)]/80 font-semibold tracking-wide",
                       titleClass: "text-[#241247] font-bold tracking-tight",
                       descClass: "text-slate-500 font-normal",
-                      borderClass: "border-[#321961]/10",
+                      borderClass: "border-[var(--color-primary,#4c2691)]/10",
                       shadowHover: "hover:shadow-[0_20px_40px_rgba(50,25,97,0.08)]",
                       watermarkColor: "text-[#1d0e3a]/12",
                     }
@@ -1675,7 +1687,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                   {/* Heading */}
                   <h2 className="text-[34px] md:text-[44px] font-bold leading-[1.15] tracking-tight mb-4">
                     <span className="text-[#0f172a]">Find the </span>
-                    <span className="text-[#321961]">Right Surgeon</span>
+                    <span className="text-[var(--color-primary,#4c2691)]">Right Surgeon</span>
                     <br />
                     <span className="text-[#475569] font-light text-[28px] md:text-[32px]">at the Right Price.</span>
                   </h2>
@@ -1823,7 +1835,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
               .QuickAccessSlider .slick-dots li.slick-active button {
                 width: 28px !important;
                 height: 8px !important;
-                background-color: #321961 !important;
+                background-color: var(--color-primary,#4c2691) !important;
               }
             `}</style>
             <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse 60% 50% at 20% 50%, rgba(124,58,237,0.04) 0%, transparent 70%), radial-gradient(ellipse 50% 60% at 80% 50%, rgba(14,165,233,0.04) 0%, transparent 70%)" }}></div>
@@ -1834,11 +1846,11 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
               <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between mb-10 gap-3">
                 <div>
                   <div className="flex items-center gap-2 mb-3">
-                    <span className="w-6 h-[2px] bg-[#321961] rounded-full"></span>
-                    <span className="text-[11px] text-[#321961] uppercase tracking-[0.25em] font-medium">Healthcare Access</span>
+                    <span className="w-6 h-[2px] bg-[var(--color-primary,#4c2691)] rounded-full"></span>
+                    <span className="text-[11px] text-[var(--color-primary,#4c2691)] uppercase tracking-[0.25em] font-medium">Healthcare Access</span>
                   </div>
                   <h2 className="!text-[32px] !font-light text-[#0f172a] leading-tight tracking-tight">
-                    Quick Access to <span className="text-[#321961] font-normal">Services</span>
+                    Quick Access to <span className="text-[var(--color-primary,#4c2691)] font-normal">Services</span>
                   </h2>
                 </div>
                 <div className="flex items-center gap-6">
@@ -1848,14 +1860,14 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                   <div className="flex items-center gap-2">
                     <button
                       onClick={() => serviceSliderRef.current?.slickPrev()}
-                      className="w-9 h-9 !rounded-full border border-solid border-[#e2e8f0] hover:border-[#321961] hover:bg-[#321961]/5 flex items-center justify-center text-[#64748b] hover:text-[#321961] transition-all duration-300 cursor-pointer shadow-sm"
+                      className="w-9 h-9 !rounded-full border border-solid border-[#e2e8f0] hover:border-[var(--color-primary-dark,#5c33a6)] hover:bg-[var(--color-primary-dark,#5c33a6)]/5 flex items-center justify-center text-[#64748b] hover:text-[var(--color-primary,#4c2691)] transition-all duration-300 cursor-pointer shadow-sm"
                       aria-label="Previous Slide"
                     >
                       <i className="fas fa-chevron-left text-[12px]"></i>
                     </button>
                     <button
                       onClick={() => serviceSliderRef.current?.slickNext()}
-                      className="w-9 h-9 !rounded-full border border-solid border-[#e2e8f0] hover:border-[#321961] hover:bg-[#321961]/5 flex items-center justify-center text-[#64748b] hover:text-[#321961] transition-all duration-300 cursor-pointer shadow-sm"
+                      className="w-9 h-9 !rounded-full border border-solid border-[#e2e8f0] hover:border-[var(--color-primary-dark,#5c33a6)] hover:bg-[var(--color-primary-dark,#5c33a6)]/5 flex items-center justify-center text-[#64748b] hover:text-[var(--color-primary,#4c2691)] transition-all duration-300 cursor-pointer shadow-sm"
                       aria-label="Next Slide"
                     >
                       <i className="fas fa-chevron-right text-[12px]"></i>
@@ -1969,7 +1981,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                         desc: "Compare and order prescriptions from local pharmacies.",
                         cta: "Explore",
                         link: "/medicine/all",
-                        from: "#321961",
+                        from: "var(--color-primary,#4c2691)",
                         to: "#4c1d95",
                         glow: "rgba(50,25,97,0.18)",
                         badge: "Medicines",
@@ -2103,7 +2115,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
 
             {/* Ambient gradients */}
             <div className="absolute top-0 left-0 w-[500px] h-[500px] rounded-full bg-[#ea580c]/5 blur-[120px] pointer-events-none"></div>
-            <div className="absolute bottom-0 right-0 w-[500px] h-[500px] rounded-full bg-[#321961]/5 blur-[120px] pointer-events-none"></div>
+            <div className="absolute bottom-0 right-0 w-[500px] h-[500px] rounded-full bg-[var(--color-primary,#4c2691)]/5 blur-[120px] pointer-events-none"></div>
 
             <div className="container mx-auto px-4 max-w-7xl relative z-10 text-center">
 
@@ -2279,21 +2291,21 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                   </div>
 
                   {/* Mega Spotlight Box */}
-                  <div className="rounded-md p-8 text-slate-800 relative overflow-hidden shadow-[0_20px_50px_rgba(50,25,97,0.06)] border border-solid border-[#321961]/15" style={{ background: "linear-gradient(135deg, #f8f4ff 0%, #e8e3f5 100%)" }}>
+                  <div className="rounded-md p-8 text-slate-800 relative overflow-hidden shadow-[0_20px_50px_rgba(50,25,97,0.06)] border border-solid border-[var(--color-primary,#4c2691)]/15" style={{ background: "linear-gradient(135deg, #f8f4ff 0%, #e8e3f5 100%)" }}>
                     <div className="absolute top-0 right-0 w-32 h-32 rounded-full bg-[#7c3aed]/10 blur-[25px] pointer-events-none"></div>
                     <div className="absolute bottom-0 left-0 w-32 h-32 rounded-full bg-[#0ea5e9]/5 blur-[25px] pointer-events-none"></div>
 
                     <div className="relative z-10 text-left">
                       <span className="text-[11px] font-bold text-[#7c3aed] tracking-widest uppercase block mb-3">Highlight Feature</span>
-                      <h3 className="text-[28px] font-normal leading-snug mb-3 text-[#321961]">
+                      <h3 className="text-[28px] font-normal leading-snug mb-3 text-[var(--color-primary,#4c2691)]">
                         Save Up to <span className="text-[#ea580c] font-semibold">40%</span> On Medical Bills
                       </h3>
                       <p className="text-[13.5px] text-slate-600 font-light leading-relaxed mb-6 tracking-wide">
-                        <span className="font-medium text-[#321961]">Medicompare</span> queries over <span className="font-semibold text-slate-800">500+ local pharmacies</span> in real-time to find you the <span className="font-semibold text-[#059669]">lowest prices</span> and substitutes automatically.
+                        <span className="font-medium text-[var(--color-primary,#4c2691)]">Medicompare</span> queries over <span className="font-semibold text-slate-800">500+ local pharmacies</span> in real-time to find you the <span className="font-semibold text-[#059669]">lowest prices</span> and substitutes automatically.
                       </p>
 
                       {/* Mock Compare Strip */}
-                      <div className="group/strip cursor-pointer bg-white/60 hover:bg-[#321961] rounded-sm p-4 border border-solid border-[#321961]/10 flex items-center justify-between transition-all duration-300 shadow-sm hover:shadow-sm">
+                      <div className="group/strip cursor-pointer bg-white/60 hover:bg-[var(--color-primary-dark,#5c33a6)] rounded-sm p-4 border border-solid border-[var(--color-primary,#4c2691)]/10 flex items-center justify-between transition-all duration-300 shadow-sm hover:shadow-sm">
                         <div className="flex items-center gap-3">
                           <div className="w-9 h-9 rounded-full bg-[#ea580c] group-hover/strip:bg-white/20 flex items-center justify-center text-[#ea580c] group-hover/strip:text-white transition-all duration-300">
                             <i className="fas fa-search-dollar text-[14px]"></i>
@@ -2303,7 +2315,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                             <div className="text-[10px] !text-slate-500 group-hover/strip:text-white/70 transition-colors duration-300">500+ Verified Partners</div>
                           </div>
                         </div>
-                        <i className="fas fa-arrow-right text-[#321961]/40 group-hover/strip:!text-white text-[12px] transition-colors duration-300"></i>
+                        <i className="fas fa-arrow-right text-[var(--color-primary,#4c2691)]/40 group-hover/strip:!text-white text-[12px] transition-colors duration-300"></i>
                       </div>
                     </div>
                   </div>
@@ -2483,7 +2495,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
               <section className="py-15 bg-gradient-to-br from-[#faf9fc] via-[#f1ebfa] to-[#ebdffc] text-slate-800 relative overflow-hidden">
                 {/* Modern light mesh gradient background blobs */}
                 <div className="absolute top-[-10%] left-[-10%] w-[400px] h-[400px] rounded-full bg-[#7c3aed]/8 blur-[90px] pointer-events-none"></div>
-                <div className="absolute bottom-[-10%] right-[-10%] w-[450px] h-[450px] rounded-full bg-[#321961]/5 blur-[100px] pointer-events-none"></div>
+                <div className="absolute bottom-[-10%] right-[-10%] w-[450px] h-[450px] rounded-full bg-[var(--color-primary,#4c2691)]/5 blur-[100px] pointer-events-none"></div>
 
                 <div className="container mx-auto px-4 max-w-7xl relative z-10">
 
@@ -2591,7 +2603,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                         </div>
 
                         {/* VS Circle */}
-                        <div className="w-16 h-16 shrink-0 rounded-full bg-gradient-to-br from-[#321961] to-[#7c3aed] text-white flex items-center justify-center shadow-[0_8px_25px_rgba(50,25,97,0.3)] relative z-10 transition-transform duration-500 hover:scale-110 hover:rotate-12 cursor-default animate-compare-sway">
+                        <div className="w-16 h-16 shrink-0 rounded-full bg-[var(--color-primary,#4c2691)] text-white flex items-center justify-center shadow-[0_8px_25px_rgba(50,25,97,0.3)] relative z-10 transition-transform duration-500 hover:scale-110 hover:rotate-12 cursor-default animate-compare-sway">
                           <span className="text-[18px] font-bold tracking-widest font-mono">VS</span>
                         </div>
 
@@ -2615,7 +2627,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
 
                         <Link
                           to="/medicine/all"
-                          className="!bg-gradient-to-r from-[#321961] to-[#7c3aed] text-white hover:from-[#4c2d96] hover:to-[#6d28d9] py-3 px-6 rounded-full font-semibold text-[13.5px] no-underline inline-flex items-center gap-2 transition-all duration-300 w-full justify-center shadow-md shadow-indigo-500/10"
+                          className="!bg-[var(--color-primary,#4c2691)] text-white hover:bg-[var(--color-primary-dark,#5c33a6)] py-3 px-6 rounded-full font-semibold text-[13.5px] no-underline inline-flex items-center gap-2 transition-all duration-300 w-full justify-center shadow-md shadow-indigo-500/10"
                         >
                           <span>Compare live prices</span>
                           <i className="fas fa-arrow-right text-[10px]"></i>
@@ -2747,7 +2759,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                   data-aos="fade-up"
                 >
                   <div
-                    className="mb-2 inline-block py-[8px] px-[20px] bg-gradient-to-br from-[#7d2eff]/10 to-[#3b82f6]/10 rounded-[50px] text-[14px] font-semibold text-[#321961]"
+                    className="mb-2 inline-block py-[8px] px-[20px] bg-[var(--color-primary,#4c2691)]/[0.08] rounded-[50px] text-[14px] font-semibold text-[var(--color-primary,#4c2691)]"
                   >
                     <i className="fas fa-bolt mr-[8px]"></i>
                     Reviews
@@ -2817,9 +2829,9 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
 
               <div className="max-w-full mx-auto px-6 md:px-12 lg:px-20 relative z-10">
                 <div className="text-center mb-14" data-aos="fade-up">
-                  <div className="inline-flex items-center gap-1.5 bg-[#321961]/10 border border-solid border-[#321961]/25 py-1.5 px-4 rounded-full mb-4">
+                  <div className="inline-flex items-center gap-1.5 bg-[var(--color-primary,#4c2691)]/10 border border-solid border-[var(--color-primary,#4c2691)]/25 py-1.5 px-4 rounded-full mb-4">
                     <span className="w-1.5 h-1.5 rounded-full bg-[#059669] animate-pulse"></span>
-                    <span className="text-[11px] uppercase tracking-wider text-[#321961] font-bold">Our Partners</span>
+                    <span className="text-[11px] uppercase tracking-wider text-[var(--color-primary,#4c2691)] font-bold">Our Partners</span>
                   </div>
                   <h2 className="!text-[34px] !font-light text-[#0f172a] leading-tight tracking-tight mb-3">
                     Trusted Network of Healthcare <span className="font-normal text-[#059669]">Partners</span>
@@ -2848,9 +2860,9 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                           <div
                             key={`r1-${vendor._id || idx}-${idx}`}
                             onClick={() => handleVendorClick(vendor)}
-                            className="w-[280px] h-[88px] bg-white rounded-xl border border-solid border-[#321961]/10 p-3 flex flex-row items-center gap-3.5 cursor-pointer transition-all duration-300 hover:border-[#321961]/35 hover:shadow-[0_8px_25px_rgba(50,25,97,0.06)] hover:-translate-y-1 relative group overflow-hidden shrink-0"
+                            className="w-[280px] h-[88px] bg-white rounded-xl border border-solid border-[var(--color-primary,#4c2691)]/10 p-3 flex flex-row items-center gap-3.5 cursor-pointer transition-all duration-300 hover:border-[var(--color-primary-dark,#5c33a6)]/35 hover:shadow-[0_8px_25px_rgba(50,25,97,0.06)] hover:-translate-y-1 relative group overflow-hidden shrink-0"
                           >
-                            <div className="absolute inset-0 bg-gradient-to-tr from-[#321961]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                            <div className="absolute inset-0 bg-gradient-to-tr from-[var(--color-primary,#4c2691)]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
 
                             <div className="w-[64px] h-[64px] rounded-lg bg-white flex items-center justify-center p-1.5 shadow-sm transition-transform duration-300 group-hover:scale-105 shrink-0">
                               {logoSrc ? (
@@ -2867,7 +2879,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                               ) : null}
                               <div
                                 style={{ display: logoSrc ? 'none' : 'flex' }}
-                                className="w-full h-full rounded-lg bg-gradient-to-br from-[#321961] to-[#7d2eff] text-white font-bold items-center justify-center text-lg uppercase"
+                                className="w-full h-full rounded-lg bg-gradient-to-br from-[var(--color-primary,#4c2691)] to-[#7d2eff] text-white font-bold items-center justify-center text-lg uppercase"
                               >
                                 {name ? name[0] : 'V'}
                               </div>
@@ -2901,9 +2913,9 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                           <div
                             key={`r2-${vendor._id || idx}-${idx}`}
                             onClick={() => handleVendorClick(vendor)}
-                            className="w-[280px] h-[88px] bg-white rounded-xl border border-solid border-[#321961]/10 p-3 flex flex-row items-center gap-3.5 cursor-pointer transition-all duration-300 hover:border-[#321961]/35 hover:shadow-[0_8px_25px_rgba(50,25,97,0.06)] hover:-translate-y-1 relative group overflow-hidden shrink-0"
+                            className="w-[280px] h-[88px] bg-white rounded-xl border border-solid border-[var(--color-primary,#4c2691)]/10 p-3 flex flex-row items-center gap-3.5 cursor-pointer transition-all duration-300 hover:border-[var(--color-primary-dark,#5c33a6)]/35 hover:shadow-[0_8px_25px_rgba(50,25,97,0.06)] hover:-translate-y-1 relative group overflow-hidden shrink-0"
                           >
-                            <div className="absolute inset-0 bg-gradient-to-tr from-[#321961]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                            <div className="absolute inset-0 bg-gradient-to-tr from-[var(--color-primary,#4c2691)]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
 
                             <div className="w-[64px] h-[64px] rounded-lg bg-white flex items-center justify-center p-1.5 shadow-sm transition-transform duration-300 group-hover:scale-105 shrink-0">
                               {logoSrc ? (
@@ -2920,7 +2932,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                               ) : null}
                               <div
                                 style={{ display: logoSrc ? 'none' : 'flex' }}
-                                className="w-full h-full rounded-lg bg-gradient-to-br from-[#321961] to-[#7d2eff] text-white font-bold items-center justify-center text-lg uppercase"
+                                className="w-full h-full rounded-lg bg-gradient-to-br from-[var(--color-primary,#4c2691)] to-[#7d2eff] text-white font-bold items-center justify-center text-lg uppercase"
                               >
                                 {name ? name[0] : 'V'}
                               </div>
@@ -2946,15 +2958,15 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
             <section className="py-12 bg-white">
               <div className="container mx-auto px-4">
                 <div className="text-center mb-16 max-w-2xl mx-auto">
-                  <div className="inline-flex items-center gap-1.5 bg-[#321961]/10 border border-solid border-[#321961]/20 py-1.5 px-4 rounded-full mb-4">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#321961] animate-pulse"></span>
-                    <span className="text-[11px] uppercase tracking-wider text-[#321961] font-bold">FAQ Support</span>
+                  <div className="inline-flex items-center gap-1.5 bg-[var(--color-primary,#4c2691)]/10 border border-solid border-[var(--color-primary,#4c2691)]/20 py-1.5 px-4 rounded-full mb-4">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-primary,#4c2691)] animate-pulse"></span>
+                    <span className="text-[11px] uppercase tracking-wider text-[var(--color-primary,#4c2691)] font-bold">FAQ Support</span>
                   </div>
                   <h2 className="!text-[34px] !font-light text-[#0f172a] leading-tight tracking-tight mb-3">
-                    Frequently Asked <span className="font-normal text-[#321961]">Questions</span>
+                    Frequently Asked <span className="font-normal text-[var(--color-primary,#4c2691)]">Questions</span>
                   </h2>
                   <p className="text-[13.5px] text-[#64748b] font-light leading-relaxed max-w-lg mx-auto tracking-wide">
-                    Find the <span className="font-semibold text-[#321961]">best medicine prices</span>, ensure <span className="font-semibold text-[#059669]">authenticity</span> with verified products, explore <span className="font-semibold text-[#7c3aed]">cost-effective alternatives</span>, and get instant answers.
+                    Find the <span className="font-semibold text-[var(--color-primary,#4c2691)]">best medicine prices</span>, ensure <span className="font-semibold text-[#059669]">authenticity</span> with verified products, explore <span className="font-semibold text-[#7c3aed]">cost-effective alternatives</span>, and get instant answers.
                   </p>
                 </div>
 
@@ -2969,14 +2981,14 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                           key={index}
                           onClick={() => toggleAccordion(index)}
                           className={`p-4.5 rounded-md border-2 border-solid cursor-pointer text-left transition-all duration-300 flex items-center justify-between gap-4 ${isActive
-                            ? "bg-gradient-to-r from-white to-[#faf9fc] border-[#321961] shadow-[0_12px_30px_rgba(50,25,97,0.06)] translate-x-2"
+                            ? "bg-gradient-to-r from-white to-[#faf9fc] border-[var(--color-primary,#4c2691)] shadow-[0_12px_30px_rgba(50,25,97,0.06)] translate-x-2"
                             : "bg-white border-slate-100 hover:border-slate-300 hover:bg-slate-50/50 shadow-sm"
                             }`}
                         >
-                          <span className={`text-[14.5px] font-semibold transition-colors duration-200 ${isActive ? "text-[#321961]" : "text-slate-700"}`}>
+                          <span className={`text-[14.5px] font-semibold transition-colors duration-200 ${isActive ? "text-[var(--color-primary,#4c2691)]" : "text-slate-700"}`}>
                             {faq.question}
                           </span>
-                          <i className={`fas fa-chevron-right text-[12px] transition-transform duration-300 ${isActive ? "text-[#321961] translate-x-1" : "text-slate-400"}`}></i>
+                          <i className={`fas fa-chevron-right text-[12px] transition-transform duration-300 ${isActive ? "text-[var(--color-primary,#4c2691)] translate-x-1" : "text-slate-400"}`}></i>
                         </div>
                       );
                     })}
@@ -3021,7 +3033,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                             </div>
                             {/* <Link
                               to="/contact"
-                              className="px-4 py-2 rounded-full bg-white text-[#321961] hover:bg-[#c4b5fd] hover:text-white transition-all duration-300 text-[11.5px] font-semibold no-underline shadow-md shadow-white/5 shrink-0"
+                              className="px-4 py-2 rounded-full bg-white text-[var(--color-primary,#4c2691)] hover:bg-[#c4b5fd] hover:text-white transition-all duration-300 text-[11.5px] font-semibold no-underline shadow-md shadow-white/5 shrink-0"
                             >
                               Chat Now
                             </Link> */}
@@ -3060,7 +3072,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                     {faqss.map((faq, index) => {
                       const isOpen = openIndex === index;
                       return (
-                        <div className={`bg-white rounded-xl border transition-all duration-300 overflow-hidden ${isOpen ? 'border-[#321961] shadow-[0_8px_20px_rgba(50,25,97,0.08)]' : 'border-gray-200 shadow-sm'}`} key={index}>
+                        <div className={`bg-white rounded-xl border transition-all duration-300 overflow-hidden ${isOpen ? 'border-[var(--color-primary,#4c2691)] shadow-[0_8px_20px_rgba(50,25,97,0.08)]' : 'border-gray-200 shadow-sm'}`} key={index}>
                           <h2 className="m-0">
                             <button
                               type="button"
@@ -3068,11 +3080,11 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                               aria-expanded={isOpen}
                               className="flex items-center justify-between w-full p-4 font-semibold text-left border-none bg-white hover:bg-gray-50/50 transition-colors cursor-pointer gap-4"
                             >
-                              <span className={`flex-1 text-[14px] font-semibold tracking-tight transition-colors duration-200 ${isOpen ? 'text-[#321961]' : 'text-gray-800'}`}>
+                              <span className={`flex-1 text-[14px] font-semibold tracking-tight transition-colors duration-200 ${isOpen ? 'text-[var(--color-primary,#4c2691)]' : 'text-gray-800'}`}>
                                 {faq.question}
                               </span>
                               <i
-                                className={`fa-solid fa-chevron-down text-gray-400 text-[12px] transition-transform duration-300 ${isOpen ? 'rotate-180 text-[#321961]' : ''} shrink-0`}
+                                className={`fa-solid fa-chevron-down text-gray-400 text-[12px] transition-transform duration-300 ${isOpen ? 'rotate-180 text-[var(--color-primary,#4c2691)]' : ''} shrink-0`}
                                 aria-hidden="true"
                               />
                             </button>
@@ -3109,12 +3121,12 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
             >
               <div className="container mx-auto px-4">
                 <div className="text-center mb-16 max-w-2xl mx-auto">
-                  <div className="inline-flex items-center gap-1.5 bg-[#321961]/10 border border-solid border-[#321961]/20 py-1.5 px-4 rounded-full mb-4">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#321961] animate-pulse"></span>
-                    <span className="text-[11px] uppercase tracking-wider text-[#321961] font-bold">Our Blogs</span>
+                  <div className="inline-flex items-center gap-1.5 bg-[var(--color-primary,#4c2691)]/10 border border-solid border-[var(--color-primary,#4c2691)]/20 py-1.5 px-4 rounded-full mb-4">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-primary,#4c2691)] animate-pulse"></span>
+                    <span className="text-[11px] uppercase tracking-wider text-[var(--color-primary,#4c2691)] font-bold">Our Blogs</span>
                   </div>
                   <h2 className="!text-[34px] !font-light text-[#0f172a] leading-tight tracking-tight mb-3">
-                    Insights & Tips on <span className="font-normal text-[#321961]">Medicines</span>
+                    Insights & Tips on <span className="font-normal text-[var(--color-primary,#4c2691)]">Medicines</span>
                   </h2>
                   <p className="text-[13.5px] text-[#64748b] font-light leading-relaxed max-w-lg mx-auto">
                     Stay informed with our latest blog posts on medicine pricing, authentic products, cost-effective alternatives, and smart savings tips.
@@ -3137,7 +3149,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                         <div key={index} className="flex flex-col h-full w-full">
                           <div
                             onClick={() => getByBlogDetails(blog)}
-                            className="bg-white rounded-[16px] overflow-hidden shadow-[0_2px_12px_rgba(128,89,202,0.1)] border border-solid border-[#321961]/10 transition-all duration-300 ease flex flex-col flex-1 cursor-pointer hover:shadow-[0_8px_24px_rgba(128,89,202,0.15)] h-full w-full"
+                            className="bg-white rounded-[16px] overflow-hidden shadow-[0_2px_12px_rgba(128,89,202,0.1)] border border-solid border-[var(--color-primary,#4c2691)]/10 transition-all duration-300 ease flex flex-col flex-1 cursor-pointer hover:shadow-[0_8px_24px_rgba(128,89,202,0.15)] h-full w-full"
                           >
                             <div
                               className="relative w-full h-[200px] overflow-hidden bg-[#f8f4ff] flex items-center justify-center shrink-0"
@@ -3171,7 +3183,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                                   </div>
                                 </div>
 
-                                <h3 className="!text-[16px] !font-semibold text-[#321961] mb-[4px] leading-[1.4] line-clamp-1 truncate">
+                                <h3 className="!text-[16px] !font-semibold text-[var(--color-primary,#4c2691)] mb-[4px] leading-[1.4] line-clamp-1 truncate">
                                   {blog.title}
                                 </h3>
 
@@ -3190,7 +3202,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                                       e.stopPropagation();
                                       getByBlogDetails(blog);
                                     }}
-                                    className="p-0 border-none bg-none !text-[#321961] !text-[13px] !font-semibold cursor-pointer flex items-center gap-1"
+                                    className="p-0 border-none bg-none !text-[var(--color-primary,#4c2691)] !text-[13px] !font-semibold cursor-pointer flex items-center gap-1"
                                   >
                                     Read more <i className="fas fa-arrow-right text-[10px]" />
                                   </button>
@@ -3219,7 +3231,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                         <div className="px-2 h-full flex flex-col w-full" key={index}>
                           <div
                             onClick={() => getByBlogDetails(blog)}
-                            className="bg-white rounded-[16px] overflow-hidden shadow-[0_2px_12px_rgba(128,89,202,0.1)] border border-solid border-[#321961]/10 transition-all duration-300 ease flex flex-col flex-1 cursor-pointer hover:shadow-[0_8px_24px_rgba(128,89,202,0.15)] h-full w-full"
+                            className="bg-white rounded-[16px] overflow-hidden shadow-[0_2px_12px_rgba(128,89,202,0.1)] border border-solid border-[var(--color-primary,#4c2691)]/10 transition-all duration-300 ease flex flex-col flex-1 cursor-pointer hover:shadow-[0_8px_24px_rgba(128,89,202,0.15)] h-full w-full"
                           >
                             <div
                               className="relative w-full h-[200px] overflow-hidden bg-[#f8f4ff] flex items-center justify-center shrink-0"
@@ -3254,7 +3266,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                                   </div>
                                 </div>
 
-                                <h3 className="!text-[16px] !font-semibold text-[#321961] mb-[4px] leading-[1.4] line-clamp-1 truncate">
+                                <h3 className="!text-[16px] !font-semibold text-[var(--color-primary,#4c2691)] mb-[4px] leading-[1.4] line-clamp-1 truncate">
                                   {blog.title}
                                 </h3>
 
@@ -3273,7 +3285,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                                       e.stopPropagation();
                                       getByBlogDetails(blog);
                                     }}
-                                    className="p-0 border-none bg-none !text-[#321961] !text-[13px] !font-semibold cursor-pointer flex items-center gap-1"
+                                    className="p-0 border-none bg-none !text-[var(--color-primary,#4c2691)] !text-[13px] !font-semibold cursor-pointer flex items-center gap-1"
                                   >
                                     Read more <i className="fas fa-arrow-right text-[10px]" />
                                   </button>
@@ -3292,7 +3304,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                   <button
                     type="button"
                     onClick={() => navigate("/blogs")}
-                    className="inline-flex items-center gap-2 px-6 py-3 bg-[#321961] hover:bg-[#6d48b8] !text-white !text-sm !font-semibold !rounded-full shadow-lg shadow-[#321961]/25 hover:shadow-xl hover:shadow-[#321961]/35 transition-all duration-200 cursor-pointer active:scale-[0.98] border-none"
+                    className="inline-flex items-center gap-2 px-6 py-3 bg-[var(--color-primary,#4c2691)] hover:bg-[#6d48b8] !text-white !text-sm !font-semibold !rounded-full shadow-lg shadow-[var(--color-primary,#4c2691)]/25 hover:shadow-xl hover:shadow-[var(--color-primary,#4c2691)]/35 transition-all duration-200 cursor-pointer active:scale-[0.98] border-none"
                   >
                     View All Blogs <i className="fas fa-arrow-right text-xs"></i>
                   </button>
@@ -3305,7 +3317,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
 
           <section className="py-16 bg-white">
             <div className="container mx-auto px-4">
-              <div className="bg-gradient-to-br from-[#1e0a3d] via-[#321961] to-[#4c1d95] rounded-md p-8 lg:p-12 relative overflow-hidden shadow-[0_20px_50px_rgba(50,25,97,0.2)]">
+              <div className="bg-gradient-to-br from-[#1e0a3d] via-[var(--color-primary,#4c2691)] to-[#4c1d95] rounded-md p-8 lg:p-12 relative overflow-hidden shadow-[0_20px_50px_rgba(50,25,97,0.2)]">
                 {/* Decorative floating background elements */}
                 <div className="absolute top-[-20%] right-[-10%] w-[350px] h-[350px] rounded-full bg-[#7c3aed]/15 blur-[60px] pointer-events-none"></div>
                 <div className="absolute bottom-[-10%] left-[-5%] w-[300px] h-[300px] rounded-full bg-[#10b981]/10 blur-[50px] pointer-events-none"></div>

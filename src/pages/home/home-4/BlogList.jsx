@@ -75,7 +75,7 @@ const BlogList = () => {
 
                     {/* Hero Banner */}
                     <div
-                        className="relative overflow-hidden text-center bg-gradient-to-br from-[#321961] via-[#6d48b8] to-[#5a3a99] py-16 px-4"
+                        className="relative overflow-hidden text-center bg-[#f8f5ff] py-16 px-4"
                     // style={{ marginTop: isTabletOrBelow ? "70px" : "40px" }}
                     >
                         <div
@@ -83,13 +83,13 @@ const BlogList = () => {
                             style={{ backgroundImage: "url('/assets/Medicompares Background.png')" }}
                         ></div>
                         <div className="absolute top-4 left-4 z-20">
-                            <BackButton className="!rounded-full !bg-white/90 border border-[#321961]/30 !text-[#321961] hover:!bg-[#321961] hover:!text-white shadow-sm" />
+                            <BackButton className="!rounded-full !bg-white/90 border border-[var(--color-primary,#4c2691)]/30 !text-[var(--color-primary,#4c2691)] hover:!bg-[var(--color-primary,#4c2691)] hover:!text-white shadow-sm" />
                         </div>
                         <div className="relative z-10 max-w-2xl mx-auto">
-                            <h1 className="text-3xl md:text-5xl font-black text-white mb-3 tracking-tight">
+                            <h1 className="text-3xl md:text-5xl font-black text-slate-800 mb-3 tracking-tight">
                                 Insights &amp; Health Tips
                             </h1>
-                            <p className="text-sm md:text-base text-white/80 leading-relaxed font-medium">
+                            <p className="text-sm md:text-base text-slate-500 leading-relaxed font-medium">
                                 Stay informed with expert articles on medicine pricing,
                                 alternatives, and smart healthcare decisions.
                             </p>
@@ -103,8 +103,8 @@ const BlogList = () => {
                                 <button
                                     key={cat}
                                     className={`px-4 py-1.5 !rounded-full !text-xs md:text-sm !font-semibold !transition-all !duration-200 !cursor-pointer !border ${activeCategory === cat
-                                        ? "!bg-[#321961] !border-[#321961] !text-white !shadow-md !shadow-[#321961]/20"
-                                        : "!bg-white !border-[#321961]/35 !text-[#321961] !hover:bg-[#321961] !hover:text-white !hover:border-[#321961]"
+                                        ? "!bg-[var(--color-primary,#4c2691)] !border-[var(--color-primary,#4c2691)] !text-white !shadow-md !shadow-[var(--color-primary,#4c2691)]/20"
+                                        : "!bg-white !border-[var(--color-primary,#4c2691)]/35 !text-[var(--color-primary,#4c2691)] !hover:bg-[var(--color-primary-dark,#5c33a6)] !hover:!text-white !hover:border-[var(--color-primary-dark,#5c33a6)]"
                                         }`}
                                     onClick={() => setActiveCategory(cat)}
                                 >
@@ -117,7 +117,7 @@ const BlogList = () => {
                         <div className="text-[13px] text-slate-400 font-semibold mt-6 mb-2">
                             Showing {filteredBlogs.length} blog{filteredBlogs.length !== 1 ? "s" : ""}
                             {activeCategory !== "All" && (
-                                <span> in <strong className="text-[#321961]">{activeCategory}</strong></span>
+                                <span> in <strong className="text-[var(--color-primary,#4c2691)]">{activeCategory}</strong></span>
                             )}
                         </div>
                     </div>
@@ -137,7 +137,7 @@ const BlogList = () => {
                                 {filteredBlogs.map((blog, index) => (
                                     <div
                                         key={blog._id || index}
-                                        className="group bg-white rounded-2xl overflow-hidden border border-[#321961]/10 shadow-[0_4px_16px_rgba(128,89,202,0.05)] hover:shadow-[0_12px_32px_rgba(128,89,202,0.12)] hover:-translate-y-1 transition-all duration-300 flex flex-col cursor-pointer"
+                                        className="group bg-white rounded-2xl overflow-hidden border border-[var(--color-primary,#4c2691)]/10 shadow-[0_4px_16px_rgba(128,89,202,0.05)] hover:shadow-[0_12px_32px_rgba(128,89,202,0.12)] hover:-translate-y-1 transition-all duration-300 flex flex-col cursor-pointer"
                                         onClick={() => handleBlogClick(blog)}
                                     >
                                         {/* Image */}
@@ -158,7 +158,7 @@ const BlogList = () => {
                                                 }}
                                             />
                                             {blog.category?.name && (
-                                                <span className="absolute top-3 left-3 bg-[#321961]/90 backdrop-blur-md text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                                                <span className="absolute top-3 left-3 bg-[var(--color-primary,#4c2691)]/90 backdrop-blur-md text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">
                                                     {blog.category.name}
                                                 </span>
                                             )}
@@ -184,7 +184,7 @@ const BlogList = () => {
                                                 dangerouslySetInnerHTML={{ __html: truncate(blog.description, 130) }}
                                             />
                                             <div className="flex items-center justify-between border-t border-slate-50 pt-4 mt-2">
-                                                <span className="text-xs font-bold text-[#321961] flex items-center gap-1 group-hover:gap-2 transition-all">
+                                                <span className="text-xs font-bold text-[var(--color-primary,#4c2691)] flex items-center gap-1 group-hover:gap-2 transition-all">
                                                     Read more <i className="fas fa-arrow-right text-[10px]" />
                                                 </span>
                                             </div>

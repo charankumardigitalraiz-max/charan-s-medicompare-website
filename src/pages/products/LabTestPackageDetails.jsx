@@ -29,20 +29,20 @@ const TestAccordionRow = ({ test, index }) => {
         className={`w-full flex items-center justify-between px-[18px] py-[14px] bg-transparent border-none text-left gap-3 ${hasParams ? "cursor-pointer" : "cursor-default"}`}
       >
         <div className="flex items-center gap-3 flex-1">
-          <div className="w-7 h-7 rounded-full bg-gradient-to-br from-[#321961] to-[#a875f7] text-white flex items-center justify-center text-[12px] font-bold flex-shrink-0">
+          <div className="w-7 h-7 rounded-full bg-gradient-to-br from-[var(--color-primary,#4c2691)] to-[#a875f7] text-white flex items-center justify-center text-[12px] font-bold flex-shrink-0">
             {index + 1}
           </div>
           <div>
             <span className="text-[14px] font-semibold text-[#222] block">{test.name}</span>
           </div>
           {hasParams && (
-            <span className="text-[11px] text-[#321961] bg-[#f3eeff] rounded-[10px] px-2 py-[2px] whitespace-nowrap font-medium">
+            <span className="text-[11px] text-[var(--color-primary,#4c2691)] bg-[#f3eeff] rounded-[10px] px-2 py-[2px] whitespace-nowrap font-medium">
               {test.parameterss.length} Parameter{test.parameterss.length > 1 ? "s" : ""}
             </span>
           )}
         </div>
         {hasParams && (
-          <i className={`fas fa-chevron-${open ? "up" : "down"} text-[#321961] text-[12px] flex-shrink-0`} />
+          <i className={`fas fa-chevron-${open ? "up" : "down"} text-[var(--color-primary,#4c2691)] text-[12px] flex-shrink-0`} />
         )}
       </button>
 
@@ -128,8 +128,8 @@ const LabTestPackageDetails = () => {
       <div className="main-wrapper">
         <Home2Header />
         <div className="min-h-[60vh] flex flex-col items-center justify-center gap-4">
-          <div className="w-12 h-12 rounded-full border-4 border-[#f0ebff] border-t-[#321961] animate-spin" />
-          <p className="text-[#321961] font-medium">Loading package…</p>
+          <div className="w-12 h-12 rounded-full border-4 border-[#f0ebff] border-t-[var(--color-primary,#4c2691)] animate-spin" />
+          <p className="text-[var(--color-primary,#4c2691)] font-medium">Loading package…</p>
         </div>
         <Footer />
       </div>
@@ -148,7 +148,7 @@ const LabTestPackageDetails = () => {
       <div className="max-w-[1440px] mx-auto px-4 py-6 md:py-8">
         <button
           onClick={() => navigate(-1)}
-          className="inline-flex items-center gap-2 text-[#321961] border border-[#e9d5ff] rounded-[30px] px-4 py-1.5 no-underline text-[12px] font-semibold bg-[#fdfaff] transition-all duration-200 hover:text-white hover:bg-gradient-to-r hover:from-[#321961] hover:to-[#6f42c1] hover:border-[#321961] hover:shadow-[0_4px_12px_rgba(128,89,202,0.2)] shadow-[0_2px_5px_rgba(128,89,202,0.05)] mb-4"
+          className="inline-flex items-center gap-2 text-[var(--color-primary,#4c2691)] border border-[#e9d5ff] rounded-[30px] px-4 py-1.5 no-underline text-[12px] font-semibold bg-[#fdfaff] transition-all duration-200 hover:text-white hover:bg-gradient-to-r hover:from-[var(--color-primary,#4c2691)] hover:to-[#6f42c1] hover:border-[var(--color-primary-dark,#5c33a6)] hover:shadow-[0_4px_12px_rgba(128,89,202,0.2)] shadow-[0_2px_5px_rgba(128,89,202,0.05)] mb-4"
         >
           <i className="fas fa-arrow-left" /> Back
         </button>
@@ -167,7 +167,7 @@ const LabTestPackageDetails = () => {
                 />
                 <div className="flex-1 min-w-[250px]">
                   <div className="flex items-center gap-2 flex-wrap mb-2">
-                    <span className="bg-[#f0ebff] text-[#321961] text-[10px] font-semibold px-2 py-[2px] rounded-full">
+                    <span className="bg-[#f0ebff] text-[var(--color-primary,#4c2691)] text-[10px] font-semibold px-2 py-[2px] rounded-full">
                       Lab Test Package
                     </span>
                     {discount > 0 && (
@@ -180,7 +180,7 @@ const LabTestPackageDetails = () => {
                     {pkg.name}
                   </h1>
                   <div className="flex items-center gap-2 flex-wrap">
-                    <span className="text-xl md:text-2xl !font-bold text-[#321961]">
+                    <span className="text-xl md:text-2xl !font-bold text-[var(--color-primary,#4c2691)]">
                       {formatCurrency(effectivePrice)}
                     </span>
                     {discount > 0 && (
@@ -200,7 +200,7 @@ const LabTestPackageDetails = () => {
                       key={sub._id}
                       className="text-[11px] text-[#666] bg-[#f5f5f5] border border-[#e5e5e5] px-[10px] py-[3px] rounded-[30px] font-medium"
                     >
-                      <i className="fas fa-tags mr-1 text-[#321961]" />
+                      <i className="fas fa-tags mr-1 text-[var(--color-primary,#4c2691)]" />
                       {sub.name}
                     </span>
                   ))}
@@ -216,7 +216,7 @@ const LabTestPackageDetails = () => {
                   { icon: "fa-flask", label: "Parameters", value: `${totalParams}` },
                 ].map((stat, i) => (
                   <div key={i} className="flex-[1_1_120px] flex items-center gap-3 p-[10px] rounded-lg bg-[#faf8ff] border border-[#f0ebff]">
-                    <div className="w-8 h-8 rounded-md bg-[#f0ebff] flex items-center justify-center text-[#321961] text-[13px] flex-shrink-0">
+                    <div className="w-8 h-8 rounded-md bg-[#f0ebff] flex items-center justify-center text-[var(--color-primary,#4c2691)] text-[13px] flex-shrink-0">
                       <i className={`fas ${stat.icon}`} />
                     </div>
                     <div>
@@ -294,7 +294,7 @@ const LabTestPackageDetails = () => {
                       </p>
                       {vendorBiz?.address && (
                         <p className="text-[11px] text-[#777] m-0 flex items-start gap-1">
-                          <i className="fas fa-map-marker-alt text-[#321961] mt-[2px] flex-shrink-0" />
+                          <i className="fas fa-map-marker-alt text-[var(--color-primary,#4c2691)] mt-[2px] flex-shrink-0" />
                           {vendorBiz.address}
                         </p>
                       )}
@@ -313,7 +313,7 @@ const LabTestPackageDetails = () => {
               <div className="bg-white rounded-[12px] shadow-[0_4px_20px_rgba(128,89,202,0.06)] border border-[#ede9f8] mb-5 overflow-hidden">
                 <div className="flex items-center justify-between px-5 py-[14px] border-b border-[#f3eeff]">
                   <h3 className="text-[13px] font-semibold text-[#1a1a2e] m-0 flex items-center gap-2">
-                    <i className="fas fa-vial text-[#321961]" />
+                    <i className="fas fa-vial text-[var(--color-primary,#4c2691)]" />
                     Tests Included ({tablets.length})
                   </h3>
                 </div>

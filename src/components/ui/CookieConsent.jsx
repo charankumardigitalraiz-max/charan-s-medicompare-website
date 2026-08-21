@@ -43,7 +43,7 @@ const CookieConsent = () => {
             <div className="fixed bottom-[20px] sm:bottom-[30px] left-0 right-0 mx-auto w-[calc(100%-32px)] sm:w-[90%] max-w-[850px] z-[9999] pointer-events-none cookie-animate">
                 <div className="w-full pointer-events-auto bg-white/95 backdrop-blur-[15px] border border-gray-100 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.15)] flex flex-col lg:flex-row items-start lg:items-center justify-between p-5 sm:p-6 lg:p-[20px_45px_20px_25px] gap-5 lg:gap-8 relative" data-aos="fade-up">
                     <div className="flex items-start sm:items-center gap-4 sm:gap-5 flex-1 min-w-0">
-                        <div className="w-[48px] h-[48px] bg-gradient-to-br from-[#321961] to-[#4a268a] rounded-xl flex items-center justify-center shrink-0 shadow-md">
+                        <div className="w-[48px] h-[48px] bg-gradient-to-br from-[var(--color-primary,#4c2691)] to-[var(--color-primary-dark,#5c33a6)] rounded-xl flex items-center justify-center shrink-0 shadow-md">
                             <i className="fas fa-cookie-bite text-white text-xl"></i>
                         </div>
                         <div className="text-left flex-1 min-w-0">
@@ -57,7 +57,7 @@ const CookieConsent = () => {
                         <button onClick={handleDecline} className="py-2.5 sm:py-3 px-5 sm:px-6 !rounded-xl !text-xs sm:!text-sm !font-semibold cursor-pointer !transition-all !duration-300 !border-none flex-1 lg:flex-none !text-center !bg-black/5 !text-[#333] hover:bg-black/10 hover:-translate-y-0.5">
                             Decline Optional
                         </button>
-                        <button onClick={handleAccept} className="py-2.5 sm:py-3 px-5 sm:px-6 !rounded-xl !text-xs sm:!text-sm !font-semibold cursor-pointer !transition-all !duration-300 !border-none flex-1 lg:flex-none !text-center !bg-[#321961] !text-white !shadow-[0_4px_15px_rgba(50,25,97,0.3)] hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(50,25,97,0.4)]">
+                        <button onClick={handleAccept} className="py-2.5 sm:py-3 px-5 sm:px-6 !rounded-xl !text-xs sm:!text-sm !font-semibold cursor-pointer !transition-all !duration-300 !border-none flex-1 lg:flex-none !text-center !bg-[var(--color-primary,#4c2691)] !text-white !shadow-[0_4px_15px_rgba(50,25,97,0.3)] hover:-translate-y-0.5 hover:shadow-[0_6px_20px_rgba(50,25,97,0.4)]">
                             Accept All
                         </button>
                     </div>

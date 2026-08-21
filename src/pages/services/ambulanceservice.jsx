@@ -155,7 +155,7 @@ const ambulanceservice = ({
         <ul className="!flex !justify-center !items-center !gap-2 !p-0 !m-0 !list-none">
           <li>
             <button
-              className="!w-9 !h-9 !flex !items-center !justify-center !rounded-xl !border !border-solid !border-gray-200 !bg-white !text-gray-600 hover:!bg-[#321961]/10 hover:!text-[#321961] disabled:!opacity-40 disabled:!cursor-not-allowed !transition-all !duration-300"
+              className="!w-9 !h-9 !flex !items-center !justify-center !rounded-xl !border !border-solid !border-gray-200 !bg-white !text-gray-600 hover:!bg-[var(--color-primary-dark,#5c33a6)]/10 hover:!text-[var(--color-primary,#4c2691)] disabled:!opacity-40 disabled:!cursor-not-allowed !transition-all !duration-300"
               onClick={() => onPageChange(Math.max(currentPage - 1, 1))}
               disabled={currentPage === 1}
             >
@@ -175,8 +175,8 @@ const ambulanceservice = ({
                 <li key={page}>
                   <button
                     className={`!w-9 !h-9 !flex !items-center !justify-center !rounded-xl !border !border-solid !text-[13px] !font-medium !transition-all !duration-300 ${currentPage === page
-                      ? "!bg-[#321961] !text-white !border-[#321961]"
-                      : "!bg-white !text-gray-700 !border-gray-200 hover:!bg-[#321961]/10 hover:!text-[#321961]"
+                      ? "!bg-[var(--color-primary,#4c2691)] !text-white !border-[var(--color-primary,#4c2691)]"
+                      : "!bg-white !text-gray-700 !border-gray-200 hover:!bg-[var(--color-primary-dark,#5c33a6)]/10 hover:!text-[var(--color-primary,#4c2691)]"
                       }`}
                     onClick={() => onPageChange(page)}
                   >
@@ -199,7 +199,7 @@ const ambulanceservice = ({
 
           <li>
             <button
-              className="!w-9 !h-9 !flex !items-center !justify-center !rounded-xl !border !border-solid !border-gray-200 !bg-white !text-gray-600 hover:!bg-[#321961]/10 hover:!text-[#321961] disabled:!opacity-40 disabled:!cursor-not-allowed !transition-all !duration-300"
+              className="!w-9 !h-9 !flex !items-center !justify-center !rounded-xl !border !border-solid !border-gray-200 !bg-white !text-gray-600 hover:!bg-[var(--color-primary-dark,#5c33a6)]/10 hover:!text-[var(--color-primary,#4c2691)] disabled:!opacity-40 disabled:!cursor-not-allowed !transition-all !duration-300"
               onClick={() =>
                 onPageChange(Math.min(currentPage + 1, totalPages))
               }
@@ -213,7 +213,7 @@ const ambulanceservice = ({
     );
   };
 
-  const PRIMARY_COLOR = "#321961";
+  const PRIMARY_COLOR = "var(--color-primary,#4c2691)";
   const PRIMARY_SECTION_BG = "#f8f4ff";
   const PRIMARY_DARK = "#6d48b8";
 
@@ -244,7 +244,7 @@ const ambulanceservice = ({
 
                   {isLoading && (
                     <div
-                      className="!w-4 !h-4 !border-2 !border-solid !border-[#321961] !border-t-transparent !rounded-full !animate-spin"
+                      className="!w-4 !h-4 !border-2 !border-solid !border-[var(--color-primary,#4c2691)] !border-t-transparent !rounded-full !animate-spin"
                       role="status"
                     >
                       <span className="sr-only">Loading...</span>
@@ -268,7 +268,7 @@ const ambulanceservice = ({
         </button>
 
         <button
-          className="!flex !items-center !gap-2 !py-2.5 !px-5 !text-[13px] md:!text-[14px] !font-medium !rounded-[8px] !bg-[#321961] !text-white hover:!bg-[#6d48b8] hover:!-translate-y-[1px] !shadow-[0_4px_12px_rgba(128,89,202,0.18)] hover:!shadow-[0_6px_16px_rgba(128,89,202,0.25)] !transition-all !duration-300 !border-none !cursor-pointer"
+          className="!flex !items-center !gap-2 !py-2.5 !px-5 !text-[13px] md:!text-[14px] !font-medium !rounded-[8px] !bg-[var(--color-primary,#4c2691)] !text-white hover:!bg-[#6d48b8] hover:!-translate-y-[1px] !shadow-[0_4px_12px_rgba(128,89,202,0.18)] hover:!shadow-[0_6px_16px_rgba(128,89,202,0.25)] !transition-all !duration-300 !border-none !cursor-pointer"
           data-tooltip-id="global-tooltip"
           data-tooltip-content="Patient Transport Services"
         >
@@ -291,7 +291,7 @@ const ambulanceservice = ({
         (categories && categories.length > 0 && !searchQuery)) && (
           <section className="!mx-2 !pt-4 !pb-6 !bg-[#f8f4ff] !rounded-2xl">
             <div className="container-fluid !px-4 md:!px-6 !mx-auto">
-              <h2 className="!text-[24px] md:!text-[28px] !font-semibold !mb-6 !text-center !bg-gradient-to-br !from-[#321961] !to-[#6d48b8] !bg-clip-text !text-transparent">
+              <h2 className="!text-[24px] md:!text-[28px] !font-semibold !mb-6 !text-center !bg-gradient-to-br !from-[var(--color-primary,#4c2691)] !to-[#6d48b8] !bg-clip-text !text-transparent">
                 Patient Transport Services
                 {filteredEmergencyVehicles.length > 0 &&
                   ` (${filteredEmergencyVehicles.length})`}
@@ -356,7 +356,7 @@ const ambulanceservice = ({
                       </div>
 
                       <button
-                        className="!w-full !mt-4 !py-2 !rounded-lg !bg-[#321961] hover:!bg-[#6d48b8] !text-white !font-semibold !text-[13px] !transition-all !duration-300 !border-none !cursor-pointer"
+                        className="!w-full !mt-4 !py-2 !rounded-lg !bg-[var(--color-primary,#4c2691)] hover:!bg-[#6d48b8] !text-white !font-semibold !text-[13px] !transition-all !duration-300 !border-none !cursor-pointer"
                         onClick={(e) => handleBookNow(e, vehicle)}
                       >
                         Book Now
@@ -378,7 +378,7 @@ const ambulanceservice = ({
       {categories1 && categories1.length > 0 && (
         <section className="!mx-2 !py-8 !px-0 !bg-[#f8f4ff] !rounded-2xl !mt-6">
           <div className="container-fluid !px-4 md:!px-6 !mx-auto">
-            <h2 className="!text-[24px] md:!text-[28px] !font-semibold !mb-6 !text-center !bg-gradient-to-br !from-[#321961] !to-[#6d48b8] !bg-clip-text !text-transparent">
+            <h2 className="!text-[24px] md:!text-[28px] !font-semibold !mb-6 !text-center !bg-gradient-to-br !from-[var(--color-primary,#4c2691)] !to-[#6d48b8] !bg-clip-text !text-transparent">
               Top Most Booked Ambulances
             </h2>
 
@@ -440,7 +440,7 @@ const ambulanceservice = ({
                     </div>
 
                     <button
-                      className="!w-full !mt-4 !py-1 !rounded-sm !bg-[#321961] hover:!bg-[#6d48b8] !text-white !font-semibold !text-[13px] !transition-all !duration-300 !border-none !cursor-pointer"
+                      className="!w-full !mt-4 !py-1 !rounded-sm !bg-[var(--color-primary,#4c2691)] hover:!bg-[#6d48b8] !text-white !font-semibold !text-[13px] !transition-all !duration-300 !border-none !cursor-pointer"
                       onClick={(e) => handleBookNow(e, vehicle)}
                     >
                       Book Now
@@ -463,8 +463,8 @@ const ambulanceservice = ({
         <section className="!py-8 !px-3 !bg-[#f8f4ff] !rounded-2xl !mt-6">
           <div className="container-fluid !px-4 md:!px-6 !mx-auto">
             <div className="!text-center !mb-6">
-              <h2 className="!text-[24px] md:!text-[28px] !font-semibold !bg-gradient-to-br !from-[#321961] !to-[#6d48b8] !bg-clip-text !text-transparent">
-                <i className="fas fa-bolt !mr-2 !text-[#321961]" />
+              <h2 className="!text-[24px] md:!text-[28px] !font-semibold !bg-gradient-to-br !from-[var(--color-primary,#4c2691)] !to-[#6d48b8] !bg-clip-text !text-transparent">
+                <i className="fas fa-bolt !mr-2 !text-[var(--color-primary,#4c2691)]" />
                 Offers & Promotions
               </h2>
             </div>
@@ -500,10 +500,10 @@ const ambulanceservice = ({
         <div className="container-fluid !px-4 md:!px-6 !mx-auto !max-w-[1320px]">
           {/* Section Header */}
           <div className="!text-center !mb-10">
-            <div className="!inline-flex !items-center !gap-2 !bg-[#321961]/10 !border !border-solid !border-[#321961]/25 !rounded-full !py-1.5 !px-4 !text-[12px] !font-bold !tracking-wider !uppercase !text-[#321961] !mb-3">
+            <div className="!inline-flex !items-center !gap-2 !bg-[var(--color-primary,#4c2691)]/10 !border !border-solid !border-[var(--color-primary,#4c2691)]/25 !rounded-full !py-1.5 !px-4 !text-[12px] !font-bold !tracking-wider !uppercase !text-[var(--color-primary,#4c2691)] !mb-3">
               <i className="fas fa-bolt !text-yellow-500" /> Fast Emergency Dispatch
             </div>
-            <h2 className="!text-[28px] md:!text-[32px] !font-semibold !bg-gradient-to-br !from-[#321961] !to-[#6d48b8] !bg-clip-text !text-transparent !mb-2">
+            <h2 className="!text-[28px] md:!text-[32px] !font-semibold !bg-gradient-to-br !from-[var(--color-primary,#4c2691)] !to-[#6d48b8] !bg-clip-text !text-transparent !mb-2">
               Booking Process
             </h2>
             <p className="!text-gray-500 !max-w-[600px] !mx-auto !leading-relaxed !mt-2 !text-[14px] md:!text-[16px]">
@@ -517,7 +517,7 @@ const ambulanceservice = ({
 
               {/* Left Column: Clean Image Showcase Card */}
               <div className="!w-full lg:!w-5/12 !flex !flex-col !justify-center">
-                <div className="!bg-white !rounded-2xl !p-3 !shadow-[0_10px_30px_rgba(128,89,202,0.06)] !border !border-solid !border-[#321961]/15 !overflow-hidden">
+                <div className="!bg-white !rounded-2xl !p-3 !shadow-[0_10px_30px_rgba(128,89,202,0.06)] !border !border-solid !border-[var(--color-primary,#4c2691)]/15 !overflow-hidden">
                   <img
                     src="/assets/img/ambulance_booking_illustration.png"
                     alt="Ambulance Booking Process Illustration"
@@ -527,13 +527,13 @@ const ambulanceservice = ({
 
                   {/* Clean Bottom Feature Strip */}
                   <div className="!flex !items-center !justify-between !gap-2 !mt-3">
-                    <span className="!flex-1 !flex !items-center !justify-center !gap-1.5 !text-[11.5px] !font-medium !py-2 !px-2 !rounded-lg !border !border-solid !border-[#321961]/15 !bg-[#f8f4ff] !text-[#321961]">
+                    <span className="!flex-1 !flex !items-center !justify-center !gap-1.5 !text-[11.5px] !font-medium !py-2 !px-2 !rounded-lg !border !border-solid !border-[var(--color-primary,#4c2691)]/15 !bg-[#f8f4ff] !text-[var(--color-primary,#4c2691)]">
                       <i className="fas fa-bolt !text-yellow-500 !text-[12px]" /> Fast Dispatch
                     </span>
-                    <span className="!flex-1 !flex !items-center !justify-center !gap-1.5 !text-[11.5px] !font-medium !py-2 !px-2 !rounded-lg !border !border-solid !border-[#321961]/15 !bg-[#f8f4ff] !text-[#321961]">
-                      <i className="fas fa-map-marker-alt !text-[#321961] !text-[12px]" /> Live GPS
+                    <span className="!flex-1 !flex !items-center !justify-center !gap-1.5 !text-[11.5px] !font-medium !py-2 !px-2 !rounded-lg !border !border-solid !border-[var(--color-primary,#4c2691)]/15 !bg-[#f8f4ff] !text-[var(--color-primary,#4c2691)]">
+                      <i className="fas fa-map-marker-alt !text-[var(--color-primary,#4c2691)] !text-[12px]" /> Live GPS
                     </span>
-                    <span className="!flex-1 !flex !items-center !justify-center !gap-1.5 !text-[11.5px] !font-medium !py-2 !px-2 !rounded-lg !border !border-solid !border-[#321961]/15 !bg-[#f8f4ff] !text-[#321961]">
+                    <span className="!flex-1 !flex !items-center !justify-center !gap-1.5 !text-[11.5px] !font-medium !py-2 !px-2 !rounded-lg !border !border-solid !border-[var(--color-primary,#4c2691)]/15 !bg-[#f8f4ff] !text-[var(--color-primary,#4c2691)]">
                       <i className="fas fa-user-nurse !text-sky-400 !text-[12px]" /> EMT Staff
                     </span>
                   </div>
@@ -568,14 +568,14 @@ const ambulanceservice = ({
                   ].map((step) => (
                     <div
                       key={step.num}
-                      className="!bg-white !rounded-sm !shadow-[0_8px_24px_rgba(128,89,202,0.04)] !border !border-solid !border-gray-100 !flex !items-start !transition-all !duration-300 !relative !overflow-hidden hover:!-translate-y-1 hover:!border-[#321961] hover:!shadow-[0_12px_30px_rgba(128,89,202,0.1)] !p-5 md:!p-6 !gap-4 md:!gap-5"
+                      className="!bg-white !rounded-sm !shadow-[0_8px_24px_rgba(128,89,202,0.04)] !border !border-solid !border-gray-100 !flex !items-start !transition-all !duration-300 !relative !overflow-hidden hover:!-translate-y-1 hover:!border-[var(--color-primary,#4c2691)] hover:!shadow-[0_12px_30px_rgba(128,89,202,0.1)] !p-5 md:!p-6 !gap-4 md:!gap-5"
                     >
-                      <span className="!absolute !top-4 !right-5 !text-[24px] !font-mono !font-bold !text-[#321961]/10">
+                      <span className="!absolute !top-4 !right-5 !text-[24px] !font-mono !font-bold !text-[var(--color-primary,#4c2691)]/10">
                         {step.num}
                       </span>
 
-                      <div className="!w-14 !h-14 !rounded-xl !bg-[#f8f4ff] !flex !items-center !justify-center !shrink-0 !border !border-solid !border-[#321961]/20 !shadow-sm !self-center">
-                        <i className={`${step.icon} !text-[22px] !text-[#321961]`} />
+                      <div className="!w-14 !h-14 !rounded-xl !bg-[#f8f4ff] !flex !items-center !justify-center !shrink-0 !border !border-solid !border-[var(--color-primary,#4c2691)]/20 !shadow-sm !self-center">
+                        <i className={`${step.icon} !text-[22px] !text-[var(--color-primary,#4c2691)]`} />
                       </div>
 
                       <div className="!flex-1 !min-w-0 !pr-6">
@@ -587,7 +587,7 @@ const ambulanceservice = ({
                         </p>
                         <div className="!flex !flex-wrap !gap-2">
                           {step.tags.map((tag, i) => (
-                            <span key={i} className="!text-[11px] !font-medium !py-0.5 !px-2.5 !rounded-full !text-[#321961] !bg-[#f8f4ff]">
+                            <span key={i} className="!text-[11px] !font-medium !py-0.5 !px-2.5 !rounded-full !text-[var(--color-primary,#4c2691)] !bg-[#f8f4ff]">
                               {tag}
                             </span>
                           ))}
@@ -606,7 +606,7 @@ const ambulanceservice = ({
       <section className="!py-16 !bg-[#E8E4F5] bg-[url('/assets/Medicompares%20Background.png')] !bg-cover !bg-center !bg-no-repeat !rounded-2xl !mx-2 !mt-6">
         <div className="container-fluid !px-4 md:!px-6 !mx-auto">
           <div className="!text-center !mb-10">
-            <h2 className="!text-[28px] md:!text-[32px] !font-semibold !bg-gradient-to-br !from-[#321961] !to-[#6d48b8] !bg-clip-text !text-transparent !mb-2">
+            <h2 className="!text-[28px] md:!text-[32px] !font-semibold !bg-gradient-to-br !from-[var(--color-primary,#4c2691)] !to-[#6d48b8] !bg-clip-text !text-transparent !mb-2">
               Why Choose Us?
             </h2>
             <p className="!text-[15px] !text-gray-600 !font-normal !m-0">
@@ -640,12 +640,12 @@ const ambulanceservice = ({
               },
             ].map((item, index) => (
               <div key={index} className="!w-full">
-                <div className="!bg-white !rounded-sm !p-6 !text-center !border !border-solid !border-gray-100 !h-full !transition-all !duration-300 hover:!-translate-y-1 hover:!shadow-[0_8px_20px_rgba(128,89,202,0.1)] hover:!border-[#321961]">
-                  <div className="!w-12 !h-12 !rounded-xl !flex !items-center !justify-center !mx-auto !mb-4 !shadow-sm !bg-gradient-to-br !from-[#321961] !to-[#6d48b8]">
+                <div className="!bg-white !rounded-sm !p-6 !text-center !border !border-solid !border-gray-100 !h-full !transition-all !duration-300 hover:!-translate-y-1 hover:!shadow-[0_8px_20px_rgba(128,89,202,0.1)] hover:!border-[var(--color-primary,#4c2691)]">
+                  <div className="!w-12 !h-12 !rounded-xl !flex !items-center !justify-center !mx-auto !mb-4 !shadow-sm !bg-gradient-to-br !from-[var(--color-primary,#4c2691)] !to-[#6d48b8]">
                     <i className={`${item.icon} !text-[20px] !text-white`} />
                   </div>
 
-                  <h5 className="!text-[16px] !font-medium !mb-2 !leading-snug !text-[#321961]">
+                  <h5 className="!text-[16px] !font-medium !mb-2 !leading-snug !text-[var(--color-primary,#4c2691)]">
                     {item.title}
                   </h5>
 
@@ -682,7 +682,7 @@ const ambulanceservice = ({
                     <div className="!text-[15px] !font-medium !text-gray-900 !m-0 !flex-1">
                       {faq.question}
                     </div>
-                    <span className="!text-[16px] !font-bold !transition-all !duration-300 !flex !items-center !justify-center !w-6 !h-6 !text-[#321961]">
+                    <span className="!text-[16px] !font-bold !transition-all !duration-300 !flex !items-center !justify-center !w-6 !h-6 !text-[var(--color-primary,#4c2691)]">
                       {expandedFaq === faq.id ? (
                         <i className="fas fa-minus"></i>
                       ) : (

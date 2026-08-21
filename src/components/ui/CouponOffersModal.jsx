@@ -57,7 +57,7 @@ const CouponOffersModal = ({
       saver: "from-emerald-400 to-emerald-500",
       good: "from-blue-400 to-indigo-500",
       hot: "from-orange-400 to-rose-500",
-      mega: "from-purple-500 to-[#321961]",
+      mega: "from-purple-500 to-[var(--color-primary,#4c2691)]",
       inactive: "from-slate-300 to-slate-400",
       applied: "from-emerald-500 to-teal-600",
     };
@@ -113,7 +113,7 @@ const CouponOffersModal = ({
               {/* Code Badge */}
               <span
                 onClick={(e) => handleCopyCode(ele.code, e)}
-                className="!text-[11px] !font-semibold !text-[#321961] !bg-purple-50 hover:!bg-purple-100 !border !border-dashed !border-purple-200 !rounded-md !px-2.5 !py-0.5 !cursor-pointer !transition-all !shrink-0"
+                className="!text-[11px] !font-semibold !text-[var(--color-primary,#4c2691)] !bg-purple-50 hover:!bg-purple-100 !border !border-dashed !border-purple-200 !rounded-md !px-2.5 !py-0.5 !cursor-pointer !transition-all !shrink-0"
                 style={{ fontFamily: '"Poppins", sans-serif', letterSpacing: "0.05em" }}
                 title="Click to copy coupon code"
               >
@@ -159,7 +159,7 @@ const CouponOffersModal = ({
                 type="button"
                 onClick={() => onApplyCoupon(ele)}
                 className={`!py-1 !px-3 !rounded-md !text-[11px] !font-bold !border-0 !transition-all !duration-200 hover:!scale-105 active:!scale-95 !shadow-[0_2px_4px_rgba(0,0,0,0.08)] !cursor-pointer ${tier === "mega"
-                  ? "!bg-[#321961] hover:!bg-[#4c2d8c] !text-white"
+                  ? "!bg-[var(--color-primary,#4c2691)] hover:!bg-[#4c2d8c] !text-white"
                   : tier === "hot"
                     ? "!bg-rose-500 hover:!bg-rose-600 !text-white"
                     : tier === "good"
@@ -196,7 +196,7 @@ const CouponOffersModal = ({
       onClose={onClose}
       title={
         <div className="!flex !items-center !gap-2">
-          <i className="fa-solid fa-tags !text-[#321961] !text-lg" />
+          <i className="fa-solid fa-tags !text-[var(--color-primary,#4c2691)] !text-lg" />
           <span
             className="!text-[16px] !font-semibold !text-slate-800 !tracking-wide"
             style={{ fontFamily: '"Poppins", sans-serif' }}
@@ -213,7 +213,7 @@ const CouponOffersModal = ({
       <div className="offers-modal-body !p-4 !bg-slate-50 !overflow-y-auto !max-h-[60vh] !scrollbar-thin">
         {/* Banner Card */}
         {hasCoupons && (
-          <div className="!bg-gradient-to-r !from-[#321961] !to-[#4c2a8f] !p-4 !rounded-sm !text-white !mb-4 !shadow-sm !relative !overflow-hidden">
+          <div className="!bg-gradient-to-r !from-[var(--color-primary,#4c2691)] !to-[#4c2a8f] !p-4 !rounded-sm !text-white !mb-4 !shadow-sm !relative !overflow-hidden">
             <div className="!absolute !-right-6 !-bottom-6 !w-24 !h-24 !bg-white/10 !rounded-full !blur-xl !pointer-events-none" />
             <div className="!absolute !-left-4 !-top-4 !w-16 !h-16 !bg-white/5 !rounded-full !blur-lg !pointer-events-none" />
 
@@ -264,7 +264,7 @@ const CouponOffersModal = ({
               {adminCoupons.length > 0 && (
                 <div className="!flex !flex-col !gap-3">
                   <div className="!flex !items-center">
-                    {/* <div className="!w-1 !h-3.5 !bg-[#321961] !rounded-full" /> */}
+                    {/* <div className="!w-1 !h-3.5 !bg-[var(--color-primary,#4c2691)] !rounded-full" /> */}
                     {/* <span
                       className="!text-[11px] !font-bold !text-slate-700 !uppercase !tracking-wider"
                       style={{ fontFamily: '"Poppins", sans-serif' }}

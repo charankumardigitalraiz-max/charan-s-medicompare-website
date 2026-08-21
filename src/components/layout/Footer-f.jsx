@@ -159,7 +159,7 @@ const Home2Footer = ({ categories: propCategories }) => {
   return (
     <>
       {!location.pathname.startsWith("/cart") && (
-        <footer className="!bg-primary text-white">
+        <footer className="!bg-[#321961] text-white">
           <div className="pt-10 pb-[10px]">
             <div className="w-full px-2 md:px-20">
               <div className="flex flex-wrap -mx-4 gap-y-4">

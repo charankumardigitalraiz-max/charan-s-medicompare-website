@@ -455,7 +455,7 @@ const AmbulanceCheckOut = () => {
                 display: "inline-flex",
                 alignItems: "center",
                 gap: "8px",
-                color: "#321961",
+                color: "var(--color-primary,#4c2691)",
                 border: "1px solid #e9d5ff",
                 borderRadius: "30px",
                 padding: "6px 18px",
@@ -511,11 +511,11 @@ const AmbulanceCheckOut = () => {
                         style={{ width: "100%", height: "100%", objectFit: "cover" }}
                       />
                     ) : (
-                      <i className="fas fa-truck-medical" style={{ fontSize: "22px", color: "#321961" }} />
+                      <i className="fas fa-truck-medical" style={{ fontSize: "22px", color: "var(--color-primary,#4c2691)" }} />
                     )}
                   </div>
                   <div>
-                    <span style={{ fontSize: "11px", fontWeight: "700", color: "#321961", textTransform: "uppercase", letterSpacing: "0.5px" }}>
+                    <span style={{ fontSize: "11px", fontWeight: "700", color: "var(--color-primary,#4c2691)", textTransform: "uppercase", letterSpacing: "0.5px" }}>
                       Service Provider
                     </span>
                     <h5 style={{ margin: "2px 0 0 0", fontSize: "16px", fontWeight: "700", color: "#1e293b" }}>
@@ -549,7 +549,7 @@ const AmbulanceCheckOut = () => {
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
-                        color: "#321961",
+                        color: "var(--color-primary,#4c2691)",
                         fontSize: "20px",
                         flexShrink: 0
                       }}
@@ -569,7 +569,7 @@ const AmbulanceCheckOut = () => {
                         {rideData.tabletdetails?.name || "Ambulance Service"}
                       </h5>
                       <span className="inline-flex items-center mt-1 px-[10px] py-[4px] rounded text-[11px] font-semibold" style={{ background: "#f8f9fa", color: "#495057", border: "1px solid #dee2e6" }}>
-                        <i className="fas fa-ambulance mr-1" style={{ color: "#321961" }}></i>
+                        <i className="fas fa-ambulance mr-1" style={{ color: "var(--color-primary,#4c2691)" }}></i>
                         {rideData.tabletdetails?.ambulancetype || "Standard Emergency"}
                       </span>
                     </div>
@@ -587,12 +587,12 @@ const AmbulanceCheckOut = () => {
                       onClick={() => setShowModal(true)}
                       style={{
                         background: "#ffffff",
-                        border: "1px solid #321961",
+                        border: "1px solid var(--color-primary,#4c2691)",
                         borderRadius: "20px",
                         padding: "3px 12px",
                         fontSize: "12px",
                         fontWeight: "600",
-                        color: "#321961",
+                        color: "var(--color-primary,#4c2691)",
                         cursor: "pointer"
                       }}
                     >
@@ -650,7 +650,7 @@ const AmbulanceCheckOut = () => {
                                 style={{ width: "24px", height: "24px", objectFit: "contain" }}
                               />
                             ) : (
-                              <i className="fas fa-medkit" style={{ color: "#321961", fontSize: "16px" }}></i>
+                              <i className="fas fa-medkit" style={{ color: "var(--color-primary,#4c2691)", fontSize: "16px" }}></i>
                             )}
                             <span style={{ fontSize: "12px", fontWeight: "600", color: "#495057" }} className="truncate">
                               {facility?.name || "Facility"}
@@ -712,7 +712,7 @@ const AmbulanceCheckOut = () => {
 
               <div style={{ borderTop: "1px dashed #dee2e6", paddingTop: "10px", marginTop: "4px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 <span style={{ fontSize: "15px", fontWeight: "700", color: "#212529" }}>Total Fare</span>
-                <span style={{ fontSize: "20px", fontWeight: "800", color: "#321961" }}>₹{totalAmount?.toLocaleString("en-IN") || 0}</span>
+                <span style={{ fontSize: "20px", fontWeight: "800", color: "var(--color-primary,#4c2691)" }}>₹{totalAmount?.toLocaleString("en-IN") || 0}</span>
               </div>
             </div>
 
@@ -720,11 +720,11 @@ const AmbulanceCheckOut = () => {
             {emergencyType === "nonemergency" && (
               <div style={{ marginTop: "16px", paddingTop: "14px", borderTop: "1px solid #f1f5f9" }}>
                 <label style={{ fontSize: "12px", fontWeight: "700", color: "#495057", marginBottom: "6px", display: "block" }}>
-                  <i className="fas fa-calendar-alt mr-1" style={{ color: "#321961" }}></i> Booking Date & Time
+                  <i className="fas fa-calendar-alt mr-1" style={{ color: "var(--color-primary,#4c2691)" }}></i> Booking Date & Time
                 </label>
                 <input
                   type="datetime-local"
-                  className="w-full px-3 py-2 border border-[#ced4da] rounded-lg text-[13px] outline-none focus:ring-2 focus:ring-[#321961]/30"
+                  className="w-full px-3 py-2 border border-[#ced4da] rounded-lg text-[13px] outline-none focus:ring-2 focus:ring-[var(--color-primary,#4c2691)]/30"
                   value={bookingDateTime}
                   onChange={(e) => setBookingDateTime(e.target.value)}
                   min={new Date().toISOString().slice(0, 16)}
@@ -762,7 +762,7 @@ const AmbulanceCheckOut = () => {
                   setPaymentMethod("online");
                 }}
                 style={{
-                  border: paymentMethod === "online" ? "2px solid #321961" : "1px solid #e9ecef",
+                  border: paymentMethod === "online" ? "2px solid var(--color-primary,#4c2691)" : "1px solid #e9ecef",
                   background: paymentMethod === "online" ? "#f8f5ff" : "#ffffff",
                   borderRadius: "10px",
                   padding: "12px 14px",
@@ -773,7 +773,7 @@ const AmbulanceCheckOut = () => {
                 }}
               >
                 <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                  <i className="fas fa-credit-card" style={{ color: "#321961", fontSize: "18px" }}></i>
+                  <i className="fas fa-credit-card" style={{ color: "var(--color-primary,#4c2691)", fontSize: "18px" }}></i>
                   <div>
                     <div style={{ fontSize: "13px", fontWeight: "700", color: "#212529" }}>Online Payment</div>
                     <div style={{ fontSize: "11px", color: "#6c757d" }}>UPI, Credit/Debit Cards, Netbanking</div>
@@ -784,7 +784,7 @@ const AmbulanceCheckOut = () => {
                   name="payment"
                   checked={paymentMethod === "online"}
                   onChange={() => setPaymentMethod("online")}
-                  style={{ accentColor: "#321961" }}
+                  style={{ accentColor: "var(--color-primary,#4c2691)" }}
                 />
               </div>
 
@@ -800,7 +800,7 @@ const AmbulanceCheckOut = () => {
                   setPaymentMethod("cod");
                 }}
                 style={{
-                  border: paymentMethod === "cod" ? "2px solid #321961" : "1px solid #e9ecef",
+                  border: paymentMethod === "cod" ? "2px solid var(--color-primary,#4c2691)" : "1px solid #e9ecef",
                   background: paymentMethod === "cod" ? "#f8f5ff" : "#ffffff",
                   borderRadius: "10px",
                   padding: "12px 14px",
@@ -811,7 +811,7 @@ const AmbulanceCheckOut = () => {
                 }}
               >
                 <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                  <i className="fas fa-hand-holding-usd" style={{ color: "#321961", fontSize: "18px" }}></i>
+                  <i className="fas fa-hand-holding-usd" style={{ color: "var(--color-primary,#4c2691)", fontSize: "18px" }}></i>
                   <div>
                     <div style={{ fontSize: "13px", fontWeight: "700", color: "#212529" }}>Pay on Pickup (COD)</div>
                     <div style={{ fontSize: "11px", color: "#6c757d" }}>Pay directly to driver</div>
@@ -822,7 +822,7 @@ const AmbulanceCheckOut = () => {
                   name="payment"
                   checked={paymentMethod === "cod"}
                   onChange={() => setPaymentMethod("cod")}
-                  style={{ accentColor: "#321961" }}
+                  style={{ accentColor: "var(--color-primary,#4c2691)" }}
                 />
               </div>
             </div>
@@ -832,8 +832,8 @@ const AmbulanceCheckOut = () => {
               disabled={isSubmitting}
               className="w-full py-1 px-5 text-white !text-[14px] !font-semibold rounded-full border-none cursor-pointer transition-all"
               style={{
-                background: isSubmitting ? "#6c757d" : "#321961",
-                borderColor: "#321961",
+                background: isSubmitting ? "#6c757d" : "var(--color-primary,#4c2691)",
+                borderColor: "var(--color-primary,#4c2691)",
                 color: "#ffffff",
                 fontWeight: "700",
                 fontSize: "14px",

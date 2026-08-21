@@ -157,7 +157,7 @@ const GenericProducts = ({
           style={{
             fontSize: "14px",
             fontWeight: "500",
-            color: "#321961",
+            color: "var(--color-primary,#4c2691)",
             cursor: "pointer",
           }}
           onClick={() => {
@@ -177,7 +177,7 @@ const GenericProducts = ({
           gap: "16px",
           paddingBottom: "8px",
           scrollbarWidth: "thin",
-          scrollbarColor: "#321961 #f0f0f0",
+          scrollbarColor: "var(--color-primary,#4c2691) #f0f0f0",
           WebkitOverflowScrolling: "touch",
           alignItems: "stretch",
         }}
@@ -658,8 +658,8 @@ const GenericProducts = ({
                       }}
                       style={{
                         minWidth: "120px",
-                        color: "#321961",
-                        border: "1px solid #321961",
+                        color: "var(--color-primary,#4c2691)",
+                        border: "1px solid var(--color-primary,#4c2691)",
                         backgroundColor: "#f8f4ff",
                       }}
                       className="btn btn-primary w-100"
@@ -706,7 +706,7 @@ const GenericProducts = ({
                       padding: "10px 16px",
                       border: "none",
                       cursor: isInStock ? "pointer" : "not-allowed",
-                      backgroundColor: isInStock ? "#321961" : "#ccc",
+                      backgroundColor: isInStock ? "var(--color-primary,#4c2691)" : "#ccc",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
@@ -727,7 +727,7 @@ const GenericProducts = ({
                     }}
                     onMouseLeave={(e) => {
                       if (isInStock) {
-                        e.currentTarget.style.backgroundColor = "#321961";
+                        e.currentTarget.style.backgroundColor = "var(--color-primary,#4c2691)";
                         e.currentTarget.style.transform = "translateY(0)";
                       }
                     }}
@@ -753,7 +753,7 @@ const GenericProducts = ({
                     justifyContent: "center",
                     gap: "4px",
                     width: "100%",
-                    border: "1px solid #321961",
+                    border: "1px solid var(--color-primary,#4c2691)",
                     borderRadius: "6px",
                     backgroundColor: "#f8f4ff",
                     padding: "4px",
@@ -768,7 +768,7 @@ const GenericProducts = ({
                       borderRadius: "4px",
                       border: "none",
                       backgroundColor: "transparent",
-                      color: "#321961",
+                      color: "var(--color-primary,#4c2691)",
                       cursor: "pointer",
                       display: "flex",
                       alignItems: "center",
@@ -816,7 +816,7 @@ const GenericProducts = ({
                       borderRadius: "4px",
                       border: "none",
                       backgroundColor: "transparent",
-                      color: "#321961",
+                      color: "var(--color-primary,#4c2691)",
                       cursor:
                         maxStock > 0 && quantity >= maxStock
                           ? "not-allowed"
@@ -866,7 +866,7 @@ const GenericProducts = ({
                     padding: "10px 16px",
                     border: "none",
                     cursor: isInStock ? "pointer" : "not-allowed",
-                    backgroundColor: isInStock ? "#321961" : "#ccc",
+                    backgroundColor: isInStock ? "var(--color-primary,#4c2691)" : "#ccc",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
@@ -889,7 +889,7 @@ const GenericProducts = ({
                   }}
                   onMouseLeave={(e) => {
                     if (isInStock) {
-                      e.currentTarget.style.backgroundColor = "#321961";
+                      e.currentTarget.style.backgroundColor = "var(--color-primary,#4c2691)";
                       e.currentTarget.style.transform = "translateY(0)";
                       e.currentTarget.style.boxShadow = "none";
                     }
@@ -928,7 +928,7 @@ const GenericProducts = ({
                     padding: "10px 16px",
                     border: "none",
                     cursor: "pointer",
-                    backgroundColor: "#321961",
+                    backgroundColor: "var(--color-primary,#4c2691)",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
@@ -945,7 +945,7 @@ const GenericProducts = ({
                     e.currentTarget.style.transform = "translateY(-1px)";
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.backgroundColor = "#321961";
+                    e.currentTarget.style.backgroundColor = "var(--color-primary,#4c2691)";
                     e.currentTarget.style.transform = "translateY(0)";
                   }}
                 >
@@ -979,7 +979,7 @@ const GenericProducts = ({
                     padding: "10px 16px",
                     border: "none",
                     cursor: isInStock ? "pointer" : "not-allowed",
-                    backgroundColor: isInStock ? "#321961" : "#ccc",
+                    backgroundColor: isInStock ? "var(--color-primary,#4c2691)" : "#ccc",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
@@ -1000,7 +1000,7 @@ const GenericProducts = ({
                   }}
                   onMouseLeave={(e) => {
                     if (isInStock) {
-                      e.currentTarget.style.backgroundColor = "#321961";
+                      e.currentTarget.style.backgroundColor = "var(--color-primary,#4c2691)";
                       e.currentTarget.style.transform = "translateY(0)";
                     }
                   }}
@@ -1031,7 +1031,7 @@ const GenericProducts = ({
                     padding: "10px 16px",
                     border: "none",
                     cursor: isInStock ? "pointer" : "not-allowed",
-                    backgroundColor: isInStock ? "#321961" : "#ccc",
+                    backgroundColor: isInStock ? "var(--color-primary,#4c2691)" : "#ccc",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
@@ -1052,7 +1052,7 @@ const GenericProducts = ({
                   }}
                   onMouseLeave={(e) => {
                     if (isInStock) {
-                      e.currentTarget.style.backgroundColor = "#321961";
+                      e.currentTarget.style.backgroundColor = "var(--color-primary,#4c2691)";
                       e.currentTarget.style.transform = "translateY(0)";
                     }
                   }}
@@ -1084,7 +1084,7 @@ const GenericProducts = ({
                     padding: "10px 16px",
                     border: "none",
                     cursor: isInStock ? "pointer" : "not-allowed",
-                    backgroundColor: isInStock ? "#321961" : "#ccc",
+                    backgroundColor: isInStock ? "var(--color-primary,#4c2691)" : "#ccc",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
@@ -1105,7 +1105,7 @@ const GenericProducts = ({
                   }}
                   onMouseLeave={(e) => {
                     if (isInStock) {
-                      e.currentTarget.style.backgroundColor = "#321961";
+                      e.currentTarget.style.backgroundColor = "var(--color-primary,#4c2691)";
                       e.currentTarget.style.transform = "translateY(0)";
                     }
                   }}
@@ -1152,8 +1152,8 @@ const GenericProducts = ({
                       maxStock={maxStock}
                       style={{
                         minWidth: "120px",
-                        color: "#321961",
-                        border: "1px solid #321961",
+                        color: "var(--color-primary,#4c2691)",
+                        border: "1px solid var(--color-primary,#4c2691)",
                         backgroundColor: "#f8f4ff",
                       }}
                       className="btn btn-primary w-100"
@@ -1199,7 +1199,7 @@ const GenericProducts = ({
                   padding: "10px 16px",
                   border: "none",
                   cursor: isInStock ? "pointer" : "not-allowed",
-                  backgroundColor: isInStock ? "#321961" : "#ccc",
+                  backgroundColor: isInStock ? "var(--color-primary,#4c2691)" : "#ccc",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -1227,7 +1227,7 @@ const GenericProducts = ({
                 }}
                 onMouseLeave={(e) => {
                   if (isInStock) {
-                    e.currentTarget.style.backgroundColor = "#321961";
+                    e.currentTarget.style.backgroundColor = "var(--color-primary,#4c2691)";
                     e.currentTarget.style.transform = "translateY(0)";
                     e.currentTarget.style.boxShadow = "none";
                   }
@@ -1393,7 +1393,7 @@ const GenericProducts = ({
                       <i
                         className="fas fa-file-alt"
                         style={{
-                          color: "#321961",
+                          color: "var(--color-primary,#4c2691)",
                           fontSize: "12px",
                           flexShrink: 0,
                         }}
@@ -1568,7 +1568,7 @@ const GenericProducts = ({
                           <i
                             className={key.icon}
                             style={{
-                              color: "#321961",
+                              color: "var(--color-primary,#4c2691)",
                               fontSize: "10px",
                               minWidth: "14px",
                               flexShrink: 0,
@@ -1682,7 +1682,7 @@ const GenericProducts = ({
                             className="fas fa-map-marker-alt"
                             style={{
                               fontSize: "10px",
-                              color: "#321961",
+                              color: "var(--color-primary,#4c2691)",
                               flexShrink: 0,
                             }}
                           ></i>

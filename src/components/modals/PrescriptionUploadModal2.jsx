@@ -186,7 +186,7 @@ const PrescriptionUploadModal2 = ({
           <div className="!flex !items-center !justify-center !mb-4 !w-16 !h-16 !rounded-full !bg-emerald-50 !text-[#10b981] mx-auto animate-bounce">
             <i className="fa-solid fa-user-doctor text-[32px]"></i>
           </div>
-          <h4 className="!text-[#321961] !font-extrabold !text-[18px] !mb-2">
+          <h4 className="!text-[var(--color-primary,#4c2691)] !font-extrabold !text-[18px] !mb-2">
             Teleconsultation Requested!
           </h4>
           <p className="!text-slate-600 !text-[13px] !leading-relaxed !mb-6">
@@ -208,7 +208,7 @@ const PrescriptionUploadModal2 = ({
                 );
               }
             }}
-            className="!w-full !py-2.5 !rounded-md !bg-[#321961] !text-white !font-bold !text-[14px] hover:!opacity-90 !transition-all !border-0"
+            className="!w-full !py-2.5 !rounded-md !bg-[var(--color-primary,#4c2691)] !text-white !font-bold !text-[14px] hover:!opacity-90 !transition-all !border-0"
           >
             Got it, Close
           </button>
@@ -333,7 +333,7 @@ const PrescriptionUploadModal2 = ({
                     <div className="!flex !items-center !justify-center !mb-3 !w-12 !h-12 !rounded-full !bg-purple-100 !text-purple-600 mx-auto">
                       <i className="fa-solid fa-user-doctor text-[22px]"></i>
                     </div>
-                    <h6 className="!mb-2 !font-bold !text-[#321961] !text-[15px]">
+                    <h6 className="!mb-2 !font-bold !text-[var(--color-primary,#4c2691)] !text-[15px]">
                       Teleconsultation Request
                     </h6>
                     <p className="text-[12px] text-slate-600 leading-relaxed !mb-4">
@@ -341,7 +341,7 @@ const PrescriptionUploadModal2 = ({
                     </p>
                     <div className="bg-white border border-purple-100 rounded-lg p-2.5 inline-flex items-center gap-2">
                       <span className="text-[11px] font-bold text-purple-600">Consultation Charge:</span>
-                      <span className="text-[13px] font-extrabold text-[#321961]">₹{prescriptionCharge}</span>
+                      <span className="text-[13px] font-extrabold text-[var(--color-primary,#4c2691)]">₹{prescriptionCharge}</span>
                     </div>
                   </div>
                   <div className="text-[12px] text-slate-400 text-center leading-relaxed px-2">
@@ -361,7 +361,7 @@ const PrescriptionUploadModal2 = ({
                   <button
                     type="button"
                     onClick={() => setShowSuccessScreen(true)}
-                    className="!w-1/2 !py-2.5 !rounded-sm !font-semibold !text-[14px] !text-white !transition-all !shadow-md hover:!shadow-lg !border-0 !bg-[#321961] hover:!opacity-95"
+                    className="!w-1/2 !py-2.5 !rounded-sm !font-semibold !text-[14px] !text-white !transition-all !shadow-md hover:!shadow-lg !border-0 !bg-[var(--color-primary,#4c2691)] hover:!opacity-95"
                   >
                     Proceed with Order
                   </button>
@@ -377,7 +377,7 @@ const PrescriptionUploadModal2 = ({
                         <span className="font-semibold">Prescription Validated Successfully!</span>
                       </div>
 
-                      <span className="!block !font-semibold !mb-2 !text-[#321961] !text-[13px]">
+                      <span className="!block !font-semibold !mb-2 !text-[var(--color-primary,#4c2691)] !text-[13px]">
                         Medicine Verification Status:
                       </span>
                       <div className="flex flex-col gap-2 max-h-[150px] overflow-y-auto mb-3 bg-slate-50 border border-slate-200 rounded-lg p-2.5">
@@ -484,7 +484,7 @@ const PrescriptionUploadModal2 = ({
                     }}
                     className={`!w-1/2 !py-2.5 !rounded-sm !font-semibold !text-[14px] !text-white !transition-all !shadow-md hover:!shadow-lg !border-0 ${!analysisResults.isValidPrescription
                       ? "!bg-slate-200 !text-slate-400 !cursor-not-allowed !shadow-none hover:!shadow-none"
-                      : "!bg-[#321961] hover:!opacity-95"
+                      : "!bg-[var(--color-primary,#4c2691)] hover:!opacity-95"
                       }`}
                   >
                     Confirm & Proceed
@@ -501,7 +501,7 @@ const PrescriptionUploadModal2 = ({
                       <>
                         {Array.isArray(medicineData) ? (
                           <div>
-                            <span className="!block !font-semibold !mb-2 !text-[#321961] !text-[13px]">
+                            <span className="!block !font-semibold !mb-2 !text-[var(--color-primary,#4c2691)] !text-[13px]">
                               The following item(s) in your cart require a valid doctor's prescription:
                             </span>
                             <div className="flex flex-col gap-2 max-h-[120px] overflow-y-auto mb-3 bg-[#faf5ff] border border-[#e9d5ff] rounded-lg p-2.5">
@@ -655,7 +655,7 @@ const PrescriptionUploadModal2 = ({
                     onClick={handleSubmit}
                     className={`!w-1/2 !py-2.5 !rounded-sm !font-semibold !text-[14px] !text-white !transition-all !shadow-md hover:!shadow-lg !border-0 ${isUploading || (files.length === 0 && !noPrescription)
                       ? "!bg-slate-200 !text-slate-400 !cursor-not-allowed !shadow-none hover:!shadow-none"
-                      : "!bg-[#321961] hover:!opacity-95"
+                      : "!bg-[var(--color-primary,#4c2691)] hover:!opacity-95"
                       }`}
                   >
                     {isUploading ? (
