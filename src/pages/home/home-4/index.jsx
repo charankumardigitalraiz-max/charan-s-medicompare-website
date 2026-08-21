@@ -72,6 +72,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
   const [selectedVariants, setSelectedVariants] = useState({});
   const [searchHistory, setSearchHistory] = useState([]);
   const [compareSection, setCompareSection] = useState([]);
+  const [vendors, setVendors] = useState([]);
   const { service } = useParams();
   const isMobile = useMediaQuery({ query: "(max-width: 768px)" });
   const [openIndex, setOpenIndex] = useState(null);
@@ -83,6 +84,51 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
   const [showPrescriptionModal, setShowPrescriptionModal] = useState(false);
   const [vendorModel, setVendorModel] = useState(null);
   const homeLiteMode = useMemo(() => shouldUseHomeLiteMode(), []);
+
+  const { row1, row2 } = useMemo(() => {
+    if (vendors && vendors.length > 0 && (vendors[0]?.part1 || vendors[0]?.part2)) {
+      return {
+        row1: vendors[0].part1 || [],
+        row2: vendors[0].part2 || []
+      };
+    }
+    if (part1Vendors?.length > 0 || part2Vendors?.length > 0) {
+      return {
+        row1: part1Vendors,
+        row2: part2Vendors
+      };
+    }
+    if (vendors && vendors.length > 0) {
+      const half = Math.ceil(vendors.length / 2);
+      return {
+        row1: vendors.slice(0, half),
+        row2: vendors.slice(half)
+      };
+    }
+    return { row1: [], row2: [] };
+  }, [vendors, part1Vendors, part2Vendors]);
+
+  const repeatedRow1 = useMemo(() => {
+    if (!row1 || row1.length === 0) return [];
+    const minItems = 15;
+    const repeats = Math.ceil(minItems / row1.length) + 1;
+    let list = [];
+    for (let i = 0; i < repeats; i++) {
+      list = [...list, ...row1];
+    }
+    return list;
+  }, [row1]);
+
+  const repeatedRow2 = useMemo(() => {
+    if (!row2 || row2.length === 0) return [];
+    const minItems = 15;
+    const repeats = Math.ceil(minItems / row2.length) + 1;
+    let list = [];
+    for (let i = 0; i < repeats; i++) {
+      list = [...list, ...row2];
+    }
+    return list;
+  }, [row2]);
 
   useLayoutEffect(() => {
     if (!homeLiteMode) return undefined;
@@ -474,6 +520,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
       setCompareSection(camparesection || [])
       setTestimonials(testimonial?.testimonial || []);
       setMediciness(topsalesproductvendor);
+      setVendors(vendor || []);
       setSections(sections || []);
       if (vendor && vendor.length > 0) {
         const parts = vendor[0];
@@ -484,7 +531,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
         setPart2Vendors([]);
       }
       setFaqs(faqs);
-
+      console.log("vendors List", vendor)
       if (!homeLiteMode) {
         prefetchImageUrls(
           collectHomeImagePaths({
@@ -1188,47 +1235,73 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
           </section>
 
           {categories && categories.length > 0 && (
-            <section className="bg-white p-5 lg:p-[20px_20px_0_20px] max-lg:p-0 overflow-hidden">
-              <div className="container mx-auto px-4">
-                <div className="hidden lg:block mt-0">
-                  <div className="w-full">
-                    <div className="mb-5 text-center">
-                      <h2 className="!text-[23px] !font-semibold !text-[#1a1a1a] mb-3">
-                        Explore Multiple Categories Compare
-                      </h2>
-                      <p className="text-[13px] max-w-[700px] mx-auto mb-5 leading-[1.6] text-gray-600">
-                        Browse a wide range of medicines across various categories.
-                        Compare prices, read detailed information, and find the best
-                        options for your health needs.
-                      </p>
-                    </div>
-                  </div>
+            <section className="py-8 bg-[#fafafc] bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-50/20 via-white to-[#fafafc] relative overflow-hidden">
+              <div className="absolute top-0 left-1/4 w-[350px] h-[350px] rounded-full bg-[#7c3aed]/3 blur-[100px] pointer-events-none"></div>
+              <div className="absolute bottom-0 right-1/4 w-[350px] h-[350px] rounded-full bg-[#059669]/3 blur-[100px] pointer-events-none"></div>
+
+              <div className="max-w-full mx-auto px-6 md:px-12 lg:px-20 relative z-10">
+                <div className="text-center mb-12 max-w-2xl lg:max-w-4xl mx-auto" data-aos="fade-up">
+                  {/* <div className="inline-flex items-center gap-1.5 bg-[#321961]/10 border border-solid border-[#321961]/20 py-1.5 px-4 rounded-full mb-4">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#321961] animate-pulse"></span>
+                    <span className="text-[11px] uppercase tracking-wider text-[#321961] font-semibold">Specialized Care</span>
+                  </div> */}
+                  <h2 className="text-[34px] font-light text-[#0f172a] leading-tight tracking-tight mb-3">
+                    Explore Multiple <span className="font-normal text-[#321961]">Services</span>
+                  </h2>
+                  <p className="text-[13.5px] text-[#64748b] font-light leading-relaxed">
+                    Browse a wide range of medical categories to compare pricing, verify compositions, and find the best deals.
+                  </p>
                 </div>
 
-                <div className="flex flex-wrap justify-center mt-3 ">
+                <style dangerouslySetInnerHTML={{
+                  __html: `
+                  .category-icon-img {
+                    filter: brightness(0) invert(13%) sepia(55%) saturate(3990%) hue-rotate(258deg) brightness(79%) contrast(97%);
+                    transition: filter 0.3s ease, transform 0.4s ease;
+                  }
+                  .group:hover .category-icon-img {
+                    filter: brightness(0) invert(1);
+                    transform: translateY(-2px);
+                  }
+                `}} />
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 w-full mt-4">
                   {categories.map((item, categoryIndex) => (
-                    <div className="w-1/2 sm:w-1/2 md:w-1/6 lg:w-1/6 xl:w-1/6 2xl:w-[14.285%] px-2 mb-4 flex" key={item._id}>
-                      <div
-                        className="group flex-1 cursor-pointer bg-white !border !border-[#e5e7eb] hover:!border-[#321961]/40 !shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:!shadow-[0_8px_20px_rgba(128,89,202,0.08)] !rounded-md w-full text-center p-4 hover:-translate-y-1 transition-all duration-300 flex flex-col justify-center items-center"
-                        onClick={() => handleCategoryClick(item)}
-                      >
-                        <span className="w-[68px] h-[68px] rounded-full mx-auto mb-3 flex items-center justify-center bg-slate-50 border border-slate-100 transition-all duration-300 group-hover:scale-105">
-                          <img
-                            src={
-                              item?.files
-                                ? getImageUrl(item.files)
-                                : "/assets/default.png"
-                            }
-                            alt={item.name}
-                            title={item.name}
-                            className="h-[46px] w-[46px] object-contain transition-transform duration-[700ms] ease-in-out group-hover:[transform:rotateY(360deg)]"
-                            style={{ filter: "brightness(0) invert(13%) sepia(55%) saturate(3990%) hue-rotate(258deg) brightness(79%) contrast(97%)" }}
-                            loading={categoryIndex < 8 ? "eager" : "lazy"}
-                            fetchPriority={categoryIndex < 4 ? "high" : "auto"}
-                            decoding="async"
-                          />
+                    <div
+                      key={item._id}
+                      onClick={() => handleCategoryClick(item)}
+                      className="group cursor-pointer bg-white border border-solid border-slate-200/80 rounded-md p-4 flex flex-row items-center gap-4 transition-all duration-300 hover:border-[#321961]/35 hover:shadow-[0_12px_30px_rgba(50,25,97,0.06)] hover:-translate-y-1 relative overflow-hidden"
+                    >
+                      {/* Glow Blob decoration on card hover */}
+                      <div className="absolute -bottom-10 -right-10 w-20 h-20 bg-[#7c3aed]/5 rounded-full blur-xl group-hover:bg-[#7c3aed]/10 transition-colors duration-300"></div>
+
+                      {/* Interactive Accent Line */}
+                      <div className="absolute inset-x-0 bottom-0 h-[3px] bg-gradient-to-r from-[#321961] to-[#7c3aed] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
+                      <div className="w-[52px] h-[52px] rounded-xl bg-gradient-to-br from-[#321961]/5 to-[#7c3aed]/5 border border-solid border-slate-200/40 flex items-center justify-center transition-all duration-300 group-hover:from-[#321961] group-hover:to-[#7c3aed] group-hover:shadow-[0_4px_12px_rgba(125,46,255,0.25)] shrink-0">
+                        <img
+                          src={
+                            item?.files
+                              ? getImageUrl(item.files)
+                              : "/assets/default.png"
+                          }
+                          alt={item.name}
+                          title={item.name}
+                          className="h-[28px] w-[28px] object-contain category-icon-img"
+                          loading={categoryIndex < 8 ? "eager" : "lazy"}
+                          fetchPriority={categoryIndex < 4 ? "high" : "auto"}
+                          decoding="async"
+                        />
+                      </div>
+
+                      <div className="flex-1 min-w-0 text-left">
+                        <h4 className="!font-semibold !text-[14px] text-slate-800 group-hover:text-[#321961] transition-colors duration-300 mb-0.5 tracking-wide leading-snug truncate">
+                          {item.name}
+                        </h4>
+                        <span className="text-[10px] text-slate-400 font-medium flex items-center gap-0.5 group-hover:text-[#7c3aed] transition-colors duration-300">
+                          <span>Compare Live</span>
+                          <i className="fas fa-chevron-right text-[8px] transform group-hover:translate-x-0.5 transition-transform" />
                         </span>
-                        <h4 className="!font-semibold !text-[13px] !text-slate-700 group-hover:!text-[#321961] transition-colors duration-200 mb-0">{item.name}</h4>
                       </div>
                     </div>
                   ))}
@@ -1339,11 +1412,9 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
             liteMode={homeLiteMode}
             isMobile={isMobile}
           // currentService={sections?.}
-          />
-
-          {/* PROMOTIONAL SECTION */}
+          />          {/* PROMOTIONAL SECTION */}
           <section className="py-12 my-6 px-3 relative overflow-hidden bg-[#faf9fc]/30">
-            <div className="container mx-auto max-w-7xl">
+            <div className="max-w-full mx-auto px-6 md:px-12 lg:px-20 relative z-10">
 
               {/* Section Header */}
               <div className="text-center mb-12 max-w-2xl mx-auto">
@@ -1470,7 +1541,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
             <div className="absolute top-[-80px] left-[-60px] w-[320px] h-[320px] rounded-full bg-[#aa6df6]/8 blur-[90px] pointer-events-none"></div>
             <div className="absolute bottom-[-100px] right-[-80px] w-[380px] h-[380px] rounded-full bg-[#0ea5e9]/6 blur-[100px] pointer-events-none"></div>
 
-            <div className="container mx-auto px-4 max-w-7xl relative z-10">
+            <div className="max-w-full mx-auto px-6 md:px-12 lg:px-20 relative z-10">
 
               {/* Top header */}
               <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between mb-12 gap-4">
@@ -1603,7 +1674,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
             `}</style>
             <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse 60% 50% at 20% 50%, rgba(124,58,237,0.04) 0%, transparent 70%), radial-gradient(ellipse 50% 60% at 80% 50%, rgba(14,165,233,0.04) 0%, transparent 70%)" }}></div>
 
-            <div className="container mx-auto px-4 max-w-7xl relative z-10">
+            <div className="max-w-full mx-auto px-6 md:px-12 lg:px-20 relative z-10">
 
               {/* Section header */}
               <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between mb-10 gap-3">
@@ -2563,6 +2634,160 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
           )}
 
 
+          {((row1 && row1.length > 0) || (row2 && row2.length > 0)) && (
+            <section className="py-20 bg-gradient-to-br from-[#1e0a3d] via-[#321961] to-[#251247] overflow-hidden relative">
+              <style dangerouslySetInnerHTML={{
+                __html: `
+                @keyframes marquee-left {
+                  0% { transform: translateX(0); }
+                  100% { transform: translateX(-50%); }
+                }
+                @keyframes marquee-right {
+                  0% { transform: translateX(-50%); }
+                  100% { transform: translateX(0); }
+                }
+                .animate-marquee-left-scroll {
+                  display: flex;
+                  width: max-content;
+                  animation: marquee-left 45s linear infinite;
+                }
+                .animate-marquee-right-scroll {
+                  display: flex;
+                  width: max-content;
+                  animation: marquee-right 45s linear infinite;
+                }
+                .marquee-track-container:hover .animate-marquee-left-scroll,
+                .marquee-track-container:hover .animate-marquee-right-scroll {
+                  animation-play-state: paused;
+                }
+              `}} />
+
+              <div className="max-w-full mx-auto px-6 md:px-12 lg:px-20 relative z-10">
+                <div className="text-center mb-14" data-aos="fade-up">
+                  <div className="inline-flex items-center gap-1.5 bg-white/10 border border-solid border-white/20 py-1.5 px-4 rounded-full mb-4">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#10b981] animate-pulse"></span>
+                    <span className="text-[11px] uppercase tracking-wider text-white font-bold">Our Partners</span>
+                  </div>
+                  <h2 className="text-[34px] font-light text-white leading-tight tracking-tight mb-3">
+                    Trusted Network of Healthcare <span className="font-normal text-[#10b981]">Partners</span>
+                  </h2>
+                  <p className="text-[13.5px] text-slate-300 font-light leading-relaxed max-w-lg mx-auto">
+                    Collaborating with India's top certified pharmacies, diagnostic labs, and medical providers to bring you the best prices.
+                  </p>
+                </div>
+              </div>
+
+              {/* Infinite Scrolling Marquee Track Container */}
+              <div className="marquee-track-container flex flex-col gap-6 w-full relative">
+                {/* Row 1: Scrolling Left */}
+                {repeatedRow1.length > 0 && (
+                  <div className="overflow-hidden w-full select-none py-2">
+                    <div className="animate-marquee-left-scroll gap-5 px-3">
+                      {repeatedRow1.map((vendor, idx) => {
+                        const name = vendor?.businessdetails?.[0].name || vendor?.name || "Partner Store";
+                        const bDetails = vendor?.businessdetails?.[0] || vendor?.bussinessdetails || vendor?.businessDetails;
+                        const bImg = bDetails?.bussiness_image || vendor?.bussiness_image || vendor?.image;
+                        const logoSrc = Array.isArray(bImg)
+                          ? (bImg[0]?.url || (typeof bImg[0] === 'string' ? bImg[0] : null))
+                          : (bImg?.url || (typeof bImg === 'string' ? bImg : (bDetails?.logo || vendor?.logo)));
+
+                        return (
+                          <div
+                            key={`r1-${vendor._id || idx}-${idx}`}
+                            onClick={() => handleVendorClick(vendor)}
+                            className="w-[280px] h-[88px] bg-white/5 backdrop-blur-md rounded-xl border border-solid border-white/10 p-3 flex flex-row items-center gap-3.5 cursor-pointer transition-all duration-300 hover:bg-white/15 hover:border-white/25 hover:shadow-[0_8px_25px_rgba(255,255,255,0.05)] hover:-translate-y-1 relative group overflow-hidden shrink-0"
+                          >
+                            <div className="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+
+                            <div className="w-[64px] h-[64px] rounded-lg bg-white flex items-center justify-center p-1.5 shadow-sm transition-transform duration-300 group-hover:scale-105 shrink-0">
+                              {logoSrc ? (
+                                <img
+                                  src={getImageUrl(logoSrc)}
+                                  alt={name}
+                                  className="w-full h-full object-contain mix-blend-multiply"
+                                  onError={(e) => {
+                                    e.target.style.display = 'none';
+                                    const fallback = e.target.nextSibling;
+                                    if (fallback) fallback.style.display = 'flex';
+                                  }}
+                                />
+                              ) : null}
+                              <div
+                                style={{ display: logoSrc ? 'none' : 'flex' }}
+                                className="w-full h-full rounded-lg bg-gradient-to-br from-[#321961] to-[#7d2eff] text-white font-bold items-center justify-center text-lg uppercase"
+                              >
+                                {name ? name[0] : 'V'}
+                              </div>
+                            </div>
+
+                            <div className="flex-1 min-w-0 text-left">
+                              <h4 className="!text-[15px] font-semibold text-white/90 m-0 leading-snug whitespace-normal break-words w-full capitalize group-hover:text-[#10b981] transition-colors duration-300 font-sans tracking-wide">
+                                {name}
+                              </h4>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+
+                {/* Row 2: Scrolling Right */}
+                {repeatedRow2.length > 0 && (
+                  <div className="overflow-hidden w-full select-none py-2">
+                    <div className="animate-marquee-right-scroll gap-5 px-3">
+                      {repeatedRow2.map((vendor, idx) => {
+                        const name = vendor?.businessdetails?.[0]?.name || vendor?.name || "Partner Store";
+                        const bDetails = vendor?.businessdetails?.[0] || vendor?.bussinessdetails || vendor?.businessDetails;
+                        const bImg = bDetails?.bussiness_image || vendor?.bussiness_image || vendor?.image;
+                        const logoSrc = Array.isArray(bImg)
+                          ? (bImg[0]?.url || (typeof bImg[0] === 'string' ? bImg[0] : null))
+                          : (bImg?.url || (typeof bImg === 'string' ? bImg : (bDetails?.logo || vendor?.logo)));
+
+                        return (
+                          <div
+                            key={`r2-${vendor._id || idx}-${idx}`}
+                            onClick={() => handleVendorClick(vendor)}
+                            className="w-[280px] h-[88px] bg-white/5 backdrop-blur-md rounded-xl border border-solid border-white/10 p-3 flex flex-row items-center gap-3.5 cursor-pointer transition-all duration-300 hover:bg-white/15 hover:border-white/25 hover:shadow-[0_8px_25px_rgba(255,255,255,0.05)] hover:-translate-y-1 relative group overflow-hidden shrink-0"
+                          >
+                            <div className="absolute inset-0 bg-gradient-to-tr from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+
+                            <div className="w-[64px] h-[64px] rounded-lg bg-white flex items-center justify-center p-1.5 shadow-sm transition-transform duration-300 group-hover:scale-105 shrink-0">
+                              {logoSrc ? (
+                                <img
+                                  src={getImageUrl(logoSrc)}
+                                  alt={name}
+                                  className="w-full h-full object-contain mix-blend-multiply"
+                                  onError={(e) => {
+                                    e.target.style.display = 'none';
+                                    const fallback = e.target.nextSibling;
+                                    if (fallback) fallback.style.display = 'flex';
+                                  }}
+                                />
+                              ) : null}
+                              <div
+                                style={{ display: logoSrc ? 'none' : 'flex' }}
+                                className="w-full h-full rounded-lg bg-gradient-to-br from-[#321961] to-[#7d2eff] text-white font-bold items-center justify-center text-lg uppercase"
+                              >
+                                {name ? name[0] : 'V'}
+                              </div>
+                            </div>
+
+                            <div className="flex-1 min-w-0 text-left">
+                              <h4 className="!text-[15px] font-semibold text-white/90 m-0 leading-snug whitespace-normal break-words w-full capitalize group-hover:text-[#10b981] transition-colors duration-300 font-sans tracking-wide">
+                                {name}
+                              </h4>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </section>
+          )}
+
 
           {faqss && faqss.length > 0 && (
             <section className="py-12 bg-white">
@@ -2922,6 +3147,8 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
               </div>
             </section>
           )}
+
+
 
           <section className="py-16 bg-white">
             <div className="container mx-auto px-4">

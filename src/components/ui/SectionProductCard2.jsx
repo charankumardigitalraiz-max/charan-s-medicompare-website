@@ -52,7 +52,7 @@ const SectionProductCard2 = ({
 }) => {
   const navigate = useNavigate();
   const location = useLocation();
-  console.log("currectservice", currentService)
+  // console.log("currectservice", currentService)
 
   const selectedVariant =
     variant ||

@@ -160,18 +160,17 @@ const CartOrderCard = ({
           </div>
         </div>
       </div>
-
       {/* ── FOOTER: Total Paid + Action Buttons ── */}
-      <div className="flex flex-col sm:items-end justify-between mt-3 pt-2 border-t border-[#f8f8f8]">
-        <div className="flex justify-between items-center w-full mb-2">
-          <div>
+      <div className="mt-3 pt-2 border-t border-[#f8f8f8] w-full">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 w-full">
+          <div className="shrink-0 text-left">
             <span style={{ fontSize: "11px", color: "#aaa" }}>Total Paid</span>
             <span className="text-[16px] font-bold text-[#7c4dc4] block">
               ₹{total != null ? Number(total).toFixed(2) : "0.00"}
             </span>
           </div>
           {order?.orderStatus !== "failed" && (
-            <div className="flex gap-2 justify-end flex-wrap">
+            <div className="flex gap-2 justify-start sm:justify-end flex-wrap items-center flex-1">
               {/* Details */}
               <button
                 type="button"
