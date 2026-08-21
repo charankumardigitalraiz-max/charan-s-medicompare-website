@@ -1299,7 +1299,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                     <span className="w-1.5 h-1.5 rounded-full bg-[#321961] animate-pulse"></span>
                     <span className="text-[11px] uppercase tracking-wider text-[#321961] font-semibold">Specialized Care</span>
                   </div> */}
-                  <h2 className="text-[34px] font-light text-[#0f172a] leading-tight tracking-tight mb-3">
+                  <h2 className="!text-[34px] !font-light text-[#0f172a] leading-tight tracking-tight mb-3">
                     Explore Multiple <span className="font-normal text-[#321961]">Services</span>
                   </h2>
                   <p className="text-[13.5px] text-[#475569] font-normal leading-[1.75] max-w-[520px] mx-auto">
@@ -1479,7 +1479,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                   <span className="w-1.5 h-1.5 rounded-full bg-[#321961] animate-pulse"></span>
                   <span className="text-[11px] uppercase tracking-wider text-[#321961] font-semibold">Ecosystem Overview</span>
                 </div>
-                <h2 className="text-[34px] font-light text-[#0f172a] leading-tight tracking-tight mb-3">
+                <h2 className="!text-[34px] !font-light text-[#0f172a] leading-tight tracking-tight mb-3">
                   Quick Access to <span className="font-normal !text-green">Healthcare Services</span>
                 </h2>
                 <p className="text-[13.5px] text-[#64748b] font-light leading-relaxed">
@@ -1838,7 +1838,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                     <span className="w-6 h-[2px] bg-[#321961] rounded-full"></span>
                     <span className="text-[11px] text-[#321961] uppercase tracking-[0.25em] font-medium">Healthcare Access</span>
                   </div>
-                  <h2 className="text-[32px] font-light text-[#0f172a] leading-tight tracking-tight">
+                  <h2 className="!text-[32px] !font-light text-[#0f172a] leading-tight tracking-tight">
                     Quick Access to <span className="text-[#321961] font-normal">Services</span>
                   </h2>
                 </div>
@@ -2114,7 +2114,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                   <span className="w-1.5 h-1.5 rounded-full bg-[#ea580c] animate-pulse"></span>
                   <span className="text-[11px] uppercase tracking-wider text-[#ea580c] font-medium">Simple Workflow</span>
                 </div>
-                <h2 className="text-[34px] font-light text-[#0f172a] leading-tight tracking-tight mb-3">
+                <h2 className="!text-[34px] !font-light text-[#0f172a] leading-tight tracking-tight mb-3">
                   4 Easy Steps to Get <span className="font-normal text-[#ea580c]">Your Solution</span>
                 </h2>
                 <p className="text-[13.5px] text-[#64748b] font-light leading-relaxed tracking-wide">
@@ -2271,7 +2271,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                       <span className="w-1.5 h-1.5 rounded-full bg-[#7c3aed] animate-pulse"></span>
                       <span className="text-[11px] uppercase tracking-wider text-[#7c3aed] font-bold">Core Strengths</span>
                     </div>
-                    <h2 className="text-[36px] font-light text-[#0f172a] leading-tight tracking-tight mb-4">
+                    <h2 className="!text-[36px] !font-light text-[#0f172a] leading-tight tracking-tight mb-4">
                       Key Features & <span className="font-normal text-[#7c3aed]">Benefits</span>
                     </h2>
                     <p className="text-[14.5px] text-[#64748b] font-light leading-relaxed max-w-[380px] mb-6">
@@ -2494,7 +2494,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                       <span className="w-1.5 h-1.5 rounded-full bg-[#7c3aed] animate-pulse"></span>
                       <span className="text-[11px] uppercase tracking-wider text-[#7c3aed] font-semibold">Visual comparison</span>
                     </div>
-                    <h2 className="text-[36px] font-light text-[#0f172a] leading-tight tracking-tight mb-3">
+                    <h2 className="!text-[36px] !font-light text-[#0f172a] leading-tight tracking-tight mb-3">
                       How Much You Can <span className="font-normal text-[#7c3aed]">Really Save</span>
                     </h2>
                     <p className="text-[14px] text-[#64748b] font-light max-w-lg mx-auto">
@@ -2822,7 +2822,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                     <span className="w-1.5 h-1.5 rounded-full bg-[#059669] animate-pulse"></span>
                     <span className="text-[11px] uppercase tracking-wider text-[#321961] font-bold">Our Partners</span>
                   </div>
-                  <h2 className="text-[34px] font-light text-[#0f172a] leading-tight tracking-tight mb-3">
+                  <h2 className="!text-[34px] !font-light text-[#0f172a] leading-tight tracking-tight mb-3">
                     Trusted Network of Healthcare <span className="font-normal text-[#059669]">Partners</span>
                   </h2>
                   <p className="text-[13.5px] text-slate-600 font-light leading-relaxed max-w-lg mx-auto">
@@ -2951,7 +2951,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                     <span className="w-1.5 h-1.5 rounded-full bg-[#321961] animate-pulse"></span>
                     <span className="text-[11px] uppercase tracking-wider text-[#321961] font-bold">FAQ Support</span>
                   </div>
-                  <h2 className="text-[34px] font-light text-[#0f172a] leading-tight tracking-tight mb-3">
+                  <h2 className="!text-[34px] !font-light text-[#0f172a] leading-tight tracking-tight mb-3">
                     Frequently Asked <span className="font-normal text-[#321961]">Questions</span>
                   </h2>
                   <p className="text-[13.5px] text-[#64748b] font-light leading-relaxed max-w-lg mx-auto tracking-wide">
@@ -3114,7 +3114,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                     <span className="w-1.5 h-1.5 rounded-full bg-[#321961] animate-pulse"></span>
                     <span className="text-[11px] uppercase tracking-wider text-[#321961] font-bold">Our Blogs</span>
                   </div>
-                  <h2 className="text-[34px] font-light text-[#0f172a] leading-tight tracking-tight mb-3">
+                  <h2 className="!text-[34px] !font-light text-[#0f172a] leading-tight tracking-tight mb-3">
                     Insights & Tips on <span className="font-normal text-[#321961]">Medicines</span>
                   </h2>
                   <p className="text-[13.5px] text-[#64748b] font-light leading-relaxed max-w-lg mx-auto">
@@ -3338,10 +3338,10 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
 
                       {/* Eyebrow and main header */}
                       <div className="aos" data-aos="fade-up">
-                        <div className="inline-flex items-center gap-1.5 bg-white/10 border border-solid border-white/20 py-1.5 px-4 rounded-full mb-4 backdrop-blur-sm">
+                        {/* <div className="inline-flex items-center gap-1.5 bg-white/10 border border-solid border-white/20 py-1.5 px-4 rounded-full mb-4 backdrop-blur-sm">
                           <span className="w-1.5 h-1.5 rounded-full bg-[#10b981] animate-pulse"></span>
                           <span className="text-[11px] uppercase tracking-wider text-[#10b981] font-bold">Go Mobile</span>
-                        </div>
+                        </div> */}
                         <h2 className="text-[32px] lg:text-[40px] font-bold text-white leading-tight tracking-tight">
                           Compare & Save On the Go
                         </h2>
