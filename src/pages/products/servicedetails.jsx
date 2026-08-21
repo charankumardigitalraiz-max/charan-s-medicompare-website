@@ -1884,7 +1884,7 @@ const ServiceDetails = () => {
         >
           <div>
             <SectionHeader
-              title={`Trusted Partners${isMobile ? "" : ` (${partners.length})`}`}
+              title={`Trusted Partners${isMobile ? "" : ``}`}
               icon="fas fa-bolt"
               viewAllLink={`/partners/${service}`}
               viewAllText="View All"

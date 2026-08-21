@@ -356,7 +356,10 @@ const SectionProductCard2 = ({
       onClick={handleImageClick}
     >
       {/* Product Image Section */}
-      <div className={`relative h-[120px] flex items-center justify-center bg-slate-50/50 ${isMedicine ? "w-full p-3 overflow-hidden" : "w-[120px] p-0 rounded-full border border-slate-200/80 mx-auto"} mb-3`}>
+      <div
+        className={`relative h-[120px] flex items-center justify-center ${isMedicine ? "w-full p-3 overflow-hidden" : "w-[120px] p-0 rounded-full border border-slate-200/80 mx-auto"} mb-3`}
+      // style={{ background: themeBg }}
+      >
 
         <img
           className={`${isMedicine ? "w-[115px] h-[115px] object-contain" : "w-full h-full rounded-full object-cover"} bg-white group-hover:scale-105 transition-transform duration-300 relative z-10`}
