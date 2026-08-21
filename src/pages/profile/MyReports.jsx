@@ -132,7 +132,7 @@ const MyReports = ({ HomeNavigate }) => {
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pb-2 mb-2 border-b border-slate-100 mt-2">
           <div className="flex items-center gap-3.5">
             {HomeNavigate && <HomeNavigate />}
-            <div className="w-11 h-11 rounded-xl bg-purple-50 text-[#321961] flex items-center justify-center text-[20px] shrink-0 border border-purple-100/50 shadow-sm">
+            <div className="w-11 h-11 rounded-xl bg-purple-50 text-[var(--color-primary,#4c2691)] flex items-center justify-center text-[20px] shrink-0 border border-purple-100/50 shadow-sm">
               <i className="fa-solid fa-shopping-bag" />
             </div>
 
@@ -166,7 +166,7 @@ const MyReports = ({ HomeNavigate }) => {
                 placeholder="Search by Order ID or Item Name..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="h-[42px] rounded-sm border border-[#e0e0e0] pl-10 pr-4 text-sm w-full outline-none focus:border-[#321961] transition-colors"
+                className="h-[42px] rounded-sm border border-[#e0e0e0] pl-10 pr-4 text-sm w-full outline-none focus:border-[var(--color-primary,#4c2691)] transition-colors"
               />
               <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[#999] pointer-events-none">
                 <i className="fa-solid fa-search" />
@@ -269,7 +269,7 @@ const MyReports = ({ HomeNavigate }) => {
                             </div>
                             <div className="text-[12px]">
                               <span className="text-[#777]">Patient: </span>
-                              <span className="capitalize font-semibold text-[#321961]">
+                              <span className="capitalize font-semibold text-[var(--color-primary,#4c2691)]">
                                 {(() => {
                                   // Get a list of all distinct patient names across all items in this order
                                   const patientNames = [];
@@ -303,7 +303,7 @@ const MyReports = ({ HomeNavigate }) => {
                             : "N/A"}
                         </div>
                         <button
-                          className="flex gap-1.5 items-center !bg-primary !rounded-md !text-[11px] px-3 py-[6px] border border-[#321961] !text-white bg-transparent font-semibold hover:bg-[#321961] hover:text-white transition-colors"
+                          className="flex gap-1.5 items-center !bg-primary !rounded-md !text-[11px] px-3 py-[6px] border border-[var(--color-primary,#4c2691)] !text-white bg-transparent font-semibold hover:bg-[var(--color-primary,#4c2691)] hover:text-white transition-colors"
                           onClick={() => handleView(order)}
                         >
                           <i className="fas fa-file-pdf"></i>
@@ -369,7 +369,7 @@ const MyReports = ({ HomeNavigate }) => {
                           {hasReport ? (
                             <button
                               type="button"
-                              className="btn btn-sm flex items-center gap-1.5 bg-[#321961] text-white font-semibold text-[12px] px-3.5 py-2 rounded-sm border-none hover:bg-[#6b1fe6] transition-colors"
+                              className="btn btn-sm flex items-center gap-1.5 bg-[var(--color-primary,#4c2691)] text-white font-semibold text-[12px] px-3.5 py-2 rounded-sm border-none hover:bg-[var(--color-primary-dark,#5c33a6)] transition-colors"
                               onClick={() => {
                                 const rawPath = patient.reports.reportFile;
                                 const fullUrl = rawPath.startsWith("http://") || rawPath.startsWith("https://")

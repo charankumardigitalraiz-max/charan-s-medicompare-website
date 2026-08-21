@@ -130,11 +130,10 @@ const Wallet = ({ HomeNavigate, BackButton }) => {
             <div className="w-full">
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pb-3 mb-2 border-b border-slate-100 mt-2">
                 <div className="flex items-center gap-3.5">
-                  {HomeNavigate && <HomeNavigate />}
-                  <div className="w-11 h-11 rounded-xl bg-purple-50 text-[#321961] flex items-center justify-center text-[20px] shrink-0 border border-purple-100/50 shadow-sm">
+                  {HomeNavigate && <HomeNavigate />}                  <div className="w-11 h-11 rounded-xl bg-purple-50 text-[var(--color-primary,#4c2691)] flex items-center justify-center text-[20px] shrink-0 border border-purple-100/50 shadow-sm">
                     <i className="fa-solid fa-wallet" />
                   </div>
-
+ 
                   <div className="flex flex-col gap-1">
                     <div className="m-0 text-[#0f172a] font-medium text-[16px] md:text-[16px] tracking-tight leading-none" >
                       Wallet
@@ -144,10 +143,10 @@ const Wallet = ({ HomeNavigate, BackButton }) => {
                     </div>
                   </div>
                 </div>
-
+ 
                 {/* Compact Current Balance on the Right */}
                 <div className="flex items-center gap-3 bg-purple-50/50 border border-purple-100/60 rounded-sm px-3 py-2 self-stretch sm:self-auto justify-between sm:justify-start shadow-[0_2px_10px_rgba(128,89,202,0.02)]">
-                  <div className="w-8 h-8 rounded-lg bg-[#321961] text-white flex items-center justify-center shrink-0 shadow-sm">
+                  <div className="w-8 h-8 rounded-lg bg-[var(--color-primary,#4c2691)] text-white flex items-center justify-center shrink-0 shadow-sm">
                     <i className="fa-solid fa-wallet text-[14px]"></i>
                   </div>
                   <div className="text-left">
@@ -157,7 +156,7 @@ const Wallet = ({ HomeNavigate, BackButton }) => {
                 </div>
               </div>
             </div>
-
+ 
             <div className="w-full">
               {/* Search bar (kept commented out, preserved as-is from the original) */}
               {/* <div
@@ -196,7 +195,7 @@ const Wallet = ({ HomeNavigate, BackButton }) => {
                       outline: "none",
                     }}
                     onFocus={(e) =>
-                      (e.target.style.borderColor = "#321961")
+                      (e.target.style.borderColor = "var(--color-primary,#4c2691)")
                     }
                     onBlur={(e) => (e.target.style.borderColor = "#e0e0e0")}
                   />

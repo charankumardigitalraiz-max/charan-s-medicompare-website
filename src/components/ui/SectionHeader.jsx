@@ -17,20 +17,20 @@ const SectionHeader = ({
 
     const buttonStyle = {
       color: '#ffffff',
-      backgroundColor: '#321961',
-      border: '1.5px solid #321961',
+      backgroundColor: 'var(--color-primary, #4c2691)',
+      border: '1.5px solid var(--color-primary, #4c2691)',
     };
 
     const handleMouseEnter = (e) => {
-      e.currentTarget.style.backgroundColor = 'rgba(50, 25, 97, 0.08)';
-      e.currentTarget.style.color = '#321961';
-      e.currentTarget.style.borderColor = 'rgba(50, 25, 97, 0.15)';
+      e.currentTarget.style.backgroundColor = 'transparent';
+      e.currentTarget.style.color = 'var(--color-primary, #4c2691)';
+      e.currentTarget.style.borderColor = 'var(--color-primary, #4c2691)';
     };
 
     const handleMouseLeave = (e) => {
-      e.currentTarget.style.backgroundColor = '#321961';
+      e.currentTarget.style.backgroundColor = 'var(--color-primary, #4c2691)';
       e.currentTarget.style.color = '#ffffff';
-      e.currentTarget.style.borderColor = '#321961';
+      e.currentTarget.style.borderColor = 'var(--color-primary, #4c2691)';
     };
 
     const content = (

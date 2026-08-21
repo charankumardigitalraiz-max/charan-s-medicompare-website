@@ -43,13 +43,13 @@
    inherit from --color-primary automatically.
    ============================================================ */
 :root {
-  --color-primary: #321961;
+  --color-primary: #4c2691;
 }
 
 @theme {
   --font-sans: 'Inter', sans-serif;
-  --color-primary: var(--color-primary, #321961);
-  --color-primary-dark: #6d48b8;
+  --color-primary: var(--color-primary, #4c2691);
+  --color-primary-dark: #5c33a6;
   --color-primary-bg: #f8f4ff;
   --color-secondary: #822bd4;
   --color-success: #04bd6c;

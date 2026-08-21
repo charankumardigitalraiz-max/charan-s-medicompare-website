@@ -384,7 +384,7 @@ const Favourites = ({ HomeNavigate, BackButton }) => {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-2 mb-2 border-b border-slate-100 mt-2">
         <div className="flex items-center gap-3.5">
           {HomeNavigate && <HomeNavigate />}
-          <div className="w-11 h-11 rounded-xl bg-purple-50 text-[#321961] flex items-center justify-center text-[20px] shrink-0 border border-purple-100/50 shadow-sm">
+          <div className="w-11 h-11 rounded-xl bg-purple-50 text-[var(--color-primary,#4c2691)] flex items-center justify-center text-[20px] shrink-0 border border-purple-100/50 shadow-sm">
             <i className="fa-solid fa-heart" />
           </div>
 
@@ -405,7 +405,7 @@ const Favourites = ({ HomeNavigate, BackButton }) => {
               placeholder="Search favourites..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="h-[42px] rounded-sm border border-[#e0e0e0] pl-10 pr-4 text-sm w-full outline-none focus:border-[#321961] transition-colors"
+              className="h-[42px] rounded-sm border border-[#e0e0e0] pl-10 pr-4 text-sm w-full outline-none focus:border-[var(--color-primary,#4c2691)] transition-colors"
             />
             <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[#999] pointer-events-none">
               <i className="fa-solid fa-search" />
@@ -585,19 +585,17 @@ const Favourites = ({ HomeNavigate, BackButton }) => {
                           <FaRegShareSquare size={15} color="#9ca3af" />
                         </div>
                       </div>
-                    </div>
-
-                    <div className="flex items-center justify-between gap-1 min-w-0">
+                    </div>                    <div className="flex items-center justify-between gap-1 min-w-0">
                       {(item?.brands?.name || item?.brand?.name || item?.manufacture?.name) && (
                         <span
-                          className="text-[10.5px] text-[#321961] overflow-hidden text-ellipsis whitespace-nowrap tracking-[0.02em] bg-[#f5f3ff] px-2 py-0.5 rounded-md border border-[#7d2eff]/10 inline-block max-w-full"
+                          className="text-[10.5px] text-[var(--color-primary,#4c2691)] overflow-hidden text-ellipsis whitespace-nowrap tracking-[0.02em] bg-[#f5f3ff] px-2 py-0.5 rounded-md border border-[#7d2eff]/10 inline-block max-w-full"
                           title={item?.brands?.name || item?.brand?.name || item?.manufacture?.name}
                         >
                           By {item?.brands?.name || item?.brand?.name || item?.manufacture?.name}
                         </span>
                       )}
                     </div>
-
+ 
                     {/* Product Details Grid */}
                     <div className="product-details-grid flex flex-col gap-0.5 mt-1">
                       {(() => {
@@ -622,17 +620,17 @@ const Favourites = ({ HomeNavigate, BackButton }) => {
                           { label: "Fasting", value: item?.isFasting ? (typeof item.isFasting === "string" ? item.isFasting : "Yes") : null },
                           { label: "Param", value: item?.parameterss?.length > 0 ? `${item.parameterss.length} Tests` : null }
                         ].filter(spec => spec.value !== null && spec.value !== undefined && String(spec.value).trim() !== "");
-
+ 
                         return specs.slice(0, 2).map((spec, specIdx) => (
                           <DetailRow key={specIdx} label={spec.label} value={spec.value} />
                         ));
                       })()}
                     </div>
-
+ 
                     {/* View Details Button */}
                     <button
                       onClick={(e) => handleProductClick(item, e)}
-                      className="block w-full text-center py-[4px] px-4 bg-[#321961] text-white !rounded-sm border-none !text-[12px] !font-medium transition-all duration-300 cursor-pointer !mt-auto hover:bg-[#6b1fe6] hover:-translate-y-px hover:shadow-[0_4px_12px_rgba(125,46,255,0.3)]"
+                      className="block w-full text-center py-[4px] px-4 bg-[var(--color-primary,#4c2691)] text-white !rounded-sm border-none !text-[12px] !font-medium transition-all duration-300 cursor-pointer !mt-auto hover:bg-[var(--color-primary-dark,#5c33a6)] hover:-translate-y-px hover:shadow-[0_4px_12px_rgba(128,89,202,0.15)]"
                     >
                       <i className="fa-solid fa-eye me-1.5"></i> View Details
                     </button>

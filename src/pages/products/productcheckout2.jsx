@@ -2110,17 +2110,17 @@ export const Cart = () => {
                 >
                   {/* COD Option */}
                   <div
-                    className={`flex-1 min-w-0 !rounded-md px-3 py-2.5 flex items-center gap-2 cursor-pointer transition-all duration-200 ease-in-out !box-border ${selectedPayment === "cod" ? "!border-2 !border-[#321961] !bg-[#fdfaff] shadow-[0_4px_12px_rgba(128,89,202,0.08)]" : "!border-[1.5px] !border-[#e2e8f0] bg-white hover:border-[#cbd5e1] hover:bg-[#fafbfc]"}`}
+                    className={`flex-1 min-w-0 !rounded-md px-3 py-2.5 flex items-center gap-2 cursor-pointer transition-all duration-200 ease-in-out !box-border ${selectedPayment === "cod" ? "!border-2 !border-[var(--color-primary,#4c2691)] !bg-[#fdfaff] shadow-[0_4px_12px_rgba(128,89,202,0.08)]" : "!border-2 !border-[#e2e8f0] bg-white hover:border-[#cbd5e1] hover:bg-[#fafbfc]"}`}
                     onClick={() => setSelectedPayment("cod")}
                   >
                     <div
-                      className={`w-7 h-7 !rounded-lg flex items-center justify-center text-xs transition-all duration-200 ease-in-out shrink-0 ${selectedPayment === "cod" ? "bg-[#321961] text-white" : "!bg-[#f1f5f9] !text-[#64748b]"}`}
+                      className={`w-7 h-7 !rounded-lg flex items-center justify-center text-xs transition-all duration-200 ease-in-out shrink-0 ${selectedPayment === "cod" ? "bg-[var(--color-primary,#4c2691)] text-white" : "!bg-[#f1f5f9] !text-[#64748b]"}`}
                     >
                       <i className="fas fa-money-bill-wave" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <div
-                        className={`text-xs font-bold mb-[1px] whitespace-nowrap overflow-hidden text-ellipsis ${selectedPayment === "cod" ? "!text-[#321961]" : "!text-[#1e293b]"}`}
+                        className={`text-xs font-bold mb-[1px] whitespace-nowrap overflow-hidden text-ellipsis ${selectedPayment === "cod" ? "!text-[var(--color-primary,#4c2691)]" : "!text-[#1e293b]"}`}
                       >
                         Cash on Delivery
                       </div>
@@ -2129,23 +2129,23 @@ export const Cart = () => {
                       </div>
                     </div>
                     <div
-                      className={`w-3.5 h-3.5 rounded-full bg-white transition-all duration-200 ease-in-out shrink-0 ${selectedPayment === "cod" ? "border-4 border-[#321961]" : "border-2 border-[#cbd5e1]"}`}
+                      className={`w-3.5 h-3.5 rounded-full bg-white transition-all duration-200 ease-in-out shrink-0 ${selectedPayment === "cod" ? "border-4 border-[var(--color-primary,#4c2691)]" : "border-2 border-[#cbd5e1]"}`}
                     />
                   </div>
 
                   {/* Online Option */}
                   <div
-                    className={`flex-1 min-w-0 !rounded-md px-3 py-2.5 flex items-center gap-2 cursor-pointer transition-all duration-200 ease-in-out !box-border ${selectedPayment === "online" ? "!border-2 !border-[#321961] !bg-[#fdfaff] shadow-[0_4px_12px_rgba(128,89,202,0.08)]" : "!border-[1.5px] !border-[#e2e8f0] !bg-white hover:border-[#cbd5e1] hover:bg-[#fafbfc]"}`}
+                    className={`flex-1 min-w-0 !rounded-md px-3 py-2.5 flex items-center gap-2 cursor-pointer transition-all duration-200 ease-in-out !box-border ${selectedPayment === "online" ? "!border-2 !border-[var(--color-primary,#4c2691)] !bg-[#fdfaff] shadow-[0_4px_12px_rgba(128,89,202,0.08)]" : "!border-2 !border-[#e2e8f0] !bg-white hover:border-[#cbd5e1] hover:bg-[#fafbfc]"}`}
                     onClick={() => setSelectedPayment("online")}
                   >
                     <div
-                      className={`w-7 h-7 !rounded-lg flex items-center justify-center text-xs transition-all duration-200 ease-in-out shrink-0 ${selectedPayment === "online" ? "!bg-[#321961] !text-white" : "!bg-[#f1f5f9] !text-[#64748b]"}`}
+                      className={`w-7 h-7 !rounded-lg flex items-center justify-center text-xs transition-all duration-200 ease-in-out shrink-0 ${selectedPayment === "online" ? "!bg-[var(--color-primary,#4c2691)] !text-white" : "!bg-[#f1f5f9] !text-[#64748b]"}`}
                     >
                       <i className="fas fa-credit-card" />
                     </div>
                     <div className="flex-1 min-w-0">
                       <div
-                        className={`text-xs font-bold mb-[1px] whitespace-nowrap overflow-hidden text-ellipsis ${selectedPayment === "online" ? "text-[#321961]" : "text-[#1e293b]"}`}
+                        className={`text-xs font-bold mb-[1px] whitespace-nowrap overflow-hidden text-ellipsis ${selectedPayment === "online" ? "text-[var(--color-primary,#4c2691)]" : "text-[#1e293b]"}`}
                       >
                         Online Payment
                       </div>
@@ -2154,7 +2154,7 @@ export const Cart = () => {
                       </div>
                     </div>
                     <div
-                      className={`w-3.5 h-3.5 rounded-full bg-white transition-all duration-200 ease-in-out shrink-0 ${selectedPayment === "online" ? "border-4 border-[#321961]" : "border-2 border-[#cbd5e1]"}`}
+                      className={`w-3.5 h-3.5 rounded-full bg-white transition-all duration-200 ease-in-out shrink-0 ${selectedPayment === "online" ? "border-4 border-[var(--color-primary,#4c2691)]" : "border-2 border-[#cbd5e1]"}`}
                     />
                   </div>
                 </div>

@@ -232,11 +232,11 @@ const Profile = ({ HomeNavigate, BackButton }) => {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pb-2 mb-2 border-b border-slate-100 mt-2">
         <div className="flex items-center gap-3.5">
           {HomeNavigate && <HomeNavigate />}
-          <div className="w-11 h-11 rounded-xl bg-purple-50 text-[#321961] flex items-center justify-center text-[20px] shrink-0 border border-purple-100/50 shadow-sm">
+          <div className="w-11 h-11 rounded-xl bg-purple-50 text-[var(--color-primary,#4c2691)] flex items-center justify-center text-[20px] shrink-0 border border-purple-100/50 shadow-sm">
             <i className="fa-solid fa-user-gear" />
           </div>
-
-
+ 
+ 
           {/* <div className="flex flex-col gap-1">
             <div className="m-0 text-[#0f172a] text-[18px] md:text-[20px] tracking-tight leading-none" style={{ fontWeight: 600 }}>
               Profile Details
@@ -245,8 +245,8 @@ const Profile = ({ HomeNavigate, BackButton }) => {
               Update your personal information and preferences
             </p>
           </div> */}
-
-
+ 
+ 
           <div className="flex flex-col gap-1">
             <div className="m-0 text-[#0f172a] font-medium text-[16px] md:text-[16px] tracking-tight leading-none" >
               Profile Details
@@ -257,14 +257,14 @@ const Profile = ({ HomeNavigate, BackButton }) => {
           </div>
         </div>
       </div>
-
+ 
       {!isEditMode ? (
         /* View Mode - Profile Details Display */
         <div className="bg-white rounded-xl p-[30px] shadow-[0_4px_20px_rgba(0,0,0,0.08)] mb-[30px]">
           {/* Profile Card Header Info & Edit Button */}
           <div className="flex items-center justify-between gap-4 pb-5 mb-5 border-b border-slate-100 flex-wrap sm:flex-nowrap">
             <div className="flex items-center gap-4">
-              <div className="w-14 h-14 rounded-full bg-purple-50 border border-purple-100 flex items-center justify-center text-[#321961] text-xl font-bold shrink-0 shadow-inner overflow-hidden">
+              <div className="w-14 h-14 rounded-full bg-purple-50 border border-purple-100 flex items-center justify-center text-[var(--color-primary,#4c2691)] text-xl font-bold shrink-0 shadow-inner overflow-hidden">
                 {profiles.image ? (
                   <img
                     src={
@@ -286,17 +286,17 @@ const Profile = ({ HomeNavigate, BackButton }) => {
                 <p className="text-slate-400 text-[11px] font-semibold m-0 uppercase tracking-wide">Personal Profile</p>
               </div>
             </div>
-
+ 
             <button
               type="button"
               onClick={handleEditClick}
-              className="bg-[#321961] hover:bg-[#6b1fe6] text-white border-none py-1.5 px-6 !rounded-sm !text-sm !font-semibold inline-flex items-center gap-2 cursor-pointer transition-all duration-300 shrink-0"
+              className="bg-[var(--color-primary,#4c2691)] hover:bg-[var(--color-primary-dark,#5c33a6)] text-white border-none py-1.5 px-6 !rounded-sm !text-sm !font-semibold inline-flex items-center gap-2 cursor-pointer transition-all duration-300 shrink-0"
             >
               <i className="fa-solid fa-pen text-[10px]"></i>
               Edit Profile
             </button>
           </div>
-
+ 
           {/* Profile Grid Details */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-5">
             {/* Customer ID Block */}
@@ -309,7 +309,7 @@ const Profile = ({ HomeNavigate, BackButton }) => {
                 <span className="block text-sm font-semibold text-slate-700 truncate">{profiles.custId || <span className="text-slate-300 italic font-normal">N/A</span>}</span>
               </div>
             </div>
-
+ 
             {/* Mobile Number Block */}
             <div className="bg-slate-50/50 hover:bg-slate-50 rounded-sm p-4 border border-slate-100 flex items-center gap-3 transition-all duration-200">
               <div className="w-10 h-10 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center text-sm shrink-0">
@@ -320,7 +320,7 @@ const Profile = ({ HomeNavigate, BackButton }) => {
                 <span className="block text-sm font-semibold text-slate-700 truncate">{profiles.phone || <span className="text-slate-300 italic font-normal">N/A</span>}</span>
               </div>
             </div>
-
+ 
             {/* Email Address Block */}
             <div className="bg-slate-50/50 hover:bg-slate-50 rounded-sm p-4 border border-slate-100 flex items-center gap-3 transition-all duration-200">
               <div className="w-10 h-10 rounded-lg bg-purple-50 text-[#7c3aed] flex items-center justify-center text-sm shrink-0">
@@ -340,7 +340,7 @@ const Profile = ({ HomeNavigate, BackButton }) => {
                   {profiles.email && profiles.email_verified === false && (
                     <button
                       type="button"
-                      className="bg-[#321961] text-white border-0 py-0.5 px-2 rounded text-[10px] font-bold cursor-pointer hover:bg-purple-700 transition"
+                      className="bg-[var(--color-primary,#4c2691)] text-white border-0 py-0.5 px-2 rounded text-[10px] font-bold cursor-pointer hover:bg-[var(--color-primary-dark,#5c33a6)] transition"
                       onClick={handleSendOtp}
                       disabled={isSendingOtp}
                     >
@@ -350,7 +350,7 @@ const Profile = ({ HomeNavigate, BackButton }) => {
                 </div>
               </div>
             </div>
-
+ 
             {/* Gender Block */}
             <div className="bg-slate-50/50 hover:bg-slate-50 rounded-sm p-4 border border-slate-100 flex items-center gap-3 transition-all duration-200">
               <div className="w-10 h-10 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center text-sm shrink-0">
@@ -361,7 +361,7 @@ const Profile = ({ HomeNavigate, BackButton }) => {
                 <span className="block text-sm font-semibold text-slate-700 capitalize">{profiles.gender || <span className="text-slate-300 italic font-normal">N/A</span>}</span>
               </div>
             </div>
-
+ 
             {/* Age Block */}
             <div className="bg-slate-50/50 hover:bg-slate-50 rounded-sm p-4 border border-slate-100 flex items-center gap-3 transition-all duration-200">
               <div className="w-10 h-10 rounded-lg bg-pink-50 text-pink-600 flex items-center justify-center text-sm shrink-0">
@@ -373,14 +373,14 @@ const Profile = ({ HomeNavigate, BackButton }) => {
               </div>
             </div>
           </div>
-
+ 
           {/* Medical Conditions block */}
           <div className="bg-purple-50/30 border border-purple-100 rounded-sm p-4 flex gap-3.5">
             <div className="w-9 h-9 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center text-sm shrink-0 mt-0.5">
               <i className="fa-solid fa-file-medical"></i>
             </div>
             <div className="flex-1 min-w-0">
-              <span className="block text-[10.5px] font-bold text-[#321961] uppercase tracking-wider mb-1">Medical Conditions / Diseases</span>
+              <span className="block text-[10.5px] font-bold text-[var(--color-primary,#4c2691)] uppercase tracking-wider mb-1">Medical Conditions / Diseases</span>
               <p className="m-0 text-slate-600 text-[13px] leading-relaxed whitespace-pre-wrap break-words font-medium">
                 {profiles.medical_conditions || <span className="text-slate-400 italic font-normal">No medical conditions listed.</span>}
               </p>
@@ -398,7 +398,7 @@ const Profile = ({ HomeNavigate, BackButton }) => {
                 ) : profiles.image ? (
                   <img src={`${imgUrl}/${profiles.image}`} alt="Profile" className="w-full h-full object-cover" />
                 ) : (
-                  <div className="w-full h-full bg-purple-50 flex items-center justify-center text-[#321961] text-xl font-black">
+                  <div className="w-full h-full bg-purple-50 flex items-center justify-center text-[var(--color-primary,#4c2691)] text-xl font-black">
                     {profiles.first_name ? profiles.first_name[0].toUpperCase() : <i className="fa-solid fa-user"></i>}
                   </div>
                 )}
@@ -426,46 +426,46 @@ const Profile = ({ HomeNavigate, BackButton }) => {
               <div className="w-full">
                 <div className="flex flex-col">
                   <label className="text-sm font-semibold text-slate-600 mb-1.5 flex items-center gap-1.5">
-                    <i className="fa-solid fa-user text-[12px] text-[#321961]"></i>
+                    <i className="fa-solid fa-user text-[12px] text-[var(--color-primary,#4c2691)]"></i>
                     First Name
                   </label>
                   <input
                     type="text"
-                    className="w-full h-[48px] rounded-lg border border-slate-200 px-4 text-sm transition-all duration-300 focus:border-[#321961] focus:ring-1 focus:ring-[#321961]/20 outline-none bg-white"
+                    className="w-full h-[48px] rounded-lg border border-slate-200 px-4 text-sm transition-all duration-300 focus:border-[var(--color-primary,#4c2691)] focus:ring-1 focus:ring-[var(--color-primary,#4c2691)]/20 outline-none bg-white"
                     name="first_name"
                     value={profiles.first_name || ""}
                     onChange={handleProfiles}
                   />
                 </div>
               </div>
-
+ 
               <div className="w-full">
                 <div className="flex flex-col">
                   <label className="text-sm font-semibold text-slate-600 mb-1.5 flex items-center gap-1.5">
-                    <i className="fa-solid fa-user text-[12px] text-[#321961]"></i>
+                    <i className="fa-solid fa-user text-[12px] text-[var(--color-primary,#4c2691)]"></i>
                     Last Name
                   </label>
                   <input
                     type="text"
-                    className="w-full h-[48px] rounded-lg border border-slate-200 px-4 text-sm transition-all duration-300 focus:border-[#321961] focus:ring-1 focus:ring-[#321961]/20 outline-none bg-white"
+                    className="w-full h-[48px] rounded-lg border border-slate-200 px-4 text-sm transition-all duration-300 focus:border-[var(--color-primary,#4c2691)] focus:ring-1 focus:ring-[var(--color-primary,#4c2691)]/20 outline-none bg-white"
                     name="last_name"
                     value={profiles.last_name || ""}
                     onChange={handleProfiles}
                   />
                 </div>
               </div>
-
+ 
               <div className="w-full">
                 <div className="flex flex-col">
                   <label className="text-sm font-semibold text-slate-600 mb-1.5 flex items-center gap-1.5">
-                    <i className="fa-solid fa-phone text-[12px] text-[#321961]"></i>
+                    <i className="fa-solid fa-phone text-[12px] text-[var(--color-primary,#4c2691)]"></i>
                     Mobile Number
                   </label>
                   <input
                     type="tel"
                     className={`w-full h-[48px] rounded-lg border border-slate-200 px-4 text-sm transition-all duration-300 outline-none ${profiles.mobile_verified === true
                       ? "bg-slate-100 cursor-not-allowed opacity-70"
-                      : "bg-white cursor-text focus:border-[#321961] focus:ring-1 focus:ring-[#321961]/20"
+                      : "bg-white cursor-text focus:border-[var(--color-primary,#4c2691)] focus:ring-1 focus:ring-[var(--color-primary,#4c2691)]/20"
                       }`}
                     name="phone"
                     value={profiles.phone || ""}
@@ -488,31 +488,31 @@ const Profile = ({ HomeNavigate, BackButton }) => {
                   )}
                 </div>
               </div>
-
+ 
               <div className="w-full">
                 <div className="flex flex-col">
                   <label className="text-sm font-semibold text-slate-600 mb-1.5 flex items-center gap-1.5">
-                    <i className="fa-solid fa-envelope text-[12px] text-[#321961]"></i>
+                    <i className="fa-solid fa-envelope text-[12px] text-[var(--color-primary,#4c2691)]"></i>
                     Email
                   </label>
                   <input
                     type="email"
-                    className="w-full h-[48px] rounded-lg border border-slate-200 px-4 text-sm transition-all duration-300 focus:border-[#321961] focus:ring-1 focus:ring-[#321961]/20 outline-none bg-white"
+                    className="w-full h-[48px] rounded-lg border border-slate-200 px-4 text-sm transition-all duration-300 focus:border-[var(--color-primary,#4c2691)] focus:ring-1 focus:ring-[var(--color-primary,#4c2691)]/20 outline-none bg-white"
                     name="email"
                     value={profiles.email || ""}
                     onChange={handleProfiles}
                   />
                 </div>
               </div>
-
+ 
               <div className="w-full">
                 <div className="flex flex-col">
                   <label className="text-sm font-semibold text-slate-600 mb-1.5 flex items-center gap-1.5">
-                    <i className="fa-solid fa-venus-mars text-[12px] text-[#321961]"></i>
+                    <i className="fa-solid fa-venus-mars text-[12px] text-[var(--color-primary,#4c2691)]"></i>
                     Gender
                   </label>
                   <select
-                    className="w-full h-[48px] rounded-lg border border-slate-200 px-4 text-sm bg-white transition-all duration-300 appearance-none focus:border-[#321961] focus:ring-1 focus:ring-[#321961]/20 outline-none bg-no-repeat"
+                    className="w-full h-[48px] rounded-lg border border-slate-200 px-4 text-sm bg-white transition-all duration-300 appearance-none focus:border-[var(--color-primary,#4c2691)] focus:ring-1 focus:ring-[var(--color-primary,#4c2691)]/20 outline-none bg-no-repeat"
                     name="gender"
                     value={profiles.gender || ""}
                     onChange={handleProfiles}
@@ -529,11 +529,11 @@ const Profile = ({ HomeNavigate, BackButton }) => {
                   </select>
                 </div>
               </div>
-
+ 
               <div className="w-full">
                 <div className="flex flex-col">
                   <label className="text-sm font-semibold text-slate-600 mb-1.5 flex items-center gap-1.5">
-                    <i className="fa-solid fa-calendar-days text-[12px] text-[#321961]"></i>
+                    <i className="fa-solid fa-calendar-days text-[12px] text-[var(--color-primary,#4c2691)]"></i>
                     Date of Birth
                   </label>
                   <DatePicker
@@ -548,7 +548,7 @@ const Profile = ({ HomeNavigate, BackButton }) => {
                     cleanable
                   />
                   {profiles.age && (
-                    <div className="mt-1.5 text-xs text-[#321961] flex items-center gap-1 font-medium">
+                    <div className="mt-1.5 text-xs text-[var(--color-primary,#4c2691)] flex items-center gap-1 font-medium">
                       <i className="fa-solid fa-cake-candles text-[10px]"></i>
                       Age: {profiles.age} years
                     </div>
@@ -561,15 +561,15 @@ const Profile = ({ HomeNavigate, BackButton }) => {
                   )}
                 </div>
               </div>
-
+ 
               <div className="w-full md:col-span-2 lg:col-span-3">
                 <div className="flex flex-col">
                   <label className="text-sm font-semibold text-slate-600 mb-1.5 flex items-center gap-1.5">
-                    <i className="fa-solid fa-file-medical text-[12px] text-[#321961]"></i>
+                    <i className="fa-solid fa-file-medical text-[12px] text-[var(--color-primary,#4c2691)]"></i>
                     Medical Conditions / Diseases
                   </label>
                   <textarea
-                    className="w-full rounded-lg border border-slate-200 p-3.5 text-sm resize-y min-h-[100px] transition-all duration-300 focus:border-[#321961] focus:ring-1 focus:ring-[#321961]/20 outline-none bg-white"
+                    className="w-full rounded-lg border border-slate-200 p-3.5 text-sm resize-y min-h-[100px] transition-all duration-300 focus:border-[var(--color-primary,#4c2691)] focus:ring-1 focus:ring-[var(--color-primary,#4c2691)]/20 outline-none bg-white"
                     name="medical_conditions"
                     value={profiles.medical_conditions || ""}
                     onChange={handleProfiles}
@@ -584,7 +584,7 @@ const Profile = ({ HomeNavigate, BackButton }) => {
               </div>
             </div>
           </div>
-
+ 
           {/* Submit Button Section */}
           <div className="flex justify-end gap-[15px] text-end mt-4">
             <button
@@ -597,7 +597,7 @@ const Profile = ({ HomeNavigate, BackButton }) => {
             </button>
             <button
               type="submit"
-              className="bg-[#321961] hover:bg-[#6b1fe6] text-white border-none py-2.5 px-6 !rounded-lg !text-sm !font-semibold inline-flex items-center gap-2 cursor-pointer transition-all duration-300"
+              className="bg-[var(--color-primary,#4c2691)] hover:bg-[var(--color-primary-dark,#5c33a6)] text-white border-none py-2.5 px-6 !rounded-lg !text-sm !font-semibold inline-flex items-center gap-2 cursor-pointer transition-all duration-300"
             >
               <i className="fas fa-check-circle"></i>
               Update Profile
@@ -605,7 +605,7 @@ const Profile = ({ HomeNavigate, BackButton }) => {
           </div>
         </form>
       )}
-
+ 
       {showOtpModal && (
         <div
           onClick={() => {
@@ -630,16 +630,16 @@ const Profile = ({ HomeNavigate, BackButton }) => {
                   setOtp("");
                   setOtpError("");
                 }}
-                className="bg-[#f5f3ff] border-none rounded-full w-7 h-7 flex items-center justify-center cursor-pointer text-[#321961] text-base"
+                className="bg-[#f5f3ff] border-none rounded-full w-7 h-7 flex items-center justify-center cursor-pointer text-[var(--color-primary,#4c2691)] text-base"
               >
                 &times;
               </button>
             </div>
-
+ 
             <p className="text-[13px] text-slate-500 m-0">
               We have sent a verification code to <strong>{profiles.email}</strong>. Please enter the OTP below.
             </p>
-
+ 
             <div className="flex flex-col gap-1.5">
               <input
                 type="text"
@@ -654,23 +654,23 @@ const Profile = ({ HomeNavigate, BackButton }) => {
                 </span>
               )}
             </div>
-
+ 
             <button
               type="button"
-              className="btn btn-primary h-11 rounded-[10px] font-semibold text-sm bg-[#321961] border-none text-white"
+              className="btn btn-primary h-11 rounded-[10px] font-semibold text-sm bg-[var(--color-primary,#4c2691)] border-none text-white"
               onClick={handleVerifyOtp}
               disabled={isVerifyingOtp}
             >
               {isVerifyingOtp ? "Verifying..." : "Verify OTP"}
             </button>
-
+ 
             <div className="flex justify-center gap-1 text-[13px]">
               <span className="text-slate-500">Didn't receive code?</span>
               <button
                 type="button"
                 onClick={handleSendOtp}
                 disabled={isSendingOtp}
-                className="bg-transparent border-none p-0 text-[#321961] font-semibold cursor-pointer"
+                className="bg-transparent border-none p-0 text-[var(--color-primary,#4c2691)] font-semibold cursor-pointer"
               >
                 {isSendingOtp ? "Sending..." : "Resend OTP"}
               </button>

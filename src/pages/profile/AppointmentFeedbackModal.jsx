@@ -283,7 +283,7 @@ const AppointmentFeedbackOffcanvas = ({ isOpen, toggle, order, onReviewSubmitted
                 <div className="flex items-center gap-3 mb-3 border-b border-dashed border-[#e2d5f8] pb-3">
                   <img
                     src={formattedVendorImage}
-                    className="w-[50px] h-[50px] rounded-full object-cover border-2 border-[#321961]"
+                    className="w-[50px] h-[50px] rounded-full object-cover border-2 border-[var(--color-primary,#4c2691)]"
                     alt="Vendor Logo"
                     onError={(e) => { e.currentTarget.src = "/assets/default.png"; }}
                   />
@@ -360,7 +360,7 @@ const AppointmentFeedbackOffcanvas = ({ isOpen, toggle, order, onReviewSubmitted
 
         <div className="p-3 position-absolute bottom-0 start-0 end-0 border-t border-[#eef0f2] bg-white border-top">
           <button
-            className="border-0 w-full bg-[#321961] text-white p-2.5 rounded-lg font-semibold transition-colors duration-200 ease hover:bg-[#6d46b8] disabled:bg-[#cccccc] disabled:cursor-not-allowed"
+            className="border-0 w-full bg-[var(--color-primary,#4c2691)] text-white p-2.5 rounded-lg font-semibold transition-colors duration-200 ease hover:bg-[var(--color-primary-dark,#5c33a6)] disabled:bg-[#cccccc] disabled:cursor-not-allowed"
             onClick={handleSubmit}
             disabled={isSubmitting}
           >

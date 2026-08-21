@@ -1729,7 +1729,7 @@ const AppoitmentsOrders = ({ HomeNavigate, ServiceTabs }) => {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full py-2.5 bg-[#321961] hover:bg-[#6a4ab0] text-white font-bold rounded-lg transition-colors cursor-pointer disabled:opacity-50"
+                className="w-full py-2.5 bg-[var(--color-primary,#4c2691)] hover:bg-[var(--color-primary-dark,#5c33a6)] text-white font-bold rounded-lg transition-colors cursor-pointer disabled:opacity-50"
               >
                 {isSubmitting ? "Submitting..." : "Submit Issue"}
               </button>

@@ -389,7 +389,7 @@ const AmbulanceBooking = ({ HomeNavigate, BackButton }) => {
                       {/* Card Footer Actions */}
                       <div className="flex gap-2 pt-2.5 border-t border-[#f1f5f9]">
                         <button
-                          className="inline-flex items-center justify-center gap-1.5 !rounded-md !text-[11px] !font-medium p-[4px_8px] min-w-fit whitespace-nowrap leading-tight bg-[#321961] text-white border border-[#321961] transition-all duration-200 no-underline shadow-none hover:bg-[#6f42c1] hover:border-[#6f42c1] focus:bg-[#6f42c1] focus:border-[#6f42c1]"
+                          className="inline-flex items-center justify-center gap-1.5 !rounded-md !text-[11px] !font-medium p-[4px_8px] min-w-fit whitespace-nowrap leading-tight bg-[var(--color-primary,#4c2691)] text-white border border-[var(--color-primary,#4c2691)] transition-all duration-200 no-underline shadow-none hover:bg-[var(--color-primary-dark,#5c33a6)] hover:border-[var(--color-primary-dark,#5c33a6)] focus:bg-[var(--color-primary-dark,#5c33a6)] focus:border-[var(--color-primary-dark,#5c33a6)]"
                           onClick={() => setSelectedLead(lead)}
                         >
                           <i className="fas fa-eye text-[11px]" /> View Details

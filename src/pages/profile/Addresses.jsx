@@ -118,7 +118,7 @@ const Address = ({ HomeNavigate, BackButton }) => {
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pb-3 mb-2 border-b border-slate-100 mt-2">
               <div className="flex items-center gap-3.5">
                 {HomeNavigate && <HomeNavigate />}
-                <div className="w-11 h-11 rounded-xl bg-purple-50 text-[#321961] flex items-center justify-center text-[20px] shrink-0 border border-purple-100/50 shadow-sm">
+                <div className="w-11 h-11 rounded-xl bg-purple-50 text-[var(--color-primary,#4c2691)] flex items-center justify-center text-[20px] shrink-0 border border-purple-100/50 shadow-sm">
                   <i className="fa-solid fa-map-location-dot" />
                 </div>
 
@@ -152,7 +152,7 @@ const Address = ({ HomeNavigate, BackButton }) => {
                 <>
                   <div>
                     <div
-                      className="flex items-center justify-center bg-[#fafafd] rounded-[9px] border border-dashed border-[#dcdbe6] h-full min-h-[220px] relative p-6 flex-col cursor-pointer transition-all duration-300 ease-in-out hover:border-[#321961] hover:bg-[#faf8ff] hover:shadow-[0_8px_24px_rgba(128,89,202,0.1)]"
+                      className="flex items-center justify-center bg-[#fafafd] rounded-[9px] border border-dashed border-[#dcdbe6] h-full min-h-[220px] relative p-6 flex-col cursor-pointer transition-all duration-300 ease-in-out hover:border-[var(--color-primary,#4c2691)] hover:bg-[#faf8ff] hover:shadow-[0_8px_24px_rgba(128,89,202,0.1)]"
                       onClick={() => handleAddAddress()}
                     >
                       <div className="w-[60px] h-[60px] rounded-full bg-[rgba(13,110,253,0.1)] flex items-center justify-center mb-[15px]">
@@ -165,7 +165,7 @@ const Address = ({ HomeNavigate, BackButton }) => {
                     <div key={addr._id} className="h-full">
                       <div className="bg-white border border-[#e2e8f0] rounded-[9px] shadow-[0_2px_10px_rgba(15,23,42,0.03)] transition-all duration-300 hover:shadow-[0_8px_24px_rgba(128,89,202,0.1)] hover:border-[#c0a6f3] p-4 h-full">
                         <div className="flex justify-between items-center">
-                          <div className="font-semibold text-[15px] inline-flex items-center bg-[#faf8ff] text-[#321961] py-1 px-3 rounded-[20px] border border-[#f3effc]">
+                          <div className="font-semibold text-[15px] inline-flex items-center bg-[#faf8ff] text-[var(--color-primary,#4c2691)] py-1 px-3 rounded-[20px] border border-[#f3effc]">
                             <i
                               className={`${getAddressIcon(addr.addressType)} me-2`}
                             ></i>{" "}
@@ -216,7 +216,7 @@ const Address = ({ HomeNavigate, BackButton }) => {
                             }
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="!bg-[#faf8ff] !border border-[#e1d5f5] !text-[#321961] no-underline font-semibold text-xs inline-flex items-center justify-center py-2 px-4 rounded-lg transition-all duration-200 ease w-full hover:bg-[#321961] hover:text-white hover:border-[#321961] hover:no-underline"
+                            className="!bg-[#faf8ff] !border border-[#e1d5f5] !text-[var(--color-primary,#4c2691)] no-underline font-semibold text-xs inline-flex items-center justify-center py-2 px-4 rounded-lg transition-all duration-200 ease w-full hover:bg-[var(--color-primary,#4c2691)] hover:text-white hover:border-[var(--color-primary,#4c2691)] hover:no-underline"
                           >
                             <i className="fa-solid fa-location-dot me-1"></i>{" "}
                             View in Maps
@@ -230,7 +230,7 @@ const Address = ({ HomeNavigate, BackButton }) => {
                 <div className="col-span-full flex justify-center">
                   <div className="w-full max-w-md">
                     <div
-                      className="flex items-center justify-center bg-[#fafafd] rounded-[9px] border border-dashed border-[#dcdbe6] h-full min-h-[220px] relative p-6 flex-col cursor-pointer transition-all duration-300 ease-in-out hover:border-[#321961] hover:bg-[#faf8ff] hover:shadow-[0_8px_24px_rgba(128,89,202,0.1)]"
+                      className="flex items-center justify-center bg-[#fafafd] rounded-[9px] border border-dashed border-[#dcdbe6] h-full min-h-[220px] relative p-6 flex-col cursor-pointer transition-all duration-300 ease-in-out hover:border-[var(--color-primary,#4c2691)] hover:bg-[#faf8ff] hover:shadow-[0_8px_24px_rgba(128,89,202,0.1)]"
                       onClick={() => handleAddAddress()}
                     >
                       <div className="w-[60px] h-[60px] rounded-full bg-[rgba(13,110,253,0.1)] flex items-center justify-center mb-[15px]">

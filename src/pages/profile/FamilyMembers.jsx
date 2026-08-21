@@ -508,7 +508,7 @@ const FamilyMembers = ({ HomeNavigate, BackButton }) => {
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 pb-3 mb-3 border-b border-slate-100 mt-2">
           <div className="flex items-center gap-3.5">
             {HomeNavigate && <HomeNavigate />}
-            <div className="w-11 h-11 rounded-xl bg-purple-50 text-[#321961] flex items-center justify-center text-[20px] shrink-0 border border-purple-100/50 shadow-sm">
+            <div className="w-11 h-11 rounded-xl bg-purple-50 text-[var(--color-primary,#4c2691)] flex items-center justify-center text-[20px] shrink-0 border border-purple-100/50 shadow-sm">
               <i className="fa-solid fa-users" />
             </div>
 
@@ -541,14 +541,14 @@ const FamilyMembers = ({ HomeNavigate, BackButton }) => {
                 placeholder="Search family member..."
                 value={memberSearchTerm}
                 onChange={handleSearchChange}
-                className="h-[42px] rounded-sm border border-[#e0e0e0] pl-10 pr-4 text-sm w-full outline-none focus:border-[#321961] transition-colors"
+                className="h-[42px] rounded-sm border border-[#e0e0e0] pl-10 pr-4 text-sm w-full outline-none focus:border-[var(--color-primary,#4c2691)] transition-colors"
               />
               <span className="absolute left-4 top-1/2 -translate-y-1/2 text-[#999] pointer-events-none">
                 <i className="fa-solid fa-search" />
               </span>
             </div>
             <button
-              className="h-[38px] w-full sm:w-auto inline-flex items-center justify-center gap-1.5 whitespace-nowrap bg-[#321961] hover:bg-[#6a4ab0] text-white px-4 py-2 !rounded-md text-sm font-medium transition-all duration-200"
+              className="h-[38px] w-full sm:w-auto inline-flex items-center justify-center gap-1.5 whitespace-nowrap bg-[var(--color-primary,#4c2691)] hover:bg-[var(--color-primary-dark,#5c33a6)] text-white px-4 py-2 !rounded-md text-sm font-medium transition-all duration-200"
               onClick={handleAdd}
             >
               <i className="fa-solid fa-plus" />
@@ -560,7 +560,7 @@ const FamilyMembers = ({ HomeNavigate, BackButton }) => {
         {/* Family Members List */}
         {isLoadingMembers ? (
           <div className="text-center py-10 flex justify-center items-center">
-            <div className="animate-spin inline-block w-8 h-8 border-4 border-[#321961] border-t-transparent rounded-full" role="status">
+            <div className="animate-spin inline-block w-8 h-8 border-4 border-[var(--color-primary,#4c2691)] border-t-transparent rounded-full" role="status">
               <span className="sr-only">Loading family members...</span>
             </div>
           </div>
@@ -573,14 +573,14 @@ const FamilyMembers = ({ HomeNavigate, BackButton }) => {
                     {/* Card Header */}
                     <div className="flex justify-between items-start gap-2">
                       <div className="flex items-center gap-3 min-w-0">
-                        <div className="w-10 h-10 rounded-xl bg-[#f3e8ff] text-[#321961] flex items-center justify-center text-base font-semibold shrink-0">
+                        <div className="w-10 h-10 rounded-xl bg-[#f3e8ff] text-[var(--color-primary,#4c2691)] flex items-center justify-center text-base font-semibold shrink-0">
                           {member?.name?.charAt(0)?.toUpperCase() || "?"}
                         </div>
                         <div className="min-w-0">
                           <span className="text-sm font-semibold text-slate-800 block capitalize truncate">
                             {member.name}
                           </span>
-                          <span className="text-[11px] text-[#321961] font-semibold uppercase tracking-wide">
+                          <span className="text-[11px] text-[var(--color-primary,#4c2691)] font-semibold uppercase tracking-wide">
                             {member.relationship}
                           </span>
                         </div>
@@ -702,7 +702,7 @@ const FamilyMembers = ({ HomeNavigate, BackButton }) => {
                   <label className="block text-sm font-medium text-slate-700 mb-1">Name</label>
                   <input
                     type="text"
-                    className="w-full px-3 py-2 text-sm border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#321961] focus:border-transparent"
+                    className="w-full px-3 py-2 text-sm border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--color-primary,#4c2691)] focus:border-transparent"
                     name="name"
                     placeholder="Enter Name"
                     value={formData.name}
@@ -710,7 +710,7 @@ const FamilyMembers = ({ HomeNavigate, BackButton }) => {
                     required
                   />
                 </div>
-
+ 
                 <div className="mb-2 relative z-[9999999999]">
                   <label className="block text-sm font-medium text-slate-700 mb-1">Date of Birth</label>
                   {/* <CustomDatePicker
@@ -734,7 +734,7 @@ const FamilyMembers = ({ HomeNavigate, BackButton }) => {
                         dateOfBirth: e.target.value,
                       }))
                     }
-                    className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[#321961]"
+                    className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-[var(--color-primary,#4c2691)]"
                     style={{
                       position: "relative",
                       zIndex: 9999999999998,
@@ -747,12 +747,12 @@ const FamilyMembers = ({ HomeNavigate, BackButton }) => {
                   )}
                 </div>
               </div>
-
+ 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 <div className="mb-2">
                   <label className="block text-sm font-medium text-slate-700 mb-1">Gender</label>
                   <select
-                    className="w-full px-3 py-2 text-sm border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#321961] focus:border-transparent"
+                    className="w-full px-3 py-2 text-sm border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--color-primary,#4c2691)] focus:border-transparent"
                     name="gender"
                     value={formData.gender}
                     onChange={handleInputChange}
@@ -764,26 +764,26 @@ const FamilyMembers = ({ HomeNavigate, BackButton }) => {
                     <option value="Other">Other</option>
                   </select>
                 </div>
-
+ 
                 <div className="mb-2">
                   <label className="block text-sm font-medium text-slate-700 mb-1">Referred By Doctor</label>
                   <Select
                     name="referedByDoctor"
                     value={(() => {
                       if (!formData.referedByDoctor) return null;
-
+ 
                       const doctorId = String(formData.referedByDoctor);
-
+ 
                       let selectedDoctor = filteredDoctors.find(
                         (doctor) => String(doctor._id) === doctorId,
                       );
-
+ 
                       if (!selectedDoctor) {
                         selectedDoctor = allDoctors.find(
                           (doctor) => String(doctor._id) === doctorId,
                         );
                       }
-
+ 
                       if (!selectedDoctor && editingId) {
                         const editingMember = familyMembers.find(
                           (m) => String(m._id) === String(editingId)
@@ -796,7 +796,7 @@ const FamilyMembers = ({ HomeNavigate, BackButton }) => {
                           selectedDoctor = editingMember.doctorDetails;
                         }
                       }
-
+ 
                       if (
                         selectedDoctor &&
                         selectedDoctor.name &&
@@ -807,7 +807,7 @@ const FamilyMembers = ({ HomeNavigate, BackButton }) => {
                           label: `${selectedDoctor.name}${selectedDoctor["AreaOfPractice "] ? ` (${selectedDoctor["AreaOfPractice "]})` : ""}${selectedDoctor.place ? `, ${selectedDoctor.place}` : ""}`,
                         };
                       }
-
+ 
                       return null;
                     })()}
                     onChange={handleDoctorSelect}
@@ -876,13 +876,13 @@ const FamilyMembers = ({ HomeNavigate, BackButton }) => {
                   />
                 </div>
               </div>
-
+ 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 <div className="mb-2">
                   <label className="block text-sm font-medium text-slate-700 mb-1">Mobile</label>
                   <input
                     type="tel"
-                    className="w-full px-3 py-2 text-sm border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#321961] focus:border-transparent"
+                    className="w-full px-3 py-2 text-sm border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--color-primary,#4c2691)] focus:border-transparent"
                     placeholder="Enter Mobile Number"
                     name="mobile"
                     value={formData.mobile}
@@ -893,7 +893,7 @@ const FamilyMembers = ({ HomeNavigate, BackButton }) => {
                     required
                   />
                 </div>
-
+ 
                 <div className="mb-2">
                   <label className="block text-sm font-medium text-slate-700 mb-1">Relationship</label>
                   <select
@@ -901,7 +901,7 @@ const FamilyMembers = ({ HomeNavigate, BackButton }) => {
                     value={formData.relationship}
                     onChange={handleInputChange}
                     required
-                    className="w-full px-3 py-2 text-sm border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#321961] focus:border-transparent"
+                    className="w-full px-3 py-2 text-sm border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--color-primary,#4c2691)] focus:border-transparent"
                   >
                     <option value="">Select relationship</option>
                     <option value="Brother">Brother</option>
@@ -922,7 +922,7 @@ const FamilyMembers = ({ HomeNavigate, BackButton }) => {
                   </select>
                 </div>
               </div>
-
+ 
               <div className="mb-3">
                 <label className="block text-sm font-medium text-slate-700 mb-1">Location</label>
                 <div className="relative">
@@ -946,7 +946,7 @@ const FamilyMembers = ({ HomeNavigate, BackButton }) => {
                     >
                       <input
                         type="text"
-                        className="w-full px-3 py-2 text-sm border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#321961] focus:border-transparent pl-10"
+                        className="w-full px-3 py-2 text-sm border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--color-primary,#4c2691)] focus:border-transparent pl-10"
                         name="location"
                         value={formData.location}
                         onChange={handleInputChange}
@@ -958,7 +958,7 @@ const FamilyMembers = ({ HomeNavigate, BackButton }) => {
                   ) : (
                     <input
                       type="text"
-                      className="w-full px-3 py-2 text-sm border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#321961] focus:border-transparent pl-10"
+                      className="w-full px-3 py-2 text-sm border border-slate-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--color-primary,#4c2691)] focus:border-transparent pl-10"
                       name="location"
                       value={formData.location}
                       onChange={handleInputChange}
@@ -970,11 +970,11 @@ const FamilyMembers = ({ HomeNavigate, BackButton }) => {
                   <i className="fas fa-location absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
                 </div>
               </div>
-
+ 
               <div className="text-end mt-4">
                 <button
                   type="submit"
-                  className="bg-[#321961] hover:bg-[#6a4ab0] text-white px-6 py-2 !rounded-md !text-sm !font-medium !transition-all !duration-200"
+                  className="bg-[var(--color-primary,#4c2691)] hover:bg-[var(--color-primary-dark,#5c33a6)] text-white px-6 py-2 !rounded-md !text-sm !font-medium !transition-all !duration-200"
                 >
                   {isEditMode ? "Update" : "Add"} Profile
                 </button>

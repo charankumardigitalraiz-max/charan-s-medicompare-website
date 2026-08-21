@@ -481,7 +481,16 @@ const SectionProductCard2 = ({
             e.stopPropagation();
             onProductClick(item, serviceSlug);
           }}
-          className="!w-full !mt-1.5 !flex !items-center !justify-center !gap-2 !py-2 !px-4 !rounded-sm !text-xs !font-semibold !text-white !bg-primary hover:!bg-[#6d4db8] !transition-all !duration-300 !shadow-[0_4px_12px_rgba(128,89,202,0.15)] hover:!shadow-[0_6px_20px_rgba(128,89,202,0.25)] !border-none !cursor-pointer"
+          className="!w-full !mt-1.5 !flex !items-center !justify-center !gap-2 !py-2 !px-4 !rounded-sm !text-xs !font-semibold !text-white !transition-all !duration-300 !shadow-[0_4px_12px_rgba(76,38,145,0.12)] hover:!shadow-[0_6px_20px_rgba(76,38,145,0.22)] !border-none !cursor-pointer"
+          style={{
+            backgroundColor: "var(--color-primary, #4c2691)",
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.backgroundColor = "var(--color-primary-dark, #5c33a6)";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.backgroundColor = "var(--color-primary, #4c2691)";
+          }}
         >
           <i className={`fas ${ctaConfig.icon} text-[10px]`} />
           <span>{ctaConfig.label}</span>
