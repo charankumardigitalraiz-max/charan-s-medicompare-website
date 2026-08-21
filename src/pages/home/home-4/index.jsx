@@ -1466,7 +1466,10 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
             liteMode={homeLiteMode}
             isMobile={isMobile}
           // currentService={sections?.}
-          />          {/* PROMOTIONAL SECTION */}
+          />
+
+
+          {/* PROMOTIONAL SECTION */}
           <section className="py-12 my-6 px-3 relative overflow-hidden bg-[#faf9fc]/30">
             <div className="max-w-full mx-auto px-6 md:px-12 lg:px-20 relative z-10">
 
@@ -1484,84 +1487,131 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+              <div className="grid grid-cols-1 lg:grid-cols-11 gap-4">
 
-                {/* Left Card: Brand Promo */}
-                <div className="lg:col-span-5 relative overflow-hidden rounded-sm bg-gradient-to-br from-[#f8f4ff] to-[#e8e3f5] border border-solid border-[#321961]/15 p-[30px] text-slate-800 shadow-[0_10px_30px_rgba(50,25,97,0.06)] flex flex-col justify-between min-h-[220px]">
-                  {/* Glowing blobs */}
-                  <div className="absolute -top-[50px] -right-[50px] w-[150px] h-[150px] rounded-full bg-[#321961]/5 blur-[30px]"></div>
+                {/* Hero info card — left */}
+                <div className="lg:col-span-4 rounded-sm p-8 flex flex-col justify-between min-h-[260px] relative overflow-hidden border border-solid border-white/20" style={{ background: "#7c3aed" }}>
+
+                  {/* Medical Cross Pattern Overlay */}
+                  <div className="absolute inset-0 opacity-[0.07] pointer-events-none" style={{
+                    backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://w3.org d='M30 20v20M20 30h20' stroke='%23ffffff' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E")`,
+                    backgroundSize: '40px 40px'
+                  }}></div>
+
+                  <div className="absolute -bottom-10 -right-10 w-[160px] h-[160px] pointer-events-none select-none">
+                    {/* Rotating glowing aura background */}
+                    <div className="absolute inset-0 bg-white/5 rounded-full blur-xl animate-[pulse_4s_infinite]"></div>
+
+                    {/* Modern tech-ring with dash array */}
+                    <div className="absolute inset-0 rounded-full border border-dashed border-white/20 animate-[spin_40s_linear_infinite]"></div>
+
+                    {/* Sharp geometric inner ring */}
+                    <div className="absolute inset-3 rounded-full border border-solid border-white/10 flex items-center justify-center">
+                      {/* Clean neon-style medical cross icon with double line accent */}
+                      <div className="relative p-3 bg-white/5 rounded-xl border border-solid border-white/15 shadow-inner backdrop-blur-sm">
+                        <svg className="w-8 h-8 text-white/30 drop-shadow-[0_0_8px_rgba(255,255,255,0.2)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
+                        </svg>
+                        {/* Decorative pulse corner dots */}
+                        <span className="absolute top-0 left-0 w-1 h-1 bg-white/40 rounded-full"></span>
+                        <span className="absolute bottom-0 right-0 w-1 h-1 bg-white/40 rounded-full"></span>
+                      </div>
+                    </div>
+                  </div>
+
+
 
                   <div className="relative z-10">
-                    <span className="inline-flex items-center gap-1.5 bg-[#321961]/10 py-[4px] px-[12px] rounded-full text-[11px] font-semibold border border-[#321961]/25 text-[#321961] mb-4">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span className="inline-flex items-center gap-1.5 bg-white/15 py-[4px] px-[12px] rounded-full text-[11px] font-semibold border border-white/20 text-white mb-4">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
                       All-in-One Platform
                     </span>
-                    <h3 className="text-[22px] font-extrabold mb-2 tracking-tight text-[#321961]">Your Health, Simplified.</h3>
-                    <p className="text-[13px] text-slate-600 leading-relaxed opacity-95">
+                    <h3 className="text-[22px] font-extrabold mb-2 tracking-tight text-white">Your Health, Simplified.</h3>
+                    <p className="text-[13px] text-purple-100 leading-relaxed opacity-95">
                       Compare pricing, locate emergency services, and book medical appointments instantly.
                     </p>
                   </div>
 
                   <div className="relative z-10 mt-6 flex gap-6 text-[12px]">
                     <div className="flex flex-col">
-                      <span className="font-extrabold text-[16px] text-[#6d48b8]">24/7</span>
-                      <span className="text-slate-500 text-[11px]">Availability</span>
+                      <span className="font-extrabold text-[16px] text-white">24/7</span>
+                      <span className="text-purple-200 text-[11px]">Availability</span>
                     </div>
-                    <div className="w-[1px] bg-[#321961]/10"></div>
+                    <div className="w-[1px] bg-white/20"></div>
                     <div className="flex flex-col">
-                      <span className="font-extrabold text-[16px] text-[#059669]">100%</span>
-                      <span className="text-slate-500 text-[11px]">Verified Partners</span>
+                      <span className="font-extrabold text-[16px] text-emerald-400">100%</span>
+                      <span className="text-purple-200 text-[11px]">Verified Partners</span>
                     </div>
                   </div>
                 </div>
+
 
                 {/* Right Cards: Quick Service Access */}
                 <div className="lg:col-span-7 grid grid-cols-1 md:grid-cols-3 gap-4">
                   {[
                     {
                       icon: "fas fa-pills",
+                      // CHANGED: Replaced generic info circle with a genuine dual capsule pill outline asset
+                      watermarkSvg: (
+                        <g strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.2">
+                          {/* Pill 1: Slanted left */}
+                          <rect x="3" y="9" width="10" height="18" rx="5" transform="rotate(-45 3 9)" />
+                          <line x1="6.5" y1="12.5" x2="13.5" y2="5.5" />
+                          {/* Pill 2: Cross intersecting right */}
+                          <rect x="11" y="5" width="8" height="16" rx="4" transform="rotate(30 11 5)" />
+                          <line x1="12" y1="11" x2="18" y2="14.5" />
+                        </g>
+                      ),
                       title: "Buy Medicines",
                       desc: "Compare and order prescriptions from local pharmacies.",
                       label: "Explore",
                       fixedType: "medicine",
                       path: "/medicine/all",
-                      cardBg: "bg-gradient-to-br from-[#f8f6fc] to-[#ebdffc] hover:from-[#ebdffc] hover:to-[#e1ccfc]",
-                      iconClass: "bg-[#321961]/10 text-[#321961]",
-                      labelClass: "text-[#321961]/80",
-                      titleClass: "text-[#321961]",
-                      descClass: "text-slate-600",
-                      borderClass: "border-[#321961]/15",
-                      shadowHover: "hover:shadow-[0_15px_35px_rgba(50,25,97,0.12)]",
-                    },
+                      cardBg: "bg-gradient-to-br from-[#fbfaff] to-[#f3ebff] hover:from-[#f3ebff] hover:to-[#e9daff]",
+                      iconClass: "bg-[#321961]/8 text-[#321961] border border-[#321961]/10",
+                      labelClass: "text-[#321961]/80 font-semibold tracking-wide",
+                      titleClass: "text-[#241247] font-bold tracking-tight",
+                      descClass: "text-slate-500 font-normal",
+                      borderClass: "border-[#321961]/10",
+                      shadowHover: "hover:shadow-[0_20px_40px_rgba(50,25,97,0.08)]",
+                      watermarkColor: "text-[#1d0e3a]/12",
+                    }
+                    ,
                     {
                       icon: "fas fa-microscope",
+                      // CHANGED: Replaced the generic shape with a premium, hyper-modern microscope line-art vector with data/sparkle nodes
+                      watermarkSvg: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.2" d="M3 12h3.5m0 0c.4 0 .7-.3.9-.7L9.8 5.2c.2-.5.9-.5 1.1 0L13.6 19c.2.5.9.5 1.1 0L17.2 12c.2-.4.5-.7.9-.7h1.4l1-3.2c.1-.4.7-.4.8 0l1 3.2c.1.4.5.7.9.7H23M3 12a1 1 0 110-2 1 1 0 010 2z" />,
+
                       title: "Diagnostics",
                       desc: "Compare test packages & schedule home sample collection.",
                       label: "Book a Test",
                       fixedType: "labtest",
                       path: "/diagnostics/all",
-                      cardBg: "bg-gradient-to-br from-[#f0fdf4] to-[#d1fae5] hover:from-[#d1fae5] hover:to-[#bbf7d0]",
-                      iconClass: "bg-[#059669]/10 text-[#059669]",
-                      labelClass: "text-[#065f46]/80",
-                      titleClass: "text-[#065f46]",
-                      descClass: "text-slate-600",
-                      borderClass: "border-emerald-500/15",
-                      shadowHover: "hover:shadow-[0_15px_35px_rgba(5,150,105,0.12)]",
-                    },
-                    {
+                      cardBg: "bg-gradient-to-br from-[#f7fdf9] to-[#ecfdf5] hover:from-[#ecfdf5] hover:to-[#d1fae5]",
+                      iconClass: "bg-[#059669]/8 text-[#059669] border border-[#059669]/10",
+                      labelClass: "text-[#065f46]/80 font-semibold tracking-wide",
+                      titleClass: "text-[#044e39] font-bold tracking-tight",
+                      descClass: "text-slate-500 font-normal",
+                      borderClass: "border-emerald-500/10",
+                      shadowHover: "hover:shadow-[0_20px_40px_rgba(5,150,105,0.08)]",
+                      watermarkColor: "text-[#023325]/12",
+                    }
+                    , {
                       icon: "fas fa-ambulance",
+                      watermarkSvg: <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />,
                       title: "Ambulances",
                       desc: "Instant dispatch & real-time booking tracking map.",
                       label: "Book Dispatch",
                       fixedType: "ambulance",
                       path: "/ambulance",
-                      cardBg: "bg-gradient-to-br from-[#fff5f5] to-[#ffe3e3] hover:from-[#ffe3e3] hover:to-[#ffd1d1]",
-                      iconClass: "bg-[#dc2626]/10 text-[#dc2626]",
-                      labelClass: "text-[#991b1b]/80",
-                      titleClass: "text-[#991b1b]",
-                      descClass: "text-slate-600",
-                      borderClass: "border-red-500/15",
-                      shadowHover: "hover:shadow-[0_15px_35px_rgba(220,38,38,0.12)]",
+                      cardBg: "bg-gradient-to-br from-[#fffdfd] to-[#fff1f1] hover:from-[#fff1f1] hover:to-[#ffe4e4]",
+                      iconClass: "bg-[#dc2626]/8 text-[#dc2626] border border-[#dc2626]/10",
+                      labelClass: "text-[#991b1b]/80 font-semibold tracking-wide",
+                      titleClass: "text-[#7f1d1d] font-bold tracking-tight",
+                      descClass: "text-slate-500 font-normal",
+                      borderClass: "border-red-500/10",
+                      shadowHover: "hover:shadow-[0_20px_40px_rgba(220,38,38,0.08)]",
+                      watermarkColor: "text-[#5c1313]/12",
                     },
                   ].map((card, idx) => (
                     <div
@@ -1570,17 +1620,25 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                         localStorage.setItem("fixedType", card.fixedType);
                         navigate(card.path);
                       }}
-                      className={`group cursor-pointer border border-solid ${card.borderClass} ${card.cardBg} p-5 rounded-sm shadow-[0_4px_15px_rgba(0,0,0,0.03)] ${card.shadowHover} transition-all duration-300 flex flex-col justify-between min-h-[180px] hover:-translate-y-1`}
+                      className={`group cursor-pointer border border-solid relative overflow-hidden ${card.borderClass} ${card.cardBg} p-5 rounded-md shadow-[0_4px_20px_rgba(0,0,0,0.02)] ${card.shadowHover} transition-all duration-500 flex flex-col justify-between min-h-[185px] hover:-translate-y-1.5`}
                     >
-                      <div>
-                        <div className={`w-10 h-10 rounded-[12px] flex items-center justify-center transition-all duration-300 mb-4 shadow-sm ${card.iconClass}`}>
-                          <i className={`${card.icon} text-[16px]`}></i>
-                        </div>
-                        <h4 className={`text-[14px] font-medium mb-1 transition-colors duration-300 ${card.titleClass}`}>{card.title}</h4>
-                        <p className={`text-[11.5px] font-light leading-normal transition-colors duration-300 ${card.descClass}`}>{card.desc}</p>
+                      {/* CHANGED: Swapped opacity scale and added mix-blend-multiply for a dark, ultra-premium integrated appearance */}
+                      <div className={`absolute -bottom-4 -right-4 w-28 h-28 pointer-events-none select-none opacity-[0.02] group-hover:opacity-100 mix-blend-multiply ${card.watermarkColor} transition-all style={{ transitionDuration: '600ms' }} group-hover:scale-105 group-hover:-translate-x-1 group-hover:-translate-y-1`}>
+                        <svg className="w-full h-full" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          {card.watermarkSvg}
+                        </svg>
                       </div>
-                      <span className={`text-[11px] font-medium flex items-center gap-1 mt-4 transition-colors duration-300 ${card.labelClass}`}>
-                        {card.label} <i className="fas fa-arrow-right text-[9px] transition-transform group-hover:translate-x-0.5"></i>
+
+                      {/* Content wrapper */}
+                      <div className="relative z-10">
+                        <div className={`w-10 h-10 rounded-[12px] flex items-center justify-center transition-all duration-300 mb-4 shadow-sm backdrop-blur-sm ${card.iconClass}`}>
+                          <i className={`${card.icon} text-[15px]`}></i>
+                        </div>
+                        <h4 className={`text-[14px] mb-1 transition-colors duration-300 ${card.titleClass}`}>{card.title}</h4>
+                        <p className={`text-[11.5px] leading-relaxed transition-colors duration-300 ${card.descClass}`}>{card.desc}</p>
+                      </div>
+                      <span className={`text-[11px] flex items-center gap-1 mt-4 transition-colors duration-300 relative z-10 ${card.labelClass}`}>
+                        {card.label} <i className="fas fa-arrow-right text-[9px] transition-transform group-hover:translate-x-1"></i>
                       </span>
                     </div>
                   ))}
@@ -1590,103 +1648,146 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
             </div>
           </section>
 
-          <section className="py-14 relative overflow-hidden bg-gradient-to-br from-[#faf9fc] via-[#f3effc] to-[#faf9fc]">
-            {/* Ambient blobs */}
-            <div className="absolute top-[-80px] left-[-60px] w-[320px] h-[320px] rounded-full bg-[#aa6df6]/8 blur-[90px] pointer-events-none"></div>
-            <div className="absolute bottom-[-100px] right-[-80px] w-[380px] h-[380px] rounded-full bg-[#0ea5e9]/6 blur-[100px] pointer-events-none"></div>
+          <section className="relative overflow-hidden py-16" style={{ background: "linear-gradient(135deg, #faf8ff 0%, #f3f0fc 50%, #f0f9ff 100%)" }}>
+            {/* Background ambient effects */}
+            <div className="absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden">
+              <div className="absolute top-[-100px] left-[-80px] w-[500px] h-[500px] rounded-full opacity-30" style={{ background: "radial-gradient(circle, #ede9fe 0%, transparent 70%)" }}></div>
+              <div className="absolute bottom-[-120px] right-[-60px] w-[400px] h-[400px] rounded-full opacity-25" style={{ background: "radial-gradient(circle, #e0f2fe 0%, transparent 70%)" }}></div>
+              <div className="absolute top-[40%] left-[50%] w-[300px] h-[300px] rounded-full opacity-20" style={{ background: "radial-gradient(circle, #d1fae5 0%, transparent 70%)", transform: "translate(-50%, -50%)" }}></div>
+              {/* Subtle dot grid */}
+              <div className="absolute inset-0" style={{ backgroundImage: "radial-gradient(circle, #c4b5fd22 1px, transparent 1px)", backgroundSize: "36px 36px" }}></div>
+            </div>
 
             <div className="max-w-full mx-auto px-6 md:px-12 lg:px-20 relative z-10">
 
-              {/* Top header */}
-              <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between mb-12 gap-4">
-                <div>
-                  <div className="flex items-center gap-2 mb-3">
-                    <div className="w-6 h-[2px] bg-[#7c3aed] rounded-full"></div>
-                    <span className="text-[#7c3aed] text-[11px] uppercase tracking-[0.3em] font-bold">Surgical Care</span>
+              {/* Split Hero Layout */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 min-h-[380px]">
+
+                {/* Left: Big Hero Text */}
+                <div className="flex flex-col justify-center py-8 pl-8 lg:pl-16 pr-0 lg:pr-12">
+                  {/* Label pill */}
+                  <div className="flex items-center gap-3 mb-5">
+                    <div className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-[#7c3aed]/25" style={{ background: "rgba(124,58,237,0.07)" }}>
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#7c3aed] animate-pulse"></span>
+                      <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-[#7c3aed]">Surgical Care</span>
+                    </div>
                   </div>
-                  <h2 className="text-[38px] font-light text-[#0f172a] leading-tight tracking-tight">
-                    Explore <span className="font-normal bg-gradient-to-r from-[#7c3aed] to-[#aa6df6] bg-clip-text text-transparent">Surgeries</span>
+
+                  {/* Heading */}
+                  <h2 className="text-[34px] md:text-[44px] font-bold leading-[1.15] tracking-tight mb-4">
+                    <span className="text-[#0f172a]">Find the </span>
+                    <span className="text-[#321961]">Right Surgeon</span>
+                    <br />
+                    <span className="text-[#475569] font-light text-[28px] md:text-[32px]">at the Right Price.</span>
                   </h2>
-                </div>
-                <p className="text-[13px] text-[#64748b] font-light leading-relaxed max-w-[360px] lg:text-right">
-                  Compare pricing, read reviews, and find elite surgical clinics and certified surgeons near you.
-                </p>
-              </div>
 
-              {/* Cards */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-                {[
-                  {
-                    num: "01",
-                    icon: "fas fa-search-dollar",
-                    title: "Compare Prices",
-                    desc: "Instantly compare surgical package costs and hidden fees across multiple hospitals.",
-                    accent: "from-[#7c3aed] to-[#4c1d95]",
-                    cardBg: "from-[#f5f3ff] to-[#e8dffc] border-violet-200/60 hover:border-[#7c3aed]/40",
-                    glow: "rgba(124,58,237,0.15)",
-                    tag: "Cost Transparency",
-                  },
-                  {
-                    num: "02",
-                    icon: "fas fa-user-md",
-                    title: "Expert Surgeons",
-                    desc: "Locate board-certified specialist surgeons with verified credentials and patient reviews.",
-                    accent: "from-[#0ea5e9] to-[#0369a1]",
-                    cardBg: "from-[#f0f9ff] to-[#d5f0fc] border-sky-200/60 hover:border-[#0ea5e9]/40",
-                    glow: "rgba(14,165,233,0.15)",
-                    tag: "Verified Specialists",
-                  },
-                  {
-                    num: "03",
-                    icon: "fas fa-shield-alt",
-                    title: "Safe & Reliable",
-                    desc: "Book NABH-accredited partner clinics with proven safety protocols and track records.",
-                    accent: "from-[#10b981] to-[#065f46]",
-                    cardBg: "from-[#f0fdf4] to-[#d1fae5] border-emerald-200/60 hover:border-[#10b981]/40",
-                    glow: "rgba(16,185,129,0.15)",
-                    tag: "Accredited Clinics",
-                  },
-                ].map((card, idx) => (
-                  <div
-                    key={idx}
-                    className={`group relative overflow-hidden rounded-[20px] border border-solid ${card.cardBg} bg-gradient-to-br p-6 transition-all duration-400 hover:-translate-y-1 cursor-pointer`}
-                    style={{ transition: "all 0.35s cubic-bezier(0.4, 0, 0.2, 1)" }}
-                    onMouseEnter={e => e.currentTarget.style.boxShadow = `0 20px 45px -10px ${card.glow}`}
-                    onMouseLeave={e => e.currentTarget.style.boxShadow = "none"}
-                  >
-                    {/* Subtle gradient overlay on hover */}
-                    <div className={`absolute inset-0 bg-gradient-to-br ${card.accent} opacity-0 group-hover:opacity-[0.03] transition-opacity duration-400 rounded-[20px]`}></div>
+                  {/* Description */}
+                  <p className="text-[13.5px] text-[#64748b] leading-[1.7] mb-6 max-w-[400px]">
+                    Compare surgical package costs, read verified patient reviews, and book with NABH-accredited hospitals — all in one place.
+                  </p>
 
-                    {/* Number watermark */}
-                    <span className="absolute top-4 right-5 text-[52px] font-bold text-slate-200/30 leading-none select-none">{card.num}</span>
-
-                    {/* Icon */}
-                    <div className={`relative w-11 h-11 rounded-[14px] bg-gradient-to-br ${card.accent} flex items-center justify-center mb-5 shadow-sm`}>
-                      <i className={`${card.icon} text-white text-[14px]`}></i>
-                    </div>
-
-                    {/* Tag */}
-                    <span className={`inline-block text-[10px] font-bold px-2.5 py-1 rounded-full bg-gradient-to-r ${card.accent} text-white mb-3 opacity-95`}>
-                      {card.tag}
-                    </span>
-
-                    {/* Title */}
-                    <h5 className="text-[16px] font-semibold text-[#0f172a] mb-2 leading-snug">{card.title}</h5>
-
-                    {/* Desc */}
-                    <p className="text-[12px] text-[#64748b] font-light leading-relaxed">{card.desc}</p>
-
-                    {/* Bottom arrow */}
-                    <div className="mt-5 flex items-center gap-1.5">
-                      <div className={`w-5 h-[1.5px] bg-gradient-to-r ${card.accent} rounded-full transition-all duration-300 group-hover:w-8`}></div>
-                      <i className="fas fa-arrow-right text-slate-400 text-[9px] group-hover:text-[#7c3aed] transition-colors duration-300"></i>
-                    </div>
+                  {/* Feature bullets */}
+                  <div className="flex flex-col gap-2.5 mb-7">
+                    {[
+                      { icon: "fas fa-check-circle", text: "Transparent all-inclusive pricing", color: "#7c3aed" },
+                      { icon: "fas fa-check-circle", text: "Verified surgeon credentials & reviews", color: "#0ea5e9" },
+                      { icon: "fas fa-check-circle", text: "NABH & NABL accredited partner clinics", color: "#10b981" },
+                    ].map((b, i) => (
+                      <div key={i} className="flex items-center gap-2.5">
+                        <i className={`${b.icon} text-[13px]`} style={{ color: b.color }}></i>
+                        <span className="text-[12.5px] text-[#475569] font-medium">{b.text}</span>
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
 
+                  {/* Stats row */}
+                  <div className="flex items-center gap-6 pt-5 border-t border-[#e2e8f0]">
+                    {[
+                      { val: "500+", label: "Partner Hospitals", color: "#7c3aed" },
+                      { val: "98%", label: "Patient Satisfaction", color: "#0ea5e9" },
+                      { val: "24/7", label: "Support Available", color: "#10b981" },
+                    ].map((s, i) => (
+                      <div key={i} className="flex flex-col">
+                        <span className="text-[20px] font-extrabold leading-none" style={{ color: s.color }}>{s.val}</span>
+                        <span className="text-[10px] text-[#94a3b8] font-medium mt-1 tracking-wide">{s.label}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Right: stacked feature rows */}
+                <div className="flex flex-col justify-center py-4 gap-3 lg:border-l lg:border-[#e2e8f0] lg:pl-16">
+                  {[
+                    {
+                      icon: "fas fa-search-dollar",
+                      color: "#7c3aed",
+                      colorBg: "rgba(124,58,237,0.08)",
+                      colorBorder: "rgba(124,58,237,0.15)",
+                      tag: "Cost Transparency",
+                      title: "Compare Prices",
+                      desc: "Instantly compare surgical package costs and hidden fees across multiple hospitals.",
+                    },
+                    {
+                      icon: "fas fa-user-md",
+                      color: "#0ea5e9",
+                      colorBg: "rgba(14,165,233,0.08)",
+                      colorBorder: "rgba(14,165,233,0.15)",
+                      tag: "Verified Specialists",
+                      title: "Expert Surgeons",
+                      desc: "Locate board-certified specialist surgeons with verified credentials and patient reviews.",
+                    },
+                    {
+                      icon: "fas fa-shield-alt",
+                      color: "#10b981",
+                      colorBg: "rgba(16,185,129,0.08)",
+                      colorBorder: "rgba(16,185,129,0.15)",
+                      tag: "Accredited Clinics",
+                      title: "Safe & Reliable",
+                      desc: "Book NABH-accredited partner clinics with proven safety protocols and track records.",
+                    },
+                  ].map((item, idx) => (
+                    <div
+                      key={idx}
+                      className="group flex items-start gap-4 p-4 rounded-sm cursor-pointer transition-all duration-300 bg-white"
+                      style={{ border: "1px solid #f1f5f9", boxShadow: "0 2px 8px rgba(0,0,0,0.04)" }}
+                      onMouseEnter={e => { e.currentTarget.style.borderColor = item.colorBorder; e.currentTarget.style.boxShadow = `0 8px 24px ${item.color}18`; e.currentTarget.style.transform = "translateX(4px)"; }}
+                      onMouseLeave={e => { e.currentTarget.style.borderColor = "#f1f5f9"; e.currentTarget.style.boxShadow = "0 2px 8px rgba(0,0,0,0.04)"; e.currentTarget.style.transform = "translateX(0)"; }}
+                    >
+                      {/* Step number + icon */}
+                      <div className="relative shrink-0">
+                        <div className="w-11 h-11 rounded-[12px] flex items-center justify-center" style={{ background: item.colorBg, border: `1px solid ${item.colorBorder}` }}>
+                          <i className={`${item.icon} text-[14px]`} style={{ color: item.color }}></i>
+                        </div>
+                        <span className="absolute -top-1.5 -right-1.5 w-4 h-4 rounded-full flex items-center justify-center text-[8px] font-bold text-white" style={{ background: item.color }}>
+                          {String(idx + 1).padStart(2, "0")}
+                        </span>
+                      </div>
+
+                      {/* Text */}
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-1">
+                          <span className="text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full" style={{ color: item.color, background: item.colorBg }}>
+                            {item.tag}
+                          </span>
+                        </div>
+                        <h5 className="text-[14px] font-semibold text-[#1e293b] mb-0.5">{item.title}</h5>
+                        <p className="text-[11.5px] text-[#94a3b8] leading-relaxed">{item.desc}</p>
+                      </div>
+
+                      {/* Arrow */}
+                      <div className="shrink-0 w-6 h-6 flex items-center justify-center rounded-full transition-all duration-300 opacity-0 group-hover:opacity-100" style={{ background: item.colorBg }}>
+                        <i className="fas fa-arrow-right text-[9px]" style={{ color: item.color }}></i>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </section>
+
+
+
+
 
           <section className="py-16 bg-white relative overflow-hidden">
             <style>{`
