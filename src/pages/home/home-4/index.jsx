@@ -868,7 +868,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                   className="mb-[25px] text-center"
                   data-aos="fade-up"
                 >
-                  <h1 className="m-0 !mb-[10px] !text-[clamp(17px,4vw,45px)] !font-semibold text-[#343434]">
+                  <h1 className="m-0 !mb-[10px] !text-[clamp(22px,3.5vw,34px)] !font-semibold text-[#343434]">
                     Compare &amp; Choose{" "}
                     <span className="text-[#321961]">
                       {homeLiteMode ? (
