@@ -21,6 +21,20 @@ const MobileSearchDropdown = ({
   const [mobileSearchQuery, setMobileSearchQuery] = useState("");
   const [mobileSearchSuggestions, setMobileSearchSuggestions] = useState([]);
   const [mobileSearchLoading, setMobileSearchLoading] = useState(false);
+  const [activeLoaderIconIndex, setActiveLoaderIconIndex] = useState(0);
+  useEffect(() => {
+    let interval;
+    if (mobileSearchLoading) {
+      interval = setInterval(() => {
+        setActiveLoaderIconIndex((prev) => (prev + 1) % 4);
+      }, 800);
+    } else {
+      setActiveLoaderIconIndex(0);
+    }
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [mobileSearchLoading]);
   const [mobileSearchRecommended, setMobileSearchRecommended] = useState([]);
   const [mobileSearchShowSuggestions, setMobileSearchShowSuggestions] = useState(true);
   const {
@@ -549,6 +563,7 @@ const MobileSearchDropdown = ({
             {/* Dropdown  */}
             {mobileSearchShowSuggestions && (mobileSearchLoading || mobileSearchSuggestions.length > 0) && (
               <div
+                className="custom-scrollbar"
                 style={{
                   position: "absolute",
                   top: "100%",
@@ -563,10 +578,47 @@ const MobileSearchDropdown = ({
                   overflowY: "auto",
                 }}
               >
+                <style dangerouslySetInnerHTML={{
+                  __html: `
+                    .custom-scrollbar::-webkit-scrollbar {
+                      width: 6px;
+                    }
+                    .custom-scrollbar::-webkit-scrollbar-track {
+                      background: #f8fafc;
+                      border-radius: 0 0 20px 0;
+                    }
+                    .custom-scrollbar::-webkit-scrollbar-thumb {
+                      background: #cbd5e1;
+                      border-radius: 10px;
+                    }
+                    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+                      background: #94a3b8;
+                    }
+                    @keyframes loaderIconPop {
+                      0% { opacity: 0; transform: scale(0.6); }
+                      100% { opacity: 1; transform: scale(1.1); }
+                    }
+                  `
+                }} />
                 {mobileSearchLoading && (
-                  <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "24px 0", gap: "10px", color: "#9ca3af" }}>
-                    <i className="fas fa-circle-notch fa-spin" style={{ fontSize: "20px", color: "#321961" }}></i>
-                    <span style={{ fontSize: "12px", fontWeight: 500, color: "#6b7280" }}>Searching for medicines...</span>
+                  <div className="flex flex-col items-center justify-center py-8 gap-4 text-slate-400">
+                    <div className="relative w-14 h-14 flex items-center justify-center">
+                      <div className="absolute inset-0 rounded-full border-[3px] border-solid border-[#321961]/10 animate-ping opacity-75"></div>
+                      <div className="absolute inset-0 rounded-full border-[3px] border-solid border-transparent border-t-[#321961] border-r-[#7c3aed] animate-spin"></div>
+                      <div className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center shadow-inner z-10">
+                        <i
+                          key={activeLoaderIconIndex}
+                          className={`${
+                            activeLoaderIconIndex === 0 ? "fas fa-capsules text-[#7c3aed]" :
+                            activeLoaderIconIndex === 1 ? "fas fa-microscope text-[#059669]" :
+                            activeLoaderIconIndex === 2 ? "fas fa-ambulance text-[#ef4444]" :
+                            "fas fa-stethoscope text-[#2563eb]"
+                          } text-lg`}
+                          style={{ animation: 'loaderIconPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards' }}
+                        />
+                      </div>
+                    </div>
+                    <span className="text-xs font-semibold text-slate-500 tracking-wide animate-pulse">Searching for medicines & services...</span>
                   </div>
                 )}
                 {!mobileSearchLoading && mobileSearchSuggestions

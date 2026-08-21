@@ -195,21 +195,23 @@ const RecentlyViewedProducts = ({
                     {/* Pricing */}
                     <div className="flex flex-col gap-px">
                       <div className="flex items-center flex-wrap gap-1">
-                        <span className="text-[13.5px] font-bold text-[#0f172a]">
-                          ₹{displayPrice.toFixed(2)}
-                        </span>
-                        {hasDiscount && (
+                        {displayPrice > 0 && (
+                          <span className="text-[13.5px] font-bold text-[#0f172a]">
+                            ₹{displayPrice.toFixed(2)}
+                          </span>
+                        )}
+                        {hasDiscount && originalPrice > 0 && (
                           <span className="text-[10.5px] line-through text-[#94a3b8]">
                             ₹{Number(originalPrice).toFixed(2)}
                           </span>
                         )}
                       </div>
-                      {hasDiscount && (
+                      {hasDiscount && discountPct > 0 && (
                         <span className="text-[10px] font-bold text-[#dc2626]">
                           {discountPct}% OFF
                         </span>
                       )}
-                      {product?.perDayRent && (
+                      {product?.perDayRent && parseFloat(product.perDayRent) > 0 && (
                         <span className="text-[10px] text-[#64748b]">
                           ₹{Number(product.perDayRent).toFixed(2)}/day
                         </span>

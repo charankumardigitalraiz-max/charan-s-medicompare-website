@@ -331,6 +331,20 @@ const DesktopSearch = ({ showSearch, setShowSearchOverlay, myservice }) => {
   const [desktopSearchQuery, setDesktopSearchQuery] = useState("");
   const [desktopSearchSuggestions, setDesktopSearchSuggestions] = useState([]);
   const [desktopSearchLoading, setDesktopSearchLoading] = useState(false);
+  const [activeLoaderIconIndex, setActiveLoaderIconIndex] = useState(0);
+  useEffect(() => {
+    let interval;
+    if (desktopSearchLoading) {
+      interval = setInterval(() => {
+        setActiveLoaderIconIndex((prev) => (prev + 1) % 4);
+      }, 800);
+    } else {
+      setActiveLoaderIconIndex(0);
+    }
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [desktopSearchLoading]);
   const [desktopSearchRecommended, setDesktopSearchRecommended] = useState([]);
   const [desktopSearchShowSuggestions, setDesktopSearchShowSuggestions] =
     useState(true);
@@ -802,15 +816,18 @@ const DesktopSearch = ({ showSearch, setShowSearchOverlay, myservice }) => {
       <div
         style={{
           background: "white",
-          borderRadius: "30px",
+          borderRadius: isDropdownVisible && desktopSearchShowSuggestions ? "12px 12px 0 0" : "12px",
           border: "1.5px solid #e5e7eb",
-          boxShadow:
-            "0 1px 3px rgba(0, 0, 0, 0.02), 0 1px 2px rgba(0, 0, 0, 0.01)",
+          borderBottom: isDropdownVisible && desktopSearchShowSuggestions ? "1px solid #f1f5f9" : "1.5px solid #e5e7eb",
+          boxShadow: isDropdownVisible && desktopSearchShowSuggestions
+            ? "0 4px 6px -1px rgba(0, 0, 0, 0.05)"
+            : "0 1px 3px rgba(0, 0, 0, 0.02), 0 1px 2px rgba(0, 0, 0, 0.01)",
           display: "flex",
           alignItems: "center",
           gap: "8px",
-          padding: "8px",
+          padding: "8px 8px",
           width: "100%",
+          transition: "all 0.2s ease",
         }}
       >
         {/* Search Icon */}
@@ -900,43 +917,86 @@ const DesktopSearch = ({ showSearch, setShowSearchOverlay, myservice }) => {
         className="desktop-search-dropdown"
         style={{
           position: "absolute",
-          top: "calc(100% + 14px)",
-          left: "50%",
-          width:
-            desktopSearchQuery && desktopSearchQuery.trim().length > 0
-              ? "400px"
-              : "850px",
-          maxWidth: "calc(100vw - 30px)",
+          top: "100%",
+          left: 0,
+          right: 0,
+          width: "100%",
           background: "#fff",
-          borderRadius: "20px",
+          borderRadius: "0 0 12px 12px",
+          border: "1.5px solid #e5e7eb",
+          borderTop: "none",
           padding: "12px",
-          boxShadow: "0 10px 35px rgba(0, 0, 0, 0.15)",
+          boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)",
           zIndex: 1000,
           opacity: isDropdownVisible ? 1 : 0,
           transform: isDropdownVisible
-            ? "translateX(-50%) translateY(0) scale(1)"
-            : "translateX(-50%) translateY(-8px) scale(0.98)",
+            ? "translateY(0) scale(1)"
+            : "translateY(-4px) scale(0.99)",
           pointerEvents: isDropdownVisible ? "auto" : "none",
-          transition: "all 0.25s ease",
+          transition: "all 0.2s ease-in-out",
         }}
       >
         {desktopSearchShowSuggestions && (
           <>
-            {/* Loading text */}
+            <style dangerouslySetInnerHTML={{
+              __html: `
+                .custom-scrollbar::-webkit-scrollbar {
+                  width: 6px;
+                }
+                .custom-scrollbar::-webkit-scrollbar-track {
+                  background: #f8fafc;
+                  border-radius: 0 0 20px 0;
+                }
+                .custom-scrollbar::-webkit-scrollbar-thumb {
+                  background: #cbd5e1;
+                  border-radius: 10px;
+                }
+                .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+                  background: #94a3b8;
+                }
+                @keyframes loaderIconPop {
+                  0% { opacity: 0; transform: scale(0.6); }
+                  100% { opacity: 1; transform: scale(1.1); }
+                }
+                .desktop-search-suggestion {
+                  transition: all 0.2s ease-in-out;
+                  border-radius: 8px;
+                  padding: 8px 10px !important;
+                  margin: 2px 0;
+                  border-bottom: none !important;
+                }
+                .desktop-search-suggestion:hover {
+                  background-color: rgba(50, 25, 97, 0.05) !important;
+                }
+                .desktop-search-suggestion:hover .suggestion-text-name {
+                  color: #321961 !important;
+                }
+                .desktop-search-suggestion:hover .fa-search {
+                  color: #321961 !important;
+                  opacity: 0.8 !important;
+                  transform: scale(1.1);
+                }
+              `
+            }} />
+
             {desktopSearchLoading && (
-              <div style={{ textAlign: "center", padding: "30px 20px" }}>
-                <p
-                  style={{
-                    color: "#6b7280",
-                    fontSize: "14px",
-                    marginBottom: "8px",
-                  }}
-                >
-                  Loading...
-                </p>
-                <p style={{ color: "#9ca3af", fontSize: "12px" }}>
-                  Searching for products
-                </p>
+              <div className="flex flex-col items-center justify-center py-8 gap-4 text-slate-400">
+                <div className="relative w-14 h-14 flex items-center justify-center">
+                  <div className="absolute inset-0 rounded-full border-[3px] border-solid border-[#321961]/10 animate-ping opacity-75"></div>
+                  <div className="absolute inset-0 rounded-full border-[3px] border-solid border-transparent border-t-[#321961] border-r-[#7c3aed] animate-spin"></div>
+                  <div className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center shadow-inner z-10">
+                    <i
+                      key={activeLoaderIconIndex}
+                      className={`${activeLoaderIconIndex === 0 ? "fas fa-capsules text-[#7c3aed]" :
+                        activeLoaderIconIndex === 1 ? "fas fa-microscope text-[#059669]" :
+                          activeLoaderIconIndex === 2 ? "fas fa-ambulance text-[#ef4444]" :
+                            "fas fa-stethoscope text-[#2563eb]"
+                        } text-lg`}
+                      style={{ animation: 'loaderIconPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards' }}
+                    />
+                  </div>
+                </div>
+                <span className="text-xs font-semibold text-slate-500 tracking-wide animate-pulse">Searching for medicines & services...</span>
               </div>
             )}
 
@@ -947,14 +1007,19 @@ const DesktopSearch = ({ showSearch, setShowSearchOverlay, myservice }) => {
                 <div>
                   <h6
                     style={{
-                      fontWeight: 600,
-                      marginBottom: "8px",
-                      fontSize: "12px",
+                      fontWeight: 700,
+                      marginBottom: "10px",
+                      fontSize: "11px",
+                      textTransform: "uppercase",
+                      letterSpacing: "0.05em",
+                      color: "#94a3b8",
+                      marginLeft: "4px",
                     }}
                   >
                     Suggestions
                   </h6>
                   <div
+                    className="custom-scrollbar"
                     style={{
                       maxHeight:
                         desktopSearchSuggestions.length > 6 ? "220px" : "auto",
@@ -975,23 +1040,23 @@ const DesktopSearch = ({ showSearch, setShowSearchOverlay, myservice }) => {
                           style={{
                             display: "flex",
                             alignItems: "center",
-                            padding: "6px 0",
                             cursor: "pointer",
                             fontSize: "13px",
-                            borderBottom: "1px solid #f0f0f0",
                           }}
                         >
                           <i
                             className="fa fa-search"
                             style={{
-                              color: "#999",
-                              marginRight: "8px",
-                              fontSize: "11px",
+                              color: "#321961",
+                              opacity: 0.4,
+                              marginRight: "10px",
+                              fontSize: "12px",
+                              transition: "all 0.2s ease",
                             }}
                           />
                           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
                             <div style={{ display: 'flex', flexDirection: 'column' }}>
-                              <span style={{ flex: 1 }}>
+                              <span className="suggestion-text-name" style={{ flex: 1, fontWeight: "600", color: "#1e293b", transition: "color 0.2s ease" }}>
                                 {highlightMatch(
                                   capitalize(typeof item.query === 'string' ? item.query :
                                     (typeof item?.tablet?.name === 'string' ? item?.tablet?.name : 'Unknown')),
@@ -1007,18 +1072,19 @@ const DesktopSearch = ({ showSearch, setShowSearchOverlay, myservice }) => {
                             </div>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><span style={{
                               fontSize: '10px',
-                              color: '#666',
-                              backgroundColor: '#f0f0f0',
-                              padding: '2px 8px',
+                              color: '#321961',
+                              backgroundColor: 'rgba(50, 25, 97, 0.08)',
+                              padding: '2.5px 10px',
                               borderRadius: '12px',
-                              whiteSpace: 'nowrap'
+                              whiteSpace: 'nowrap',
+                              fontWeight: '700'
                             }}>
                               {item?.type === "package"
                                 ? capitalize(item?.type)
                                 : item?.tablet?.category?.fixedType === "medicine"
                                   ? capitalize(item?.tablet?.medicineType || "product")
                                   : capitalize(item?.tablet?.category?.name || "product")}
-                            </span> <button type="button" onClick={(e) => { e.stopPropagation(); e.preventDefault(); setVendorModel(item); }} style={{ background: '#f8fafc', border: '1px solid #e2e8f0', color: 'var(--color-primary)', cursor: 'pointer', padding: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%', width: '24px', height: '24px', transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)', boxShadow: '0 1px 2px rgba(0,0,0,0.05)' }} onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = 'var(--color-primary)'; e.currentTarget.style.color = '#ffffff'; e.currentTarget.style.borderColor = 'var(--color-primary)'; e.currentTarget.style.transform = 'scale(1.08)'; }} onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#f8fafc'; e.currentTarget.style.color = 'var(--color-primary)'; e.currentTarget.style.borderColor = '#e2e8f0'; e.currentTarget.style.transform = 'none'; }} title="Insert into search"><i className="fa fa-plus" style={{ fontSize: '11px' }} /></button></div>
+                            </span> <button type="button" onClick={(e) => { e.stopPropagation(); e.preventDefault(); setVendorModel(item); }} style={{ background: '#f8fafc', border: '1px solid #e2e8f0', color: '#321961', cursor: 'pointer', padding: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%', width: '24px', height: '24px', transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)', boxShadow: '0 1px 2px rgba(0,0,0,0.05)' }} onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#321961'; e.currentTarget.style.color = '#ffffff'; e.currentTarget.style.borderColor = '#321961'; e.currentTarget.style.transform = 'scale(1.08)'; }} onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#f8fafc'; e.currentTarget.style.color = '#321961'; e.currentTarget.style.borderColor = '#e2e8f0'; e.currentTarget.style.transform = 'none'; }} title="Insert into search"><i className="fa fa-plus" style={{ fontSize: '11px' }} /></button></div>
                           </div>
                         </div>
                       ))}
@@ -1034,24 +1100,32 @@ const DesktopSearch = ({ showSearch, setShowSearchOverlay, myservice }) => {
                           fetchDesktopSuggestions(desktopSearchQuery, nextLimit, true);
                         }}
                         style={{
-                          width: "100%",
-                          padding: "10px",
+                          width: "fit-content",
+                          minWidth: "120px",
+                          margin: "12px auto 0 auto",
+                          display: "block",
+                          padding: "6px 16px",
                           border: "none",
-                          background: "#f9fafb",
-                          color: isMoreLoading ? "#9ca3af" : "#321961",
-                          fontWeight: "600",
+                          borderRadius: "20px",
+                          background: "rgba(50, 25, 97, 0.05)",
+                          color: isMoreLoading ? "#9ca3af" : "#321961 !important",
+                          fontWeight: "700",
                           textAlign: "center",
                           cursor: isMoreLoading ? "not-allowed" : "pointer",
-                          fontSize: "13px",
-                          borderTop: "1px solid #f3f4f6",
-                          transition: "background-color 0.2s",
-                          marginTop: "6px"
+                          fontSize: "12px",
+                          transition: "all 0.2s ease-in-out"
                         }}
                         onMouseEnter={(e) => {
-                          if (!isMoreLoading) e.currentTarget.style.backgroundColor = "#f1f5f9";
+                          if (!isMoreLoading) {
+                            e.currentTarget.style.backgroundColor = "#321961";
+                            e.currentTarget.style.color = "#ffffff";
+                          }
                         }}
                         onMouseLeave={(e) => {
-                          if (!isMoreLoading) e.currentTarget.style.backgroundColor = "#f9fafb";
+                          if (!isMoreLoading) {
+                            e.currentTarget.style.backgroundColor = "rgba(50, 25, 97, 0.05)";
+                            e.currentTarget.style.color = "#321961";
+                          }
                         }}
                       >
                         {isMoreLoading ? "Loading..." : "Load More"}

@@ -466,7 +466,7 @@ const ProfileSideBar = () => {
           </div>
           <button
             onClick={() => setIsMobileDrawerOpen(false)}
-            className="w-8 h-8 rounded-full flex items-center justify-center cursor-pointer transition-all duration-200"
+            className="w-8 h-8 !rounded-full flex items-center justify-center cursor-pointer transition-all duration-200"
             style={{
               backgroundColor: "rgba(255,255,255,0.15)",
               border: "1px solid rgba(255,255,255,0.25)",

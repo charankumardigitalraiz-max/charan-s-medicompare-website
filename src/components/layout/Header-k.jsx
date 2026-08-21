@@ -752,7 +752,21 @@ const Home2Header = () => {
             }}
             className="w-[32px] h-[32px] !rounded-full border !border-solid !border-[#e5e7eb] hover:!border-[#321961] flex items-center justify-center !text-[#321961] bg-white hover:bg-[#f0ebff] cursor-pointer transition-all duration-200 no-underline relative"
           >
-            <i className="fas fa-shopping-cart"></i>
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="w-4 h-4"
+            >
+              <circle cx="8" cy="21" r="1" />
+              <circle cx="19" cy="21" r="1" />
+              <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" />
+            </svg>
             {cartCount > 0 && (
               <span
                 style={{
@@ -782,12 +796,20 @@ const Home2Header = () => {
               className="w-[32px] h-[32px] !rounded-full !border !border-solid !border-[#e5e7eb] hover:!border-[#321961] !flex !items-center !justify-center !text-[#321961] !bg-white hover:!bg-[#f0ebff] !cursor-pointer !transition-all !duration-200 no-underline relative"
               title="Notifications"
             >
-              <i
-                className="fas fa-bell"
-                style={{
-                  fontSize: "16px",
-                }}
-              ></i>
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="w-4 h-4"
+              >
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+                <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+              </svg>
               {unreadCount > 0 && (
                 <span
                   style={{
@@ -844,52 +866,97 @@ const Home2Header = () => {
               {showDropdown && (
                 <div
                   ref={dropdownRef}
-                  className="absolute right-0 top-full mt-2 p-0 w-[260px] rounded-[12px] border border-[#eee] bg-white shadow-[0_8px_24px_rgba(0,0,0,0.08)] overflow-hidden z-50"
+                  className="absolute right-0 top-full mt-3 w-[280px] z-50"
+                  style={{
+                    borderRadius: "10px",
+                    background: "#fff",
+                    boxShadow: "0 20px 60px rgba(50,25,97,0.18), 0 4px 16px rgba(0,0,0,0.06)",
+                    border: "1px solid rgba(230,220,255,0.6)",
+                    overflow: "hidden",
+                  }}
                   onClick={(e) => e.stopPropagation()}
                 >
-                  {/* Header */}
-                  <div className="flex items-center gap-2 px-3 py-2 bg-[#F8F9FA]">
-                    {profiles?.files && profiles.files.length > 0 ? (
-                      <img
-                        src={getImageUrl(profiles.files[0])}
-                        alt={profiles?.first_name}
-                        loading="lazy"
-                        className="w-11 h-11 rounded-full object-cover border-2 border-[#E6E6FF]"
-                      />
-                    ) : (
-                      <div className="flex items-center justify-center w-11 h-11 rounded-full bg-[#6F42C1] text-white text-[20px] font-semibold uppercase">
-                        {profiles?.first_name?.charAt(0)}
+                  {/* Gradient Header */}
+                  <div
+                    style={{
+                      background: "linear-gradient(135deg, #321961 0%, #6b21a8 60%, #9333ea 100%)",
+                      padding: "20px 18px 15px 18px",
+                      position: "relative",
+                      overflow: "hidden",
+                    }}
+                  >
+                    <div style={{ position: "absolute", top: "-20px", right: "-20px", width: "90px", height: "90px", borderRadius: "50%", background: "rgba(255,255,255,0.07)" }} />
+                    <div style={{ position: "absolute", bottom: "-30px", left: "-10px", width: "70px", height: "70px", borderRadius: "50%", background: "rgba(255,255,255,0.05)" }} />
+                    <div className="flex items-center gap-3 relative z-[1]">
+                      <div style={{ padding: "2.5px", borderRadius: "50%", background: "linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.4) 100%)", boxShadow: "0 4px 12px rgba(0,0,0,0.2)" }}>
+                        {profiles?.files && profiles.files.length > 0 ? (
+                          <img
+                            src={getImageUrl(profiles.files[0])}
+                            alt={profiles?.first_name}
+                            loading="lazy"
+                            style={{ width: "46px", height: "46px", borderRadius: "50%", objectFit: "cover", display: "block" }}
+                          />
+                        ) : (
+                          <div style={{ width: "46px", height: "46px", borderRadius: "50%", background: "rgba(255,255,255,0.25)", backdropFilter: "blur(4px)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "20px", fontWeight: "700", color: "#fff", textTransform: "uppercase" }}>
+                            {profiles?.first_name?.charAt(0)}
+                          </div>
+                        )}
                       </div>
-                    )}
-                    <div className="min-w-0 flex-1">
-                      <div className="text-[13px] font-semibold text-[#222] capitalize whitespace-nowrap overflow-hidden text-ellipsis text-left">
-                        {profiles?.first_name}
-                      </div>
-                      <div className="text-[11px] text-[#888] whitespace-nowrap overflow-hidden text-ellipsis text-left">
-                        {profiles?.email}
+                      <div style={{ minWidth: 0 }}>
+                        <div style={{ fontSize: "14px", fontWeight: "700", color: "#fff", textTransform: "capitalize", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "170px" }}>
+                          {profiles?.first_name}
+                        </div>
+                        <div style={{ fontSize: "11px", color: "rgba(255,255,255,0.7)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "170px", marginTop: "2px" }}>
+                          {profiles?.email}
+                        </div>
+                        <div style={{ display: "inline-flex", alignItems: "center", gap: "4px", marginTop: "6px", padding: "2px 8px", borderRadius: "20px", background: "rgba(255,255,255,0.18)", backdropFilter: "blur(8px)" }}>
+                          <div style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#4ade80" }} />
+                          <span style={{ fontSize: "10px", color: "#fff", fontWeight: "600" }}>Active</span>
+                        </div>
                       </div>
                     </div>
                   </div>
-                  <div className="border-t border-[#eee]" />
-                  {/* Items */}
-                  <Link
-                    to="/my-orders"
-                    className="flex items-center gap-2 px-3 py-2 text-[12px] !text-[#555] hover:bg-gray-100 w-full text-left no-underline"
-                    onClick={() => setShowDropdown(false)}
-                  >
-                    <i className="fas fa-user-circle"></i>
-                    My Account
-                  </Link>
-                  <button
-                    className="flex items-center gap-2 px-3 py-2 !text-[12px] !text-red-500 hover:bg-gray-100 w-full text-left border-none bg-transparent cursor-pointer"
-                    onClick={() => {
-                      setShowDropdown(false);
-                      confirmLogout();
-                    }}
-                  >
-                    <i className="fas fa-sign-out-alt"></i>
-                    Logout
-                  </button>
+
+                  {/* Menu Items */}
+                  <div style={{ padding: "14px 10px 10px" }}>
+                    <Link
+                      to="/my-orders"
+                      className="!no-underline"
+                      style={{ display: "flex", alignItems: "center", gap: "12px", padding: "9px 12px", borderRadius: "10px", color: "#374151", fontSize: "13px", fontWeight: "500", transition: "all 0.15s ease", cursor: "pointer", textDecoration: "none" }}
+                      onClick={() => setShowDropdown(false)}
+                      onMouseEnter={e => { e.currentTarget.style.background = "rgba(50,25,97,0.05)"; e.currentTarget.style.color = "#321961"; }}
+                      onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "#374151"; }}
+                    >
+                      <div style={{ width: "32px", height: "32px", borderRadius: "8px", background: "rgba(50,25,97,0.07)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#321961" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M20 7H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z" />
+                          <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+                        </svg>
+                      </div>
+                      <span>My Account</span>
+                      <svg style={{ marginLeft: "auto", opacity: 0.3 }} width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M9 18l6-6-6-6" />
+                      </svg>
+                    </Link>
+
+                    <div style={{ height: "1px", background: "linear-gradient(90deg, transparent, #e5e7eb, transparent)", margin: "6px 10px" }} />
+
+                    <button
+                      style={{ display: "flex", alignItems: "center", gap: "12px", padding: "9px 12px", borderRadius: "10px", color: "#ef4444", fontSize: "13px", fontWeight: "500", transition: "all 0.15s ease", cursor: "pointer", width: "100%", textAlign: "left", border: "none", background: "transparent" }}
+                      onClick={() => { setShowDropdown(false); confirmLogout(); }}
+                      onMouseEnter={e => { e.currentTarget.style.background = "rgba(239,68,68,0.06)"; }}
+                      onMouseLeave={e => { e.currentTarget.style.background = "transparent"; }}
+                    >
+                      <div style={{ width: "32px", height: "32px", borderRadius: "8px", background: "rgba(239,68,68,0.07)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                          <polyline points="16 17 21 12 16 7" />
+                          <line x1="21" y1="12" x2="9" y2="12" />
+                        </svg>
+                      </div>
+                      <span>Sign Out</span>
+                    </button>
+                  </div>
                 </div>
               )}
             </div>
@@ -950,28 +1017,28 @@ const Home2Header = () => {
 
         return !isSearchExcluded && (
           <section
-            className="mobile-search lg:!hidden fixed left-0 right-0 px-[15px] py-[14px] bg-white border-b border-solid border-[#f1f1f1] z-[998]"
+            className="mobile-search lg:!hidden fixed left-0 right-0 px-[15px] py-[10px] bg-white/95 backdrop-blur-[12px] border-b border-solid border-slate-100/80 shadow-[0_4px_12px_rgba(0,0,0,0.03)] z-[998]"
             style={{
               top: `${mobileHeaderHeight}px`,
             }}
           >
             <div
-              className="bg-white rounded-[30px] shadow-[0_1px_3px_rgba(0,0,0,0.02),0_1px_2px_rgba(0,0,0,0.01)] flex items-center gap-[8px] p-[8px] w-full"
+              className="flex items-center gap-[10px] p-[6px_12px] w-full rounded-[10px] bg-slate-50 transition-all duration-200"
               style={{
-                border: "1.5px solid #e5e7eb",
+                border: "1px solid #e2e8f0",
               }}
             >
               {/* Search Icon */}
               <div
-                className="w-[25px] h-[25px] flex items-center justify-center text-[#9ca3af]"
+                className="w-[20px] h-[20px] flex items-center justify-center text-[#321961]/50"
               >
-                <i className="fas fa-search"></i>
+                <i className="fas fa-search text-[13px]"></i>
               </div>
 
               <div className="relative flex-1">
                 <input
                   type="search"
-                  className="border-none outline-none w-full text-[15px] bg-transparent text-[#111] focus:ring-0 focus:outline-none focus:border-none p-0 m-0 shadow-none"
+                  className="border-none outline-none w-full text-[13.5px] font-medium bg-transparent text-slate-700 focus:ring-0 focus:outline-none focus:border-none p-0 m-0 shadow-none placeholder:text-slate-400"
                   onClick={() => setShowMobileSearchDropdown(true)}
                   onFocus={() => setShowMobileSearchDropdown(true)}
                   readOnly
@@ -979,6 +1046,24 @@ const Home2Header = () => {
                   value=""
                 />
               </div>
+
+              <button
+                type="button"
+                title="Upload prescription"
+                onClick={() => navigate("/prescription-upload", { state: { mode: "search", pincode: selectedPincode, lat: latitude, lng: longitude } })}
+                className="!flex !items-center !justify-center !w-[28px] !h-[28px] !rounded-full !bg-violet-100/70 !text-[#321961] !border !border-solid !border-violet-100 !cursor-pointer !transition-all !duration-200 !ease-in-out !shrink-0 active:!scale-95"
+              >
+                <i className="fas fa-file-prescription text-[12px]"></i>
+              </button>
+
+              <button
+                type="button"
+                title="Voice search"
+                onClick={() => setShowMobileSearchDropdown(true)}
+                className="!flex !items-center !justify-center !w-[28px] !h-[28px] !rounded-full !border !border-solid !transition-all !duration-200 !ease-in-out !cursor-pointer !shrink-0 active:!scale-95 !bg-blue-50/70 !text-blue-600 !border-blue-100"
+              >
+                <i className="fas fa-microphone text-[12px]"></i>
+              </button>
             </div>
           </section>
         );
@@ -1134,7 +1219,11 @@ const Home2Header = () => {
                   className="w-9 h-9 flex items-center justify-center !rounded-full bg-gray-50 !border !border-gray-200 !text-[#321961] hover:bg-[#f0ebff] hover:!border-[#321961] transition-all relative cursor-pointer !no-underline"
                   title={`${cartCount} product${cartCount !== 1 ? "s" : ""} in cart`}
                 >
-                  <i className="fas fa-shopping-cart text-[16px]"></i>
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="8" cy="21" r="1" />
+                    <circle cx="19" cy="21" r="1" />
+                    <path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12" />
+                  </svg>
                   {cartCount > 0 && (
                     <span
                       className={`flex items-center justify-center font-bold text-white rounded-full bg-red-500 absolute -top-1 -right-1 min-w-[16px] h-4 text-[9px] px-1`}
@@ -1151,7 +1240,10 @@ const Home2Header = () => {
                     className="w-9 h-9 flex items-center justify-center !rounded-full bg-gray-50 !border !border-gray-200 !text-[#321961] hover:bg-[#f0ebff] hover:!border-[#321961] transition-all relative cursor-pointer !no-underline"
                     title="Notifications"
                   >
-                    <i className="fas fa-bell text-[16px]"></i>
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+                      <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+                    </svg>
                     {unreadCount > 0 && (
                       <span className="absolute -top-1 -right-1 bg-[#321961] text-white rounded-full min-w-[16px] h-4 flex items-center justify-center text-[9px] font-bold px-1">
                         {unreadCount > 99 ? "99+" : unreadCount}
@@ -1200,47 +1292,129 @@ const Home2Header = () => {
                     {showDropdown && (
                       <div
                         ref={dropdownRef}
-                        className="absolute right-0 top-full mt-2 p-0 w-[260px] rounded-[12px] border border-[#eee] bg-white shadow-[0_8px_24px_rgba(0,0,0,0.08)] overflow-hidden z-50"
+                        className="absolute right-0 top-full mt-3 w-[280px] z-50"
+                        style={{
+                          borderRadius: "10px",
+                          background: "#fff",
+                          boxShadow: "0 20px 60px rgba(50,25,97,0.18), 0 4px 16px rgba(0,0,0,0.06)",
+                          border: "1px solid rgba(230,220,255,0.6)",
+                          overflow: "hidden",
+                        }}
                       >
-                        {/* Header */}
-                        <div className="flex items-center gap-2 px-3 py-2 bg-[#F8F9FA]">
-                          {profiles?.files && profiles.files.length > 0 ? (
-                            <img
-                              src={getImageUrl(profiles.files[0])}
-                              alt={profiles?.first_name}
-                              loading="lazy"
-                              className="w-11 h-11 rounded-full object-cover border-2 border-[#E6E6FF]"
-                            />
-                          ) : (
-                            <div className="flex items-center justify-center w-11 h-11 rounded-full bg-[#6F42C1] text-white text-[20px] font-semibold uppercase">
-                              {profiles?.first_name?.charAt(0)}
+                        {/* Gradient Header */}
+                        <div
+                          style={{
+                            background: "linear-gradient(135deg, #321961 0%, #6b21a8 60%, #9333ea 100%)",
+                            padding: "20px 18px 15px 18px",
+                            position: "relative",
+                            overflow: "hidden",
+                          }}
+                        >
+                          {/* Decorative circles */}
+                          <div style={{ position: "absolute", top: "-20px", right: "-20px", width: "90px", height: "90px", borderRadius: "50%", background: "rgba(255,255,255,0.07)" }} />
+                          <div style={{ position: "absolute", bottom: "-30px", left: "-10px", width: "70px", height: "70px", borderRadius: "50%", background: "rgba(255,255,255,0.05)" }} />
+                          <div className="flex items-center gap-3 relative z-[1]">
+                            <div style={{ padding: "2.5px", borderRadius: "50%", background: "linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.4) 100%)", boxShadow: "0 4px 12px rgba(0,0,0,0.2)" }}>
+                              {profiles?.files && profiles.files.length > 0 ? (
+                                <img
+                                  src={getImageUrl(profiles.files[0])}
+                                  alt={profiles?.first_name}
+                                  loading="lazy"
+                                  style={{ width: "46px", height: "46px", borderRadius: "50%", objectFit: "cover", display: "block" }}
+                                />
+                              ) : (
+                                <div style={{ width: "46px", height: "46px", borderRadius: "50%", background: "rgba(255,255,255,0.25)", backdropFilter: "blur(4px)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "20px", fontWeight: "700", color: "#fff", textTransform: "uppercase" }}>
+                                  {profiles?.first_name?.charAt(0)}
+                                </div>
+                              )}
                             </div>
-                          )}
-                          <div className="min-w-0">
-                            <div className="text-[13px] font-semibold text-[#222] capitalize whitespace-nowrap overflow-hidden text-ellipsis">
-                              {profiles?.first_name}
-                            </div>
-                            <div className="text-[11px] text-[#888] whitespace-nowrap overflow-hidden text-ellipsis">
-                              {profiles?.email}
+                            <div style={{ minWidth: 0 }}>
+                              <div style={{ fontSize: "14px", fontWeight: "700", color: "#fff", textTransform: "capitalize", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "170px" }}>
+                                {profiles?.first_name}
+                              </div>
+                              <div style={{ fontSize: "11px", color: "rgba(255,255,255,0.7)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", maxWidth: "170px", marginTop: "2px" }}>
+                                {profiles?.email}
+                              </div>
+                              <div style={{ display: "inline-flex", alignItems: "center", gap: "4px", marginTop: "6px", padding: "2px 8px", borderRadius: "20px", background: "rgba(255,255,255,0.18)", backdropFilter: "blur(8px)" }}>
+                                <div style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#4ade80" }} />
+                                <span style={{ fontSize: "10px", color: "#fff", fontWeight: "600" }}>Active</span>
+                              </div>
                             </div>
                           </div>
                         </div>
-                        <div className="border-t border-[#eee]" />
-                        {/* Items */}
-                        <Link
-                          to="/my-orders"
-                          className="flex items-center gap-2 px-3 py-2 text-[12px] !text-[#555] hover:bg-gray-100 w-full text-left no-underline"
-                        >
-                          <i className="fas fa-user-circle"></i>
-                          My Account
-                        </Link>
-                        <button
-                          className="flex items-center gap-2 px-3 py-2 !text-[12px] !text-red-500 hover:bg-gray-100 w-full text-left border-none bg-transparent cursor-pointer"
-                          onClick={confirmLogout}
-                        >
-                          <i className="fas fa-sign-out-alt"></i>
-                          Logout
-                        </button>
+
+                        {/* Quick stats strip */}
+                        {/* <div style={{ margin: "-16px 16px 0 16px", borderRadius: "12px", background: "#fff", boxShadow: "0 4px 16px rgba(50,25,97,0.1)", padding: "10px 14px", display: "flex", gap: "0", position: "relative", zIndex: 2, border: "1px solid rgba(230,220,255,0.5)" }}>
+                          <div style={{ flex: 1, textAlign: "center", borderRight: "1px solid #f0ebff" }}>
+                            <div style={{ fontSize: "13px", fontWeight: "700", color: "#321961" }}>My</div>
+                            <div style={{ fontSize: "10px", color: "#94a3b8", fontWeight: "500" }}>Orders</div>
+                          </div>
+                          <div style={{ flex: 1, textAlign: "center" }}>
+                            <div style={{ fontSize: "13px", fontWeight: "700", color: "#321961" }}>Profile</div>
+                            <div style={{ fontSize: "10px", color: "#94a3b8", fontWeight: "500" }}>Settings</div>
+                          </div>
+                        </div> */}
+
+                        {/* Menu Items */}
+                        <div style={{ padding: "14px 10px 10px" }}>
+                          <Link
+                            to="/my-orders"
+                            className="!no-underline"
+                            style={{ display: "flex", alignItems: "center", gap: "12px", padding: "9px 12px", borderRadius: "10px", color: "#374151", fontSize: "13px", fontWeight: "500", transition: "all 0.15s ease", cursor: "pointer", textDecoration: "none" }}
+                            onMouseEnter={e => { e.currentTarget.style.background = "rgba(50,25,97,0.05)"; e.currentTarget.style.color = "#321961"; }}
+                            onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "#374151"; }}
+                          >
+                            <div style={{ width: "32px", height: "32px", borderRadius: "8px", background: "rgba(50,25,97,0.07)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#321961" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M20 7H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z" />
+                                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+                              </svg>
+                            </div>
+                            <span>My Account</span>
+                            <svg style={{ marginLeft: "auto", opacity: 0.3 }} width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                              <path d="M9 18l6-6-6-6" />
+                            </svg>
+                          </Link>
+                          {/* 
+                          <Link
+                            to="/notifications"
+                            className="!no-underline"
+                            style={{ display: "flex", alignItems: "center", gap: "12px", padding: "9px 12px", borderRadius: "10px", color: "#374151", fontSize: "13px", fontWeight: "500", transition: "all 0.15s ease", cursor: "pointer", textDecoration: "none" }}
+                            onMouseEnter={e => { e.currentTarget.style.background = "rgba(50,25,97,0.05)"; e.currentTarget.style.color = "#321961"; }}
+                            onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "#374151"; }}
+                          >
+                            <div style={{ width: "32px", height: "32px", borderRadius: "8px", background: "rgba(50,25,97,0.07)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#321961" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+                                <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+                              </svg>
+                            </div>
+                            <span>Notifications</span>
+                            {unreadCount > 0 && (
+                              <span style={{ marginLeft: "auto", background: "#321961", color: "#fff", borderRadius: "20px", padding: "1px 7px", fontSize: "10px", fontWeight: "700" }}>
+                                {unreadCount > 99 ? "99+" : unreadCount}
+                              </span>
+                            )}
+                          </Link> */}
+
+                          <div style={{ height: "1px", background: "linear-gradient(90deg, transparent, #e5e7eb, transparent)", margin: "6px 10px" }} />
+
+                          <button
+                            style={{ display: "flex", alignItems: "center", gap: "12px", padding: "9px 12px", borderRadius: "10px", color: "#ef4444", fontSize: "13px", fontWeight: "500", transition: "all 0.15s ease", cursor: "pointer", width: "100%", textAlign: "left", border: "none", background: "transparent" }}
+                            onClick={confirmLogout}
+                            onMouseEnter={e => { e.currentTarget.style.background = "rgba(239,68,68,0.06)"; }}
+                            onMouseLeave={e => { e.currentTarget.style.background = "transparent"; }}
+                          >
+                            <div style={{ width: "32px", height: "32px", borderRadius: "8px", background: "rgba(239,68,68,0.07)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                                <polyline points="16 17 21 12 16 7" />
+                                <line x1="21" y1="12" x2="9" y2="12" />
+                              </svg>
+                            </div>
+                            <span>Sign Out</span>
+                          </button>
+                        </div>
                       </div>
                     )}
                   </li>

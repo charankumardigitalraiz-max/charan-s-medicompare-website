@@ -154,6 +154,7 @@ const VendorOffersModal = ({ show, onClose, product }) => {
                     med={tablet}
                     vendor={vendor}
                     price={basePrice}
+                    service={category?.fixedType}
                     calculatedDiscountPrice={sellingPrice}
                     effectiveVariantId={selectedVar?._id}
                     isVariant={!!selectedVar}

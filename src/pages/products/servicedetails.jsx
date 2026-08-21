@@ -144,6 +144,20 @@ const ServiceDetails = () => {
   const { selectedPincode, latitude, longitude } = useLocationContext();
   const [categories, setCategories] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [activeLoaderIconIndex, setActiveLoaderIconIndex] = useState(0);
+  useEffect(() => {
+    let interval;
+    if (isLoading) {
+      interval = setInterval(() => {
+        setActiveLoaderIconIndex((prev) => (prev + 1) % 4);
+      }, 800);
+    } else {
+      setActiveLoaderIconIndex(0);
+    }
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [isLoading]);
   const [isMoreLoading, setIsMoreLoading] = useState(false);
   const [suggestionsLimit, setSuggestionsLimit] = useState(10);
   const [hasMoreSuggestions, setHasMoreSuggestions] = useState(true);
@@ -1053,6 +1067,8 @@ const ServiceDetails = () => {
     );
   };
 
+  const isDropdownActive = isLoading || (showSuggestions && (filteredSuggestions.length > 0 || (!query.trim() && searchHistory.length > 0)));
+
   if (isPageLoading) {
     return <PageLoader />;
   }
@@ -1082,10 +1098,17 @@ const ServiceDetails = () => {
                       <div
                         ref={searchContainerRef}
                         className={`search-wrapper1 mx-auto relative ${showSuggestions ? "z-30" : "z-[2]"}`}
+                        style={{ maxWidth: "550px" }}
                       >
                         <form onSubmit={(e) => e.preventDefault()}>
                           <div
-                            className={`bg-white rounded-[30px] border-[1.5px] border-solid border-[#e5e7eb] shadow-[0_1px_3px_rgba(0,0,0,0.02),0_1px_2px_rgba(0,0,0,0.01)] transition-all duration-300 ease-in-out overflow-hidden relative ${isMobile ? "hidden" : "flex"} items-center p-[8px] gap-[8px]`}
+                            className={`bg-white border-[1.5px] border-solid border-[#e5e7eb] shadow-[0_1px_3px_rgba(0,0,0,0.02),0_1px_2px_rgba(0,0,0,0.01)] transition-all duration-300 ease-in-out overflow-hidden relative ${isMobile ? "hidden" : "flex"} items-center p-[8px] gap-[8px]`}
+                            style={{
+                              borderRadius: isDropdownActive ? "12px 12px 0 0" : "20px",
+                              borderBottom: isDropdownActive ? "1px solid #f1f5f9" : "1.5px solid #e5e7eb",
+                              boxShadow: isDropdownActive ? "0 4px 6px -1px rgba(0, 0, 0, 0.05)" : "0 1px 3px rgba(0,0,0,0.02),0_1px_2px_rgba(0,0,0,0.01)",
+                              transition: "all 0.2s ease"
+                            }}
                           >
                             <div
                               className="flex items-center justify-center w-[25px] h-[25px] text-[#9ca3af] shrink-0"
@@ -1142,8 +1165,8 @@ const ServiceDetails = () => {
                               title="Voice search"
                               onClick={startVoiceRecognition}
                               className={`!flex !items-center !justify-center !w-[30px] !h-[30px] !rounded-full !border !border-solid !transition-all !duration-300 !ease-in-out !cursor-pointer active:!scale-90 ${isListening
-                                  ? "!bg-gradient-to-r !from-rose-500 !to-red-600 !text-white !border-rose-500 !shadow-[0_0_12px_rgba(244,63,94,0.5)] hover:!scale-110 hover:!shadow-[0_0_16px_rgba(244,63,94,0.7)]"
-                                  : "!bg-blue-50 !text-blue-600 !border-blue-100/80 hover:!bg-blue-600 hover:!text-white hover:!border-blue-600 hover:!scale-110 hover:!shadow-[0_4px_12px_rgba(37,99,235,0.25)]"
+                                ? "!bg-gradient-to-r !from-rose-500 !to-red-600 !text-white !border-rose-500 !shadow-[0_0_12px_rgba(244,63,94,0.5)] hover:!scale-110 hover:!shadow-[0_0_16px_rgba(244,63,94,0.7)]"
+                                : "!bg-blue-50 !text-blue-600 !border-blue-100/80 hover:!bg-blue-600 hover:!text-white hover:!border-blue-600 hover:!scale-110 hover:!shadow-[0_4px_12px_rgba(37,99,235,0.25)]"
                                 }`}
                             >
                               <svg
@@ -1192,12 +1215,78 @@ const ServiceDetails = () => {
                                 (!query.trim() &&
                                   searchHistory.length > 0)))) && (
                               <div
-                                className={`absolute top-full left-0 right-0 mt-0 bg-white rounded-[10px] border-[1.5px] border-solid border-[#e5e7eb] shadow-[0_20px_40px_rgba(0,0,0,0.12),0_8px_16px_rgba(0,0,0,0.08)] z-[999999] max-h-[400px] overflow-y-auto overflow-x-hidden ${pageLiteMode ? "animate-none" : "animate-[fadeInUp_0.2s_ease-out]"}`}
+                                className={`absolute top-full left-0 right-0 mt-0 bg-white border-[1.5px] border-t-0 border-solid border-[#e5e7eb] shadow-[0_20px_40px_rgba(0,0,0,0.12),0_8px_16px_rgba(0,0,0,0.08)] z-[999999] max-h-[400px] overflow-y-auto overflow-x-hidden custom-scrollbar ${pageLiteMode ? "animate-none" : "animate-[fadeInUp_0.2s_ease-out]"}`}
+                                style={{ borderRadius: "0 0 12px 12px" }}
                               >
+                                <style dangerouslySetInnerHTML={{
+                                  __html: `
+                                    .custom-scrollbar::-webkit-scrollbar {
+                                      width: 6px;
+                                    }
+                                    .custom-scrollbar::-webkit-scrollbar-track {
+                                      background: #f8fafc;
+                                      border-radius: 0 0 12px 0;
+                                    }
+                                    .custom-scrollbar::-webkit-scrollbar-thumb {
+                                      background: #cbd5e1;
+                                      border-radius: 10px;
+                                    }
+                                    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+                                      background: #94a3b8;
+                                    }
+                                    @keyframes loaderIconPop {
+                                      0% { opacity: 0; transform: scale(0.6); }
+                                      100% { opacity: 1; transform: scale(1.1); }
+                                    }
+                                    .service-suggestion-item {
+                                      transition: all 0.2s ease-in-out;
+                                      border-radius: 8px;
+                                      margin: 2px 8px !important;
+                                      width: calc(100% - 16px) !important;
+                                      border-bottom: none !important;
+                                    }
+                                    .service-suggestion-item:hover {
+                                      background-color: rgba(50, 25, 97, 0.05) !important;
+                                    }
+                                    .service-suggestion-row {
+                                      transition: all 0.2s ease-in-out;
+                                      border-radius: 8px;
+                                      padding: 8px 12px !important;
+                                      margin: 2px 8px !important;
+                                      width: calc(100% - 16px) !important;
+                                      border-bottom: none !important;
+                                    }
+                                    .service-suggestion-row:hover {
+                                      background-color: rgba(50, 25, 97, 0.05) !important;
+                                    }
+                                    .service-suggestion-row:hover .suggestion-text-name {
+                                      color: #321961 !important;
+                                    }
+                                    .service-suggestion-row:hover .fa-search {
+                                      color: #321961 !important;
+                                      opacity: 0.8 !important;
+                                      transform: scale(1.1);
+                                    }
+                                  `
+                                }} />
                                 {isLoading && (
-                                  <div className="flex flex-col items-center justify-center py-8 gap-2.5 text-slate-400">
-                                    <i className="fas fa-circle-notch fa-spin text-2xl text-[#321961]"></i>
-                                    <span className="text-xs font-medium text-slate-500">Searching for medicines & services...</span>
+                                  <div className="flex flex-col items-center justify-center py-8 gap-4 text-slate-400">
+                                    <div className="relative w-14 h-14 flex items-center justify-center">
+                                      <div className="absolute inset-0 rounded-full border-[3px] border-solid border-[#321961]/10 animate-ping opacity-75"></div>
+                                      <div className="absolute inset-0 rounded-full border-[3px] border-solid border-transparent border-t-[#321961] border-r-[#7c3aed] animate-spin"></div>
+                                      <div className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center shadow-inner z-10">
+                                        <i
+                                          key={activeLoaderIconIndex}
+                                          className={`${activeLoaderIconIndex === 0 ? "fas fa-capsules text-[#7c3aed]" :
+                                            activeLoaderIconIndex === 1 ? "fas fa-microscope text-[#059669]" :
+                                              activeLoaderIconIndex === 2 ? "fas fa-ambulance text-[#ef4444]" :
+                                                "fas fa-stethoscope text-[#2563eb]"
+                                            } text-lg`}
+                                          style={{ animation: 'loaderIconPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards' }}
+                                        />
+                                      </div>
+                                    </div>
+                                    <span className="text-xs font-semibold text-slate-500 tracking-wide animate-pulse">Searching for medicines & services...</span>
                                   </div>
                                 )}
                                 {!isLoading &&
@@ -1346,15 +1435,17 @@ const ServiceDetails = () => {
                                     <div
                                       key={getSearchItemId(item) || `search-${index}`}
                                       onClick={() => handleSelect(item)}
-                                      className={`w-full p-[10px] border-none bg-transparent text-left cursor-pointer text-[15px] text-[#111827] flex z-[9999999] items-center gap-[14px] transition-all duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] relative ${index < filteredSuggestions.length - 1 ? "border-b border-solid border-[#f3f4f6]" : "border-b-0"}`}
+                                      className="service-suggestion-row flex items-center cursor-pointer text-[15px]"
                                     >
                                       <div
-                                        className="text-[#9ca3af] shrink-0"
+                                        className="text-[#321961] shrink-0"
+                                        style={{ opacity: 0.4, marginRight: "10px", fontSize: "12px", transition: "all 0.2s ease" }}
                                       >
                                         <i className="fas fa-search"></i>
                                       </div>
                                       <span
-                                        className="flex-1 leading-[1.5] capitalize"
+                                        className="suggestion-text-name flex-1 leading-[1.5] capitalize"
+                                        style={{ fontWeight: "600", color: "#1e293b", transition: "color 0.2s ease" }}
                                       >
                                         {highlightMatch(
                                           item.tablet?.name,
@@ -1362,14 +1453,22 @@ const ServiceDetails = () => {
                                         )}
                                       </span>
                                       <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}><span
-                                        className="text-[10px] text-[#666] bg-[#f0f0f0] py-[2px] px-[8px] rounded-[12px] whitespace-nowrap ml-[8px] capitalize"
+                                        className="whitespace-nowrap ml-[8px] capitalize"
+                                        style={{
+                                          fontSize: '10px',
+                                          color: '#321961',
+                                          backgroundColor: 'rgba(50, 25, 97, 0.08)',
+                                          padding: '2.5px 10px',
+                                          borderRadius: '12px',
+                                          fontWeight: '700'
+                                        }}
                                       >
                                         {item?.type === "package"
                                           ? item?.type
                                           : item?.tablet?.category?.fixedType === "medicine"
                                             ? (item?.tablet?.medicineType || "product")
                                             : (item?.tablet?.category?.name || "product")}
-                                      </span> <button type="button" onClick={(e) => { e.stopPropagation(); e.preventDefault(); setVendorModel(item); }} style={{ background: '#f8fafc', border: '1px solid #e2e8f0', color: 'var(--color-primary)', cursor: 'pointer', padding: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%', width: '24px', height: '24px', transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)', boxShadow: '0 1px 2px rgba(0,0,0,0.05)' }} onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = 'var(--color-primary)'; e.currentTarget.style.color = '#ffffff'; e.currentTarget.style.borderColor = 'var(--color-primary)'; e.currentTarget.style.transform = 'scale(1.08)'; }} onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#f8fafc'; e.currentTarget.style.color = 'var(--color-primary)'; e.currentTarget.style.borderColor = '#e2e8f0'; e.currentTarget.style.transform = 'none'; }} title="Insert into search"><i className="fa fa-plus" style={{ fontSize: '11px' }} /></button></div>
+                                      </span> <button type="button" onClick={(e) => { e.stopPropagation(); e.preventDefault(); setVendorModel(item); }} style={{ background: '#f8fafc', border: '1px solid #e2e8f0', color: '#321961', cursor: 'pointer', padding: '4px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '50%', width: '24px', height: '24px', transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)', boxShadow: '0 1px 2px rgba(0,0,0,0.05)' }} onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = '#321961'; e.currentTarget.style.color = '#ffffff'; e.currentTarget.style.borderColor = '#321961'; e.currentTarget.style.transform = 'scale(1.08)'; }} onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = '#f8fafc'; e.currentTarget.style.color = '#321961'; e.currentTarget.style.borderColor = '#e2e8f0'; e.currentTarget.style.transform = 'none'; }} title="Insert into search"><i className="fa fa-plus" style={{ fontSize: '11px' }} /></button></div>
                                     </div>
                                   ))}
                                 {!isLoading && query.trim() && hasMoreSuggestions && filteredSuggestions.length > 0 && (
@@ -1383,7 +1482,34 @@ const ServiceDetails = () => {
                                       setSuggestionsLimit(nextLimit);
                                       fetchSearchResults(query, nextLimit, true);
                                     }}
-                                    className={`w-full p-[10px] border-none font-semibold text-center text-[13px] border-t border-solid border-[#f3f4f6] transition-colors duration-200 ${isMoreLoading ? "text-[#9ca3af] cursor-not-allowed bg-[#f9fafb]" : "text-[#321961] cursor-pointer bg-[#f9fafb] hover:bg-[#f1f5f9]"}`}
+                                    style={{
+                                      width: "fit-content",
+                                      minWidth: "120px",
+                                      margin: "12px auto 12px auto",
+                                      display: "block",
+                                      padding: "6px 16px",
+                                      border: "none",
+                                      borderRadius: "20px",
+                                      background: "rgba(50, 25, 97, 0.05)",
+                                      color: isMoreLoading ? "#9ca3af" : "#321961",
+                                      fontWeight: "700",
+                                      textAlign: "center",
+                                      cursor: isMoreLoading ? "not-allowed" : "pointer",
+                                      fontSize: "12px",
+                                      transition: "all 0.2s ease-in-out"
+                                    }}
+                                    onMouseEnter={(e) => {
+                                      if (!isMoreLoading) {
+                                        e.currentTarget.style.backgroundColor = "#321961";
+                                        e.currentTarget.style.color = "#ffffff";
+                                      }
+                                    }}
+                                    onMouseLeave={(e) => {
+                                      if (!isMoreLoading) {
+                                        e.currentTarget.style.backgroundColor = "rgba(50, 25, 97, 0.05)";
+                                        e.currentTarget.style.color = "#321961";
+                                      }
+                                    }}
                                   >
                                     {isMoreLoading ? "Loading..." : "Load More"}
                                   </button>

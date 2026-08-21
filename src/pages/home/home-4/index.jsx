@@ -55,6 +55,21 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
   const [testimonials, setTestimonials] = useState([]);
   const [blogss, setblogss] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [activeLoaderIconIndex, setActiveLoaderIconIndex] = useState(0);
+  useEffect(() => {
+    let interval;
+    if (isLoading) {
+      interval = setInterval(() => {
+        setActiveLoaderIconIndex((prev) => (prev + 1) % 4);
+      }, 800);
+    } else {
+      setActiveLoaderIconIndex(0);
+    }
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [isLoading]);
   const [isMoreLoading, setIsMoreLoading] = useState(false);
   const { isListening, startListening, MicPermissionModal } = useVoiceRecognition();
   const [faqss, setFaqs] = useState([]);
@@ -62,7 +77,6 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
   const [part1Vendors, setPart1Vendors] = useState([]);
   const [part2Vendors, setPart2Vendors] = useState([]);
   const [mediciness, setMediciness] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [query, setQuery] = useState("");
   const [filteredSuggestions, setFilteredSuggestions] = useState([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
@@ -843,7 +857,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
             } ${isMobile ? "bg-[#f9f9f9]" : ""}`}
         >
           <Home2Header />
-          <section className="relative min-h-[420px] bg-[#f9f9f9] bg-[url('/assets/search-bg.png')] bg-no-repeat bg-bottom bg-[length:100%_auto] pt-10 pb-[60px] max-lg:min-h-[280px] max-md:pt-5 max-md:pb-[50px] max-[480px]:min-h-[220px] max-[480px]:px-[15px] max-[480px]:pb-[30px]">
+          <section className="relative z-30 min-h-[420px] bg-[#f9f9f9] bg-[url('/assets/search-bg.png')] bg-no-repeat bg-bottom bg-[length:100%_auto] pt-10 pb-[60px] max-lg:min-h-[280px] max-md:pt-5 max-md:pb-[50px] max-[480px]:min-h-[220px] max-[480px]:px-[15px] max-[480px]:pb-[30px]">
             {/* Overlay */}
             <div className="pointer-events-none absolute inset-0 z-[1] bg-[linear-gradient(180deg,white_0%,white_20%,transparent_40%,rgba(128,70,241,0.3)_100%)] max-lg:bg-[linear-gradient(180deg,transparent_40%,rgba(128,70,241,0.3)_100%)] opacity-50" />
 
@@ -885,15 +899,15 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                 </div>
 
                 <section
-                  className="p-[12px] md:py-0 md:px-[10px] relative mt-[10px] mobileview z-[9]"
+                  className="p-[12px] md:py-0 md:px-[10px] relative mt-[10px] mobileview z-[50]"
                 >
                   <div
-                    className="container-fluid px-3 px-md-4 relative z-[1] w-full max-w-[600px] mx-auto"
+                    className="container-fluid px-3 px-md-4 relative z-[50] w-full max-w-[600px] mx-auto"
                   >
                     <div className="row">
                       <div className="col-12">
                         <div
-                          className="relative z-[1] max-w-[600px]"
+                          className="relative z-[50] max-w-[600px]"
                         >
                           <div className="row">
                             <div className="col-12">
@@ -909,7 +923,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                                         <div
                                           className={`bg-white border border-solid transition-all duration-250 ease-in-out overflow-hidden relative flex items-center p-2.5 gap-2.5 ${isDropdownActive
                                             ? "rounded-t-[20px] rounded-b-none border-slate-200 border-b-transparent shadow-[0_15px_30px_rgba(50,25,97,0.05)]"
-                                            : "rounded-[30px] border-slate-200 shadow-[0_4px_20px_rgba(0,0,0,0.02),0_1px_3px_rgba(0,0,0,0.01)] hover:border-[#321961]/50 focus-within:border-[#321961]"
+                                            : "rounded-[30px] border-slate-200 shadow-[0_4px_20px_rgba(0,0,0,0.02),0_1px_3px_rgba(0,0,0,0.01)]  "
                                             }`}
                                         >
                                           <div
@@ -974,15 +988,55 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
 
                                         {(isLoading || isDropdownActive) && (
                                           <div
-                                            className={`absolute top-full left-0 right-0 mt-0 bg-white border border-solid border-slate-200 z-[999999] max-h-[400px] overflow-y-auto overflow-x-hidden animate-[fadeInUp_0.2s_ease-out] ${isDropdownActive
+                                            className={`absolute top-full left-0 right-0 mt-0 bg-white border border-solid border-slate-200 z-[999999] max-h-[400px] overflow-y-auto overflow-x-hidden custom-scrollbar animate-[fadeInUp_0.2s_ease-out] ${isDropdownActive
                                               ? "rounded-b-[20px] rounded-t-none border-t-0 shadow-[0_20px_45px_rgba(50,25,97,0.12)]"
                                               : "rounded-[20px] shadow-[0_10px_30px_rgba(0,0,0,0.08)]"
                                               }`}
                                           >
+                                            <style dangerouslySetInnerHTML={{
+                                              __html: `
+                                                .custom-scrollbar::-webkit-scrollbar {
+                                                  width: 6px;
+                                                }
+                                                .custom-scrollbar::-webkit-scrollbar-track {
+                                                  background: #f8fafc;
+                                                  border-radius: 0 0 20px 0;
+                                                }
+                                                .custom-scrollbar::-webkit-scrollbar-thumb {
+                                                  background: #cbd5e1;
+                                                  border-radius: 10px;
+                                                }
+                                                .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+                                                  background: #94a3b8;
+                                                }
+                                              `
+                                            }} />
                                             {isLoading && (
-                                              <div className="flex flex-col items-center justify-center py-8 gap-2.5 text-slate-400">
-                                                <i className="fas fa-circle-notch fa-spin text-2xl text-[#321961]"></i>
-                                                <span className="text-xs font-medium text-slate-500">Searching for medicines & services...</span>
+                                              <div className="flex flex-col items-center justify-center py-8 gap-4 text-slate-400">
+                                                <style dangerouslySetInnerHTML={{
+                                                  __html: `
+                                                    @keyframes loaderIconPop {
+                                                      0% { opacity: 0; transform: scale(0.6); }
+                                                      100% { opacity: 1; transform: scale(1.1); }
+                                                    }
+                                                  `
+                                                }} />
+                                                <div className="relative w-14 h-14 flex items-center justify-center">
+                                                  <div className="absolute inset-0 rounded-full border-[3px] border-solid border-[#321961]/10 animate-ping opacity-75"></div>
+                                                  <div className="absolute inset-0 rounded-full border-[3px] border-solid border-transparent border-t-[#321961] border-r-[#7c3aed] animate-spin"></div>
+                                                  <div className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center shadow-inner z-10">
+                                                    <i
+                                                      key={activeLoaderIconIndex}
+                                                      className={`${activeLoaderIconIndex === 0 ? "fas fa-capsules text-[#7c3aed]" :
+                                                        activeLoaderIconIndex === 1 ? "fas fa-microscope text-[#059669]" :
+                                                          activeLoaderIconIndex === 2 ? "fas fa-ambulance text-[#ef4444]" :
+                                                            "fas fa-stethoscope text-[#2563eb]"
+                                                        } text-lg`}
+                                                      style={{ animation: 'loaderIconPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards' }}
+                                                    />
+                                                  </div>
+                                                </div>
+                                                <span className="text-xs font-semibold text-slate-500 tracking-wide animate-pulse">Searching for medicines & services...</span>
                                               </div>
                                             )}
                                             {!isLoading &&
@@ -1298,7 +1352,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                         <h4 className="!font-semibold !text-[14px] text-slate-800 group-hover:text-[#321961] transition-colors duration-300 mb-0.5 tracking-wide leading-snug truncate">
                           {item.name}
                         </h4>
-                        <span className="text-[10px] text-slate-400 font-medium flex items-center gap-0.5 group-hover:text-[#7c3aed] transition-colors duration-300">
+                        <span className="inline-flex items-center gap-1 text-[10px] font-bold text-[#321961] py-0.5 rounded-full transition-all duration-300 ">
                           <span>Compare Live</span>
                           <i className="fas fa-chevron-right text-[8px] transform group-hover:translate-x-0.5 transition-transform" />
                         </span>
@@ -3167,7 +3221,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                       {/* Soft backdrop glow behind phone */}
                       <div className="absolute inset-0 bg-[#7c3aed]/25 rounded-full filter blur-[40px] transform scale-75 animate-pulse pointer-events-none"></div>
                       <img
-                        src="/assets/mobileapp.png"
+                        src="/mobile/mobile-app.png"
                         className="max-w-full h-auto object-contain relative z-10 animate-[float_4s_ease-in-out_infinite]"
                         alt="Medicompare Mobile App Mockup"
                         title="Medicompare Mobile App"
