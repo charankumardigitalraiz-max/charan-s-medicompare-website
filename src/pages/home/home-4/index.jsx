@@ -1289,9 +1289,8 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
           </section>
 
           {categories && categories.length > 0 && (
-            <section className="py-8 bg-[#fafafc] bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-indigo-50/20 via-white to-[#fafafc] relative overflow-hidden">
-              <div className="absolute top-0 left-1/4 w-[350px] h-[350px] rounded-full bg-[#7c3aed]/3 blur-[100px] pointer-events-none"></div>
-              <div className="absolute bottom-0 right-1/4 w-[350px] h-[350px] rounded-full bg-[#059669]/3 blur-[100px] pointer-events-none"></div>
+            <section className="py-10 relative overflow-hidden" style={{ background: "#ffffff" }}>
+
 
               <div className="max-w-full mx-auto px-6 md:px-12 lg:px-20 relative z-10">
                 <div className="text-center mb-12 max-w-2xl lg:max-w-4xl mx-auto" data-aos="fade-up">
