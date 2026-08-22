@@ -1330,12 +1330,12 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                   }
                 `}} />
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 w-full mt-4">
+                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 w-full mt-4">
                   {categories.map((item, categoryIndex) => (
                     <div
                       key={item._id}
                       onClick={() => handleCategoryClick(item)}
-                      className="group cursor-pointer bg-white border border-solid border-slate-200/80 rounded-md p-4 flex flex-row items-center gap-4 transition-all duration-300 hover:border-[var(--color-primary-dark,#5c33a6)]/35 hover:shadow-[0_12px_30px_rgba(50,25,97,0.06)] hover:-translate-y-1 relative overflow-hidden"
+                      className="group cursor-pointer bg-white border border-solid border-slate-200/80 rounded-md p-4 flex flex-col sm:flex-row items-center gap-3 sm:gap-4 transition-all duration-300 hover:border-[var(--color-primary-dark,#5c33a6)]/35 hover:shadow-[0_12px_30px_rgba(50,25,97,0.06)] hover:-translate-y-1 relative overflow-hidden"
                     >
                       {/* Glow Blob decoration on card hover */}
                       <div className="absolute -bottom-10 -right-10 w-20 h-20 bg-[#7c3aed]/5 rounded-full blur-xl group-hover:bg-[#7c3aed]/10 transition-colors duration-300"></div>
@@ -1359,8 +1359,8 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                         />
                       </div>
 
-                      <div className="flex-1 min-w-0 text-left">
-                        <h4 className="!font-[600] !text-[14px] !text-[#1e293b] group-hover:!text-[var(--color-primary,#4c2691)] transition-colors duration-300 !mb-0 !leading-tight truncate !tracking-tight">
+                      <div className="flex-1 min-w-0 text-center sm:text-left flex flex-col items-center sm:items-start w-full">
+                        <h4 className="!font-[600] !text-[14px] !text-[#1e293b] group-hover:!text-[var(--color-primary,#4c2691)] transition-colors duration-300 !mb-0 !leading-tight truncate !tracking-tight w-full">
                           {item.name}
                         </h4>
                         <span className="inline-flex items-center gap-0.5 text-[10px] font-medium text-[#94a3b8] group-hover:text-[var(--color-primary,#4c2691)] transition-colors duration-300 mt-0.5">

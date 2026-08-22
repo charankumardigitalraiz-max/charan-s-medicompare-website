@@ -1356,7 +1356,7 @@ const Home2Header = () => {
                         </div> */}
 
                         {/* Menu Items */}
-                        <div style={{ padding: "14px 10px 10px" }}>
+                        <div style={{ padding: "7px 10px 7px" }}>
                           <Link
                             to="/my-orders"
                             className="!no-underline"
