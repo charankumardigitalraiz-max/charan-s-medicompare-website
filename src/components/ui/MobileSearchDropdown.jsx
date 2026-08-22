@@ -417,7 +417,7 @@ const MobileSearchDropdown = ({
           left: 0,
           right: 0,
           bottom: 0,
-          backgroundColor: "#f5f6f7",
+          backgroundColor: "#ffffff",
           zIndex: 10000,
           overflowY: mobileSearchQuery.trim() && mobileSearchSuggestions.length > 0 && !mobileSearchSuggestions[0].noResult ? "hidden" : "auto",
           WebkitOverflowScrolling: "touch",
@@ -465,77 +465,72 @@ const MobileSearchDropdown = ({
           </h5>
         </div>
 
-        <div className="container py-3" style={{ backgroundColor: "#f5f6f7", maxWidth: "100%", paddingLeft: "15px", paddingRight: "15px" }}>
-          <div ref={searchContainerRef} className="relative w-full flex items-center mb-2" style={{ minHeight: "48px" }}>
-            <i
-              className="fa fa-search"
-              style={{
-                position: "absolute",
-                left: "14px",
-                top: "50%",
-                transform: "translateY(-50%)",
-                color: "#6b7280",
-                fontSize: "16px",
-                zIndex: 2,
-                pointerEvents: "none",
-                flexShrink: 0,
-              }}
-            />
-            <input
-              type="text"
-              autoComplete="off"
-              placeholder={placeholderTexts[placeholderIndex]}
-              value={mobileSearchQuery}
-              onChange={(e) => {
-                setMobileSearchQuery(e.target.value);
-                setMobileSearchShowSuggestions(true);
-              }}
-              onFocus={() => {
-                setMobileSearchShowSuggestions(true);
-              }}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" && mobileSearchQuery && mobileSearchQuery.trim().length > 0) {
-                  e.preventDefault();
-                  addToMobileRecentSearches(mobileSearchQuery.trim());
-                  setMobileSearchShowSuggestions(true);
-                }
-              }}
-              style={{
-                paddingLeft: "42px",
-                paddingRight: mobileSearchShowDots && mobileSearchLoading ? "110px" : "82px",
-                width: "100%",
-                height: "46px",
-                borderRadius: "12px",
-                border: "1px solid #e5e7eb",
-                backgroundColor: "#ffffff",
-                fontSize: "15px",
-                outline: "none",
-                boxShadow: "0 2px 4px rgba(0,0,0,0.02)",
-                color: "#1f2937",
-              }}
-            />
+        <div className="container py-3" style={{ backgroundColor: "#ffffff", maxWidth: "100%", paddingLeft: "15px", paddingRight: "15px" }}>
+          {/* Row: search pill + two action buttons */}
+          <div ref={searchContainerRef} className="relative flex items-center gap-[8px] w-full mb-2" style={{ minHeight: "48px" }}>
 
-            {mobileSearchShowDots && mobileSearchLoading && (
-              <div
-                className="google-dots"
-                style={{
-                  position: "absolute",
-                  right: "82px",
-                  top: "50%",
-                  transform: "translateY(-50%)",
-                  zIndex: 3,
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "4px",
-                }}
-              >
-                <span className="dott blue" />
-                <span className="dott red" />
-                <span className="dott yellow" />
-                <span className="dott green" />
+            {/* Search pill — takes remaining space */}
+            <div
+              className="flex items-center flex-1 min-w-0 bg-white rounded-full overflow-hidden"
+              style={{
+                border: "1px solid #f0f0f5",
+                boxShadow: "0 4px 18px rgba(0,0,0,0.09), 0 1px 3px rgba(0,0,0,0.05)",
+                height: "48px",
+                position: "relative"
+              }}
+            >
+              <div className="flex items-center justify-center w-[36px] h-full shrink-0 text-slate-400">
+                <i className="fas fa-search text-[18px]"></i>
               </div>
-            )}
+              <input
+                type="text"
+                autoComplete="off"
+                placeholder={placeholderTexts[placeholderIndex]}
+                value={mobileSearchQuery}
+                onChange={(e) => {
+                  setMobileSearchQuery(e.target.value);
+                  setMobileSearchShowSuggestions(true);
+                }}
+                onFocus={() => {
+                  setMobileSearchShowSuggestions(true);
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && mobileSearchQuery && mobileSearchQuery.trim().length > 0) {
+                    e.preventDefault();
+                    addToMobileRecentSearches(mobileSearchQuery.trim());
+                    setMobileSearchShowSuggestions(true);
+                  }
+                }}
+                className="border-none !rounded-full outline-none flex-1 min-w-0 h-full text-[13px] font-normal bg-transparent text-slate-700 focus:ring-0 focus:outline-none focus:border-none p-0 m-0 shadow-none placeholder:text-slate-400"
+                style={{
+                  paddingLeft: "0px",
+                  paddingRight: mobileSearchShowDots && mobileSearchLoading ? "44px" : "12px",
+                }}
+              />
 
+              {mobileSearchShowDots && mobileSearchLoading && (
+                <div
+                  className="google-dots"
+                  style={{
+                    position: "absolute",
+                    right: "12px",
+                    top: "50%",
+                    transform: "translateY(-50%)",
+                    zIndex: 3,
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "4px",
+                  }}
+                >
+                  <span className="dott blue" />
+                  <span className="dott red" />
+                  <span className="dott yellow" />
+                  <span className="dott green" />
+                </div>
+              )}
+            </div>
+
+            {/* Prescription button — separate floating circle */}
             <button
               type="button"
               title="Upload prescription"
@@ -543,21 +538,39 @@ const MobileSearchDropdown = ({
                 onClose();
                 navigate("/prescription-upload", { state: { mode: "search", pincode: selectedPincode, lat: latitude, lng: longitude } });
               }}
-              className="!absolute !mr-1 !right-[46px] !top-1/2 !-translate-y-1/2 !z-[4] !flex !items-center !justify-center !w-[30px] !h-[30px] !rounded-full !bg-violet-200 !text-violet-600 !border !border-solid !border-violet-100/80 !cursor-pointer !transition-all !duration-300 !ease-in-out !shrink-0 hover:!bg-violet-600 hover:!text-white hover:!border-violet-600 hover:!scale-110 active:!scale-90 hover:!shadow-[0_4px_12px_rgba(124,58,237,0.25)]"
+              className="flex items-center justify-center shrink-0 !rounded-full transition-all duration-200 active:scale-90"
+              style={{
+                width: "48px",
+                height: "48px",
+                background: "linear-gradient(135deg, #f3eeff 0%, #e8d9ff 100%)",
+                color: "#6c3fbe",
+                border: "1px solid #ddd0f7",
+                boxShadow: "0 4px 14px rgba(108,63,190,0.15)",
+              }}
             >
-              <i className="fas fa-file-prescription text-[13px]"></i>
+              <i className="fas fa-file-prescription text-[18px]"></i>
             </button>
 
+            {/* Mic button — separate floating circle */}
             <button
               type="button"
               title="Voice search"
               onClick={startMobileVoiceRecognition}
-              className={`!absolute !right-[14px]  !top-1/2 !-translate-y-1/2 !z-[4] !flex !items-center !justify-center !w-[30px] !h-[30px] !rounded-full !border !border-solid !transition-all !duration-300 !ease-in-out !cursor-pointer !shrink-0 active:!scale-90 ${mobileSearchIsListening
-                ? "!bg-gradient-to-r !from-rose-500 !to-red-600 !text-white !border-rose-500 !shadow-[0_0_12px_rgba(244,63,94,0.5)] hover:!scale-110 hover:!shadow-[0_0_16px_rgba(244,63,94,0.7)]"
-                : "!bg-blue-50 !text-blue-600 !border-blue-100/80 hover:!bg-blue-600 hover:!text-white hover:!border-blue-600 hover:!scale-110 hover:!shadow-[0_4px_12px_rgba(37,99,235,0.25)]"
-                }`}
+              className="flex items-center justify-center shrink-0 !rounded-full transition-all duration-200 active:scale-90"
+              style={{
+                width: "48px",
+                height: "48px",
+                background: mobileSearchIsListening
+                  ? "linear-gradient(135deg, #ef4444 0%, #dc2626 100%)"
+                  : "linear-gradient(135deg, #e8f3ff 0%, #d4e8ff 100%)",
+                color: mobileSearchIsListening ? "#ffffff" : "#2563eb",
+                border: mobileSearchIsListening ? "1px solid #fca5a5" : "1px solid #c7dfff",
+                boxShadow: mobileSearchIsListening
+                  ? "0 4px 14px rgba(239,68,68,0.25)"
+                  : "0 4px 14px rgba(37,99,235,0.13)",
+              }}
             >
-              <i className={`${mobileSearchIsListening ? "fas fa-microphone text-white animate-pulse" : "fas fa-microphone"} text-[14px]`}></i>
+              <i className={`${mobileSearchIsListening ? "fas fa-microphone text-white animate-pulse" : "fas fa-microphone"} text-[18px]`}></i>
             </button>
 
             {/* Dropdown  */}
@@ -608,12 +621,11 @@ const MobileSearchDropdown = ({
                       <div className="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center shadow-inner z-10">
                         <i
                           key={activeLoaderIconIndex}
-                          className={`${
-                            activeLoaderIconIndex === 0 ? "fas fa-capsules text-[#7c3aed]" :
+                          className={`${activeLoaderIconIndex === 0 ? "fas fa-capsules text-[#7c3aed]" :
                             activeLoaderIconIndex === 1 ? "fas fa-microscope text-[#059669]" :
-                            activeLoaderIconIndex === 2 ? "fas fa-ambulance text-[#ef4444]" :
-                            "fas fa-stethoscope text-[#2563eb]"
-                          } text-lg`}
+                              activeLoaderIconIndex === 2 ? "fas fa-ambulance text-[#ef4444]" :
+                                "fas fa-stethoscope text-[#2563eb]"
+                            } text-lg`}
                           style={{ animation: 'loaderIconPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards' }}
                         />
                       </div>

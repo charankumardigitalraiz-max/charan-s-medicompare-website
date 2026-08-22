@@ -75,13 +75,7 @@ const HealthcareNavigation = ({ categories: propCategories, isLoading: propLoadi
           offset = mobileHeader.offsetHeight;
         }
 
-        let searchBarVisible = false;
-        if (mobileSearch && window.getComputedStyle(mobileSearch).display !== 'none') {
-          searchBarVisible = true;
-          offset += mobileSearch.offsetHeight;
-        }
-
-        setHasSearchBar(searchBarVisible);
+        setHasSearchBar(false);
         setTopOffset(offset);
       } else {
         const desktopHeader = document.querySelector('header.header-custom');
@@ -200,9 +194,10 @@ const HealthcareNavigation = ({ categories: propCategories, isLoading: propLoadi
 
   return (
     <div
-      className={`healthcare-navigation-wrapper w-full ${shouldShow ? 'block' : 'hidden'} ${hasSearchBar ? 'has-search-bar' : ''} fixed left-0 right-0 z-[997] bg-white border-b border-solid border-[#e6e6e7] transition-all duration-300`}
+      className={`healthcare-navigation-wrapper w-full ${shouldShow ? 'block' : 'hidden'} ${hasSearchBar ? 'has-search-bar' : ''} fixed left-0 right-0 z-[997] bg-white border-b border-solid border-[#e6e6e7] transition-transform duration-300 ease-in-out`}
       style={{
-        top: `${topOffset}px`,
+        top: isMobileView ? `var(--header-height, 62px)` : `${topOffset}px`,
+        transform: "translateY(var(--header-translate-y, 0px))",
       }}
     >
       {/* Left scroll arrow */}
@@ -248,8 +243,8 @@ const HealthcareNavigation = ({ categories: propCategories, isLoading: propLoadi
                 return (
                   <li key={item._id} className="nav-item text-center">
                     <div
-                      className={`flex items-center justify-center gap-[6px] !rounded-sm text-[#374151] font-medium text-[13px] !px-[14px] !py-[6px] !border !border-solid !border-slate-100 cursor-pointer transition-all duration-200 no-underline hover:bg-slate-50 hover:text-[#321961] hover:border-slate-200 hover:shadow-sm shadow-[0_2px_6px_rgba(0,0,0,0.02)] whitespace-nowrap ${isActive
-                        ? "!border-[var(--color-primary,#321961)] !text-white !bg-primary !shadow-[0_3px_10px_rgba(50,25,97,0.04)]"
+                      className={`flex flex-col md:flex-row items-center justify-center gap-[4px] md:gap-[6px] !rounded-sm text-[#374151] font-medium text-[13px] !px-1.5 !py-1 md:!px-[14px] md:!py-[6px] border-0 md:!border md:!border-solid border-transparent md:!border-slate-100 bg-transparent md:bg-white shadow-none md:shadow-[0_2px_6px_rgba(0,0,0,0.02)] cursor-pointer transition-all duration-200 no-underline hover:text-[#321961] whitespace-nowrap ${isActive
+                        ? "!text-[var(--color-primary,#4c2691)] md:!border-[var(--color-primary,#4c2691)] md:!bg-[#f4efff] md:!shadow-[0_3px_10px_rgba(50,25,97,0.04)]"
                         : ""
                         }`}
                       onClick={() => handleCategoryClick(item)}
@@ -261,15 +256,10 @@ const HealthcareNavigation = ({ categories: propCategories, isLoading: propLoadi
                             : "/assets/default.png"
                         }
                         title={item.name}
-                        className="h-[20px] w-[20px] object-contain transition-all duration-200"
-                        style={{
-                          filter: isActive
-                            ? "brightness(0) invert(1) brightness(2)"
-                            : "brightness(0) invert(13%) sepia(55%) saturate(3990%) hue-rotate(258deg) brightness(79%) contrast(97%)"
-                        }}
+                        className="h-[48px] w-[48px] md:h-[26px] md:w-[26px] object-contain transition-all duration-200"
                         loading="lazy"
                       />
-                      <span className="nav-text text-[12px]">
+                      <span className="nav-text text-[11.5px] md:text-[12.5px] font-semibold">
                         {item.name}
                       </span>
                     </div>

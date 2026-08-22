@@ -1529,7 +1529,7 @@ const ServiceDetails = () => {
 
       {myservice.fixedType !== "ambulanceservice" && (
         <div
-          className={`relative overflow-visible ${showSuggestions ? "z-[1]" : "z-[5]"} mt-0`}
+          className={`hidden md:block relative overflow-visible ${showSuggestions ? "z-[1]" : "z-[5]"} mt-0`}
           style={{
             backgroundColor: PRIMARY_SECTION_BG,
             contain: "none",

@@ -99,6 +99,45 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
   const [vendorModel, setVendorModel] = useState(null);
   const homeLiteMode = useMemo(() => shouldUseHomeLiteMode(), []);
 
+  const categoryScrollRef = useRef(null);
+  const [canCategoryScrollLeft, setCanCategoryScrollLeft] = useState(false);
+  const [canCategoryScrollRight, setCanCategoryScrollRight] = useState(true);
+
+  const updateCategoryScrollButtons = () => {
+    const container = categoryScrollRef.current;
+    if (container) {
+      setCanCategoryScrollLeft(container.scrollLeft > 5);
+      setCanCategoryScrollRight(
+        container.scrollLeft < container.scrollWidth - container.clientWidth - 5
+      );
+    }
+  };
+
+  const scrollCategoryLeft = () => {
+    if (categoryScrollRef.current) {
+      categoryScrollRef.current.scrollBy({ left: -240, behavior: 'smooth' });
+    }
+  };
+
+  const scrollCategoryRight = () => {
+    if (categoryScrollRef.current) {
+      categoryScrollRef.current.scrollBy({ left: 240, behavior: 'smooth' });
+    }
+  };
+
+  useEffect(() => {
+    const container = categoryScrollRef.current;
+    if (!container) return;
+    container.addEventListener("scroll", updateCategoryScrollButtons, { passive: true });
+    setTimeout(updateCategoryScrollButtons, 500);
+    return () => container.removeEventListener("scroll", updateCategoryScrollButtons);
+  }, [categories]);
+
+  useEffect(() => {
+    window.addEventListener("resize", updateCategoryScrollButtons);
+    return () => window.removeEventListener("resize", updateCategoryScrollButtons);
+  }, []);
+
   const { row1, row2 } = useMemo(() => {
     if (vendors && vendors.length > 0 && (vendors[0]?.part1 || vendors[0]?.part2)) {
       return {
@@ -858,7 +897,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
             } ${isMobile ? "bg-[#f9f9f9]" : ""}`}
         >
           <Home2Header />
-          <section className="relative z-30 min-h-[420px] bg-[#f9f9f9] bg-[url('/assets/search-bg.png')] bg-no-repeat bg-bottom bg-[length:100%_auto] pt-10 pb-[60px] max-lg:min-h-[280px] max-md:pt-5 max-md:pb-[50px] max-[480px]:min-h-[220px] max-[480px]:px-[15px] max-[480px]:pb-[30px]">
+          <section className="relative z-30 min-h-[420px] bg-[#f9f9f9] bg-[url('/assets/search-bg.png')] bg-no-repeat bg-bottom bg-[length:100%_auto] pt-10 pb-[60px] max-lg:min-h-[140px] max-md:pt-5 max-md:pb-[20px] max-[480px]:min-h-[100px] max-[480px]:px-[15px] max-[480px]:pb-[15px]">
             {/* Overlay */}
             <div className="pointer-events-none absolute inset-0 z-[1] bg-[linear-gradient(180deg,white_0%,white_20%,transparent_40%,rgba(128,70,241,0.3)_100%)] max-lg:bg-[linear-gradient(180deg,transparent_40%,rgba(128,70,241,0.3)_100%)] opacity-50" />
 
@@ -866,7 +905,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
               <div className="mx-auto w-full max-w-[800px] max-lg:max-w-[720px]">
 
                 <div
-                  className="mb-[25px] text-center"
+                  className="mb-0 lg:mb-[25px] text-center"
                   data-aos="fade-up"
                 >
                   <h1 className="m-0 !mb-[10px] !text-[clamp(22px,3.5vw,34px)] !font-semibold text-[#343434]">
@@ -900,7 +939,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                 </div>
 
                 <section
-                  className="p-[12px] md:py-0 md:px-[10px] relative mt-[10px] mobileview z-[50]"
+                  className="p-[12px] md:py-0 md:px-[10px] relative mt-[10px] mobileview z-[50] hidden lg:block"
                 >
                   <div
                     className="container-fluid px-3 px-md-4 relative z-[50] w-full max-w-[600px] mx-auto"
@@ -1045,15 +1084,19 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                                               searchHistory.length > 0 && (
                                                 <>
                                                   <div
-                                                    className="py-[6px] px-[15px] text-[12px] border-b border-solid border-[#f3f4f6] bg-[#f9fafb] flex justify-between items-center"
+                                                    className="py-2.5 px-4 text-[11px] border-b border-solid border-slate-100 bg-slate-50/80 backdrop-blur-sm flex justify-between items-center"
                                                   >
-                                                    <span>Recent Search History</span>
+                                                    <span className="flex items-center gap-1.5 font-semibold text-slate-500">
+                                                      <i className="fa-solid fa-clock-rotate-left text-slate-400 text-[10px]" />
+                                                      <span>Recent Search History</span>
+                                                    </span>
                                                     <button
                                                       type="button"
                                                       onClick={clearSearchHistory}
-                                                      className="bg-none border-none text-[#ef4444] text-[11px] cursor-pointer py-1 px-2 rounded-[4px] transition-all duration-200 ease hover:bg-[#fef2f2]"
+                                                      className="bg-transparent border-none text-red-500 hover:text-red-600 font-semibold text-[11px] cursor-pointer py-1 px-2.5 rounded-md transition-all duration-200 flex items-center gap-1 hover:bg-red-50/60"
                                                     >
-                                                      Clear All
+                                                      <i className="fa-solid fa-trash-can text-[9px]" />
+                                                      <span>Clear All</span>
                                                     </button>
                                                   </div>
                                                   {searchHistory.map(
@@ -1306,71 +1349,156 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
 
 
               <div className="max-w-full mx-auto px-6 md:px-12 lg:px-20 relative z-10">
-                <div className="text-center mb-12 max-w-2xl lg:max-w-4xl mx-auto" data-aos="fade-up">
-                  {/* <div className="inline-flex items-center gap-1.5 bg-[var(--color-primary,#4c2691)]/10 border border-solid border-[var(--color-primary,#4c2691)]/20 py-1.5 px-4 rounded-full mb-4">
+                <div className="text-left mb-8 max-w-full" data-aos="fade-up">
+                  {/* Premium Badge */}
+                  <div className="inline-flex items-center gap-1.5 bg-[var(--color-primary,#4c2691)]/5 border border-solid border-[var(--color-primary,#4c2691)]/10 py-1 px-3 rounded-full mb-3 shadow-[0_2px_10px_rgba(76,38,145,0.02)]">
                     <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-primary,#4c2691)] animate-pulse"></span>
-                    <span className="text-[11px] uppercase tracking-wider text-[var(--color-primary,#4c2691)] font-semibold">Specialized Care</span>
-                  </div> */}
-                  <h2 className="!text-[34px] !font-light text-[#0f172a] leading-tight tracking-tight mb-3">
-                    Explore Multiple <span className="font-normal text-[var(--color-primary,#4c2691)]">Services</span>
+                    <span className="text-[10px] md:text-[11px] uppercase tracking-wider text-[var(--color-primary,#4c2691)] font-semibold">Categories</span>
+                  </div>
+
+                  {/* Main Title */}
+                  <h2 className="!text-[24px] md:!text-[32px] !font-light text-slate-800 tracking-tight leading-tight mb-3">
+                    Explore Multiple <span className="font-normal text-[var(--color-primary,#4c2691)] relative pb-1 inline-block">
+                      Services
+                      {/* Animated bottom line */}
+                      <span className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-[var(--color-primary,#4c2691)] via-[#7946db] to-transparent rounded-full animate-pulse"></span>
+                    </span>
                   </h2>
-                  <p className="text-[13.5px] text-[#475569] font-normal leading-[1.75] max-w-[520px] mx-auto">
-                    Browse a wide range of medical categories to compare pricing, verify compositions, and find the best deals near you.
+
+                  {/* Subtitle */}
+                  <p className="text-[12.5px] md:text-[13.5px] text-slate-500 font-light max-w-[540px] leading-relaxed">
+                    Compare pricing, compositions, and select the finest healthcare categories near you.
                   </p>
                 </div>
 
                 <style dangerouslySetInnerHTML={{
                   __html: `
                   .category-icon-img {
-                    filter: brightness(0) invert(13%) sepia(55%) saturate(3990%) hue-rotate(258deg) brightness(79%) contrast(97%);
-                    transition: filter 0.3s ease, transform 0.4s ease;
+                    transition: transform 0.4s ease;
                   }
                   .group:hover .category-icon-img {
-                    filter: brightness(0) invert(1);
                     transform: translateY(-2px);
+                  }
+                  .no-scrollbar::-webkit-scrollbar {
+                    display: none !important;
+                  }
+                  .no-scrollbar {
+                    -ms-overflow-style: none !important;
+                    scrollbar-width: none !important;
                   }
                 `}} />
 
-                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 w-full mt-4">
-                  {categories.map((item, categoryIndex) => (
-                    <div
-                      key={item._id}
-                      onClick={() => handleCategoryClick(item)}
-                      className="group cursor-pointer bg-white border border-solid border-slate-200/80 rounded-md p-4 flex flex-col sm:flex-row items-center gap-3 sm:gap-4 transition-all duration-300 hover:border-[var(--color-primary-dark,#5c33a6)]/35 hover:shadow-[0_12px_30px_rgba(50,25,97,0.06)] hover:-translate-y-1 relative overflow-hidden"
-                    >
-                      {/* Glow Blob decoration on card hover */}
-                      <div className="absolute -bottom-10 -right-10 w-20 h-20 bg-[#7c3aed]/5 rounded-full blur-xl group-hover:bg-[#7c3aed]/10 transition-colors duration-300"></div>
+                {/* {categories.map((item, categoryIndex) => (
+                  <div
+                    key={item._id}
+                    onClick={() => handleCategoryClick(item)}
+                    className="group cursor-pointer bg-white/90 backdrop-blur-md border border-solid border-white rounded-2xl p-5 flex flex-col items-center justify-center text-center transition-all duration-300 hover:bg-white hover:border-[var(--color-primary,#4c2691)]/30 hover:shadow-[0_12px_24px_rgba(76,38,145,0.06)] hover:-translate-y-1 relative overflow-hidden"
+                    style={{
+                      boxShadow: "inset 0 1px 2px rgba(255,255,255,0.95), 0 6px 18px rgba(0, 0, 0, 0.015)"
+                    }}
+                  >
+            
+                    <div className="absolute inset-x-0 bottom-0 h-[3px] bg-[var(--color-primary,#4c2691)] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
-                      {/* Interactive Accent Line */}
-                      <div className="absolute inset-x-0 bottom-0 h-[3px] bg-[var(--color-primary,#4c2691)] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-
-                      <div className="w-[52px] h-[52px] rounded-xl bg-gradient-to-br from-[var(--color-primary,#4c2691)]/5 to-[var(--color-primary,#4c2691)]/5 border border-solid border-slate-200/40 flex items-center justify-center transition-all duration-300 group-hover:bg-[var(--color-primary,#4c2691)] group-hover:shadow-[0_4px_12px_rgba(125,46,255,0.25)] shrink-0">
-                        <img
-                          src={
-                            item?.files
-                              ? getImageUrl(item.files)
-                              : "/assets/default.png"
-                          }
-                          alt={item.name}
-                          title={item.name}
-                          className="h-[28px] w-[28px] object-contain category-icon-img"
-                          loading={categoryIndex < 8 ? "eager" : "lazy"}
-                          fetchPriority={categoryIndex < 4 ? "high" : "auto"}
-                          decoding="async"
-                        />
-                      </div>
-
-                      <div className="flex-1 min-w-0 text-center sm:text-left flex flex-col items-center sm:items-start w-full">
-                        <h4 className="!font-[600] !text-[14px] !text-[#1e293b] group-hover:!text-[var(--color-primary,#4c2691)] transition-colors duration-300 !mb-0 !leading-tight truncate !tracking-tight w-full">
-                          {item.name}
-                        </h4>
-                        <span className="inline-flex items-center gap-0.5 text-[10px] font-medium text-[#94a3b8] group-hover:text-[var(--color-primary,#4c2691)] transition-colors duration-300 mt-0.5">
-                          <span>Explore</span>
-                          <i className="fas fa-arrow-right text-[7px] transform group-hover:translate-x-0.5 transition-transform" />
-                        </span>
-                      </div>
+              
+                    <div className="w-[72px] h-[72px] rounded-full bg-white border border-solid border-slate-100 flex items-center justify-center mb-3.5 transition-all duration-300 group-hover:scale-105 shrink-0 shadow-sm">
+                      <img
+                        src={
+                          item?.files
+                            ? getImageUrl(item.files)
+                            : "/assets/default.png"
+                        }
+                        alt={item.name}
+                        title={item.name}
+                        className="h-[50px] w-[50px] object-contain category-icon-img"
+                        loading={categoryIndex < 8 ? "eager" : "lazy"}
+                        fetchPriority={categoryIndex < 4 ? "high" : "auto"}
+                        decoding="async"
+                      />
                     </div>
-                  ))}
+
+                  
+                    <div className="flex flex-col items-center w-full mt-0.5">
+                      <h4 className="!font-[600] !text-[13.5px] sm:!text-[14.5px] !text-slate-800 group-hover:!text-[var(--color-primary,#4c2691)] transition-colors duration-300 !mb-0 !leading-snug truncate !tracking-tight w-full">
+                        {item.name}
+                      </h4>
+                      <span className="inline-flex items-center gap-1 text-[10px] font-semibold text-slate-400 group-hover:text-[var(--color-primary,#4c2691)] transition-colors duration-300 mt-1.5">
+                        <span>Explore</span>
+                        <i className="fas fa-chevron-right text-[6px] transform group-hover:translate-x-0.5 transition-transform" />
+                      </span>
+                    </div>
+                  </div>
+                ))} */}
+
+                <div className="relative w-full">
+                  {/* Left scroll arrow */}
+                  <button
+                    type="button"
+                    onClick={scrollCategoryLeft}
+                    className={`absolute -left-4 top-1/2 -translate-y-1/2 bg-white border border-solid border-[#e8e8e8] text-[#555] text-[12px] w-[36px] h-[36px] flex items-center justify-center p-0 rounded-full shadow-[0_2px_8px_rgba(0,0,0,0.12)] cursor-pointer z-10 transition-all duration-200 hover:bg-[#f0ebff] hover:text-[#321961] hover:border-[#c9b5f5] hover:shadow-[0_3px_10px_rgba(128,89,202,0.2)] ${canCategoryScrollLeft ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
+                    style={{ borderRadius: "50%" }}
+                    aria-label="Scroll categories left"
+                  >
+                    <i className="fa-solid fa-chevron-left"></i>
+                  </button>
+
+                  <div
+                    ref={categoryScrollRef}
+                    className="flex flex-row flex-nowrap overflow-x-auto gap-1 md:gap-5 w-full mt-4 pb-4 no-scrollbar scroll-smooth px-1"
+                  >
+                    {categories.map((item, categoryIndex) => {
+                      const getLocalImage = (name) => {
+                        const normalized = name?.toLowerCase()?.trim()
+                          ?.replace(/\s+/g, '_')
+                          ?.replace('&', 'and');
+                        const map = {
+                          rx_medicines: "/categories/rx_medicines (2).png",
+                          lab_tests: "/categories/lab_tests (2).png",
+                          diagnostics: "/categories/diagnostics (2).png",
+                          home_care: "/categories/home_care (2).png",
+                          clinics_and_rehabs: "/categories/clinics_and_rehabs (2).png",
+                          dental_care: "/categories/dental_care (2).png",
+                          medical_equipment: "/categories/medical_equipment (2).png",
+                          treatments: "/categories/treatments (2).png",
+                          surgeries: "/categories/surgeries (2).png",
+                          ambulance: "/categories/ambulance (2).png"
+                        };
+                        return map[normalized] || "/assets/default.png";
+                      };
+
+                      return (
+                        <div
+                          key={item._id}
+                          onClick={() => handleCategoryClick(item)}
+                          className="group cursor-pointer bg-white/90 backdrop-blur-md border border-solid border-white rounded-full p-0 flex items-center justify-center text-center transition-all duration-300 hover:bg-white hover:border-white hover:shadow-[0_12px_28px_rgba(255,255,255,0.8),_0_6px_20px_rgba(0,0,0,0.03)] hover:-translate-y-1 relative overflow-hidden w-[95px] h-[95px] md:w-[135px] md:h-[135px] shrink-0"
+                          style={{
+                            boxShadow: "inset 0 1px 2px rgba(255,255,255,0.95), 0 6px 18px rgba(0, 0, 0, 0.015)"
+                          }}
+                        >
+                          <img
+                            src={getLocalImage(item.name)}
+                            alt={item.name}
+                            title={item.name}
+                            className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-[1.05]"
+                            loading={categoryIndex < 8 ? "eager" : "lazy"}
+                            fetchPriority={categoryIndex < 4 ? "high" : "auto"}
+                            decoding="async"
+                          />
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                  {/* Right scroll arrow */}
+                  <button
+                    type="button"
+                    onClick={scrollCategoryRight}
+                    className={`absolute -right-4 top-1/2 -translate-y-1/2 bg-white border border-solid border-[#e8e8e8] text-[#555] text-[12px] w-[36px] h-[36px] flex items-center justify-center p-0 rounded-full shadow-[0_2px_8px_rgba(0,0,0,0.12)] cursor-pointer z-10 transition-all duration-200 hover:bg-[#f0ebff] hover:text-[#321961] hover:border-[#c9b5f5] hover:shadow-[0_3px_10px_rgba(128,89,202,0.2)] ${canCategoryScrollRight ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
+                    style={{ borderRadius: "50%" }}
+                    aria-label="Scroll categories right"
+                  >
+                    <i className="fa-solid fa-chevron-right"></i>
+                  </button>
                 </div>
               </div>
             </section>
@@ -1378,7 +1506,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
 
 
 
-          {mediciness?.length > 0 && (
+          {/* {mediciness?.length > 0 && (
             <MedicineSection
               title="Top Most Medicines"
               icon="fas fa-capsules"
@@ -1478,7 +1606,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
             liteMode={homeLiteMode}
             isMobile={isMobile}
           // currentService={sections?.}
-          />
+          /> */}
 
 
           {/* PROMOTIONAL SECTION */}

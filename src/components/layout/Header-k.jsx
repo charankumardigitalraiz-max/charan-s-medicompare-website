@@ -86,6 +86,29 @@ const Home2Header = () => {
   const dropdownRef = useRef(null);
 
   const [mobileHeaderHeight, setMobileHeaderHeight] = useState(62);
+  const [mobileHeaderVisible, setMobileHeaderVisible] = useState(true);
+  const lastScrollYRef = useRef(0);
+
+  // Hide mobile header on scroll down, show on scroll up
+  useEffect(() => {
+    const onScroll = () => {
+      const currentY = window.scrollY;
+      const diff = currentY - lastScrollYRef.current;
+      if (currentY <= 10) {
+        // Always show at the very top
+        setMobileHeaderVisible(true);
+      } else if (diff > 4) {
+        // Scrolling down
+        setMobileHeaderVisible(false);
+      } else if (diff < -4) {
+        // Scrolling up
+        setMobileHeaderVisible(true);
+      }
+      lastScrollYRef.current = currentY;
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   useEffect(() => {
     const updateHeaderHeight = () => {
@@ -99,12 +122,8 @@ const Home2Header = () => {
 
       if (isMobile) {
         const mobileHeader = document.querySelector('header.mobile-header');
-        const mobileSearch = document.querySelector('section.mobile-search');
         if (mobileHeader) {
           height += mobileHeader.offsetHeight;
-        }
-        if (mobileSearch && window.getComputedStyle(mobileSearch).display !== 'none') {
-          height += mobileSearch.offsetHeight;
         }
       } else {
         const desktopHeader = document.querySelector('header.header-custom');
@@ -113,7 +132,18 @@ const Home2Header = () => {
         }
       }
       document.documentElement.style.setProperty('--header-height', `${height}px`);
+
+      // Track search bar height separately (it now sits below nav on mobile)
+      const mobileSearch = document.querySelector('section.mobile-search');
+      const searchH = (isMobile && mobileSearch && window.getComputedStyle(mobileSearch).display !== 'none')
+        ? mobileSearch.offsetHeight
+        : 0;
+      document.documentElement.style.setProperty('--search-height', `${searchH}px`);
     };
+
+    // Keep translation variable synced (leave 12px safe area at top of screen)
+    const translateYVal = mobileHeaderVisible ? '0px' : `-${mobileHeaderHeight - 12}px`;
+    document.documentElement.style.setProperty('--header-translate-y', translateYVal);
 
     updateHeaderHeight();
     const interval = setInterval(updateHeaderHeight, 200);
@@ -126,7 +156,7 @@ const Home2Header = () => {
       window.removeEventListener('scroll', updateHeaderHeight);
       document.documentElement.style.setProperty('--header-height', '0px');
     };
-  }, []);
+  }, [mobileHeaderVisible]);
 
   useEffect(() => {
     const handleUnreadCountUpdate = (event) => {
@@ -679,8 +709,10 @@ const Home2Header = () => {
     <>
       {/* Mobile Header */}
       <header
-        className={`mobile-header fixed top-0 left-0 right-0 w-full px-[15px] py-[11px] flex-nowrap items-center justify-between bg-white border-b border-[#f1f1f1] z-[9999] lg:hidden ${isLocationUpdating ? "hidden" : "flex"
-          }`}
+        className={`mobile-header fixed top-0 left-0 right-0 w-full px-[15px] py-[11px] flex-nowrap items-center justify-between bg-white border-b border-[#f1f1f1] z-[9999] lg:hidden transition-transform duration-300 ease-in-out ${isLocationUpdating ? "hidden" : "flex"}`}
+        style={{
+          transform: "translateY(var(--header-translate-y, 0px))",
+        }}
       >
         <div
           style={{
@@ -719,16 +751,20 @@ const Home2Header = () => {
             ) : (
               <div className="flex flex-col leading-tight min-w-0">
                 <div className="flex items-center gap-[2px] min-w-0">
-                  <small className="font-bold text-[10px] text-gray-800 truncate block max-w-[120px]">
+                  <small className="font-medium text-[10px] text-slate-700 truncate block max-w-[120px]">
                     {(() => {
                       const loc = getLocationDisplayName();
                       return loc.length > 18 ? `${loc.slice(0, 18)}...` : loc;
                     })()}
                   </small>
-                  <i className="fa-solid fa-chevron-down text-gray-600 text-[7px] shrink-0 mt-[1px]"></i>
+                  <i className="fa-solid fa-chevron-down text-slate-400 text-[7px] shrink-0 mt-[1px]"></i>
                 </div>
-                <small className="text-[8px] text-gray-500 font-medium leading-none block truncate max-w-[120px]">
-                  {currentLocation?.pincode || selectedPincode || "No Pincode"}
+                <small className="text-[8px] text-slate-400 font-normal leading-none block truncate max-w-[120px]">
+                  {currentLocation?.address
+                    ? currentLocation.address.length > 22
+                      ? currentLocation.address.slice(0, 22) + "..."
+                      : currentLocation.address
+                    : currentLocation?.pincode || selectedPincode || "Select location"}
                 </small>
               </div>
             )}
@@ -790,49 +826,7 @@ const Home2Header = () => {
             )}
           </Link>
 
-          {isLoggedIn && (
-            <Link
-              to="/notifications"
-              className="w-[32px] h-[32px] !rounded-full !border !border-solid !border-[#e5e7eb] hover:!border-[#321961] !flex !items-center !justify-center !text-[#321961] !bg-white hover:!bg-[#f0ebff] !cursor-pointer !transition-all !duration-200 no-underline relative"
-              title="Notifications"
-            >
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="w-4 h-4"
-              >
-                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
-                <path d="M13.73 21a2 2 0 0 1-3.46 0" />
-              </svg>
-              {unreadCount > 0 && (
-                <span
-                  style={{
-                    position: "absolute",
-                    top: "-4px",
-                    right: "-4px",
-                    background: "#321961",
-                    color: "#fff",
-                    borderRadius: "50%",
-                    width: "16px",
-                    height: "16px",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontSize: "10px",
-                    fontWeight: "bold",
-                  }}
-                >
-                  {unreadCount > 99 ? "99+" : unreadCount}
-                </span>
-              )}
-            </Link>
-          )}
+
 
           {!isLoggedIn ? (
             <Link
@@ -967,7 +961,7 @@ const Home2Header = () => {
       {/* Global Spacer to prevent page content from sliding behind fixed headers */}
       <div
         style={{
-          height: "calc(var(--header-height, 0px) + var(--nav-height, 0px))",
+          height: "calc(var(--header-height, 0px) + var(--nav-height, 0px) + var(--search-height, 0px))",
         }}
       />
 
@@ -1017,28 +1011,32 @@ const Home2Header = () => {
 
         return !isSearchExcluded && (
           <section
-            className="mobile-search lg:!hidden fixed left-0 right-0 px-[15px] py-[10px] bg-white/95 backdrop-blur-[12px] border-b border-solid border-slate-100/80 shadow-[0_4px_12px_rgba(0,0,0,0.03)] z-[998]"
+            className="mobile-search lg:!hidden fixed left-0 right-0 px-[12px] py-[8px] z-[996] transition-transform duration-300 ease-in-out"
             style={{
-              top: `${mobileHeaderHeight}px`,
+              top: `calc(var(--header-height, ${mobileHeaderHeight}px) + var(--nav-height, 0px))`,
+              transform: "translateY(var(--header-translate-y, 0px))",
+              background: "#ffffff",
+              borderBottom: "1px solid #f1f1f1",
+              boxShadow: "0 2px 8px rgba(0, 0, 0, 0.04)",
             }}
           >
-            <div
-              className="flex items-center gap-[10px] p-[6px_12px] w-full rounded-[10px] bg-slate-50 transition-all duration-200"
-              style={{
-                border: "1px solid #e2e8f0",
-              }}
-            >
-              {/* Search Icon */}
-              <div
-                className="w-[20px] h-[20px] flex items-center justify-center text-[#321961]/50"
-              >
-                <i className="fas fa-search text-[13px]"></i>
-              </div>
+            {/* Row: search pill + two action buttons */}
+            <div className="flex items-center gap-[8px] w-full">
 
-              <div className="relative flex-1">
+              {/* Search pill — takes remaining space */}
+              <div
+                className="flex items-center flex-1 min-w-0 bg-white rounded-[14px] overflow-hidden"
+                style={{
+                  border: "1px solid #e5e7eb",
+                  height: "44px",
+                }}
+              >
+                <div className="flex items-center justify-center w-[36px] h-full shrink-0 text-[#321961]/40">
+                  <i className="fas fa-search text-[13px]"></i>
+                </div>
                 <input
                   type="search"
-                  className="border-none outline-none w-full text-[13.5px] font-medium bg-transparent text-slate-700 focus:ring-0 focus:outline-none focus:border-none p-0 m-0 shadow-none placeholder:text-slate-400"
+                  className="border-none outline-none flex-1 min-w-0 h-full text-[13px] font-normal bg-transparent text-slate-700 focus:ring-0 focus:outline-none focus:border-none p-0 m-0 shadow-none placeholder:text-slate-400"
                   onClick={() => setShowMobileSearchDropdown(true)}
                   onFocus={() => setShowMobileSearchDropdown(true)}
                   readOnly
@@ -1047,23 +1045,40 @@ const Home2Header = () => {
                 />
               </div>
 
+              {/* Prescription button — separate floating circle */}
               <button
                 type="button"
                 title="Upload prescription"
                 onClick={() => navigate("/prescription-upload", { state: { mode: "search", pincode: selectedPincode, lat: latitude, lng: longitude } })}
-                className="!flex !items-center !justify-center !w-[28px] !h-[28px] !rounded-full !bg-violet-100/70 !text-[#321961] !border !border-solid !border-violet-100 !cursor-pointer !transition-all !duration-200 !ease-in-out !shrink-0 active:!scale-95"
+                className="flex items-center justify-center shrink-0 !rounded-full transition-all duration-200 active:scale-90"
+                style={{
+                  width: "44px",
+                  height: "44px",
+                  background: "linear-gradient(135deg, #f3eeff 0%, #e8d9ff 100%)",
+                  color: "#6c3fbe",
+                  border: "1px solid #ddd0f7",
+                }}
               >
-                <i className="fas fa-file-prescription text-[12px]"></i>
+                <i className="fas fa-file-prescription text-[14px]"></i>
               </button>
 
+              {/* Mic button — separate floating circle */}
               <button
                 type="button"
                 title="Voice search"
                 onClick={() => setShowMobileSearchDropdown(true)}
-                className="!flex !items-center !justify-center !w-[28px] !h-[28px] !rounded-full !border !border-solid !transition-all !duration-200 !ease-in-out !cursor-pointer !shrink-0 active:!scale-95 !bg-blue-50/70 !text-blue-600 !border-blue-100"
+                className="flex items-center justify-center shrink-0 !rounded-full transition-all duration-200 active:scale-90"
+                style={{
+                  width: "44px",
+                  height: "44px",
+                  background: "linear-gradient(135deg, #e8f3ff 0%, #d4e8ff 100%)",
+                  color: "#2563eb",
+                  border: "1px solid #c7dfff",
+                }}
               >
-                <i className="fas fa-microphone text-[12px]"></i>
+                <i className="fas fa-microphone text-[14px]"></i>
               </button>
+
             </div>
           </section>
         );
@@ -1090,7 +1105,7 @@ const Home2Header = () => {
               </Link>
 
               <span
-                className="hidden lg:flex items-center -ml-2.5 cursor-pointer transition-all duration-300 ease-in-out text-slate-800 font-semibold location-selector"
+                className="hidden lg:flex items-center -ml-2.5 cursor-pointer transition-all duration-300 ease-in-out text-slate-700 font-medium location-selector"
                 title={currentLocation?.name || "Select Location"}
                 onClick={() => handleLocationClick("right")}
               >
@@ -1106,27 +1121,31 @@ const Home2Header = () => {
                       <div className="flex items-center">
                         <i className="fa-solid fa-spinner fa-spin mr-2 text-[#9f64ff] text-[12px]"></i>
                         <div className="flex flex-col hover-texts">
-                          <span className="text-[12px] font-semibold text-gray-800 leading-[1.4] tracking-[0.01em]">
+                          <span className="text-[12px] font-medium text-slate-700 leading-[1.4] tracking-[0.01em]">
                             Detecting Location...
                           </span>
-                          <small className="text-gray-500 text-[10px] mt-[3px] font-medium">
+                          <small className="text-slate-400 text-[10px] mt-[3px] font-normal">
                             Please wait...
                           </small>
                         </div>
                       </div>
                     ) : (
                       <>
-                        <div className="flex items-center mb-[3px] tooltip-wrappers">
-                          <span className="hover-texts text-[12px] font-semibold text-gray-800 leading-[1.4] truncate max-w-[200px] tracking-[0.01em] block">
+                        <div className="flex items-center mb-[2px] tooltip-wrappers">
+                          <span className="hover-texts text-[12px] font-medium text-slate-700 leading-[1.4] truncate max-w-[200px] tracking-[0.01em] block">
                             {getLocationDisplayName()}
                           </span>
                           <i className="fa-solid fa-chevron-down ml-2 text-[10px] text-[#9f64ff] shrink-0 transition-transform duration-200 ease-in-out"></i>
                         </div>
-                        <div className="flex items-center max-w-[150px] min-w-0">
-                          <small className="hover-texts text-gray-500 text-[10px] font-medium truncate block min-w-0 w-full">
-                            {currentLocation?.pincode || selectedPincode
-                              ? `Pincode: ${currentLocation?.pincode || selectedPincode}`
-                              : "Pin Code Not Found"}
+                        <div className="flex items-center max-w-[200px] min-w-0">
+                          <small className="hover-texts text-slate-400 text-[10px] font-normal truncate block min-w-0 w-full leading-[1.3]">
+                            {currentLocation?.address
+                              ? currentLocation.address.length > 40
+                                ? currentLocation.address.slice(0, 40) + "..."
+                                : currentLocation.address
+                              : currentLocation?.pincode || selectedPincode
+                                ? `Pincode: ${currentLocation?.pincode || selectedPincode}`
+                                : "Select your location"}
                           </small>
                         </div>
                       </>
@@ -1233,25 +1252,7 @@ const Home2Header = () => {
                   )}
                 </Link>
               </li>
-              {isLoggedIn && (
-                <li className="relative">
-                  <Link
-                    to="/notifications"
-                    className="w-9 h-9 flex items-center justify-center !rounded-full bg-gray-50 !border !border-gray-200 !text-[#321961] hover:bg-[#f0ebff] hover:!border-[#321961] transition-all relative cursor-pointer !no-underline"
-                    title="Notifications"
-                  >
-                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
-                      <path d="M13.73 21a2 2 0 0 1-3.46 0" />
-                    </svg>
-                    {unreadCount > 0 && (
-                      <span className="absolute -top-1 -right-1 bg-[#321961] text-white rounded-full min-w-[16px] h-4 flex items-center justify-center text-[9px] font-bold px-1">
-                        {unreadCount > 99 ? "99+" : unreadCount}
-                      </span>
-                    )}
-                  </Link>
-                </li>
-              )}
+
 
               {!isLoggedIn ? (
                 <>
