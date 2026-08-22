@@ -1122,7 +1122,7 @@ export const Cart = () => {
           <div className="pt-0 mb-[15px]">
             <Link
               to="/"
-              className="inline-flex items-center gap-2 text-[var(--color-primary,#4c2691)] border border-[#e9d5ff] rounded-[30px] px-[18px] py-[6px] no-underline text-[13px] font-semibold bg-[#fdfaff] transition-all duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)] shadow-[0_2px_5px_rgba(128,89,202,0.05)] hover:text-white hover:bg-primary hover:border-[var(--color-primary-dark,#5c33a6)] hover:shadow-[0_4px_12px_rgba(128,89,202,0.2)]"
+              className="inline-flex items-center gap-2 !text-[var(--color-primary,#4c2691)] border border-[#e9d5ff] rounded-[30px] px-[18px] py-[6px] no-underline text-[13px] font-semibold bg-[#fdfaff] transition-all duration-[250ms] ease-[cubic-bezier(0.4,0,0.2,1)] shadow-[0_2px_5px_rgba(128,89,202,0.05)] hover:text-white hover:bg-primary hover:border-[var(--color-primary-dark,#5c33a6)] hover:shadow-[0_4px_12px_rgba(128,89,202,0.2)]"
             >
               <i className="fas fa-arrow-left text-[11px]" />
               Back to Home

@@ -443,7 +443,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
   };
 
   const blogsSettings = {
-    dots: true,
+    // dots: true,
     arrows: false,
     infinite: blogss?.length > 3,
     speed: 500,
@@ -466,8 +466,9 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
       {
         breakpoint: 768,
         settings: {
-          slidesToShow: 1,
+          slidesToShow: 1.2,
           centerMode: false,
+          infinite: true
         },
       },
     ],
@@ -1481,7 +1482,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
 
 
           {/* PROMOTIONAL SECTION */}
-          <section className="py-12 my-6 px-3 relative overflow-hidden bg-[#faf9fc]/30">
+          <section className="py-12 my-1 px-3 relative overflow-hidden bg-white">
             <div className="max-w-full mx-auto px-6 md:px-12 lg:px-20 relative z-10">
 
               {/* Section Header */}
@@ -1659,7 +1660,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
             </div>
           </section>
 
-          <section className="relative overflow-hidden py-16" style={{ background: "linear-gradient(135deg, #faf8ff 0%, #f3f0fc 50%, #f0f9ff 100%)" }}>
+          <section className="relative overflow-hidden py-5" style={{ background: "linear-gradient(135deg, #faf8ff 0%, #f3f0fc 50%, #f0f9ff 100%)" }}>
             {/* Background ambient effects */}
             <div className="absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden">
               <div className="absolute top-[-100px] left-[-80px] w-[500px] h-[500px] rounded-full opacity-30" style={{ background: "radial-gradient(circle, #ede9fe 0%, transparent 70%)" }}></div>
@@ -1935,8 +1936,9 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                       {
                         breakpoint: 640,
                         settings: {
-                          slidesToShow: 1,
+                          slidesToShow: 1.2,
                           slidesToScroll: 1,
+                          infinite: false,
                         }
                       }
                     ]}
@@ -2165,7 +2167,7 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                   }
                 `}</style>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-6">
                   {[
                     {
                       step: "01",
@@ -2513,8 +2515,8 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                     </p>
                   </div>
 
-                  {/* Asymmetrical 3-Column Receipt Splitter */}
-                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                  {/* Desktop Layout: Asymmetrical 3-Column Receipt Splitter */}
+                  <div className="hidden lg:grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
 
                     {/* Bill A: Standard Retail Receipt */}
                     <div className="lg:col-span-4 bg-white text-slate-800 rounded-2xl p-6 shadow-[0_15px_35px_rgba(0,0,0,0.03)] hover:shadow-[0_20px_50px_rgba(239,68,68,0.06)] transition-all duration-300 relative flex flex-col justify-between overflow-hidden border border-solid border-red-100/80 min-h-[390px]">
@@ -2546,25 +2548,6 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                           </div>
                           <span className="text-[9px] text-[#ef4444] bg-[#ef4444]/5 px-2 py-0.5 rounded-full mt-2 inline-block">Estimated standard retail shop rate</span>
                         </div>
-
-                        {/* Stylized Receipt Barcode for Standard Retail */}
-                        {/* <div className="mt-4 flex flex-col items-center opacity-30 hover:opacity-60 transition-opacity duration-300 select-none">
-                          <div className="flex gap-[2.5px] h-5 items-stretch">
-                            <div className="w-[1.5px] bg-slate-800"></div>
-                            <div className="w-[2px] bg-slate-800"></div>
-                            <div className="w-[1px] bg-slate-800"></div>
-                            <div className="w-[4px] bg-slate-800"></div>
-                            <div className="w-[1px] bg-slate-800"></div>
-                            <div className="w-[2px] bg-slate-800"></div>
-                            <div className="w-[1.5px] bg-slate-800"></div>
-                            <div className="w-[3px] bg-slate-800"></div>
-                            <div className="w-[2px] bg-slate-800"></div>
-                            <div className="w-[1px] bg-slate-800"></div>
-                            <div className="w-[4px] bg-slate-800"></div>
-                            <div className="w-[1px] bg-slate-800"></div>
-                          </div>
-                          <span className="text-[7.5px] font-mono tracking-[0.3em] mt-1.5 text-slate-500">MC-RETAIL-OVERPAY</span>
-                        </div> */}
                       </div>
                     </div>
 
@@ -2711,40 +2694,125 @@ const Home2 = ({ handleProductClick: propHandleProductClick }) => {
                             Saved ₹{formattedSavingsAmount} {vendors.length > 0 ? "" : "per strip"}
                           </span>
                         </div>
-
-                        {/* Stylized Receipt Barcode */}
-                        {/* <div className="mt-4 flex flex-col items-center opacity-40 hover:opacity-75 transition-opacity duration-300 select-none">
-                          <div className="flex gap-[2.5px] h-5 items-stretch">
-                            <div className="w-[2px] bg-slate-800"></div>
-                            <div className="w-[1px] bg-slate-800"></div>
-                            <div className="w-[3px] bg-slate-800"></div>
-                            <div className="w-[1px] bg-slate-800"></div>
-                            <div className="w-[2px] bg-slate-800"></div>
-                            <div className="w-[4px] bg-slate-800"></div>
-                            <div className="w-[1.5px] bg-slate-800"></div>
-                            <div className="w-[3px] bg-slate-800"></div>
-                            <div className="w-[2px] bg-slate-800"></div>
-                            <div className="w-[1px] bg-slate-800"></div>
-                            <div className="w-[4px] bg-slate-800"></div>
-                            <div className="w-[2px] bg-slate-800"></div>
-                          </div>
-                          <span className="text-[7.5px] font-mono tracking-[0.3em] mt-1.5 text-slate-500">MC-DEAL-ACTIVE</span>
-                        </div> */}
                       </div>
                     </div>
 
                   </div>
+
+                  {/* Mobile-only Optimized Comparison Design */}
+                  <div className="block lg:hidden bg-white rounded-2xl p-6 shadow-[0_15px_30px_rgba(0,0,0,0.05)] border border-solid border-slate-100">
+                    <div className="text-center mb-6">
+                      <h3 className="!text-[18px] !font-semibold gap-2 mt-2 text-slate-800 flex flex-col items-center gap-0.5 leading-snug">
+                        <span>Standard Retail</span>
+                        <span className="text-[12px] text-slate-400 font-mono uppercase">VS</span>
+                        <span className="text-[var(--color-primary,#4c2691)] font-bold">Medicompare</span>
+                      </h3>
+                    </div>
+
+                    {/* Item Row */}
+                    <div className="border-b border-solid border-slate-100 pb-4 mb-5">
+                      <div className="text-[11px] text-slate-400 font-mono mb-1 text-left">COMPARING ITEM</div>
+                      <div className="text-[14px] font-semibold text-slate-800 text-left">{tabletName}</div>
+                    </div>
+
+                    {/* Price Comparison */}
+                    <div className="flex items-stretch justify-between gap-3 mb-5">
+                      {/* Retail */}
+                      <div className="flex-1 bg-red-50/50 rounded-xl p-3 border border-solid border-red-100 text-center flex flex-col justify-between">
+                        <div>
+                          <span className="text-[9px] font-mono text-red-500 font-bold block mb-1 uppercase">Retail Shop</span>
+                        </div>
+                        <div className="flex flex-col gap-1.5 text-left font-mono text-[9px] text-slate-500 my-3">
+                          <div className="flex justify-between">
+                            <span className="truncate max-w-[55px]">Base Price</span>
+                            <span className="font-semibold text-slate-700">₹{maxPrice || 45.00}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span className="truncate max-w-[55px]">Est. Markup</span>
+                            <span className="font-semibold text-slate-700">₹15.00</span>
+                          </div>
+                        </div>
+                        <div className="border-t border-dashed border-red-200 pt-2">
+                          <span className="text-[14px] font-bold text-red-600 font-mono">₹{maxPrice ? (maxPrice + 15) : 60.00}</span>
+                          <span className="text-[7.5px] text-slate-400 block uppercase tracking-wider">Total Est. Price</span>
+                        </div>
+                      </div>
+
+                      {/* VS Divider */}
+                      <div className="flex items-center justify-center font-mono font-bold text-slate-300 text-[13px] shrink-0">VS</div>
+
+                      {/* Medicompare */}
+                      <div className="flex-1 bg-[#7c3aed]/5 rounded-xl p-3 border border-solid border-[#7c3aed]/15 flex flex-col justify-between">
+                        <div className="text-center">
+                          <span className="text-[9px] font-mono text-[#7c3aed] font-bold block mb-1 uppercase">Medicompare</span>
+                        </div>
+
+                        {/* Pharmacy list */}
+                        <div className="flex flex-col gap-1.5 font-mono text-[9px] text-left my-3">
+                          {vendors.length > 0 ? (
+                            vendors.map((vendor, idx) => {
+                              const price = vendor.products?.[0]?.displayPrice;
+                              const isBest = vendor.isBestDeal;
+                              const name = vendor.businessdetails?.name || "Pharmacy";
+
+                              return (
+                                <div
+                                  key={vendor._id || idx}
+                                  className={`flex justify-between items-center py-0.5 px-1 rounded transition-all duration-300 ${isBest
+                                    ? "bg-[#7c3aed]/10 text-slate-800 font-bold"
+                                    : "text-slate-400"
+                                    }`}
+                                >
+                                  <span className="truncate max-w-[55px] block">{name}</span>
+                                  <span className={isBest ? "text-[#7c3aed]" : "text-slate-600 font-normal"}>₹{price}</span>
+                                </div>
+                              );
+                            })
+                          ) : (
+                            <>
+                              <div className="flex justify-between items-center text-slate-400">
+                                <span className="truncate max-w-[55px]">Pharmacy A</span>
+                                <span>₹45.00</span>
+                              </div>
+                              <div className="flex justify-between items-center rounded bg-[#7c3aed]/10 px-1 text-slate-800 font-bold">
+                                <span className="text-[#7c3aed] truncate max-w-[55px]">Pharmacy B</span>
+                                <span className="text-[#7c3aed]">₹32.00</span>
+                              </div>
+                              <div className="flex justify-between items-center text-slate-400">
+                                <span className="truncate max-w-[55px]">Pharmacy C</span>
+                                <span>₹50.00</span>
+                              </div>
+                            </>
+                          )}
+                        </div>
+
+                        <div className="border-t border-dashed border-[#7c3aed]/20 pt-2 text-center">
+                          <span className="text-[14px] font-bold text-[#7c3aed] font-mono">₹{bestDealPrice || 32.00}</span>
+                          <span className="text-[7.5px] text-[#7c3aed] font-semibold block uppercase tracking-wider">Best Deal Price</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Savings Highlight */}
+                    <div className="bg-[#7c3aed]/10 border border-solid border-[#7c3aed]/20 rounded-xl p-4 text-center mb-6">
+                      <div className="text-[11px] text-slate-500 uppercase tracking-wider mb-1">Estimated Instant Savings</div>
+                      <div className="text-[22px] font-bold text-[#7c3aed]">Save ₹{formattedSavingsAmount} ({savingsPercent}%)</div>
+                    </div>
+
+                    {/* CTA Button */}
+                    <Link
+                      to="/medicine/all"
+                      className="!bg-[var(--color-primary,#4c2691)] text-white hover:bg-[var(--color-primary-dark,#5c33a6)] py-3 px-6 rounded-full font-semibold text-[13.5px] no-underline flex items-center gap-2 justify-center shadow-md shadow-indigo-500/10"
+                    >
+                      <span>Compare live prices</span>
+                      <i className="fas fa-arrow-right text-[10px]"></i>
+                    </Link>
+                  </div>
+
                 </div>
               </section>
             );
           })()}
-
-
-
-
-
-
-
 
 
 

@@ -257,7 +257,7 @@ const FilterSidebar = ({
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-sm border border-purple-100/55 sticky top-28 pb-4">
+    <div className="bg-white rounded-sm border border-purple-100/55 sticky top-28 pb-4">
       <div className="p-0">
         <div className="divide-y divide-slate-100">
           <div
