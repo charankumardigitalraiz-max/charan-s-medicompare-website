@@ -19,6 +19,158 @@ import Pagination from "../../components/ui/Pagination.jsx";
 import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 
+const CompositionLoader = ({ message = "Analyzing active formulations..." }) => {
+  return (
+    <div className="flex flex-col items-center justify-center py-10 px-4 text-center w-full bg-white rounded-2xl">
+      <style dangerouslySetInnerHTML={{
+        __html: `
+          @keyframes rotateBeaker {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-8deg); }
+            75% { transform: rotate(8deg); }
+          }
+          @keyframes bubbleUp {
+            0% { transform: translateY(20px) scale(0.6); opacity: 0; }
+            50% { opacity: 0.8; }
+            100% { transform: translateY(-40px) scale(1.1); opacity: 0; }
+          }
+          @keyframes flowLeftToCenter {
+            0% { transform: translate(0, 0) scale(0.5); opacity: 0; }
+            15% { opacity: 0.8; }
+            80% { transform: translate(100px, -22px) scale(0.85); opacity: 0.8; }
+            100% { transform: translate(112px, -18px) scale(0.65); opacity: 0; }
+          }
+          @keyframes flowRightToCenter {
+            0% { transform: translate(0, 0) scale(0.5); opacity: 0; }
+            15% { opacity: 0.8; }
+            80% { transform: translate(-100px, -22px) scale(0.85); opacity: 0.8; }
+            100% { transform: translate(-112px, -18px) scale(0.65); opacity: 0; }
+          }
+          @keyframes orbitMolecules {
+            0% { transform: rotate(0deg) translateX(36px) rotate(0deg); }
+            100% { transform: rotate(360deg) translateX(36px) rotate(-360deg); }
+          }
+          @keyframes orbitMolecules2 {
+            0% { transform: rotate(180deg) translateX(36px) rotate(-180deg); }
+            100% { transform: rotate(540deg) translateX(36px) rotate(-540deg); }
+          }
+          .animate-beaker {
+            animation: rotateBeaker 3s ease-in-out infinite;
+          }
+          .bubble-1 {
+            animation: bubbleUp 1.8s ease-in infinite;
+          }
+          .bubble-2 {
+            animation: bubbleUp 2.2s ease-in infinite;
+            animation-delay: 0.5s;
+          }
+          .bubble-3 {
+            animation: bubbleUp 1.5s ease-in infinite;
+            animation-delay: 0.9s;
+          }
+          .bubble-flow-left {
+            position: absolute;
+            bottom: 38px;
+            left: 24%;
+            animation: flowLeftToCenter 2.2s linear infinite;
+          }
+          .bubble-flow-right {
+            position: absolute;
+            bottom: 38px;
+            right: 24%;
+            animation: flowRightToCenter 2.2s linear infinite;
+            animation-delay: 0.7s;
+          }
+          .molecule-orbit-1 {
+            animation: orbitMolecules 4s linear infinite;
+          }
+          .molecule-orbit-2 {
+            animation: orbitMolecules2 4s linear infinite;
+          }
+        `
+      }} />
+
+      {/* Animation Area */}
+      <div className="relative w-full max-w-[280px] md:max-w-[480px] h-[135px] flex items-center justify-center overflow-hidden mb-5 bg-slate-50/60 rounded-xl border border-solid border-slate-100/80">
+
+        {/* Sky / Lab Background clouds */}
+        <div className="absolute top-3 left-4 text-slate-200"><i className="fas fa-cloud text-xs"></i></div>
+        <div className="absolute top-5 right-20 text-slate-200"><i className="fas fa-cloud text-[10px]"></i></div>
+
+        {/* Bench Ground Line */}
+        <div className="absolute bottom-[28px] left-[15%] right-[15%] h-[2px] bg-slate-200/80 border-b border-dashed border-slate-300"></div>
+
+        {/* ==================== MOBILE LAYOUT (Single Central Flask) ==================== */}
+        <div className="block md:hidden w-full h-full relative">
+          <div className="absolute left-1/2 bottom-[28px] -translate-x-1/2 z-10 flex flex-col items-center">
+            {/* Orbiting atoms */}
+            <div className="absolute molecule-orbit-1 z-20 w-3 h-3 bg-[#7c3aed] rounded-full flex items-center justify-center shadow-md -top-6">
+              <span className="text-[6px] text-white font-bold">H</span>
+            </div>
+            <div className="absolute molecule-orbit-2 z-20 w-3.5 h-3.5 bg-emerald-500 rounded-full flex items-center justify-center shadow-md -top-6">
+              <span className="text-[6px] text-white font-bold">O</span>
+            </div>
+
+            <div className="relative animate-beaker flex flex-col items-center justify-center">
+              <i className="fas fa-flask text-[var(--color-primary,#4c2691)] text-[42px]"></i>
+              <div className="absolute top-2 w-8 h-8 flex flex-col items-center">
+                <i className="fas fa-circle text-emerald-400/70 text-[5px] absolute bubble-1 left-1"></i>
+                <i className="fas fa-circle text-[#7c3aed]/70 text-[7px] absolute bubble-2 right-2"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* ==================== DESKTOP LAYOUT (Merging Formulation) ==================== */}
+        <div className="hidden md:block w-full h-full relative">
+          {/* Left Element (Blue Compound) */}
+          <div className="absolute left-[18%] bottom-[28px] z-10 flex flex-col items-center">
+            <span className="text-[7px] text-sky-500 font-bold mb-1">CHEM A</span>
+            <i className="fas fa-flask text-sky-400 text-[26px]"></i>
+          </div>
+
+          {/* Right Element (Emerald Compound) */}
+          <div className="absolute right-[18%] bottom-[28px] z-10 flex flex-col items-center">
+            <span className="text-[7px] text-emerald-500 font-bold mb-1">CHEM B</span>
+            <i className="fas fa-vial text-emerald-400 text-[26px]"></i>
+          </div>
+
+          {/* Flowing liquid bubbles */}
+          <i className="fas fa-circle text-sky-400/60 text-[6px] bubble-flow-left"></i>
+          <i className="fas fa-circle text-emerald-400/60 text-[6px] bubble-flow-right"></i>
+
+          {/* Central Formulation Vessel */}
+          <div className="absolute left-1/2 bottom-[28px] -translate-x-1/2 z-10 flex flex-col items-center">
+            {/* Orbiting atoms */}
+            <div className="absolute molecule-orbit-1 z-20 w-3.5 h-3.5 bg-[#7c3aed] rounded-full flex items-center justify-center shadow-md -top-6">
+              <span className="text-[6px] text-white font-bold">H</span>
+            </div>
+            <div className="absolute molecule-orbit-2 z-20 w-4 h-4 bg-emerald-500 rounded-full flex items-center justify-center shadow-md -top-6">
+              <span className="text-[6px] text-white font-bold">O</span>
+            </div>
+
+            <div className="relative animate-beaker flex flex-col items-center justify-center">
+              <i className="fas fa-flask text-[var(--color-primary,#4c2691)] text-[44px]"></i>
+              <div className="absolute top-2 w-8 h-8 flex flex-col items-center">
+                <i className="fas fa-circle text-emerald-400/80 text-[6px] absolute bubble-1 left-2"></i>
+                <i className="fas fa-circle text-[#7c3aed]/80 text-[8px] absolute bubble-2 right-1"></i>
+                <i className="fas fa-circle text-purple-400/80 text-[5px] absolute bubble-3 left-3"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      {/* Loader Info */}
+      <h4 className="text-[15px] font-semibold text-slate-800 tracking-tight mb-1">{message}</h4>
+      <p className="text-[11px] text-slate-400 font-light max-w-xs mx-auto">
+        Comparing ingredients and chemical active combinations to identify matching brand variants.
+      </p>
+    </div>
+  );
+};
+
 const Compositions = () => {
   const { compId } = useParams();
   const navigate = useNavigate();
@@ -670,7 +822,15 @@ const Compositions = () => {
   );
 
   if (loading && !searchQuery.trim()) {
-    return <PageLoader />;
+    return (
+      <div className="main-wrapper">
+        <Home2Header />
+        <div className="content pt-[120px] pb-10 bg-gradient-to-b from-[#f8f9fa] to-white min-h-[80vh] flex items-center justify-center">
+          <CompositionLoader message="Loading active formulation details..." />
+        </div>
+        <Footer />
+      </div>
+    );
   }
 
   return (
@@ -842,9 +1002,8 @@ const Compositions = () => {
               </div>
             )}
             {searchLoading || filterLoading ? (
-              <div className="text-center py-[50px]">
-                <i className="fas fa-spinner fa-spin text-2xl text-slate-400"></i>
-                <p className="mt-2.5 text-slate-400 text-sm">{filterLoading ? 'Filtering...' : 'Searching...'}</p>
+              <div className="py-8">
+                <CompositionLoader message={filterLoading ? 'Filtering brands...' : 'Searching formulation brands...'} />
               </div>
             ) : displayProducts && displayProducts.length > 0 ? (
               <section className="w-full">

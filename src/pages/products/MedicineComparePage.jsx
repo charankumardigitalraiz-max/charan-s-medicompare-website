@@ -52,6 +52,189 @@ const bannerSliderSettings = {
   pauseOnHover: true,
 };
 
+const VendorLoader = ({ message = "Comparing regional pharmacy prices..." }) => {
+  return (
+    <div className="flex flex-col items-center justify-center py-10 px-4 text-center w-full">
+      <style dangerouslySetInnerHTML={{
+        __html: `
+          @keyframes walkToStoreMobile {
+            0% {
+              left: 20%;
+              transform: translateY(0);
+              opacity: 0;
+            }
+            15% { opacity: 1; }
+            30% { transform: translateY(-5px); }
+            45% { transform: translateY(0); }
+            60% { transform: translateY(-5px); }
+            75% { left: 60%; opacity: 1; }
+            90% { left: 68%; transform: scale(0.85); opacity: 0.15; }
+            100% { left: 74%; transform: scale(0.7); opacity: 0; }
+          }
+
+          @keyframes walkToStoreDesktop {
+            0% {
+              left: 5%;
+              transform: translateY(0);
+              opacity: 0;
+            }
+            10% { opacity: 1; }
+            20% { transform: translateY(-4px); }
+            30% { transform: translateY(0); }
+            40% { transform: translateY(-4px); }
+            50% { transform: translateY(0); }
+            60% { transform: translateY(-4px); }
+            70% { transform: translateY(0); }
+            80% { transform: translateY(-4px); }
+            90% { left: 72%; transform: scale(1); opacity: 1; }
+            95% { left: 76%; transform: scale(0.85); opacity: 0.15; }
+            100% { left: 80%; transform: scale(0.7); opacity: 0; }
+          }
+
+          @keyframes storePulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05); }
+            50% { transform: scale(1.05); box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12); }
+          }
+
+          @keyframes bestStorePulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 4px 20px rgba(124, 58, 237, 0.1); border-color: var(--color-primary, #4c2691); }
+            50% { transform: scale(1.06); box-shadow: 0 10px 30px rgba(124, 58, 237, 0.25); border-color: #7c3aed; }
+          }
+
+          @keyframes crossFlash {
+            0%, 100% { opacity: 0.4; transform: scale(0.9); }
+            50% { opacity: 1; transform: scale(1.1); }
+          }
+
+          .walk-animation-mobile {
+            position: absolute;
+            bottom: 28px;
+            animation: walkToStoreMobile 2.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+          }
+
+          .walk-animation-desktop {
+            position: absolute;
+            bottom: 28px;
+            animation: walkToStoreDesktop 3.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+          }
+
+          .store-card-normal {
+            animation: storePulse 2.5s ease-in-out infinite;
+          }
+
+          .store-card-best {
+            animation: bestStorePulse 2.5s ease-in-out infinite;
+          }
+
+          .store-cross-flash {
+            animation: crossFlash 1.25s ease-in-out infinite;
+          }
+        `
+      }} />
+
+      {/* Animation Area */}
+      <div className="relative w-full max-w-[280px] md:max-w-[650px] h-[140px] flex items-center justify-center overflow-hidden mb-6 bg-slate-50/60 rounded-xl border border-solid border-slate-100/80">
+
+        {/* Sky / Background elements */}
+        <div className="absolute top-3 left-4 text-slate-200"><i className="fas fa-cloud text-xs"></i></div>
+        <div className="absolute top-5 right-20 text-slate-200"><i className="fas fa-cloud text-[10px]"></i></div>
+        <div className="absolute top-2 left-[30%] text-slate-100 hidden md:block"><i className="fas fa-cloud text-sm"></i></div>
+
+        {/* ==================== MOBILE LAYOUT (Single Store) ==================== */}
+        <div className="block md:hidden w-full h-full relative">
+          {/* Path */}
+          <div className="absolute bottom-[28px] left-[15%] right-[15%] h-[2px] bg-slate-200/80 border-b border-dashed border-slate-300"></div>
+
+          {/* Storefront */}
+          <div className="absolute right-[22%] bottom-[28px] z-10 flex flex-col items-center">
+            <div className="mb-1 text-slate-400 text-[11px] store-cross-flash flex items-center gap-0.5 bg-emerald-50 px-1 py-0.5 rounded border border-solid border-emerald-100 font-bold font-mono">
+              <i className="fas fa-plus-circle text-emerald-500 text-[8px] store-cross-flash"></i>
+              <span className="text-[7.5px] text-emerald-600">RX</span>
+            </div>
+            <div className="store-card-best w-14 h-14 bg-gradient-to-b from-white to-[#f5f3ff] border-2 border-solid border-[var(--color-primary,#4c2691)] rounded-xl flex flex-col items-center justify-center relative">
+              <div className="absolute -top-1 left-0 right-0 h-2 bg-gradient-to-r from-[var(--color-primary,#4c2691)] via-[#7c3aed] to-[var(--color-primary,#4c2691)] rounded-t-lg"></div>
+              <div className="absolute bottom-0 w-5 h-7 bg-indigo-50 border-t-2 border-x-2 border-solid border-[#7c3aed]/40 rounded-t-sm"></div>
+              <i className="fas fa-store text-[var(--color-primary,#4c2691)]/60 text-lg -mt-2"></i>
+            </div>
+          </div>
+
+          {/* Person */}
+          <div className="walk-animation-mobile z-20">
+            <div className="flex flex-col items-center relative">
+              <span className="absolute -top-1 -right-2 text-[8px] bg-[#7c3aed] text-white rounded-full w-3.5 h-3.5 flex items-center justify-center border border-white">
+                <i className="fas fa-file-prescription text-[6px]"></i>
+              </span>
+              <i className="fas fa-walking text-[var(--color-primary,#4c2691)] text-2xl"></i>
+            </div>
+          </div>
+        </div>
+
+        {/* ==================== DESKTOP LAYOUT (Multi Store Comparative Scan) ==================== */}
+        <div className="hidden md:block w-full h-full relative">
+          {/* Path */}
+          <div className="absolute bottom-[28px] left-[10%] right-[10%] h-[2px] bg-slate-200/80 border-b border-dashed border-slate-300"></div>
+
+          {/* Store 1: Standard Pharmacy (Red Theme) */}
+          <div className="absolute left-[15%] bottom-[28px] z-10 flex flex-col items-center">
+            <div className="mb-1 text-red-500 text-[10px] flex items-center gap-0.5 bg-red-50 px-1 py-0.2 rounded border border-solid border-red-100">
+              <i className="fas fa-plus text-[7px] text-red-500"></i>
+              <span className="text-[7.5px] font-bold text-red-600">RETAIL</span>
+            </div>
+            <div className="store-card-normal w-12 h-12 bg-white border border-solid border-red-200 rounded-lg flex flex-col items-center justify-center relative">
+              <div className="absolute -top-0.5 left-0 right-0 h-1.5 bg-red-500 rounded-t-md"></div>
+              <div className="absolute bottom-0 w-4 h-6 bg-red-50/50 border-t border-x border-solid border-red-200 rounded-t-sm"></div>
+              <i className="fas fa-clinic-medical text-red-400 text-sm -mt-2"></i>
+            </div>
+          </div>
+
+          {/* Store 2: Competitor Pharmacy (Blue Theme) */}
+          <div className="absolute left-[45%] bottom-[28px] z-10 flex flex-col items-center">
+            <div className="mb-1 text-blue-500 text-[10px] flex items-center gap-0.5 bg-blue-50 px-1 py-0.2 rounded border border-solid border-blue-100">
+              <i className="fas fa-pills text-[7px] text-blue-500"></i>
+              <span className="text-[7.5px] font-bold text-blue-600">SHOP B</span>
+            </div>
+            <div className="store-card-normal w-12 h-12 bg-white border border-solid border-blue-200 rounded-lg flex flex-col items-center justify-center relative">
+              <div className="absolute -top-0.5 left-0 right-0 h-1.5 bg-blue-500 rounded-t-md"></div>
+              <div className="absolute bottom-0 w-4 h-6 bg-blue-50/50 border-t border-x border-solid border-blue-200 rounded-t-sm"></div>
+              <i className="fas fa-store text-blue-400 text-sm -mt-2"></i>
+            </div>
+          </div>
+
+          {/* Store 3: Medicompare Best Deal (Purple/Gold Theme) */}
+          <div className="absolute right-[15%] bottom-[28px] z-10 flex flex-col items-center">
+            <div className="mb-1 text-emerald-600 text-[10px] store-cross-flash flex items-center gap-0.5 bg-emerald-50 px-1.5 py-0.5 rounded border border-solid border-emerald-200 font-bold font-mono">
+              <i className="fas fa-star text-[7px] text-amber-500"></i>
+              <span className="text-[7.5px] text-emerald-700">MEDICOMPARE</span>
+            </div>
+            <div className="store-card-best w-14 h-14 bg-gradient-to-b from-white to-[#f5f3ff] border-2 border-solid border-[var(--color-primary,#4c2691)] rounded-xl flex flex-col items-center justify-center relative">
+              <div className="absolute -top-1 left-0 right-0 h-2 bg-gradient-to-r from-[var(--color-primary,#4c2691)] via-[#7c3aed] to-[var(--color-primary,#4c2691)] rounded-t-lg"></div>
+              <div className="absolute bottom-0 w-5 h-7 bg-indigo-50 border-t-2 border-x-2 border-solid border-[#7c3aed]/40 rounded-t-sm"></div>
+              <i className="fas fa-store text-[var(--color-primary,#4c2691)] text-lg -mt-2"></i>
+            </div>
+          </div>
+
+          {/* Walking Person travelling across stores */}
+          <div className="walk-animation-desktop z-20">
+            <div className="flex flex-col items-center relative">
+              <span className="absolute -top-1 -right-2 text-[8px] bg-emerald-500 text-white rounded-full w-3.5 h-3.5 flex items-center justify-center border border-white font-bold">
+                <i className="fas fa-check text-[6px]"></i>
+              </span>
+              <i className="fas fa-walking text-[var(--color-primary,#4c2691)] text-2xl"></i>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      {/* Informative text below */}
+      <h4 className="text-[15px] font-semibold text-slate-800 tracking-tight mb-1">{message}</h4>
+      <p className="text-[11px] text-slate-400 font-light max-w-xs mx-auto">
+        Scanning regional partner pharmacies to fetch live stock, discounts and best deals...
+      </p>
+    </div>
+  );
+};
+
 const MedicineComparePage = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -1094,17 +1277,7 @@ const MedicineComparePage = () => {
         <div
           className="content medicine-compare pt-[100px] pb-10 bg-gradient-to-b from-[#f8f9fa] to-white min-h-[80vh] flex items-center justify-center"
         >
-          <div className="text-center">
-            <div
-              className="spinner-border text-primary w-12 h-12"
-              role="status"
-            >
-              <span className="visually-hidden">Loading...</span>
-            </div>
-            <p className="mt-3 text-[#6c757d] text-base">
-              Loading product details...
-            </p>
-          </div>
+          <VendorLoader message="Fetching product and comparison details..." />
         </div>
         <Footer />
       </div>
@@ -1208,11 +1381,11 @@ const MedicineComparePage = () => {
                     </div>
 
                     <div
-                      className="flex min-w-[280px] flex-1 max-w-[400px]"
+                      className="flex w-full max-w-[240px] items-center h-10"
                     >
                       <input
                         type="text"
-                        className="form-control h-10 text-[14px] !rounded-l-md border border-gray-300 px-3 focus:outline-none focus:ring-1 focus:ring-[var(--color-primary,#4c2691)] focus:border-[var(--color-primary,#4c2691)]"
+                        className="form-control h-full text-[14px] rounded-l-md rounded-r-none border border-r-0 border-gray-300 px-3 focus:outline-none focus:ring-1 focus:ring-[var(--color-primary,#4c2691)] focus:border-[var(--color-primary,#4c2691)] flex-1 min-w-0"
                         placeholder="Enter Pin code"
                         value={pincode}
                         onChange={(e) => {
@@ -1232,7 +1405,7 @@ const MedicineComparePage = () => {
                       />
 
                       <button
-                        className="btn bg-[var(--color-primary,#4c2691)] text-white py-2 px-[18px] !rounded-r-md text-[14px] !font-medium border-none whitespace-nowrap transition-colors duration-200"
+                        className="btn bg-[var(--color-primary,#4c2691)] hover:bg-[var(--color-primary-dark,#5c33a6)] text-white h-full px-[18px] text-[14px] !font-medium !rounded-r-md !rounded-l-none border border-[var(--color-primary,#4c2691)] whitespace-nowrap transition-colors duration-200 flex items-center justify-center cursor-pointer"
                         onClick={handlePincodeCheck}
                         disabled={loadingVendors}
                       >
@@ -1331,32 +1504,14 @@ const MedicineComparePage = () => {
                 <div className="p-5 relative">
                   {loadingVendors && (
                     <div
-                      className="absolute inset-0 bg-white/90 flex items-center justify-center z-10 rounded-[16px]"
+                      className="absolute inset-0 bg-white/95 flex items-center justify-center z-10 rounded-[16px]"
                     >
-                      <div className="text-center">
-                        <div
-                          className="spinner-border text-primary w-12 h-12"
-                          role="status"
-                        >
-                          <span className="visually-hidden">Loading...</span>
-                        </div>
-                        <p className="mt-3 text-[#6c757d]">
-                          Loading...
-                        </p>
-                      </div>
+                      <VendorLoader message="Updating pharmacy deals..." />
                     </div>
                   )}
                   {loading ? (
-                    <div className="text-center py-5">
-                      <div
-                        className="spinner-border text-primary w-12 h-12"
-                        role="status"
-                      >
-                        <span className="visually-hidden">Loading...</span>
-                      </div>
-                      <p className="mt-3 text-[#6c757d]">
-                        Loading pharmacy prices...
-                      </p>
+                    <div className="py-5">
+                      <VendorLoader message="Comparing pharmacy prices..." />
                     </div>
                   ) : !headerPincode && !checkedPincode ? (
                     <div className="text-center py-5">

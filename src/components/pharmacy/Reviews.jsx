@@ -772,6 +772,12 @@ const Reviews = ({ reviews = [] }) => {
         @media (max-width: 768px) {
           .cr-layout {
             flex-direction: column;
+            align-items: stretch;
+            width: 100%;
+          }
+
+          .cr-main {
+            width: 100%;
           }
 
           .cr-summary {
