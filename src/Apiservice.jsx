@@ -7,9 +7,9 @@ export const isDevMachine = import.meta.env.DEV;
 // (import.meta.env.DEV
 // const host = "http://192.168.0.117:9001"
 // const host = "http://192.168.0.163:9001"
-const host = "http://192.168.0.115:9001";
+// const host = "http://192.168.0.115:9001";
 // const host = "http://192.168.0.161:9001"
-// const host = "https://api.medicompares.com";
+const host = "https://api.medicompares.com";
 export const baseurl = host + "/api/v1/web";
 export const imgUrl = host;
 export const customerWebUrl = "https://medicompares.com";
@@ -50,7 +50,7 @@ const handle401Error = (error) => {
     alert(message);
     window.location.href = "/login";
     return;
-  }
+  } 1
 
   return Promise.reject(error);
 };
