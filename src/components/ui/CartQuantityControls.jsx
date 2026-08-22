@@ -221,7 +221,7 @@ const CartQuantityControls = ({
         ...(isPackage ? { packageId } : {}),
         ...(prescriptionImage ? { prescriptionImage } : {})
       };
-      if (addOptions.bookingType === "rentals_addtocarts") {
+      if (addOptions.bookingType === "rentals_addtocarts" || addOptions.bookingType === "rent") {
         addOptions.bookingType = "cart";
       }
 
@@ -863,26 +863,27 @@ const CartQuantityControls = ({
         (quantity > 0 ?
           (
             <div
-              className="w-full flex flex-col items-center gap-1"
+              className="w-full flex-1 flex flex-col items-center gap-1"
+              style={{ flex: 1 }}
             >
               <div
-                className={`cart-qty-controls ${className}`}
-                style={individualStyleForCart}
+                className={`flex items-center justify-between bg-[#fdfaff] !rounded-sm px-2.5 w-full !shadow-[0_0_8px_rgba(50,25,97,0.18)] transition-shadow duration-200 ${className}`}
+                style={{ height: "28px" }}
               >
                 <button
-                  className="cart-qty-btn cart-qty-decrease"
+                  className="cart-qty-btn cart-qty-decrease text-[var(--color-primary,#4c2691)] hover:bg-[var(--color-primary)]/10 disabled:opacity-50 w-5 h-5 rounded flex items-center justify-center cursor-pointer border-none bg-transparent"
                   onClick={handleDecrement}
                   disabled={isLoading || quantity <= 0}
                 >
-                  <i className="fas fa-minus"></i>
+                  <i className="fas fa-minus text-[10px]"></i>
                 </button>
-                <span className="cart-qty-value">{quantity}</span>
+                <span className="cart-qty-value text-xs font-bold text-[var(--color-primary,#4c2691)] px-2">{quantity}</span>
                 <button
-                  className="cart-qty-btn cart-qty-increase"
+                  className="cart-qty-btn cart-qty-increase text-[var(--color-primary,#4c2691)] hover:bg-[var(--color-primary)]/10 disabled:opacity-50 w-5 h-5 rounded flex items-center justify-center cursor-pointer border-none bg-transparent"
                   onClick={handleIncrement}
-                // disabled={isLoading || atMaxStock}
+                  disabled={isLoading}
                 >
-                  <i className="fas fa-plus"></i>
+                  <i className="fas fa-plus text-[10px]"></i>
                 </button>
               </div>
               {/* )} */}

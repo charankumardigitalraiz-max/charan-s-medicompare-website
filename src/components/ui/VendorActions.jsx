@@ -84,9 +84,10 @@ const VendorActions = ({
             flexDirection: "row",
             alignItems: "center",
             justifyContent: "space-between",
-            padding: "2px 10px",
+            padding: "0px 8px",
             maxWidth: "100%",
             width: "100%",
+            height: "28px",
             gap: "4px",
             borderRadius: "4px",
             border: "1px solid var(--color-primary,#4c2691)",
@@ -112,7 +113,7 @@ const VendorActions = ({
           }}
           className="pd-cart-controls"
           service={service}
-          style={{ flex: 1, width: "100%" }}
+          style={{ flex: 1, width: "100%", height: "28px" }}
         />
 
         <button
@@ -132,10 +133,11 @@ const VendorActions = ({
               );
             }
           }}
-          className={`w-full flex-1 flex items-center justify-center gap-1.5 !py-1 !px-2.5 !rounded-sm !text-[11px] !font-semibold !text-white transition-all cursor-pointer border-none ${perDayRent === 0 || !perDayRent
+          className={`w-full flex-1 flex items-center justify-center gap-1.5 !py-0 !px-2.5 !rounded-sm !text-[11px] !font-semibold !text-white transition-all cursor-pointer border-none ${perDayRent === 0 || !perDayRent
             ? "bg-slate-300 opacity-60 cursor-not-allowed"
-            : "bg-[var(--color-primary)] hover:shadow-md active:scale-[0.98]"
+            : "bg-[var(--color-primary)] hover:bg-[var(--color-primary-dark,#5c33a6)] hover:shadow-md active:scale-[0.98]"
             }`}
+          style={{ height: "28px" }}
         >
           <i className="fa-solid fa-clipboard-check"></i>
           Rent
